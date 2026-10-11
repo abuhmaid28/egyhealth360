@@ -1,0 +1,34 @@
+You are starting implementation of the EgyHealth 360 project.
+
+Your current task is EH-001 — Bootstrap EgyHealth 360 Monorepo.
+
+Before writing any code:
+
+1. Read AGENTS.md completely.
+2. Read docs/PRODUCT.md.
+3. Read docs/ARCHITECTURE.md.
+4. Read docs/DOMAIN.md.
+5. Read docs/DATA_MODEL.md.
+6. Read docs/API.md.
+7. Read docs/DECISIONS.md.
+8. Read docs/EH-001_BOOTSTRAP_ISSUE.md.
+9. Inspect the current repository before changing anything.
+
+Do not implement healthcare business features in EH-001.
+
+Before making changes, first summarize:
+- your understanding of the architecture,
+- the exact EH-001 scope,
+- versions you intend to use,
+- your implementation plan,
+- any compatibility risk you identified.
+
+Then implement EH-001.
+
+Requirements:
+- preserve the free-first/self-hostable policy,
+- do not add paid services,
+- do not redesign the architecture,
+- pin important versions,
+- run all required builds/tests/checks,
+- leave a clear Pull Request summary with completed work, checks run, known limitations, and remaining work if incomplete.
