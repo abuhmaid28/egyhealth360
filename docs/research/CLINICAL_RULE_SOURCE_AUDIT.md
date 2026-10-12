@@ -94,17 +94,27 @@ No automatic medical exemption is inferred in V1 from the WHO source.
 
 A clinician/manual exemption may exist as an auditable product workflow, but the system must not invent clinical exemption reasons.
 
-## EACCE mapping for CR-HTN-FU-001
-At an explicit `evaluation_time`:
+## Frozen EACCE decision order for CR-HTN-FU-001
+At an explicit `evaluation_time`, after input validation:
 
-1. If the rule is not applicable to the benchmark case → `EXEMPT` or case excluded from benchmark according to experiment protocol.
-2. If evaluation time has not passed the due-by boundary → `NOT_DUE`, unless valid completion/schedule evidence already establishes another state according to the final closure contract.
-3. If qualifying completion evidence exists → `COMPLETED`.
-4. If valid future schedule evidence exists → `SCHEDULED`.
-5. If the action is overdue and relevant record coverage is insufficient → `UNCERTAIN`.
-6. If the action is overdue, no completion/schedule evidence exists, and relevant coverage is known sufficient → `TRUE_GAP`.
+1. Applicability / explicit exemption handling.
+   - If the action is not applicable or has a valid documented exemption → `EXEMPT`.
+2. Qualifying completion evidence.
+   - If present → `COMPLETED`, even if completion occurred earlier than the recommended 3-month window start.
+3. Valid future schedule evidence.
+   - If present under the frozen scheduling contract → `SCHEDULED`.
+4. Due timing.
+   - If the due-by boundary has not passed and no earlier resolving state applies → `NOT_DUE`.
+5. Relevant record-coverage sufficiency for an overdue unresolved action.
+   - Insufficient relevant coverage → `UNCERTAIN`.
+   - Sufficient relevant coverage with no completion/schedule/exemption → `TRUE_GAP`.
 
-Final decision ordering must remain consistent with the approved closure-engine contract and tests.
+Why this order is frozen:
+- completed care should not be labelled `NOT_DUE` merely because it happened early;
+- an explicitly scheduled follow-up should remain visible as `SCHEDULED` rather than be hidden by a pre-due `NOT_DUE` label;
+- `TRUE_GAP` is only reachable after the action is overdue and relevant coverage is sufficient.
+
+Any future change to this ordering is a behavior change requiring a versioned engine contract, ADR/requirements update where relevant, and updated golden tests.
 
 ## Relevant evidence window
 For research V1, the relevant evidence window begins after the trigger controlled assessment and ends at the explicit evaluation time, with the due-by boundary at trigger +6 calendar months.
@@ -135,4 +145,4 @@ The project does not claim that:
 - the synthetic benchmark constitutes clinical validation.
 
 ## Implementation gate
-No coding agent may implement CR-HTN-FU-001 from memory or a chat summary. The machine-readable rule must reference this rule ID, the source/version, and the approved research protocol. Any change to the threshold, follow-up window, applicability cohort, or completion evidence requires a documented rule-version change and updated tests.
+No coding agent may implement CR-HTN-FU-001 from memory or a chat summary. The machine-readable rule must reference this rule ID, the source/version, and the approved research protocol. Any change to the threshold, follow-up window, applicability cohort, completion evidence, or decision ordering requires a documented version change and updated tests.
