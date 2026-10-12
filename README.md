@@ -59,9 +59,9 @@ Major scope or architecture changes require a recorded decision.
 
 ## Project status
 
-Repository reboot and EH-004 Deep Planning Audit Pass 2 are merged. **EH-003 — Bootstrap Monorepo V2** on `feature/EH-003-bootstrap-v2` has passed local validation and is ready for PR/CI review. See `docs/EH-003_VALIDATION.md` for observed results and limitations.
+**Milestone M0 — Repository Reboot / Bootstrap** is complete and validated. EH-004 Deep Planning Audit Pass 2 is complete and merged; EH-003 Bootstrap Monorepo V2 implementation and validation are complete. See `docs/EH-003_VALIDATION.md` for observed results and limitations.
 
-Later milestones remain blocked until EH-003 review and their dependency/acceptance gates are completed.
+Next planned milestone: **M1 — Identity, Authorization, and Core Data Foundation**. No M1 implementation may begin without its own GitHub Issue, branch, defined scope, acceptance criteria, and review gate. Later milestones remain gated by issue-scoped implementation and review.
 
 Important planning references:
 - `docs/DEEP_PLANNING_AUDIT_SUMMARY.md`
