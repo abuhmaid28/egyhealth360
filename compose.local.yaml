@@ -1,0 +1,4 @@
+# Opt in only for host-run applications and integration tests.
+services:
+  postgres:
+    ports: ['127.0.0.1:5432:5432']

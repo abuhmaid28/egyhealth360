@@ -1,0 +1,21 @@
+{
+  "name": "@egyhealth/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "typecheck": "next typegen && tsc --noEmit",
+    "start": "next start --hostname 0.0.0.0",
+    "dev": "next dev --hostname 0.0.0.0"
+  },
+  "dependencies": {
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0"
+  }
+}

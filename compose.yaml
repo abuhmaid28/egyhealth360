@@ -1,0 +1,57 @@
+name: egyhealth360
+x-app: &app
+  image: egyhealth360-bootstrap:local
+  build: .
+  init: true
+  depends_on:
+    postgres:
+      condition: service_healthy
+  environment: &app-env
+    DATABASE_URL: postgresql://${POSTGRES_USER:-egyhealth}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-egyhealth}
+services:
+  postgres:
+    image: postgres:18.6-bookworm
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-egyhealth}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-egyhealth}
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  api:
+    <<: *app
+    command: [node, apps/api/dist/main.js]
+    ports: ['127.0.0.1:3001:3001']
+    healthcheck:
+      test: [CMD, node, -e, 'fetch("http://localhost:3001/api/v1/health").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  web:
+    image: egyhealth360-bootstrap:local
+    build: .
+    init: true
+    command: [node, apps/web/node_modules/next/dist/bin/next, start, apps/web, --hostname, 0.0.0.0]
+    ports: ['127.0.0.1:3000:3000']
+    healthcheck:
+      test: [CMD, node, -e, 'fetch("http://localhost:3000").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  worker:
+    <<: *app
+    command: [node, apps/experiment-worker/dist/main.js]
+    environment:
+      <<: *app-env
+      WORKER_POLL_MS: '5000'
+    healthcheck:
+      test: [CMD, node, -e, 'const fs=require("node:fs");try{const t=Number(fs.readFileSync("/tmp/egyhealth-worker-health","utf8"));process.exit(Date.now()-t<15000?0:1)}catch{process.exit(1)}']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+volumes:
+  postgres-data:

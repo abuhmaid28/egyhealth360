@@ -75,15 +75,13 @@ Primary outcome:
 False-gap rate, reported together with true-gap recall and decision coverage/abstention.
 
 ## Current project stage
-Repository reboot and **EH-004 Deep Planning Audit Pass 2** are complete at documentation level and ready to merge.
+**EH-004 Deep Planning Audit Pass 2** is complete and merged.
 
-After EH-004 is merged, the active first implementation task is:
-**EH-003 — Bootstrap Monorepo V2**
+**EH-003 — Bootstrap Monorepo V2** implementation and validation are complete. **Milestone M0 — Repository Reboot / Bootstrap** is complete at the current baseline. EH-003 provides infrastructure/bootstrap only.
 
-Required branch:
-`feature/EH-003-bootstrap-v2`
+The next planned milestone is **M1 — Identity, Authorization, and Core Data Foundation**.
 
-EH-003 is infrastructure/bootstrap only. No later product/clinical/research feature may be pulled forward without its dependency gate.
+No M1 implementation may begin without its own GitHub Issue, branch, defined scope, acceptance criteria, and review gate. Later product/clinical/research milestones remain gated by issue-scoped implementation and review.
 
 ## Pre-coding deep-audit result
 No unresolved P0 planning blocker remains for EH-003.

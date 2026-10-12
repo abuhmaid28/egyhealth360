@@ -59,12 +59,71 @@ Major scope or architecture changes require a recorded decision.
 
 ## Project status
 
-Repository reboot and Deep Planning Audit Pass 2 are complete/ready to merge through EH-004. The next implementation task is **EH-003 — Bootstrap Monorepo V2** on branch `feature/EH-003-bootstrap-v2`.
+**Milestone M0 — Repository Reboot / Bootstrap** is complete and validated. EH-004 Deep Planning Audit Pass 2 is complete and merged; EH-003 Bootstrap Monorepo V2 implementation and validation are complete. See `docs/EH-003_VALIDATION.md` for observed results and limitations.
 
-After EH-004 is merged, EH-003 is authorized to resume. Later milestones remain blocked until their dependency/acceptance gates are completed.
+Next planned milestone: **M1 — Identity, Authorization, and Core Data Foundation**. No M1 implementation may begin without its own GitHub Issue, branch, defined scope, acceptance criteria, and review gate. Later milestones remain gated by issue-scoped implementation and review.
 
 Important planning references:
 - `docs/DEEP_PLANNING_AUDIT_SUMMARY.md`
 - `docs/PROJECT_PLAN_6_MONTHS.md`
 - `docs/TRACEABILITY_MATRIX_V1.md`
 - `docs/research/EXPERIMENT_PROTOCOL_V1.md`
+
+## EH-003 executable workspace
+
+Infrastructure only: the web page, `/api/v1/health`, and worker database health polling contain no product, clinical, or experiment functionality. The machine-readable bootstrap contract is `docs/openapi.json`. Shared clinical-rules, FHIR-adapter, and UI packages are intentionally empty.
+
+### Pinned toolchain
+
+Node **24.21.0**, pnpm **10.34.6**, TypeScript **5.9.3**, Next.js **16.4.0**, React **19.3.0**, NestJS **11.2.7**, Prisma **7.10.0**, PostgreSQL **18.6**. Root `packageManager`, `.nvmrc`, CI, and Docker fix the runtime/toolchain versions. Direct dependencies are exact and transitive resolutions are in `pnpm-lock.yaml`.
+
+### Local startup
+
+Use Node 24.21.0 (`nvm install && nvm use` if using nvm), then:
+
+```sh
+npm install --global pnpm@10.34.6
+cp .env.example .env
+pnpm install --frozen-lockfile
+docker compose -f compose.yaml -f compose.local.yaml up -d --wait postgres
+pnpm dev
+```
+
+Web: http://localhost:3000. API readiness: http://localhost:3001/api/v1/health. The worker logs health only; it does not execute experiments. `pnpm dev` builds first, then runs web development mode, TypeScript watches, and API/worker restart watches. Stop with Ctrl+C.
+
+The default example credentials are explicitly local-only. For custom credentials, URL-encode reserved characters in `DATABASE_URL`; Compose's interpolated password must be URL-safe. Never commit `.env`. The local override exposes PostgreSQL only on loopback. Default Compose does not publish its port. The web service receives no database credentials.
+
+### Full Docker startup
+
+```sh
+cp .env.example .env
+docker compose config --quiet
+docker compose build
+docker compose up -d --wait --wait-timeout 120
+curl --fail http://localhost:3000
+curl --fail http://localhost:3001/api/v1/health
+docker compose down
+```
+
+PostgreSQL data persists in a named volume mounted at `/var/lib/postgresql`, matching the PostgreSQL 18 image layout. `docker compose down --volumes` deletes this local database; use it only when intentionally resetting disposable bootstrap data.
+
+Docker Engine 28.4.0 / Compose 2.40.3 were available during bootstrap development. Application containers run as the unprivileged `node` user. The shared bootstrap image retains workspace build tooling to keep package resolution straightforward; production image minimization/deployment is outside EH-003.
+
+In managed environments with a TLS proxy, supply the proxy CA as a BuildKit secret named `proxy_ca` to **each networked build step**; the Dockerfile supports it without embedding it in the image. Preserve the platform proxy configuration. Do not disable certificate verification. The environment must permit npm, Node/container downloads, and `binaries.prisma.sh` for Prisma CLI engine setup.
+
+### Checks
+
+```sh
+pnpm install --frozen-lockfile
+pnpm lint
+pnpm --filter @egyhealth/db validate
+pnpm build
+pnpm typecheck
+pnpm test
+pnpm test:integration
+pnpm audit --prod --audit-level high
+```
+
+Integration tests require the loopback PostgreSQL service above and `.env`. Unit tests include the pure deterministic engine import, configuration validation, and sanitized API failure response; integration tests use Prisma against real PostgreSQL and verify worker polling/shutdown. No schema migrations, domain tables, seed data, authentication, or clinical tests are introduced.
+
+The health endpoint returns `{"data":{"status":"ok"}}` only after a successful database query. Failures return HTTP 503 with `DATABASE_UNAVAILABLE` and a generic message. Worker readiness is based on a recent successful database heartbeat, not merely process existence.
