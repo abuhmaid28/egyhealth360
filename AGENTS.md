@@ -1,129 +1,100 @@
 # EgyHealth 360 — AI Agent Instructions
 
-These instructions apply to every AI coding agent working on this repository.
+These instructions apply to every coding/research agent working on this repository.
 
-## Before writing code
+## Mandatory context before work
 
-1. Read this file completely.
-2. Read `docs/PRODUCT.md`.
-3. Read `docs/ARCHITECTURE.md`.
-4. Read the documentation relevant to the current task.
-5. Read the current GitHub Issue completely.
-6. Inspect the existing branch, code, tests, and Pull Request if one exists.
-7. Do not restart work that is already implemented.
+Read, in order:
+1. `AGENTS.md`
+2. `docs/PROJECT.md`
+3. the current GitHub Issue
+4. task-relevant docs
+5. existing branch/PR/tests/contracts
 
-Before changing code, summarize:
+Do not rely on prior AI chat memory. Do not restart completed work.
 
-- the current task,
-- what already exists,
-- what remains,
-- risks or dependencies,
-- your implementation plan.
+Before changing anything, summarize the task, current state, dependencies/risks, and implementation plan.
 
-## Source of truth
+## Source-of-truth priority
 
-Use this priority order:
+1. Accepted ADRs and current approved repository docs
+2. Current GitHub Issue
+3. Tests, schemas, and API contracts
+4. Existing implementation
+5. Agent assumptions
 
-1. Accepted product and architecture decisions in this repository.
-2. Current GitHub Issue requirements.
-3. Existing tests and API contracts.
-4. Existing implementation.
-5. Agent assumptions only when the above do not define the behavior.
+If an Issue conflicts with an accepted ADR or current approved requirement, stop and report the conflict. Do not silently redesign the project.
 
-Do not silently redesign the project.
+## Core architecture
 
-## Architecture rules
+- Next.js + TypeScript frontend
+- NestJS + TypeScript modular-monolith API
+- PostgreSQL 18
+- Prisma 7
+- REST + OpenAPI
+- pure TypeScript shared EACCE package
+- TypeScript experiment worker
+- FHIR R4 adapter
+- pnpm monorepo
+- Docker Compose
 
-- Frontend: Next.js + TypeScript.
-- Main backend: NestJS + TypeScript.
-- Database: PostgreSQL.
-- ORM baseline: Prisma 7 unless an explicit upgrade decision is approved.
-- AI service: Python + FastAPI.
-- Architecture: modular monolith + separate AI prediction service.
-- API style: REST + OpenAPI.
-- The browser must not call the AI service directly.
-- The AI service must not access the main PostgreSQL database directly.
-- NestJS owns business logic and persistence.
-- Respect module ownership.
-- Avoid circular dependencies.
-- Do not introduce microservices unless explicitly approved.
+Core V1 explicitly has no FastAPI/Python runtime, ML service, Redis, Kafka, RabbitMQ, GraphQL, paid auth, paid AI APIs, or microservice architecture.
 
-## Free-first rule
+## Product scope
 
-Do not introduce a paid external dependency when a reasonable:
+MVP roles: Patient, Clinician, Admin.
 
-1. local,
-2. open-source,
-3. self-hostable,
-4. or free-tier
+Core product: chronic-care coordination around expected care actions and evidence-aware closure classification.
 
-solution can satisfy the requirement.
+Do not add lab/pharmacy portals, marketplace, telemedicine, diagnosis, treatment recommendation, diabetes-risk prediction, chatbot, OCR, or other removed features without an approved scope change.
 
-Any paid dependency requires explicit approval.
+## EACCE rules
 
-Do not add paid AI APIs to the product core.
+- Missing completion evidence alone must not automatically produce `TRUE_GAP` when relevant record coverage is insufficient.
+- `UNCERTAIN` is allowed and represents abstention under insufficient observed evidence.
+- Closure assessments are immutable historical records.
+- New relevant evidence creates/requires a new assessment; do not overwrite history.
+- The engine must not diagnose, prescribe, recommend dosage, or fabricate missing medical data.
+- Ground truth must never be available to Baseline/EACCE inputs during research evaluation.
 
-## Security rules
+## Clinical-rule safety
 
-- Never commit secrets.
-- Never store plaintext passwords.
+Never invent a clinical rule. Every implemented clinical rule needs an authoritative source, version, location/section, human-readable interpretation, machine representation, and tests. If the source is ambiguous, mark the rule unresolved instead of guessing.
+
+## Security
+
 - Backend authorization is mandatory.
-- Hiding a UI control is not authorization.
-- Apply least-privilege access.
-- Medical-data access must follow role and resource-level authorization.
-- Validate important input on the backend.
-- Do not expose unnecessary medical or authentication information in logs.
-- Admin access does not automatically grant unrestricted clinical-data access.
+- Patient access is own-data only.
+- Clinician access requires an active patient relationship, not role alone.
+- Admin does not automatically receive unrestricted clinical access.
+- Never trust client-supplied identity/status fields when derivable server-side.
+- Never commit secrets or log passwords/session tokens/secrets/full medical payloads unnecessarily.
+- Preserve audit history.
+- Research ground truth and product-facing data must remain logically isolated.
 
-## Healthcare and AI rules
+## Free-first
 
-- AI is clinical decision support, not diagnosis.
-- Do not generate treatment automatically from model output.
-- Do not fabricate missing medical data.
-- If model inputs are insufficient, return an insufficient-data state.
-- Preserve assessment history and model version.
-- Published medical results must not be silently overwritten.
-- Important clinical changes must remain auditable.
-
-## Code quality
-
-- Prefer simple, explicit solutions.
-- Do not over-engineer.
-- Reuse existing abstractions before adding new ones.
-- Avoid unnecessary dependencies.
-- Keep domain logic out of UI components.
-- Preserve strict typing where applicable.
-- Update tests for business-critical behavior.
-- Update documentation only when a real architecture, product, or contract decision changes.
+Prefer local, open-source, self-hostable, or free solutions. New dependencies require justification: why needed, maintained status, license, security impact, and why existing dependencies are insufficient.
 
 ## Task workflow
 
-For each task:
+Use one issue-scoped branch and one reviewable PR. Implement only defined scope. Run relevant lint, type checks, tests, builds, and security/authorization tests. Review your diff before handoff.
 
-1. Work on the task branch.
-2. Implement only the defined scope.
-3. Run relevant linting, type checks, tests, and builds.
-4. Review your own diff.
-5. Do not mark the task complete while required checks fail.
-6. Update the Pull Request with:
-   - completed work,
-   - remaining work,
-   - checks/tests run,
-   - known limitations,
-   - next recommended step if incomplete.
+PR handoff must state:
+- implemented work
+- files/modules changed
+- checks/tests run and results
+- acceptance criteria status
+- known limitations
+- remaining work
+- next recommended step if incomplete
 
-If execution limits stop work, leave the branch and Pull Request in a state another AI agent can continue without restarting.
+## Definition of Ready
+
+A task is ready only when goal, scope, dependencies, acceptance criteria, relevant requirements, and major architecture decisions are clear. Clinical tasks also require an approved source.
 
 ## Definition of Done
 
-A feature is not done because the UI exists or because code compiles.
+A task is done only when required behavior works, acceptance criteria pass, authorization/validation/error paths are handled where relevant, tests pass, CI/build checks pass, documentation is updated when contracts change, and no known P0/P1 blocker remains.
 
-It is done only when:
-
-- required behavior works end-to-end,
-- authorization rules are respected,
-- validation and error handling exist where required,
-- relevant tests pass,
-- builds/checks pass,
-- no known blocker remains,
-- documentation is updated when necessary.
+Critical areas—authentication, authorization, EACCE, clinical rules, database migrations, and research evaluation—require independent second-pass review where practical.
