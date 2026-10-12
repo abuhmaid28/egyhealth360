@@ -1,198 +1,68 @@
-# EgyHealth 360 — Domain Model
+# EgyHealth 360 — Domain Model V1
 
-## Identity
+## Domain boundaries
 
-### User
-Authentication identity.
+### 1. Identity & Access
+Owns users, patient/clinician profiles, roles, sessions, and clinician-patient assignments.
 
-Roles:
-- PATIENT
-- DOCTOR
-- LAB
-- PHARMACY
-- ADMIN
+### 2. Clinical Planning
+Owns guideline sources, care-plan templates, rule definitions, patient care plans, and care actions.
 
-### PatientProfile
-Patient demographic/profile information.
+### 3. Clinical Evidence
+Owns normalized evidence used by closure reasoning, initially including BP measurements, follow-up appointments, clinical encounters, data sources, and record-coverage windows.
 
-### DoctorProfile
-Professional doctor information.
+### 4. Care Closure Intelligence
+Owns immutable closure assessments, evidence traces, reason codes, and stale/superseded assessment relationships.
 
-### LabProfile
-Laboratory provider information.
+### 5. Clinician Review & Audit
+Owns clinician confirmations/overrides and append-only audit events. Human review never overwrites the raw engine result.
 
-### PharmacyProfile
-Pharmacy provider information.
+### 6. Research / Evaluation
+Owns experiment runs, benchmark cases, corruption events, engine predictions, metrics, and ground truth. Ground truth is never exposed to runtime engine inputs.
 
-### ConsentRecord
-Versioned patient consent record.
+## Core distinctions
 
-## Scheduling
+- CarePlanTemplate ≠ CarePlan instance
+- CareAction lifecycle ≠ ClosureAssessment classification
+- FollowUpAppointment ≠ ClinicalEncounter
+- Engine assessment ≠ Clinician review
+- Patient-facing product data ≠ research ground truth
 
-### AvailabilityRule
-Recurring doctor availability.
+## Care-action lifecycle
 
-### ScheduleException
-Specific unavailable or extra-availability period.
-
-### Appointment
-Booking between one patient and one doctor.
-
-Lifecycle:
-
-```text
-SCHEDULED
-  ├─→ COMPLETED
-  ├─→ CANCELLED
-  └─→ NO_SHOW
-```
-
-An appointment has at most one encounter.
-
-## Clinical
-
-### Encounter
-The clinical consultation that actually occurred.
-
-Appointment and Encounter are intentionally separate.
-
-Lifecycle:
-
-```text
-DRAFT → COMPLETED
-```
-
-### Diagnosis
-Diagnosis recorded within an encounter.
-
-### Prescription
-Prescription header created from an encounter.
-
-### PrescriptionItem
-One medication instruction within a prescription.
-
-### DispensingRecord
-A pharmacy dispensing action for a prescription item.
-Supports partial dispensing.
-
-### LabOrder
-Doctor-requested group of laboratory tests.
-
-### LabOrderItem
-One requested test.
-
-### LabResult
-Published result for a lab-order item.
-
-Published results are not silently overwritten.
-Corrections create a new result version referencing the previous result.
-
-## Continuity of care
-
-### CarePlan
-Doctor-created plan for one patient.
-
-Lifecycle:
-
-```text
-DRAFT → ACTIVE
-        ├─→ COMPLETED
-        └─→ CANCELLED
-```
-
-### CarePlanTask
-Trackable action inside a care plan.
-
-Stored states:
-- PENDING
+Operational states:
+- PLANNED
+- ACTIVE
 - COMPLETED
-- SKIPPED
+- CANCELLED
 
-Overdue should normally be derived from due date + state.
-
-### FollowUp
-Required patient follow-up.
-
-Can be linked to:
-- an encounter,
-- a care plan,
-- or both when appropriate.
-
-### HealthMeasurement
-Structured patient measurement such as:
-- weight,
-- blood pressure,
-- glucose.
-
-Each measurement stores:
-- value,
-- unit,
-- timestamp,
-- source.
-
-### CareGap
-Detected missing care step.
-
-Initial types:
-- MISSED_FOLLOWUP
-- PENDING_LAB_TEST
-- UNREVIEWED_LAB_RESULT
-
-Lifecycle:
-
-```text
-OPEN
- ├─→ RESOLVED
- └─→ DISMISSED
-```
-
-Each care gap must reference a real source record.
-
-Duplicate open gaps for the same rule/source should be prevented.
-
-## Intelligence
-
-### RiskAssessment
-Historical AI-assisted risk assessment.
-
-Multiple assessments may exist for one patient.
-
-Possible states:
+Closure classifications:
+- NOT_DUE
 - COMPLETED
-- INSUFFICIENT_DATA
-- FAILED
+- SCHEDULED
+- TRUE_GAP
+- EXEMPT
+- UNCERTAIN
 
-A completed assessment may contain:
-- score,
-- risk level,
-- model version,
-- explanation,
-- doctor review information.
+A closure classification is a time-specific inference and must not be stored as the mutable lifecycle state of a CareAction.
 
-## System concepts
+## Core business invariants
 
-### Notification
-User-facing message.
+1. No CareAction without a CarePlan.
+2. No ClosureAssessment without a CareAction.
+3. ClosureAssessments are immutable after creation.
+4. Published clinical definitions are immutable; changes create versions.
+5. Clinician access requires an authorized patient relationship.
+6. Overrides preserve the original engine assessment and require a reason.
+7. Patient-entered evidence preserves provenance.
+8. Missing relevant evidence does not automatically imply a true gap.
+9. Research engines cannot read ground truth.
+10. The closure engine never diagnoses or prescribes treatment.
 
-Notification is not a source of truth.
+## Evidence and coverage
 
-### AuditLog
-Immutable trace of important actions.
+Record completeness is modeled explicitly through relevant coverage windows. Missing data outside an action's relevant evidence window must not automatically make that action uncertain.
 
-### Health Timeline
-Patient-facing / doctor-facing chronological projection.
+## Current clinical scope
 
-The timeline is not the primary source of medical data.
-
-Initial implementation should build the timeline from source records rather than duplicate all clinical data in a dedicated timeline table.
-
-## Important distinctions
-
-- User ≠ Patient ≠ Doctor
-- Appointment ≠ Encounter
-- LabOrder ≠ LabResult
-- Prescription ≠ PrescriptionItem
-- PrescriptionItem ≠ DispensingRecord
-- Timeline ≠ Audit Log
-- Notification ≠ Domain event
-- AI risk assessment ≠ diagnosis
+Hypertension follow-up care actions are the first evaluation domain. Clinical rules must remain traceable to authoritative sources and versioned independently of patient instances.

@@ -1,34 +1,31 @@
-You are starting implementation of the EgyHealth 360 project.
+You are continuing implementation of the EgyHealth 360 project.
 
-Your current task is EH-001 — Bootstrap EgyHealth 360 Monorepo.
-
-Before writing any code:
+Before writing code:
 
 1. Read AGENTS.md completely.
-2. Read docs/PRODUCT.md.
-3. Read docs/ARCHITECTURE.md.
-4. Read docs/DOMAIN.md.
-5. Read docs/DATA_MODEL.md.
-6. Read docs/API.md.
-7. Read docs/DECISIONS.md.
-8. Read docs/EH-001_BOOTSTRAP_ISSUE.md.
-9. Inspect the current repository before changing anything.
+2. Read docs/PROJECT.md.
+3. Read the current GitHub Issue completely.
+4. Read only the task-relevant approved documentation referenced by the issue.
+5. Inspect the current branch, Pull Request, code, tests, and existing contracts before changing anything.
 
-Do not implement healthcare business features in EH-001.
+Do not rely on prior AI chat history. Do not silently redesign architecture or restore superseded product scope.
 
-Before making changes, first summarize:
-- your understanding of the architecture,
-- the exact EH-001 scope,
-- versions you intend to use,
+Before making changes, summarize:
+- the current task and acceptance criteria,
+- what already exists,
+- what remains,
+- relevant architecture/security/clinical constraints,
 - your implementation plan,
-- any compatibility risk you identified.
+- any conflict or ambiguity that blocks safe execution.
 
-Then implement EH-001.
+Then implement only the defined issue scope.
 
-Requirements:
+Required operating rules:
 - preserve the free-first/self-hostable policy,
-- do not add paid services,
-- do not redesign the architecture,
-- pin important versions,
-- run all required builds/tests/checks,
-- leave a clear Pull Request summary with completed work, checks run, known limitations, and remaining work if incomplete.
+- keep Core V1 free of FastAPI/Python runtime and ML unless a later approved ADR changes that,
+- never invent clinical rules,
+- preserve immutable assessment/audit history,
+- enforce backend resource-level authorization,
+- keep research ground truth isolated from engine input,
+- add and run the tests required by the issue and docs/TESTING.md,
+- leave the Pull Request as the handoff point with completed work, checks/results, limitations, remaining work, and next recommended step.
