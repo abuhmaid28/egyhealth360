@@ -1,187 +1,111 @@
-# EgyHealth 360 — API Principles
+# EgyHealth 360 — API Principles V1
 
 ## Style
 
 - REST
-- base path: `/api/v1`
-- OpenAPI is the formal runtime contract
-- JSON payloads
-- ISO 8601 timestamps
-- UTC storage
+- base path `/api/v1`
+- JSON
+- OpenAPI is the formal contract
+- UTC storage and ISO 8601 timestamps
+- stable machine-readable error codes
 
-## Response formats
+## Security
 
-### Single result
+- Server-side sessions via secure HttpOnly cookies
+- Backend authorization is mandatory
+- Clinician access requires an active patient assignment
+- Admin does not automatically receive unrestricted clinical access
+- Server-owned identity/status fields are derived server-side
+- State-changing requests require CSRF protection in the cookie-session architecture
 
+## Response shapes
+
+Single result:
 ```json
-{
-  "data": {}
-}
+{ "data": {} }
 ```
 
-### Collection
-
+Collection:
 ```json
-{
-  "data": [],
-  "meta": {
-    "page": 1,
-    "pageSize": 20,
-    "total": 0
-  }
-}
+{ "data": [], "meta": { "page": 1, "pageSize": 20, "total": 0 } }
 ```
 
-### Error
-
+Error:
 ```json
-{
-  "error": {
-    "code": "APPOINTMENT_SLOT_UNAVAILABLE",
-    "message": "The selected appointment slot is no longer available."
-  }
-}
+{ "error": { "code": "ACCESS_DENIED", "message": "Access denied." } }
 ```
-
-Frontend logic should rely on stable error codes rather than parse message text.
-
-## Initial error-code examples
-
-- AUTH_INVALID_CREDENTIALS
-- ACCESS_DENIED
-- PATIENT_NOT_FOUND
-- DOCTOR_NOT_AVAILABLE
-- APPOINTMENT_SLOT_UNAVAILABLE
-- APPOINTMENT_ALREADY_CANCELLED
-- ENCOUNTER_ALREADY_EXISTS
-- LAB_ORDER_INVALID_STATE
-- PRESCRIPTION_CANCELLED
-- AI_INSUFFICIENT_DATA
-- AI_SERVICE_UNAVAILABLE
-
-## Security principle
-
-Do not accept server-owned identity or status fields from the client when they can be derived from authentication or server state.
-
-Example appointment request:
-
-```json
-{
-  "doctorId": "doctor-id",
-  "startAt": "2026-11-10T17:00:00Z"
-}
-```
-
-The backend determines:
-- patient identity,
-- initial status,
-- timestamps.
 
 ## Planned endpoint groups
 
 ### Auth
-- POST `/auth/register`
 - POST `/auth/login`
 - POST `/auth/logout`
 - GET `/auth/me`
 
-### Patients
-- GET/PATCH `/patients/me`
-- GET/POST `/patients/me/allergies`
-- GET/POST `/patients/me/conditions`
-- GET `/patients/:patientId/clinical-summary`
+### Clinician patients
+- GET `/clinician/patients`
+- GET `/clinician/patients/:patientId/summary`
+- GET `/clinician/patients/:patientId/timeline`
+- GET `/clinician/patients/:patientId/measurements`
 
-### Doctors
-- GET `/doctors`
-- GET `/doctors/:doctorId`
-- GET `/specialties`
-
-### Scheduling
-- GET `/doctors/:doctorId/availability`
-- GET `/doctors/:doctorId/available-slots`
-- PUT `/doctors/me/availability`
-- POST `/doctors/me/schedule-exceptions`
-
-### Appointments
-- POST `/appointments`
-- GET `/appointments/me`
-- GET `/appointments/:id`
-- POST `/appointments/:id/cancel`
-- GET `/doctors/me/appointments`
-
-### Encounters
-- POST `/appointments/:appointmentId/encounter`
-- GET `/encounters/:id`
-- PATCH `/encounters/:id`
-- POST `/encounters/:id/complete`
-- POST `/encounters/:id/diagnoses`
-
-### Prescriptions
-- POST `/encounters/:encounterId/prescriptions`
-- GET `/prescriptions/:id`
-- POST `/prescriptions/:id/cancel`
-- POST `/prescriptions/:id/assign-pharmacy`
-- POST `/prescription-items/:itemId/dispensings`
-
-### Labs
-- POST `/encounters/:encounterId/lab-orders`
-- POST `/lab-orders/:id/assign-lab`
-- GET `/labs/me/orders`
-- POST `/lab-orders/:id/accept`
-- POST `/lab-orders/:id/collect-sample`
-- POST `/lab-orders/:id/start-processing`
-- POST `/lab-order-items/:itemId/results`
-- POST `/lab-results/:id/corrections`
-
-### Care plans
+### Care plans/actions
 - POST `/patients/:patientId/care-plans`
-- GET/PATCH `/care-plans/:id`
+- GET `/care-plans/:id`
 - POST `/care-plans/:id/activate`
-- POST `/care-plans/:id/complete`
 - POST `/care-plans/:id/cancel`
-- POST `/care-plans/:id/tasks`
-- POST `/care-plan-tasks/:id/complete`
+- GET `/care-plans/:id/actions`
+- GET `/care-actions/:id`
 
-### Follow-ups
+### Evidence / measurements
+- POST `/patients/me/measurements/blood-pressure`
+- GET `/patients/me/measurements/blood-pressure`
+- POST `/patients/:patientId/measurements/blood-pressure` (clinician-authorized)
+
+### Follow-up
 - POST `/patients/:patientId/follow-ups`
 - GET `/patients/me/follow-ups`
 - POST `/follow-ups/:id/cancel`
 
-### Measurements
-- POST `/patients/me/measurements`
-- GET `/patients/me/measurements`
-- GET `/patients/:patientId/measurements`
+### Closure assessments
+- GET `/care-actions/:id/assessments/current`
+- GET `/care-actions/:id/assessments`
+- POST `/care-actions/:id/re-evaluate`
+- POST `/assessments/:id/confirm`
+- POST `/assessments/:id/override`
 
-### Care gaps
-- GET `/patients/me/care-gaps`
-- GET `/doctors/me/care-gaps`
-- POST `/care-gaps/:id/dismiss`
+### Patient view
+- GET `/patients/me/care-plan`
+- GET `/patients/me/care-actions`
+- GET `/patients/me/timeline`
 
-### Risk assessments
-- POST `/patients/:patientId/risk-assessments/diabetes`
-
-### Admin
+### Admin / research
 - GET `/admin/users`
-- POST `/admin/users/:id/suspend`
-- GET `/admin/providers/pending`
-- POST `/admin/doctors/:id/verify`
-- GET `/admin/analytics/overview`
+- POST `/admin/users/:id/disable`
+- POST `/admin/demo/reset`
+- POST `/admin/experiments`
+- GET `/admin/experiments`
+- GET `/admin/experiments/:id`
 
-These endpoint names are a baseline and must not all be implemented during bootstrap.
+Endpoint names are conceptual until implementation issues freeze their contracts.
 
-## Internal AI API
+## Closure-engine boundary
 
-Initial conceptual endpoint:
+EACCE is not an HTTP microservice. NestJS and the experiment worker call the shared TypeScript package directly.
 
-- POST `/predict/diabetes-risk`
+## Error-code examples
 
-Final input fields are frozen only after dataset/model design.
+- AUTH_INVALID_CREDENTIALS
+- AUTH_SESSION_EXPIRED
+- ACCESS_DENIED
+- PATIENT_NOT_FOUND
+- CARE_PLAN_INVALID_STATE
+- CARE_ACTION_NOT_FOUND
+- ASSESSMENT_STALE
+- ASSESSMENT_UNAVAILABLE
+- OVERRIDE_REASON_REQUIRED
+- EXPERIMENT_NOT_FOUND
+- EXPERIMENT_FAILED
 
 ## Pagination
 
-Potentially large collections must support pagination.
-
-## Versioning
-
-Initial public API version:
-- `/api/v1`
+Potentially large collections such as patients, care actions, and experiment runs must support pagination/filtering.
