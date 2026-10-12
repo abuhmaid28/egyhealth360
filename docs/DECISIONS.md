@@ -1,125 +1,103 @@
-# EgyHealth 360 — Accepted Decisions
+# EgyHealth 360 — Decision Register V2
 
-AI agents must not silently reverse these decisions.
+AI agents must not silently reverse accepted decisions.
 
-## ADR-001 — Continuity of care is the core product focus
-**Status:** Accepted
+## Superseded decisions
 
-The project is not positioned as a generic all-in-one healthcare application.
+The original five-role continuity-of-care scope, separate FastAPI/Python prediction service, diabetes-risk model, pharmacy/lab portals, and generic care-gap design are superseded by the 2026 reboot.
 
-Core differentiators:
-- health timeline,
-- care plans,
-- follow-ups,
-- care gaps,
-- health trends,
-- responsible AI-assisted risk assessment.
+## Current accepted decisions
 
-## ADR-002 — One frontend application
-**Status:** Accepted
+### ADR-001 — Focused chronic-care coordination
+Status: Accepted
 
-Use one Next.js application for all roles.
+Core V1 focuses on evidence-aware care-action closure, initially hypertension follow-up actions, rather than a generic healthcare super-app.
 
-Reason:
-Reduce duplication and simplify AI-driven maintenance.
+### ADR-002 — One Next.js frontend
+Status: Accepted
 
-## ADR-003 — Modular monolith
-**Status:** Accepted
+One responsive web application serves Patient, Clinician, and Admin experiences.
 
-Use NestJS as a modular monolith.
+### ADR-003 — NestJS modular monolith
+Status: Accepted
 
-Microservices are rejected for the current scope.
+Use one NestJS API application. Microservices are rejected for Core V1.
 
-## ADR-004 — PostgreSQL
-**Status:** Accepted
+### ADR-004 — PostgreSQL + Prisma
+Status: Accepted
 
-Primary database: PostgreSQL.
+Use PostgreSQL 18 and Prisma 7.
 
-Reason:
-Strong relational domain, transactions, constraints, indexing, integrity.
+### ADR-005 — Shared pure-TypeScript EACCE
+Status: Accepted
 
-## ADR-005 — Separate AI prediction service
-**Status:** Accepted
+The product API and experiment worker use the same deterministic TypeScript Evidence-Aware Care Closure Engine.
 
-Use FastAPI/Python.
+### ADR-006 — No FastAPI/Python runtime in Core V1
+Status: Accepted
 
-Rules:
-- browser never calls FastAPI directly,
-- FastAPI never directly accesses the main database,
-- NestJS prepares inputs and persists outputs.
+Python/ML is not required by the current research question and is removed from runtime architecture.
 
-## ADR-006 — AI is decision support
-**Status:** Accepted
-
-AI must not automatically diagnose or prescribe treatment.
-
-## ADR-007 — REST + OpenAPI
-**Status:** Accepted
+### ADR-007 — REST + OpenAPI
+Status: Accepted
 
 GraphQL is not required.
 
-## ADR-008 — Server-side sessions initially
-**Status:** Accepted
+### ADR-008 — Server-side sessions
+Status: Accepted
 
-Use database-backed sessions and secure HttpOnly cookies for the web/PWA MVP.
+Use database-backed server sessions, secure HttpOnly cookies, CSRF protection, and Argon2id password hashing.
 
-## ADR-009 — Free-first / self-hostable
-**Status:** Accepted
+### ADR-009 — Free-first / self-hostable
+Status: Accepted
 
-The core must work without paid services.
+Core operation must not depend on paid external services.
 
-Priority:
-1. local,
-2. open source,
-3. self-hostable,
-4. free tier only when deployment requires it.
+### ADR-010 — Monorepo
+Status: Accepted
 
-## ADR-010 — Monorepo
-**Status:** Accepted
+Web, API, worker, shared packages, research assets/config, and docs live in one repository.
 
-One repository contains web, API, AI, shared packages, and docs.
+### ADR-011 — GitHub is operational source of truth
+Status: Accepted
 
-## ADR-011 — GitHub is the operational source of truth
-**Status:** Accepted
+Issues, branches, PRs, docs, tests, and CI replace AI-chat memory.
 
-Task state belongs in Issues, branches, PRs, and automated checks.
+### ADR-012 — PRs are handoff points
+Status: Accepted
 
-Do not rely on AI-agent conversation memory.
+Do not maintain a permanent HANDOFF.md. The current branch/PR must state completed work, checks, limitations, and remaining work.
 
-## ADR-012 — Pull Requests are handoff points
-**Status:** Accepted
+### ADR-013 — FHIR R4 adapter, not FHIR-native database
+Status: Accepted
 
-Do not maintain a permanent HANDOFF.md.
+Use an internal relational domain model with FHIR R4 import/export mapping where useful.
 
-If an agent stops, the branch and PR must clearly state completed work and remaining work.
+### ADR-014 — Immutable assessment history
+Status: Accepted
 
-## ADR-013 — Timeline is initially derived from source records
-**Status:** Accepted
+Closure assessments are time-specific immutable records. New evidence creates/requires a new assessment rather than overwriting prior inference.
 
-Do not duplicate clinical source-of-truth data into a separate timeline table without a demonstrated need.
+### ADR-015 — Synthetic-only research benchmark
+Status: Accepted
 
-## ADR-014 — Preserve clinical history
-**Status:** Accepted
+Research/evaluation uses Synthea synthetic data. Real patient data is prohibited in Core V1.
 
-Published clinical data must not be silently overwritten or hard-deleted.
+### ADR-016 — No ML in Core V1
+Status: Accepted
 
-## ADR-015 — Care-gap detection begins rule-based
-**Status:** Accepted
+The primary method is deterministic and explainable. ML may only be a future extension after the core study is complete.
 
-Initial types:
-- missed follow-up,
-- pending lab test,
-- unreviewed result.
+### ADR-017 — PostgreSQL-backed experiment worker
+Status: Accepted
 
-## ADR-016 — Minimal infrastructure first
-**Status:** Accepted
+Experiment runs use a TypeScript worker and database run states. Redis/BullMQ/Kafka/RabbitMQ are not required.
 
-Do not add by default:
-- Kubernetes
-- Kafka
-- RabbitMQ
-- Redis
-- BullMQ
-- paid auth
-- paid notification services
-- paid AI APIs.
+### ADR-018 — Source-traceable clinical rules
+Status: Accepted
+
+Clinical rules must be versioned and tied to authoritative source/version/location plus tests. Agents must not invent medical logic.
+
+## Change process
+
+A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.
