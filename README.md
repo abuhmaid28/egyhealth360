@@ -1,67 +1,60 @@
 # EgyHealth 360
 
-**EgyHealth 360** is an AI-assisted continuity-of-care platform connecting patients, doctors, laboratories, pharmacies, and administrators around one continuous healthcare journey.
+EgyHealth 360 is a graduation-research prototype for **evidence-aware chronic-care coordination**.
 
-## Current status
+The core problem is that an expected care action may look overdue simply because the available longitudinal record is incomplete. The project evaluates whether an explainable Evidence-Aware Care Closure Engine (EACCE) can reduce false care-gap classifications compared with a naive overdue-and-missing-event rule.
 
-The project is ready for repository bootstrap.
+## Core V1
 
-The first implementation task is:
+Roles:
+- Patient
+- Clinician
+- Admin
 
-**EH-001 — Bootstrap EgyHealth 360 Monorepo**
+Clinical evaluation domain:
+- Hypertension follow-up care actions
 
-No healthcare business feature should be implemented before EH-001 is completed successfully.
+Core states:
+- NOT_DUE
+- COMPLETED
+- SCHEDULED
+- TRUE_GAP
+- EXEMPT
+- UNCERTAIN
 
-## Core product idea
+`UNCERTAIN` is an abstention caused by insufficient observed evidence; it is not ground truth.
 
-**Connect → Understand → Predict → Follow**
+## Architecture
 
-- **Connect:** patient, doctor, laboratory, pharmacy.
-- **Understand:** structured medical records and longitudinal health timeline.
-- **Predict:** responsible AI-assisted risk assessment.
-- **Follow:** care plans, follow-ups, and care-gap detection.
-
-## Planned applications
-
-- `apps/web` — Next.js web application for all roles.
-- `apps/api` — NestJS main backend and business logic.
-- `apps/ai` — FastAPI prediction service.
-
-## Planned core infrastructure
-
-- PostgreSQL
-- Prisma
+- `apps/web` — Next.js + TypeScript
+- `apps/api` — NestJS modular monolith
+- `apps/experiment-worker` — TypeScript research worker
+- PostgreSQL 18
+- Prisma 7
 - REST + OpenAPI
-- Docker / Docker Compose
+- shared pure-TypeScript EACCE package
+- FHIR R4 adapter
+- Synthea synthetic research data
+- Docker Compose
 - GitHub Actions
-- Free-first / open-source-first / self-hostable architecture
+
+Core V1 has **no FastAPI service, no Python runtime, and no ML model**.
+
+## Explicit non-goals
+
+No lab portal, pharmacy portal, doctor marketplace, full appointment marketplace, telemedicine platform, diagnostic AI, treatment recommender, diabetes-risk model, chatbot, OCR, hospital ERP, insurance, payments, or real-patient deployment.
 
 ## Source of truth
 
-The project is implemented by interchangeable AI coding agents.
-
-Do not rely on prior agent chat history.
-
-The source of truth is:
-
-1. Repository documentation.
-2. GitHub Issues.
-3. Existing branch / Pull Request.
-4. Automated checks and tests.
-5. Existing code.
-
-## Required reading before coding
-
+AI coding agents must not rely on prior chat history. Read:
 1. `AGENTS.md`
-2. `docs/PRODUCT.md`
-3. `docs/ARCHITECTURE.md`
-4. `docs/DOMAIN.md`
-5. `docs/DATA_MODEL.md`
-6. `docs/API.md`
-7. `docs/DECISIONS.md`
+2. `docs/PROJECT.md`
+3. the current GitHub Issue
+4. task-relevant documentation
+5. existing tests/contracts and implementation
 
-## Cost principle
+Major scope or architecture changes require a recorded decision.
 
-The core project must remain free to develop and self-host.
+## Project status
 
-Paid dependencies are not allowed by default when a reasonable free, open-source, local, or self-hosted alternative exists.
+Planning/reboot phases 0–13 are complete. Repository documentation synchronization is tracked in **EH-002**. Coding remains blocked until the synchronized documentation is merged and a clean Bootstrap V2 issue is opened.
