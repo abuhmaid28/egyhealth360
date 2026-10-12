@@ -1,235 +1,88 @@
-# EgyHealth 360 — Technical Architecture
+# EgyHealth 360 — Technical Architecture V1
 
 ## Goal
 
-Use the simplest architecture that is:
+Keep the architecture professional, free-first, self-hostable, testable, and easy for interchangeable AI agents to understand.
 
-- professional,
-- maintainable by interchangeable AI coding agents,
-- free/open-source first,
-- self-hostable,
-- easy to test,
-- appropriate for a graduation-project scope.
-
-## High-level architecture
-
-```text
-Browser / PWA
-      |
-      v
-Next.js Web App
-      |
-      | REST / HTTPS
-      v
-NestJS Main API
-   |          |
-   v          v
-PostgreSQL   FastAPI AI Service
-                  |
-                  v
-               ML Model
-```
-
-NestJS is the application brain and owner of persistence.
-
-## Applications
-
-### `apps/web`
-- Next.js
-- TypeScript
-- one frontend for all five roles
-- patient experience: mobile-first
-- provider/admin experiences: desktop-first
-- Arabic RTL + English
-
-### `apps/api`
-- NestJS
-- TypeScript
-- modular monolith
-- REST + OpenAPI
-- PostgreSQL persistence
-- authentication / authorization
-- business rules
-- audit
-- care-gap engine
-- AI orchestration
-
-### `apps/ai`
-- Python
-- FastAPI
-- prediction-only service
-- no direct database access
-- no direct browser access
-
-## Technical baseline
-
-At bootstrap time, use pinned stable versions consistent with:
-
-- Node.js 24 LTS
-- latest patched stable Next.js 16.x
-- stable NestJS
-- PostgreSQL 18
-- Prisma 7 initially
-- Python 3.14 initially
-- FastAPI
-- Tailwind CSS
-- selective shadcn/ui primitives
-- Docker / Docker Compose
-- GitHub Actions
-- pnpm workspace
-- `uv` for Python environment management
-
-## Backend architecture
-
-Use a modular monolith.
-
-Planned modules:
-
-- auth
-- users
-- patients
-- doctors
-- scheduling
-- appointments
-- encounters
-- prescriptions
-- labs
-- pharmacies
-- care-plans
-- follow-ups
-- measurements
-- care-gaps
-- risk-assessments
-- notifications
-- audit
-- admin
-- common
-
-Module ownership must be respected.
-
-A module must not bypass another module's business rules by directly mutating records owned by that module.
-
-## Authentication
-
-Initial strategy:
-
-- database-backed server sessions,
-- secure HttpOnly cookie,
-- Argon2id password hashing.
-
-Do not use localStorage authentication tokens by default.
-
-## Authorization
-
-Use:
-
-- role-based access,
-- resource-level rules.
-
-A doctor role alone does not grant access to every patient.
-
-## API
-
-- REST
-- base path `/api/v1`
-- OpenAPI as the formal contract
-- stable response/error formats
-- UTC storage
-- ISO 8601 timestamps
-- pagination for large collections
-
-## AI boundary
-
-Correct flow:
+## Runtime architecture
 
 ```text
 Browser
   ↓
-NestJS
-  ↓
-FastAPI
-  ↓
-Model
-  ↓
-FastAPI response
-  ↓
-NestJS validation / persistence / audit
+Next.js Web App
+  ↓ REST /api/v1
+NestJS Modular-Monolith API
+  ├── PostgreSQL 18 / Prisma 7
+  ├── shared EACCE package
+  └── FHIR R4 adapter
+
+Experiment Worker (TypeScript)
+  ├── Synthea/FHIR benchmark input
+  ├── same shared EACCE package
+  └── experiment/result persistence
 ```
 
-Forbidden:
+## Applications
 
-```text
-Browser → FastAPI
-FastAPI → Main PostgreSQL DB
-```
+- `apps/web` — Next.js 16.x + TypeScript
+- `apps/api` — NestJS v11 + TypeScript modular monolith
+- `apps/experiment-worker` — TypeScript background research worker
 
-## Care-gap engine
+## Shared packages
 
-Initial detection is deterministic and rule-based.
+- `packages/closure-engine` — pure deterministic TypeScript EACCE; no Nest/Prisma/Next imports
+- `packages/clinical-rules` — versioned source-traceable care-rule definitions
+- `packages/fhir-adapter` — FHIR R4 ↔ internal normalized model
+- `packages/db` — Prisma schema/client/migrations/seed helpers
+- `packages/ui` — design-system and healthcare UI components
+- `packages/config` — shared validated configuration where useful
 
-Examples:
+## Core decisions
 
-- missed follow-up,
-- pending lab test,
-- unreviewed result.
+- Modular monolith, not microservices
+- REST + OpenAPI, not GraphQL
+- PostgreSQL 18
+- Prisma 7 pinned/stable
+- Node.js 24 LTS
+- pnpm workspace
+- Docker Compose
+- GitHub Actions
+- Server-side sessions with HttpOnly cookies
+- Argon2id password hashing
+- Same-origin browser/API setup where practical
 
-Care-gap detection is not an ML feature.
+## EACCE boundary
 
-## Background work
+The closure engine is pure domain logic. It receives typed action/evidence/coverage inputs and returns classification, reason codes, evidence trace, and missing-evidence information. It does not access the database or HTTP layer directly.
 
-Start with NestJS scheduling.
+The product API and research worker must use the same engine implementation.
 
-Do not add Redis, BullMQ, Kafka, RabbitMQ, or distributed-job infrastructure unless a demonstrated requirement appears.
+## Research worker
 
-## Files
+Experiment runs are asynchronous. PostgreSQL stores run state (`PENDING`, `RUNNING`, `COMPLETED`, `FAILED`); a worker claims and executes jobs. Redis/BullMQ/Kafka/RabbitMQ are not required in Core V1.
 
-Do not store large binary files directly in PostgreSQL.
+## FHIR
 
-Use a storage abstraction:
+Use FHIR R4 for interchange, especially Synthea imports. The internal relational model is not a FHIR server/database. A dedicated adapter maps resources such as Patient, Observation, Encounter, Appointment, CarePlan/Task where useful.
 
-- local storage during development,
-- S3-compatible/self-hostable/free storage later only if needed.
+## Files and notifications
 
-## Notifications
-
-MVP:
-
-- in-app notifications only.
-
-Do not add paid SMS, WhatsApp, or email services to the core MVP.
-
-## Analytics
-
-Initial analytics should use PostgreSQL queries/views and application dashboards.
-
-External reporting tools may use sanitized reporting data later.
+Core V1 has no medical-file upload/storage requirement. Notifications are in-app only if implemented; no paid SMS/WhatsApp/email dependency is required.
 
 ## Deployment
 
-The core must run locally without paid services.
+Primary requirement: local/self-hosted Docker Compose demo that works without paid services. Optional cloud deployment may use the same standard containers and PostgreSQL.
 
-Development orchestration:
+## Explicitly rejected in Core V1
 
-- Docker Compose.
-
-Graduation-demo deployment:
-
-- free tier where practical,
-- or self-hosted/simple Linux server.
-
-No Kubernetes is required.
-
-## Explicitly rejected from the baseline
-
-- microservices
+- FastAPI/Python runtime service
+- ML inference service
+- Redis/BullMQ
+- Kafka/RabbitMQ
 - Kubernetes
-- MongoDB
 - GraphQL
-- Kafka
-- RabbitMQ
-- Redis by default
-- Firebase as primary backend
+- MongoDB primary storage
+- Firebase primary backend
 - paid auth providers
 - paid AI APIs
-- five separate frontend apps
-- multiple repositories
+- separate lab/pharmacy applications
