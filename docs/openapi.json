@@ -1,0 +1,45 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EgyHealth 360 Bootstrap API",
+    "version": "0.0.0"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "summary": "API and PostgreSQL readiness",
+        "responses": {
+          "200": {
+            "description": "PostgreSQL reachable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "data": {
+                      "status": "ok"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable; no database details disclosed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "DATABASE_UNAVAILABLE",
+                      "message": "Service unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

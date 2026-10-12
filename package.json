@@ -1,0 +1,25 @@
+{
+  "name": "egyhealth360",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.6",
+  "engines": {
+    "node": "24.21.0"
+  },
+  "scripts": {
+    "generate": "pnpm --filter @egyhealth/db generate",
+    "build": "pnpm generate && pnpm -r build",
+    "typecheck": "pnpm generate && pnpm -r --filter './packages/*' build && pnpm -r typecheck",
+    "lint": "eslint .",
+    "test": "pnpm build && node --test tests/*.test.mjs",
+    "test:integration": "node --env-file-if-exists=.env --test tests/integration/*.test.mjs",
+    "dev": "pnpm build && node --env-file-if-exists=.env scripts/dev.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "eslint": "9.39.5",
+    "@eslint/js": "9.39.5",
+    "typescript-eslint": "8.71.1",
+    "@types/node": "24.19.2"
+  }
+}

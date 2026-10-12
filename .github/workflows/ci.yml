@@ -1,0 +1,41 @@
+name: Bootstrap CI
+on:
+  push:
+    branches: [main, feature/EH-003-bootstrap-v2]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      POSTGRES_USER: egyhealth
+      POSTGRES_PASSWORD: ci-local-only
+      POSTGRES_DB: egyhealth
+      DATABASE_URL: postgresql://egyhealth:ci-local-only@localhost:5432/egyhealth
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 24.21.0
+      - run: npm install --global pnpm@10.34.6
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm --filter @egyhealth/db validate
+      - run: pnpm build
+      - run: pnpm typecheck
+      - run: node --test tests/*.test.mjs
+      - run: docker compose -f compose.yaml -f compose.local.yaml up -d --wait postgres
+      - run: pnpm test:integration
+      - run: pnpm audit --prod --audit-level high
+      - run: docker compose config --quiet
+      - run: docker compose build
+      - run: docker compose up -d --wait --wait-timeout 120
+      - run: |
+          curl --fail http://localhost:3000
+          curl --fail http://localhost:3001/api/v1/health
+      - if: always()
+        run: docker compose -f compose.yaml -f compose.local.yaml down --volumes
