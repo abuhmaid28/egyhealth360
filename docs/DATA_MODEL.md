@@ -1,7 +1,6 @@
-# EgyHealth 360 — Conceptual Data Model
+# EgyHealth 360 — Conceptual Data Model V1
 
-This document defines the conceptual relational model.
-It is not executable SQL.
+This is a logical model, not executable Prisma/SQL.
 
 ## Identity
 
@@ -9,303 +8,216 @@ It is not executable SQL.
 - id
 - email (unique)
 - password_hash
-- role
+- role: PATIENT | CLINICIAN | ADMIN
 - status
-- created_at
-- updated_at
+- created_at / updated_at
 
 ### patient_profiles
 - id
 - user_id (unique FK)
-- full_name
+- display_name
 - date_of_birth
-- gender
-- phone
-- governorate
-- emergency_contact
+- sex
 
-### patient_allergies
-- id
-- patient_id
-- allergy_name
-- notes
-- source
-- verified_by_doctor_id
-- created_at
-
-### patient_conditions
-- id
-- patient_id
-- condition_name
-- notes
-- source
-- verified_by_doctor_id
-- created_at
-
-### doctor_profiles
+### clinician_profiles
 - id
 - user_id (unique FK)
-- full_name
-- specialty_id
-- biography
-- years_experience
-- governorate
-- clinic_address
-- verification_status
+- display_name
+- specialty
+- professional_identifier_optional
 
-### specialties
+### clinician_patient_assignments
 - id
-- name (unique)
+- clinician_id
+- patient_id
+- status
+- assigned_at
+- ended_at
 
-### lab_profiles
+## Clinical planning
+
+### guideline_sources
 - id
-- user_id (unique FK)
+- name / publisher / version / publication_date
+- reference_url
+- status
+
+### care_plan_templates
+- id
 - name
-- phone
-- governorate
-- address
-- verification_status
-
-### pharmacy_profiles
-- id
-- user_id (unique FK)
-- name
-- phone
-- governorate
-- address
-- verification_status
-
-### consent_records
-- id
-- patient_id
-- consent_type
+- condition_code
 - version
-- accepted_at
-- revoked_at
-
-## Scheduling
-
-### availability_rules
-- id
-- doctor_id
-- weekday
-- start_time
-- end_time
-- slot_duration_minutes
-- is_active
-
-### schedule_exceptions
-- id
-- doctor_id
-- date
-- type
-- start_time
-- end_time
-- reason
-
-### appointments
-- id
-- patient_id
-- doctor_id
-- start_at
-- end_at
-- status
-- created_at
-- cancelled_at
-- cancellation_reason
-
-Important constraint:
-A doctor must not have overlapping active appointments.
-
-## Clinical
-
-### encounters
-- id
-- appointment_id (unique FK)
-- status
-- chief_complaint
-- symptoms
-- clinical_notes
-- assessment
-- started_at
-- completed_at
-
-### diagnoses
-- id
-- encounter_id
-- diagnosis_name
-- notes
-- created_at
-
-### prescriptions
-- id
-- encounter_id
-- status
-- issued_at
-- valid_until
-- assigned_pharmacy_id
-
-### prescription_items
-- id
-- prescription_id
-- medication_name
-- dose
-- frequency
-- duration
-- instructions
-- fulfillment_status
-
-### dispensing_records
-- id
-- prescription_item_id
-- pharmacy_id
-- quantity
-- dispensed_at
-
-## Laboratory
-
-### lab_test_catalog
-- id
-- name
-- default_unit
-
-### lab_orders
-- id
-- encounter_id
-- assigned_lab_id
-- status
-- priority
-- doctor_notes
-- requested_at
-
-### lab_order_items
-- id
-- lab_order_id
-- lab_test_id
-
-### lab_results
-- id
-- lab_order_item_id
-- lab_id
-- numeric_value
-- text_value
-- unit
-- reference_low
-- reference_high
-- flag
-- report_file_url
+- guideline_source_id
+- status: DRAFT | PUBLISHED | RETIRED
 - published_at
-- supersedes_result_id
-- created_at
 
-## Continuity
+### care_rule_definitions
+- id
+- template_id
+- rule_key / rule_version
+- action_type
+- applicability_definition
+- timing_definition
+- completion_definition
+- source_reference
 
 ### care_plans
 - id
 - patient_id
-- doctor_id
-- title
-- description
-- status
-- start_date
-- end_date
-- created_at
+- template_id / template_version
+- created_by_clinician_id
+- status: DRAFT | ACTIVE | COMPLETED | CANCELLED
+- started_at / completed_at / cancelled_at
 
-### care_plan_tasks
+### care_actions
 - id
 - care_plan_id
-- title
-- description
-- due_date
-- status
-- completed_at
+- patient_id
+- rule_definition_id
+- action_type
+- operational_status: PLANNED | ACTIVE | COMPLETED | CANCELLED
+- not_before_at / due_at
+- stable_occurrence_key
+- created_at / completed_at / cancelled_at
 
-### follow_ups
+## Clinical evidence
+
+### data_sources
+- id
+- name
+- type: PATIENT | CLINIC | EXTERNAL_PROVIDER | SYNTHETIC_GENERATOR | BENCHMARK
+
+### record_coverage_windows
 - id
 - patient_id
-- doctor_id
-- source_encounter_id
-- care_plan_id
-- due_at
+- data_source_id
+- start_at / end_at
+- coverage_status: COMPLETE | INCOMPLETE | UNKNOWN
+
+### blood_pressure_measurements
+- id
+- patient_id
+- systolic / diastolic
+- measured_at
+- source_type
+- entered_by_user_id
+- data_source_id
+- created_at
+
+### follow_up_appointments
+- id
+- patient_id / clinician_id
+- scheduled_at
+- status: SCHEDULED | COMPLETED | CANCELLED | MISSED
+- created_by / created_at
+
+### clinical_encounters
+- id
+- patient_id / clinician_id
+- occurred_at
+- encounter_type
+- source/data_source_id
+
+## Closure intelligence
+
+### closure_assessments
+- id
+- care_action_id
+- classification: NOT_DUE | COMPLETED | SCHEDULED | TRUE_GAP | EXEMPT | UNCERTAIN
+- evaluated_at
+- rule_version / engine_version
+- explanation_summary
+- reason_codes
+- is_stale
+- supersedes_assessment_id
+- created_at
+
+Assessments are immutable.
+
+### assessment_evidence
+- id
+- assessment_id
+- evidence_kind
+- evidence_reference_id_optional
+- evidence_role: SUPPORTING | CONTRADICTING | MISSING | CONTEXT
 - reason
-- status
-- completed_appointment_id
 
-### health_measurements
+### clinician_assessment_reviews
 - id
-- patient_id
-- type
-- value_primary
-- value_secondary
-- unit
-- source
-- recorded_at
-- created_by_user_id
-
-### care_gaps
-- id
-- patient_id
-- type
-- status
-- follow_up_id
-- lab_order_id
-- lab_result_id
-- detected_at
-- resolved_at
-- dismissed_at
-- dismissal_reason
-
-Exactly one relevant source should be populated for a care-gap type.
-
-## Intelligence
-
-### risk_assessments
-- id
-- patient_id
-- type
-- status
-- score
-- risk_level
-- model_version
-- explanation
-- created_at
-- reviewed_by_doctor_id
+- assessment_id
+- clinician_id
+- review_status: CONFIRMED | OVERRIDDEN
+- override_classification_optional
+- override_reason_optional
 - reviewed_at
-- review_note
 
 ## System
-
-### notifications
-- id
-- user_id
-- type
-- title
-- message
-- read_at
-- created_at
 
 ### audit_logs
 - id
 - actor_user_id
-- action
-- resource_type
-- resource_id
-- metadata
-- created_at
+- action_type
+- entity_type / entity_id
+- timestamp
+- safe_metadata
 
-## Likely important indexes
+Application audit is append-only and distinct from the patient clinical timeline.
 
-- users.email
-- appointments(doctor_id, start_at)
-- appointments(patient_id, start_at)
-- encounters.appointment_id
-- lab_orders(assigned_lab_id, status)
-- lab_results.lab_order_item_id
-- care_plans(patient_id, status)
-- follow_ups(patient_id, due_at)
-- care_gaps(patient_id, status)
-- health_measurements(patient_id, recorded_at)
-- risk_assessments(patient_id, created_at)
-- notifications(user_id, read_at)
+## Research
 
-Final constraints and indexes are frozen during executable schema implementation.
+### experiment_runs
+- id
+- dataset_version / synthea_version
+- patient_count / random_seed
+- missingness_level / corruption_profile
+- baseline_engine_version / proposed_engine_version
+- rule_set_version
+- status: PENDING | RUNNING | COMPLETED | FAILED
+- started_at / completed_at
+
+### benchmark_cases
+- id
+- experiment_run_id
+- synthetic_patient_id
+- case_key
+- ground_truth_classification
+- scenario_type
+
+### corruption_events
+- id
+- benchmark_case_id
+- corruption_type
+- target_type / target_reference
+- corruption_metadata
+
+### engine_predictions
+- id
+- benchmark_case_id
+- engine_type: BASELINE | PROPOSED
+- engine_version
+- predicted_classification
+- reason_codes
+- execution_time_ms
+
+### evaluation_metrics
+- id
+- experiment_run_id
+- engine_type
+- metric_name / metric_value
+- class_label_optional
+
+## Key constraints
+
+- `users.email` unique
+- one corresponding profile per user
+- no duplicate active clinician-patient assignment for the same pair
+- care-plan template `(name, version)` unique
+- rule `(template/version, rule_key)` unique
+- one ACTIVE hypertension care plan per patient in MVP V1
+- generated care actions idempotent by patient+plan+rule+expected occurrence
+- foreign-key integrity for all core relationships
+- product-facing APIs must never expose benchmark ground truth
+
+## Time/versioning
+
+Technical timestamps use UTC. Date-only clinical concepts use date types when appropriate. Published templates/rules and closure assessments are not silently mutated; new versions/assessments preserve history.
