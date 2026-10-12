@@ -1,203 +1,102 @@
-# EgyHealth 360 — Product Definition
+# EgyHealth 360 — Product Definition V2
 
 ## Vision
 
-EgyHealth 360 is an intelligent continuity-of-care platform connecting the patient, doctor, laboratory, pharmacy, and administration around one continuous healthcare journey.
+EgyHealth 360 is a standards-oriented chronic-care coordination prototype that helps patients and clinicians track expected care actions and understand whether each action is completed, scheduled, unresolved, exempt, not yet due, or uncertain based on available longitudinal evidence.
 
-The platform is not intended to replace doctors or become a full hospital ERP.
+## Core problem
 
-## Problem
+An overdue expected action with no visible completion event is not always a genuine care gap. Records can be incomplete or fragmented. The product therefore treats evidence quality and relevant record coverage as first-class inputs instead of equating absence with failure.
 
-Healthcare interactions are often fragmented:
+## Roles
 
-Doctor visit → Lab request → Lab result → Prescription → Pharmacy → Follow-up.
+### Clinician — primary
+- View assigned patients
+- Review patient summary, care plan, timeline, measurements, and care actions
+- See EACCE classification and explanation
+- Confirm or override an assessment with a required reason
+- Schedule/manage follow-up
 
-This creates problems such as:
+### Patient — secondary
+- View own plan and next actions
+- View completed/upcoming items
+- Enter permitted BP measurements
+- View follow-up information
+- Receive simple, non-accusatory wording for uncertain/attention states
 
-- fragmented medical information,
-- missed follow-ups,
-- uncompleted lab requests,
-- difficulty understanding patient history,
-- limited visibility into what should happen next,
-- healthcare data being stored without being actively used to support continuity of care.
+### Admin — operational/research
+- Manage accounts/status
+- Load/reset demo data
+- Run/view Evaluation Lab experiments
+- No default unrestricted clinical-data editing
 
-## Core questions
+## MVP modules
 
-The product should help answer:
+1. Authentication & roles
+2. Patient profile
+3. Clinician patient list
+4. Patient clinical summary
+5. Hypertension care-plan template/rules
+6. Care actions/tasks
+7. Patient timeline/evidence
+8. BP measurements
+9. Follow-up scheduling
+10. Evidence-Aware Care Closure Engine (EACCE)
+11. Clinician review/override
+12. Patient care view
+13. Evaluation Lab
 
-1. What happened to the patient?
-2. What should happen next?
-3. Has an important care step been missed?
+## Closure classifications
+
+- NOT_DUE
+- COMPLETED
+- SCHEDULED
+- TRUE_GAP
+- EXEMPT
+- UNCERTAIN
+
+Operational action lifecycle is separate from closure classification.
 
 ## Product principles
 
-### Connect
-Connect the main healthcare journey.
+1. Care-action first
+2. Evidence before assumption
+3. Uncertainty is allowed
+4. Every classification must be explainable
+5. Clinician remains in control
+6. Standards-oriented, not standards-for-show
+7. Focused hypertension-first scope
 
-### Understand
-Turn healthcare events into a clear longitudinal health timeline.
+## Core differentiation
 
-### Predict
-Use responsible AI-assisted risk assessment.
+The graduation contribution is not generic reminders or a combined health record. It is the evidence-aware classification of expected care-action closure under incomplete longitudinal data, plus a reproducible controlled-missingness benchmark.
 
-### Follow
-Track care plans, follow-ups, and care gaps.
+## Golden demo
 
-## Users
+1. Clinician opens a synthetic hypertensive patient.
+2. One overdue action with complete relevant coverage becomes TRUE_GAP.
+3. A similar case with missing relevant coverage becomes UNCERTAIN instead of a confirmed gap.
+4. Another case with a valid future follow-up becomes SCHEDULED.
+5. Patient view shows next steps in simple wording.
+6. Evaluation Lab compares the naive baseline with EACCE across controlled missingness.
 
-### Primary
-- Patient
-- Doctor
+## Explicit non-goals
 
-### Supporting
-- Laboratory
-- Pharmacy
+- Lab portal or laboratory ERP
+- Pharmacy portal/e-commerce/dispensing workflow
+- Doctor marketplace or reviews
+- Full appointment marketplace
+- Online consultation/video infrastructure
+- Hospital ERP
+- Insurance/payments
+- Diagnostic AI
+- Treatment recommendation or dose selection
+- Diabetes-risk prediction
+- Chatbot/OCR/image diagnosis
+- Real-patient clinical deployment
 
-### Operational
-- Admin
+## Success
 
-## MVP
+Product success: the golden journey works end-to-end with correct authorization, auditable assessments, understandable explanations, clinician override, and stable synthetic demo data.
 
-### Foundation
-- Authentication
-- Authorization
-- Role-based access
-
-### Patient
-- Profile
-- Medical profile
-- Doctor discovery
-- Appointment booking/history
-- Medical timeline
-- Lab requests/results
-- Prescriptions
-- Care plans
-- Follow-ups
-- Measurements
-- Care-gap alerts
-- Risk-insight view
-- Notifications
-
-### Doctor
-- Profile
-- Availability
-- Appointments
-- Patient summary
-- Medical history
-- Clinical encounters
-- Diagnoses
-- Prescriptions
-- Lab requests
-- Lab-result review
-- Care plans
-- Follow-ups
-- Care-gap view
-- Health trends
-- AI-risk review
-- Notifications
-
-### Laboratory
-- Profile
-- Receive/accept requests
-- Update request status
-- Sample collection
-- Structured results
-- Reference ranges
-- Abnormal flags
-- Report attachment
-- Result publishing
-- Request history
-
-### Pharmacy
-- Profile
-- Receive authorized prescription
-- Medication availability
-- Medication-level dispensing
-- Partial dispensing
-- Prescription history
-- Basic refill tracking
-
-### Admin
-- User/provider management
-- Verification status
-- Account suspension/reactivation
-- Appointment oversight
-- Basic operational analytics
-- Care-gap overview
-- Audit information
-- Basic system settings
-- Operational announcements
-
-## Core differentiators
-
-- Health Timeline
-- Care Plan
-- Follow-up tracking
-- Care Gap Detection
-- Health Trends
-- Explainable AI-assisted risk assessment
-- Doctor-in-the-loop
-
-## Initial AI use case
-
-Planned first model:
-
-**Diabetes Risk Assessment**
-
-The final dataset, features, model, and evaluation plan are not frozen yet.
-
-AI must:
-
-- validate required inputs,
-- return insufficient-data state when needed,
-- generate a risk assessment rather than diagnosis,
-- preserve model version and timestamp,
-- support understandable explanation,
-- remain subject to doctor review.
-
-## Golden demo journey
-
-Patient registers  
-→ books doctor  
-→ doctor consultation  
-→ doctor requests lab tests  
-→ patient selects lab  
-→ lab publishes structured results  
-→ health timeline updates  
-→ risk assessment runs when sufficient data exists  
-→ doctor reviews assessment  
-→ doctor creates care plan  
-→ follow-up is scheduled  
-→ missed follow-up creates care gap  
-→ completed follow-up resolves care gap.
-
-This is the North Star of the MVP.
-
-## Explicit MVP exclusions
-
-- Full hospital ERP
-- Full pharmacy e-commerce
-- Payments
-- Insurance claims
-- Ambulance management
-- Advanced medical chatbot
-- Automated diagnosis
-- Automated treatment
-- Medical-image diagnosis
-- X-ray / CT classification
-- Handwritten prescription OCR
-- Wearable integration
-- Apple Health / Google Fit integration
-- Full video-consultation infrastructure
-- Hospital admission management
-- Nationwide healthcare integration
-- Blockchain
-- Full laboratory ERP
-- Pharmacy supplier management
-- Advanced inventory management
-
-## Product success
-
-The MVP succeeds when the connected healthcare journey works reliably end-to-end with correct authorization, data integrity, care continuity, and responsible AI integration.
-
-Screen count and number of AI models are not success metrics.
+Academic success: baseline and proposed engine are reproducibly evaluated on synthetic care-action cases under controlled incompleteness with transparent metrics and limitations.
