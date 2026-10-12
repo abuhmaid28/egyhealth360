@@ -59,9 +59,9 @@ Major scope or architecture changes require a recorded decision.
 
 ## Project status
 
-Repository reboot and Deep Planning Audit Pass 2 are complete/ready to merge through EH-004. The next implementation task is **EH-003 — Bootstrap Monorepo V2** on branch `feature/EH-003-bootstrap-v2`.
+Repository reboot and EH-004 Deep Planning Audit Pass 2 are merged. **EH-003 — Bootstrap Monorepo V2** on `feature/EH-003-bootstrap-v2` has passed local validation and is ready for PR/CI review. See `docs/EH-003_VALIDATION.md` for observed results and limitations.
 
-After EH-004 is merged, EH-003 is authorized to resume. Later milestones remain blocked until their dependency/acceptance gates are completed.
+Later milestones remain blocked until EH-003 review and their dependency/acceptance gates are completed.
 
 Important planning references:
 - `docs/DEEP_PLANNING_AUDIT_SUMMARY.md`
