@@ -64,3 +64,12 @@ A deterministic demo-verification command should verify database health, demo se
 
 ## Bug policy
 Every meaningful fixed bug receives a regression test. Final-demo target: zero known P0/P1 defects.
+
+## EH-007 automated evidence
+
+`tests/authorization.test.mjs` and `tests/integration/authorization.test.mjs` cover
+T-AUTHZ-IDOR-* through real Nest HTTP + database sessions: self/cross-patient, ACTIVE/
+ENDED/no/wrong clinician, ADMIN/missing profiles, input/path/HEAD bypass attempts,
+uniform denial, current-state recheck, failure sanitization, audit silence and no
+renewal/cache. Running-container proof: `scripts/verify-authorization-runtime.mjs`.
+Snapshot concurrency limits are tested without claiming in-flight revocation.

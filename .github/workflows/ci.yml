@@ -39,9 +39,10 @@ jobs:
       - run: docker compose config --quiet
       - run: docker compose build
       - run: docker compose up -d --wait --wait-timeout 120
-      - run: docker compose exec -T api node --test tests/auth.test.mjs
+      - run: docker compose exec -T api node --test tests/auth.test.mjs tests/authorization.test.mjs
       - run: docker compose exec -T api node scripts/measure-auth.mjs
       - run: docker compose exec -T api node scripts/verify-auth-runtime.mjs
+      - run: docker compose exec -T api node scripts/verify-authorization-runtime.mjs
       - run: |
           curl --fail http://localhost:3000
           curl --fail http://localhost:3001/api/v1/health

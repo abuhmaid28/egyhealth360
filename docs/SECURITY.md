@@ -47,3 +47,12 @@ Critical mutations and clinician review actions are append-only/auditable. Audit
 
 ## Compliance boundary
 Do not claim HIPAA, GDPR, or other legal compliance. This is a security-conscious graduation research prototype using synthetic data, not a certified clinical system.
+
+## EH-007 implemented authorization foundation
+
+Patient-profile reads require EH-006 authentication plus self ownership or a current
+ACTIVE clinician assignment. ADMIN and missing profiles fail closed. The scoped SQL
+read rechecks session/user/role and projects only permitted data; no result caching.
+Uniform object 404 avoids existence reasons. READ COMMITTED snapshot semantics allow
+already authorized in-flight responses to overlap revocation/assignment ending.
+See `EH-007_AUTHORIZATION.md`; later clinical endpoints need their own scoped tests.

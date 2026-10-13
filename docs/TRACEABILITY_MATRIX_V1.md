@@ -137,3 +137,17 @@ Any future proposal to add one of these requires a new approved scope decision a
 An Issue is not Definition-of-Ready if its requirement/acceptance/test trace cannot be identified in this matrix or added through an approved documentation change.
 
 A requirement is not considered implemented merely because a screen exists; verification evidence must include the planned automated/integration/E2E/security/research checks appropriate to that row.
+
+## EH-007 foundation evidence
+
+| Requirement | Implemented surface | Verification |
+|---|---|---|
+| P-003 / FR-002 / AC-010 | Scoped patient-profile read independent of UI | T-AUTHZ-IDOR-* HTTP suite |
+| BR-001 | patient_profiles.user_id self scope | patient own/cross/user-ID tests |
+| BR-002 / AC-011 | ACTIVE assignment of authenticated clinician profile | active/ended/never/wrong/reassignment tests |
+| BR-020 | ADMIN excluded from patient read | admin generic-denial tests |
+| ERR-001 | Uniform object 404, minimal projection | forbidden/nonexistent/malformed/leakage tests |
+| NFR-006 | Independent second-pass review before merge | EH-007 validation + PR evidence |
+
+These are foundation proofs only. FR-010/FR-011 and later clinical-resource tests
+remain pending; no full M1 completion claim is made.
