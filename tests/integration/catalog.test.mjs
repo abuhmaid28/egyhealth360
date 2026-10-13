@@ -8,7 +8,7 @@ const { PrismaPg } = require('@prisma/adapter-pg');
 
 test('migration catalog contains exactly the approved custom contract', () => withTransaction(async connection => {
   const tables = (await connection.query(`SELECT tablename FROM pg_tables WHERE schemaname = 'public' ORDER BY tablename`)).rows.map(row => row.tablename);
-  assert.deepEqual(tables, ['_prisma_migrations', 'audit_logs', 'clinician_patient_assignments', 'clinician_profiles', 'patient_profiles', 'users']);
+  assert.deepEqual(tables, ['_prisma_migrations', 'audit_logs', 'clinician_patient_assignments', 'clinician_profiles', 'patient_profiles', 'sessions', 'users']);
   const enums = (await connection.query(`SELECT t.typname, array_agg(e.enumlabel::text ORDER BY e.enumsortorder) AS labels
     FROM pg_type t JOIN pg_enum e ON e.enumtypid = t.oid JOIN pg_namespace n ON n.oid = t.typnamespace
     WHERE n.nspname = 'public' GROUP BY t.typname ORDER BY t.typname`)).rows;
@@ -20,12 +20,13 @@ test('migration catalog contains exactly the approved custom contract', () => wi
   assert.deepEqual(checks.map(row => row.conname), [
     'assignments_lifecycle_check', 'audit_logs_action_type_nonblank_check', 'audit_logs_entity_type_nonblank_check',
     'audit_logs_metadata_object_check', 'clinician_profiles_role_check', 'patient_profiles_role_check',
+    'sessions_expiry_check', 'sessions_revocation_check', 'sessions_token_hash_format_check',
     'users_email_canonical_check', 'users_email_shape_check', 'users_password_hash_nonblank_check',
   ]);
   assert.ok(checks.every(row => row.convalidated));
   const fk = (await connection.query(`SELECT conname, confdeltype, confupdtype, pg_get_constraintdef(oid) AS definition
     FROM pg_constraint WHERE connamespace = 'public'::regnamespace AND contype = 'f' ORDER BY conname`)).rows;
-  assert.deepEqual(fk.map(row => row.conname), ['assignments_clinician_fkey', 'assignments_patient_fkey', 'audit_logs_actor_fkey', 'clinician_profiles_user_role_fkey', 'patient_profiles_user_role_fkey']);
+  assert.deepEqual(fk.map(row => row.conname), ['assignments_clinician_fkey', 'assignments_patient_fkey', 'audit_logs_actor_fkey', 'clinician_profiles_user_role_fkey', 'patient_profiles_user_role_fkey', 'sessions_user_fkey']);
   assert.ok(fk.every(row => row.confdeltype === 'r' && row.confupdtype === 'r'));
   assert.ok(fk.filter(row => row.conname.includes('user_role')).every(row => row.definition.includes('FOREIGN KEY (user_id, user_role) REFERENCES users(id, role)')));
   const partial = (await connection.query(`SELECT i.indisunique, i.indisvalid, pg_get_indexdef(i.indexrelid) AS definition,
@@ -47,7 +48,7 @@ test('migration catalog contains exactly the approved custom contract', () => wi
   assert.deepEqual(functions, [{ proname: 'guard_assignment_history', prosecdef: false }, { proname: 'reject_audit_mutation', prosecdef: false }]);
   const columns = (await connection.query(`SELECT table_name, column_name, udt_name, column_default, is_nullable
     FROM information_schema.columns WHERE table_schema = 'public' AND column_name = 'id' AND table_name <> '_prisma_migrations'`)).rows;
-  assert.equal(columns.length, 5);
+  assert.equal(columns.length, 6);
   assert.ok(columns.every(row => row.udt_name === 'uuid' && row.column_default === 'gen_random_uuid()' && row.is_nullable === 'NO'));
   const sex = (await connection.query(`SELECT udt_name, is_nullable FROM information_schema.columns
     WHERE table_schema = 'public' AND table_name = 'patient_profiles' AND column_name = 'sex'`)).rows[0];

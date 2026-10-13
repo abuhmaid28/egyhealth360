@@ -1,6 +1,8 @@
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 import { PrismaClient } from './generated/prisma/client.js';
+import { appendAuditRecord, type AppendAuditInput } from './audit.js';
+export type { AppendAuditInput } from './audit.js';
 
 /** Bounded Core V1 identity policy, not full RFC email validation. */
 export function canonicalizeEmail(input: string): string {
@@ -22,16 +24,6 @@ export type CreateUserInput = IdentityInput & (
   | { role: 'CLINICIAN'; profile: { displayName: string; specialty?: string; professionalIdentifier?: string } }
   | { role: 'ADMIN'; profile?: never }
 );
-
-export type AppendAuditInput = {
-  // NULL is an explicit system/unattributed actor, never a missing-user fallback.
-  actorUserId: string | null;
-  actionType: string;
-  entityType: string;
-  entityId: string;
-  // No event-specific fields are approved yet. Never accept arbitrary payloads.
-  safeMetadata?: Record<string, never>;
-};
 
 /** Narrow persistence operations; no general client, delete, or role-change API. */
 export function createPersistence(connectionString: string | undefined) {
@@ -79,15 +71,7 @@ export function createPersistence(connectionString: string | undefined) {
       if (result.count !== 1) throw new Error('Active assignment not found');
     },
     async appendAudit(input: AppendAuditInput) {
-      const metadata = input.safeMetadata === undefined ? {} : input.safeMetadata;
-      if (input.actorUserId === undefined || metadata === null || typeof metadata !== 'object'
-        || Array.isArray(metadata) || Object.keys(metadata).length !== 0) {
-        throw new Error('Audit requires an explicit actor and empty safe metadata');
-      }
-      return client.auditLog.create({ data: {
-        actorUserId: input.actorUserId, actionType: input.actionType,
-        entityType: input.entityType, entityId: input.entityId, safeMetadata: {},
-      } });
+      return appendAuditRecord(client, input);
     },
     async close(): Promise<void> { await client.$disconnect(); await pool.end(); },
   };

@@ -17,3 +17,5 @@ export type Database = ReturnType<typeof createDatabase>;
 
 export { canonicalizeEmail, createPersistence } from './persistence.js';
 export type { CreateUserInput, AppendAuditInput } from './persistence.js';
+export { createAuthPersistence } from './auth.js';
+export type { AuthPersistence, AuthPrincipal } from './auth.js';
