@@ -98,6 +98,50 @@ Status: Accepted
 
 Clinical rules must be versioned and tied to authoritative source/version/location plus tests. Agents must not invent medical logic.
 
+### ADR-019 — Identity and Core Persistence Foundation
+Status: Accepted (EH-005 final approval, Issue #8 comment 6129057503)
+
+The first persistence slice contains only users, patient/clinician profiles,
+clinician-patient assignments, and audit logs. PostgreSQL generates UUID v4 IDs
+with `gen_random_uuid()`; Prisma uses `String @db.Uuid` and snake_case mappings.
+Roles are PATIENT/CLINICIAN/ADMIN, user status ACTIVE/DISABLED, and assignment
+status ACTIVE/ENDED. No authentication or authorization behavior is implied.
+
+Email identity is bounded ASCII: trim outer ASCII whitespace and lowercase ASCII;
+store canonical values under a unique constraint and database canonical/shape
+CHECKs. This is not full RFC email validation. No provider-specific alias rules.
+
+Profiles have unique user IDs, fixed-role discriminator CHECKs, and composite
+RESTRICT FKs to users(id, role). Prisma requires redundant composite uniqueness
+on each profile's relation key in addition to unique user_id. Bound users cannot
+change to an incompatible role. Profileless-role transitions are deferred.
+User/profile provisioning is transactional through the package boundary; SQL
+does not require every applicable user to have a profile. No global role,
+user/profile deletion, ownership, or database timestamp trigger is introduced.
+Mutable user/profile timestamps use Prisma @updatedAt; raw SQL does not maintain it.
+
+An ACTIVE-pair partial unique index permits only one current assignment per pair.
+The lifecycle CHECK ties status to ended_at and enforces time ordering. Narrow
+history guards freeze IDs/endpoints/start time, permit ACTIVE→ENDED, retain ended
+rows, and reject history mutation/deletion/truncation. Reassignment inserts a new
+row. All FKs explicitly RESTRICT key updates/deletion; the normal boundary has no
+delete/role-change operation. Controlled maintenance/reset policy is deferred.
+
+Audit logs reject UPDATE/DELETE/TRUNCATE in PostgreSQL and expose only a typed
+append operation. The actor may explicitly be NULL for system/unattributed events.
+Entity references remain polymorphic without generic target validation/allowlists.
+Metadata is object-only JSONB; the initial append primitive accepts only empty
+metadata until event-specific safe fields are approved. Passwords, hashes, tokens,
+secrets, and arbitrary payloads are prohibited. This is ordinary-operation
+protection, not tamper-proof storage against database owners/superusers.
+
+Patient sex is nullable opaque text with no inferred clinical/FHIR meaning.
+Custom CHECKs, partial index, functions, and triggers are owned by the committed
+migration and verified by catalog and behavior tests. No db push, preview feature,
+new dependency, or production/container migration runner is introduced. Host/CI
+migrate deploy proves clean deployment and second-deploy behavior before Docker
+regression. Future migrations must preserve custom SQL deliberately.
+
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.

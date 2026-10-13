@@ -61,7 +61,7 @@ Major scope or architecture changes require a recorded decision.
 
 **Milestone M0 — Repository Reboot / Bootstrap** is complete and validated. EH-004 Deep Planning Audit Pass 2 is complete and merged; EH-003 Bootstrap Monorepo V2 implementation and validation are complete. See `docs/EH-003_VALIDATION.md` for observed results and limitations.
 
-Next planned milestone: **M1 — Identity, Authorization, and Core Data Foundation**. No M1 implementation may begin without its own GitHub Issue, branch, defined scope, acceptance criteria, and review gate. Later milestones remain gated by issue-scoped implementation and review.
+**EH-005 — M1 Identity & Core Data Foundation** adds the first migration-backed users, profiles, relationship history, and append-only audit primitives. See ADR-019 and `docs/EH-005_PERSISTENCE.md`. Authentication, sessions, authorization, demo seeds, and clinical/research behavior remain unimplemented. The full M1 exit gate is not satisfied by this persistence slice. Later work remains issue-scoped and review-gated.
 
 Important planning references:
 - `docs/DEEP_PLANNING_AUDIT_SUMMARY.md`
@@ -86,6 +86,7 @@ npm install --global pnpm@10.34.6
 cp .env.example .env
 pnpm install --frozen-lockfile
 docker compose -f compose.yaml -f compose.local.yaml up -d --wait postgres
+pnpm --filter @egyhealth/db exec prisma migrate deploy
 pnpm dev
 ```
 
@@ -98,7 +99,10 @@ The default example credentials are explicitly local-only. For custom credential
 ```sh
 cp .env.example .env
 docker compose config --quiet
+pnpm install --frozen-lockfile
 docker compose build
+docker compose -f compose.yaml -f compose.local.yaml up -d --wait postgres
+pnpm --filter @egyhealth/db exec prisma migrate deploy
 docker compose up -d --wait --wait-timeout 120
 curl --fail http://localhost:3000
 curl --fail http://localhost:3001/api/v1/health
@@ -122,8 +126,11 @@ pnpm typecheck
 pnpm test
 pnpm test:integration
 pnpm audit --prod --audit-level high
+pnpm audit --audit-level high
 ```
 
-Integration tests require the loopback PostgreSQL service above and `.env`. Unit tests include the pure deterministic engine import, configuration validation, and sanitized API failure response; integration tests use Prisma against real PostgreSQL and verify worker polling/shutdown. No schema migrations, domain tables, seed data, authentication, or clinical tests are introduced.
+Integration tests require the loopback PostgreSQL service above, `.env`, and `prisma migrate deploy`. Unit tests include the pure deterministic engine import, configuration validation, sanitized API failure response, and bounded email policy. Integration tests verify database constraints/catalog, audit and assignment history, the persistence boundary, API health, and worker polling/shutdown. No seed/authentication/clinical behavior is introduced.
+
+For a **clean disposable database only**, `pnpm test:migrations` verifies emptiness, deploy/status, second deploy/status, and preservation of migration history and a rolled-back sentinel. It refuses an already migrated database. CI runs it before integration tests and keeps the migrated volume for Docker regression. Both `pnpm audit --prod --audit-level high` and `pnpm audit --audit-level high` are required. No production/container migration runner is provided.
 
 The health endpoint returns `{"data":{"status":"ok"}}` only after a successful database query. Failures return HTTP 503 with `DATABASE_UNAVAILABLE` and a generic message. Worker readiness is based on a recent successful database heartbeat, not merely process existence.

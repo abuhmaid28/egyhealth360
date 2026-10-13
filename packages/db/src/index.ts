@@ -14,3 +14,6 @@ export function createDatabase(connectionString: string | undefined) {
   };
 }
 export type Database = ReturnType<typeof createDatabase>;
+
+export { canonicalizeEmail, createPersistence } from './persistence.js';
+export type { CreateUserInput, AppendAuditInput } from './persistence.js';
