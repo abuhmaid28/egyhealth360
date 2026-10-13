@@ -9,7 +9,7 @@ import { once } from 'node:events';
 import { createDatabase } from '../../packages/db/dist/index.js';
 import { createApp } from '../../apps/api/dist/app.js';
 
-test('Prisma connects without models; API returns the documented health contract', async () => {
+test('Prisma connects to the migrated database; API returns the documented health contract', async () => {
   const db = createDatabase(process.env.DATABASE_URL);
   const app = await createApp(db);
   try {

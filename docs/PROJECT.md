@@ -79,7 +79,7 @@ False-gap rate, reported together with true-gap recall and decision coverage/abs
 
 **EH-003 — Bootstrap Monorepo V2** implementation and validation are complete. **Milestone M0 — Repository Reboot / Bootstrap** is complete at the current baseline. EH-003 provides infrastructure/bootstrap only.
 
-The next planned milestone is **M1 — Identity, Authorization, and Core Data Foundation**.
+**EH-005 — M1 Identity & Core Data Foundation** implements the first persistence slice: users, role-bound profiles, assignment history, and audit primitives. See ADR-019 and `EH-005_PERSISTENCE.md`. Authentication/session/authorization and deterministic identity seeds remain future issue-scoped tasks; the full M1 exit gate is not complete.
 
 No M1 implementation may begin without its own GitHub Issue, branch, defined scope, acceptance criteria, and review gate. Later product/clinical/research milestones remain gated by issue-scoped implementation and review.
 

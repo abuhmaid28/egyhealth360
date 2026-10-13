@@ -1,8 +1,111 @@
 generator client {
   provider = "prisma-client"
-  output = "../src/generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+enum UserRole {
+  PATIENT
+  CLINICIAN
+  ADMIN
+
+  @@map("user_role")
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+
+  @@map("user_status")
+}
+
+enum AssignmentStatus {
+  ACTIVE
+  ENDED
+
+  @@map("assignment_status")
+}
+
+model User {
+  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email            String            @unique(map: "users_email_key") @db.Text
+  passwordHash     String            @map("password_hash") @db.Text
+  role             UserRole
+  status           UserStatus        @default(ACTIVE)
+  createdAt        DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  patientProfile   PatientProfile?
+  clinicianProfile ClinicianProfile?
+  auditLogs        AuditLog[]
+
+  @@unique([id, role], map: "users_id_role_key")
+  @@map("users")
+}
+
+model PatientProfile {
+  id          String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String                       @unique(map: "patient_profiles_user_id_key") @map("user_id") @db.Uuid
+  userRole    UserRole                     @default(PATIENT) @map("user_role")
+  displayName String                       @map("display_name") @db.Text
+  dateOfBirth DateTime?                    @map("date_of_birth") @db.Date
+  // Opaque optional profile text; no clinical/FHIR interpretation.
+  sex         String?                      @db.Text
+  createdAt   DateTime                     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime                     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  user        User                         @relation(fields: [userId, userRole], references: [id, role], onDelete: Restrict, onUpdate: Restrict, map: "patient_profiles_user_role_fkey")
+  assignments ClinicianPatientAssignment[]
+
+  // Prisma requires the full composite relation key to be marked unique.
+  @@unique([userId, userRole], map: "patient_profiles_user_role_key")
+  @@map("patient_profiles")
+}
+
+model ClinicianProfile {
+  id                     String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId                 String                       @unique(map: "clinician_profiles_user_id_key") @map("user_id") @db.Uuid
+  userRole               UserRole                     @default(CLINICIAN) @map("user_role")
+  displayName            String                       @map("display_name") @db.Text
+  specialty              String?                      @db.Text
+  professionalIdentifier String?                      @map("professional_identifier") @db.Text
+  createdAt              DateTime                     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt              DateTime                     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  user                   User                         @relation(fields: [userId, userRole], references: [id, role], onDelete: Restrict, onUpdate: Restrict, map: "clinician_profiles_user_role_fkey")
+  assignments            ClinicianPatientAssignment[]
+
+  @@unique([userId, userRole], map: "clinician_profiles_user_role_key")
+  @@map("clinician_profiles")
+}
+
+model ClinicianPatientAssignment {
+  id          String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clinicianId String           @map("clinician_id") @db.Uuid
+  patientId   String           @map("patient_id") @db.Uuid
+  status      AssignmentStatus @default(ACTIVE)
+  assignedAt  DateTime         @default(now()) @map("assigned_at") @db.Timestamptz(3)
+  endedAt     DateTime?        @map("ended_at") @db.Timestamptz(3)
+  clinician   ClinicianProfile @relation(fields: [clinicianId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "assignments_clinician_fkey")
+  patient     PatientProfile   @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "assignments_patient_fkey")
+
+  // Active-pair partial uniqueness and history guards live in migration SQL.
+  @@index([clinicianId, status, assignedAt], map: "assignments_clinician_history_idx")
+  @@index([patientId, status, assignedAt], map: "assignments_patient_history_idx")
+  @@map("clinician_patient_assignments")
+}
+
+model AuditLog {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actorUserId  String?  @map("actor_user_id") @db.Uuid
+  actionType   String   @map("action_type") @db.Text
+  entityType   String   @map("entity_type") @db.Text
+  entityId     String   @map("entity_id") @db.Uuid
+  timestamp    DateTime @default(now()) @db.Timestamptz(3)
+  safeMetadata Json     @default("{}") @map("safe_metadata") @db.JsonB
+  actor        User?    @relation(fields: [actorUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "audit_logs_actor_fkey")
+
+  @@index([actorUserId, timestamp], map: "audit_logs_actor_timestamp_idx")
+  @@index([entityType, entityId, timestamp], map: "audit_logs_entity_timestamp_idx")
+  @@map("audit_logs")
 }
