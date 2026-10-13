@@ -151,3 +151,17 @@ A requirement is not considered implemented merely because a screen exists; veri
 
 These are foundation proofs only. FR-010/FR-011 and later clinical-resource tests
 remain pending; no full M1 completion claim is made.
+
+## EH-008 executable M1 evidence
+
+| Requirement | Surface | Verification |
+|---|---|---|
+| FR-001/003 | Five synthetic role logins/me/logout | real HTTP m1:verify + integration |
+| FR-002 / BR-001/002/020 / AC-010/011 | Own/cross/assigned/unassigned/ADMIN profiles | m1:verify + preserved full EH-007 IDOR suite |
+| BR-019 | Obviously synthetic fixed fixture names/emails | manifest tests |
+| ERR-001 / NFR-008 | Uniform denial + credential/output protection | CLI/HTTP failure/leakage tests |
+| NFR-006 | Seed credential/persistence independent review | final PR/validation evidence |
+| M1 step4/exit | Deterministic seed and executable verification | clean/repeat/container/CI evidence |
+
+M1 completion remains pending final validation, CI, review, merge and recorded exit
+evidence. FR-010/FR-011 and clinical/product milestones remain incomplete.

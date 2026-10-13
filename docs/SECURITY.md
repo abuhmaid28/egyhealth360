@@ -56,3 +56,12 @@ read rechecks session/user/role and projects only permitted data; no result cach
 Uniform object 404 avoids existence reasons. READ COMMITTED snapshot semantics allow
 already authorized in-flight responses to overlap revocation/assignment ending.
 See `EH-007_AUTHORIZATION.md`; later clinical endpoints need their own scoped tests.
+
+## EH-008 synthetic bootstrap boundary
+
+Explicit CLI opt-in and development/test mode only; private injected demo password,
+no default and no production seed allowance. A fixed insert-only dataset validates
+existing credentials/profile/relationship state before writing; conflicts roll back.
+No seed audit fabrication/reset/client export. m1:verify uses real HTTP and is not
+read-only: genuine login/logout sessions/audits remain retained. Hostname checks are
+accident prevention, not proof of database ownership. See EH-008_DEMO_IDENTITIES.md.

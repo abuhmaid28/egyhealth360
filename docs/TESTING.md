@@ -73,3 +73,12 @@ ENDED/no/wrong clinician, ADMIN/missing profiles, input/path/HEAD bypass attempt
 uniform denial, current-state recheck, failure sanitization, audit silence and no
 renewal/cache. Running-container proof: `scripts/verify-authorization-runtime.mjs`.
 Snapshot concurrency limits are tested without claiming in-flight revocation.
+
+## EH-008 seed and milestone verification
+
+Demo unit/integration tests cover guard/secret handling, first/repeat/concurrent/
+partial seed, profile recovery, credential/role/status/profile/relationship conflicts,
+rollback, unrelated history preservation and future-compatible migration checks.
+Actual Nest HTTP verifies all five logins, ownership, clinician assignment, ADMIN
+denial, logout and zero-insert repetition. CI executes the running-container M1
+workflow, preserving all EH-005/EH-006/EH-007 regressions. See EH-008_VALIDATION.md.
