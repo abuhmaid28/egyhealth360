@@ -132,3 +132,10 @@ Project planning/reporting:
 - `PROJECT_PLAN_6_MONTHS.md`
 - `THESIS_STRUCTURE_V1.md`
 - `diagrams/SYSTEM_DIAGRAMS_V1.md`
+
+## EH-007 implementation slice
+
+EH-007 adds deny-by-default patient-profile authorization and actual HTTP IDOR
+coverage, using EH-006 principals and ACTIVE assignments. Review/validation evidence
+is in `EH-007_AUTHORIZATION.md` and `EH-007_VALIDATION.md`. FR-010/FR-011 are not
+complete. Deterministic demo identity seed and the full M1 exit gate remain pending.

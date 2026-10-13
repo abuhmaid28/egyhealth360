@@ -154,6 +154,21 @@ custom-header controls. Successful session mutations append empty-metadata audit
 atomically. Only login/logout/me and minimal principal; authorization remains later.
 See `EH-006_AUTH.md` for the frozen contract and limitations.
 
+### ADR-021 — Relationship-aware authorization foundation
+Status: Accepted (Issue #12 final approval comment 6150370205)
+
+EH-006 server principal is the only actor source. Patient ownership uses
+patient_profiles.id and authenticated user_id mapping; clinician mapping uses
+its own user_id and requires ACTIVE/null-ended assignment. Missing profiles and
+ADMIN patient access fail closed. Only explicit actions can permit access.
+The minimal production proof route reads id/displayName only. Authorization and
+projection share one narrow parameterized SQL statement, rechecking session/user/
+role. No general client/read, cache, migration, dependency, write or audit expansion.
+Uniform object 404 covers malformed/nonexistent/forbidden targets; current-session
+failure remains 401. READ COMMITTED statement semantics do not retract in-flight
+responses after concurrent ending/revocation. Future clinical writes need separate
+transaction contracts. See EH-007_AUTHORIZATION.md.
+
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.

@@ -113,3 +113,10 @@ Potentially large collections such as patients, care actions, and experiment run
 ## EH-006 frozen authentication contract
 
 Login/logout/me are frozen in `openapi.json` and `EH-006_AUTH.md`. Health remains public. Authentication does not imply clinical-resource authorization. Current split-port browser integration requires later same-origin routing; no CORS expansion is provided.
+
+## EH-007 frozen authorization contract
+
+GET `/patients/{patientId}/profile` returns only profile id/displayName to the
+patient owner or ACTIVE-assigned clinician. ADMIN is denied. Uniform object 404,
+no query/body, no-store and HEAD semantics are frozen in `openapi.json` and
+`EH-007_AUTHORIZATION.md`. This does not implement clinical summary/list APIs.

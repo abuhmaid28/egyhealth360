@@ -19,3 +19,5 @@ export { canonicalizeEmail, createPersistence } from './persistence.js';
 export type { CreateUserInput, AppendAuditInput } from './persistence.js';
 export { createAuthPersistence } from './auth.js';
 export type { AuthPersistence, AuthPrincipal } from './auth.js';
+export { createAuthorizationPersistence } from './authorization.js';
+export type { AuthorizationPersistence, PatientProfileId, PatientAccessTarget, PatientProfileProjection, PatientAccessEvidence } from './authorization.js';

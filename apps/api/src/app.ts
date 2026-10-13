@@ -2,12 +2,13 @@ import 'reflect-metadata';
 import { ArgumentsHost, Catch, Controller, ExceptionFilter, Get, HttpException, Module, ServiceUnavailableException } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
-import type { Database } from '@egyhealth/db';
+import type { Database, AuthorizationPersistence } from '@egyhealth/db';
+import { patientController, patientRequestBoundary } from './authorization.js';
 import { bootstrapSmoke } from '@egyhealth/closure-engine';
 import type { ServerResponse } from 'node:http';
 import { authController, authError, authRequestBoundary, type AuthRuntime } from './auth.js';
 
-export async function createApp(database: Database, auth?: AuthRuntime) {
+export async function createApp(database: Database, auth?: AuthRuntime, authorization?: AuthorizationPersistence) {
   @Controller('health')
   class HealthController {
     @Get()
@@ -17,13 +18,14 @@ export async function createApp(database: Database, auth?: AuthRuntime) {
       return { data: { status: bootstrapSmoke('ok') } };
     }
   }
-  @Module({ controllers: auth ? [authController(auth)] : [] })
+  @Module({ controllers: auth ? [authController(auth), ...(authorization ? [patientController(auth, authorization)] : [])] : [] })
   class AuthModule {}
   @Module({ controllers: [HealthController], imports: [AuthModule] })
   class AppModule {}
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: false, bodyParser: false });
   app.setGlobalPrefix('api/v1');
   if (auth) app.use(authRequestBoundary(auth));
+  app.use(patientRequestBoundary);
   app.useBodyParser('json', { limit: '16kb', strict: false });
   @Catch()
   class SafeErrors implements ExceptionFilter {
