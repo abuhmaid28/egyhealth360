@@ -21,3 +21,5 @@ export { createAuthPersistence } from './auth.js';
 export type { AuthPersistence, AuthPrincipal } from './auth.js';
 export { createAuthorizationPersistence } from './authorization.js';
 export type { AuthorizationPersistence, PatientProfileId, PatientAccessTarget, PatientProfileProjection, PatientAccessEvidence } from './authorization.js';
+export { createDemoPersistence, DEMO_DATASET, DEMO_FIXTURES, DemoStateError } from './demo.js';
+export type { DemoFixtureKey, DemoPasswordCheck, DemoIdentityState, DemoSeedResult } from './demo.js';

@@ -134,3 +134,12 @@ Integration tests require the loopback PostgreSQL service above, `.env`, and `pr
 For a **clean disposable database only**, `pnpm test:migrations` verifies emptiness, deploy/status, second deploy/status, and preservation of migration history and a rolled-back sentinel. It refuses an already migrated database. CI runs it before integration tests and keeps the migrated volume for Docker regression. Both `pnpm audit --prod --audit-level high` and `pnpm audit --audit-level high` are required. No production/container migration runner is provided.
 
 The health endpoint returns `{"data":{"status":"ok"}}` only after a successful database query. Failures return HTTP 503 with `DATABASE_UNAVAILABLE` and a generic message. Worker readiness is based on a recent successful database heartbeat, not merely process existence.
+
+## M1 synthetic identities
+
+After the normal build/migration workflow, `pnpm demo:seed` and `pnpm m1:verify`
+provide deterministic logical identities and actual HTTP milestone proof. Require
+explicit local/test opt-in and a privately injected EH_DEMO_PASSWORD; no password
+default is supplied. Verification is not read-only: real session/audit history is
+retained. Follow [M1 runbook](docs/M1_DEMO_RUNBOOK.md). M1 completion remains gated
+on final validation/CI/review, merge and recorded exit-gate evidence.

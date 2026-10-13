@@ -13,9 +13,9 @@ Exit gate: repo structure, tooling, Docker, CI, health checks, and shared-packag
 1. Implement Prisma domain foundation for users/profiles/assignments and core audit primitives.
 2. Implement server-side sessions, Argon2id login/logout, CSRF protection, and session lifecycle.
 3. Implement backend RBAC + clinician-patient relationship authorization and IDOR tests.
-4. Add deterministic synthetic/demo identity seed.
+4. Add deterministic synthetic/demo identity seed (EH-008 implementation under review).
 
-Exit gate: Patient/Clinician/Admin can authenticate and protected-resource isolation is proven by tests.
+Exit gate: Patient/Clinician/Admin can authenticate and protected-resource isolation is proven by tests. Completion remains pending final EH-008 validation, final-head remote CI, independent review, PR merge and recorded executable exit-gate evidence.
 
 ## Milestone M2 — Clinical Planning & Evidence
 1. Implement guideline source/template/rule-definition versioning model.

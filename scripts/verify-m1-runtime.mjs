@@ -1,0 +1,30 @@
+import { Buffer } from 'node:buffer';
+import { randomBytes } from 'node:crypto';
+import { spawn } from 'node:child_process';
+
+// One ephemeral secret for the entire disposable workflow; never an argument/output.
+const password=randomBytes(32).toString('base64url');
+const env={...process.env,NODE_ENV:'test',EH_DEMO_SEED_ENABLED:'1',EH_DEMO_PASSWORD:password};
+async function run(script) {
+  await new Promise((resolve,reject)=>{
+    const child=spawn(process.execPath,[script],{env,stdio:['ignore','pipe','pipe']});
+    const output=[];
+    child.stdout.on('data',chunk=>output.push(chunk));
+    child.stderr.on('data',chunk=>output.push(chunk));
+    child.on('error',()=>reject(new Error('M1_RUNTIME_FAILED')));
+    child.on('close',code=>{
+      // Do not forward arbitrary child output, even on failure.
+      try {
+        const text=Buffer.concat(output).toString('utf8');
+        if(code!==0 || text.includes(password)) throw new Error();
+        const summary=JSON.parse(text);
+        if(summary.result!=='PASS') throw new Error();
+        resolve();
+      } catch {reject(new Error('M1_RUNTIME_FAILED'));}
+    });
+  });
+}
+try {
+  for(const script of ['scripts/demo-seed.mjs','scripts/verify-m1.mjs','scripts/demo-seed.mjs','scripts/verify-m1.mjs']) await run(script);
+  console.log('M1 runtime seed/HTTP isolation/logout/repeat verification PASS');
+} catch {console.error('M1_RUNTIME_FAILED');process.exitCode=1;}

@@ -79,7 +79,7 @@ False-gap rate, reported together with true-gap recall and decision coverage/abs
 
 **EH-003 — Bootstrap Monorepo V2** implementation and validation are complete. **Milestone M0 — Repository Reboot / Bootstrap** is complete at the current baseline. EH-003 provides infrastructure/bootstrap only.
 
-**EH-005 — M1 Identity & Core Data Foundation** implements the first persistence slice: users, role-bound profiles, assignment history, and audit primitives. See ADR-019 and `EH-005_PERSISTENCE.md`. EH-006 implements authentication/session/CSRF foundations (`EH-006_AUTH.md`). Authorization and deterministic identity seeds remain future issue-scoped tasks; the full M1 exit gate is not complete.
+**EH-005 — M1 Identity & Core Data Foundation** implements the first persistence slice: users, role-bound profiles, assignment history, and audit primitives. See ADR-019 and `EH-005_PERSISTENCE.md`. EH-006 implements authentication/session/CSRF foundations (`EH-006_AUTH.md`). EH-007 authorization is merged. EH-008 provides deterministic identities and executable verification under implementation review; the full M1 exit gate is not complete.
 
 No M1 implementation may begin without its own GitHub Issue, branch, defined scope, acceptance criteria, and review gate. Later product/clinical/research milestones remain gated by issue-scoped implementation and review.
 
@@ -139,3 +139,9 @@ EH-007 adds deny-by-default patient-profile authorization and actual HTTP IDOR
 coverage, using EH-006 principals and ACTIVE assignments. Review/validation evidence
 is in `EH-007_AUTHORIZATION.md` and `EH-007_VALIDATION.md`. FR-010/FR-011 are not
 complete. Deterministic demo identity seed and the full M1 exit gate remain pending.
+
+## EH-008 review status
+
+Synthetic CLI seed and actual HTTP M1 verification are implemented for review.
+M1 is not complete until final validation, remote CI, independent review, PR merge
+and recorded exit-gate evidence. No FR-010/FR-011 or clinical/UI completion is claimed.

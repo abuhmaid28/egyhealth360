@@ -169,6 +169,21 @@ failure remains 401. READ COMMITTED statement semantics do not retract in-flight
 responses after concurrent ending/revocation. Future clinical writes need separate
 transaction contracts. See EH-007_AUTHORIZATION.md.
 
+### ADR-022 — Deterministic logical demo identities and M1 verification
+Status: Accepted (Issue #14 final approval comment 6153695039)
+
+Dataset eh-m1-demo-v1 fixes five synthetic logical identities and one ACTIVE edge.
+UUIDs/timestamps/salts are naturally generated. Insert missing / validate existing
+only, with credential/profile/relationship conflicts rolling back; ENDED-only intended
+history never silently re-grants access. Narrow bootstrap helper; explicit local/test
+CLI opt-in; private injected password and existing EH-006 Argon2id; no production
+allowance, reset, HTTP administration, schema/dependency/pin/auth redesign.
+M1 verification inspects valid state before real HTTP and any repeat seed, accepts
+additional valid future migrations while requiring M1 checksums, and proves zero
+repeat inserts. It is not read-only: genuine login/logout history is retained.
+M1 status stays pending validation/CI/independent review/merge/recorded exit evidence.
+See EH-008_DEMO_IDENTITIES.md and M1_DEMO_RUNBOOK.md.
+
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.
