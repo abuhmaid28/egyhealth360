@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "EgyHealth 360 Bootstrap API",
-    "version": "0.0.0"
+    "title": "EgyHealth 360 API",
+    "version": "0.1.0"
   },
   "paths": {
     "/api/v1/health": {
@@ -39,6 +39,585 @@
             }
           }
         }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "authLogin",
+        "summary": "Authenticate and rotate the presented browser session",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_INVALID_CREDENTIALS",
+                      "message": "Invalid credentials."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported content type.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_SERVICE_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Minimal user identity, absolute expiry and CSRF token.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Fresh session credential; eight-hour absolute expiry, HttpOnly, production Secure, SameSite=Lax, Path=/, Domain omitted.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSuccess"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "description": "Exact configured browser application origin, including scheme/port; mandatory even when Fetch Metadata is absent.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sec-Fetch-Site",
+            "in": "header",
+            "required": false,
+            "description": "cross-site rejected. same-site/same-origin/none require exact Origin; absent metadata does not bypass Origin/custom-header checks.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-EH-Login",
+            "in": "header",
+            "required": true,
+            "description": "Nonsecret browser custom-header control for login CSRF.",
+            "schema": {
+              "const": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "application/json only (optional UTF-8 charset), maximum 16 KiB.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "description": "No CORS permission is granted. Invalid account/credential states share one failure. Failed login preserves the existing session/cookie."
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "operationId": "authLogout",
+        "summary": "Revoke the current session",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported content type.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_SERVICE_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Revoked atomically with audit append; no response body.",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Same session-cookie attributes, Max-Age=0 and past Expires.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "description": "Exact configured browser application origin, including scheme/port; mandatory even when Fetch Metadata is absent.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sec-Fetch-Site",
+            "in": "header",
+            "required": false,
+            "description": "cross-site rejected. same-site/same-origin/none require exact Origin; absent metadata does not bypass Origin/custom-header checks.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "description": "Canonical session-derived CSRF token obtained from login/me.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "application/json only (optional UTF-8 charset), maximum 16 KiB.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {},
+                "required": []
+              }
+            }
+          }
+        },
+        "description": "Missing/invalid/expired/revoked/disabled-user sessions share one 401 and clear the unusable cookie. CSRF403 and service503 preserve cookies. No expiry renewal."
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "operationId": "authMe",
+        "summary": "Resolve the current authenticated principal",
+        "responses": {
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_SERVICE_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Minimal user identity, absolute expiry and CSRF token.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthSuccess"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "description": "Missing/invalid/expired/revoked/disabled-user sessions share one 401 and clear the unusable cookie. CSRF403 and service503 preserve cookies. No expiry renewal."
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "sessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "__Host-eh_session",
+        "description": "Production HttpOnly Secure SameSite=Lax Path=/ host-only cookie. Local development/test uses eh_session without Secure."
+      }
+    },
+    "schemas": {
+      "AuthSuccess": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "user": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "PATIENT",
+                      "CLINICIAN",
+                      "ADMIN"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "email",
+                  "role"
+                ]
+              },
+              "session": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "expiresAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": [
+                  "expiresAt"
+                ]
+              },
+              "csrfToken": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_-]{43}$",
+                "description": "Session-bound CSRF value; never a session credential."
+              }
+            },
+            "required": [
+              "user",
+              "session",
+              "csrfToken"
+            ]
+          }
+        },
+        "required": [
+          "data"
+        ]
+      },
+      "LoginRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "EH-005 bounded ASCII canonicalization; maximum 1024 UTF-8 bytes before normalization."
+          },
+          "password": {
+            "type": "string",
+            "description": "Unmodified UTF-8 password, 1\u20131024 bytes; never silently truncated."
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
       }
     }
   }

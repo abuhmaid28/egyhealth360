@@ -142,6 +142,18 @@ new dependency, or production/container migration runner is introduced. Host/CI
 migrate deploy proves clean deployment and second-deploy behavior before Docker
 regression. Future migrations must preserve custom SQL deliberately.
 
+### ADR-020 — Authentication/session foundation
+Status: Accepted (EH-006 final approval, Issue #10 comment 6136179437)
+
+Use Node 24.21.0 built-in asynchronous Argon2id and the strict application-specific
+109-byte versioned encoding; no external dependency. Eight-hour opaque database
+sessions store only SHA-256 lookup hashes. Sessions rotate at successful relogin,
+remain retained, and have no sliding/last-used/cleanup machinery. Production
+__Host- cookie; session-derived CSRF; exact mandatory browser Origin and login
+custom-header controls. Successful session mutations append empty-metadata audit
+atomically. Only login/logout/me and minimal principal; authorization remains later.
+See `EH-006_AUTH.md` for the frozen contract and limitations.
+
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.

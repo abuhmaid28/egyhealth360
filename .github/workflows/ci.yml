@@ -16,6 +16,7 @@ jobs:
       POSTGRES_DB: egyhealth
       DATABASE_URL: postgresql://egyhealth:ci-local-only@localhost:5432/egyhealth
       NEXT_TELEMETRY_DISABLED: '1'
+      AUTH_BROWSER_ORIGIN: http://localhost:3000
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
@@ -32,11 +33,15 @@ jobs:
       - run: docker compose -f compose.yaml -f compose.local.yaml up -d --wait postgres
       - run: pnpm test:migrations
       - run: pnpm test:integration
+      - run: node scripts/measure-auth.mjs
       - run: pnpm audit --prod --audit-level high
       - run: pnpm audit --audit-level high
       - run: docker compose config --quiet
       - run: docker compose build
       - run: docker compose up -d --wait --wait-timeout 120
+      - run: docker compose exec -T api node --test tests/auth.test.mjs
+      - run: docker compose exec -T api node scripts/measure-auth.mjs
+      - run: docker compose exec -T api node scripts/verify-auth-runtime.mjs
       - run: |
           curl --fail http://localhost:3000
           curl --fail http://localhost:3001/api/v1/health

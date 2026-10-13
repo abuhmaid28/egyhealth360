@@ -109,3 +109,7 @@ EACCE is not an HTTP microservice. NestJS and the experiment worker call the sha
 ## Pagination
 
 Potentially large collections such as patients, care actions, and experiment runs must support pagination/filtering.
+
+## EH-006 frozen authentication contract
+
+Login/logout/me are frozen in `openapi.json` and `EH-006_AUTH.md`. Health remains public. Authentication does not imply clinical-resource authorization. Current split-port browser integration requires later same-origin routing; no CORS expansion is provided.

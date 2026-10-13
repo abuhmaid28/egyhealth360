@@ -61,7 +61,7 @@ Major scope or architecture changes require a recorded decision.
 
 **Milestone M0 — Repository Reboot / Bootstrap** is complete and validated. EH-004 Deep Planning Audit Pass 2 is complete and merged; EH-003 Bootstrap Monorepo V2 implementation and validation are complete. See `docs/EH-003_VALIDATION.md` for observed results and limitations.
 
-**EH-005 — M1 Identity & Core Data Foundation** adds the first migration-backed users, profiles, relationship history, and append-only audit primitives. See ADR-019 and `docs/EH-005_PERSISTENCE.md`. Authentication, sessions, authorization, demo seeds, and clinical/research behavior remain unimplemented. The full M1 exit gate is not satisfied by this persistence slice. Later work remains issue-scoped and review-gated.
+**EH-005 — M1 Identity & Core Data Foundation** adds the first migration-backed users, profiles, relationship history, and append-only audit primitives. See ADR-019 and `docs/EH-005_PERSISTENCE.md`. EH-006 adds password authentication, database-backed sessions, and CSRF-protected login/logout/me; see `docs/EH-006_AUTH.md`. Authorization, demo seeds, and clinical/research behavior remain unimplemented. The full M1 exit gate is not satisfied by this persistence slice. Later work remains issue-scoped and review-gated.
 
 Important planning references:
 - `docs/DEEP_PLANNING_AUDIT_SUMMARY.md`

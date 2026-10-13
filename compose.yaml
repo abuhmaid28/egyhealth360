@@ -24,6 +24,10 @@ services:
       retries: 12
   api:
     <<: *app
+    environment:
+      <<: *app-env
+      NODE_ENV: development
+      AUTH_BROWSER_ORIGIN: ${AUTH_BROWSER_ORIGIN:-http://localhost:3000}
     command: [node, apps/api/dist/main.js]
     ports: ['127.0.0.1:3001:3001']
     healthcheck:
