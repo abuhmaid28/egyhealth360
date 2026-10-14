@@ -94,6 +94,9 @@ importers:
 
   packages/db:
     dependencies:
+      '@egyhealth/clinical-rules':
+        specifier: workspace:*
+        version: link:../clinical-rules
       '@prisma/adapter-pg':
         specifier: 7.10.0
         version: 7.10.0

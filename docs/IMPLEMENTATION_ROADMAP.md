@@ -13,12 +13,12 @@ Exit gate: repo structure, tooling, Docker, CI, health checks, and shared-packag
 1. Implement Prisma domain foundation for users/profiles/assignments and core audit primitives.
 2. Implement server-side sessions, Argon2id login/logout, CSRF protection, and session lifecycle.
 3. Implement backend RBAC + clinician-patient relationship authorization and IDOR tests.
-4. Add deterministic synthetic/demo identity seed (EH-008 implementation under review).
+4. Add deterministic synthetic/demo identity seed (EH-008 merged and complete).
 
-Exit gate: Patient/Clinician/Admin can authenticate and protected-resource isolation is proven by tests. Completion remains pending final EH-008 validation, final-head remote CI, independent review, PR merge and recorded executable exit-gate evidence.
+Exit gate: Patient/Clinician/Admin can authenticate and protected-resource isolation is proven by tests. COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [recorded final evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884).
 
 ## Milestone M2 — Clinical Planning & Evidence
-1. Implement guideline source/template/rule-definition versioning model.
+1. EH-009 (current slice): guideline source/template/rule-definition versioning model. See EH-009_CLINICAL_DEFINITION_CONTRACT.md.
 2. Implement care-plan lifecycle and idempotent care-action generation.
 3. Implement BP measurements with provenance.
 4. Implement follow-up appointments and clinical encounters.

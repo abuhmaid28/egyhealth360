@@ -123,3 +123,65 @@ model AuditLog {
   @@index([entityType, entityId, timestamp], map: "audit_logs_entity_timestamp_idx")
   @@map("audit_logs")
 }
+
+enum ClinicalDefinitionStatus {
+  DRAFT
+  PUBLISHED
+  RETIRED
+
+  @@map("clinical_definition_status")
+}
+
+model GuidelineSource {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sourceKey           String   @unique(map: "guideline_sources_source_key_key") @map("source_key") @db.Text
+  title               String   @db.Text
+  publisher           String   @db.Text
+  publicationIdentity String   @map("publication_identity") @db.Text
+  publicationYear     Int      @map("publication_year")
+  referenceIdentifier String?  @map("reference_identifier") @db.Text
+  referenceUrl        String?  @map("reference_url") @db.Text
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime @default(now()) @map("updated_at") @db.Timestamptz(3)
+  templates           CarePlanTemplate[]
+
+  @@unique([publisher, title, publicationIdentity], map: "guideline_sources_publication_key")
+  @@map("guideline_sources")
+}
+
+model CarePlanTemplate {
+  id                String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  templateKey       String                   @map("template_key") @db.Text
+  name              String                   @db.Text
+  conditionDomain   String                   @map("condition_domain") @db.Text
+  version           String                   @db.Text
+  guidelineSourceId String                   @map("guideline_source_id") @db.Uuid
+  status            ClinicalDefinitionStatus @default(DRAFT)
+  publishedAt       DateTime?                 @map("published_at") @db.Timestamptz(3)
+  retiredAt         DateTime?                 @map("retired_at") @db.Timestamptz(3)
+  createdAt         DateTime                  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime                  @default(now()) @map("updated_at") @db.Timestamptz(3)
+  guidelineSource   GuidelineSource           @relation(fields: [guidelineSourceId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_plan_templates_source_fkey")
+  rules             CareRuleDefinition[]
+
+  @@unique([templateKey, version], map: "care_plan_templates_key_version_key")
+  @@unique([name, version], map: "care_plan_templates_name_version_key")
+  @@index([guidelineSourceId], map: "care_plan_templates_source_idx")
+  @@map("care_plan_templates")
+}
+
+model CareRuleDefinition {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  templateId  String   @map("template_id") @db.Uuid
+  ruleKey     String   @map("rule_key") @db.Text
+  ruleVersion String   @map("rule_version") @db.Text
+  actionType  String   @map("action_type") @db.Text
+  definition  Json     @db.JsonB
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamptz(3)
+  template    CarePlanTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_rule_definitions_template_fkey")
+
+  @@unique([templateId, ruleKey], map: "care_rule_definitions_template_rule_key")
+  @@unique([ruleKey, ruleVersion], map: "care_rule_definitions_key_version_key")
+  @@map("care_rule_definitions")
+}

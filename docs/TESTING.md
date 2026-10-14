@@ -82,3 +82,20 @@ rollback, unrelated history preservation and future-compatible migration checks.
 Actual Nest HTTP verifies all five logins, ownership, clinician assignment, ADMIN
 denial, logout and zero-insert repetition. CI executes the running-container M1
 workflow, preserving all EH-005/EH-006/EH-007 regressions. See EH-008_VALIDATION.md.
+
+## EH-009 clinical-definition evidence
+
+`tests/clinical-rules.test.mjs` checks the reviewed fixture, exact source/sections,
+strict unknown/missing/type validation and deferred declarations. `tests/integration/
+clinical-catalog.test.mjs` compares SQL/application validators, tests direct SQL/Prisma
+publication bypasses, lifecycle/immutability/history, exact versions, concurrency,
+stale snapshots, bounded lock timeouts, bootstrap conflicts/idempotency and audit/late
+failure rollback. `tests/fixtures/eh009-approved-definition.json` is the reviewed
+contract fixture; do not regenerate it to bless changed clinical logic.
+
+The migration verifier retains EH-005 -> EH-006 checks and additionally upgrades a
+seeded M1 database with real HTTP-generated session/audit history to EH-009, preserving
+all six M1 tables and ledger entries. It repeats deploy/status and actual M1 verification.
+Use only an empty disposable target database. Historical checksums remain pinned.
+CI retains all M1/security/health/worker/Docker gates and adds explicit running-container
+clinical bootstrap/repeat verification. See EH-009_VALIDATION.md for observed results.

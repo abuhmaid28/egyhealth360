@@ -16,7 +16,8 @@
     "test:migrations": "node --env-file-if-exists=.env scripts/verify-migrations.mjs",
     "dev": "pnpm build && node --env-file-if-exists=.env scripts/dev.mjs",
     "demo:seed": "node --env-file-if-exists=.env scripts/demo-seed.mjs",
-    "m1:verify": "node --env-file-if-exists=.env scripts/verify-m1.mjs"
+    "m1:verify": "node --env-file-if-exists=.env scripts/verify-m1.mjs",
+    "clinical:bootstrap": "node --env-file-if-exists=.env scripts/bootstrap-clinical-catalog.mjs"
   },
   "devDependencies": {
     "typescript": "5.9.3",

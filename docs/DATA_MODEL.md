@@ -221,3 +221,17 @@ Application audit is append-only and distinct from the patient clinical timeline
 ## Time/versioning
 
 Technical timestamps use UTC. Date-only clinical concepts use date types when appropriate. Published templates/rules and closure assessments are not silently mutated; new versions/assessments preserve history.
+
+## EH-009 executable clinical-definition slice
+
+The conceptual future models above are not all implemented. EH-009 adds only
+GuidelineSource, CarePlanTemplate and CareRuleDefinition. Exact fields, indexes,
+CHECKs and lifecycle are in the Prisma schema and EH-009_CLINICAL_DEFINITION_CONTRACT.md.
+Publication year is stored instead of an unsupported exact publication date.
+Sources are append-only, without a separate lifecycle. Templates own DRAFT/PUBLISHED/
+RETIRED for the aggregate; rule status is inherited. Structured versioned JSONB holds
+applicability/trigger/timing/completion/schedule/exemption/coverage/source declarations.
+No free-form interpretation column. Uniques retain (name,version), add stable
+(templateKey,version), (templateId,ruleKey) and global (ruleKey,ruleVersion).
+All relationships RESTRICT. New catalog timestamps are database-trigger owned.
+Patient CarePlan and CareAction models remain later M2 work.

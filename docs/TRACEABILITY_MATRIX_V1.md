@@ -163,5 +163,18 @@ remain pending; no full M1 completion claim is made.
 | NFR-006 | Seed credential/persistence independent review | final PR/validation evidence |
 | M1 step4/exit | Deterministic seed and executable verification | clean/repeat/container/CI evidence |
 
-M1 completion remains pending final validation, CI, review, merge and recorded exit
-evidence. FR-010/FR-011 and clinical/product milestones remain incomplete.
+M1 is complete at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [recorded exit evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884). FR-010/FR-011 and clinical/product milestones remain incomplete.
+
+## EH-009 clinical-definition foundation
+
+| Requirement | Implemented foundation | Verification |
+|---|---|---|
+| BR-003 | Exact template/rule version identities for future pinning | version/relationship uniqueness tests |
+| BR-004/005 | Immutable published/retired aggregate and source/history guards | SQL/Prisma mutation/removal/lifecycle/concurrency tests |
+| BR-018 | WHO identity, structured sections, exact CR-HTN-FU-001 definition | reviewed JSON fixture + source/SQL/application agreement |
+| ERR-003 | Required-known applicability declaration | strict exact representation tests; evaluation deferred |
+| FR-021 foundation only | Durable versioned definitions and explicit bootstrap | bootstrap first/repeat/conflict/rollback tests |
+| FR-060 | Genuine system publication/retirement audit | atomic rollback and duplicate-event tests |
+| NFR-006 | Independent clinical/schema/immutability review | EH-009 validation / PR evidence |
+
+FR-021 care-action generation, patient planning, M2 exit gate and EACCE remain incomplete.

@@ -181,8 +181,33 @@ allowance, reset, HTTP administration, schema/dependency/pin/auth redesign.
 M1 verification inspects valid state before real HTTP and any repeat seed, accepts
 additional valid future migrations while requiring M1 checksums, and proves zero
 repeat inserts. It is not read-only: genuine login/logout history is retained.
-M1 status stays pending validation/CI/independent review/merge/recorded exit evidence.
+The original M1 completion gate was subsequently satisfied at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [recorded evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884).
 See EH-008_DEMO_IDENTITIES.md and M1_DEMO_RUNBOOK.md.
+
+### ADR-023 — Source-traceable clinical definitions and explicit catalog bootstrap
+Status: Accepted (Issue #16 final approval comment 6157539102)
+
+Three catalog models only: immutable GuidelineSource, lifecycle-owning CarePlanTemplate,
+and CareRuleDefinition with exact specialized JSONB. WHO 2021 alone is authoritative;
+Egyptian 2014 remains documented corroboration. No free-form interpretation column.
+The approved 1.0.0-draft identity can have PUBLISHED lifecycle. Only the exact approved
+source/template/rule manifest and machine definition can publish, including through
+ordinary SQL/Prisma. Version regex validity alone never authorizes a new version.
+Future versions require explicit approval, manifest and validator support.
+
+Template aggregate transitions DRAFT -> PUBLISHED -> RETIRED only. Parent-row locks,
+CHECKs, migration-owned invoker functions/triggers, immutable identities/FKs and
+statement DELETE/TRUNCATE guards protect history. No-op updates preserve timestamps;
+new-model timestamps are database-owned. DRAFT display name may change but must match
+the approved name at publication. Source is immutable from insertion. No independent
+rule lifecycle, patient model, evaluator, expression language, or generic rules CRUD.
+
+Explicit pnpm clinical:bootstrap; fixed manifest in clinical-rules; narrow private
+DB boundary; one bounded atomic insert-missing/validate-existing/publish transaction.
+Exact repeat is zero-write. Conflicting/retired state fails closed; no force/reset.
+Genuine publication/retirement append empty-metadata system audits atomically. Only
+an internal workspace dependency is added. One additive migration; EH-005/006 SQL
+unchanged. No product endpoint or auth change. See EH-009_CLINICAL_DEFINITION_CONTRACT.md.
 
 ## Change process
 

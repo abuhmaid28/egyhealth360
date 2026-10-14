@@ -79,7 +79,7 @@ False-gap rate, reported together with true-gap recall and decision coverage/abs
 
 **EH-003 — Bootstrap Monorepo V2** implementation and validation are complete. **Milestone M0 — Repository Reboot / Bootstrap** is complete at the current baseline. EH-003 provides infrastructure/bootstrap only.
 
-**EH-005 — M1 Identity & Core Data Foundation** implements the first persistence slice: users, role-bound profiles, assignment history, and audit primitives. See ADR-019 and `EH-005_PERSISTENCE.md`. EH-006 implements authentication/session/CSRF foundations (`EH-006_AUTH.md`). EH-007 authorization is merged. EH-008 provides deterministic identities and executable verification under implementation review; the full M1 exit gate is not complete.
+**EH-005 — M1 Identity & Core Data Foundation** implements the first persistence slice: users, role-bound profiles, assignment history, and audit primitives. See ADR-019 and `EH-005_PERSISTENCE.md`. EH-006 implements authentication/session/CSRF foundations (`EH-006_AUTH.md`). EH-007 authorization is merged. M1 is COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [final exit-gate evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884). EH-009 is the current M2 step-1 clinical-definition slice. M2 remains in progress; no care-action generation/EACCE completion is claimed.
 
 No M1 implementation may begin without its own GitHub Issue, branch, defined scope, acceptance criteria, and review gate. Later product/clinical/research milestones remain gated by issue-scoped implementation and review.
 
@@ -138,10 +138,10 @@ Project planning/reporting:
 EH-007 adds deny-by-default patient-profile authorization and actual HTTP IDOR
 coverage, using EH-006 principals and ACTIVE assignments. Review/validation evidence
 is in `EH-007_AUTHORIZATION.md` and `EH-007_VALIDATION.md`. FR-010/FR-011 are not
-complete. Deterministic demo identity seed and the full M1 exit gate remain pending.
+complete. EH-008 deterministic identities and the full M1 exit gate are complete; see the recorded final evidence above.
 
-## EH-008 review status
+## Current M2 slice
 
-Synthetic CLI seed and actual HTTP M1 verification are implemented for review.
-M1 is not complete until final validation, remote CI, independent review, PR merge
-and recorded exit-gate evidence. No FR-010/FR-011 or clinical/UI completion is claimed.
+M1 is COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [final exit-gate evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884). EH-009 is the current M2 step-1 clinical-definition slice. M2 remains in progress; no care-action generation/EACCE completion is claimed.
+
+See `EH-009_CLINICAL_DEFINITION_CONTRACT.md` and `EH-009_VALIDATION.md`.
