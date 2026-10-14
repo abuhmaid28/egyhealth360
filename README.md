@@ -61,7 +61,7 @@ Major scope or architecture changes require a recorded decision.
 
 **Milestone M0 — Repository Reboot / Bootstrap** is complete and validated. EH-004 Deep Planning Audit Pass 2 is complete and merged; EH-003 Bootstrap Monorepo V2 implementation and validation are complete. See `docs/EH-003_VALIDATION.md` for observed results and limitations.
 
-**EH-005 — M1 Identity & Core Data Foundation** adds the first migration-backed users, profiles, relationship history, and append-only audit primitives. See ADR-019 and `docs/EH-005_PERSISTENCE.md`. EH-006 adds password authentication, database-backed sessions, and CSRF-protected login/logout/me; see `docs/EH-006_AUTH.md`. Authorization, demo seeds, and clinical/research behavior remain unimplemented. The full M1 exit gate is not satisfied by this persistence slice. Later work remains issue-scoped and review-gated.
+**EH-005 — M1 Identity & Core Data Foundation** adds the first migration-backed users, profiles, relationship history, and append-only audit primitives. See ADR-019 and `docs/EH-005_PERSISTENCE.md`. EH-006 adds password authentication, database-backed sessions, and CSRF-protected login/logout/me; see `docs/EH-006_AUTH.md`. EH-007 authorization and EH-008 deterministic demo identities are merged; M1 is complete at `a4b2f2a4a496daba32aead5b612cb105e8873d27`. Clinical/research product behavior remains later work. Later work remains issue-scoped and review-gated.
 
 Important planning references:
 - `docs/DEEP_PLANNING_AUDIT_SUMMARY.md`
@@ -141,5 +141,13 @@ After the normal build/migration workflow, `pnpm demo:seed` and `pnpm m1:verify`
 provide deterministic logical identities and actual HTTP milestone proof. Require
 explicit local/test opt-in and a privately injected EH_DEMO_PASSWORD; no password
 default is supplied. Verification is not read-only: real session/audit history is
-retained. Follow [M1 runbook](docs/M1_DEMO_RUNBOOK.md). M1 completion remains gated
-on final validation/CI/review, merge and recorded exit-gate evidence.
+retained. Follow [M1 runbook](docs/M1_DEMO_RUNBOOK.md). M1 is complete; [final exit-gate evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884).
+
+## EH-009 clinical catalog
+
+After build and migration, explicitly run `pnpm clinical:bootstrap` with DATABASE_URL.
+It loads only the exact approved WHO CR-HTN-FU-001 catalog, fails on conflicts and
+preserves identical repeat state. It does not run on application startup. See
+[clinical-definition contract](docs/EH-009_CLINICAL_DEFINITION_CONTRACT.md) and
+[validation](docs/EH-009_VALIDATION.md). M2 remains in progress; no evaluator or patient
+care plan/action/evidence model is included.

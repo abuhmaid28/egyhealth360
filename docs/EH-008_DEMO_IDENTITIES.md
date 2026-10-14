@@ -1,5 +1,8 @@
 # EH-008 deterministic synthetic identity contract
 
+> Post-merge status annotation: M1 is COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [final evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884). Pending statements below record the historical pre-merge gate, not current status. Historical test results are not represented as newly executed.
+
+
 Approved by Issue #14 comment 6153695039 at baseline
 `a36c53940c7d26a706fa89ff12e757646d781b7e`. Dataset: `eh-m1-demo-v1`.
 This implements seed and executable M1 proof only, not clinical demo data or UI.

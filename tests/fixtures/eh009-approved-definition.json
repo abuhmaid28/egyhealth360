@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "eh-cr-htn-fu-001/v1",
+  "domain": "HYPERTENSION",
+  "applicability": {
+    "combination": "ALL",
+    "requiredKnownFacts": [
+      "age_years_at_trigger",
+      "pregnancy_status_at_trigger",
+      "hypertension_diagnosis",
+      "known_CVD",
+      "diabetes_mellitus",
+      "chronic_kidney_disease"
+    ],
+    "age": {
+      "field": "age_years_at_trigger",
+      "operator": "GTE",
+      "value": 18
+    },
+    "pregnancy": {
+      "field": "pregnancy_status_at_trigger",
+      "requirement": "KNOWN_NON_PREGNANT"
+    },
+    "hypertensionDiagnosis": {
+      "field": "hypertension_diagnosis",
+      "equals": true
+    },
+    "knownCvd": {
+      "field": "known_CVD",
+      "equals": false
+    },
+    "diabetesMellitus": {
+      "field": "diabetes_mellitus",
+      "equals": false
+    },
+    "chronicKidneyDisease": {
+      "field": "chronic_kidney_disease",
+      "equals": false
+    },
+    "missingOrUnknownRequiredFact": "DO_NOT_ASSUME_ELIGIBLE"
+  },
+  "trigger": {
+    "kind": "QUALIFYING_OBSERVED_BP_ASSESSMENT",
+    "combination": "ALL",
+    "systolic": {
+      "unit": "mmHg",
+      "operator": "LT",
+      "value": 140
+    },
+    "diastolic": {
+      "unit": "mmHg",
+      "operator": "LT",
+      "value": 90
+    },
+    "triggerTime": "ASSESSMENT_TIME"
+  },
+  "action": {
+    "code": "HTN_BP_FOLLOWUP",
+    "label": "Hypertension BP reassessment / follow-up"
+  },
+  "timing": {
+    "anchor": "TRIGGER_TIME",
+    "recommendedWindowStart": {
+      "operation": "ADD_CALENDAR_MONTHS",
+      "value": 3
+    },
+    "dueBy": {
+      "operation": "ADD_CALENDAR_MONTHS",
+      "value": 6
+    },
+    "overdueBoundary": "STRICTLY_AFTER_DUE_BY"
+  },
+  "completion": {
+    "combination": "ALL",
+    "relevantFollowupEncounter": "REQUIRED",
+    "bpAssessmentAssociatedWithFollowup": "REQUIRED",
+    "followupTime": {
+      "afterTrigger": "STRICT",
+      "atOrBeforeDueBy": true
+    },
+    "beforeRecommendedWindowStartAllowed": true
+  },
+  "scheduleEvidence": {
+    "kind": "FUTURE_APPOINTMENT",
+    "explicitLinkToActionRequired": true,
+    "finalScheduledDecisionContract": "DEFERRED"
+  },
+  "exemptionPolicy": {
+    "automaticMedicalExemption": "NONE",
+    "manualExemptionRequirements": [
+      "EXPLICIT",
+      "AUDITABLE",
+      "REASONED"
+    ],
+    "manualWorkflow": "DEFERRED"
+  },
+  "coverageRequirement": {
+    "trueGapRequires": "SUFFICIENT_RELEVANT_RECORD_COVERAGE",
+    "relevantPeriod": {
+      "start": "AFTER_TRIGGER_TIME",
+      "end": "EXPLICIT_EVALUATION_TIME"
+    },
+    "insufficientCoverageWithoutStrongerResolvingEvidence": "UNCERTAIN",
+    "outsideRelevantPeriodAloneForcesUncertain": false,
+    "sufficiencyAlgorithm": "DEFERRED"
+  },
+  "sourceReferences": [
+    {
+      "sourceKey": "WHO-HTN-2021",
+      "publicationIdentity": "2021",
+      "section": "3.6",
+      "recommendation": 6,
+      "purpose": "CONTROL_TARGET"
+    },
+    {
+      "sourceKey": "WHO-HTN-2021",
+      "publicationIdentity": "2021",
+      "section": "3.7",
+      "recommendation": 7,
+      "purpose": "FOLLOWUP_INTERVAL"
+    }
+  ],
+  "repositoryEvidence": {
+    "baselineCommit": "a4b2f2a4a496daba32aead5b612cb105e8873d27",
+    "catalog": "docs/research/CLINICAL_RULE_CATALOG_V1.md",
+    "sourceAudit": "docs/research/CLINICAL_RULE_SOURCE_AUDIT.md",
+    "researchProtocol": "docs/research/EXPERIMENT_PROTOCOL_V1.md"
+  }
+}

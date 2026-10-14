@@ -23,3 +23,5 @@ export { createAuthorizationPersistence } from './authorization.js';
 export type { AuthorizationPersistence, PatientProfileId, PatientAccessTarget, PatientProfileProjection, PatientAccessEvidence } from './authorization.js';
 export { createDemoPersistence, DEMO_DATASET, DEMO_FIXTURES, DemoStateError } from './demo.js';
 export type { DemoFixtureKey, DemoPasswordCheck, DemoIdentityState, DemoSeedResult } from './demo.js';
+export { createClinicalCatalogPersistence, ClinicalCatalogError } from './clinical-catalog.js';
+export type { ClinicalCatalogPersistence, ClinicalCatalogSnapshot, ClinicalTemplateVersionId } from './clinical-catalog.js';
