@@ -209,6 +209,26 @@ Genuine publication/retirement append empty-metadata system audits atomically. O
 an internal workspace dependency is added. One additive migration; EH-005/006 SQL
 unchanged. No product endpoint or auth change. See EH-009_CLINICAL_DEFINITION_CONTRACT.md.
 
+### ADR-024 — Version-pinned CarePlan lifecycle and evidence-gated action generation
+Status: Accepted (Issue #18 final approval comment 6179110871)
+
+One CarePlan model only, with exact patient-profile/template/rule UUIDs and authenticated
+creator user identity. Composite rule/template FK; no copied versions/latest lookup.
+DRAFT/ACTIVE/CANCELLED only; completion is deferred. Pins immutable from insertion;
+one ACTIVE hypertension plan per patient; ordinary SQL guards restrict the exact
+approved EH-009 aggregate and reject DELETE/TRUNCATE. PUBLISHED required on creation
+and activation under retirement-conflicting locks; retirement retains historical plans.
+
+Narrow internal principal-checked operations, transactional session/user/profile/
+assignment/patient/plan/template locking and genuine atomic lifecycle audit. No HTTP
+route or EH-007 authorization ticket. Deterministic read-only deferred specification
+contains approved declarations and explicit gates only, never an action/occurrence/
+evidence identity, eligibility result or concrete timestamp. No CareAction table,
+generation writer, key encoder, BP/evidence, calendar arithmetic or EACCE. Activation
+is not trigger evidence. No new external dependency. One additive migration; prior
+migrations unchanged. FR-020 foundation only; FR-021 incomplete; M2 in progress.
+See EH-010_CARE_PLAN_CONTRACT.md and EH-010_VALIDATION.md.
+
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.

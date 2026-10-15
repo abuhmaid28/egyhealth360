@@ -17,8 +17,8 @@ async function run(script) {
       try {
         const text=Buffer.concat(output).toString('utf8');
         if(code!==0 || text.includes(password)) throw new Error();
-        const summary=JSON.parse(text);
-        if(summary.result!=='PASS') throw new Error();
+        if(script==='scripts/verify-care-plan-runtime.mjs') { if(!text.includes('runtime PASS')) throw new Error(); }
+        else { const summary=JSON.parse(text); if(summary.result!=='PASS') throw new Error(); }
         resolve();
       } catch {reject(new Error('M1_RUNTIME_FAILED'));}
     });
@@ -26,5 +26,10 @@ async function run(script) {
 }
 try {
   for(const script of ['scripts/demo-seed.mjs','scripts/verify-m1.mjs','scripts/demo-seed.mjs','scripts/verify-m1.mjs']) await run(script);
+  const { createClinicalCatalogPersistence } = await import('../packages/db/dist/index.js');
+  const catalog=createClinicalCatalogPersistence(env.DATABASE_URL);
+  try {await catalog.bootstrapApprovedCatalog();} finally {await catalog.close();}
+  await run('scripts/verify-care-plan-runtime.mjs');
+  console.log('EH-010 synthetic service runtime PASS');
   console.log('M1 runtime seed/HTTP isolation/logout/repeat verification PASS');
 } catch {console.error('M1_RUNTIME_FAILED');process.exitCode=1;}

@@ -25,3 +25,5 @@ export { createDemoPersistence, DEMO_DATASET, DEMO_FIXTURES, DemoStateError } fr
 export type { DemoFixtureKey, DemoPasswordCheck, DemoIdentityState, DemoSeedResult } from './demo.js';
 export { createClinicalCatalogPersistence, ClinicalCatalogError } from './clinical-catalog.js';
 export type { ClinicalCatalogPersistence, ClinicalCatalogSnapshot, ClinicalTemplateVersionId } from './clinical-catalog.js';
+export { createCarePlanPersistence, CarePlanError } from './care-plans.js';
+export type { CarePlanPersistence, CarePlanId, ClinicalRuleDefinitionId, CarePlanStatus, CarePlanSnapshot, PlanTarget, PlanMutationResult, DeferredActionSpecification } from './care-plans.js';

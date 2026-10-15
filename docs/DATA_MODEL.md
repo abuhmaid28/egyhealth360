@@ -234,4 +234,17 @@ applicability/trigger/timing/completion/schedule/exemption/coverage/source decla
 No free-form interpretation column. Uniques retain (name,version), add stable
 (templateKey,version), (templateId,ruleKey) and global (ruleKey,ruleVersion).
 All relationships RESTRICT. New catalog timestamps are database-trigger owned.
-Patient CarePlan and CareAction models remain later M2 work.
+Patient CarePlan is implemented by EH-010 as specified below; CareAction remains deferred.
+
+
+## EH-010 executable care-plan slice
+
+CarePlan has exactly id, patientId (patient_profiles.id), templateId, ruleDefinitionId,
+createdByUserId, status (DRAFT/ACTIVE/CANCELLED), createdAt, startedAt, cancelledAt.
+UUID defaults and timestamps are database-owned. Explicit exact template and rule
+FKs, with composite rule/template consistency; no copied versions or latest lookup.
+Only the approved EH-009 aggregate is permitted. Pins/creator/patient immutable from
+insertion; DELETE/TRUNCATE blocked. One ACTIVE hypertension plan per patient via a
+partial unique index; multiple drafts allowed. No completedAt/updatedAt/reason.
+Conceptual COMPLETED and all CareAction/evidence models above remain future work.
+Exact contract: EH-010_CARE_PLAN_CONTRACT.md. Activation is not clinical evidence.

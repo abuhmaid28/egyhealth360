@@ -41,6 +41,7 @@ model User {
   clinicianProfile ClinicianProfile?
   auditLogs        AuditLog[]
   sessions         Session[]
+  createdCarePlans CarePlan[]
 
   @@unique([id, role], map: "users_id_role_key")
   @@map("users")
@@ -71,6 +72,8 @@ model PatientProfile {
   updatedAt   DateTime                     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
   user        User                         @relation(fields: [userId, userRole], references: [id, role], onDelete: Restrict, onUpdate: Restrict, map: "patient_profiles_user_role_fkey")
   assignments ClinicianPatientAssignment[]
+
+  carePlans   CarePlan[]
 
   // Prisma requires the full composite relation key to be marked unique.
   @@unique([userId, userRole], map: "patient_profiles_user_role_key")
@@ -163,6 +166,7 @@ model CarePlanTemplate {
   updatedAt         DateTime                  @default(now()) @map("updated_at") @db.Timestamptz(3)
   guidelineSource   GuidelineSource           @relation(fields: [guidelineSourceId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_plan_templates_source_fkey")
   rules             CareRuleDefinition[]
+  carePlans         CarePlan[]
 
   @@unique([templateKey, version], map: "care_plan_templates_key_version_key")
   @@unique([name, version], map: "care_plan_templates_name_version_key")
@@ -181,7 +185,41 @@ model CareRuleDefinition {
   updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamptz(3)
   template    CarePlanTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_rule_definitions_template_fkey")
 
+  carePlans   CarePlan[]
+
+  @@unique([id, templateId], map: "care_rule_definitions_id_template_key")
   @@unique([templateId, ruleKey], map: "care_rule_definitions_template_rule_key")
   @@unique([ruleKey, ruleVersion], map: "care_rule_definitions_key_version_key")
   @@map("care_rule_definitions")
+}
+
+
+enum CarePlanStatus {
+  DRAFT
+  ACTIVE
+  CANCELLED
+
+  @@map("care_plan_status")
+}
+
+model CarePlan {
+  id               String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId        String @map("patient_id") @db.Uuid
+  templateId       String @map("template_id") @db.Uuid
+  ruleDefinitionId String @map("rule_definition_id") @db.Uuid
+  createdByUserId  String @map("created_by_user_id") @db.Uuid
+  status           CarePlanStatus @default(DRAFT)
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  startedAt        DateTime? @map("started_at") @db.Timestamptz(3)
+  cancelledAt      DateTime? @map("cancelled_at") @db.Timestamptz(3)
+  patient          PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_plans_patient_fkey")
+  template         CarePlanTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_plans_template_fkey")
+  ruleDefinition   CareRuleDefinition @relation(fields: [ruleDefinitionId, templateId], references: [id, templateId], onDelete: Restrict, onUpdate: Restrict, map: "care_plans_rule_template_fkey")
+  creator          User @relation(fields: [createdByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_plans_creator_fkey")
+
+  @@index([patientId, createdAt], map: "care_plans_patient_history_idx")
+  @@index([templateId], map: "care_plans_template_idx")
+  @@index([ruleDefinitionId, templateId], map: "care_plans_rule_template_idx")
+  @@index([createdByUserId], map: "care_plans_creator_idx")
+  @@map("care_plans")
 }

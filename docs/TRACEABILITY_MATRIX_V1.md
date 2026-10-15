@@ -178,3 +178,18 @@ M1 is complete at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [recorded exit evi
 | NFR-006 | Independent clinical/schema/immutability review | EH-009 validation / PR evidence |
 
 FR-021 care-action generation, patient planning, M2 exit gate and EACCE remain incomplete.
+
+## EH-010 service foundation
+
+| Requirement | Implemented scope | Verification |
+|---|---|---|
+| FR-020 foundation only | Principal-checked create/activate/cancel/inspect; no HTTP workflow | CarePlan service lifecycle/actor/race tests |
+| BR-003/004/018 | Exact template + rule FKs and source trace, approved aggregate only | Composite FK, SQL bypass, retirement and projection tests |
+| BR-005 | Immutable plan identity/history and DELETE/TRUNCATE guards | Direct SQL and service history tests |
+| BR-002/020 | Current clinician assignment required, Patient/Admin denied | Service actor matrix and revocation races |
+| FR-060 | Three atomic genuine clinician lifecycle events | Exact actor/entity/metadata, rollback/no-op tests |
+| FR-021 incomplete | Read-only deferred declaration specification only | Pure determinism/no-action/no-evidence tests |
+| NFR-006 | Independent second-pass review | EH-010 validation / PR evidence |
+
+FR-020 remains foundation only, FR-021 remains incomplete and M2 remains in progress.
+No CareAction/EACCE/clinical eligibility or product HTTP behavior is claimed.

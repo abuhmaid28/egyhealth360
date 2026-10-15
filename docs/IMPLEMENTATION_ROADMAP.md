@@ -18,8 +18,9 @@ Exit gate: repo structure, tooling, Docker, CI, health checks, and shared-packag
 Exit gate: Patient/Clinician/Admin can authenticate and protected-resource isolation is proven by tests. COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [recorded final evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884).
 
 ## Milestone M2 — Clinical Planning & Evidence
-1. EH-009 (current slice): guideline source/template/rule-definition versioning model. See EH-009_CLINICAL_DEFINITION_CONTRACT.md.
-2. Implement care-plan lifecycle and idempotent care-action generation.
+1. EH-009 (merged / complete): guideline source/template/rule-definition versioning model. See EH-009_CLINICAL_DEFINITION_CONTRACT.md.
+2. EH-010 (current slice): version-pinned CarePlan lifecycle, transactional clinician authorization/audit and deterministic read-only deferred action specification. No CareAction persistence. See EH-010_CARE_PLAN_CONTRACT.md.
+   Durable idempotent action generation remains an explicit follow-up gate after persisted qualifying evidence, calendar arithmetic and occurrence/retrigger semantics are approved; step 2 is not claimed complete by the lifecycle foundation.
 3. Implement BP measurements with provenance.
 4. Implement follow-up appointments and clinical encounters.
 5. Implement record-coverage windows and normalized evidence queries.
