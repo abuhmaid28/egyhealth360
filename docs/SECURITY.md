@@ -88,3 +88,17 @@ protect structure/history, not authentication. Exact approved catalog pins, trus
 search paths and qualified lookups prevent alternative-definition/TEMP bypasses.
 Read-only deferred specifications contain no inferred clinical evidence or action.
 See EH-010_CARE_PLAN_CONTRACT.md for lock order, expiry and ordinary-write limits.
+
+
+## EH-011 authenticated BP evidence
+
+BP creation and history use the EH-006 principal, current locked user/session/profile/
+ACTIVE assignment revalidation and final expiry check. PATIENT self only, CLINICIAN
+assigned only, ADMIN denied; no actor/source override. Raw JSON lexical checks are
+confined to bounded BP POST; existing global parser/session/Origin/CSRF behavior stays.
+Uniform object denial, no-store, allowlisted field errors and explicit minimized HTTP
+projection omit internal recorder UUID. Source kinds assert entry, not medical validity.
+One atomic BP_MEASUREMENT_CREATED event uses the real actor and empty metadata;
+reads/rejections append none. SQL invoker guards and qualified lookups protect ordinary
+structural provenance and reject all BP UPDATE/DELETE/TRUNCATE, including TEMP bypasses.
+Corrections and clinical evidence selection remain separately gated. See EH-011 contract.

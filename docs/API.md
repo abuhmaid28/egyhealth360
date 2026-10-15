@@ -120,3 +120,19 @@ GET `/patients/{patientId}/profile` returns only profile id/displayName to the
 patient owner or ACTIVE-assigned clinician. ADMIN is denied. Uniform object 404,
 no query/body, no-store and HEAD semantics are frozen in `openapi.json` and
 `EH-007_AUTHORIZATION.md`. This does not implement clinical summary/list APIs.
+
+
+## EH-011 frozen BP API
+
+POST /patients/{patientId}/blood-pressure-measurements creates one paired immutable row
+(201); GET/HEAD provide authorized paginated history (200), page/pageSize default 1/20,
+max pageSize 100, measuredAt DESC/id DESC. PATIENT self / ACTIVE-assigned CLINICIAN only;
+ADMIN denied. POST requires EH-006 session/Origin/CSRF, application/json (optional UTF-8),
+16 KiB, no query or Idempotency-Key. Exactly systolic/diastolic integer tokens, unit mmHg,
+measuredAt with strict offset/calendar/millisecond rules. No medical plausibility limits.
+POST is non-idempotent: identical accepted requests create separate rows. No automatic retry.
+HTTP exposes id/patientId/systolic/diastolic/unit/measuredAt/createdAt/sourceKind only;
+internal recordedByUserId is never projected. All responses no-store; HEAD performs
+GET checks with no body; unsupported methods 405 Allow GET, HEAD, POST. Exact errors,
+input/time/provenance and transaction contracts are in openapi.json and
+EH-011_BP_PROVENANCE_CONTRACT.md. Other endpoint names above remain conceptual.

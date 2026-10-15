@@ -1,4 +1,4 @@
-import { createAuthPersistence, createAuthorizationPersistence, createDatabase } from '@egyhealth/db';
+import { createBloodPressureMeasurementPersistence, createAuthPersistence, createAuthorizationPersistence, createDatabase } from '@egyhealth/db';
 import { authConfiguration, positiveInteger } from '@egyhealth/config';
 import { createApp } from './app.js';
 import { createPasswordVerifier } from './password.js';
@@ -9,7 +9,8 @@ async function main() {
   const database = createDatabase(process.env.DATABASE_URL);
   const store = createAuthPersistence(process.env.DATABASE_URL);
   const authorization = createAuthorizationPersistence(process.env.DATABASE_URL);
-  const app = await createApp(database, { config, passwords, store }, authorization);
+  const bloodPressure = createBloodPressureMeasurementPersistence(process.env.DATABASE_URL);
+  const app = await createApp(database, { config, passwords, store }, authorization, bloodPressure);
   let closing = false;
   const close = async () => {
     if (closing) return;
@@ -18,6 +19,7 @@ async function main() {
     await database.close();
     await store.close();
     await authorization.close();
+    await bloodPressure.close();
   };
   const shutdown = () => { void close().catch(() => { console.error('API shutdown failed'); process.exitCode = 1; }); };
   process.once('SIGTERM', shutdown);

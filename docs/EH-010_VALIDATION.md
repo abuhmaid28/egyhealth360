@@ -117,3 +117,12 @@ cannot advance between that check and commit. No automatic stale-authorization
 retry. Ordinary database guards do not protect against schema owners/superusers.
 Synthetic service evidence is not clinical validation or new HTTP authorization
 coverage. No unapproved implementation scope deviation is claimed.
+
+
+## Post-merge annotation
+
+PR #19 squash-merged as `9ed0d2e09a06fb1e63ae30e86678088ff805c5b8`; Issue #18 closed.
+Final implementation head `8663aacfbded63cee61c221ea57baf14e7e6ce5d` passed independent
+review 5527708524 and CI run 38675701214. [Final merge record](https://github.com/abuhmaid28/egyhealth360/issues/18#issuecomment-6183801672).
+EH-010's approved foundation slice is complete. Pending-review text above is historical;
+these results are not a new rerun. EH-011 is current; FR-021 incomplete; M2 in progress.

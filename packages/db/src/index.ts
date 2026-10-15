@@ -27,3 +27,6 @@ export { createClinicalCatalogPersistence, ClinicalCatalogError } from './clinic
 export type { ClinicalCatalogPersistence, ClinicalCatalogSnapshot, ClinicalTemplateVersionId } from './clinical-catalog.js';
 export { createCarePlanPersistence, CarePlanError } from './care-plans.js';
 export type { CarePlanPersistence, CarePlanId, ClinicalRuleDefinitionId, CarePlanStatus, CarePlanSnapshot, PlanTarget, PlanMutationResult, DeferredActionSpecification } from './care-plans.js';
+export { createBloodPressureMeasurementPersistence } from './blood-pressure.js';
+export type { BloodPressureMeasurementPersistence, BloodPressureMeasurementSnapshot, BloodPressureMeasurementId } from './blood-pressure.js';
+export { BloodPressureError, bpInvalid, exactBpKeys, validateBpValues, bpTimestamp } from './blood-pressure-values.js';

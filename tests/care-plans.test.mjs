@@ -11,8 +11,8 @@ test('deferred projection is exact, immutable, deterministic and accepts only th
 });
 test('EH-010 schema and API contain no action/evidence/completion or product route expansion',async()=>{
   const schema=await readFile('packages/db/prisma/schema.prisma','utf8');
-  assert.doesNotMatch(schema,/model (CareAction|BloodPressure|ClinicalEncounter|FollowUpAppointment|RecordCoverage|ClosureAssessment)/);
-  const plan=schema.split('model CarePlan {')[1];assert.doesNotMatch(plan,/updatedAt|completedAt|cancellationReason|templateVersion|ruleVersion/);
+  assert.doesNotMatch(schema,/model (CareAction|ClinicalEncounter|FollowUpAppointment|RecordCoverage|ClosureAssessment)/);
+  const plan=schema.split('model CarePlan {')[1].split('\n}')[0];assert.doesNotMatch(plan,/updatedAt|completedAt|cancellationReason|templateVersion|ruleVersion/);
   assert.match(schema,/enum CarePlanStatus \{\s+DRAFT\s+ACTIVE\s+CANCELLED\s+@@map/);
   const api=await readFile('apps/api/src/app.ts','utf8');assert.doesNotMatch(api,/CarePlan|care-plans/);
 });

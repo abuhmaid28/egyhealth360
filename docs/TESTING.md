@@ -113,3 +113,19 @@ suites remain isolated; latest-schema catalog/demo suites include EH-010.
 Action generation/idempotency, calendar and evidence tests remain deferred acceptance
 gates, not EH-010 PASS claims. All prior tests/audits/Docker/runtime/CI and independent
 second-pass review remain required. See EH-010_VALIDATION.md.
+
+
+## EH-011 BP evidence/API
+
+BP unit tests cover exact flat JSON keys, escaped duplicate keys, lossless integer
+numeric spellings, storage-only bounds and strict calendar/offset/precision parsing.
+BP integration tests cover genuine-session HTTP role/IDOR matrix, minimized projection,
+POST security/media/query/size errors, history pagination/order, HEAD/method/no-store,
+source/actor consistency, immutable SQL/Prisma history, TEMP shadows, audit rollback,
+non-idempotent duplicate preservation and controlled current-authorization races.
+Fresh five-migration deploy and seeded EH-010 upgrade preserve all ten previous domain
+tables, including three CarePlan lifecycle states, session/audit/catalog data and ledger.
+Historical isolated EH-009/EH-010 tests retain their own migration baselines.
+verify-m1-runtime additionally runs the genuine demo-session BP HTTP/provenance probe.
+All existing suites, literal commands, audits, Docker and independent review/CI remain
+mandatory. No action-generation/clinical-eligibility PASS is implied. See EH-011_VALIDATION.md.

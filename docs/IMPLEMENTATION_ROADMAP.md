@@ -19,9 +19,9 @@ Exit gate: Patient/Clinician/Admin can authenticate and protected-resource isola
 
 ## Milestone M2 — Clinical Planning & Evidence
 1. EH-009 (merged / complete): guideline source/template/rule-definition versioning model. See EH-009_CLINICAL_DEFINITION_CONTRACT.md.
-2. EH-010 (current slice): version-pinned CarePlan lifecycle, transactional clinician authorization/audit and deterministic read-only deferred action specification. No CareAction persistence. See EH-010_CARE_PLAN_CONTRACT.md.
+2. EH-010 (merged / complete foundation slice): version-pinned CarePlan lifecycle, transactional clinician authorization/audit and deterministic read-only deferred action specification. No CareAction persistence. See EH-010_CARE_PLAN_CONTRACT.md.
    Durable idempotent action generation remains an explicit follow-up gate after persisted qualifying evidence, calendar arithmetic and occurrence/retrigger semantics are approved; step 2 is not claimed complete by the lifecycle foundation.
-3. Implement BP measurements with provenance.
+3. EH-011 (current slice): immutable paired BP measurements, server-derived entry provenance, Patient self / ACTIVE-assigned Clinician POST and paginated GET/HEAD history. See EH-011_BP_PROVENANCE_CONTRACT.md. Corrections and durable action generation remain gated.
 4. Implement follow-up appointments and clinical encounters.
 5. Implement record-coverage windows and normalized evidence queries.
 
