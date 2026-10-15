@@ -248,3 +248,17 @@ insertion; DELETE/TRUNCATE blocked. One ACTIVE hypertension plan per patient via
 partial unique index; multiple drafts allowed. No completedAt/updatedAt/reason.
 Conceptual COMPLETED and all CareAction/evidence models above remain future work.
 Exact contract: EH-010_CARE_PLAN_CONTRACT.md. Activation is not clinical evidence.
+
+
+## EH-011 executable BP slice
+
+BloodPressureMeasurement contains exactly id, patientId (patient profile FK), systolic,
+diastolic (int32), unit (mmHg), measuredAt, createdAt, recordedByUserId (user FK),
+sourceKind (PATIENT_SELF_ENTRY/CLINICIAN_ENTRY). No clinical plausibility bounds or
+qualification columns. Event time is caller-owned, TIMESTAMPTZ(6) with millisecond
+alignment; receipt time is database-owned TIMESTAMPTZ(3); event <= receipt.
+All UPDATE/DELETE/TRUNCATE rejected. Two RESTRICT FKs, patient/event/id history index
+and actor index. Conceptual data_sources, encounter and CarePlan links are deferred.
+Internal recorder UUID is omitted from HTTP. Identical submissions retain distinct
+identities. Corrections/invalidation are future evidence-consumer gates.
+Exact contract: EH-011_BP_PROVENANCE_CONTRACT.md. No CareAction generation.

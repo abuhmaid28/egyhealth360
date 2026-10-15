@@ -42,6 +42,7 @@ model User {
   auditLogs        AuditLog[]
   sessions         Session[]
   createdCarePlans CarePlan[]
+  recordedBloodPressureMeasurements BloodPressureMeasurement[]
 
   @@unique([id, role], map: "users_id_role_key")
   @@map("users")
@@ -74,6 +75,7 @@ model PatientProfile {
   assignments ClinicianPatientAssignment[]
 
   carePlans   CarePlan[]
+  bloodPressureMeasurements BloodPressureMeasurement[]
 
   // Prisma requires the full composite relation key to be marked unique.
   @@unique([userId, userRole], map: "patient_profiles_user_role_key")
@@ -222,4 +224,28 @@ model CarePlan {
   @@index([ruleDefinitionId, templateId], map: "care_plans_rule_template_idx")
   @@index([createdByUserId], map: "care_plans_creator_idx")
   @@map("care_plans")
+}
+
+
+enum BloodPressureSourceKind {
+  PATIENT_SELF_ENTRY
+  CLINICIAN_ENTRY
+  @@map("bp_measurement_source_kind")
+}
+
+model BloodPressureMeasurement {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  systolic Int
+  diastolic Int
+  unit String @db.Text
+  measuredAt DateTime @map("measured_at") @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  recordedByUserId String @map("recorded_by_user_id") @db.Uuid
+  sourceKind BloodPressureSourceKind @map("source_kind")
+  patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "blood_pressure_measurements_patient_fkey")
+  recorder User @relation(fields: [recordedByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "blood_pressure_measurements_actor_fkey")
+  @@index([patientId, measuredAt(sort: Desc), id(sort: Desc)], map: "blood_pressure_measurements_patient_history_idx")
+  @@index([recordedByUserId], map: "blood_pressure_measurements_actor_idx")
+  @@map("blood_pressure_measurements")
 }

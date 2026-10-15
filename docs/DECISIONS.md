@@ -229,6 +229,26 @@ is not trigger evidence. No new external dependency. One additive migration; pri
 migrations unchanged. FR-020 foundation only; FR-021 incomplete; M2 in progress.
 See EH-010_CARE_PLAN_CONTRACT.md and EH-010_VALIDATION.md.
 
+### ADR-025 — Immutable paired BP evidence and authenticated entry provenance
+Status: Accepted (Issue #20 final approval comment 6183982525)
+
+One nine-field paired BP row, int32 components and mmHg only; caller event time,
+database receipt time, patient-profile FK, authenticated recorder user FK and exactly
+PATIENT_SELF_ENTRY/CLINICIAN_ENTRY. No clinical plausibility bounds, qualifications,
+CarePlan/catalog dependency or external source identity. No correction workflow;
+all UPDATE/DELETE/TRUNCATE prohibited. Later evidence use requires correction-aware
+normalization and selection. Identical POSTs create distinct rows; no idempotency.
+
+Narrow principal-checked creation/history boundary, fixed current-authorization locks,
+final expiry recheck and atomic empty-metadata BP_MEASUREMENT_CREATED audit. SQL guards
+check structure, not authentication, with invoker/trusted search path/qualified lookups.
+POST and paginated GET/HEAD use existing session/Origin/CSRF and uniform object denial.
+Raw duplicate/token validation is confined to BP POST; global parser unchanged.
+HTTP explicitly omits recorder user UUID. No external dependency. One additive migration;
+four historical migrations unchanged. CareAction generation/FR-021 remain deferred;
+below-threshold BP and active plan do not establish clinical eligibility. M2 in progress.
+See EH-011_BP_PROVENANCE_CONTRACT.md and EH-011_VALIDATION.md.
+
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.

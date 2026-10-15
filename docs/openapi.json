@@ -712,6 +712,727 @@
           }
         }
       }
+    },
+    "/api/v1/patients/{patientId}/blood-pressure-measurements": {
+      "post": {
+        "operationId": "bloodPressureSubmit",
+        "summary": "Submit one immutable paired BP measurement",
+        "description": "PATIENT owns target profile; CLINICIAN needs current ACTIVE/null-ended assignment; ADMIN denied. Current session/user/profile/assignment revalidated under bounded transaction locks. Every response no-store. No session renewal. Recorder user UUID is persisted internally but omitted from HTTP. Entry source does not assert device operation, witnessing, medical verification or clinical validity. Exactly four properties, integer JSON tokens only: no strings, fractions, decimal/exponent spellings, negative zero, duplicate keys (including escaped equivalents), coercion, rounding, clamping or inferred defaults. No medical plausibility range. Query strings and Idempotency-Key are rejected. Non-idempotent: identical successful POSTs create distinct rows and audits; no automatic retry. No CarePlan/catalog dependency. No correction workflow or clinical qualification. application/json with optional UTF-8 charset only; identity content encoding only; 16 KiB limit. Parsing/Origin/media errors can precede authentication and reveal no target state.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "patient_profiles.id, never user ID; uppercase hex normalizes; encoded spellings rejected."
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "description": "Exact configured browser application origin, including scheme/port; mandatory even when Fetch Metadata is absent.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sec-Fetch-Site",
+            "in": "header",
+            "required": false,
+            "description": "cross-site rejected. same-site/same-origin/none require exact Origin; absent metadata does not bypass Origin/custom-header checks.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "description": "Canonical session-derived CSRF token obtained from login/me.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BloodPressureSubmission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "New durable measurement; genuine creation audit committed atomically.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BloodPressureMeasurement"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request syntax/query or strict BP field/shape validation failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "REQUEST_INVALID",
+                          "message": "Invalid request."
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "error"
+                      ],
+                      "properties": {
+                        "error": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "code",
+                            "message",
+                            "fields"
+                          ],
+                          "properties": {
+                            "code": {
+                              "const": "BP_MEASUREMENT_INVALID"
+                            },
+                            "message": {
+                              "const": "Invalid blood pressure measurement."
+                            },
+                            "fields": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/BloodPressureFieldError"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid/missing/expired/revoked session or disabled actor; clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Uniform malformed/nonexistent/forbidden patient target. No object existence reason.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method; no patient lookup or content.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD, POST"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body exceeds 16 KiB.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized failure; no credentials, raw database diagnostics or BP payload.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "BP_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata or CSRF verification failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Missing/duplicate/unsupported Content-Type or unsupported Content-Encoding.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "bloodPressureHistory",
+        "summary": "Read authorized paginated BP history",
+        "description": "PATIENT owns target profile; CLINICIAN needs current ACTIVE/null-ended assignment; ADMIN denied. Current session/user/profile/assignment revalidated under bounded transaction locks. Every response no-store. No session renewal. Recorder user UUID is persisted internally but omitted from HTTP. Entry source does not assert device operation, witnessing, medical verification or clinical validity. No body. Only canonical page/pageSize query keys once each; empty/bare queries, unknown/duplicate/encoded/noncanonical values rejected. One statement snapshot supplies total and page, ordered measuredAt DESC,id DESC. Independent page requests are not a frozen snapshot. Authorized empty history is 200 with []. No CSRF required; no audit for reads.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "patient_profiles.id, never user ID; uppercase hex normalizes; encoded spellings rejected."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647,
+              "default": 1
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized history; empty collection permitted.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/BloodPressureMeasurement"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request syntax/query or strict BP field/shape validation failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "REQUEST_INVALID",
+                          "message": "Invalid request."
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "error"
+                      ],
+                      "properties": {
+                        "error": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "code",
+                            "message",
+                            "fields"
+                          ],
+                          "properties": {
+                            "code": {
+                              "const": "BP_MEASUREMENT_INVALID"
+                            },
+                            "message": {
+                              "const": "Invalid blood pressure measurement."
+                            },
+                            "fields": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/BloodPressureFieldError"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid/missing/expired/revoked session or disabled actor; clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Uniform malformed/nonexistent/forbidden patient target. No object existence reason.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method; no patient lookup or content.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD, POST"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body exceeds 16 KiB.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized failure; no credentials, raw database diagnostics or BP payload.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "BP_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "operationId": "bloodPressureHistoryHead",
+        "summary": "Authorize BP history without a response body",
+        "description": "PATIENT owns target profile; CLINICIAN needs current ACTIVE/null-ended assignment; ADMIN denied. Current session/user/profile/assignment revalidated under bounded transaction locks. Every response no-store. No session renewal. Recorder user UUID is persisted internally but omitted from HTTP. Entry source does not assert device operation, witnessing, medical verification or clinical validity. No body. Only canonical page/pageSize query keys once each; empty/bare queries, unknown/duplicate/encoded/noncanonical values rejected. One statement snapshot supplies total and page, ordered measuredAt DESC,id DESC. Independent page requests are not a frozen snapshot. Authorized empty history is 200 with []. No CSRF required; no audit for reads. HEAD executes the same authentication, target and query checks as GET, with no response body for every status.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "patient_profiles.id, never user ID; uppercase hex normalizes; encoded spellings rejected."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647,
+              "default": 1
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized history; empty collection permitted.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request syntax/query or strict BP field/shape validation failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid/missing/expired/revoked session or disabled actor; clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Uniform malformed/nonexistent/forbidden patient target. No object existence reason.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method; no patient lookup or content.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD, POST"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body exceeds 16 KiB.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized failure; no credentials, raw database diagnostics or BP payload.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -805,6 +1526,123 @@
           "email",
           "password"
         ]
+      },
+      "BloodPressureMeasurement": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "patientId",
+          "systolic",
+          "diastolic",
+          "unit",
+          "measuredAt",
+          "createdAt",
+          "sourceKind"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "patientId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "systolic": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647,
+            "description": "Technical int32 limits only; no clinical plausibility claim."
+          },
+          "diastolic": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "unit": {
+            "const": "mmHg"
+          },
+          "measuredAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC instant serialized with exactly three fractional digits."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC instant serialized with exactly three fractional digits."
+          },
+          "sourceKind": {
+            "enum": [
+              "PATIENT_SELF_ENTRY",
+              "CLINICIAN_ENTRY"
+            ]
+          }
+        }
+      },
+      "BloodPressureSubmission": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "systolic",
+          "diastolic",
+          "unit",
+          "measuredAt"
+        ],
+        "properties": {
+          "systolic": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647,
+            "description": "Technical int32 limits only; no clinical plausibility claim."
+          },
+          "diastolic": {
+            "type": "integer",
+            "minimum": -2147483648,
+            "maximum": 2147483647
+          },
+          "unit": {
+            "const": "mmHg"
+          },
+          "measuredAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,3})?(?:Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Real Gregorian date, years 0001..9999 both before/after UTC normalization. Seconds and timezone required. -00:00, leap seconds, 24:00, whitespace, excess precision and future instants rejected. Backdated readings allowed."
+          }
+        }
+      },
+      "BloodPressureFieldError": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field",
+          "reason"
+        ],
+        "properties": {
+          "field": {
+            "enum": [
+              "systolic",
+              "diastolic",
+              "unit",
+              "measuredAt",
+              "$"
+            ]
+          },
+          "reason": {
+            "enum": [
+              "required",
+              "type",
+              "integer",
+              "representation",
+              "format",
+              "precision",
+              "future",
+              "unknown_fields"
+            ]
+          }
+        }
       }
     }
   }

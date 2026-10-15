@@ -193,3 +193,20 @@ FR-021 care-action generation, patient planning, M2 exit gate and EACCE remain i
 
 FR-020 remains foundation only, FR-021 remains incomplete and M2 remains in progress.
 No CareAction/EACCE/clinical eligibility or product HTTP behavior is claimed.
+
+
+## EH-011 BP persistence and API scope
+
+| Requirement | Implemented surface | Required evidence |
+|---|---|---|
+| FR-022 | Patient self / ACTIVE-assigned Clinician POST | Genuine-session HTTP/runtime submission + denial matrix |
+| FR-012 / FR-043 foundation | Authorized paginated BP GET/HEAD | HTTP pagination/projection/ownership; UI remains pending |
+| FR-023 BP only | Immutable entry kind and recorder UUID | Exact internal actor/source, SQL guards and runtime checks |
+| BR-001/002/020 / AC-010/011 | Current ownership/assignment; ADMIN denied | IDOR + both lock-order race tests |
+| ERR-001/006 | Generic target denial; strict no-coercion input | Malformed/encoded paths, lexical/type/time/error tests |
+| BR-005 / FR-060/061 | Immutable BP + distinct atomic creation audit | SQL/Prisma history, rollback, empty metadata tests |
+| BR-018 / ERR-003 | No inferred clinical eligibility/action | Scope assertions and documented deferred gates |
+| NFR-006 | Independent final review | EH-011 validation + final PR record |
+
+FR-012/FR-043 are API/data foundations, FR-023 covers BP entry provenance only;
+FR-021 and M2 remain incomplete. No eligibility/EACCE or correction workflow claimed.
