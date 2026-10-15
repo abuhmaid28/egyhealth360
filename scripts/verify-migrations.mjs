@@ -11,7 +11,7 @@ import { verifyCommand } from './lib/m1-verify.mjs';
 import { createApp } from '../apps/api/dist/app.js';
 import { createPasswordVerifier } from '../apps/api/dist/password.js';
 import { authConfiguration } from '../packages/config/dist/index.js';
-import { createDatabase, createAuthPersistence, createAuthorizationPersistence } from '../packages/db/dist/index.js';
+import { createDatabase, createAuthPersistence, createAuthorizationPersistence, createClinicalCatalogPersistence } from '../packages/db/dist/index.js';
 
 // Intentionally refuses nonempty databases. Use only disposable local/CI DBs.
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -27,7 +27,7 @@ try {
   prisma('deploy');
   prisma('status');
   const before = (await connection.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
-  assert.deepEqual(before.map(row => row.migration_name), ['20261012200810_eh005_identity_core_foundation', '20261013014000_eh006_auth_sessions', '20261013235221_eh009_clinical_definition_foundation']);
+  assert.deepEqual(before.map(row => row.migration_name), ['20261012200810_eh005_identity_core_foundation', '20261013014000_eh006_auth_sessions', '20261013235221_eh009_clinical_definition_foundation', '20261016000000_eh010_care_plan_lifecycle']);
   for (const row of before) assert.equal(row.checksum, createHash('sha256').update(await readFile(`packages/db/prisma/migrations/${row.migration_name}/migration.sql`)).digest('hex'));
   assert.equal(before[0].checksum, 'd8396ed97e82550866a44055f308fb039ed29d6c8cdcdd74d95da060f441749a');
   assert.equal(before[1].checksum, '2fb1704ab28b698bfcf6995f6120cb1b1f0138ab18fcf7db562517f47d53b79b');
@@ -96,6 +96,23 @@ try {
       for (let i = 0; i < allM1.length; i++) assert.deepEqual((await upgrade.query(`SELECT * FROM ${allM1[i]} ORDER BY id`)).rows, seeded[i].rows);
       assert.deepEqual((await seedCommand(env)).created, { users: 0, profiles: 0, assignments: 0 });
       assert.equal((await verifyCommand(env)).result, 'PASS');
+      const catalog = createClinicalCatalogPersistence(env.DATABASE_URL);
+      try { await catalog.bootstrapApprovedCatalog(); } finally { await catalog.close(); }
+      const retainedAll = [...allM1, 'guideline_sources', 'care_plan_templates', 'care_rule_definitions'];
+      const baselineRows = await Promise.all(retainedAll.map(table => upgrade.query(`SELECT * FROM ${table} ORDER BY id`)));
+      const baselineLedger = (await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
+      await cp('packages/db/prisma/migrations/20261016000000_eh010_care_plan_lifecycle', join(directory, 'migrations/20261016000000_eh010_care_plan_lifecycle'), { recursive: true });
+      prisma('deploy', schema, upgradeUrl.toString()); prisma('status', schema, upgradeUrl.toString());
+      for (let i=0;i<retainedAll.length;i++) assert.deepEqual((await upgrade.query(`SELECT * FROM ${retainedAll[i]} ORDER BY id`)).rows, baselineRows[i].rows);
+      const finalLedger=(await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
+      assert.equal(finalLedger.length,4); assert.deepEqual(finalLedger.slice(0,3),baselineLedger);
+      assert.equal(finalLedger[2].checksum,'bf341361c12c50741987ee68d50c4ee7f80637adabc2f52f3fee77aa0c81af2a');
+      prisma('deploy', schema, upgradeUrl.toString()); prisma('status', schema, upgradeUrl.toString());
+      assert.deepEqual((await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows,finalLedger);
+      for (let i=0;i<retainedAll.length;i++) assert.deepEqual((await upgrade.query(`SELECT * FROM ${retainedAll[i]} ORDER BY id`)).rows, baselineRows[i].rows);
+      assert.deepEqual((await seedCommand(env)).created,{users:0,profiles:0,assignments:0});
+      assert.equal((await verifyCommand(env)).result,'PASS');
+      console.log('EH-009 -> EH-010 preserved M1/session/audit/catalog rows and ledger; repeat deploy/status and HTTP M1 PASS');
       console.log('M1 -> EH-009 upgrade preserved all seeded identity/session/audit state and ledger; repeat deploy/status and real HTTP M1 verification passed');
     } finally { await app.close(); await db.close(); await auth.close(); await authorization.close(); }
 

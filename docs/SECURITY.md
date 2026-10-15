@@ -75,3 +75,16 @@ not protect against schema owners/superusers. No executable expressions/eval, pr
 route or authorization change. Trusted explicit CLI only; bounded transactions;
 fixed safe output; atomic empty-metadata system publication/retirement audit.
 See EH-009_CLINICAL_DEFINITION_CONTRACT.md. No patient clinical data is introduced.
+
+## EH-010 care-plan service boundary
+
+No new HTTP endpoint. Every public plan operation revalidates EH-006 session/user/
+role and ACTIVE clinician assignment inside a bounded transaction. User/session/
+profile/assignment/patient/plan/template locks preserve the documented transaction
+contract; no reusable read authorization ticket. Generic object denial and allowlisted
+errors prevent raw diagnostics/resource-existence leakage. Creator derives from the
+validated principal; lifecycle audits are atomic and empty-metadata. SQL triggers
+protect structure/history, not authentication. Exact approved catalog pins, trusted
+search paths and qualified lookups prevent alternative-definition/TEMP bypasses.
+Read-only deferred specifications contain no inferred clinical evidence or action.
+See EH-010_CARE_PLAN_CONTRACT.md for lock order, expiry and ordinary-write limits.

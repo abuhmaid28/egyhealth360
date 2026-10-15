@@ -92,3 +92,18 @@ export function validateClinicalDefinition(value: unknown): ApprovedClinicalDefi
   // Return the canonical deeply frozen value, never the caller's mutable object.
   return definition;
 }
+
+/** Declarations only. Never evidence, eligibility, an occurrence or permission to persist. */
+export function projectDeferredActionSpecification(value: unknown) {
+  const approved = validateClinicalDefinition(value);
+  return freeze({
+    actionType: approved.action.code,
+    triggerRequirement: approved.trigger.kind,
+    timing: {
+      recommendedWindowStart: approved.timing.recommendedWindowStart,
+      dueBy: approved.timing.dueBy,
+    },
+    persistence: 'DEFERRED' as const,
+    unmetGates: ['PERSISTED_QUALIFYING_EVIDENCE', 'APPROVED_CALENDAR_ARITHMETIC', 'OCCURRENCE_RETRIGGER_SELECTION'] as const,
+  });
+}

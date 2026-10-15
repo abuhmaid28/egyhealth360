@@ -99,3 +99,17 @@ all six M1 tables and ledger entries. It repeats deploy/status and actual M1 ver
 Use only an empty disposable target database. Historical checksums remain pinned.
 CI retains all M1/security/health/worker/Docker gates and adds explicit running-container
 clinical bootstrap/repeat verification. See EH-009_VALIDATION.md for observed results.
+
+## EH-010 care-plan foundation
+
+Care-plan unit/integration tests cover exact read-only deferred declarations, nine-field
+schema, explicit version pins, current clinician authorization, lifecycle/terminal
+history, same-state audit silence, ACTIVE uniqueness and concurrency, retirement,
+identity/timestamp immutability, SQL/TEMP bypass attempts and atomic audit rollback.
+Session revocation/user disabling/assignment ending races must wait and fail closed.
+Fresh four-migration and EH-009 upgrade proof retain M1/session/audit/catalog state and
+ledger, repeat deploy/status and actual M1 HTTP verification. Historical baseline
+suites remain isolated; latest-schema catalog/demo suites include EH-010.
+Action generation/idempotency, calendar and evidence tests remain deferred acceptance
+gates, not EH-010 PASS claims. All prior tests/audits/Docker/runtime/CI and independent
+second-pass review remain required. See EH-010_VALIDATION.md.
