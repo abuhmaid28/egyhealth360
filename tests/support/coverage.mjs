@@ -1,6 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { randomUUID, createHash } from 'node:crypto';
-import { PrismaPg } from '@prisma/adapter-pg';
+import { createRequire } from 'node:module';
+const require = createRequire(new URL('../../packages/db/package.json', import.meta.url));
+const { PrismaPg } = require('@prisma/adapter-pg');
 import { PrismaClient } from '../../packages/db/dist/generated/prisma/client.js';
 import { isolatedFollowup } from './followup.mjs';
 import { createNormalizedEvidencePersistence } from '../../packages/db/dist/index.js';
