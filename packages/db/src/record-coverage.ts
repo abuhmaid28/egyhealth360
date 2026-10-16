@@ -236,7 +236,11 @@ export async function internalCreateRecordCoverageWindow(
   } catch (error) {
     if (error instanceof RecordCoverageError) throw error;
     const msg = error instanceof Error ? error.message : String(error);
-    if (msg.includes('record_coverage_windows_scope_guard') || msg.includes('record_coverage_windows_patient_fkey')) {
+    if (
+      msg.includes('record_coverage_windows_scope_guard') ||
+      msg.includes('record_coverage_windows_patient_fkey') ||
+      msg.includes('Invalid patient profile')
+    ) {
       throw new RecordCoverageError('COVERAGE_NOT_FOUND', 'Patient profile not found');
     }
     if (msg.includes('record_coverage_windows_source_reference_check')) {

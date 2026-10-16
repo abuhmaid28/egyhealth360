@@ -224,21 +224,21 @@ test('EH-013 factual candidate extraction and encounter-anchored inclusion', () 
   isolatedCoverage(async (f) => {
     // Evidence 1: BP measurement inside interval
     const bpInside = await f.write(f.actor, {
-      measuredAt: '2026-03-01T10:00:00.000Z',
+      measuredAt: '2025-03-01T10:00:00.000Z',
       systolic: 130,
       diastolic: 85,
     });
 
     // Evidence 2: BP measurement outside interval (older)
     const bpOutside = await f.write(f.actor, {
-      measuredAt: '2025-12-01T10:00:00.000Z',
+      measuredAt: '2024-12-01T10:00:00.000Z',
       systolic: 140,
       diastolic: 90,
     });
 
     // Evidence 3: Encounter inside interval, associated with bpOutside!
     const encInside = await f.encounter(f.actor, {
-      occurredAt: '2026-03-01T10:30:00.000Z',
+      occurredAt: '2025-03-01T10:30:00.000Z',
     });
     await f.encounters.associateBloodPressureMeasurement(f.actor, {
       patientId: f.patientId,
@@ -248,7 +248,7 @@ test('EH-013 factual candidate extraction and encounter-anchored inclusion', () 
 
     // Evidence 4: Encounter outside interval, associated with bpInside!
     const encOutside = await f.encounter(f.actor, {
-      occurredAt: '2025-12-01T10:30:00.000Z',
+      occurredAt: '2024-12-01T10:30:00.000Z',
     });
     await f.encounters.associateBloodPressureMeasurement(f.actor, {
       patientId: f.patientId,
@@ -258,12 +258,12 @@ test('EH-013 factual candidate extraction and encounter-anchored inclusion', () 
 
     // Evidence 5: Operational appointment inside interval (SCHEDULED)
     const appScheduled = await f.appointment(f.actor, {
-      scheduledAt: '2026-04-01T09:00:00.000Z',
+      scheduledAt: '2028-04-01T09:00:00.000Z',
     });
 
     // Evidence 6: Operational appointment inside interval (CANCELLED)
     const appCancelled = await f.appointment(f.actor, {
-      scheduledAt: '2026-04-15T09:00:00.000Z',
+      scheduledAt: '2028-04-15T09:00:00.000Z',
     });
     await f.appointments.cancelFollowUpAppointment(f.actor, {
       patientId: f.patientId,
@@ -272,17 +272,17 @@ test('EH-013 factual candidate extraction and encounter-anchored inclusion', () 
 
     // Coverage window
     await f.insertCoverage({
-      startAt: '2026-01-01T00:00:00.000Z',
-      endAt: '2026-06-01T00:00:00.000Z',
+      startAt: '2025-01-01T00:00:00.000Z',
+      endAt: '2029-01-01T00:00:00.000Z',
       coverageStatus: 'COMPLETE',
     });
 
-    // Query interval: [2026-01-01, 2026-06-01)
+    // Query interval: [2025-01-01, 2029-01-01)
     const result = await f.normalized.getNormalizedPatientEvidence(f.actor, {
       patientId: f.patientId,
       queryInterval: {
-        startAt: '2026-01-01T00:00:00.000Z',
-        endAt: '2026-06-01T00:00:00.000Z',
+        startAt: '2025-01-01T00:00:00.000Z',
+        endAt: '2029-01-01T00:00:00.000Z',
       },
       partition: {
         sourceType: 'SYNTHETIC_BENCHMARK',
@@ -323,20 +323,20 @@ test('EH-013 factual candidate extraction and encounter-anchored inclusion', () 
 test('EH-013 single-statement snapshot proof: query-counting and cross-table consistency', () =>
   isolatedCoverage(async (f) => {
     // Populate baseline evidence across multiple domain tables
-    await f.write(f.actor, { measuredAt: '2026-02-01T00:00:00.000Z' });
-    await f.encounter(f.actor, { occurredAt: '2026-02-01T00:00:00.000Z' });
-    await f.appointment(f.actor, { scheduledAt: '2026-03-01T00:00:00.000Z' });
+    await f.write(f.actor, { measuredAt: '2025-02-01T00:00:00.000Z' });
+    await f.encounter(f.actor, { occurredAt: '2025-02-01T00:00:00.000Z' });
+    await f.appointment(f.actor, { scheduledAt: '2028-03-01T00:00:00.000Z' });
     await f.insertCoverage({
-      startAt: '2026-01-01T00:00:00.000Z',
-      endAt: '2026-06-01T00:00:00.000Z',
+      startAt: '2025-01-01T00:00:00.000Z',
+      endAt: '2029-01-01T00:00:00.000Z',
       coverageStatus: 'COMPLETE',
     });
 
     const queryInput = {
       patientId: f.patientId,
       queryInterval: {
-        startAt: '2026-01-01T00:00:00.000Z',
-        endAt: '2026-06-01T00:00:00.000Z',
+        startAt: '2025-01-01T00:00:00.000Z',
+        endAt: '2029-01-01T00:00:00.000Z',
       },
       partition: {
         sourceType: 'SYNTHETIC_BENCHMARK',
