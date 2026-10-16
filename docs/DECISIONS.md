@@ -255,6 +255,15 @@ Status: Accepted (Issue #22 final approval 6204890129)
 
 Three narrow models: SCHEDULED->CANCELLED operational appointments, immutable encounters, immutable BP associations. HTN_BP_FOLLOWUP is purpose only. No provider allocation/participant claim, rule/plan/action FK or clinical qualification. Preserve BP rows and guards; composite same-patient FKs plus unique BP prevent cross-patient/ambiguous association. Prisma requires a redundant composite unique for its one-to-one relation. Current session/user/profile/assignment transactions and final expiry recheck; genuine empty-metadata atomic audit. Patient own reads; assigned clinician writes; Admin denied. Non-idempotent creation; authorized cancellation/exact-pair retries preserve provenance without events. One additive migration, no external dependency. Corrected association-reference GET/HEAD ends blood-pressure-associations. CareAction/FR-021 deferred, FR-024 foundation-only, AC-004/005 unsatisfied, M2 in progress; EH-013 owns coverage/normalization. Exact contract: EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md.
 
+### ADR-027 — Record coverage windows and normalized evidence queries
+Status: Accepted (Issue #24 final approval comment 6223961083)
+
+One new model RecordCoverageWindow with immutable machine-process provenance. Source type is strictly SYNTHETIC_BENCHMARK; sourceReference is required opaque string (1..128 chars, regex ^[A-Za-z0-9_.-]+$). Status is COMPLETE | INCOMPLETE | UNKNOWN. No recordedByUserId; no DataSource table. Chronology check startAt < endAt. Assertion uniqueness on (patient_id, source_type, source_reference, status, start_at, end_at). Immutability enforced by database trigger rejecting all UPDATE, DELETE, and TRUNCATE.
+Internal insert-missing helper performs ON CONFLICT DO NOTHING without application audit events because EH-013 is an internal machine slice with no public HTTP endpoints.
+Coverage interval normalization is pure, in-memory, deterministic, and strictly partitioned by (patientId, sourceType, sourceReference). Overlap resolution precedence is INCOMPLETE > UNKNOWN > COMPLETE. Contributing raw window IDs are preserved on every segment. Adjacent identical-status intervals coalesce. Gaps with no assertions remain unasserted (silent missingness preserved; never synthesized as UNKNOWN).
+Normalized evidence queries execute as a single-statement transactional snapshot returning canonical coverage intervals, raw BP measurements, encounter-anchored BP candidates, and operational appointment candidates without clinical qualification. Zero HTTP endpoints.
+See EH-013_COVERAGE_NORMALIZED_EVIDENCE_CONTRACT.md and EH-013_VALIDATION.md.
+
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.

@@ -106,3 +106,17 @@ Corrections and clinical evidence selection remain separately gated. See EH-011 
 ## EH-012 follow-up and encounter authorization
 
 Patient own reads only; current ACTIVE-assigned clinician reads/writes; Admin denied. All operations revalidate principal/session/user/profile/assignment under the EH-010/EH-011 lock discipline; target appointment lock or encounter-then-BP locks follow authorization. Final clock-expiry check, bounded READ COMMITTED, no cached ticket/automatic retry. Internal actors are omitted from HTTP. Uniform nested target denial precedes conflict disclosure. Scoped strict JSON, existing Origin/CSRF, no-store/HEAD/no conditional caching. Four genuine atomic audits contain {} only; no read/denied/no-op noise. Composite FKs enforce patient consistency, unique BP enforces cardinality, invoker/trusted-path/qualified guards protect structural provenance and immutable history against ordinary SQL/TEMP bypasses. Guards do not authenticate sessions or resist schema owners. See EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md.
+
+## EH-013 record coverage and normalized evidence query authorization
+
+RecordCoverageWindow persistence has no public write route. Machine processes (demo/bootstrap, synthetic benchmark fixtures) insert coverage assertions internally.
+Normalized evidence queries use an authorized persistence wrapper enforcing the standard EgyHealth 360 authorization matrix:
+- Patient role: own-data read only (`principal.userId === target.userId`).
+- Clinician role: read requires an active clinician-patient assignment (`clinician_patient_assignments.status === 'ACTIVE'`).
+- Admin role: denied.
+- Unassigned clinician: denied.
+- Cross-patient access: denied with uniform access denial.
+Authorization is revalidated transactionally with session and assignment validation.
+Immutability is enforced at the database layer via triggers rejecting UPDATE, DELETE, and TRUNCATE.
+No public HTTP routes are added in EH-013; `docs/openapi.json` is byte-for-byte unchanged.
+
