@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
+import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import {
   normalizeCoverageIntervals,
@@ -287,9 +288,56 @@ test('EH-013 architectural boundary: @egyhealth/db does not export internal unau
   assert.equal(dbExports.PrismaClient, undefined);
 });
 
+async function getApiSourceFiles(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const fullPath = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await getApiSourceFiles(fullPath)));
+    } else if (entry.isFile() && (entry.name.endsWith('.ts') || entry.name.endsWith('.tsx'))) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
 test('EH-013 architectural boundary: apps/api does not import internal coverage writer or raw reader', async () => {
-  const apiSrc = await readFile('apps/api/src/app.ts', 'utf8');
-  assert.doesNotMatch(apiSrc, /record-coverage|internalGetNormalizedPatientEvidence|createRecordCoverageWindow/);
+  const apiFiles = await getApiSourceFiles('apps/api/src');
+  assert.ok(apiFiles.length >= 7, 'Expected at least 7 source files in apps/api/src');
+
+  const forbiddenIdentifiers = [
+    'internalCreateRecordCoverageWindow',
+    'internalGetNormalizedPatientEvidence',
+    'internalExecuteEvidenceSnapshot',
+  ];
+
+  const forbiddenModuleImports = [
+    /from\s+['"][^'"]*record-coverage(?:[.]js)?['"]/,
+    /from\s+['"][^'"]*normalized-evidence(?:[.]js)?['"]/,
+    /import\s+['"][^'"]*record-coverage(?:[.]js)?['"]/,
+    /import\s+['"][^'"]*normalized-evidence(?:[.]js)?['"]/,
+    /require\(['"][^'"]*record-coverage(?:[.]js)?['"]\)/,
+    /require\(['"][^'"]*normalized-evidence(?:[.]js)?['"]\)/,
+  ];
+
+  for (const file of apiFiles) {
+    const content = await readFile(file, 'utf8');
+
+    for (const identifier of forbiddenIdentifiers) {
+      assert.ok(
+        !content.includes(identifier),
+        `apps/api source file ${file} must not reference internal primitive ${identifier}`
+      );
+    }
+
+    for (const pattern of forbiddenModuleImports) {
+      assert.ok(
+        !pattern.test(content),
+        `apps/api source file ${file} must not bypass public package boundary via internal module import ${pattern}`
+      );
+    }
+  }
 });
 
 test('EH-013 research integrity and candidate factual contracts', () => {
