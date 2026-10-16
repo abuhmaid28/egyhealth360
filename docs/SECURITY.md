@@ -102,3 +102,7 @@ One atomic BP_MEASUREMENT_CREATED event uses the real actor and empty metadata;
 reads/rejections append none. SQL invoker guards and qualified lookups protect ordinary
 structural provenance and reject all BP UPDATE/DELETE/TRUNCATE, including TEMP bypasses.
 Corrections and clinical evidence selection remain separately gated. See EH-011 contract.
+
+## EH-012 follow-up and encounter authorization
+
+Patient own reads only; current ACTIVE-assigned clinician reads/writes; Admin denied. All operations revalidate principal/session/user/profile/assignment under the EH-010/EH-011 lock discipline; target appointment lock or encounter-then-BP locks follow authorization. Final clock-expiry check, bounded READ COMMITTED, no cached ticket/automatic retry. Internal actors are omitted from HTTP. Uniform nested target denial precedes conflict disclosure. Scoped strict JSON, existing Origin/CSRF, no-store/HEAD/no conditional caching. Four genuine atomic audits contain {} only; no read/denied/no-op noise. Composite FKs enforce patient consistency, unique BP enforces cardinality, invoker/trusted-path/qualified guards protect structural provenance and immutable history against ordinary SQL/TEMP bypasses. Guards do not authenticate sessions or resist schema owners. See EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md.

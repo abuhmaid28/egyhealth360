@@ -130,3 +130,7 @@ authenticate callers and cannot protect against schema owners disabling them. SQ
 have PostgreSQL type-conversion behavior; the HTTP boundary preserves the approved raw
 lexical contract. History pages from different requests are not one frozen snapshot.
 No product UI or same-origin browser routing expansion is claimed.
+
+## Final merge annotation
+
+PR #21 squash-merged as `c24b7c487dc7d56624e8dd3cfa95ba92afa963a5`; Issue #20 closed. Final implementation head `29d28929b5dcd6310e6386d0fa9bba536d342daf`, CI run `38735336245` SUCCESS, independent review `5533350769` PASS. [Final merge record](https://github.com/abuhmaid28/egyhealth360/issues/20#issuecomment-6192622574). EH-011 is complete. Pending-delivery wording above is historical; these are not newly rerun results. M2 remains in progress.

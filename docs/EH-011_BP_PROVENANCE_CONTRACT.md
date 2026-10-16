@@ -1,6 +1,6 @@
 # EH-011 BP measurement and entry provenance contract
 
-Approved by [Issue #20 comment 6183982525](https://github.com/abuhmaid28/egyhealth360/issues/20#issuecomment-6183982525), baseline `9ed0d2e09a06fb1e63ae30e86678088ff805c5b8`. ADR-025 records the decision. EH-009 and EH-010 are complete; EH-011 is the current slice; M2 remains IN PROGRESS.
+Approved by [Issue #20 comment 6183982525](https://github.com/abuhmaid28/egyhealth360/issues/20#issuecomment-6183982525), baseline `9ed0d2e09a06fb1e63ae30e86678088ff805c5b8`. ADR-025 records the decision. EH-009 and EH-010 are complete; EH-011 is merged and complete at `c24b7c487dc7d56624e8dd3cfa95ba92afa963a5`; M2 remains IN PROGRESS.
 
 ## Evidence model
 
@@ -63,3 +63,7 @@ FR-022 is implemented only for the tested HTTP submission behavior. FR-012/FR-04
 ## Migration and validation
 
 Exactly one additive migration: 20261017000000_eh011_bp_provenance. Enum, nine-column table, PK, two RESTRICT FKs, four CHECKs, history/actor indexes, eh011_guard_bp_insert / eh011_reject_bp_mutation and insertion/statement-history triggers. No reference or BP seed rows, external dependencies or historical migration changes. Fresh/upgrade/redeploy, existing regressions, actual HTTP/runtime, both audits, Docker, independent review and final-head CI are required. Observed evidence belongs in EH-011_VALIDATION.md.
+
+## EH-012 additive relationship annotation
+
+EH-012 adds an immutable association table and supporting composite BP unique key; no BP row, field, source or historical migration changes. EH-011 exclusions describe its original slice, not a prohibition on separately approved later models. See EH-012 contract.

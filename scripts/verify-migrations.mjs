@@ -11,7 +11,7 @@ import { verifyCommand } from './lib/m1-verify.mjs';
 import { createApp } from '../apps/api/dist/app.js';
 import { createPasswordVerifier } from '../apps/api/dist/password.js';
 import { authConfiguration } from '../packages/config/dist/index.js';
-import { createDatabase, createAuthPersistence, createAuthorizationPersistence, createClinicalCatalogPersistence, createCarePlanPersistence } from '../packages/db/dist/index.js';
+import { createDatabase, createAuthPersistence, createAuthorizationPersistence, createClinicalCatalogPersistence, createCarePlanPersistence, createBloodPressureMeasurementPersistence } from '../packages/db/dist/index.js';
 
 // Intentionally refuses nonempty databases. Use only disposable local/CI DBs.
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -27,7 +27,7 @@ try {
   prisma('deploy');
   prisma('status');
   const before = (await connection.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
-  assert.deepEqual(before.map(row => row.migration_name), ['20261012200810_eh005_identity_core_foundation', '20261013014000_eh006_auth_sessions', '20261013235221_eh009_clinical_definition_foundation', '20261016000000_eh010_care_plan_lifecycle', '20261017000000_eh011_bp_provenance']);
+  assert.deepEqual(before.map(row => row.migration_name), ['20261012200810_eh005_identity_core_foundation', '20261013014000_eh006_auth_sessions', '20261013235221_eh009_clinical_definition_foundation', '20261016000000_eh010_care_plan_lifecycle', '20261017000000_eh011_bp_provenance', '20261018000000_eh012_followup_encounters']);
   for (const row of before) assert.equal(row.checksum, createHash('sha256').update(await readFile(`packages/db/prisma/migrations/${row.migration_name}/migration.sql`)).digest('hex'));
   assert.equal(before[0].checksum, 'd8396ed97e82550866a44055f308fb039ed29d6c8cdcdd74d95da060f441749a');
   assert.equal(before[1].checksum, '2fb1704ab28b698bfcf6995f6120cb1b1f0138ab18fcf7db562517f47d53b79b');
@@ -140,6 +140,32 @@ try {
       assert.deepEqual((await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows,eh011Ledger);
       for(let i=0;i<eh010Tables.length;i++)assert.deepEqual((await upgrade.query(`SELECT * FROM ${eh010Tables[i]} ORDER BY id`)).rows,eh010Rows[i].rows);
       assert.equal((await verifyCommand(env)).result,'PASS');
+      // Populate retained EH-011 evidence/provenance before the additive EH-012 upgrade.
+      const bp=createBloodPressureMeasurementPersistence(env.DATABASE_URL);
+      const freshHash=randomBytes(32).toString('hex');
+      const clinicianActor=await auth.createSession({userId:clinicianUser.id,verifiedHash:clinicianUser.password_hash,tokenHash:freshHash,previousHash:null});
+      const patientUser=(await upgrade.query("SELECT * FROM users WHERE email='eh-m1-patient-a@example.invalid'")).rows[0];
+      const patientHash=randomBytes(32).toString('hex');
+      const patientActor=await auth.createSession({userId:patientUser.id,verifiedHash:patientUser.password_hash,tokenHash:patientHash,previousHash:null});
+      try {
+        for(const principal of [clinicianActor,patientActor])await bp.createBloodPressureMeasurement(principal,{patientId,systolic:128,diastolic:82,unit:'mmHg',measuredAt:'2024-02-29T00:00:00.000Z'});
+      }finally{await bp.close();await auth.revoke(freshHash);await auth.revoke(patientHash);}
+      const eh011Tables=[...eh010Tables,'blood_pressure_measurements'];
+      const eh011Rows=await Promise.all(eh011Tables.map(table=>upgrade.query(`SELECT * FROM public.${table} ORDER BY id`)));
+      const oldEh011Ledger=(await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
+      await cp('packages/db/prisma/migrations/20261018000000_eh012_followup_encounters',join(directory,'migrations/20261018000000_eh012_followup_encounters'),{recursive:true});
+      prisma('deploy',schema,upgradeUrl.toString());prisma('status',schema,upgradeUrl.toString());
+      const eh012Ledger=(await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
+      assert.equal(eh012Ledger.length,6);assert.deepEqual(eh012Ledger.slice(0,5),oldEh011Ledger);
+      assert.equal(eh012Ledger[4].checksum,'5383cc5f606a73959194f0615ac6525b211a8719d41ef2dc1542a6205bdc3e21');
+      for(const table of ['follow_up_appointments','clinical_encounters','encounter_bp_associations'])assert.equal((await upgrade.query(`SELECT count(*)::int n FROM public.${table}`)).rows[0].n,0);
+      for(let i=0;i<eh011Tables.length;i++)assert.deepEqual((await upgrade.query(`SELECT * FROM public.${eh011Tables[i]} ORDER BY id`)).rows,eh011Rows[i].rows);
+      prisma('deploy',schema,upgradeUrl.toString());prisma('status',schema,upgradeUrl.toString());
+      assert.deepEqual((await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows,eh012Ledger);
+      for(let i=0;i<eh011Tables.length;i++)assert.deepEqual((await upgrade.query(`SELECT * FROM public.${eh011Tables[i]} ORDER BY id`)).rows,eh011Rows[i].rows);
+      assert.equal((await verifyCommand(env)).result,'PASS');
+      assert.deepEqual((await seedCommand(env)).created,{users:0,profiles:0,assignments:0});
+      console.log('EH-011 -> EH-012: eleven retained domain tables, BP provenance and ledger unchanged; new tables empty; repeat deploy/status and M1 HTTP PASS');
       console.log('EH-010 -> EH-011: all ten M1/catalog/plan tables and ledger preserved; no BP seed; repeat deploy/status and real M1 HTTP PASS');
       console.log('EH-009 -> EH-010 preserved M1/session/audit/catalog rows and ledger; repeat deploy/status and HTTP M1 PASS');
       console.log('M1 -> EH-009 upgrade preserved all seeded identity/session/audit state and ledger; repeat deploy/status and real HTTP M1 verification passed');

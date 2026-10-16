@@ -1433,6 +1433,2414 @@
           }
         }
       }
+    },
+    "/api/v1/patients/{patientId}/follow-up-appointments": {
+      "post": {
+        "operationId": "followUpAppointmentCreate",
+        "summary": "followUpAppointment post",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "description": "Exact configured browser application origin, including scheme/port; mandatory even when Fetch Metadata is absent.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sec-Fetch-Site",
+            "in": "header",
+            "required": false,
+            "description": "cross-site rejected. same-site/same-origin/none require exact Origin; absent metadata does not bypass Origin/custom-header checks.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "description": "Canonical session-derived CSRF token obtained from login/me.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
+          }
+        ],
+        "description": "Operational evidence foundation only. No CareAction/rule/CarePlan link, eligibility, qualification, normalized evidence or EACCE result. HTN_BP_FOLLOWUP is purpose only. PATIENT reads own records; CLINICIAN requires current ACTIVE/null-ended assignment; ADMIN denied. Writes are CLINICIAN only. Every operation revalidates current session/user/profile/assignment under bounded locks with final session-expiry recheck. Internal creator/recorder/canceller UUIDs are omitted. All responses no-store, no ETag/Last-Modified/conditional 304, no renewal. Malformed/nonexistent/forbidden/cross-patient targets share generic 404. Uppercase UUID-v4 hex normalizes; encoded/alternate target forms rejected. Exact application/json (optional UTF-8 charset), one Content-Type, identity encoding only, 16 KiB, exact configured Origin/Fetch Metadata/session-bound CSRF. Reject all queries including bare ?, Idempotency-Key, duplicate decoded keys, missing/unknown fields, arrays/primitives/null; parser stays EH-012 scoped. Syntax/Origin/media errors can precede authentication and reveal no target state. Non-idempotent creation: identical accepted submissions create distinct rows/events; no automatic retry. ",
+        "responses": {
+          "403": {
+            "description": "Origin/Fetch Metadata or CSRF failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Missing/duplicate/unsupported Content-Type, charset or content encoding.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request framing/syntax/query/body-shape failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "REQUEST_INVALID",
+                          "message": "Invalid request."
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "error"
+                      ],
+                      "properties": {
+                        "error": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "code",
+                            "message",
+                            "fields"
+                          ],
+                          "properties": {
+                            "code": {
+                              "const": "FOLLOW_UP_APPOINTMENT_INVALID"
+                            },
+                            "message": {
+                              "const": "Invalid follow-up appointment."
+                            },
+                            "fields": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/ClinicalEvidenceFieldError"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Uniform safe failure; 401 clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method without target-resource lookup; no CORS grant.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD, POST"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized service failure; no payload/driver/credential disclosure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "FOLLOW_UP_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created atomically with genuine empty-metadata audit.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpAppointment"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowUpAppointmentCreation"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "followUpAppointmentHistory",
+        "summary": "followUpAppointment get",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647,
+              "default": 1
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          }
+        ],
+        "description": "Operational evidence foundation only. No CareAction/rule/CarePlan link, eligibility, qualification, normalized evidence or EACCE result. HTN_BP_FOLLOWUP is purpose only. PATIENT reads own records; CLINICIAN requires current ACTIVE/null-ended assignment; ADMIN denied. Writes are CLINICIAN only. Every operation revalidates current session/user/profile/assignment under bounded locks with final session-expiry recheck. Internal creator/recorder/canceller UUIDs are omitted. All responses no-store, no ETag/Last-Modified/conditional 304, no renewal. Malformed/nonexistent/forbidden/cross-patient targets share generic 404. Uppercase UUID-v4 hex normalizes; encoded/alternate target forms rejected. No request body or transfer encoding. Only canonical page/pageSize once each, default 1/20, max page 2147483647 and pageSize 100. Reject bare/empty/unknown/duplicate/encoded/noncanonical queries. Count/page share one SQL statement snapshot; independent pages can observe changes. Ordered scheduledAt DESC,id DESC. Authorized empty history returns 200 []. No read audit. ",
+        "responses": {
+          "400": {
+            "description": "Request framing/syntax/query/body-shape failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Uniform safe failure; 401 clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method without target-resource lookup; no CORS grant.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD, POST"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized service failure; no payload/driver/credential disclosure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "FOLLOW_UP_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Authorized paginated raw records.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FollowUpAppointment"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "operationId": "followUpAppointmentHistoryHead",
+        "summary": "followUpAppointment head",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647,
+              "default": 1
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          }
+        ],
+        "description": "Operational evidence foundation only. No CareAction/rule/CarePlan link, eligibility, qualification, normalized evidence or EACCE result. HTN_BP_FOLLOWUP is purpose only. PATIENT reads own records; CLINICIAN requires current ACTIVE/null-ended assignment; ADMIN denied. Writes are CLINICIAN only. Every operation revalidates current session/user/profile/assignment under bounded locks with final session-expiry recheck. Internal creator/recorder/canceller UUIDs are omitted. All responses no-store, no ETag/Last-Modified/conditional 304, no renewal. Malformed/nonexistent/forbidden/cross-patient targets share generic 404. Uppercase UUID-v4 hex normalizes; encoded/alternate target forms rejected. No request body or transfer encoding. Only canonical page/pageSize once each, default 1/20, max page 2147483647 and pageSize 100. Reject bare/empty/unknown/duplicate/encoded/noncanonical queries. Count/page share one SQL statement snapshot; independent pages can observe changes. Ordered scheduledAt DESC,id DESC. Authorized empty history returns 200 []. No read audit. HEAD performs identical GET checks and returns no body for every status.",
+        "responses": {
+          "400": {
+            "description": "Request framing/syntax/query/body-shape failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Uniform safe failure; 401 clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method without target-resource lookup; no CORS grant.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD, POST"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized service failure; no payload/driver/credential disclosure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Authorized paginated raw records.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/patients/{patientId}/follow-up-appointments/{appointmentId}/cancel": {
+      "post": {
+        "operationId": "followUpAppointmentCancel",
+        "summary": "followUpAppointmentCancel post",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "description": "Exact configured browser application origin, including scheme/port; mandatory even when Fetch Metadata is absent.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sec-Fetch-Site",
+            "in": "header",
+            "required": false,
+            "description": "cross-site rejected. same-site/same-origin/none require exact Origin; absent metadata does not bypass Origin/custom-header checks.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "description": "Canonical session-derived CSRF token obtained from login/me.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
+          }
+        ],
+        "description": "Operational evidence foundation only. No CareAction/rule/CarePlan link, eligibility, qualification, normalized evidence or EACCE result. HTN_BP_FOLLOWUP is purpose only. PATIENT reads own records; CLINICIAN requires current ACTIVE/null-ended assignment; ADMIN denied. Writes are CLINICIAN only. Every operation revalidates current session/user/profile/assignment under bounded locks with final session-expiry recheck. Internal creator/recorder/canceller UUIDs are omitted. All responses no-store, no ETag/Last-Modified/conditional 304, no renewal. Malformed/nonexistent/forbidden/cross-patient targets share generic 404. Uppercase UUID-v4 hex normalizes; encoded/alternate target forms rejected. Exact application/json (optional UTF-8 charset), one Content-Type, identity encoding only, 16 KiB, exact configured Origin/Fetch Metadata/session-bound CSRF. Reject all queries including bare ?, Idempotency-Key, duplicate decoded keys, missing/unknown fields, arrays/primitives/null; parser stays EH-012 scoped. Syntax/Origin/media errors can precede authentication and reveal no target state. SCHEDULED->CANCELLED only; already cancelled is authorized no-op retaining original actor/time, no audit. Passing schedule does not infer MISSED/COMPLETED. ",
+        "responses": {
+          "403": {
+            "description": "Origin/Fetch Metadata or CSRF failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Missing/duplicate/unsupported Content-Type, charset or content encoding.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request framing/syntax/query/body-shape failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Uniform safe failure; 401 clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method without target-resource lookup; no CORS grant.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "POST"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized service failure; no payload/driver/credential disclosure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "FOLLOW_UP_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained cancelled record.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpAppointment"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/patients/{patientId}/clinical-encounters": {
+      "post": {
+        "operationId": "clinicalEncounterCreate",
+        "summary": "clinicalEncounter post",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "description": "Exact configured browser application origin, including scheme/port; mandatory even when Fetch Metadata is absent.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sec-Fetch-Site",
+            "in": "header",
+            "required": false,
+            "description": "cross-site rejected. same-site/same-origin/none require exact Origin; absent metadata does not bypass Origin/custom-header checks.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "description": "Canonical session-derived CSRF token obtained from login/me.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
+          }
+        ],
+        "description": "Operational evidence foundation only. No CareAction/rule/CarePlan link, eligibility, qualification, normalized evidence or EACCE result. HTN_BP_FOLLOWUP is purpose only. PATIENT reads own records; CLINICIAN requires current ACTIVE/null-ended assignment; ADMIN denied. Writes are CLINICIAN only. Every operation revalidates current session/user/profile/assignment under bounded locks with final session-expiry recheck. Internal creator/recorder/canceller UUIDs are omitted. All responses no-store, no ETag/Last-Modified/conditional 304, no renewal. Malformed/nonexistent/forbidden/cross-patient targets share generic 404. Uppercase UUID-v4 hex normalizes; encoded/alternate target forms rejected. Exact application/json (optional UTF-8 charset), one Content-Type, identity encoding only, 16 KiB, exact configured Origin/Fetch Metadata/session-bound CSRF. Reject all queries including bare ?, Idempotency-Key, duplicate decoded keys, missing/unknown fields, arrays/primitives/null; parser stays EH-012 scoped. Syntax/Origin/media errors can precede authentication and reveal no target state. Non-idempotent creation: identical accepted submissions create distinct rows/events; no automatic retry. ",
+        "responses": {
+          "403": {
+            "description": "Origin/Fetch Metadata or CSRF failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Missing/duplicate/unsupported Content-Type, charset or content encoding.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request framing/syntax/query/body-shape failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "REQUEST_INVALID",
+                          "message": "Invalid request."
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "error"
+                      ],
+                      "properties": {
+                        "error": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": [
+                            "code",
+                            "message",
+                            "fields"
+                          ],
+                          "properties": {
+                            "code": {
+                              "const": "CLINICAL_ENCOUNTER_INVALID"
+                            },
+                            "message": {
+                              "const": "Invalid clinical encounter."
+                            },
+                            "fields": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/components/schemas/ClinicalEvidenceFieldError"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Uniform safe failure; 401 clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method without target-resource lookup; no CORS grant.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD, POST"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized service failure; no payload/driver/credential disclosure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "CLINICAL_ENCOUNTER_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created atomically with genuine empty-metadata audit.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ClinicalEncounter"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClinicalEncounterCreation"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "clinicalEncounterHistory",
+        "summary": "clinicalEncounter get",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647,
+              "default": 1
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          }
+        ],
+        "description": "Operational evidence foundation only. No CareAction/rule/CarePlan link, eligibility, qualification, normalized evidence or EACCE result. HTN_BP_FOLLOWUP is purpose only. PATIENT reads own records; CLINICIAN requires current ACTIVE/null-ended assignment; ADMIN denied. Writes are CLINICIAN only. Every operation revalidates current session/user/profile/assignment under bounded locks with final session-expiry recheck. Internal creator/recorder/canceller UUIDs are omitted. All responses no-store, no ETag/Last-Modified/conditional 304, no renewal. Malformed/nonexistent/forbidden/cross-patient targets share generic 404. Uppercase UUID-v4 hex normalizes; encoded/alternate target forms rejected. No request body or transfer encoding. Only canonical page/pageSize once each, default 1/20, max page 2147483647 and pageSize 100. Reject bare/empty/unknown/duplicate/encoded/noncanonical queries. Count/page share one SQL statement snapshot; independent pages can observe changes. Ordered occurredAt DESC,id DESC. Authorized empty history returns 200 []. No read audit. ",
+        "responses": {
+          "400": {
+            "description": "Request framing/syntax/query/body-shape failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Uniform safe failure; 401 clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method without target-resource lookup; no CORS grant.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD, POST"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized service failure; no payload/driver/credential disclosure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "CLINICAL_ENCOUNTER_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Authorized paginated raw records.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ClinicalEncounter"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "operationId": "clinicalEncounterHistoryHead",
+        "summary": "clinicalEncounter head",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647,
+              "default": 1
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          }
+        ],
+        "description": "Operational evidence foundation only. No CareAction/rule/CarePlan link, eligibility, qualification, normalized evidence or EACCE result. HTN_BP_FOLLOWUP is purpose only. PATIENT reads own records; CLINICIAN requires current ACTIVE/null-ended assignment; ADMIN denied. Writes are CLINICIAN only. Every operation revalidates current session/user/profile/assignment under bounded locks with final session-expiry recheck. Internal creator/recorder/canceller UUIDs are omitted. All responses no-store, no ETag/Last-Modified/conditional 304, no renewal. Malformed/nonexistent/forbidden/cross-patient targets share generic 404. Uppercase UUID-v4 hex normalizes; encoded/alternate target forms rejected. No request body or transfer encoding. Only canonical page/pageSize once each, default 1/20, max page 2147483647 and pageSize 100. Reject bare/empty/unknown/duplicate/encoded/noncanonical queries. Count/page share one SQL statement snapshot; independent pages can observe changes. Ordered occurredAt DESC,id DESC. Authorized empty history returns 200 []. No read audit. HEAD performs identical GET checks and returns no body for every status.",
+        "responses": {
+          "400": {
+            "description": "Request framing/syntax/query/body-shape failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Uniform safe failure; 401 clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method without target-resource lookup; no CORS grant.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD, POST"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized service failure; no payload/driver/credential disclosure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Authorized paginated raw records.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/patients/{patientId}/clinical-encounters/{encounterId}/blood-pressure-measurements/{measurementId}": {
+      "post": {
+        "operationId": "encounterBloodPressureAssociate",
+        "summary": "encounterBloodPressureAssociate post",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "encounterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "measurementId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "description": "Exact configured browser application origin, including scheme/port; mandatory even when Fetch Metadata is absent.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sec-Fetch-Site",
+            "in": "header",
+            "required": false,
+            "description": "cross-site rejected. same-site/same-origin/none require exact Origin; absent metadata does not bypass Origin/custom-header checks.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "description": "Canonical session-derived CSRF token obtained from login/me.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
+          }
+        ],
+        "description": "Operational evidence foundation only. No CareAction/rule/CarePlan link, eligibility, qualification, normalized evidence or EACCE result. HTN_BP_FOLLOWUP is purpose only. PATIENT reads own records; CLINICIAN requires current ACTIVE/null-ended assignment; ADMIN denied. Writes are CLINICIAN only. Every operation revalidates current session/user/profile/assignment under bounded locks with final session-expiry recheck. Internal creator/recorder/canceller UUIDs are omitted. All responses no-store, no ETag/Last-Modified/conditional 304, no renewal. Malformed/nonexistent/forbidden/cross-patient targets share generic 404. Uppercase UUID-v4 hex normalizes; encoded/alternate target forms rejected. Exact application/json (optional UTF-8 charset), one Content-Type, identity encoding only, 16 KiB, exact configured Origin/Fetch Metadata/session-bound CSRF. Reject all queries including bare ?, Idempotency-Key, duplicate decoded keys, missing/unknown fields, arrays/primitives/null; parser stays EH-012 scoped. Syntax/Origin/media errors can precede authentication and reveal no target state. One encounter may have multiple BPs; a BP has at most one encounter. Never move a link or alter BP source/recorder. ",
+        "responses": {
+          "403": {
+            "description": "Origin/Fetch Metadata or CSRF failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Missing/duplicate/unsupported Content-Type, charset or content encoding.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request framing/syntax/query/body-shape failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Uniform safe failure; 401 clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method without target-resource lookup; no CORS grant.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "POST"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized service failure; no payload/driver/credential disclosure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "CLINICAL_ENCOUNTER_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created atomically with genuine empty-metadata audit.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/EncounterBloodPressureAssociation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Exact existing pair: authorized no-op, original actor/time retained, no audit.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/EncounterBloodPressureAssociation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "BP linked to a different encounter, only after full scope authorization.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "ENCOUNTER_BP_CONFLICT",
+                      "message": "Association conflict."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/patients/{patientId}/clinical-encounters/{encounterId}/blood-pressure-associations": {
+      "get": {
+        "operationId": "encounterBloodPressureAssociationHistory",
+        "summary": "encounterBloodPressureAssociation get",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "encounterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647,
+              "default": 1
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          }
+        ],
+        "description": "Operational evidence foundation only. No CareAction/rule/CarePlan link, eligibility, qualification, normalized evidence or EACCE result. HTN_BP_FOLLOWUP is purpose only. PATIENT reads own records; CLINICIAN requires current ACTIVE/null-ended assignment; ADMIN denied. Writes are CLINICIAN only. Every operation revalidates current session/user/profile/assignment under bounded locks with final session-expiry recheck. Internal creator/recorder/canceller UUIDs are omitted. All responses no-store, no ETag/Last-Modified/conditional 304, no renewal. Malformed/nonexistent/forbidden/cross-patient targets share generic 404. Uppercase UUID-v4 hex normalizes; encoded/alternate target forms rejected. No request body or transfer encoding. Only canonical page/pageSize once each, default 1/20, max page 2147483647 and pageSize 100. Reject bare/empty/unknown/duplicate/encoded/noncanonical queries. Count/page share one SQL statement snapshot; independent pages can observe changes. Ordered createdAt DESC,id DESC. Authorized empty history returns 200 []. No read audit. ",
+        "responses": {
+          "400": {
+            "description": "Request framing/syntax/query/body-shape failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Uniform safe failure; 401 clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method without target-resource lookup; no CORS grant.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized service failure; no payload/driver/credential disclosure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "CLINICAL_ENCOUNTER_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Authorized paginated raw records.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/EncounterBloodPressureAssociation"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "operationId": "encounterBloodPressureAssociationHistoryHead",
+        "summary": "encounterBloodPressureAssociation head",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "encounterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89aAbB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+            },
+            "description": "Patient-profile/resource UUID v4; raw unencoded form only."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647,
+              "default": 1
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical positive decimal digits only; at most once."
+          }
+        ],
+        "description": "Operational evidence foundation only. No CareAction/rule/CarePlan link, eligibility, qualification, normalized evidence or EACCE result. HTN_BP_FOLLOWUP is purpose only. PATIENT reads own records; CLINICIAN requires current ACTIVE/null-ended assignment; ADMIN denied. Writes are CLINICIAN only. Every operation revalidates current session/user/profile/assignment under bounded locks with final session-expiry recheck. Internal creator/recorder/canceller UUIDs are omitted. All responses no-store, no ETag/Last-Modified/conditional 304, no renewal. Malformed/nonexistent/forbidden/cross-patient targets share generic 404. Uppercase UUID-v4 hex normalizes; encoded/alternate target forms rejected. No request body or transfer encoding. Only canonical page/pageSize once each, default 1/20, max page 2147483647 and pageSize 100. Reject bare/empty/unknown/duplicate/encoded/noncanonical queries. Count/page share one SQL statement snapshot; independent pages can observe changes. Ordered createdAt DESC,id DESC. Authorized empty history returns 200 []. No read audit. HEAD performs identical GET checks and returns no body for every status.",
+        "responses": {
+          "400": {
+            "description": "Request framing/syntax/query/body-shape failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Uniform safe failure; 401 clears unusable session cookie.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method without target-resource lookup; no CORS grant.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              },
+              "Allow": {
+                "schema": {
+                  "const": "GET, HEAD"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized service failure; no payload/driver/credential disclosure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Authorized paginated raw records.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1640,6 +4048,191 @@
               "precision",
               "future",
               "unknown_fields"
+            ]
+          }
+        }
+      },
+      "FollowUpAppointment": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "patientId",
+          "scheduledAt",
+          "purpose",
+          "status",
+          "createdAt",
+          "cancelledAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "patientId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC instant serialized with exactly three fractional digits."
+          },
+          "purpose": {
+            "const": "HTN_BP_FOLLOWUP"
+          },
+          "status": {
+            "enum": [
+              "SCHEDULED",
+              "CANCELLED"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC instant serialized with exactly three fractional digits."
+          },
+          "cancelledAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "ClinicalEncounter": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "patientId",
+          "occurredAt",
+          "purpose",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "patientId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC instant serialized with exactly three fractional digits."
+          },
+          "purpose": {
+            "const": "HTN_BP_FOLLOWUP"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC instant serialized with exactly three fractional digits."
+          }
+        }
+      },
+      "EncounterBloodPressureAssociation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "patientId",
+          "encounterId",
+          "bloodPressureMeasurementId",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "patientId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "encounterId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "bloodPressureMeasurementId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "UTC instant serialized with exactly three fractional digits."
+          }
+        }
+      },
+      "FollowUpAppointmentCreation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "scheduledAt",
+          "purpose"
+        ],
+        "properties": {
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,3})?(?:Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Real Gregorian offset-bearing instant; years 0001..9999 before/after normalization; 0..3 fractional digits. No whitespace, -00:00, leap seconds or 24:00. Must be strictly future relative to database receipt time."
+          },
+          "purpose": {
+            "const": "HTN_BP_FOLLOWUP"
+          }
+        }
+      },
+      "ClinicalEncounterCreation": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "occurredAt",
+          "purpose"
+        ],
+        "properties": {
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,3})?(?:Z|[+-]\\d{2}:\\d{2})$",
+            "description": "Real Gregorian offset-bearing instant; years 0001..9999 before/after normalization; 0..3 fractional digits. No whitespace, -00:00, leap seconds or 24:00. Backdating allowed; cannot exceed database receipt time."
+          },
+          "purpose": {
+            "const": "HTN_BP_FOLLOWUP"
+          }
+        }
+      },
+      "ClinicalEvidenceFieldError": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "field",
+          "reason"
+        ],
+        "properties": {
+          "field": {
+            "enum": [
+              "scheduledAt",
+              "occurredAt",
+              "purpose",
+              "$"
+            ]
+          },
+          "reason": {
+            "enum": [
+              "required",
+              "type",
+              "format",
+              "precision",
+              "future",
+              "not_future",
+              "unknown_fields",
+              "representation"
             ]
           }
         }

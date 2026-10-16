@@ -30,3 +30,8 @@ export type { CarePlanPersistence, CarePlanId, ClinicalRuleDefinitionId, CarePla
 export { createBloodPressureMeasurementPersistence } from './blood-pressure.js';
 export type { BloodPressureMeasurementPersistence, BloodPressureMeasurementSnapshot, BloodPressureMeasurementId } from './blood-pressure.js';
 export { BloodPressureError, bpInvalid, exactBpKeys, validateBpValues, bpTimestamp } from './blood-pressure-values.js';
+export { createFollowUpAppointmentPersistence } from './follow-up-appointments.js';
+export type { FollowUpAppointmentPersistence, FollowUpAppointmentId, FollowUpAppointmentSnapshot } from './follow-up-appointments.js';
+export { createClinicalEncounterPersistence } from './clinical-encounters.js';
+export type { ClinicalEncounterPersistence, ClinicalEncounterId, ClinicalEncounterSnapshot, EncounterBloodPressureAssociationSnapshot } from './clinical-encounters.js';
+export { ClinicalEvidenceError, evidenceKeys, evidenceValues } from './followup-common.js';

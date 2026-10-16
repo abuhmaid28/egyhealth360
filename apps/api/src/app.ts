@@ -2,14 +2,15 @@ import 'reflect-metadata';
 import { ArgumentsHost, Catch, Controller, ExceptionFilter, Get, HttpException, Module, ServiceUnavailableException } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
-import type { Database, AuthorizationPersistence, BloodPressureMeasurementPersistence } from '@egyhealth/db';
+import type { Database, AuthorizationPersistence, BloodPressureMeasurementPersistence, FollowUpAppointmentPersistence, ClinicalEncounterPersistence } from '@egyhealth/db';
+import { followupController, followupRequestBoundary } from './followup.js';
 import { bloodPressureController, bloodPressureRequestBoundary } from './blood-pressure.js';
 import { patientController, patientRequestBoundary } from './authorization.js';
 import { bootstrapSmoke } from '@egyhealth/closure-engine';
 import type { ServerResponse } from 'node:http';
 import { authController, authError, authRequestBoundary, type AuthRuntime } from './auth.js';
 
-export async function createApp(database: Database, auth?: AuthRuntime, authorization?: AuthorizationPersistence, bloodPressure?: BloodPressureMeasurementPersistence) {
+export async function createApp(database: Database, auth?: AuthRuntime, authorization?: AuthorizationPersistence, bloodPressure?: BloodPressureMeasurementPersistence, followup?: { appointments: FollowUpAppointmentPersistence; encounters: ClinicalEncounterPersistence }) {
   @Controller('health')
   class HealthController {
     @Get()
@@ -19,7 +20,7 @@ export async function createApp(database: Database, auth?: AuthRuntime, authoriz
       return { data: { status: bootstrapSmoke('ok') } };
     }
   }
-  @Module({ controllers: auth ? [authController(auth), ...(authorization ? [patientController(auth, authorization)] : []), ...(bloodPressure ? [bloodPressureController(auth, bloodPressure)] : [])] : [] })
+  @Module({ controllers: auth ? [authController(auth), ...(authorization ? [patientController(auth, authorization)] : []), ...(bloodPressure ? [bloodPressureController(auth, bloodPressure)] : []), ...(followup ? [followupController(auth, followup.appointments, followup.encounters)] : [])] : [] })
   class AuthModule {}
   @Module({ controllers: [HealthController], imports: [AuthModule] })
   class AppModule {}
@@ -28,6 +29,7 @@ export async function createApp(database: Database, auth?: AuthRuntime, authoriz
   if (auth) app.use(authRequestBoundary(auth));
   app.use(patientRequestBoundary);
   if (auth && bloodPressure) app.use(bloodPressureRequestBoundary(auth));
+  if (auth && followup) app.use(followupRequestBoundary(auth));
   app.useBodyParser('json', { limit: '16kb', strict: false });
   @Catch()
   class SafeErrors implements ExceptionFilter {

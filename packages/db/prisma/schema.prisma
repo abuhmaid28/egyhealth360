@@ -43,6 +43,10 @@ model User {
   sessions         Session[]
   createdCarePlans CarePlan[]
   recordedBloodPressureMeasurements BloodPressureMeasurement[]
+  createdFollowUpAppointments FollowUpAppointment[] @relation("AppointmentCreator")
+  cancelledFollowUpAppointments FollowUpAppointment[] @relation("AppointmentCanceller")
+  recordedClinicalEncounters ClinicalEncounter[]
+  recordedEncounterBloodPressureAssociations EncounterBloodPressureAssociation[]
 
   @@unique([id, role], map: "users_id_role_key")
   @@map("users")
@@ -76,6 +80,9 @@ model PatientProfile {
 
   carePlans   CarePlan[]
   bloodPressureMeasurements BloodPressureMeasurement[]
+  followUpAppointments FollowUpAppointment[]
+  clinicalEncounters ClinicalEncounter[]
+  encounterBloodPressureAssociations EncounterBloodPressureAssociation[]
 
   // Prisma requires the full composite relation key to be marked unique.
   @@unique([userId, userRole], map: "patient_profiles_user_role_key")
@@ -247,5 +254,68 @@ model BloodPressureMeasurement {
   recorder User @relation(fields: [recordedByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "blood_pressure_measurements_actor_fkey")
   @@index([patientId, measuredAt(sort: Desc), id(sort: Desc)], map: "blood_pressure_measurements_patient_history_idx")
   @@index([recordedByUserId], map: "blood_pressure_measurements_actor_idx")
+  encounterAssociation EncounterBloodPressureAssociation?
+  @@unique([id, patientId], map: "blood_pressure_measurements_id_patient_key")
   @@map("blood_pressure_measurements")
+}
+
+
+enum FollowUpAppointmentStatus {
+  SCHEDULED
+  CANCELLED
+  @@map("follow_up_appointment_status")
+}
+
+model FollowUpAppointment {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  scheduledAt DateTime @map("scheduled_at") @db.Timestamptz(6)
+  purpose String @db.Text
+  status FollowUpAppointmentStatus @default(SCHEDULED)
+  createdByUserId String @map("created_by_user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  cancelledAt DateTime? @map("cancelled_at") @db.Timestamptz(3)
+  cancelledByUserId String? @map("cancelled_by_user_id") @db.Uuid
+  patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "follow_up_appointments_patient_fkey")
+  creator User @relation("AppointmentCreator", fields: [createdByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "follow_up_appointments_creator_fkey")
+  canceller User? @relation("AppointmentCanceller", fields: [cancelledByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "follow_up_appointments_canceller_fkey")
+  @@index([patientId, scheduledAt(sort: Desc), id(sort: Desc)], map: "follow_up_appointments_patient_history_idx")
+  @@index([createdByUserId], map: "follow_up_appointments_creator_idx")
+  @@index([cancelledByUserId], map: "follow_up_appointments_canceller_idx")
+  @@map("follow_up_appointments")
+}
+
+model ClinicalEncounter {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  occurredAt DateTime @map("occurred_at") @db.Timestamptz(6)
+  purpose String @db.Text
+  recordedByUserId String @map("recorded_by_user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "clinical_encounters_patient_fkey")
+  recorder User @relation(fields: [recordedByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "clinical_encounters_recorder_fkey")
+  bloodPressureAssociations EncounterBloodPressureAssociation[]
+  @@unique([id, patientId], map: "clinical_encounters_id_patient_key")
+  @@index([patientId, occurredAt(sort: Desc), id(sort: Desc)], map: "clinical_encounters_patient_history_idx")
+  @@index([recordedByUserId], map: "clinical_encounters_recorder_idx")
+  @@map("clinical_encounters")
+}
+
+model EncounterBloodPressureAssociation {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  encounterId String @map("encounter_id") @db.Uuid
+  bloodPressureMeasurementId String @unique(map: "encounter_bp_associations_measurement_key") @map("blood_pressure_measurement_id") @db.Uuid
+  recordedByUserId String @map("recorded_by_user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "encounter_bp_associations_patient_fkey")
+  encounter ClinicalEncounter @relation(fields: [encounterId, patientId], references: [id, patientId], onDelete: Restrict, onUpdate: Restrict, map: "encounter_bp_associations_encounter_patient_fkey")
+  measurement BloodPressureMeasurement @relation(fields: [bloodPressureMeasurementId, patientId], references: [id, patientId], onDelete: Restrict, onUpdate: Restrict, map: "encounter_bp_associations_measurement_patient_fkey")
+  recorder User @relation(fields: [recordedByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "encounter_bp_associations_recorder_fkey")
+  @@index([patientId, encounterId, createdAt(sort: Desc), id(sort: Desc)], map: "encounter_bp_associations_patient_history_idx")
+  @@index([encounterId, patientId], map: "encounter_bp_associations_encounter_idx")
+  @@index([recordedByUserId], map: "encounter_bp_associations_recorder_idx")
+  // Prisma requires the full composite defining relation key to be unique.
+  @@unique([bloodPressureMeasurementId, patientId], map: "encounter_bp_associations_measurement_patient_key")
+  @@map("encounter_bp_associations")
 }

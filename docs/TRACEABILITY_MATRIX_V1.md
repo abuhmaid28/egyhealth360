@@ -210,3 +210,16 @@ No CareAction/EACCE/clinical eligibility or product HTTP behavior is claimed.
 
 FR-012/FR-043 are API/data foundations, FR-023 covers BP entry provenance only;
 FR-021 and M2 remain incomplete. No eligibility/EACCE or correction workflow claimed.
+
+## EH-012 follow-up and encounter foundation
+
+| Requirement | Implemented foundation | Verification |
+|---|---|---|
+| FR-012 / FR-023 | Raw encounter/association history, direct recording provenance | Genuine HTTP/minimized projection/internal actor tests + runtime |
+| FR-024 foundation-only | Operational appointments with cancellation history | Lifecycle/future-time/history/no-op tests; no action link |
+| BR-001/002/020, AC-010/011 | Own reads, ACTIVE-assigned clinician writes, Admin denied | Nested IDOR/current-state/race matrix |
+| BR-005 / FR-060/061 | Immutable encounter/link, retained appointments and separate atomic audits | SQL/Prisma/TEMP/rollback/no-op tests |
+| ERR-001 / BR-018 / ERR-003 | Generic denial and no fabricated eligibility/closure | HTTP safety + explicit scope assertions |
+| NFR-006 | Separate independent review before merge | Pending separate review task |
+
+FR-021 remains incomplete. FR-024 remains foundation-only/incomplete; AC-004/AC-005 and M2 exit are not satisfied. EH-013 coverage/normalization and UI remain deferred.

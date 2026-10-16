@@ -113,5 +113,5 @@ superusers. M2, FR-021 care-action generation and EACCE are not complete.
 PR #17 merged as `ccc967b4d1125c69b2db8725351dca0f50783acf`; Issue #16 closed.
 Final independent review PASS on `69f6a1e1af7c73b055f1f02ad204fe5706d04df7`.
 [Final-head CI 38588723326](https://github.com/abuhmaid28/egyhealth360/actions/runs/38588723326)
-completed successfully. EH-009 completes M2 step 1 only; EH-010 is the next slice.
+completed successfully. EH-009 completes M2 step 1 only; EH-010 was the next slice at that historical handoff and subsequently merged; EH-011 also subsequently merged. This is historical sequencing, not current task status.
 These are historical EH-009 results, not a rerun of this validation document.

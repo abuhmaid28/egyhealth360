@@ -249,6 +249,12 @@ four historical migrations unchanged. CareAction generation/FR-021 remain deferr
 below-threshold BP and active plan do not establish clinical eligibility. M2 in progress.
 See EH-011_BP_PROVENANCE_CONTRACT.md and EH-011_VALIDATION.md.
 
+
+### ADR-026 — Operational follow-up and immutable encounter/BP evidence foundation
+Status: Accepted (Issue #22 final approval 6204890129)
+
+Three narrow models: SCHEDULED->CANCELLED operational appointments, immutable encounters, immutable BP associations. HTN_BP_FOLLOWUP is purpose only. No provider allocation/participant claim, rule/plan/action FK or clinical qualification. Preserve BP rows and guards; composite same-patient FKs plus unique BP prevent cross-patient/ambiguous association. Prisma requires a redundant composite unique for its one-to-one relation. Current session/user/profile/assignment transactions and final expiry recheck; genuine empty-metadata atomic audit. Patient own reads; assigned clinician writes; Admin denied. Non-idempotent creation; authorized cancellation/exact-pair retries preserve provenance without events. One additive migration, no external dependency. Corrected association-reference GET/HEAD ends blood-pressure-associations. CareAction/FR-021 deferred, FR-024 foundation-only, AC-004/005 unsatisfied, M2 in progress; EH-013 owns coverage/normalization. Exact contract: EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md.
+
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.
