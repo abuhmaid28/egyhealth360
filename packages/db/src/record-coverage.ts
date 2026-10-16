@@ -1,4 +1,4 @@
-import type { Prisma } from './generated/prisma/client.js';
+import type { Prisma, PrismaClient } from './generated/prisma/client.js';
 import { bpTimestamp } from './blood-pressure-values.js';
 
 export type RecordCoverageSourceType = 'SYNTHETIC_BENCHMARK';
@@ -120,7 +120,7 @@ export function validateCoverageInput(input: CreateRecordCoverageWindowInput): {
  * NOTE: Not exported from the public package surface.
  */
 export async function internalCreateRecordCoverageWindow(
-  tx: Prisma.TransactionClient,
+  tx: Prisma.TransactionClient | PrismaClient,
   rawInput: CreateRecordCoverageWindowInput
 ): Promise<{ window: RecordCoverageWindowSnapshot; created: boolean }> {
   const input = validateCoverageInput(rawInput);

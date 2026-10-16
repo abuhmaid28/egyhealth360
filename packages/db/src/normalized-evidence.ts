@@ -155,8 +155,15 @@ export function validateNormalizedEvidenceInput(rawInput: unknown): {
   }
 
   exactKeys(rawInput.queryInterval, ['startAt', 'endAt']);
-  const queryStart = parseCoverageTimestamp(rawInput.queryInterval.startAt, 'startAt');
-  const queryEnd = parseCoverageTimestamp(rawInput.queryInterval.endAt, 'endAt');
+  let queryStart: Date;
+  let queryEnd: Date;
+  try {
+    queryStart = parseCoverageTimestamp(rawInput.queryInterval.startAt, 'startAt');
+    queryEnd = parseCoverageTimestamp(rawInput.queryInterval.endAt, 'endAt');
+  } catch (err) {
+    if (err instanceof NormalizedEvidenceError) throw err;
+    throw new NormalizedEvidenceError('REQUEST_INVALID', err instanceof Error ? err.message : 'Invalid timestamp format');
+  }
 
   if (queryEnd.getTime() <= queryStart.getTime()) {
     throw new NormalizedEvidenceError('REQUEST_INVALID', 'Query endAt must be chronologically after startAt');
@@ -166,7 +173,13 @@ export function validateNormalizedEvidenceInput(rawInput: unknown): {
   if (rawInput.partition.sourceType !== 'SYNTHETIC_BENCHMARK') {
     throw new NormalizedEvidenceError('REQUEST_INVALID', 'Invalid partition sourceType');
   }
-  const sourceReference = validateSourceReference(rawInput.partition.sourceReference);
+  let sourceReference: string;
+  try {
+    sourceReference = validateSourceReference(rawInput.partition.sourceReference);
+  } catch (err) {
+    if (err instanceof NormalizedEvidenceError) throw err;
+    throw new NormalizedEvidenceError('REQUEST_INVALID', err instanceof Error ? err.message : 'Invalid sourceReference');
+  }
 
   return {
     patientId: patientId.toLowerCase(),
@@ -439,11 +452,11 @@ export async function internalExecuteEvidenceSnapshot(
       )
     SELECT
       jsonb_build_object(
-        'bloodPressureMeasurements', COALESCE((SELECT jsonb_agg(to_jsonb(bp)) FROM bp_rows bp), '[]'::jsonb),
-        'clinicalEncounters', COALESCE((SELECT jsonb_agg(to_jsonb(enc)) FROM encounter_rows enc), '[]'::jsonb),
-        'structuralEncounterBpCandidates', COALESCE((SELECT jsonb_agg(to_jsonb(pr)) FROM pair_rows pr), '[]'::jsonb),
-        'operationalAppointmentCandidates', COALESCE((SELECT jsonb_agg(to_jsonb(ap)) FROM appointment_rows ap), '[]'::jsonb),
-        'rawCoverageWindows', COALESCE((SELECT jsonb_agg(to_jsonb(cov)) FROM coverage_rows cov), '[]'::jsonb)
+        'bloodPressureMeasurements', COALESCE((SELECT jsonb_agg(to_jsonb(bp) ORDER BY bp."measuredAt" ASC, bp.id ASC) FROM bp_rows bp), '[]'::jsonb),
+        'clinicalEncounters', COALESCE((SELECT jsonb_agg(to_jsonb(enc) ORDER BY enc."occurredAt" ASC, enc.id ASC) FROM encounter_rows enc), '[]'::jsonb),
+        'structuralEncounterBpCandidates', COALESCE((SELECT jsonb_agg(to_jsonb(pr) ORDER BY pr."encounterOccurredAt" ASC, pr."encounterId" ASC, pr."associationId" ASC) FROM pair_rows pr), '[]'::jsonb),
+        'operationalAppointmentCandidates', COALESCE((SELECT jsonb_agg(to_jsonb(ap) ORDER BY ap."scheduledAt" ASC, ap."appointmentId" ASC) FROM appointment_rows ap), '[]'::jsonb),
+        'rawCoverageWindows', COALESCE((SELECT jsonb_agg(to_jsonb(cov) ORDER BY cov."startAt" ASC, cov."endAt" ASC, cov.id ASC) FROM coverage_rows cov), '[]'::jsonb)
       ) AS payload
   `;
 

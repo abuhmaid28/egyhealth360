@@ -269,7 +269,7 @@ The conceptual four-state appointment/clinician fields above are future concepts
 
 ## EH-013 executable record coverage slice
 
-RecordCoverageWindow has exactly id, patientId (patient_profiles.id FK), sourceType (RecordCoverageSourceType enum with single variant SYNTHETIC_BENCHMARK), sourceReference (VARCHAR(128)), status (RecordCoverageStatus enum: COMPLETE, INCOMPLETE, UNKNOWN), startAt (TIMESTAMPTZ(3)), endAt (TIMESTAMPTZ(3)), createdAt (TIMESTAMPTZ(3) database-owned).
+RecordCoverageWindow has exactly id, patientId (patient_profiles.id FK), sourceType (RecordCoverageSourceType enum with single variant SYNTHETIC_BENCHMARK), sourceReference (VARCHAR(128)), status (RecordCoverageStatus enum: COMPLETE, INCOMPLETE, UNKNOWN), startAt (TIMESTAMPTZ(6)), endAt (TIMESTAMPTZ(6)), createdAt (TIMESTAMPTZ(3) database-owned).
 Chronology invariant: startAt < endAt. Exact assertion uniqueness: (patient_id, source_type, source_reference, status, start_at, end_at).
 Covering index: (patient_id, source_type, source_reference, start_at, end_at).
 Every UPDATE, DELETE, and TRUNCATE is unconditionally prohibited by database trigger.

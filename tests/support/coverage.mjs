@@ -1,9 +1,20 @@
 import { readFile } from 'node:fs/promises';
 import { randomUUID, createHash } from 'node:crypto';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '../../packages/db/dist/generated/prisma/client.js';
 import { isolatedFollowup } from './followup.mjs';
 import { createNormalizedEvidencePersistence } from '../../packages/db/dist/index.js';
+import { internalCreateRecordCoverageWindow } from '../../packages/db/dist/record-coverage.js';
 
 export const coverageMigration = '20261019000000_eh013_record_coverage_windows';
+
+export async function waitBlocked(pool, pid) {
+  for (let i = 0; i < 500; i++) {
+    const res = await pool.query('SELECT cardinality(pg_blocking_pids($1)) > 0 AS blocked', [pid]);
+    if (res.rows[0]?.blocked) return;
+  }
+  throw new Error(`Expected lock wait on pid ${pid}`);
+}
 
 export async function isolatedCoverage(run) {
   return isolatedFollowup(async (f) => {
@@ -14,47 +25,27 @@ export async function isolatedCoverage(run) {
       [randomUUID(), createHash('sha256').update(sql).digest('hex'), coverageMigration]
     );
 
+    const adapter = new PrismaPg(f.pool);
+    const prisma = new PrismaClient({ adapter });
     const normalized = createNormalizedEvidencePersistence(f.url);
 
     const insertCoverage = async (input = {}) => {
-      const {
-        patientId = f.patientId,
-        sourceType = 'SYNTHETIC_BENCHMARK',
-        sourceReference = 'eh013-demo-v1',
-        coverageStatus = 'COMPLETE',
-        startAt = '2026-01-01T00:00:00.000Z',
-        endAt = '2026-06-01T00:00:00.000Z',
-      } = input;
-
-      const res = await f.pool.query(
-        `INSERT INTO public.record_coverage_windows (
-          id, patient_id, source_type, source_reference, coverage_status, start_at, end_at
-        ) VALUES (
-          gen_random_uuid(), $1::uuid, $2::public.record_coverage_source_type, $3, $4::public.record_coverage_status, $5::timestamptz(6), $6::timestamptz(6)
-        )
-        ON CONFLICT ON CONSTRAINT record_coverage_windows_assertion_key DO NOTHING
-        RETURNING *`,
-        [patientId, sourceType, sourceReference, coverageStatus, startAt, endAt]
-      );
-
-      if (res.rows.length === 1) return { window: res.rows[0], created: true };
-
-      const existing = await f.pool.query(
-        `SELECT * FROM public.record_coverage_windows
-         WHERE patient_id = $1::uuid
-           AND source_type = $2::public.record_coverage_source_type
-           AND source_reference = $3
-           AND coverage_status = $4::public.record_coverage_status
-           AND start_at = $5::timestamptz(6)
-           AND end_at = $6::timestamptz(6)`,
-        [patientId, sourceType, sourceReference, coverageStatus, startAt, endAt]
-      );
-      return { window: existing.rows[0], created: false };
+      const fullInput = {
+        patientId: f.patientId,
+        sourceType: 'SYNTHETIC_BENCHMARK',
+        sourceReference: 'eh013-demo-v1',
+        coverageStatus: 'COMPLETE',
+        startAt: '2026-01-01T00:00:00.000Z',
+        endAt: '2026-06-01T00:00:00.000Z',
+        ...input,
+      };
+      return internalCreateRecordCoverageWindow(prisma, fullInput);
     };
 
     try {
-      await run({ ...f, normalized, insertCoverage });
+      await run({ ...f, normalized, insertCoverage, prisma });
     } finally {
+      await prisma.$disconnect();
       await normalized.close();
     }
   });

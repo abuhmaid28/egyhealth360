@@ -90,6 +90,25 @@ test('EH-013 normalized evidence query input rejects extra keys, invalid dates, 
     () => validateNormalizedEvidenceInput({ ...valid, queryInterval: { startAt: '2026-12-31T00:00:00.000Z', endAt: '2026-01-01T00:00:00.000Z' } }),
     (err) => err instanceof NormalizedEvidenceError && err.code === 'REQUEST_INVALID'
   );
+
+  // Equal bounds
+  assert.throws(
+    () => validateNormalizedEvidenceInput({ ...valid, queryInterval: { startAt: '2026-01-01T00:00:00.000Z', endAt: '2026-01-01T00:00:00.000Z' } }),
+    (err) => err instanceof NormalizedEvidenceError && err.code === 'REQUEST_INVALID'
+  );
+
+  // Error boundary: sourceReference validation must produce NormalizedEvidenceError / REQUEST_INVALID, never RecordCoverageError
+  for (const invalidRef of ['', 'with whitespace', ' leadingspace', 'trailingspace ', 'invalid@char', 'bad#hash', 'a'.repeat(129)]) {
+    assert.throws(
+      () => validateNormalizedEvidenceInput({ ...valid, partition: { ...valid.partition, sourceReference: invalidRef } }),
+      (err) => {
+        assert.ok(err instanceof NormalizedEvidenceError);
+        assert.equal(err.code, 'REQUEST_INVALID');
+        assert.notEqual(err.constructor.name, 'RecordCoverageError');
+        return true;
+      }
+    );
+  }
 });
 
 test('EH-013 normalization: absence of raw windows yields 100% unasserted coverage (silent missingness)', () => {
@@ -323,3 +342,22 @@ test('EH-013 schema scope, frozen migrations, and additive migration verificatio
     assert.equal(createHash('sha256').update(content).digest('hex'), hashes[i]);
   }
 });
+
+test('EH-013 deterministic snapshot aggregation ordering regression test', async () => {
+  const fileContent = await readFile('packages/db/src/normalized-evidence.ts', 'utf8');
+  assert.match(fileContent, /jsonb_agg\(to_jsonb\(bp\)\s+ORDER BY\s+bp\."measuredAt"\s+ASC,\s+bp\.id\s+ASC\)/);
+  assert.match(fileContent, /jsonb_agg\(to_jsonb\(enc\)\s+ORDER BY\s+enc\."occurredAt"\s+ASC,\s+enc\.id\s+ASC\)/);
+  assert.match(fileContent, /jsonb_agg\(to_jsonb\(pr\)\s+ORDER BY\s+pr\."encounterOccurredAt"\s+ASC,\s+pr\."encounterId"\s+ASC,\s+pr\."associationId"\s+ASC\)/);
+  assert.match(fileContent, /jsonb_agg\(to_jsonb\(ap\)\s+ORDER BY\s+ap\."scheduledAt"\s+ASC,\s+ap\."appointmentId"\s+ASC\)/);
+  assert.match(fileContent, /jsonb_agg\(to_jsonb\(cov\)\s+ORDER BY\s+cov\."startAt"\s+ASC,\s+cov\."endAt"\s+ASC,\s+cov\.id\s+ASC\)/);
+});
+
+test('EH-013 single-statement snapshot architecture protection', async () => {
+  const fileContent = await readFile('packages/db/src/normalized-evidence.ts', 'utf8');
+  const snapshotFn = fileContent.split('export async function internalExecuteEvidenceSnapshot')[1].split('if (rows.length !== 1')[0];
+  const queryRawMatches = snapshotFn.match(/\$queryRaw/g);
+  assert.equal(queryRawMatches?.length, 1, 'Evidence retrieval must use exactly one $queryRaw statement');
+  assert.match(snapshotFn, /WITH\s+bp_rows\s+AS/);
+  assert.match(snapshotFn, /SELECT\s+jsonb_build_object/);
+});
+
