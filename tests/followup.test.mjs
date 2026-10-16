@@ -8,6 +8,10 @@ test('EH-012 exact flat parser rejects shapes, identity authority and escaped du
   for(const [kind,input] of [['appointment',appointmentInput],['encounter',encounterInput]]){
     assert.deepEqual(parseFollowupJson(JSON.stringify(input),kind,true),input);assert.deepEqual(parseFollowupJson(' {} ',kind,false),{});
     for(const raw of ['', '{bad','[]','null','true','{}',JSON.stringify({...input,status:'SCHEDULED'}),JSON.stringify({...input,recordedByUserId:'secret'}),JSON.stringify(input).replace('"purpose":','"purp\\u006fse":"HTN_BP_FOLLOWUP","purpose":')])assert.throws(()=>parseFollowupJson(raw,kind,true));
+    for(const last of ['"OTHER"','null','42']){
+      const duplicate=JSON.stringify(input).replace('"purpose":"HTN_BP_FOLLOWUP"','"purp\\u006fse":"HTN_BP_FOLLOWUP","purpose":'+last);
+      assert.throws(()=>parseFollowupJson(duplicate,kind,true),e=>e.code==='REQUEST_INVALID'||e.getResponse?.().error.code==='REQUEST_INVALID');
+    }
     for(const key of Object.keys(input)){const body={...input};delete body[key];assert.throws(()=>parseFollowupJson(JSON.stringify(body),kind,true));}
     for(const raw of ['null','[]','{"x":1}','{"x":1,"x":2}'])assert.throws(()=>parseFollowupJson(raw,kind,false));
     for(const value of [null,1,[],{},'WRONG'])assert.throws(()=>parseFollowupJson(JSON.stringify({...input,purpose:value}),kind,true));

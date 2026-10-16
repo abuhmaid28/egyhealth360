@@ -16,9 +16,16 @@ export function parseFollowupJson(raw: string, kind: Kind, create: boolean) {
   const keys = create ? [kind === 'appointment' ? 'scheduledAt' : 'occurredAt', 'purpose'] : [];
   evidenceKeys(parsed, keys);
   if (create) {
+    const seen = new Set<string>();
+    // JSON grammar distinguishes keys (a string followed by :) from string values.
+    // Nested objects are invalid field values; their duplicate keys also fail closed.
+    for (const token of raw.matchAll(/"(?:[^"\\]|\\.)*"/g)) {
+      if (!/^[ \t\r\n]*:/.test(raw.slice(token.index + token[0].length))) continue;
+      const key: string = JSON.parse(token[0]);
+      if (seen.has(key)) throw invalid();
+      seen.add(key);
+    }
     evidenceValues(kind, parsed);
-    const tokens = raw.match(/"(?:[^"\\]|\\.)*"/g) ?? [];
-    if (tokens.length !== 4 || new Set([JSON.parse(tokens[0]), JSON.parse(tokens[2])]).size !== 2) throw invalid();
   }
   return parsed;
 }

@@ -56,7 +56,7 @@ test('EH-012 HTTP malformed bodies and strict field errors never echo authority/
   const session=f.sessions['clinician-assigned'],r=await resources(f),before=await followupSnapshot(f.pool);
   for(const [path,input] of [[appointmentPath(f),appointmentInput],[encounterPath(f),encounterInput]]){
     const raw=JSON.stringify(input);
-    for(const body of ['', '{bad','null','[]','1','true','{}',JSON.stringify({...input,actorId:'secret-payload'}),JSON.stringify({...input,status:'CANCELLED'}),raw.replace('"purpose":','"purp\\u006fse":"HTN_BP_FOLLOWUP","purpose":')]){
+    for(const body of ['', '{bad','null','[]','1','true','{}',JSON.stringify({...input,actorId:'secret-payload'}),JSON.stringify({...input,status:'CANCELLED'}),raw.replace('"purpose":','"purp\\u006fse":"HTN_BP_FOLLOWUP","purpose":'),raw.replace('"purpose":"HTN_BP_FOLLOWUP"','"purp\\u006fse":"HTN_BP_FOLLOWUP","purpose":"OTHER"')]){
       const res=await f.request(path,{session,method:'POST',body});assert.equal(res.status,400);assert.equal(res.json.error.code,'REQUEST_INVALID');noStore(res);assert.ok(!res.text.includes('secret-payload'));
     }
     for(const purpose of ['OTHER',null,1]){const res=await f.request(path,{session,method:'POST',body:{...input,purpose}});assert.equal(res.status,400);assert.ok(['FOLLOW_UP_APPOINTMENT_INVALID','CLINICAL_ENCOUNTER_INVALID'].includes(res.json.error.code));assert.deepEqual(res.json.error.fields.map(x=>x.field),['purpose']);}

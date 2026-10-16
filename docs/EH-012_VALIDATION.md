@@ -13,8 +13,9 @@ Implements only operational SCHEDULED/CANCELLED appointments, immutable encounte
 Pinned Node 24.21.0 and pnpm 10.34.6, selected in a temporary tooling prefix because the environment defaults differ. Existing proxy/CA trust preserved. Frozen install: PASS. Prisma generate/validate: PASS. Full workspace build, lint and typecheck: PASS. No dependency/lockfile change.
 
 - Unit: **26/26 PASS**, no skipped/cancelled tests; includes 3 EH-012 unit cases.
-- EH-012 focused coverage: **78 distinct cases PASS** (3 unit + 63 persistence + 12 HTTP). The target-concurrency case was strengthened to use two distinct clinician users/sessions and independently rerun as an affected-test check: **1/1 PASS**. This rerun is not claimed as independent review.
+- EH-012 focused coverage: **78 distinct cases PASS** (3 unit + 63 persistence + 12 HTTP). The target-concurrency case was strengthened to use two distinct clinician users/sessions and rerun separately as an affected-test check: **1/1 PASS**. This rerun is not claimed as independent review.
 - Full integration: **247/247 PASS**, no skipped/cancelled tests; all EH-005 through EH-011 regressions included.
+- Final request-parser self-review found an error-code precedence issue: duplicate keys with an invalid final value were rejected, but could return field validation before REQUEST_INVALID. Key-duplicate checking now precedes field validation; regression cases cover invalid string/null/number final values. After that narrow fix, all **26 unit + 12 affected HTTP = 38/38 PASS**, with lint/API build/typecheck PASS. The 247-case full local run above preceded this parser-only correction; final-head CI reruns the complete matrix. No database/persistence/migration change was made by the correction.
 - Production and full high-severity dependency audits: PASS; no known vulnerabilities.
 - Host concurrent-auth measurement: PASS.
 - git diff --check: PASS; all five historical SHA-256 values unchanged.
@@ -43,6 +44,8 @@ Separate disposable literal-command database: pnpm demo:seed created five users/
 All established host auth/authorization/CarePlan/BP/clinical runtime probes passed; new verify-followup-runtime passed. It creates an appointment/encounter for Patient A using the assigned clinician's real HTTP session, submits Patient/Clinician BP using EH-011, links both, verifies Patient reads/denials/minimized references, checks original BP provenance, cancels/retries and checks exact persisted actor/audit/no-op behavior. It logs out verifier-created sessions and never prints credentials. The same new probe is chained into verify-m1-runtime with the existing private ephemeral credential flow.
 
 Docker Compose config/build/startup: PASS, PostgreSQL/API/web/worker healthy. Used a new disposable Compose project/database; retained project volumes were not reset. Session proxy CA supplied as BuildKit secret; no secret/override committed. Running-container auth/authorization unit tests **7/7 PASS**; concurrent-auth measurement, auth/authorization runtime, M1 seed/real HTTP/logout/repeat, CarePlan, BP, new EH-012 and clinical bootstrap/inspect/repeat runtime: PASS. Host web/API health: PASS. Full host build also passed.
+
+After the parser correction, the image was rebuilt and all six migrations deployed to another fresh disposable runtime database. All services became healthy. Container 7/7 auth/authorization unit tests, concurrent-auth measurement, auth/authorization/M1/CarePlan/BP/EH-012/clinical probes and web/API health all passed again. The earlier attempt to rerun the ephemeral-credential M1 driver against its retained database correctly rejected a credential conflict; no retained credentials/history were repaired or overwritten, and that attempt is excluded from passing results. Runtime reruns need a fresh fixture database or the original private fixture credential.
 
 ## Delivery and independent review
 
