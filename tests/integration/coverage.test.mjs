@@ -1,5 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+const dbRequire = createRequire(new URL('../../packages/db/package.json', import.meta.url));
+const pg = dbRequire('pg');
 import { isolatedCoverage, coverageSnapshot, waitBlocked } from '../support/coverage.mjs';
 import { RecordCoverageError } from '../../packages/db/dist/record-coverage.js';
 
@@ -346,13 +349,13 @@ test('EH-013 single-statement snapshot proof: query-counting and cross-table con
 
     // Prove exactly one SQL evidence query executes during retrieval
     let snapshotQueryCount = 0;
-    const origQuery = f.pool.query.bind(f.pool);
-    f.pool.query = function (...args) {
+    const origQuery = pg.Client.prototype.query;
+    pg.Client.prototype.query = function (...args) {
       const sql = typeof args[0] === 'string' ? args[0] : args[0]?.text || '';
       if (sql.includes('WITH') && sql.includes('bp_rows') && sql.includes('coverage_rows')) {
         snapshotQueryCount++;
       }
-      return origQuery(...args);
+      return origQuery.apply(this, args);
     };
 
     try {
@@ -370,6 +373,6 @@ test('EH-013 single-statement snapshot proof: query-counting and cross-table con
       assert.equal(snapshotQueryCount, 2, 'Second fetch executes exactly one second snapshot query');
       assert.deepEqual(JSON.stringify(result1), JSON.stringify(result2));
     } finally {
-      f.pool.query = origQuery;
+      pg.Client.prototype.query = origQuery;
     }
   }));
