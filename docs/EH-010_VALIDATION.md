@@ -125,4 +125,4 @@ PR #19 squash-merged as `9ed0d2e09a06fb1e63ae30e86678088ff805c5b8`; Issue #18 cl
 Final implementation head `8663aacfbded63cee61c221ea57baf14e7e6ce5d` passed independent
 review 5527708524 and CI run 38675701214. [Final merge record](https://github.com/abuhmaid28/egyhealth360/issues/18#issuecomment-6183801672).
 EH-010's approved foundation slice is complete. Pending-review text above is historical;
-these results are not a new rerun. EH-011 is current; FR-021 incomplete; M2 in progress.
+these results are not a new rerun. EH-011 subsequently merged at `c24b7c487dc7d56624e8dd3cfa95ba92afa963a5`; EH-012 is the current implementation slice; FR-021 incomplete; M2 in progress.

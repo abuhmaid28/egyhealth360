@@ -262,3 +262,7 @@ and actor index. Conceptual data_sources, encounter and CarePlan links are defer
 Internal recorder UUID is omitted from HTTP. Identical submissions retain distinct
 identities. Corrections/invalidation are future evidence-consumer gates.
 Exact contract: EH-011_BP_PROVENANCE_CONTRACT.md. No CareAction generation.
+
+## EH-012 executable follow-up and encounter slice
+
+The conceptual four-state appointment/clinician fields above are future concepts, not executable behavior. FollowUpAppointment has exactly id, patientId, scheduledAt, purpose, status SCHEDULED/CANCELLED, createdByUserId, createdAt, cancelledAt, cancelledByUserId. Only SCHEDULED->CANCELLED; schedule/provenance immutable; removal prohibited. ClinicalEncounter has exactly id, patientId, occurredAt, purpose, recordedByUserId, createdAt. EncounterBloodPressureAssociation has exactly id, patientId, encounterId, bloodPressureMeasurementId, recordedByUserId, createdAt. Encounters/links reject every UPDATE/DELETE/TRUNCATE. Purpose HTN_BP_FOLLOWUP is operational only; no clinician participant/CarePlan/rule/action FK or qualification. Composite same-patient FKs and unique BP enforce many BPs per encounter, at most one encounter per BP. No BP row changes; supporting unique keys only. No action-linked schedule or completion inference. Exact schema/guards/time/provenance: EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md.

@@ -136,3 +136,9 @@ internal recordedByUserId is never projected. All responses no-store; HEAD perfo
 GET checks with no body; unsupported methods 405 Allow GET, HEAD, POST. Exact errors,
 input/time/provenance and transaction contracts are in openapi.json and
 EH-011_BP_PROVENANCE_CONTRACT.md. Other endpoint names above remain conceptual.
+
+## EH-012 frozen follow-up and encounter API
+
+POST and paginated GET/HEAD /patients/{patientId}/follow-up-appointments; POST /patients/{patientId}/follow-up-appointments/{appointmentId}/cancel. POST and paginated GET/HEAD /patients/{patientId}/clinical-encounters; POST /patients/{patientId}/clinical-encounters/{encounterId}/blood-pressure-measurements/{measurementId}; paginated GET/HEAD /patients/{patientId}/clinical-encounters/{encounterId}/blood-pressure-associations. The final read returns association references only; EH-011 retains BP-resource history. These replace conceptual follow-up names above for this implemented slice.
+
+Create accepts exactly scheduledAt/purpose or occurredAt/purpose and returns 201; cancellation/link accept {}. Cancel returns 200; new association 201/exact pair 200/different encounter 409 after full scope authorization. Internal creator/recorder/canceller omitted. Patient reads own; assigned clinician writes; Admin denied. Strict timestamp/JSON/UUID, session/Origin/CSRF, no-store/no ETag/304, canonical pagination default 1/20/max100, generic 404 and method Allow contracts are frozen in openapi.json and EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md. No action-linked SCHEDULED or qualifying completion evidence is claimed.
