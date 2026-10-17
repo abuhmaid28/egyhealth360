@@ -229,18 +229,32 @@ export async function internalInsertObservedApplicabilitySnapshot(
       };
     }
   } catch (error: unknown) {
-    const dbErr = error as { code?: string; message?: string };
-    if (dbErr?.code === '23503' || dbErr?.code === '23514') {
-      const msg = dbErr?.message ?? '';
-      if (msg.includes('oa_snapshots_scope_guard') || msg.includes('oa_snapshots_patient_fkey')) {
-        throw new ObservedApplicabilityError('APPLICABILITY_NOT_FOUND');
-      }
+    if (error instanceof ObservedApplicabilityError) throw error;
+    const msg = error instanceof Error ? error.message : String(error);
+    const dbErr = error as { code?: string };
+    if (
+      msg.includes('oa_snapshots_scope_guard') ||
+      msg.includes('oa_snapshots_patient_fkey') ||
+      msg.includes('patient_profiles')
+    ) {
+      throw new ObservedApplicabilityError('APPLICABILITY_NOT_FOUND');
+    }
+    if (
+      msg.includes('oa_snapshots_source_reference_check') ||
+      msg.includes('oa_snapshots_assertion_reference_check') ||
+      msg.includes('oa_snapshots_age_assertion_check') ||
+      msg.includes('oa_snapshots_chronology_check') ||
+      dbErr?.code === '23514' ||
+      dbErr?.code === '23503'
+    ) {
       throw new ObservedApplicabilityError('APPLICABILITY_INVALID');
     }
-    if (dbErr?.code === '23505') {
+    if (
+      dbErr?.code === '23505' ||
+      msg.includes('oa_snapshots_source_identity_key') ||
+      msg.includes('Unique constraint failed')
+    ) {
       // Unique conflict handled below
-    } else if (error instanceof ObservedApplicabilityError) {
-      throw error;
     } else {
       throw new ObservedApplicabilityError('APPLICABILITY_SERVICE_UNAVAILABLE');
     }
@@ -566,28 +580,39 @@ export async function internalRetractObservedApplicabilitySnapshot(
     throw new ObservedApplicabilityError('APPLICABILITY_SERVICE_UNAVAILABLE');
   } catch (error: unknown) {
     if (error instanceof ObservedApplicabilityError) throw error;
-    const dbErr = error as { code?: string; message?: string };
-    if (dbErr?.code === '23505') {
+    const msg = error instanceof Error ? error.message : String(error);
+    const dbErr = error as { code?: string };
+    if (
+      dbErr?.code === '23505' ||
+      msg.includes('oa_retractions_source_identity_key') ||
+      msg.includes('oa_retractions_target_key') ||
+      msg.includes('Unique constraint failed')
+    ) {
       throw new ObservedApplicabilityError('APPLICABILITY_CONFLICT');
     }
-    if (dbErr?.code === '23503' || dbErr?.code === '23514') {
-      const msg = dbErr?.message ?? '';
-      if (
-        msg.includes('oa_retractions_scope_guard') ||
-        msg.includes('oa_retractions_target_scope_guard') ||
-        msg.includes('oa_retractions_snapshot_scope_fkey')
-      ) {
-        throw new ObservedApplicabilityError('APPLICABILITY_NOT_FOUND');
-      }
-      if (
-        msg.includes('oa_retractions_target_chronology_guard') ||
-        msg.includes('oa_retractions_receipt_chronology_guard') ||
-        msg.includes('oa_retractions_chronology_check')
-      ) {
-        throw new ObservedApplicabilityError('APPLICABILITY_INVALID', [
-          { field: 'assertedAt', reason: 'chronology' },
-        ]);
-      }
+    if (
+      msg.includes('oa_retractions_scope_guard') ||
+      msg.includes('oa_retractions_target_scope_guard') ||
+      msg.includes('oa_retractions_snapshot_scope_fkey') ||
+      msg.includes('Target snapshot not found')
+    ) {
+      throw new ObservedApplicabilityError('APPLICABILITY_NOT_FOUND');
+    }
+    if (
+      msg.includes('oa_retractions_target_chronology_guard') ||
+      msg.includes('oa_retractions_receipt_chronology_guard') ||
+      msg.includes('oa_retractions_chronology_check')
+    ) {
+      throw new ObservedApplicabilityError('APPLICABILITY_INVALID', [
+        { field: 'assertedAt', reason: 'chronology' },
+      ]);
+    }
+    if (
+      msg.includes('oa_retractions_source_reference_check') ||
+      msg.includes('oa_retractions_retraction_reference_check') ||
+      dbErr?.code === '23514' ||
+      dbErr?.code === '23503'
+    ) {
       throw new ObservedApplicabilityError('APPLICABILITY_INVALID');
     }
     throw new ObservedApplicabilityError('APPLICABILITY_SERVICE_UNAVAILABLE');

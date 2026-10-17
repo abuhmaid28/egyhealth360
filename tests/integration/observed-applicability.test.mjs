@@ -143,7 +143,7 @@ test('EH-015 database SQL check constraints: age assertion states, chronology, a
       (err) => err.code === '23514' && err.message.includes('oa_snapshots_chronology_check')
     );
 
-    // 6. Retraction on non-existent snapshot violates foreign key
+    // 6. Retraction on non-existent snapshot violates scope guard / foreign key
     await assert.rejects(
       f.pool.query(
         `INSERT INTO public.observed_applicability_retractions (
@@ -153,7 +153,10 @@ test('EH-015 database SQL check constraints: age assertion states, chronology, a
         )`,
         [f.patientId]
       ),
-      (err) => err.code === '23503'
+      (err) =>
+        (err.code === '23503' || err.code === '23514') &&
+        (err.message.includes('oa_retractions_snapshot_scope_fkey') ||
+          err.message.includes('Target snapshot not found in scope'))
     );
   }));
 
@@ -263,7 +266,7 @@ test('EH-015 retraction: terminal one-to-one withdrawal, idempotency, conflicts,
       f.retractSnapshot({
         ...retractInput,
         retractionReference: 'retract-ref-002',
-        reasonCode: 'PATIENT_REQUEST',
+        assertedAt: '2026-03-01T10:45:00.000Z',
       }),
       'APPLICABILITY_CONFLICT'
     );
