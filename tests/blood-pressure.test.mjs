@@ -32,6 +32,6 @@ test('BP OpenAPI projection, schema scope and historical migration bytes remain 
   assert.equal(path.post.responses['201'].headers['Cache-Control'].schema.const,'no-store');assert.equal(path.head.responses['200'].content,undefined);
   const schema=await readFile('packages/db/prisma/schema.prisma','utf8'),bp=schema.split('model BloodPressureMeasurement {')[1].split('\n}')[0];
   assert.doesNotMatch(bp,/updatedAt|controlled|qualifying|eligibility|carePlanId|ruleDefinitionId|encounterId|metadata|externalReference/);
-  assert.doesNotMatch(schema,/model (CareAction|RecordCoverage|ClosureAssessment)/);
+  assert.doesNotMatch(schema,/model (CareAction|ClosureAssessment)/);
   for(const [name,hash] of [['20261012200810_eh005_identity_core_foundation','d8396ed97e82550866a44055f308fb039ed29d6c8cdcdd74d95da060f441749a'],['20261013014000_eh006_auth_sessions','2fb1704ab28b698bfcf6995f6120cb1b1f0138ab18fcf7db562517f47d53b79b'],['20261013235221_eh009_clinical_definition_foundation','bf341361c12c50741987ee68d50c4ee7f80637adabc2f52f3fee77aa0c81af2a'],['20261016000000_eh010_care_plan_lifecycle','47cfa990e016bae42e07875b99c3400f2783c91bcaae234994ac7e32e0822c38']])assert.equal(createHash('sha256').update(await readFile(`packages/db/prisma/migrations/${name}/migration.sql`)).digest('hex'),hash);
 });

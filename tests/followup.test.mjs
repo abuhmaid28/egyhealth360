@@ -28,12 +28,12 @@ test('EH-012 exact schema, corrected route, minimized projections and frozen his
   for(const model of ['FollowUpAppointment','ClinicalEncounter','EncounterBloodPressureAssociation']){
     const body=schema.split(`model ${model} {`)[1].split('\n}')[0];assert.doesNotMatch(body,/carePlan|templateId|ruleDefinition|careAction|qualifying|relevant|completedEvidence|closesAction|scheduledEvidence|updatedAt|notes|metadata|clinicianId/);
   }
-  assert.doesNotMatch(schema,/model (CareAction|ClosureAssessment|RecordCoverage)/);
+  assert.doesNotMatch(schema,/model (CareAction|ClosureAssessment)/);
   const api=JSON.parse(await readFile('docs/openapi.json','utf8'));
   const root='/api/v1/patients/{patientId}/clinical-encounters/{encounterId}';
   assert.ok(api.paths[root+'/blood-pressure-associations']);assert.equal(api.paths[root+'/blood-pressure-measurements'],undefined);
   for(const [name,keys] of [['FollowUpAppointment',['id','patientId','scheduledAt','purpose','status','createdAt','cancelledAt']],['ClinicalEncounter',['id','patientId','occurredAt','purpose','createdAt']],['EncounterBloodPressureAssociation',['id','patientId','encounterId','bloodPressureMeasurementId','createdAt']]])assert.deepEqual(Object.keys(api.components.schemas[name].properties).sort(),keys.sort());
-  const hashes=['d8396ed97e82550866a44055f308fb039ed29d6c8cdcdd74d95da060f441749a','2fb1704ab28b698bfcf6995f6120cb1b1f0138ab18fcf7db562517f47d53b79b','bf341361c12c50741987ee68d50c4ee7f80637adabc2f52f3fee77aa0c81af2a','47cfa990e016bae42e07875b99c3400f2783c91bcaae234994ac7e32e0822c38','5383cc5f606a73959194f0615ac6525b211a8719d41ef2dc1542a6205bdc3e21'];
-  const {readdir}=await import('node:fs/promises');const dirs=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();assert.equal(dirs.length,6);
-  for(let i=0;i<5;i++)assert.equal(createHash('sha256').update(await readFile(`packages/db/prisma/migrations/${dirs[i]}/migration.sql`)).digest('hex'),hashes[i]);
+  const hashes=['d8396ed97e82550866a44055f308fb039ed29d6c8cdcdd74d95da060f441749a','2fb1704ab28b698bfcf6995f6120cb1b1f0138ab18fcf7db562517f47d53b79b','bf341361c12c50741987ee68d50c4ee7f80637adabc2f52f3fee77aa0c81af2a','47cfa990e016bae42e07875b99c3400f2783c91bcaae234994ac7e32e0822c38','5383cc5f606a73959194f0615ac6525b211a8719d41ef2dc1542a6205bdc3e21','7df16c1ccf5c9985b3a375b103d54041cad5051e1f23dea5104f4c3149bbbe01'];
+  const {readdir}=await import('node:fs/promises');const dirs=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();assert.equal(dirs.length,7);
+  for(let i=0;i<6;i++)assert.equal(createHash('sha256').update(await readFile(`packages/db/prisma/migrations/${dirs[i]}/migration.sql`)).digest('hex'),hashes[i]);
 });

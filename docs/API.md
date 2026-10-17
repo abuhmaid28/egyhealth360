@@ -142,3 +142,10 @@ EH-011_BP_PROVENANCE_CONTRACT.md. Other endpoint names above remain conceptual.
 POST and paginated GET/HEAD /patients/{patientId}/follow-up-appointments; POST /patients/{patientId}/follow-up-appointments/{appointmentId}/cancel. POST and paginated GET/HEAD /patients/{patientId}/clinical-encounters; POST /patients/{patientId}/clinical-encounters/{encounterId}/blood-pressure-measurements/{measurementId}; paginated GET/HEAD /patients/{patientId}/clinical-encounters/{encounterId}/blood-pressure-associations. The final read returns association references only; EH-011 retains BP-resource history. These replace conceptual follow-up names above for this implemented slice.
 
 Create accepts exactly scheduledAt/purpose or occurredAt/purpose and returns 201; cancellation/link accept {}. Cancel returns 200; new association 201/exact pair 200/different encounter 409 after full scope authorization. Internal creator/recorder/canceller omitted. Patient reads own; assigned clinician writes; Admin denied. Strict timestamp/JSON/UUID, session/Origin/CSRF, no-store/no ETag/304, canonical pagination default 1/20/max100, generic 404 and method Allow contracts are frozen in openapi.json and EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md. No action-linked SCHEDULED or qualifying completion evidence is claimed.
+
+## EH-013 record coverage and normalized evidence boundary
+
+EH-013 introduces zero public HTTP routes. `docs/openapi.json` is byte-for-byte unchanged.
+RecordCoverageWindow is written internally by machine processes (demo/bootstrap, synthetic benchmark fixtures).
+Normalized evidence queries are internal repository operations exposed via authorized persistence methods (`packages/db/src/normalized-evidence.ts`), returning canonical timelines and evidence candidates directly for internal and downstream evaluation use.
+

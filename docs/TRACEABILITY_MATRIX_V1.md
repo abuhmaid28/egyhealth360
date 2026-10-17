@@ -223,3 +223,18 @@ FR-021 and M2 remain incomplete. No eligibility/EACCE or correction workflow cla
 | NFR-006 | Separate independent review before merge | Pending separate review task |
 
 FR-021 remains incomplete. FR-024 remains foundation-only/incomplete; AC-004/AC-005 and M2 exit are not satisfied. EH-013 coverage/normalization and UI remain deferred.
+
+## EH-013 record coverage windows and normalized evidence queries
+
+| Requirement | Implemented surface | Verification |
+|---|---|---|
+| FR-025 | Machine-process RecordCoverageWindow persistence | Schema constraints, ON CONFLICT DO NOTHING, DB immutability triggers |
+| FR-023 coverage & normalization | Normalized coverage timeline + evidence snapshot query | Pure interval normalizer tests, single-statement snapshot queries |
+| BR-007 / BR-008 | Source-partitioned coverage normalization (INCOMPLETE > UNKNOWN > COMPLETE) | Multi-interval, boundary clipping, coalescing, gap preservation tests |
+| BR-001 / BR-002 / BR-020 | Patient own-data read, ACTIVE-assigned Clinician read, Admin/unassigned denied | Authorized normalized evidence persistence wrapper unit/integration tests |
+| BR-005 | Append-only coverage windows; UPDATE/DELETE/TRUNCATE blocked | SQL immutability trigger integration tests |
+| BR-014 / BR-018 | Logical isolation; zero public HTTP routes; no CareAction/EACCE inference | Zero-route tests, openapi.json diff check, architecture import tests |
+| NFR-006 | Independent final review | EH-013 validation + final PR record |
+
+FR-021 remains incomplete; FR-024 remains foundation-only; AC-001/002/004/005 remain deferred to M3/EACCE. M2 remains in progress.
+

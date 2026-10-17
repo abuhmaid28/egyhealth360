@@ -35,3 +35,18 @@ export type { FollowUpAppointmentPersistence, FollowUpAppointmentId, FollowUpApp
 export { createClinicalEncounterPersistence } from './clinical-encounters.js';
 export type { ClinicalEncounterPersistence, ClinicalEncounterId, ClinicalEncounterSnapshot, EncounterBloodPressureAssociationSnapshot } from './clinical-encounters.js';
 export { ClinicalEvidenceError, evidenceKeys, evidenceValues } from './followup-common.js';
+export { RecordCoverageError } from './record-coverage.js';
+export type { RecordCoverageSourceType, RecordCoverageStatus, RecordCoverageWindowSnapshot, CreateRecordCoverageWindowInput } from './record-coverage.js';
+export { createNormalizedEvidencePersistence, NormalizedEvidenceError } from './normalized-evidence.js';
+export type {
+  NormalizedEvidencePersistence,
+  NormalizedPatientEvidence,
+  NormalizedBpMeasurement,
+  NormalizedClinicalEncounter,
+  StructuralEncounterBpCandidate,
+  OperationalAppointmentCandidate,
+  NormalizedCoverageWindow,
+  EffectiveCoverageSegment,
+  UnassertedCoverageSegment,
+  GetNormalizedPatientEvidenceInput,
+} from './normalized-evidence.js';

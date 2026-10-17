@@ -16,7 +16,7 @@ import { verifyCommand } from '../../scripts/lib/m1-verify.mjs';
 const password=Buffer.from(randomBytes(32).toString('base64url'));
 const hashes={};for(const f of DEMO_FIXTURES) hashes[f.key]=await hashPassword(password);
 const input={newPasswordHashes:hashes,acceptsExistingHash:passwordCheck(password)};
-const migrationNames=['20261012200810_eh005_identity_core_foundation','20261013014000_eh006_auth_sessions','20261013235221_eh009_clinical_definition_foundation','20261016000000_eh010_care_plan_lifecycle','20261017000000_eh011_bp_provenance','20261018000000_eh012_followup_encounters'];
+const migrationNames=['20261012200810_eh005_identity_core_foundation','20261013014000_eh006_auth_sessions','20261013235221_eh009_clinical_definition_foundation','20261016000000_eh010_care_plan_lifecycle','20261017000000_eh011_bp_provenance','20261018000000_eh012_followup_encounters','20261019000000_eh013_record_coverage_windows'];
 async function isolated(run) {
   const admin=new Pool({connectionString:process.env.DATABASE_URL});
   const name=`eh008_${randomUUID().replaceAll('-','')}`;const url=new URL(process.env.DATABASE_URL);url.pathname=`/${name}`;

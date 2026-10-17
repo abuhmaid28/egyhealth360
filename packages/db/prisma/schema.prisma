@@ -83,6 +83,7 @@ model PatientProfile {
   followUpAppointments FollowUpAppointment[]
   clinicalEncounters ClinicalEncounter[]
   encounterBloodPressureAssociations EncounterBloodPressureAssociation[]
+  recordCoverageWindows RecordCoverageWindow[]
 
   // Prisma requires the full composite relation key to be marked unique.
   @@unique([userId, userRole], map: "patient_profiles_user_role_key")
@@ -318,4 +319,32 @@ model EncounterBloodPressureAssociation {
   // Prisma requires the full composite defining relation key to be unique.
   @@unique([bloodPressureMeasurementId, patientId], map: "encounter_bp_associations_measurement_patient_key")
   @@map("encounter_bp_associations")
+}
+
+enum RecordCoverageSourceType {
+  SYNTHETIC_BENCHMARK
+  @@map("record_coverage_source_type")
+}
+
+enum RecordCoverageStatus {
+  COMPLETE
+  INCOMPLETE
+  UNKNOWN
+  @@map("record_coverage_status")
+}
+
+model RecordCoverageWindow {
+  id              String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId       String                   @map("patient_id") @db.Uuid
+  sourceType      RecordCoverageSourceType @map("source_type")
+  sourceReference String                   @map("source_reference") @db.Text
+  coverageStatus  RecordCoverageStatus     @map("coverage_status")
+  startAt         DateTime                 @map("start_at") @db.Timestamptz(6)
+  endAt           DateTime                 @map("end_at") @db.Timestamptz(6)
+  createdAt       DateTime                 @default(now()) @map("created_at") @db.Timestamptz(3)
+  patient         PatientProfile           @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "record_coverage_windows_patient_fkey")
+
+  @@unique([patientId, sourceType, sourceReference, coverageStatus, startAt, endAt], map: "record_coverage_windows_assertion_key")
+  @@index([patientId, sourceType, sourceReference, startAt, endAt], map: "record_coverage_windows_partition_idx")
+  @@map("record_coverage_windows")
 }
