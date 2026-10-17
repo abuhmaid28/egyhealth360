@@ -149,3 +149,19 @@ Coverage and normalized evidence suites cover:
 - Fresh seven-migration deploy and EH-012 -> EH-013 upgrade verification preserving all 14 previous domain tables and ledger checksums.
 Actual counts and results: EH-013_VALIDATION.md.
 
+## EH-015 observed clinical applicability foundation
+
+Observed applicability test suites cover:
+- Age assertion truth table: validation and SQL check constraint `oa_snapshots_age_assertion_check` enforcing that `NO_ASSERTION` and `UNKNOWN` require age NULL, and `ASSERTED_VALUE` requires age >= 0. Rejection of string coercions, floats, and negative numbers.
+- SQL triggers enforcing unconditional immutability on `observed_applicability_snapshots` and `observed_applicability_retractions` (UPDATE, DELETE, and TRUNCATE rejected).
+- Machine writer idempotency: exact duplicate returns original snapshot/retraction (`created: false`); conflicting assertions fail closed with `APPLICABILITY_CONFLICT`.
+- Terminal one-to-one retractions: target snapshot lock FOR UPDATE; partition FK integrity; chronology checks; duplicate retraction reference conflicts; cross-patient rejection.
+- Mechanical point projection: pure in-memory evaluation of non-retracted snapshots returning `NO_NON_RETRACTED_ROWS`, `IDENTICAL_TUPLES`, or `DIFFERING_TUPLES`.
+- Research noninterference & missingness preservation: inaccessible complete ground truth never backfills missing observed fields (`null` strictly preserved); explicit `UNKNOWN` and `ABSENT` preserved.
+- Zero product audit events: internal synthetic writes and reads generate zero `audit_logs` entries.
+- Authorized query service matrix: Patient own read allowed, ACTIVE-assigned Clinician read allowed, Admin denied, unassigned Clinician denied, cross-patient denied with uniform access denial.
+- Architectural boundaries: `@egyhealth/db` exports only persistence wrapper, errors, and types; `apps/api` prevented from importing private writers/readers; zero public HTTP routes; OpenAPI spec unchanged.
+- Migration verification: 8 migrations verified, and EH-013 -> EH-015 upgrade preserving all 15 previous domain tables.
+Actual counts and results: EH-015_VALIDATION.md.
+
+

@@ -278,3 +278,27 @@ Normalization is strictly source-partitioned: (patientId, sourceType, sourceRefe
 Normalized evidence query executes as a single-statement transactional snapshot returning canonical intervals, BP candidates, encounter BP candidates, and operational appointment candidates without clinical qualification.
 Exact contract: EH-013_COVERAGE_NORMALIZED_EVIDENCE_CONTRACT.md. No CareAction generation or EACCE classification.
 
+## EH-015 executable observed applicability slice
+
+Two models: ObservedClinicalApplicabilitySnapshot (15 scalar fields) and ObservedClinicalApplicabilityRetraction (9 scalar fields).
+Four enums:
+- ObservedApplicabilitySourceType: SYNTHETIC_OBSERVED_INPUT
+- ObservedAgeAssertionState: NO_ASSERTION | UNKNOWN | ASSERTED_VALUE
+- ObservedPregnancyStatus: PREGNANT | NOT_PREGNANT | UNKNOWN
+- ObservedConditionStatus: PRESENT | ABSENT | UNKNOWN
+
+Snapshot fields: id, patientId, sourceType, sourceReference, assertionReference, effectiveAt, assertedAt, recordedAt, ageAssertionState, ageYearsAtAssessment, pregnancyStatus, hypertensionStatus, cvdStatus, diabetesStatus, ckdStatus.
+Retraction fields: id, snapshotId, patientId, sourceType, sourceReference, retractionReference, assertedAt, recordedAt, reasonCode.
+
+Constraints and invariants:
+- Natural identity uniqueness on (patient_id, source_type, source_reference, assertion_reference).
+- Terminal one-to-one retraction on snapshot_id with composite partition FK (snapshot_id, patient_id, source_type, source_reference).
+- Retraction reference uniqueness on (patient_id, source_type, source_reference, retraction_reference).
+- Age assertion check: NO_ASSERTION and UNKNOWN require age NULL; ASSERTED_VALUE requires age >= 0.
+- Chronology: snapshot effectiveAt <= assertedAt; retraction assertedAt >= target snapshot assertedAt.
+- Immutability: database triggers reject UPDATE, DELETE, and TRUNCATE unconditionally on both tables.
+- Research noninterference: complete ground truth never backfills missing observed fields (null strictly preserved).
+- Read-only authorized query service with canonical user/session/assignment lock discipline and mechanical point projection.
+Exact contract: EH-015_OBSERVED_APPLICABILITY_CONTRACT.md. No CareAction generation or EACCE classification.
+
+

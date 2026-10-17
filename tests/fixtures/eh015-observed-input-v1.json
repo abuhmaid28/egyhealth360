@@ -1,0 +1,72 @@
+{
+  "manifestVersion": "eh015-observed-input-v1",
+  "logicalPatient": "patient-a",
+  "snapshots": [
+    {
+      "sourceType": "SYNTHETIC_OBSERVED_INPUT",
+      "sourceReference": "eh015-obs-src-01",
+      "assertionReference": "item-001",
+      "effectiveAt": "2026-03-01T08:00:00.000Z",
+      "assertedAt": "2026-03-01T08:30:00.000Z",
+      "ageAssertionState": "ASSERTED_VALUE",
+      "ageYearsAtAssessment": 52,
+      "pregnancyStatus": "NOT_PREGNANT",
+      "hypertensionStatus": "PRESENT",
+      "cvdStatus": "ABSENT",
+      "diabetesStatus": "ABSENT",
+      "ckdStatus": "ABSENT"
+    },
+    {
+      "sourceType": "SYNTHETIC_OBSERVED_INPUT",
+      "sourceReference": "eh015-obs-src-01",
+      "assertionReference": "item-002",
+      "effectiveAt": "2026-03-01T08:00:00.000Z",
+      "assertedAt": "2026-03-01T08:45:00.000Z",
+      "ageAssertionState": "ASSERTED_VALUE",
+      "ageYearsAtAssessment": 52,
+      "pregnancyStatus": "NOT_PREGNANT",
+      "hypertensionStatus": "PRESENT",
+      "cvdStatus": "ABSENT",
+      "diabetesStatus": "ABSENT",
+      "ckdStatus": "ABSENT"
+    },
+    {
+      "sourceType": "SYNTHETIC_OBSERVED_INPUT",
+      "sourceReference": "eh015-obs-src-01",
+      "assertionReference": "item-003",
+      "effectiveAt": "2026-03-15T09:00:00.000Z",
+      "assertedAt": "2026-03-15T09:15:00.000Z",
+      "ageAssertionState": "UNKNOWN",
+      "ageYearsAtAssessment": null,
+      "pregnancyStatus": "UNKNOWN",
+      "hypertensionStatus": "PRESENT",
+      "cvdStatus": "UNKNOWN",
+      "diabetesStatus": null,
+      "ckdStatus": null
+    },
+    {
+      "sourceType": "SYNTHETIC_OBSERVED_INPUT",
+      "sourceReference": "eh015-obs-src-02",
+      "assertionReference": "item-004",
+      "effectiveAt": "2026-03-15T09:00:00.000Z",
+      "assertedAt": "2026-03-15T09:20:00.000Z",
+      "ageAssertionState": "NO_ASSERTION",
+      "ageYearsAtAssessment": null,
+      "pregnancyStatus": null,
+      "hypertensionStatus": "PRESENT",
+      "cvdStatus": null,
+      "diabetesStatus": null,
+      "ckdStatus": null
+    }
+  ],
+  "retractions": [
+    {
+      "sourceType": "SYNTHETIC_OBSERVED_INPUT",
+      "sourceReference": "eh015-obs-src-01",
+      "targetAssertionReference": "item-002",
+      "retractionReference": "retract-001",
+      "assertedAt": "2026-03-01T09:00:00.000Z",
+      "reasonCode": "SOURCE_ASSERTION_WITHDRAWN"
+    }
+  ]
+}

@@ -120,3 +120,18 @@ Authorization is revalidated transactionally with session and assignment validat
 Immutability is enforced at the database layer via triggers rejecting UPDATE, DELETE, and TRUNCATE.
 No public HTTP routes are added in EH-013; `docs/openapi.json` is byte-for-byte unchanged.
 
+## EH-015 observed clinical applicability authorization and boundary
+
+Observed applicability snapshots and retractions have no public write HTTP route. Internal machine processes (synthetic benchmark fixtures, research evaluation inputs) write assertions internally using private helpers (`internalInsertObservedApplicabilitySnapshot`, `internalRetractObservedApplicabilitySnapshot`).
+Authorized query operations (`getObservedApplicabilitySnapshots`) strictly enforce the canonical EgyHealth 360 authorization discipline:
+- Patient role: own-data read only (`principal.userId === target.userId`).
+- Clinician role: read requires an active clinician-patient assignment (`clinician_patient_assignments.status === 'ACTIVE'`).
+- Admin role: denied by role alone.
+- Unassigned clinician: denied.
+- Cross-patient access: denied with uniform access denial.
+Authorization is revalidated transactionally with session and assignment validation.
+Immutability is enforced at the database layer via triggers rejecting UPDATE, DELETE, and TRUNCATE unconditionally on both `observed_applicability_snapshots` and `observed_applicability_retractions`.
+Research noninterference: complete research ground truth is strictly inaccessible to the observed applicability engine. Missing observed fields (`null`) are preserved without inference or backfilling.
+Zero public HTTP routes are added in EH-015; `docs/openapi.json` is byte-for-byte unchanged.
+
+

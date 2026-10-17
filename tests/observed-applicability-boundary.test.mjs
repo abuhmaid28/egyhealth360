@@ -1,0 +1,69 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile, readdir } from 'node:fs/promises';
+import { join } from 'node:path';
+import { createHash } from 'node:crypto';
+import * as dbExports from '../packages/db/dist/index.js';
+
+test('EH-015 architectural boundary: @egyhealth/db does not export internal writer or raw reader', () => {
+  const exports = Object.keys(dbExports);
+
+  // Assert approved public factory and error exist
+  assert.ok(exports.includes('createObservedApplicabilityPersistence'));
+  assert.ok(exports.includes('ObservedApplicabilityError'));
+
+  // Assert internal writers and internal readers are NOT exported
+  assert.equal(exports.includes('internalInsertObservedApplicabilitySnapshot'), false);
+  assert.equal(exports.includes('internalRetractObservedApplicabilitySnapshot'), false);
+  assert.equal(exports.includes('internalGetObservedApplicabilitySnapshots'), false);
+  assert.equal(exports.includes('validateInsertSnapshotInput'), false);
+  assert.equal(exports.includes('validateRetractSnapshotInput'), false);
+  assert.equal(exports.includes('projectObservedApplicabilityPoint'), false);
+});
+
+async function getAllSourceFiles(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const fullPath = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await getAllSourceFiles(fullPath)));
+    } else if (entry.isFile() && (entry.name.endsWith('.ts') || entry.name.endsWith('.tsx') || entry.name.endsWith('.js'))) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
+test('EH-015 architectural boundary: apps/api does not import internal applicability writer or raw reader', async () => {
+  const apiFiles = await getAllSourceFiles('apps/api/src');
+  assert.ok(apiFiles.length > 0, 'apps/api/src must contain source files to verify');
+
+  for (const file of apiFiles) {
+    const content = await readFile(file, 'utf8');
+    assert.doesNotMatch(content, /internalInsertObservedApplicabilitySnapshot/, `Violation in ${file}`);
+    assert.doesNotMatch(content, /internalRetractObservedApplicabilitySnapshot/, `Violation in ${file}`);
+    assert.doesNotMatch(content, /internalGetObservedApplicabilitySnapshots/, `Violation in ${file}`);
+    assert.doesNotMatch(content, /observed-applicability(?:\.js)?['"]/, `Violation in ${file}`);
+  }
+});
+
+test('EH-015 architectural boundary: zero public HTTP routes and OpenAPI hash unchanged', async () => {
+  const openapiContent = await readFile('docs/openapi.json', 'utf8');
+  const hash = createHash('sha256').update(openapiContent).digest('hex');
+  assert.equal(hash, '37a52027d416859f0c676fce86e8d7b347eae16a5d11398748e5ab17cdfcd83d');
+
+  const openapi = JSON.parse(openapiContent);
+  const pathKeys = Object.keys(openapi.paths ?? {});
+  for (const path of pathKeys) {
+    assert.doesNotMatch(path, /applicability/, `No public applicability route allowed: ${path}`);
+  }
+});
+
+test('EH-015 schema boundary: no CareAction, ClosureAssessment, or extraneous models', async () => {
+  const schema = await readFile('packages/db/prisma/schema.prisma', 'utf8');
+  assert.doesNotMatch(schema, /model\s+CareAction\b/);
+  assert.doesNotMatch(schema, /model\s+ClosureAssessment\b/);
+  assert.match(schema, /model\s+ObservedClinicalApplicabilitySnapshot\b/);
+  assert.match(schema, /model\s+ObservedClinicalApplicabilityRetraction\b/);
+});

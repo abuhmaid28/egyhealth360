@@ -84,6 +84,7 @@ model PatientProfile {
   clinicalEncounters ClinicalEncounter[]
   encounterBloodPressureAssociations EncounterBloodPressureAssociation[]
   recordCoverageWindows RecordCoverageWindow[]
+  observedApplicabilitySnapshots ObservedClinicalApplicabilitySnapshot[]
 
   // Prisma requires the full composite relation key to be marked unique.
   @@unique([userId, userRole], map: "patient_profiles_user_role_key")
@@ -347,4 +348,78 @@ model RecordCoverageWindow {
   @@unique([patientId, sourceType, sourceReference, coverageStatus, startAt, endAt], map: "record_coverage_windows_assertion_key")
   @@index([patientId, sourceType, sourceReference, startAt, endAt], map: "record_coverage_windows_partition_idx")
   @@map("record_coverage_windows")
+}
+
+enum ObservedApplicabilitySourceType {
+  SYNTHETIC_OBSERVED_INPUT
+
+  @@map("observed_applicability_source_type")
+}
+
+enum ObservedAgeAssertionState {
+  NO_ASSERTION
+  UNKNOWN
+  ASSERTED_VALUE
+
+  @@map("observed_age_assertion_state")
+}
+
+enum ObservedPregnancyStatus {
+  PREGNANT
+  NOT_PREGNANT
+  UNKNOWN
+
+  @@map("observed_pregnancy_status")
+}
+
+enum ObservedConditionStatus {
+  PRESENT
+  ABSENT
+  UNKNOWN
+
+  @@map("observed_condition_status")
+}
+
+model ObservedClinicalApplicabilitySnapshot {
+  id                   String                          @id(map: "oa_snapshots_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId            String                          @map("patient_id") @db.Uuid
+  sourceType           ObservedApplicabilitySourceType @map("source_type")
+  sourceReference      String                          @map("source_reference") @db.Text
+  assertionReference   String                          @map("assertion_reference") @db.Text
+  effectiveAt          DateTime                        @map("effective_at") @db.Timestamptz(6)
+  assertedAt           DateTime                        @map("asserted_at") @db.Timestamptz(6)
+  recordedAt           DateTime                        @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  ageAssertionState    ObservedAgeAssertionState       @map("age_assertion_state")
+  ageYearsAtAssessment Int?                            @map("age_years_at_assessment")
+  pregnancyStatus      ObservedPregnancyStatus?        @map("pregnancy_status")
+  hypertensionStatus   ObservedConditionStatus?        @map("hypertension_status")
+  cvdStatus            ObservedConditionStatus?        @map("cvd_status")
+  diabetesStatus       ObservedConditionStatus?        @map("diabetes_status")
+  ckdStatus            ObservedConditionStatus?        @map("ckd_status")
+
+  patient              PatientProfile                  @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "oa_snapshots_patient_fkey")
+  retraction           ObservedClinicalApplicabilityRetraction?
+
+  @@unique([patientId, sourceType, sourceReference, assertionReference], map: "oa_snapshots_source_identity_key")
+  @@unique([id, patientId, sourceType, sourceReference], map: "oa_snapshots_scope_key")
+  @@index([patientId, effectiveAt, sourceType, sourceReference, assertionReference, id], map: "oa_snapshots_point_idx")
+  @@map("observed_applicability_snapshots")
+}
+
+model ObservedClinicalApplicabilityRetraction {
+  id                  String                                @id(map: "oa_retractions_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  snapshotId          String                                @unique(map: "oa_retractions_target_key") @map("snapshot_id") @db.Uuid
+  patientId           String                                @map("patient_id") @db.Uuid
+  sourceType          ObservedApplicabilitySourceType       @map("source_type")
+  sourceReference     String                                @map("source_reference") @db.Text
+  retractionReference String                                @map("retraction_reference") @db.Text
+  assertedAt          DateTime                              @map("asserted_at") @db.Timestamptz(6)
+  recordedAt          DateTime                              @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  reasonCode          String                                @map("reason_code") @db.Text
+
+  snapshot            ObservedClinicalApplicabilitySnapshot @relation(fields: [snapshotId, patientId, sourceType, sourceReference], references: [id, patientId, sourceType, sourceReference], onDelete: Restrict, onUpdate: Restrict, map: "oa_retractions_snapshot_scope_fkey")
+
+  @@unique([patientId, sourceType, sourceReference, retractionReference], map: "oa_retractions_source_identity_key")
+  @@unique([snapshotId, patientId, sourceType, sourceReference], map: "oa_retractions_target_scope_key")
+  @@map("observed_applicability_retractions")
 }
