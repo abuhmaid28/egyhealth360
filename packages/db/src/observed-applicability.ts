@@ -231,11 +231,14 @@ export async function internalInsertObservedApplicabilitySnapshot(
   } catch (error: unknown) {
     if (error instanceof ObservedApplicabilityError) throw error;
     const msg = error instanceof Error ? error.message : String(error);
-    const dbErr = error as { code?: string };
+    const dbErr = error as { code?: string; constraint?: string };
     if (
       msg.includes('oa_snapshots_scope_guard') ||
       msg.includes('oa_snapshots_patient_fkey') ||
-      msg.includes('patient_profiles')
+      msg.includes('Invalid patient profile') ||
+      msg.includes('patient_profiles') ||
+      dbErr?.constraint === 'oa_snapshots_scope_guard' ||
+      dbErr?.constraint === 'oa_snapshots_patient_fkey'
     ) {
       throw new ObservedApplicabilityError('APPLICABILITY_NOT_FOUND');
     }
@@ -581,7 +584,7 @@ export async function internalRetractObservedApplicabilitySnapshot(
   } catch (error: unknown) {
     if (error instanceof ObservedApplicabilityError) throw error;
     const msg = error instanceof Error ? error.message : String(error);
-    const dbErr = error as { code?: string };
+    const dbErr = error as { code?: string; constraint?: string };
     if (
       dbErr?.code === '23505' ||
       msg.includes('oa_retractions_source_identity_key') ||
@@ -594,7 +597,11 @@ export async function internalRetractObservedApplicabilitySnapshot(
       msg.includes('oa_retractions_scope_guard') ||
       msg.includes('oa_retractions_target_scope_guard') ||
       msg.includes('oa_retractions_snapshot_scope_fkey') ||
-      msg.includes('Target snapshot not found')
+      msg.includes('Target snapshot not found') ||
+      msg.includes('Invalid patient profile') ||
+      dbErr?.constraint === 'oa_retractions_scope_guard' ||
+      dbErr?.constraint === 'oa_retractions_target_scope_guard' ||
+      dbErr?.constraint === 'oa_retractions_snapshot_scope_fkey'
     ) {
       throw new ObservedApplicabilityError('APPLICABILITY_NOT_FOUND');
     }

@@ -32,37 +32,37 @@ test('EH-015 database immutability: snapshots and retractions reject UPDATE, DEL
     // 1. Snapshot UPDATE rejection
     await assert.rejects(
       f.pool.query('UPDATE public.observed_applicability_snapshots SET age_years_at_assessment = 99 WHERE id = $1', [snapshot.id]),
-      (err) => err.message.includes('Observed applicability snapshots are immutable')
+      (err) => err.message.includes('Observed clinical applicability history is immutable')
     );
 
     // 2. Snapshot DELETE rejection
     await assert.rejects(
       f.pool.query('DELETE FROM public.observed_applicability_snapshots WHERE id = $1', [snapshot.id]),
-      (err) => err.message.includes('Observed applicability snapshots are immutable')
+      (err) => err.message.includes('Observed clinical applicability history is immutable')
     );
 
     // 3. Snapshot TRUNCATE rejection
     await assert.rejects(
       f.pool.query('TRUNCATE TABLE public.observed_applicability_snapshots CASCADE'),
-      (err) => err.message.includes('Observed applicability snapshots are immutable')
+      (err) => err.message.includes('Observed clinical applicability history is immutable')
     );
 
     // 4. Retraction UPDATE rejection
     await assert.rejects(
       f.pool.query('UPDATE public.observed_applicability_retractions SET reason_code = $1 WHERE id = $2', ['OTHER', retraction.id]),
-      (err) => err.message.includes('Observed applicability retractions are immutable')
+      (err) => err.message.includes('Observed clinical applicability history is immutable')
     );
 
     // 5. Retraction DELETE rejection
     await assert.rejects(
       f.pool.query('DELETE FROM public.observed_applicability_retractions WHERE id = $1', [retraction.id]),
-      (err) => err.message.includes('Observed applicability retractions are immutable')
+      (err) => err.message.includes('Observed clinical applicability history is immutable')
     );
 
     // 6. Retraction TRUNCATE rejection
     await assert.rejects(
       f.pool.query('TRUNCATE TABLE public.observed_applicability_retractions CASCADE'),
-      (err) => err.message.includes('Observed applicability retractions are immutable')
+      (err) => err.message.includes('Observed clinical applicability history is immutable')
     );
   }));
 
