@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(new URL('../../packages/db/package.json', import.meta.url));
 const { PrismaPg } = require('@prisma/adapter-pg');
 import { PrismaClient } from '../../packages/db/dist/generated/prisma/client.js';
-import { isolatedCoverage, waitBlocked } from './coverage.mjs';
+import { isolatedCoverage } from './coverage.mjs';
 import { createObservedApplicabilityPersistence } from '../../packages/db/dist/index.js';
 import {
   internalInsertObservedApplicabilitySnapshot,
@@ -14,7 +14,15 @@ import {
 
 export const applicabilityMigration = '20261020000000_eh015_observed_clinical_applicability';
 
-export { waitBlocked };
+export async function waitBlocked(pool, pid, timeoutMs = 5000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    const res = await pool.query('SELECT cardinality(pg_blocking_pids($1)) > 0 AS blocked', [pid]);
+    if (res.rows[0]?.blocked) return;
+    await new Promise((resolve) => setTimeout(resolve, 20));
+  }
+  throw new Error(`Expected lock wait on pid ${pid} within ${timeoutMs}ms`);
+}
 
 export async function isolatedObservedApplicability(run) {
   return isolatedCoverage(async (f) => {
@@ -76,8 +84,12 @@ export async function isolatedObservedApplicability(run) {
         prisma,
       });
     } finally {
-      await prisma.$disconnect();
-      await applicability.close();
+      try {
+        await prisma.$disconnect();
+      } catch {}
+      try {
+        await applicability.close();
+      } catch {}
     }
   });
 }

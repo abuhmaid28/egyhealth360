@@ -6,7 +6,7 @@
 - **Primary Blocked Issue:** #28 (`EH-014 — M2 Hypertension Care Action Generation Foundation`)
 - **Approved Baseline Commit:** `40f3a0ecd64e0d9fe2389c9bd3efea4acaa63591` on `origin/main`
 - **Feature Branch:** `feature/EH-015-m2-observed-clinical-applicability`
-- **Authoritative Gates:** Issue #29 final implementation plan (comment `6242326017`) and independent second-pass re-review (comment `6242398457`)
+- **Authoritative Gates:** Issue #29 final implementation plan (comment `6242326017`) and independent second-pass re-review (comment `6242103787`)
 - **Architecture Decision Record:** ADR-028 (`docs/DECISIONS.md`)
 
 ---
@@ -72,41 +72,46 @@ enum ObservedConditionStatus {
 }
 
 model ObservedClinicalApplicabilitySnapshot {
-  id                   String                           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  patientId            String                           @map("patient_id") @db.Uuid
-  sourceType           ObservedApplicabilitySourceType  @map("source_type")
-  sourceReference      String                           @map("source_reference") @db.Text
-  assertionReference   String                           @map("assertion_reference") @db.Text
-  effectiveAt          DateTime                         @map("effective_at") @db.Timestamptz(6)
-  assertedAt           DateTime                         @map("asserted_at") @db.Timestamptz(6)
-  recordedAt           DateTime                         @default(now()) @map("recorded_at") @db.Timestamptz(6)
-  ageAssertionState    ObservedAgeAssertionState        @map("age_assertion_state")
-  ageYearsAtAssessment Int?                             @map("age_years_at_assessment")
-  pregnancyStatus      ObservedPregnancyStatus?         @map("pregnancy_status")
-  hypertensionStatus   ObservedConditionStatus?         @map("hypertension_status")
-  cvdStatus            ObservedConditionStatus?         @map("cvd_status")
-  diabetesStatus       ObservedConditionStatus?         @map("diabetes_status")
-  ckdStatus            ObservedConditionStatus?         @map("ckd_status")
-  patient              PatientProfile                   @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "oa_snapshots_patient_fkey")
+  id                   String                          @id(map: "oa_snapshots_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId            String                          @map("patient_id") @db.Uuid
+  sourceType           ObservedApplicabilitySourceType @map("source_type")
+  sourceReference      String                          @map("source_reference") @db.Text
+  assertionReference   String                          @map("assertion_reference") @db.Text
+  effectiveAt          DateTime                        @map("effective_at") @db.Timestamptz(6)
+  assertedAt           DateTime                        @map("asserted_at") @db.Timestamptz(6)
+  recordedAt           DateTime                        @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  ageAssertionState    ObservedAgeAssertionState       @map("age_assertion_state")
+  ageYearsAtAssessment Int?                            @map("age_years_at_assessment")
+  pregnancyStatus      ObservedPregnancyStatus?        @map("pregnancy_status")
+  hypertensionStatus   ObservedConditionStatus?        @map("hypertension_status")
+  cvdStatus            ObservedConditionStatus?        @map("cvd_status")
+  diabetesStatus       ObservedConditionStatus?        @map("diabetes_status")
+  ckdStatus            ObservedConditionStatus?        @map("ckd_status")
+
+  patient              PatientProfile                  @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "oa_snapshots_patient_fkey")
+  retraction           ObservedClinicalApplicabilityRetraction?
 
   @@unique([patientId, sourceType, sourceReference, assertionReference], map: "oa_snapshots_source_identity_key")
-  @@index([patientId, effectiveAt], map: "oa_snapshots_patient_effective_idx")
+  @@unique([id, patientId, sourceType, sourceReference], map: "oa_snapshots_scope_key")
+  @@index([patientId, effectiveAt, sourceType, sourceReference, assertionReference, id], map: "oa_snapshots_point_idx")
   @@map("observed_applicability_snapshots")
 }
 
 model ObservedClinicalApplicabilityRetraction {
-  id                  String                          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  snapshotId          String                          @unique(map: "oa_retractions_snapshot_id_key") @map("snapshot_id") @db.Uuid
-  patientId           String                          @map("patient_id") @db.Uuid
-  sourceType          ObservedApplicabilitySourceType @map("source_type")
-  sourceReference     String                          @map("source_reference") @db.Text
-  retractionReference String                          @map("retraction_reference") @db.Text
-  assertedAt          DateTime                        @map("asserted_at") @db.Timestamptz(6)
-  recordedAt          DateTime                        @default(now()) @map("recorded_at") @db.Timestamptz(6)
-  reasonCode          String                          @map("reason_code") @db.Text
-  patient             PatientProfile                  @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "oa_retractions_patient_fkey")
+  id                  String                                @id(map: "oa_retractions_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  snapshotId          String                                @unique(map: "oa_retractions_target_key") @map("snapshot_id") @db.Uuid
+  patientId           String                                @map("patient_id") @db.Uuid
+  sourceType          ObservedApplicabilitySourceType       @map("source_type")
+  sourceReference     String                                @map("source_reference") @db.Text
+  retractionReference String                                @map("retraction_reference") @db.Text
+  assertedAt          DateTime                              @map("asserted_at") @db.Timestamptz(6)
+  recordedAt          DateTime                              @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  reasonCode          String                                @map("reason_code") @db.Text
+
+  snapshot            ObservedClinicalApplicabilitySnapshot @relation(fields: [snapshotId, patientId, sourceType, sourceReference], references: [id, patientId, sourceType, sourceReference], onDelete: Restrict, onUpdate: Restrict, map: "oa_retractions_snapshot_scope_fkey")
 
   @@unique([patientId, sourceType, sourceReference, retractionReference], map: "oa_retractions_source_identity_key")
+  @@unique([snapshotId, patientId, sourceType, sourceReference], map: "oa_retractions_target_scope_key")
   @@map("observed_applicability_retractions")
 }
 ```
@@ -116,16 +121,26 @@ model ObservedClinicalApplicabilityRetraction {
    ```sql
    CONSTRAINT oa_snapshots_age_assertion_check CHECK (
      (
-       (age_assertion_state = 'NO_ASSERTION' AND age_years_at_assessment IS NULL) OR
-       (age_assertion_state = 'UNKNOWN' AND age_years_at_assessment IS NULL) OR
-       (age_assertion_state = 'ASSERTED_VALUE' AND age_years_at_assessment IS NOT NULL AND age_years_at_assessment >= 0)
+       (age_assertion_state = 'NO_ASSERTION' AND age_years_at_assessment IS NULL)
+       OR (age_assertion_state = 'UNKNOWN' AND age_years_at_assessment IS NULL)
+       OR (age_assertion_state = 'ASSERTED_VALUE'
+           AND age_years_at_assessment IS NOT NULL
+           AND age_years_at_assessment >= 0)
      ) IS TRUE
    )
    ```
 2. **Chronology Constraints:**
-   ```sql
-   CONSTRAINT oa_snapshots_chronology_check CHECK (effective_at <= asserted_at)
-   ```
+   - Snapshot table check:
+     ```sql
+     CONSTRAINT oa_snapshots_chronology_check CHECK (effective_at <= asserted_at AND asserted_at <= recorded_at)
+     ```
+   - Retraction table check:
+     ```sql
+     CONSTRAINT oa_retractions_chronology_check CHECK (asserted_at <= recorded_at)
+     ```
+   - Retraction trigger guards (`eh015_guard_retraction_insert`):
+     - `retraction.asserted_at >= target_snapshot.asserted_at` (`oa_retractions_target_chronology_guard`)
+     - `retraction.recorded_at >= target_snapshot.recorded_at` (`oa_retractions_receipt_chronology_guard`)
 3. **Reference Grammars:**
    Bounded ASCII `^[A-Za-z0-9_.-]{1,128}$` enforced by regex checks on `source_reference`, `assertion_reference`, and `retraction_reference`.
 4. **Terminal One-to-One Retraction Partition Key Integrity:**

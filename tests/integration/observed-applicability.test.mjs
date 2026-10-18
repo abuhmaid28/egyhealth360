@@ -447,8 +447,9 @@ test('EH-015 mechanical point projection & tuple comparisons in DB', () =>
 
 test('EH-015 concurrent duplicate insertion: overlapping assertion attempts serialize with single insertion', () =>
   isolatedObservedApplicability(async (f) => {
-    const clientA = await f.pool.connect();
-    const clientB = await f.pool.connect();
+    let clientA;
+    let clientB;
+    let insertPromiseB;
 
     const input = {
       patientId: f.patientId,
@@ -467,6 +468,12 @@ test('EH-015 concurrent duplicate insertion: overlapping assertion attempts seri
     };
 
     try {
+      clientA = await f.pool.connect();
+      clientB = await f.pool.connect();
+
+      await clientA.query('SET statement_timeout = 10000');
+      await clientB.query('SET statement_timeout = 10000');
+
       const bPid = (await clientB.query('SELECT pg_backend_pid() AS pid')).rows[0].pid;
 
       await clientA.query('BEGIN');
@@ -507,7 +514,7 @@ test('EH-015 concurrent duplicate insertion: overlapping assertion attempts seri
       const insertedA = resA.rows[0];
 
       // Client B attempts the concurrent insert of the EXACT SAME assertion
-      const insertPromiseB = clientB.query(
+      insertPromiseB = clientB.query(
         `INSERT INTO public.observed_applicability_snapshots (
           id, patient_id, source_type, source_reference, assertion_reference,
           effective_at, asserted_at, age_assertion_state, age_years_at_assessment,
@@ -539,7 +546,7 @@ test('EH-015 concurrent duplicate insertion: overlapping assertion attempts seri
       );
 
       // Verify Client B is blocked on Client A's transaction
-      await waitBlocked(f.pool, bPid);
+      await waitBlocked(f.pool, bPid, 5000);
 
       // Commit transaction A, releasing lock to Client B
       await clientA.query('COMMIT');
@@ -569,7 +576,22 @@ test('EH-015 concurrent duplicate insertion: overlapping assertion attempts seri
       );
       assert.equal(countRes.rows[0].n, 1);
     } finally {
-      clientA.release();
-      clientB.release();
+      if (clientA) {
+        try {
+          await clientA.query('ROLLBACK');
+        } catch {}
+      }
+      if (insertPromiseB) {
+        try {
+          await insertPromiseB.catch(() => {});
+        } catch {}
+      }
+      if (clientB) {
+        try {
+          await clientB.query('ROLLBACK');
+        } catch {}
+      }
+      if (clientA) clientA.release();
+      if (clientB) clientB.release();
     }
   }));
