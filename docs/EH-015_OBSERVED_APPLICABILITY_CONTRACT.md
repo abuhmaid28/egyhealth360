@@ -169,3 +169,30 @@ model ObservedClinicalApplicabilityRetraction {
    - `NO_NON_RETRACTED_ROWS`: 0 non-retracted rows.
    - `IDENTICAL_TUPLES`: $\ge 1$ non-retracted rows with identical clinical fields.
    - `DIFFERING_TUPLES`: $\ge 2$ non-retracted rows with conflicting clinical fields.
+
+
+## 5. Exact point and receipt semantics
+
+A snapshot describes exactly effectiveAt, with no carry-forward, nearest, same-day,
+or latest-prior selection. Equivalent timezone-offset instants normalize identically;
+T-1ms and T+1ms do not match T. assertedAt is the source's assertion/availability
+time. recordedAt is local DB receipt after scope locks, not clinical availability
+or commit time. The reader returns the current statement-visible factual ledger,
+including later retrospective assertions and terminal withdrawals. It is not
+historical knowledge replay; EH-015 has no knowledgeAsOf semantics. B2 decides
+future trigger linkage/admissibility and any pinned input set.
+
+The authorized wrapper copies canonical patientId/effectiveAt before the first
+await and uses only those private scalars throughout authorization and retrieval.
+Both runtime fixture applications use READ COMMITTED, Prisma maxWait=5000ms and
+timeout=30000ms, with SET LOCAL lock_timeout='5s' and statement_timeout='10s'
+before writes. Fixed-fixture and isolated-test injection share exact manifest/item
+shape validation; hidden/unknown keys and accessors are rejected before mapping.
+The runtime emits a fixed sanitized failure summary. Private writer/raw-reader
+imports remain prohibited from product/API/web/worker/startup entry paths.
+
+The SQL primary keys are explicitly named oa_snapshots_pkey and
+oa_retractions_pkey, matching Prisma. The unmerged migration hash is recorded below
+and in validation; historical migration bytes remain frozen.
+
+EH-015 migration SHA-256: `49b5afca8d394e7f501a111409eb39dcba65166f8ef22f39a954028de8f9ea69`.

@@ -1,184 +1,81 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {
-  isolatedObservedApplicability,
-  applicabilitySnapshot,
-} from '../support/observed-applicability.mjs';
+import { readFile } from 'node:fs/promises';
+import { isolatedObservedApplicability, observeApplicabilityQueries } from '../support/observed-applicability.mjs';
+import { applyObservedApplicabilityFixtureTransaction } from '../../scripts/lib/observed-applicability-fixture.mjs';
 
-test('EH-015 research noninterference: hidden complete truth never backfills missing observed applicability data', () =>
-  isolatedObservedApplicability(async (f) => {
-    // Simulated research ground truth that is NOT visible to the observed applicability engine:
-    // In ground truth, the patient is a 55-year-old non-pregnant diabetic with HTN, no CVD, no CKD.
-    const hiddenGroundTruth = {
-      patientId: f.patientId,
-      cohort: 'DIABETIC_HYPERTENSIVE_STUDY_COHORT_2026',
-      trueAge: 55,
-      truePregnancy: 'NOT_PREGNANT',
-      trueHypertension: 'PRESENT',
-      trueCvd: 'ABSENT',
-      trueDiabetes: 'PRESENT',
-      trueCkd: 'ABSENT',
-      futureOutcome30d: 'NO_EVENT',
-    };
+const inputFields = ['sourceType', 'sourceReference', 'assertionReference', 'effectiveAt', 'assertedAt',
+  'ageAssertionState', 'ageYearsAtAssessment', 'pregnancyStatus', 'hypertensionStatus', 'cvdStatus', 'diabetesStatus', 'ckdStatus'];
+const pick = row => Object.fromEntries(inputFields.map(key => [key,
+  row[key] instanceof Date ? row[key].toISOString() : row[key]]));
+const base = JSON.parse(await readFile('tests/fixtures/eh015-observed-input-v1.json', 'utf8'));
+const fixtureFor = item => ({ manifestVersion: base.manifestVersion, logicalPatient: base.logicalPatient,
+  snapshots: [item], retractions: [] });
 
-    // Visible clinical / observed record only has an assertion of hypertension = PRESENT.
-    // Age has no assertion, pregnancy is unmentioned (null), CVD is unmentioned (null),
-    // diabetes is unmentioned (null), CKD is unmentioned (null).
-    const visibleObservedRecord = {
-      patientId: f.patientId,
-      sourceType: 'SYNTHETIC_OBSERVED_INPUT',
-      sourceReference: 'eh015-research-run-001',
-      assertionReference: 'obs-assert-001',
-      effectiveAt: '2026-03-01T08:00:00.000Z',
-      assertedAt: '2026-03-01T08:30:00.000Z',
-      ageAssertionState: 'NO_ASSERTION',
-      ageYearsAtAssessment: null,
-      pregnancyStatus: null,
-      hypertensionStatus: 'PRESENT',
-      cvdStatus: null,
-      diabetesStatus: null,
-      ckdStatus: null,
-    };
-
-    const { snapshot: snap1 } = await f.insertSnapshot(visibleObservedRecord);
-
-    // Assert that the stored snapshot strictly preserves missingness (null):
-    // It must NOT backfill trueAge (55), trueDiabetes ('PRESENT'), trueCvd ('ABSENT'), etc.
-    assert.equal(snap1.ageAssertionState, 'NO_ASSERTION');
-    assert.equal(snap1.ageYearsAtAssessment, null);
-    assert.equal(snap1.pregnancyStatus, null);
-    assert.equal(snap1.hypertensionStatus, 'PRESENT');
-    assert.equal(snap1.cvdStatus, null);
-    assert.equal(snap1.diabetesStatus, null); // NOT 'PRESENT' from ground truth
-    assert.equal(snap1.ckdStatus, null);
-
-    // Verify directly from the database row
-    const dbRow = (
-      await f.pool.query(
-        'SELECT * FROM public.observed_applicability_snapshots WHERE id = $1',
-        [snap1.id]
-      )
-    ).rows[0];
-    assert.equal(dbRow.age_assertion_state, 'NO_ASSERTION');
-    assert.equal(dbRow.age_years_at_assessment, null);
-    assert.equal(dbRow.pregnancy_status, null);
-    assert.equal(dbRow.hypertension_status, 'PRESENT');
-    assert.equal(dbRow.cvd_status, null);
-    assert.equal(dbRow.diabetes_status, null);
-    assert.equal(dbRow.ckd_status, null);
-
-    // Now simulate an alternative ground truth (cohort changed, true diabetes changed to ABSENT, etc.)
-    const alternateGroundTruth = {
-      ...hiddenGroundTruth,
-      cohort: 'HEALTHY_CONTROL_COHORT',
-      trueDiabetes: 'ABSENT',
-      trueCvd: 'PRESENT',
-    };
-
-    // Storing for another assertion under the exact same visible record
-    const { snapshot: snap2 } = await f.insertSnapshot({
-      ...visibleObservedRecord,
-      assertionReference: 'obs-assert-002',
+test('EH-015 actual fixture validator→mapper→writer: inaccessible canaries do not repair observed missingness', { timeout: 45000 }, () =>
+  isolatedObservedApplicability(async f => {
+    const observed = { ...base.snapshots[0], ageAssertionState: 'NO_ASSERTION', ageYearsAtAssessment: null,
+      pregnancyStatus: null, hypertensionStatus: null, cvdStatus: null, diabetesStatus: null, ckdStatus: null };
+    const hidden = Object.create(null);
+    // Canaries are outside the observed argument and production import graph.
+    // Any accidental access from visible getters/global/SQL fails, rather than
+    // comparing against an unused local object.
+    const hiddenKeys = ['groundTruth', 'cohort', 'futureOutcome', 'corruption'];
+    let reads = 0;
+    let hiddenScenario;
+    for (const key of hiddenKeys) Object.defineProperty(hidden, key, { get() {
+      reads++; throw new Error('HIDDEN_CANARY_ACCESSED:' + hiddenScenario.complete.diabetesStatus);
+    } });
+    const restore = observeApplicabilityQueries((q, execute) => {
+      assert.doesNotMatch(q.text, /benchmark_cases|ground_truth|corruption_events|engine_predictions/i);
+      return execute();
     });
-
-    // Both snapshots are identical in clinical fields regardless of hidden ground truth
-    assert.equal(snap2.diabetesStatus, null);
-    assert.equal(snap2.cvdStatus, null);
-    assert.equal(snap2.ckdStatus, null);
-    assert.equal(snap2.pregnancyStatus, null);
-    assert.equal(snap2.ageAssertionState, 'NO_ASSERTION');
-    assert.equal(snap2.ageYearsAtAssessment, null);
-    assert.notEqual(snap2.diabetesStatus, alternateGroundTruth.trueDiabetes);
-    assert.notEqual(snap2.cvdStatus, alternateGroundTruth.trueCvd);
-
-    // Zero audit logs generated
-    const snap = await applicabilitySnapshot(f.pool);
-    assert.equal(snap.audit.filter((a) => a.entity_type?.includes('applicability')).length, 0);
+    try {
+      for (const diabetesStatus of [null, 'UNKNOWN', 'ABSENT']) {
+        const item = { ...observed, diabetesStatus, assertionReference: `visible-${diabetesStatus ?? 'null'}` };
+        // Change the external complete-data objects while keeping observed input
+        // byte-equivalent. Neither is a production input. Hidden inherited keys
+        // trap any fallback such as item.groundTruth; own-key validation still
+        // sees exactly the allowed plain observed object.
+        for (const truth of ['ABSENT', 'PRESENT']) {
+          hiddenScenario = { complete: { diabetesStatus: truth }, cohort: truth,
+            futureOutcome: truth, corruption: { removed: truth }, canaries: hidden };
+          assert.equal(hiddenScenario.complete.diabetesStatus, truth);
+          const guarded = new Proxy(item, { get(target, key, receiver) {
+            if (hiddenKeys.includes(key)) return hidden[key];
+            return Reflect.get(target, key, receiver);
+          } });
+          await applyObservedApplicabilityFixtureTransaction(f.prisma, f.patientId, fixtureFor(guarded));
+          const point = await f.getRawPoint(f.patientId, item.effectiveAt);
+          const stored = point.snapshots.find(s => s.assertionReference === item.assertionReference);
+          assert.deepEqual(pick(stored), pick(item));
+          assert.equal(stored.diabetesStatus, diabetesStatus);
+        }
+      }
+      assert.equal(reads, 0);
+      const rows = (await f.pool.query('SELECT * FROM observed_applicability_snapshots')).rows;
+      assert.equal(rows.length, 3, 'exact fixture retries retain only original rows');
+      for (const row of rows) {
+        assert.equal(row.age_assertion_state, 'NO_ASSERTION');
+        assert.equal(row.age_years_at_assessment, null);
+        for (const field of ['pregnancy_status', 'hypertension_status', 'cvd_status', 'ckd_status']) assert.equal(row[field], null);
+      }
+      const unknown = { ...observed, assertionReference: 'explicit-unknown', ageAssertionState: 'UNKNOWN',
+        pregnancyStatus: 'UNKNOWN', hypertensionStatus: 'UNKNOWN', cvdStatus: 'UNKNOWN', diabetesStatus: 'UNKNOWN', ckdStatus: 'UNKNOWN' };
+      await applyObservedApplicabilityFixtureTransaction(f.prisma, f.patientId, fixtureFor(unknown));
+      const stored = (await f.getRawPoint(f.patientId, unknown.effectiveAt)).snapshots.find(s => s.assertionReference === unknown.assertionReference);
+      assert.deepEqual(pick(stored), pick(unknown));
+    } finally { restore(); }
   }));
 
-test('EH-015 missingness preservation vs explicit UNKNOWN vs explicit ABSENT across all clinical dimensions', () =>
-  isolatedObservedApplicability(async (f) => {
-    // 1. Explicit UNKNOWN values are preserved as UNKNOWN (distinct from null / unasserted)
-    const { snapshot: snapUnknown } = await f.insertSnapshot({
-      assertionReference: 'assert-explicit-unknown',
-      ageAssertionState: 'UNKNOWN',
-      ageYearsAtAssessment: null,
-      pregnancyStatus: 'UNKNOWN',
-      hypertensionStatus: 'UNKNOWN',
-      cvdStatus: 'UNKNOWN',
-      diabetesStatus: 'UNKNOWN',
-      ckdStatus: 'UNKNOWN',
-    });
-
-    assert.equal(snapUnknown.ageAssertionState, 'UNKNOWN');
-    assert.equal(snapUnknown.ageYearsAtAssessment, null);
-    assert.equal(snapUnknown.pregnancyStatus, 'UNKNOWN');
-    assert.equal(snapUnknown.hypertensionStatus, 'UNKNOWN');
-    assert.equal(snapUnknown.cvdStatus, 'UNKNOWN');
-    assert.equal(snapUnknown.diabetesStatus, 'UNKNOWN');
-    assert.equal(snapUnknown.ckdStatus, 'UNKNOWN');
-
-    // 2. Explicit ABSENT / NOT_PREGNANT values are preserved as ABSENT / NOT_PREGNANT
-    const { snapshot: snapAbsent } = await f.insertSnapshot({
-      assertionReference: 'assert-explicit-absent',
-      ageAssertionState: 'ASSERTED_VALUE',
-      ageYearsAtAssessment: 32,
-      pregnancyStatus: 'NOT_PREGNANT',
-      hypertensionStatus: 'ABSENT',
-      cvdStatus: 'ABSENT',
-      diabetesStatus: 'ABSENT',
-      ckdStatus: 'ABSENT',
-    });
-
-    assert.equal(snapAbsent.ageAssertionState, 'ASSERTED_VALUE');
-    assert.equal(snapAbsent.ageYearsAtAssessment, 32);
-    assert.equal(snapAbsent.pregnancyStatus, 'NOT_PREGNANT');
-    assert.equal(snapAbsent.hypertensionStatus, 'ABSENT');
-    assert.equal(snapAbsent.cvdStatus, 'ABSENT');
-    assert.equal(snapAbsent.diabetesStatus, 'ABSENT');
-    assert.equal(snapAbsent.ckdStatus, 'ABSENT');
-
-    // 3. Unasserted values (missingness) remain strictly NULL
-    const { snapshot: snapMissing } = await f.insertSnapshot({
-      assertionReference: 'assert-pure-missing',
-      ageAssertionState: 'NO_ASSERTION',
-      ageYearsAtAssessment: null,
-      pregnancyStatus: null,
-      hypertensionStatus: null,
-      cvdStatus: null,
-      diabetesStatus: null,
-      ckdStatus: null,
-    });
-
-    assert.equal(snapMissing.ageAssertionState, 'NO_ASSERTION');
-    assert.equal(snapMissing.ageYearsAtAssessment, null);
-    assert.equal(snapMissing.pregnancyStatus, null);
-    assert.equal(snapMissing.hypertensionStatus, null);
-    assert.equal(snapMissing.cvdStatus, null);
-    assert.equal(snapMissing.diabetesStatus, null);
-    assert.equal(snapMissing.ckdStatus, null);
-
-    // Verify all 3 rows in DB have exact representation
-    const rows = (
-      await f.pool.query(
-        'SELECT id, age_assertion_state, age_years_at_assessment, pregnancy_status, hypertension_status, cvd_status, diabetes_status, ckd_status FROM public.observed_applicability_snapshots WHERE id IN ($1, $2, $3)',
-        [snapUnknown.id, snapAbsent.id, snapMissing.id]
-      )
-    ).rows;
-
-    const rowUnknown = rows.find((r) => r.id === snapUnknown.id);
-    assert.equal(rowUnknown.diabetes_status, 'UNKNOWN');
-    assert.equal(rowUnknown.pregnancy_status, 'UNKNOWN');
-
-    const rowAbsent = rows.find((r) => r.id === snapAbsent.id);
-    assert.equal(rowAbsent.diabetes_status, 'ABSENT');
-    assert.equal(rowAbsent.pregnancy_status, 'NOT_PREGNANT');
-
-    const rowMissing = rows.find((r) => r.id === snapMissing.id);
-    assert.equal(rowMissing.diabetes_status, null);
-    assert.equal(rowMissing.pregnancy_status, null);
-
-    // Zero product audit logs created
-    const snap = await applicabilitySnapshot(f.pool);
-    assert.equal(snap.audit.filter((a) => a.entity_type?.includes('applicability')).length, 0);
+for (const level of ['manifest', 'snapshot', 'retraction']) test(`EH-015 actual fixture entry rejects hidden keys at ${level}`, () =>
+  isolatedObservedApplicability(async f => {
+    const before = (await f.pool.query('SELECT count(*)::int n FROM observed_applicability_snapshots')).rows[0].n;
+    for (const key of ['eligible', 'applicable', 'ruleSatisfied', 'groundTruth', 'trueDiabetes', 'trueCvd', 'cohort', 'corruption', 'futureOutcome', 'benchmarkLabel', 'arbitrary']) {
+      const fixture = JSON.parse(JSON.stringify(base));
+      const target = level === 'manifest' ? fixture : level === 'snapshot' ? fixture.snapshots[0] : fixture.retractions[0];
+      target[key] = 'hidden';
+      await assert.rejects(applyObservedApplicabilityFixtureTransaction(f.prisma, f.patientId, fixture), e => e.code === 'APPLICABILITY_INVALID');
+    }
+    assert.equal((await f.pool.query('SELECT count(*)::int n FROM observed_applicability_snapshots')).rows[0].n, before);
   }));

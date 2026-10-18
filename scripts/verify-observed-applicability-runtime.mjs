@@ -13,7 +13,7 @@ import {
 } from '../packages/db/dist/index.js';
 import { demoConfiguration, passwordCheck, verificationConfiguration } from './lib/m1-demo.mjs';
 import { sessionHash } from '../apps/api/dist/auth.js';
-import { applyObservedApplicabilityFixture } from './lib/observed-applicability-fixture.mjs';
+import { applyObservedApplicabilityFixtureTransaction } from './lib/observed-applicability-fixture.mjs';
 
 const config = demoConfiguration(process.env);
 const http = verificationConfiguration(process.env);
@@ -38,19 +38,13 @@ try {
   `;
   const preAuditCount = preAudit[0].count;
 
-  // 1. Apply fixed fixture on Patient A
-  await dbClient.$transaction(async tx => {
-    const res = await applyObservedApplicabilityFixture(tx, patientA.profileId);
+  // Both first application and exact repeat use the same bounded write entry.
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const res = await applyObservedApplicabilityFixtureTransaction(dbClient, patientA.profileId);
     assert.equal(res.success, true);
     assert.equal(res.snapshotCount, 4);
     assert.equal(res.retractionCount, 1);
-  });
-
-  // 2. Repeat fixture application (idempotent / conflict safe)
-  await dbClient.$transaction(async tx => {
-    const res = await applyObservedApplicabilityFixture(tx, patientA.profileId);
-    assert.equal(res.success, true);
-  });
+  }
 
   // Verify zero audit logs created by internal synthetic writes
   const postAudit = await dbClient.$queryRaw`
@@ -129,8 +123,8 @@ try {
   }
 
   console.log('EH-015 observed applicability runtime PASS');
-} catch (error) {
-  console.error('APPLICABILITY_RUNTIME_FAILED', error);
+} catch {
+  console.error('APPLICABILITY_RUNTIME_FAILED');
   process.exitCode = 1;
 } finally {
   for (const session of sessions) {

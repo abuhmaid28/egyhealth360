@@ -295,7 +295,7 @@ Constraints and invariants:
 - Terminal one-to-one retraction on snapshot_id with composite partition FK (snapshot_id, patient_id, source_type, source_reference).
 - Retraction reference uniqueness on (patient_id, source_type, source_reference, retraction_reference).
 - Age assertion check: NO_ASSERTION and UNKNOWN require age NULL; ASSERTED_VALUE requires age >= 0.
-- Chronology: snapshot effectiveAt <= assertedAt; retraction assertedAt >= target snapshot assertedAt.
+- Chronology: snapshot effectiveAt <= assertedAt <= recordedAt. Retraction assertedAt >= target snapshot assertedAt and assertedAt <= its own recordedAt; retraction recordedAt >= target snapshot recordedAt. Receipt is database-owned TIMESTAMPTZ(3).
 - Immutability: database triggers reject UPDATE, DELETE, and TRUNCATE unconditionally on both tables.
 - Research noninterference: complete ground truth never backfills missing observed fields (null strictly preserved).
 - Read-only authorized query service with canonical user/session/assignment lock discipline and mechanical point projection.

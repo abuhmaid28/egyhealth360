@@ -630,8 +630,16 @@ export async function internalGetObservedApplicabilitySnapshots(
   tx: Prisma.TransactionClient,
   rawInput: unknown
 ): Promise<ObservedApplicabilityPoint> {
-  const { patientId, effectiveAt, effectiveAtCanonicalUtc } = validateGetApplicabilityInput(rawInput);
+  const { patientId, effectiveAtCanonicalUtc } = validateGetApplicabilityInput(rawInput);
+  return executeObservedApplicabilitySnapshots(tx, patientId, effectiveAtCanonicalUtc);
+}
 
+// Only private, canonical scalar copies cross an await in the authorized read path.
+async function executeObservedApplicabilitySnapshots(
+  tx: Prisma.TransactionClient,
+  patientId: string,
+  effectiveAtCanonicalUtc: string
+): Promise<ObservedApplicabilityPoint> {
   const rawRows = await tx.$queryRaw<
     Array<{
       id: string;
@@ -692,7 +700,7 @@ export async function internalGetObservedApplicabilitySnapshots(
       AND r.source_type = s.source_type
       AND r.source_reference = s.source_reference
     WHERE s.patient_id = ${patientId}::uuid
-      AND s.effective_at = ${effectiveAt.toISOString()}::timestamptz(6)
+      AND s.effective_at = ${effectiveAtCanonicalUtc}::timestamptz(6)
     ORDER BY
       s.source_type ASC,
       s.source_reference COLLATE "C" ASC,
@@ -723,7 +731,7 @@ export function createObservedApplicabilityPersistence(connectionString: string 
         throw new ObservedApplicabilityError('APPLICABILITY_UNAUTHENTICATED');
       }
 
-      const { patientId } = validateGetApplicabilityInput(rawInput);
+      const { patientId, effectiveAtCanonicalUtc } = validateGetApplicabilityInput(rawInput);
 
       try {
         return await client.$transaction(
@@ -789,7 +797,7 @@ export function createObservedApplicabilityPersistence(connectionString: string 
             }
 
             // 6. Execute evidence snapshot
-            const point = await internalGetObservedApplicabilitySnapshots(tx, rawInput);
+            const point = await executeObservedApplicabilitySnapshots(tx, patientId, effectiveAtCanonicalUtc);
 
             // 7. Final session / user verification before commit
             const recheck = await tx.$queryRaw<{ role: string }[]>`

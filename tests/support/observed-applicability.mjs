@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { setTimeout, clearTimeout } from 'node:timers';
 import { randomUUID, createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 const require = createRequire(new URL('../../packages/db/package.json', import.meta.url));
@@ -14,10 +15,10 @@ import {
 
 export const applicabilityMigration = '20261020000000_eh015_observed_clinical_applicability';
 
-export async function waitBlocked(pool, pid, timeoutMs = 5000) {
+export async function waitBlocked(pool, pid, timeoutMs = 5000, blockerPid = null) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
-    const res = await pool.query('SELECT cardinality(pg_blocking_pids($1)) > 0 AS blocked', [pid]);
+    const res = await pool.query('SELECT cardinality(pg_blocking_pids($1)) > 0 AND ($2::int IS NULL OR $2=ANY(pg_blocking_pids($1))) AS blocked', [pid, blockerPid]);
     if (res.rows[0]?.blocked) return;
     await new Promise((resolve) => setTimeout(resolve, 20));
   }
@@ -37,6 +38,12 @@ export async function isolatedObservedApplicability(run) {
     const prisma = new PrismaClient({ adapter });
     const applicability = createObservedApplicabilityPersistence(f.url);
 
+    const transaction = run => prisma.$transaction(async tx => {
+      await tx.$executeRaw`SET LOCAL lock_timeout='5s'`;
+      await tx.$executeRaw`SET LOCAL statement_timeout='10s'`;
+      return run(tx);
+    }, { isolationLevel: 'ReadCommitted', maxWait: 5000, timeout: 30000 });
+
     const insertSnapshot = async (input = {}) => {
       const fullInput = {
         patientId: f.patientId,
@@ -54,7 +61,7 @@ export async function isolatedObservedApplicability(run) {
         ckdStatus: 'ABSENT',
         ...input,
       };
-      return internalInsertObservedApplicabilitySnapshot(prisma, fullInput);
+      return transaction(tx => internalInsertObservedApplicabilitySnapshot(tx, fullInput));
     };
 
     const retractSnapshot = async (input = {}) => {
@@ -67,11 +74,11 @@ export async function isolatedObservedApplicability(run) {
         reasonCode: 'SOURCE_ASSERTION_WITHDRAWN',
         ...input,
       };
-      return internalRetractObservedApplicabilitySnapshot(prisma, fullInput);
+      return transaction(tx => internalRetractObservedApplicabilitySnapshot(tx, fullInput));
     };
 
     const getRawPoint = async (patientId, effectiveAt) => {
-      return internalGetObservedApplicabilitySnapshots(prisma, { patientId, effectiveAt });
+      return transaction(tx => internalGetObservedApplicabilitySnapshots(tx, { patientId, effectiveAt }));
     };
 
     try {
@@ -82,6 +89,7 @@ export async function isolatedObservedApplicability(run) {
         retractSnapshot,
         getRawPoint,
         prisma,
+        transaction,
       });
     } finally {
       try {
@@ -103,3 +111,33 @@ export const applicabilitySnapshot = async (pool) => ({
   retractions: (await pool.query('SELECT * FROM public.observed_applicability_retractions ORDER BY id')).rows,
   audit: (await pool.query('SELECT * FROM public.audit_logs ORDER BY id')).rows,
 });
+
+// Tests intercept only the SQL transport; every statement still runs on PostgreSQL.
+export function observeApplicabilityQueries(observer) {
+  const { Client } = require('pg');
+  const original = Client.prototype.query;
+  Client.prototype.query = function (...args) {
+    const config = args[0];
+    const text = typeof config === 'string' ? config : config.text;
+    const values = typeof config === 'string' ? args[1] : config.values;
+    return observer({ text, values, pid: this.processID }, () => original.apply(this, args));
+  };
+  return () => { Client.prototype.query = original; };
+}
+
+export function signal() {
+  const latch = Promise.withResolvers();
+  const timer = setTimeout(() => latch.reject(new Error('Bounded test coordination timed out')), 12000);
+  timer.unref();
+  return { promise: latch.promise, resolve: value => { clearTimeout(timer); latch.resolve(value); } };
+}
+
+export async function waitBlockedBy(pool, blockerPid, timeoutMs = 4000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    const rows = (await pool.query('SELECT pid FROM pg_stat_activity WHERE $1=ANY(pg_blocking_pids(pid))', [blockerPid])).rows;
+    if (rows.length) return rows[0].pid;
+    await new Promise(resolve => setTimeout(resolve, 20));
+  }
+  throw new Error('Expected bounded lock wait on exact blocker');
+}

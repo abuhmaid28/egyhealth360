@@ -11,7 +11,7 @@ import { verifyCommand } from './lib/m1-verify.mjs';
 import { createApp } from '../apps/api/dist/app.js';
 import { createPasswordVerifier } from '../apps/api/dist/password.js';
 import { authConfiguration } from '../packages/config/dist/index.js';
-import { createDatabase, createAuthPersistence, createAuthorizationPersistence, createClinicalCatalogPersistence, createCarePlanPersistence, createBloodPressureMeasurementPersistence } from '../packages/db/dist/index.js';
+import { createDatabase, createAuthPersistence, createAuthorizationPersistence, createClinicalCatalogPersistence, createCarePlanPersistence, createBloodPressureMeasurementPersistence, createFollowUpAppointmentPersistence, createClinicalEncounterPersistence } from '../packages/db/dist/index.js';
 
 // Intentionally refuses nonempty databases. Use only disposable local/CI DBs.
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -36,7 +36,7 @@ try {
   assert.equal(before[4].checksum, '5383cc5f606a73959194f0615ac6525b211a8719d41ef2dc1542a6205bdc3e21');
   assert.equal(before[5].checksum, '7df16c1ccf5c9985b3a375b103d54041cad5051e1f23dea5104f4c3149bbbe01');
   assert.equal(before[6].checksum, 'f59b690059bcb2cd99a9b67dc55c2f84758c495c90b218f52c1c75f54f770d1b');
-  assert.equal(before[7].checksum, '4e2d01269e51649de029f79a7687f420659a32f81ccd9c03d0a709235c44304f');
+  assert.equal(before[7].checksum, '49b5afca8d394e7f501a111409eb39dcba65166f8ef22f39a954028de8f9ea69');
   assert.ok(before.every(row => row.finished_at && row.rolled_back_at === null));
   await connection.query('BEGIN');
   const sentinel = (await connection.query(`INSERT INTO users(email, password_hash, role)
@@ -171,6 +171,22 @@ try {
       for(let i=0;i<eh011Tables.length;i++)assert.deepEqual((await upgrade.query(`SELECT * FROM public.${eh011Tables[i]} ORDER BY id`)).rows,eh011Rows[i].rows);
       assert.equal((await verifyCommand(env)).result,'PASS');
       assert.deepEqual((await seedCommand(env)).created,{users:0,profiles:0,assignments:0});
+      // Retain meaningful operational rows and the exact encounter→BP link across
+      // both later upgrades, rather than comparing only empty evidence tables.
+      const followups = createFollowUpAppointmentPersistence(env.DATABASE_URL);
+      const encounters = createClinicalEncounterPersistence(env.DATABASE_URL);
+      const upgradeToken = randomBytes(32).toString('hex');
+      const upgradeActor = await auth.createSession({ userId: clinicianUser.id,
+        verifiedHash: clinicianUser.password_hash, tokenHash: upgradeToken, previousHash: null });
+      try {
+        await followups.createFollowUpAppointment(upgradeActor, { patientId,
+          scheduledAt: '2099-01-01T00:00:00.000Z', purpose: 'HTN_BP_FOLLOWUP' });
+        const encounter = await encounters.createClinicalEncounter(upgradeActor, { patientId,
+          occurredAt: '2024-02-29T00:00:00.000Z', purpose: 'HTN_BP_FOLLOWUP' });
+        const retainedBp = (await upgrade.query('SELECT id FROM blood_pressure_measurements WHERE patient_id=$1 ORDER BY id LIMIT 1', [patientId])).rows[0];
+        await encounters.associateBloodPressureMeasurement(upgradeActor, { patientId,
+          encounterId: encounter.id, measurementId: retainedBp.id });
+      } finally { await followups.close(); await encounters.close(); await auth.revoke(upgradeToken); }
       const eh012Tables=[...eh011Tables,'follow_up_appointments','clinical_encounters','encounter_bp_associations'];
       const eh012Rows=await Promise.all(eh012Tables.map(table=>upgrade.query(`SELECT * FROM public.${table} ORDER BY id`)));
       await cp('packages/db/prisma/migrations/20261019000000_eh013_record_coverage_windows',join(directory,'migrations/20261019000000_eh013_record_coverage_windows'),{recursive:true});
@@ -202,7 +218,7 @@ try {
       prisma('deploy', schema, upgradeUrl.toString()); prisma('status', schema, upgradeUrl.toString());
       const eh015Ledger = (await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
       assert.equal(eh015Ledger.length, 8); assert.deepEqual(eh015Ledger.slice(0, 7), eh013Ledger);
-      assert.equal(eh015Ledger[7].checksum, '4e2d01269e51649de029f79a7687f420659a32f81ccd9c03d0a709235c44304f');
+      assert.equal(eh015Ledger[7].checksum, '49b5afca8d394e7f501a111409eb39dcba65166f8ef22f39a954028de8f9ea69');
       for (const table of ['observed_applicability_snapshots', 'observed_applicability_retractions']) {
         assert.equal((await upgrade.query(`SELECT count(*)::int n FROM public.${table}`)).rows[0].n, 0);
       }

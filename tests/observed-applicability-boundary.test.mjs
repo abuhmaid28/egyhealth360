@@ -67,3 +67,45 @@ test('EH-015 schema boundary: no CareAction, ClosureAssessment, or extraneous mo
   assert.match(schema, /model\s+ObservedClinicalApplicabilitySnapshot\b/);
   assert.match(schema, /model\s+ObservedClinicalApplicabilityRetraction\b/);
 });
+
+test('EH-015 product/web/worker/startup imports cannot reach private writer or fixture helpers', async () => {
+  const { resolve, dirname, extname } = await import('node:path');
+  const { existsSync } = await import('node:fs');
+  const roots = (await Promise.all(['apps/api/src', 'apps/web/app', 'apps/web/src', 'apps/experiment-worker/src'].map(async dir =>
+    existsSync(dir) ? getAllSourceFiles(dir) : []))).flat();
+  roots.push('scripts/dev.mjs');
+  const visited = new Set();
+  async function scan(file) {
+    file = resolve(file);
+    if (visited.has(file)) return;
+    visited.add(file);
+    const text = await readFile(file, 'utf8');
+    assert.doesNotMatch(text, /internal(?:Insert|Retract|Get)ObservedApplicability|applyObservedApplicabilityFixture|PrismaClient|@prisma\/client|generated\/prisma/);
+    const imports = [...text.matchAll(/(?:\bfrom\s*|\bimport\s*\(?\s*|\brequire\s*\(\s*)['"]([^'"]+)['"]/g)].map(match => match[1]);
+    for (const specifier of imports) {
+      assert.doesNotMatch(specifier, /observed-applicability|observed-applicability-fixture/);
+      if (specifier === '@egyhealth/db') continue; // approved root service exports only
+      if (specifier.startsWith('@egyhealth/')) {
+        const entry = resolve('packages', specifier.slice('@egyhealth/'.length), 'src/index.ts');
+        if (existsSync(entry)) await scan(entry);
+      }
+      if (specifier.startsWith('.')) {
+        const path = resolve(dirname(file), specifier);
+        const candidates = [path, path.replace(/\.js$/, '.ts'), path.replace(/\.js$/, '.tsx')];
+        const target = candidates.find(candidate => existsSync(candidate) && ['.ts', '.tsx', '.js', '.mjs'].includes(extname(candidate)));
+        if (target) await scan(target);
+      }
+    }
+  }
+  for (const root of roots) await scan(root);
+  assert.ok(visited.size >= roots.length);
+  const pkg = JSON.parse(await readFile('packages/db/package.json', 'utf8'));
+  assert.deepEqual(Object.keys(pkg.exports), ['.']);
+});
+
+test('EH-015 runtime logs fixed failures and uses only bounded fixture transaction entry', async () => {
+  const source = await readFile('scripts/verify-observed-applicability-runtime.mjs', 'utf8');
+  assert.match(source, /applyObservedApplicabilityFixtureTransaction\(dbClient, patientA.profileId\)/);
+  assert.doesNotMatch(source, /console\.error\([^\n]*,\s*(?:error|err)\b/);
+  assert.match(source, /console\.error\('APPLICABILITY_RUNTIME_FAILED'\)/);
+});

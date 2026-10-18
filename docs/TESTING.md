@@ -165,3 +165,24 @@ Observed applicability test suites cover:
 Actual counts and results: EH-015_VALIDATION.md.
 
 
+
+### EH-015 review 5563885959 regression evidence
+
+`tests/integration/observed-applicability-fixes.test.mjs` exercises the real
+PostgreSQL transport and transaction-local writers: immutable target/time copies
+for Patient and Clinician reads (observed SQL parameters), snapshot/retraction
+exact/conflicting retries with winner commit/rollback and exact blocker PIDs,
+both lock orders for session/user/assignment/profile changes, final expiry,
+exact point/offset retrieval, one-statement/coherent withdrawal views, held-lock
+fixture failure/rollback, late-failure atomic correction, SQL precision/chronology/
+receipt spoofing, independent composite FKs, TEMP shadows, named PKs and Prisma
+immutability. Coordination signals, database waits and transactions are bounded.
+
+The research suite uses the actual strict fixture validator, visible mapper and
+writer, with external inaccessible canaries and SQL access guards. It preserves
+NULL/UNKNOWN/explicit ABSENT and rejects hidden keys at all three manifest levels.
+Loader and custom injection use the same exact-shape validation. Boundary tests
+cover product/API/web/worker/startup and transitive local/workspace imports,
+root-only exports, unchanged OpenAPI and sanitized runtime failure output.
+The upgrade verifier preserves populated appointment/encounter/BP associations
+and coverage as well as all previous rows and migration ledger entries.

@@ -265,7 +265,7 @@ Normalized evidence queries execute as a single-statement transactional snapshot
 See EH-013_COVERAGE_NORMALIZED_EVIDENCE_CONTRACT.md and EH-013_VALIDATION.md.
 
 ### ADR-028 — Observed clinical applicability persistence foundation
-Status: Accepted (Issue #29 authoritative review comments 6242326017 and 6242398457)
+Status: Accepted (Issue #29 authoritative review comments 6242326017 and 6242103787)
 
 Two new models: ObservedClinicalApplicabilitySnapshot (15 scalar fields) and ObservedClinicalApplicabilityRetraction (9 scalar fields).
 Source type is strictly SYNTHETIC_OBSERVED_INPUT; sourceReference, assertionReference, and retractionReference are required bounded ASCII strings (1..128 chars, regex ^[A-Za-z0-9_.-]+$) sorted using PostgreSQL C collation.

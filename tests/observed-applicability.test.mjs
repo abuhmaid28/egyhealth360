@@ -301,3 +301,36 @@ test('EH-015 research noninterference & missingness: null is never coerced to AB
   assert.equal(Object.prototype.hasOwnProperty.call(validated, 'groundTruth'), false);
 });
 
+
+test('EH-015 source times reject nonfinite/year/sub-ms/calendar/offset representations', () => {
+  const base = {
+    patientId: '00000000-0000-4000-8000-000000000001', sourceType: 'SYNTHETIC_OBSERVED_INPUT',
+    sourceReference: 'src', assertionReference: 'item', effectiveAt: '2026-03-01T08:00:00.000Z',
+    assertedAt: '2026-03-01T08:00:00.000Z', ageAssertionState: 'NO_ASSERTION', ageYearsAtAssessment: null,
+    pregnancyStatus: null, hypertensionStatus: null, cvdStatus: null, diabetesStatus: null, ckdStatus: null,
+  };
+  for (const field of ['effectiveAt', 'assertedAt']) for (const value of [
+    'infinity', '-infinity', '0000-01-01T00:00:00Z', '10000-01-01T00:00:00Z',
+    '2026-03-01T08:00:00.000001Z', '2026-02-30T00:00:00Z',
+    '2026-03-01T08:00:00-00:00', '2026-03-01T08:00Z', NaN, Infinity,
+  ]) assert.throws(() => validateInsertSnapshotInput({ ...base, [field]: value }), e => e.code === 'APPLICABILITY_INVALID');
+});
+
+test('EH-015 fixture loading and custom injection share exact manifest/item validation', async () => {
+  const { mkdtemp, writeFile, rm } = await import('node:fs/promises');
+  const { tmpdir } = await import('node:os');
+  const { join } = await import('node:path');
+  const { validateObservedApplicabilityFixture } = await import('../scripts/lib/observed-applicability-fixture.mjs');
+  const fixture = await loadObservedApplicabilityFixture();
+  const dir = await mkdtemp(join(tmpdir(), 'eh015-fixture-shape-'));
+  try {
+    for (const level of ['manifest', 'snapshot', 'retraction']) {
+      const bad = JSON.parse(JSON.stringify(fixture));
+      (level === 'manifest' ? bad : level === 'snapshot' ? bad.snapshots[0] : bad.retractions[0]).groundTruth = { diabetesStatus: 'ABSENT' };
+      assert.throws(() => validateObservedApplicabilityFixture(bad), e => e.code === 'APPLICABILITY_INVALID');
+      const path = join(dir, level + '.json');
+      await writeFile(path, JSON.stringify(bad));
+      await assert.rejects(loadObservedApplicabilityFixture(path), e => e.code === 'APPLICABILITY_INVALID');
+    }
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});

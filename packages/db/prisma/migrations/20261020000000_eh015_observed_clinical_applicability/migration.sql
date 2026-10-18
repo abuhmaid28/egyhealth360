@@ -6,7 +6,7 @@ CREATE TYPE public.observed_pregnancy_status AS ENUM ('PREGNANT', 'NOT_PREGNANT'
 CREATE TYPE public.observed_condition_status AS ENUM ('PRESENT', 'ABSENT', 'UNKNOWN');
 
 CREATE TABLE public.observed_applicability_snapshots (
-  id uuid PRIMARY KEY DEFAULT pg_catalog.gen_random_uuid(),
+  id uuid NOT NULL DEFAULT pg_catalog.gen_random_uuid(),
   patient_id uuid NOT NULL,
   source_type public.observed_applicability_source_type NOT NULL,
   source_reference text COLLATE "C" NOT NULL,
@@ -21,6 +21,7 @@ CREATE TABLE public.observed_applicability_snapshots (
   cvd_status public.observed_condition_status,
   diabetes_status public.observed_condition_status,
   ckd_status public.observed_condition_status,
+  CONSTRAINT oa_snapshots_pkey PRIMARY KEY (id),
   CONSTRAINT oa_snapshots_patient_fkey FOREIGN KEY (patient_id) REFERENCES public.patient_profiles(id) ON UPDATE RESTRICT ON DELETE RESTRICT,
   CONSTRAINT oa_snapshots_source_identity_key UNIQUE (patient_id, source_type, source_reference, assertion_reference),
   CONSTRAINT oa_snapshots_scope_key UNIQUE (id, patient_id, source_type, source_reference),
@@ -44,7 +45,7 @@ CREATE TABLE public.observed_applicability_snapshots (
 CREATE INDEX oa_snapshots_point_idx ON public.observed_applicability_snapshots(patient_id, effective_at, source_type, source_reference, assertion_reference, id);
 
 CREATE TABLE public.observed_applicability_retractions (
-  id uuid PRIMARY KEY DEFAULT pg_catalog.gen_random_uuid(),
+  id uuid NOT NULL DEFAULT pg_catalog.gen_random_uuid(),
   snapshot_id uuid NOT NULL,
   patient_id uuid NOT NULL,
   source_type public.observed_applicability_source_type NOT NULL,
@@ -53,6 +54,7 @@ CREATE TABLE public.observed_applicability_retractions (
   asserted_at timestamptz(6) NOT NULL,
   recorded_at timestamptz(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   reason_code text NOT NULL,
+  CONSTRAINT oa_retractions_pkey PRIMARY KEY (id),
   CONSTRAINT oa_retractions_target_key UNIQUE (snapshot_id),
   CONSTRAINT oa_retractions_source_identity_key UNIQUE (patient_id, source_type, source_reference, retraction_reference),
   CONSTRAINT oa_retractions_target_scope_key UNIQUE (snapshot_id, patient_id, source_type, source_reference),
