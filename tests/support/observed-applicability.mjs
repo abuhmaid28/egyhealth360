@@ -86,10 +86,14 @@ export async function isolatedObservedApplicability(run) {
     } finally {
       try {
         await prisma.$disconnect();
-      } catch {}
+      } catch {
+        /* ignore disconnect error */
+      }
       try {
         await applicability.close();
-      } catch {}
+      } catch {
+        /* ignore close error */
+      }
     }
   });
 }

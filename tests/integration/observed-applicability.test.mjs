@@ -579,17 +579,23 @@ test('EH-015 concurrent duplicate insertion: overlapping assertion attempts seri
       if (clientA) {
         try {
           await clientA.query('ROLLBACK');
-        } catch {}
+        } catch {
+          /* ignore rollback error */
+        }
       }
       if (insertPromiseB) {
         try {
           await insertPromiseB.catch(() => {});
-        } catch {}
+        } catch {
+          /* ignore drain error */
+        }
       }
       if (clientB) {
         try {
           await clientB.query('ROLLBACK');
-        } catch {}
+        } catch {
+          /* ignore rollback error */
+        }
       }
       if (clientA) clientA.release();
       if (clientB) clientB.release();
