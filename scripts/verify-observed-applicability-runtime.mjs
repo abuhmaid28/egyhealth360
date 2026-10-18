@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
-import pg from 'pg';
-import { PrismaPg } from '@prisma/adapter-pg';
+import { createRequire } from 'node:module';
+const dbRequire = createRequire(new URL('../packages/db/package.json', import.meta.url));
+const { Pool } = dbRequire('pg');
+const { PrismaPg } = dbRequire('@prisma/adapter-pg');
 import { PrismaClient } from '../packages/db/dist/generated/prisma/client.js';
 import {
   createDemoPersistence,
@@ -19,7 +21,7 @@ const demo = createDemoPersistence(config.databaseUrl);
 const auth = createAuthPersistence(config.databaseUrl);
 const applicability = createObservedApplicabilityPersistence(config.databaseUrl);
 
-const pool = new pg.Pool({ connectionString: config.databaseUrl, max: 2 });
+const pool = new Pool({ connectionString: config.databaseUrl, max: 2 });
 const dbClient = new PrismaClient({ adapter: new PrismaPg(pool), log: [] });
 
 const sessions = [];
