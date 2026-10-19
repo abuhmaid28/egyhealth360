@@ -26,6 +26,15 @@ const dbClient = new PrismaClient({ adapter: new PrismaPg(pool), log: [] });
 
 const sessions = [];
 
+async function runCleanup(action) {
+  try {
+    await action();
+  } catch {
+    console.error('APPLICABILITY_RUNTIME_CLEANUP_FAILED');
+    process.exitCode = 1;
+  }
+}
+
 try {
   const state = await demo.inspectIdentities({ acceptsExistingHash: passwordCheck(config.password) });
   const identities = Object.fromEntries(state.identities.map(i => [i.key, i]));
@@ -145,10 +154,10 @@ try {
       process.exitCode = 1;
     }
   }
-  config.password.fill(0);
-  await applicability.close();
-  await auth.close();
-  await demo.close();
-  await dbClient.$disconnect();
-  await pool.end();
+  await runCleanup(() => config.password.fill(0));
+  await runCleanup(() => applicability.close());
+  await runCleanup(() => auth.close());
+  await runCleanup(() => demo.close());
+  await runCleanup(() => dbClient.$disconnect());
+  await runCleanup(() => pool.end());
 }

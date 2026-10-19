@@ -7,15 +7,67 @@ This records fixes for independent implementation review
 which reviewed `56e0944191f9f40fbecdc789ad1a1f7edf6c9ea9` against approved main
 `40f3a0ecd64e0d9fe2389c9bd3efea4acaa63591`.
 
-The exact pushed fix head and its final GitHub Actions run/status are pinned in
+The earlier R1–R4 fix head and its GitHub Actions run/status are pinned in
 [PR #30 resolution record](https://github.com/abuhmaid28/egyhealth360/pull/30#issuecomment-6254195992).
-That record is updated after final-head CI verification; it is the authoritative
-commit/run pair for this document, avoiding a self-referencing commit hash here.
+The final cleanup-patch commit/run pair is pinned in the separate record below,
+avoiding a self-referencing commit hash here.
 Local results below are actual executions of the fixes on this branch, not copied
 results from the reviewed Windows implementation. Independent exact-head re-review
 is still required; this document does not approve merge.
 
-## Environment and executed checks
+## Final cleanup P2 correction — review 5572638325
+
+The final patch is limited to the cleanup failure boundary identified in
+[review 5572638325](https://github.com/abuhmaid28/egyhealth360/pull/30#pullrequestreview-5572638325)
+at `c8bfb63938b175fccf49c4bbbf3c14b9ecb7133e`. R1–R4 remain resolved.
+Sequential best-effort cleanup contains both synchronous zeroization failures and
+asynchronous close/disconnect/end rejections, attempts every later action, emits
+only `APPLICABILITY_RUNTIME_CLEANUP_FAILED`, and retains exit code 1. Logout
+continues to emit its separate fixed `APPLICABILITY_RUNTIME_LOGOUT_FAILED`.
+
+`tests/observed-applicability-cleanup.test.mjs` executes the actual entry-script
+source in isolated subprocess VM modules with synthetic imports. Seven behavioral
+cases cover successful cleanup, applicability close rejection, Prisma disconnect
+rejection, multiple failures, combined operational/cleanup failure, synchronous
+password zeroization failure and logout failure. Assertions check the complete
+ordered callback list, exact fixed diagnostics, no canary/stack in stdout, stderr
+or module rejection, and the real subprocess exit status. Before the patch, five
+failure cases reproduced the defect; after the patch all seven pass. No production
+fault-injection API was added.
+
+Local validation uses Node 24.21.0 and pnpm 10.34.6, disposable PostgreSQL
+18.6-bookworm and the existing Compose configuration. Docker build uses a
+session-only CA secret override outside the repository. No dependency, schema,
+migration, OpenAPI or clinical contract change is part of this patch.
+
+Actual local results for this final patch (all exited normally):
+
+| Executed check | Observed result |
+|---|---|
+| `pnpm install --frozen-lockfile` with pinned pnpm | PASS |
+| `node --test tests/observed-applicability-cleanup.test.mjs` | 7 passed; 0 failed/cancelled/skipped |
+| `pnpm lint` | PASS |
+| `pnpm --filter @egyhealth/db validate` | PASS |
+| `pnpm build` / `pnpm typecheck` | PASS |
+| `node --test tests/*.test.mjs` | 63 passed; 0 failed/cancelled/skipped |
+| `pnpm test:migrations` | PASS; fresh/chained populated upgrades/redeploy |
+| `pnpm test:integration` | 289 passed; 0 failed/cancelled/skipped; 473295 ms |
+| `node scripts/measure-auth.mjs` | PASS |
+| Production and full `pnpm audit --audit-level high` | No known vulnerabilities found |
+| Compose config / build / healthy startup | PASS |
+| Container auth tests / auth measurement | 7 tests passed / PASS |
+| Container auth / authorization / M1 and EH-015 / clinical runtime probes | PASS |
+| Web and API HTTP smoke | PASS |
+| Disposable Compose `down --volumes` | PASS |
+
+The [final P2 evidence record](https://github.com/abuhmaid28/egyhealth360/pull/30#issuecomment-6270290219)
+pins the pushed final head and its exact-head CI result after verification. This
+patch requires independent re-review; it does not approve merge. All eight
+migration hashes and OpenAPI were recomputed unchanged. Fault-injection tests use
+synthetic dependencies, while the existing actual runtime was also exercised in
+Docker; no universal guarantee about arbitrary startup failures is claimed.
+
+## Earlier R1–R4 fix validation
 
 Linux managed workspace; Node **24.21.0**, pnpm **10.34.6**, PostgreSQL
 **18.6-bookworm**. Docker API/runtime also reports Node 24.21.0. Installed workspace
@@ -82,7 +134,7 @@ reports the independent clean-checkout validation at the pushed head.
   limits. The actual apply path fails boundedly under a held duplicate lock,
   leaves zero partial snapshots/retractions, and succeeds after lock cleanup.
 - **P2:** explicit SQL PK names match Prisma; catalog assertions verify them.
-  Runtime failures print only fixed sanitized summaries. ADR re-review reference,
+  Operational, logout and cleanup failures print only fixed sanitized summaries. ADR re-review reference,
   full chronology, current-ledger/point semantics and PR #30 review trace are fixed.
   Product/API/web/worker/startup import guards follow transitive relative/workspace
   imports without adding a general module analyzer or dependencies.

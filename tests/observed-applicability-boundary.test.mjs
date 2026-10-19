@@ -104,8 +104,10 @@ test('EH-015 product/web/worker/startup imports cannot reach private writer or f
 });
 
 test('EH-015 runtime logs fixed failures and uses only bounded fixture transaction entry', async () => {
+  // Actual cleanup failure containment is exercised by observed-applicability-cleanup.test.mjs.
   const source = await readFile('scripts/verify-observed-applicability-runtime.mjs', 'utf8');
   assert.match(source, /applyObservedApplicabilityFixtureTransaction\(dbClient, patientA.profileId\)/);
   assert.doesNotMatch(source, /console\.error\([^\n]*,\s*(?:error|err)\b/);
   assert.match(source, /console\.error\('APPLICABILITY_RUNTIME_FAILED'\)/);
+  assert.match(source, /console\.error\('APPLICABILITY_RUNTIME_CLEANUP_FAILED'\)/);
 });
