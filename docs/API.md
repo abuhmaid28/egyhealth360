@@ -149,3 +149,10 @@ EH-013 introduces zero public HTTP routes. `docs/openapi.json` is byte-for-byte 
 RecordCoverageWindow is written internally by machine processes (demo/bootstrap, synthetic benchmark fixtures).
 Normalized evidence queries are internal repository operations exposed via authorized persistence methods (`packages/db/src/normalized-evidence.ts`), returning canonical timelines and evidence candidates directly for internal and downstream evaluation use.
 
+## EH-015 observed clinical applicability boundary
+
+EH-015 introduces zero public HTTP routes. `docs/openapi.json` is byte-for-byte unchanged (SHA-256: `37a52027d416859f0c676fce86e8d7b347eae16a5d11398748e5ab17cdfcd83d`).
+ObservedClinicalApplicabilitySnapshot and Retraction models are written internally by synthetic input processors and research benchmark fixtures.
+Querying applicability points is an internal operation exposed via the authorized persistence wrapper (`packages/db/src/observed-applicability.ts`), returning point-in-time snapshots and mechanical tuple comparisons directly for internal clinical planning and evaluation use.
+
+

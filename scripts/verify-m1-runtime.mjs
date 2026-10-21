@@ -17,7 +17,7 @@ async function run(script) {
       try {
         const text=Buffer.concat(output).toString('utf8');
         if(code!==0 || text.includes(password)) throw new Error();
-        if(['scripts/verify-care-plan-runtime.mjs','scripts/verify-blood-pressure-runtime.mjs','scripts/verify-followup-runtime.mjs'].includes(script)) { if(!text.includes('runtime PASS')) throw new Error(); }
+        if(['scripts/verify-care-plan-runtime.mjs','scripts/verify-blood-pressure-runtime.mjs','scripts/verify-followup-runtime.mjs','scripts/verify-observed-applicability-runtime.mjs'].includes(script)) { if(!text.includes('runtime PASS')) throw new Error(); }
         else { const summary=JSON.parse(text); if(summary.result!=='PASS') throw new Error(); }
         resolve();
       } catch {reject(new Error('M1_RUNTIME_FAILED'));}
@@ -32,6 +32,8 @@ try {
   await run('scripts/verify-care-plan-runtime.mjs');
   await run('scripts/verify-blood-pressure-runtime.mjs');
   await run('scripts/verify-followup-runtime.mjs');
+  await run('scripts/verify-observed-applicability-runtime.mjs');
+  console.log('EH-015 observed applicability runtime PASS');
   console.log('EH-012 genuine follow-up HTTP runtime PASS');
   console.log('EH-011 genuine BP HTTP runtime PASS');
   console.log('EH-010 synthetic service runtime PASS');

@@ -24,8 +24,9 @@ Exit gate: Patient/Clinician/Admin can authenticate and protected-resource isola
 3. EH-011 (merged / complete): immutable paired BP measurements, server-derived entry provenance, Patient self / ACTIVE-assigned Clinician POST and paginated GET/HEAD history. See EH-011_BP_PROVENANCE_CONTRACT.md. Corrections and durable action generation remain gated.
 4. EH-012 (merged / complete): operational SCHEDULED/CANCELLED follow-up appointments, immutable clinical encounters and immutable encounter-BP associations. See EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md. No action-linked schedule/closure evidence; FR-024 remains foundation-only.
 5. EH-013 (merged / complete): immutable source-scoped record-coverage windows and deterministic normalized evidence queries with explicit unasserted intervals, single-statement snapshot retrieval, authorized product read boundary and internal synthetic writer. No CareAction generation, EACCE classification, coverage-sufficiency decision, FHIR/Synthea ingestion or public HTTP routes. See EH-013_COVERAGE_NORMALIZED_EVIDENCE_CONTRACT.md.
+6. EH-015 (implemented / in review): immutable observed clinical applicability snapshots and terminal retractions foundation (slice B1). Discriminated age assertion state (`NO_ASSERTION`, `UNKNOWN`, `ASSERTED_VALUE`), exact source partition `(patientId, sourceType, sourceReference, assertionReference)`, research noninterference (hidden complete truth never backfills missing observed data), authorized single-statement read service, and private synthetic observed-input writer. Zero public HTTP routes. B2 (BP qualification/selection), B3 (occurrence/retrigger), B4 (BP evidence invalidation/correction), and CareAction generation remain deferred. See `EH-015_OBSERVED_APPLICABILITY_CONTRACT.md` and `EH-015_VALIDATION.md`.
 
-Exit gate: synthetic patient can receive an active hypertension plan with traceable actions and evidence.
+Exit gate: synthetic patient can receive an active hypertension plan with traceable actions and evidence (unsatisfied; M2 in progress).
 
 ## Milestone M3 — EACCE Core
 1. Freeze typed engine input/output contracts.

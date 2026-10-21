@@ -50,3 +50,18 @@ export type {
   UnassertedCoverageSegment,
   GetNormalizedPatientEvidenceInput,
 } from './normalized-evidence.js';
+export { createObservedApplicabilityPersistence } from './observed-applicability.js';
+export type { ObservedApplicabilityPersistence } from './observed-applicability.js';
+export { ObservedApplicabilityError } from './observed-applicability-values.js';
+export type {
+  GetObservedApplicabilitySnapshotsInput,
+  ObservedApplicabilityPoint,
+  ObservedApplicabilitySnapshot,
+  ObservedApplicabilityRetraction,
+  ObservedTupleComparison,
+  ObservedApplicabilitySourceType,
+  ObservedAgeAssertionState,
+  ObservedPregnancyStatus,
+  ObservedConditionStatus,
+} from './observed-applicability-values.js';
+

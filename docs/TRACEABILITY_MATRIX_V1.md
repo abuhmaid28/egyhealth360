@@ -238,3 +238,17 @@ FR-021 remains incomplete. FR-024 remains foundation-only/incomplete; AC-004/AC-
 
 FR-021 remains incomplete; FR-024 remains foundation-only; AC-001/002/004/005 remain deferred to M3/EACCE. M2 remains in progress.
 
+## EH-015 observed clinical applicability foundation
+
+| Requirement | Implemented surface | Verification |
+|---|---|---|
+| FR-023 applicability foundation | Machine-process ObservedClinicalApplicabilitySnapshot and Retraction persistence | Schema constraints, age check, unique keys, DB immutability triggers |
+| BR-018 / ERR-003 | No invented medical rules; no clinical eligibility or CareAction inference | Scope assertions and deferred foundation gates (B2, B3, B4 open) |
+| BR-014 | Research noninterference: hidden complete truth never backfills missing observed data | Inaccessible ground truth test, missingness preservation tests |
+| BR-001 / BR-002 / BR-020 | Patient own-data read, ACTIVE-assigned Clinician read, Admin/unassigned denied | Authorized query persistence wrapper unit and integration tests |
+| BR-005 | Append-only snapshots and terminal retractions; UPDATE/DELETE/TRUNCATE blocked | SQL immutability trigger integration tests |
+| NFR-006 | Independent final review before merge | Independent implementation review on PR #30 (review 5563885959); fixes require exact-head re-review |
+
+FR-021 remains incomplete; FR-024 remains foundation-only; AC-001/002/004/005 remain deferred to M3/EACCE. Slices B2, B3, and B4 remain open. Milestone M2 remains in progress.
+
+

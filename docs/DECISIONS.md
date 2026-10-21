@@ -264,6 +264,21 @@ Coverage interval normalization is pure, in-memory, deterministic, and strictly 
 Normalized evidence queries execute as a single-statement transactional snapshot returning canonical coverage intervals, raw BP measurements, encounter-anchored BP candidates, and operational appointment candidates without clinical qualification. Zero HTTP endpoints.
 See EH-013_COVERAGE_NORMALIZED_EVIDENCE_CONTRACT.md and EH-013_VALIDATION.md.
 
+### ADR-028 — Observed clinical applicability persistence foundation
+Status: Accepted (Issue #29 authoritative review comments 6242326017 and 6242103787)
+
+Two new models: ObservedClinicalApplicabilitySnapshot (15 scalar fields) and ObservedClinicalApplicabilityRetraction (9 scalar fields).
+Source type is strictly SYNTHETIC_OBSERVED_INPUT; sourceReference, assertionReference, and retractionReference are required bounded ASCII strings (1..128 chars, regex ^[A-Za-z0-9_.-]+$) sorted using PostgreSQL C collation.
+Discriminated age assertion state machine: NO_ASSERTION and UNKNOWN enforce ageYearsAtAssessment IS NULL; ASSERTED_VALUE enforces ageYearsAtAssessment IS NOT NULL AND >= 0. Coercions (e.g. floats, strings, negative numbers) are strictly rejected.
+Clinical conditions (hypertension, CVD, diabetes, CKD) and pregnancy status are explicit four-state domains (NULL, PRESENT/PREGNANT, ABSENT/NOT_PREGNANT, UNKNOWN).
+Research noninterference: Complete ground truth is logically inaccessible; unasserted observed fields remain NULL and are never backfilled or inferred from ground truth.
+Terminal one-to-one retraction: A retraction locks its target snapshot FOR UPDATE, enforces composite partition key consistency (snapshot_id, patient_id, source_type, source_reference), and withdraws the snapshot permanently. Retraction retries are idempotent; conflicting attempts fail closed with APPLICABILITY_CONFLICT.
+Immutability: Database triggers reject all UPDATE, DELETE, and TRUNCATE operations unconditionally on both tables.
+Internal machine writer operates with zero application audit events.
+Authorized query service executes a single-statement parameterized LEFT JOIN snapshot under canonical user/session/assignment lock discipline, returning an ObservedApplicabilityPoint with mechanical tuple comparison (NO_NON_RETRACTED_ROWS, IDENTICAL_TUPLES, DIFFERING_TUPLES). Zero public HTTP routes.
+Slices B2 (BP qualification/selection), B3 (occurrence/retrigger), B4 (BP evidence invalidation/correction), and CareAction generation remain deferred. Milestone M2 remains in progress.
+See EH-015_OBSERVED_APPLICABILITY_CONTRACT.md and EH-015_VALIDATION.md.
+
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.
