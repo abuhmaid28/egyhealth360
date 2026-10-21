@@ -48,10 +48,10 @@ test('EH-015 architectural boundary: apps/api does not import internal applicabi
   }
 });
 
-test('EH-015 architectural boundary: zero public HTTP routes and OpenAPI hash unchanged', async () => {
+test('EH-015 architectural boundary: zero public HTTP routes; current OpenAPI includes approved Issue31 read privacy', async () => {
   const openapiContent = await readFile('docs/openapi.json', 'utf8');
   const hash = createHash('sha256').update(openapiContent).digest('hex');
-  assert.equal(hash, '37a52027d416859f0c676fce86e8d7b347eae16a5d11398748e5ab17cdfcd83d');
+  assert.equal(hash, 'c4577d43f7c2d43b9ff2c0d4ef1516e2cd5a48d59176ae869ae34c26cdca9ae0');
 
   const openapi = JSON.parse(openapiContent);
   const pathKeys = Object.keys(openapi.paths ?? {});

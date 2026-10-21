@@ -380,6 +380,7 @@ export async function internalExecuteEvidenceSnapshot(
           source_kind AS "sourceKind"
         FROM public.blood_pressure_measurements
         WHERE patient_id = ${patientId}::uuid
+          AND public.bp31_effective(id)
           AND measured_at >= ${queryStart.toISOString()}::timestamptz(6)
           AND measured_at < ${queryEnd.toISOString()}::timestamptz(6)
         ORDER BY measured_at ASC, id ASC
@@ -415,6 +416,7 @@ export async function internalExecuteEvidenceSnapshot(
         JOIN public.blood_pressure_measurements b
           ON b.id = a.blood_pressure_measurement_id AND b.patient_id = a.patient_id
         WHERE e.patient_id = ${patientId}::uuid
+          AND public.bp31_effective(b.id)
           AND e.occurred_at >= ${queryStart.toISOString()}::timestamptz(6)
           AND e.occurred_at < ${queryEnd.toISOString()}::timestamptz(6)
         ORDER BY e.occurred_at ASC, e.id ASC, a.id ASC

@@ -301,4 +301,6 @@ Constraints and invariants:
 - Read-only authorized query service with canonical user/session/assignment lock discipline and mechanical point projection.
 Exact contract: EH-015_OBSERVED_APPLICABILITY_CONTRACT.md. No CareAction generation or EACCE classification.
 
+## Issue #31 executable BP correction/invalidation slice
 
+BpAmendmentOperation freezes actor/patient/kind/client operation key, exact BP target, structured reason, optional duplicate target, explicitly selected predecessor IDs and optional fresh full-pair replacement. BpExclusion enforces one immutable terminal exclusion per BP. BpPrivacyTarget independently enforces one wrong-patient privacy membership per BP, including already-excluded evidence without changing its reason. All references preserve same-patient context with RESTRICT FKs; no source BP rewrite, mutable valid flag or backfill. Unique actor/kind/operation key, replacement ownership, one bare restatement and immutable/deferred-completeness guards enforce the [contract](BP_CORRECTION_INVALIDATION_CONTRACT.md). Source occurrence time differs from database-owned local assertion/receipt; no commit-time or arbitrary historical-knowledge model.

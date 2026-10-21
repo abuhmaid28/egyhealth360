@@ -384,7 +384,7 @@ test('EH-013 schema scope, frozen migrations, and additive migration verificatio
   ];
 
   const dirs = (await readdir('packages/db/prisma/migrations')).filter((n) => n !== 'migration_lock.toml').sort();
-  assert.equal(dirs.length, 8);
+  assert.equal(dirs.length, 9); // Issue #31 adds one migration; historical checksums remain frozen.
   for (let i = 0; i < 7; i++) {
     const content = await readFile(`packages/db/prisma/migrations/${dirs[i]}/migration.sql`);
     assert.equal(createHash('sha256').update(content).digest('hex'), hashes[i]);

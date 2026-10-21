@@ -67,3 +67,7 @@ Exactly one additive migration: 20261017000000_eh011_bp_provenance. Enum, nine-c
 ## EH-012 additive relationship annotation
 
 EH-012 adds an immutable association table and supporting composite BP unique key; no BP row, field, source or historical migration changes. EH-011 exclusions describe its original slice, not a prohibition on separately approved later models. See EH-012 contract.
+
+## Issue #31 approved extension
+
+The original EH-011 no-correction statement above records that slice's scope. Issue #31 now adds append-only correction/exclusion and independent F1 privacy without changing any BP source row/guard or historical migration. Ordinary BP history masks wrong-patient payload; nonprivate excluded source history remains recoverable. Effective/normalized consumers omit excluded and private targets. Fresh replacement is full-pair, truthfully clinician-recorded and separately identified. See [the extension contract](BP_CORRECTION_INVALIDATION_CONTRACT.md). Qualification/selection and CareAction remain EH-014 work.

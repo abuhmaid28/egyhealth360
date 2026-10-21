@@ -66,3 +66,7 @@ Record completeness is modeled explicitly through relevant coverage windows. Mis
 ## Current clinical scope
 
 Hypertension follow-up care actions are the first evaluation domain. Clinical rules must remain traceable to authoritative sources and versioned independently of patient instances.
+
+## Issue #31 evidence interpretation
+
+A fresh measurement is independent evidence. Correction creates a fresh complete paired assertion and terminally excludes its exact predecessor; exclusion never removes history. Wrong-patient privacy is a separate immutable determination that can mask an already-excluded record without replacing its reason. Explicit frozen targets prevent privacy spreading automatically along a correction chain. Effective evidence excludes every terminal exclusion and privacy target; eligibility/qualification remains B2 scope. See [the amendment contract](BP_CORRECTION_INVALIDATION_CONTRACT.md).

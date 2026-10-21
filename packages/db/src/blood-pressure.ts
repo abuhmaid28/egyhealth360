@@ -71,10 +71,10 @@ export function createBloodPressureMeasurementPersistence(connectionString: stri
       return run(principal, patientId, async tx => {
         // One statement snapshot supplies count and page, including an empty page.
         const [result] = await tx.$queryRaw<{ total: number; measurements: BloodPressureMeasurementSnapshot[] }[]>`
-          SELECT (SELECT count(*)::integer FROM public.blood_pressure_measurements WHERE patient_id=${patientId}::uuid) total,
+          SELECT (SELECT count(*)::integer FROM public.blood_pressure_measurements WHERE patient_id=${patientId}::uuid AND public.bp31_disclosable(id)) total,
           COALESCE((SELECT jsonb_agg(to_jsonb(p) ORDER BY p."measuredAt" DESC,p.id DESC) FROM (
             SELECT id,patient_id AS "patientId",systolic,diastolic,unit,measured_at AS "measuredAt",created_at AS "createdAt",recorded_by_user_id AS "recordedByUserId",source_kind AS "sourceKind"
-            FROM public.blood_pressure_measurements WHERE patient_id=${patientId}::uuid ORDER BY measured_at DESC,id DESC LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}
+            FROM public.blood_pressure_measurements WHERE patient_id=${patientId}::uuid AND public.bp31_disclosable(id) ORDER BY measured_at DESC,id DESC LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}
           ) p),'[]'::jsonb) measurements`;
         return { measurements: result.measurements.map(row => ({ ...row, measuredAt: new Date(row.measuredAt), createdAt: new Date(row.createdAt) })), page, pageSize, total: result.total };
       });

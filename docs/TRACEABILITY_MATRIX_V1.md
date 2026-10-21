@@ -251,4 +251,13 @@ FR-021 remains incomplete; FR-024 remains foundation-only; AC-001/002/004/005 re
 
 FR-021 remains incomplete; FR-024 remains foundation-only; AC-001/002/004/005 remain deferred to M3/EACCE. Slices B2, B3, and B4 remain open. Milestone M2 remains in progress.
 
+## Issue #31 prerequisite trace
 
+| Requirement/boundary | Implementation | Verification |
+|---|---|---|
+| FR-023 preserved evidence provenance | Immutable source, operation/exclusion/privacy records; fresh truthful paired replacement | bp-amendments unit/integration tests; populated migration upgrade proof |
+| FR-002 / FR-060..061 | Current assigned-clinician writes; self/assigned reads; atomic minimized audits | Authorization, audit rollback, real concurrency and actual HTTP history tests |
+| FR-012 / FR-043 foundation | Product-safe ordinary history; independent privacy for already-excluded BP | Patient/clinician GET/HEAD, reference/count masking; no UI completion claim |
+| FR-021 / FR-024 / AC-004 / AC-005 | Incomplete / foundation-only / unsatisfied / unsatisfied | No action generation, scheduling classification or closure logic added |
+
+Exact source: [Issue #31 contract](BP_CORRECTION_INVALIDATION_CONTRACT.md). Results: [validation](BP_CORRECTION_INVALIDATION_VALIDATION.md). No new EH number. M2 IN PROGRESS.

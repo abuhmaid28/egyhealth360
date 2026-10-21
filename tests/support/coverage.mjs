@@ -1,5 +1,5 @@
-import { readFile } from 'node:fs/promises';
-import { randomUUID, createHash } from 'node:crypto';
+import { applyMigrationOnce } from './bp-amendment-schema.mjs';
+
 import { createRequire } from 'node:module';
 const require = createRequire(new URL('../../packages/db/package.json', import.meta.url));
 const { PrismaPg } = require('@prisma/adapter-pg');
@@ -20,12 +20,7 @@ export async function waitBlocked(pool, pid) {
 
 export async function isolatedCoverage(run) {
   return isolatedFollowup(async (f) => {
-    const sql = await readFile(`packages/db/prisma/migrations/${coverageMigration}/migration.sql`, 'utf8');
-    await f.pool.query(sql);
-    await f.pool.query(
-      'INSERT INTO _prisma_migrations(id,checksum,finished_at,migration_name,applied_steps_count) VALUES($1,$2,now(),$3,1)',
-      [randomUUID(), createHash('sha256').update(sql).digest('hex'), coverageMigration]
-    );
+  await applyMigrationOnce(f.pool, coverageMigration);
 
     const adapter = new PrismaPg(f.pool);
     const prisma = new PrismaClient({ adapter });

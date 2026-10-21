@@ -133,3 +133,7 @@ No implementation may reorder these in a way that changes approved acceptance be
 - `docs/research/CLINICAL_RULE_CATALOG_V1.md` defines the first executable clinical rule.
 - `docs/research/EXPERIMENT_PROTOCOL_V1.md` defines research-evaluation behavior.
 - `docs/TESTING.md` and the traceability matrix define verification coverage.
+
+## Issue #31 implementation evidence boundary
+
+BP source-history preservation, append-only amendment provenance, atomic audit and wrong-patient masking extend FR-023/FR-060/FR-061 foundations. FR-012/FR-043 history remains an API foundation without UI completion. Evidence semantics are specified in [the BP correction contract](BP_CORRECTION_INVALIDATION_CONTRACT.md) and verified in its validation report. This does not satisfy FR-021 (incomplete), FR-024 (foundation-only) or AC-004/AC-005 (unsatisfied). EH-014 remains open pending readiness re-review after this prerequisite's independent review, merge and post-merge validation. M2 IN PROGRESS; EACCE remains M3.

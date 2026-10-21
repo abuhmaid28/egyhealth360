@@ -42,7 +42,7 @@ async function checkSession(tx: EvidenceTx, actor: AuthPrincipal) {
   if (rows[0].role !== actor.role || !['PATIENT', 'CLINICIAN'].includes(rows[0].role)) evidenceFail('EVIDENCE_NOT_FOUND');
 }
 /** Internal EH-012 transaction helper. No unscoped client is exported from the package. */
-export function evidenceTransactions(connectionString: string | undefined, kind: EvidenceKind) {
+export function evidenceTransactions(connectionString: string | undefined, kind: EvidenceKind, isDomainError: (error: unknown) => boolean = () => false) {
   const unavailable = kind === 'appointment' ? 'FOLLOW_UP_SERVICE_UNAVAILABLE' : 'CLINICAL_ENCOUNTER_SERVICE_UNAVAILABLE';
   if (!connectionString) evidenceFail(unavailable);
   const pool = new pg.Pool({ connectionString, connectionTimeoutMillis: 3000, max: 4 }); pool.on('error', () => {});
@@ -72,7 +72,7 @@ export function evidenceTransactions(connectionString: string | undefined, kind:
           await checkSession(tx, actor);
           return result;
         }, { isolationLevel: 'ReadCommitted', maxWait: 5000, timeout: 30000 });
-      } catch (error) { if (error instanceof ClinicalEvidenceError) throw error; return evidenceFail(unavailable); }
+      } catch (error) { if (error instanceof ClinicalEvidenceError || isDomainError(error)) throw error; return evidenceFail(unavailable); }
     },
     async close() { try { await client.$disconnect(); await pool.end(); } catch { evidenceFail(unavailable); } },
   };

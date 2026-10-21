@@ -30,6 +30,7 @@ enum AssignmentStatus {
 }
 
 model User {
+  bpAmendments BpAmendmentOperation[]
   id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email            String            @unique(map: "users_email_key") @db.Text
   passwordHash     String            @map("password_hash") @db.Text
@@ -66,6 +67,9 @@ model Session {
 }
 
 model PatientProfile {
+  bpAmendments BpAmendmentOperation[]
+  bpExclusions BpExclusion[]
+  bpPrivacyTargets BpPrivacyTarget[]
   id          String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId      String                       @unique(map: "patient_profiles_user_id_key") @map("user_id") @db.Uuid
   userRole    UserRole                     @default(PATIENT) @map("user_role")
@@ -243,6 +247,11 @@ enum BloodPressureSourceKind {
 }
 
 model BloodPressureMeasurement {
+  amendmentTargets BpAmendmentOperation[] @relation("BpAmendmentTarget")
+  duplicateReferences BpAmendmentOperation[] @relation("BpDuplicateReference")
+  originAmendment BpAmendmentOperation? @relation("BpFreshEvidence")
+  exclusion BpExclusion?
+  privacyRestriction BpPrivacyTarget?
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   patientId String @map("patient_id") @db.Uuid
   systolic Int
@@ -422,4 +431,71 @@ model ObservedClinicalApplicabilityRetraction {
   @@unique([patientId, sourceType, sourceReference, retractionReference], map: "oa_retractions_source_identity_key")
   @@unique([snapshotId, patientId, sourceType, sourceReference], map: "oa_retractions_target_scope_key")
   @@map("observed_applicability_retractions")
+}
+
+
+// Issue #31: immutable operation identity, clinical exclusion and disclosure are distinct.
+model BpAmendmentOperation {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  actorUserId String @map("actor_user_id") @db.Uuid
+  kind String @db.Text
+  operationKey String @map("operation_key") @db.Uuid
+  targetBpId String @map("target_bp_id") @db.Uuid
+  reasonCode String @map("reason_code") @db.Text
+  duplicateOfBpId String? @map("duplicate_of_bp_id") @db.Uuid
+  predecessorIds String[] @default([]) @map("predecessor_ids") @db.Uuid
+  newBpId String? @unique @map("new_bp_id") @db.Uuid
+  systolic Int?
+  diastolic Int?
+  measuredAt DateTime? @map("measured_at") @db.Timestamptz(6)
+  assertedAt DateTime @default(now()) @map("asserted_at") @db.Timestamptz(3)
+  recordedAt DateTime @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  patient PatientProfile @relation(fields:[patientId], references:[id], onUpdate:Restrict, onDelete:Restrict)
+  actor User @relation(fields:[actorUserId], references:[id], onUpdate:Restrict, onDelete:Restrict)
+  target BloodPressureMeasurement @relation("BpAmendmentTarget", fields:[targetBpId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  duplicateOf BloodPressureMeasurement? @relation("BpDuplicateReference", fields:[duplicateOfBpId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  newBp BloodPressureMeasurement? @relation("BpFreshEvidence", fields:[newBpId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  exclusions BpExclusion[]
+  privacyTargets BpPrivacyTarget[]
+  @@unique([actorUserId,kind,operationKey])
+  @@unique([id,patientId])
+  @@unique([newBpId,patientId])
+  @@index([patientId,recordedAt,id], map:"bp_operations_patient_history")
+  @@index([targetBpId], map:"bp_operations_target")
+  @@index([duplicateOfBpId], map:"bp_operations_duplicate")
+  @@index([predecessorIds], type: Gin, map:"bp_operations_predecessors")
+  @@map("bp_amendment_operations")
+}
+model BpExclusion {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  bpId String @unique @map("bp_id") @db.Uuid
+  operationId String @map("operation_id") @db.Uuid
+  reasonCode String @map("reason_code") @db.Text
+  assertedAt DateTime @default(now()) @map("asserted_at") @db.Timestamptz(3)
+  recordedAt DateTime @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  patient PatientProfile @relation(fields:[patientId], references:[id], onUpdate:Restrict, onDelete:Restrict)
+  bp BloodPressureMeasurement @relation(fields:[bpId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  operation BpAmendmentOperation @relation(fields:[operationId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  @@unique([bpId,patientId])
+  @@index([operationId], map:"bp_exclusions_operation")
+  @@index([patientId,recordedAt,id], map:"bp_exclusions_patient")
+  @@map("bp_exclusions")
+}
+model BpPrivacyTarget {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  bpId String @unique @map("bp_id") @db.Uuid
+  operationId String @map("operation_id") @db.Uuid
+  reasonCode String @default("WRONG_PATIENT") @map("reason_code") @db.Text
+  assertedAt DateTime @default(now()) @map("asserted_at") @db.Timestamptz(3)
+  recordedAt DateTime @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  patient PatientProfile @relation(fields:[patientId], references:[id], onUpdate:Restrict, onDelete:Restrict)
+  bp BloodPressureMeasurement @relation(fields:[bpId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  operation BpAmendmentOperation @relation(fields:[operationId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  @@unique([bpId,patientId])
+  @@index([operationId], map:"bp_privacy_operation")
+  @@index([patientId,recordedAt,id], map:"bp_privacy_patient")
+  @@map("bp_privacy_targets")
 }

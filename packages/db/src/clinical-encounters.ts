@@ -41,13 +41,18 @@ export function createClinicalEncounterPersistence(connectionString: string | un
       if (!evidenceUuid(encounterId) || !evidenceUuid(measurementId)) evidenceFail('EVIDENCE_NOT_FOUND');
       return store.run(principal, patientId, true, async (tx, actor) => {
         await lockEncounter(tx, patientId, encounterId);
-        const rows = await tx.$queryRaw<{ id: string }[]>`SELECT id FROM public.blood_pressure_measurements WHERE id=${measurementId}::uuid AND patient_id=${patientId}::uuid FOR UPDATE`;
+        const rows = await tx.$queryRaw<{ id: string }[]>`SELECT id FROM public.blood_pressure_measurements WHERE id=${measurementId}::uuid AND patient_id=${patientId}::uuid AND public.bp31_disclosable(id) FOR UPDATE`;
         if (rows.length !== 1) evidenceFail('EVIDENCE_NOT_FOUND');
+        // A lock-only privacy writer can commit during the wait without changing the BP
+        // tuple. Recheck in a fresh statement before even an existing-pair acknowledgement.
+        const [state] = await tx.$queryRaw<{ disclosable: boolean; effective: boolean }[]>`SELECT public.bp31_disclosable(${measurementId}::uuid) AS disclosable, public.bp31_effective(${measurementId}::uuid) AS effective`;
+        if (!state.disclosable) evidenceFail('EVIDENCE_NOT_FOUND');
         const existing = await tx.encounterBloodPressureAssociation.findUnique({ where: { bloodPressureMeasurementId: measurementId } });
         if (existing) {
           if (existing.encounterId !== encounterId) evidenceFail('ENCOUNTER_BP_CONFLICT');
           return { association: existing, changed: false };
         }
+        if (!state.effective) evidenceFail('EVIDENCE_NOT_FOUND');
         const association = await tx.encounterBloodPressureAssociation.create({ data: { patientId, encounterId, bloodPressureMeasurementId: measurementId, recordedByUserId: actor.userId } });
         await appendAuditRecord(tx, { actorUserId: actor.userId, actionType: 'ENCOUNTER_BP_ASSOCIATED', entityType: 'encounter_bp_association', entityId: association.id });
         return { association, changed: true };
@@ -58,10 +63,10 @@ export function createClinicalEncounterPersistence(connectionString: string | un
       return store.run(principal, patientId, false, async tx => {
         await lockEncounter(tx, patientId, encounterId);
         const [result] = await tx.$queryRaw<{ total: number; rows: EncounterBloodPressureAssociationSnapshot[] }[]>`
-          SELECT (SELECT count(*)::integer FROM public.encounter_bp_associations WHERE patient_id=${patientId}::uuid AND encounter_id=${encounterId}::uuid) total,
+          SELECT (SELECT count(*)::integer FROM public.encounter_bp_associations WHERE patient_id=${patientId}::uuid AND encounter_id=${encounterId}::uuid AND public.bp31_disclosable(blood_pressure_measurement_id)) total,
           COALESCE((SELECT jsonb_agg(to_jsonb(p) ORDER BY p."createdAt" DESC,p.id DESC) FROM (
             SELECT id,patient_id AS "patientId",encounter_id AS "encounterId",blood_pressure_measurement_id AS "bloodPressureMeasurementId",recorded_by_user_id AS "recordedByUserId",created_at AS "createdAt"
-            FROM public.encounter_bp_associations WHERE patient_id=${patientId}::uuid AND encounter_id=${encounterId}::uuid ORDER BY created_at DESC,id DESC LIMIT ${page.pageSize} OFFSET ${(page.page - 1) * page.pageSize}
+            FROM public.encounter_bp_associations WHERE patient_id=${patientId}::uuid AND encounter_id=${encounterId}::uuid AND public.bp31_disclosable(blood_pressure_measurement_id) ORDER BY created_at DESC,id DESC LIMIT ${page.pageSize} OFFSET ${(page.page - 1) * page.pageSize}
           ) p),'[]'::jsonb) rows`;
         return { data: result.rows.map(r => ({ ...r, createdAt: new Date(r.createdAt) })), meta: { ...page, total: result.total } };
       });

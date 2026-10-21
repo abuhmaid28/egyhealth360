@@ -279,6 +279,11 @@ Authorized query service executes a single-statement parameterized LEFT JOIN sna
 Slices B2 (BP qualification/selection), B3 (occurrence/retrigger), B4 (BP evidence invalidation/correction), and CareAction generation remain deferred. Milestone M2 remains in progress.
 See EH-015_OBSERVED_APPLICABILITY_CONTRACT.md and EH-015_VALIDATION.md.
 
+### ADR-029 — BP terminal exclusion and independent wrong-patient privacy
+Status: Accepted (Issue #31 complete frozen contract, final approval comment 6305526971)
+
+Immutable source BP remains intact. One terminal exclusion per BP; correction/restatement uses fresh full-pair same-patient evidence and truthful new provenance. Separate append-only wrong-patient privacy supports F1's already-excluded case without overwriting the original reason. Privacy targets are explicit frozen same-lineage identities, never dynamically propagated. Current assigned clinicians only; principal-checked internal service, canonical operation idempotency, locked atomic mutation/audit. Existing product reads mask private payload/references and effective normalized evidence removes every exclusion. D1 defers exact captured decision inputs to EH-014/B2 and guarantees no arbitrary historical transaction visibility. D2 adds no forensic role, raw endpoint or cross-patient transfer. One additive migration, no BP backfill or historical migration changes. No B2/B3/CareAction/EACCE implementation; M2 IN PROGRESS. See BP_CORRECTION_INVALIDATION_CONTRACT.md and BP_CORRECTION_INVALIDATION_VALIDATION.md. Implementation acceptance still requires independent review, merge and post-merge CI.
+
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.
