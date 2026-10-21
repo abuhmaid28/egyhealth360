@@ -304,3 +304,8 @@ Exact contract: EH-015_OBSERVED_APPLICABILITY_CONTRACT.md. No CareAction generat
 ## Issue #31 executable BP correction/invalidation slice
 
 BpAmendmentOperation freezes actor/patient/kind/client operation key, exact BP target, structured reason, optional duplicate target, explicitly selected predecessor IDs and optional fresh full-pair replacement. BpExclusion enforces one immutable terminal exclusion per BP. BpPrivacyTarget independently enforces one wrong-patient privacy membership per BP, including already-excluded evidence without changing its reason. All references preserve same-patient context with RESTRICT FKs; no source BP rewrite, mutable valid flag or backfill. Unique actor/kind/operation key, replacement ownership, one bare restatement and immutable/deferred-completeness guards enforce the [contract](BP_CORRECTION_INVALIDATION_CONTRACT.md). Source occurrence time differs from database-owned local assertion/receipt; no commit-time or arbitrary historical-knowledge model.
+
+
+## EH-014 bounded INITIAL implementation — pending review
+
+The executable EH-014 slice supersedes the conceptual care_actions lifecycle above: CareAction has only exact patient/plan/template/rule pins, INITIAL/type, immutable triggerAt/recommendedAt/dueBy/createdAt and one-to-one protected decision. CareActionDecision stores explicit selection, clinician/assignment/command provenance and a fixed-shape exact evaluated snapshot. CareActionApplicabilityInput pins exact point membership. No operational status/completed/cancelled/superseded fields. SQL-owned deferred completeness and same-patient composite RESTRICT FKs accompany the Prisma models. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [validation](EH-014_VALIDATION.md).

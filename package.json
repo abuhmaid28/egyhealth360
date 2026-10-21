@@ -17,6 +17,7 @@
     "dev": "pnpm build && node --env-file-if-exists=.env scripts/dev.mjs",
     "demo:seed": "node --env-file-if-exists=.env scripts/demo-seed.mjs",
     "m1:verify": "node --env-file-if-exists=.env scripts/verify-m1.mjs",
+    "m2:verify": "node --env-file-if-exists=.env scripts/verify-care-action-runtime.mjs",
     "clinical:bootstrap": "node --env-file-if-exists=.env scripts/bootstrap-clinical-catalog.mjs"
   },
   "devDependencies": {

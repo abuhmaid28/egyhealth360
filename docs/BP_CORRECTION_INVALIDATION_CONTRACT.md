@@ -1,6 +1,6 @@
 # BP measurement correction and invalidation — Issue #31
 
-Implementation contract for the slice authorized by [the final approval](https://github.com/abuhmaid28/egyhealth360/issues/31#issuecomment-6305526971), including D1, D2 and F1 in the complete issue discussion. Baseline: `4733d1c27e70672ed6a4f52a793e53b320290b03` (merged EH-015). No EH number is assigned to this prerequisite. This implementation remains subject to independent review, merge and post-merge validation; Issue #31 stays open.
+Implementation contract for the slice authorized by [the final approval](https://github.com/abuhmaid28/egyhealth360/issues/31#issuecomment-6305526971), including D1, D2 and F1 in the complete issue discussion. Baseline: `4733d1c27e70672ed6a4f52a793e53b320290b03` (merged EH-015). No EH number is assigned to this prerequisite. Issue #31 was independently reviewed, merged in PR #32 at `e83e9b3e0e6e42988cc4e4ba905d9bcc589b9adc`, post-merge validated and CLOSED/completed.
 
 ## Evidence invariants
 
@@ -74,3 +74,8 @@ Replacement, operation, exclusion/privacy children and audits commit together. D
 EH-015 remains the observed-applicability foundation. After this prerequisite is reviewed, merged and validated, EH-014 must be re-reviewed: B2 still owns trigger qualification/selection, exact captured input snapshots, generation-time races and temporal decisions; B3 still owns occurrence/retrigger semantics. CareAction generation and later-invalidated-source lifecycle policy remain deferred. EACCE remains M3. FR-021 incomplete; FR-024 foundation-only; AC-004/AC-005 unsatisfied; M2 IN PROGRESS.
 
 Validation evidence: [BP_CORRECTION_INVALIDATION_VALIDATION.md](BP_CORRECTION_INVALIDATION_VALIDATION.md).
+
+
+## EH-014 approved consumer extension
+
+The historical deferred B2/B3/action-policy statements above described the prerequisite boundary. The frozen R1–R8 extension now implements explicit INITIAL generation and protected decision capture without changing D1/D2/F1. See [EH-014 contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md). EH-014 remains pending independent review/merge/post-merge validation; Issue #28 OPEN, M2 IN PROGRESS.

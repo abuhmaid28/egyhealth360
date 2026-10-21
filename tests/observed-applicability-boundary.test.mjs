@@ -60,9 +60,9 @@ test('EH-015 architectural boundary: zero public HTTP routes; current OpenAPI in
   }
 });
 
-test('EH-015 schema boundary: no CareAction, ClosureAssessment, or extraneous models', async () => {
+test('EH-015 schema boundary: no ClosureAssessment; EH-014 action models are separately authorized', async () => {
   const schema = await readFile('packages/db/prisma/schema.prisma', 'utf8');
-  assert.doesNotMatch(schema, /model\s+CareAction\b/);
+  assert.match(schema, /model\s+CareAction\b/);
   assert.doesNotMatch(schema, /model\s+ClosureAssessment\b/);
   assert.match(schema, /model\s+ObservedClinicalApplicabilitySnapshot\b/);
   assert.match(schema, /model\s+ObservedClinicalApplicabilityRetraction\b/);
