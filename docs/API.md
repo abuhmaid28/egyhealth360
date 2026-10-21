@@ -158,3 +158,8 @@ Querying applicability points is an internal operation exposed via the authorize
 ## Issue #31 changes to existing BP read semantics
 
 No new HTTP endpoints. BP GET/HEAD history omits wrong-patient privacy targets (and WRONG_PATIENT exclusions defensively); ordinary history still contains nonprivate excluded facts. Encounter association GET/HEAD likewise omits private BP references, including pagination counts. Existing association POST denies private targets and new links to excluded targets; an existing exact nonprivate link remains an authorized no-op. Normalized internal BP/encounter candidates additionally omit every terminal exclusion. HTTP response schemas, authentication/CSRF/no-store/error contracts remain as before. OpenAPI descriptions reflect these actual read changes. Internal amendment operations/retry semantics are defined in [BP_CORRECTION_INVALIDATION_CONTRACT.md](BP_CORRECTION_INVALIDATION_CONTRACT.md), without a product raw-history route.
+
+
+## EH-014 bounded INITIAL implementation — pending review
+
+EH-014 adds zero HTTP routes and leaves OpenAPI unchanged. Root internal factory createCareActionPersistence provides previewSelection, generateInitialAction, inspectAction, listActions and close with genuine current principals. Preview/generation are assigned-clinician-only; ordinary reads allow self-patient/current assigned clinician and expose minimized action fields only. No raw decision snapshot route, forensic role or autonomous/research generation API. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [validation](EH-014_VALIDATION.md).

@@ -27,7 +27,7 @@ try {
   prisma('deploy');
   prisma('status');
   const before = (await connection.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
-  assert.deepEqual(before.map(row => row.migration_name), ['20261012200810_eh005_identity_core_foundation', '20261013014000_eh006_auth_sessions', '20261013235221_eh009_clinical_definition_foundation', '20261016000000_eh010_care_plan_lifecycle', '20261017000000_eh011_bp_provenance', '20261018000000_eh012_followup_encounters', '20261019000000_eh013_record_coverage_windows', '20261020000000_eh015_observed_clinical_applicability', '20261021000000_bp_correction_invalidation']);
+  assert.deepEqual(before.map(row => row.migration_name), ['20261012200810_eh005_identity_core_foundation', '20261013014000_eh006_auth_sessions', '20261013235221_eh009_clinical_definition_foundation', '20261016000000_eh010_care_plan_lifecycle', '20261017000000_eh011_bp_provenance', '20261018000000_eh012_followup_encounters', '20261019000000_eh013_record_coverage_windows', '20261020000000_eh015_observed_clinical_applicability', '20261021000000_bp_correction_invalidation', '20261022000000_eh014_initial_care_action']);
   for (const row of before) assert.equal(row.checksum, createHash('sha256').update(await readFile(`packages/db/prisma/migrations/${row.migration_name}/migration.sql`)).digest('hex'));
   assert.equal(before[0].checksum, 'd8396ed97e82550866a44055f308fb039ed29d6c8cdcdd74d95da060f441749a');
   assert.equal(before[1].checksum, '2fb1704ab28b698bfcf6995f6120cb1b1f0138ab18fcf7db562517f47d53b79b');
@@ -245,6 +245,30 @@ try {
       assert.deepEqual((await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows,bp31Ledger);
       for (let i=0;i<oldTables.length;i++) assert.deepEqual((await upgrade.query(`SELECT * FROM public.${oldTables[i]} ORDER BY id`)).rows,oldRows[i].rows);
       console.log('Issue #31 populated exact-baseline upgrade and repeated deploy preserved all historical rows/links/ledger; no amendment backfill');
+
+      // Exact nine-migration baseline -> EH-014, with populated amendments and every old table retained.
+      // Populate exclusion and independent privacy history before the EH-014 upgrade.
+      const historicalBp=(await upgrade.query('SELECT id FROM blood_pressure_measurements WHERE patient_id=$1 ORDER BY id LIMIT 1',[patientId])).rows[0];
+      const operationId=randomUUID();
+      await upgrade.query('BEGIN');
+      try {
+        await upgrade.query(`INSERT INTO bp_amendment_operations(id,patient_id,actor_user_id,kind,operation_key,target_bp_id,reason_code) VALUES($1,$2,$3,'EXCLUDE',$4,$5,'WRONG_PATIENT')`,[operationId,patientId,clinicianUser.id,randomUUID(),historicalBp.id]);
+        await upgrade.query(`INSERT INTO bp_exclusions(patient_id,bp_id,operation_id,reason_code) VALUES($1,$2,$3,'WRONG_PATIENT')`,[patientId,historicalBp.id,operationId]);
+        await upgrade.query('INSERT INTO bp_privacy_targets(patient_id,bp_id,operation_id) VALUES($1,$2,$3)',[patientId,historicalBp.id,operationId]);
+        await upgrade.query('COMMIT');
+      }catch(error){await upgrade.query('ROLLBACK');throw error;}
+      const bp31Tables=[...oldTables,'bp_amendment_operations','bp_exclusions','bp_privacy_targets'];
+      const bp31Rows=await Promise.all(bp31Tables.map(table=>upgrade.query(`SELECT * FROM public.${table} ORDER BY id`)));
+      await cp('packages/db/prisma/migrations/20261022000000_eh014_initial_care_action',join(directory,'migrations/20261022000000_eh014_initial_care_action'),{recursive:true});
+      prisma('deploy',schema,upgradeUrl.toString());prisma('status',schema,upgradeUrl.toString());
+      const actionLedger=(await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
+      assert.equal(actionLedger.length,10);assert.deepEqual(actionLedger.slice(0,9),bp31Ledger);
+      for(let i=0;i<bp31Tables.length;i++)assert.deepEqual((await upgrade.query(`SELECT * FROM public.${bp31Tables[i]} ORDER BY id`)).rows,bp31Rows[i].rows);
+      for(const table of ['care_actions','care_action_decisions','care_action_applicability_inputs'])assert.equal((await upgrade.query(`SELECT count(*)::int n FROM public.${table}`)).rows[0].n,0);
+      prisma('deploy',schema,upgradeUrl.toString());prisma('status',schema,upgradeUrl.toString());
+      assert.deepEqual((await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows,actionLedger);
+      for(let i=0;i<bp31Tables.length;i++)assert.deepEqual((await upgrade.query(`SELECT * FROM public.${bp31Tables[i]} ORDER BY id`)).rows,bp31Rows[i].rows);
+      console.log('EH-014 populated nine-to-ten migration upgrade/redeploy preserved history/ledger; zero action/decision backfill');
 
       console.log('EH-013 -> EH-015: fifteen retained domain tables, coverage/followup/BP/care-plan/identity rows and ledger unchanged; observed applicability tables empty; repeat deploy/status and M1 HTTP PASS');
       console.log('EH-012 -> EH-013: fourteen retained domain tables, followup/BP/care-plan/identity rows and ledger unchanged; record_coverage_windows empty; repeat deploy/status and M1 HTTP PASS');

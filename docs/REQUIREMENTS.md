@@ -137,3 +137,8 @@ No implementation may reorder these in a way that changes approved acceptance be
 ## Issue #31 implementation evidence boundary
 
 BP source-history preservation, append-only amendment provenance, atomic audit and wrong-patient masking extend FR-023/FR-060/FR-061 foundations. FR-012/FR-043 history remains an API foundation without UI completion. Evidence semantics are specified in [the BP correction contract](BP_CORRECTION_INVALIDATION_CONTRACT.md) and verified in its validation report. This does not satisfy FR-021 (incomplete), FR-024 (foundation-only) or AC-004/AC-005 (unsatisfied). EH-014 remains open pending readiness re-review after this prerequisite's independent review, merge and post-merge validation. M2 IN PROGRESS; EACCE remains M3.
+
+
+## EH-014 bounded INITIAL implementation — pending review
+
+FR-021: bounded INITIAL generation is implemented on the EH-014 feature branch, pending independent implementation review, merge and post-merge CI/exit verification; recurring care and arbitrary versions remain unimplemented. FR-024 remains foundation-only/incomplete; AC-004/AC-005 remain unsatisfied. M2 IN PROGRESS. No closure classifications or design work are added. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [validation](EH-014_VALIDATION.md).

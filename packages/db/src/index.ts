@@ -68,3 +68,5 @@ export type {
 
 export { createBpAmendmentPersistence, BpAmendmentError, BP_EXCLUSION_REASONS } from './bp-amendments.js';
 export type { BpExclusionReason, BpAmendmentKind, BpAmendmentResult } from './bp-amendments.js';
+export { createCareActionPersistence, CareActionError } from './care-actions.js';
+export type { CareActionPersistence, CareActionTarget, CareActionSelection, GenerateInitialCareActionInput, CareActionSnapshot } from './care-actions.js';

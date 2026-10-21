@@ -69,7 +69,10 @@ test('assignment uniqueness, lifecycle, terminal history and later reassignment'
   await rejectsConstraint(connection, 'UPDATE clinician_patient_assignments SET status = \'ACTIVE\', ended_at = NULL WHERE id = $1', [assignment.id], '23514', 'assignments_history_guard');
   await rejectsConstraint(connection, 'UPDATE clinician_patient_assignments SET ended_at = ended_at + interval \'1 second\' WHERE id = $1', [assignment.id], '23514', 'assignments_history_guard');
   await rejectsConstraint(connection, 'DELETE FROM clinician_patient_assignments WHERE id = $1', [assignment.id], '23514', 'assignments_history_guard');
-  await rejectsConstraint(connection, 'TRUNCATE clinician_patient_assignments', [], '23514', 'assignments_history_guard');
+  // EH-014 retains selector assignment provenance: PostgreSQL first rejects plain TRUNCATE via FK.
+  await rejectsConstraint(connection, 'TRUNCATE clinician_patient_assignments', [], '0A000');
+  // Including children independently proves the original assignment history guard still rejects removal.
+  await rejectsConstraint(connection, 'TRUNCATE clinician_patient_assignments CASCADE', [], '23514', 'assignments_history_guard');
   const later = (await connection.query(insert, [...endpoints, 'ACTIVE', null])).rows[0];
   assert.notEqual(later.id, assignment.id);
   await connection.query('UPDATE clinician_patient_assignments SET status = \'ENDED\', ended_at = assigned_at WHERE id = $1', [later.id]);

@@ -112,4 +112,13 @@ Product UI golden journey           │
 
 ## Issue #31 implementation status
 
-BP correction/invalidation prerequisite is implemented on its feature branch against merged EH-015 baseline `4733d1c27e70672ed6a4f52a793e53b320290b03`, pending independent review, merge and post-merge CI. [Contract](BP_CORRECTION_INVALIDATION_CONTRACT.md); [validation](BP_CORRECTION_INVALIDATION_VALIDATION.md). Issue #31 is not closed. Dependency chain remains EH-015 → this prerequisite → EH-014 readiness re-review → resolve B2/B3 → approved CareAction implementation → M2 exit verification → M3. Issue #28 remains open. M2 **IN PROGRESS**; FR-021 incomplete; FR-024 foundation-only; AC-004/AC-005 unsatisfied. No additional EH number assigned.
+BP correction/invalidation prerequisite is merged in PR #32; Issue #31 is CLOSED/completed at the approved baseline. [Contract](BP_CORRECTION_INVALIDATION_CONTRACT.md); [validation](BP_CORRECTION_INVALIDATION_VALIDATION.md). EH-014 R1–R8 and the bounded INITIAL implementation are approved by Issue #28 comment 6317196946. The implementation below remains subject to independent review, approved merge, exact-main post-merge CI and explicit M2 exit verification. No additional EH number assigned.
+
+
+## Current EH-014 implementation status
+
+Issue #31 is CLOSED/completed; PR #32 merged at `e83e9b3e0e6e42988cc4e4ba905d9bcc589b9adc` and post-merge CI passed.
+
+EH-014 is implemented on `feature/eh-014-initial-care-action` under approval comment 6317196946, locally validated as recorded below, pending PR submission, independent implementation review, merge and post-merge verification. It adds only explicit clinician-selected immutable INITIAL actions/decisions, exact replay, UTC calendar schedule, current privacy-safe reads, atomic audits and synthetic proof. No recurrence or EACCE; no appointment coupling or design. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [actual validation](EH-014_VALIDATION.md).
+
+Issue #28 remains OPEN. M2 IN PROGRESS. FR-021 bounded implementation is pending review/merge/post-merge validation; FR-024 incomplete/foundation-only; AC-004/AC-005 unsatisfied. Independent review → approved merge → exact-main post-merge CI → explicit M2 exit proof/review remain mandatory before considering milestone completion.

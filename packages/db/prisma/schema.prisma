@@ -30,6 +30,8 @@ enum AssignmentStatus {
 }
 
 model User {
+  careActionSelections CareActionDecision[]
+
   bpAmendments BpAmendmentOperation[]
   id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email            String            @unique(map: "users_email_key") @db.Text
@@ -112,6 +114,8 @@ model ClinicianProfile {
 }
 
 model ClinicianPatientAssignment {
+  careActionSelections CareActionDecision[]
+
   id          String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   clinicianId String           @map("clinician_id") @db.Uuid
   patientId   String           @map("patient_id") @db.Uuid
@@ -218,6 +222,9 @@ enum CarePlanStatus {
 }
 
 model CarePlan {
+  actions CareAction[] @relation("ActionPlan")
+  actionDecisions CareActionDecision[] @relation("DecisionPlan")
+
   id               String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   patientId        String @map("patient_id") @db.Uuid
   templateId       String @map("template_id") @db.Uuid
@@ -236,6 +243,7 @@ model CarePlan {
   @@index([templateId], map: "care_plans_template_idx")
   @@index([ruleDefinitionId, templateId], map: "care_plans_rule_template_idx")
   @@index([createdByUserId], map: "care_plans_creator_idx")
+  @@unique([id,patientId,templateId,ruleDefinitionId], map: "care_plans_action_scope_key")
   @@map("care_plans")
 }
 
@@ -247,6 +255,8 @@ enum BloodPressureSourceKind {
 }
 
 model BloodPressureMeasurement {
+  actionDecisions CareActionDecision[]
+
   amendmentTargets BpAmendmentOperation[] @relation("BpAmendmentTarget")
   duplicateReferences BpAmendmentOperation[] @relation("BpDuplicateReference")
   originAmendment BpAmendmentOperation? @relation("BpFreshEvidence")
@@ -390,6 +400,9 @@ enum ObservedConditionStatus {
 }
 
 model ObservedClinicalApplicabilitySnapshot {
+  actionDecisions CareActionDecision[]
+  actionMemberships CareActionApplicabilityInput[]
+
   id                   String                          @id(map: "oa_snapshots_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   patientId            String                          @map("patient_id") @db.Uuid
   sourceType           ObservedApplicabilitySourceType @map("source_type")
@@ -412,6 +425,7 @@ model ObservedClinicalApplicabilitySnapshot {
   @@unique([patientId, sourceType, sourceReference, assertionReference], map: "oa_snapshots_source_identity_key")
   @@unique([id, patientId, sourceType, sourceReference], map: "oa_snapshots_scope_key")
   @@index([patientId, effectiveAt, sourceType, sourceReference, assertionReference, id], map: "oa_snapshots_point_idx")
+  @@unique([id,patientId], map: "oa_action_scope_key")
   @@map("observed_applicability_snapshots")
 }
 
@@ -498,4 +512,74 @@ model BpPrivacyTarget {
   @@index([operationId], map:"bp_privacy_operation")
   @@index([patientId,recordedAt,id], map:"bp_privacy_patient")
   @@map("bp_privacy_targets")
+}
+
+// EH-014: SQL additionally owns deferred cyclic completeness and immutable guards.
+model CareAction {
+  plan CarePlan @relation("ActionPlan", fields:[carePlanId,patientId,templateId,ruleDefinitionId], references:[id,patientId,templateId,ruleDefinitionId], onUpdate:Restrict,onDelete:Restrict,map:"care_actions_plan_fk")
+  decision CareActionDecision @relation("ActionDecision",fields:[id,decisionId,patientId],references:[actionId,id,patientId],onUpdate:Restrict,onDelete:Restrict,map:"care_actions_decision_fk")
+  ownedDecision CareActionDecision? @relation("DecisionAction")
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  carePlanId String @map("care_plan_id") @db.Uuid
+  templateId String @map("template_id") @db.Uuid
+  ruleDefinitionId String @map("rule_definition_id") @db.Uuid
+  decisionId String @unique @map("decision_id") @db.Uuid
+  occurrence String @db.Text
+  actionType String @map("action_type") @db.Text
+  triggerAt DateTime @map("trigger_at") @db.Timestamptz(6)
+  recommendedAt DateTime @map("recommended_at") @db.Timestamptz(6)
+  dueBy DateTime @map("due_by") @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  @@unique([carePlanId,ruleDefinitionId,occurrence], map:"care_actions_occurrence_key")
+  @@unique([id,decisionId,patientId], map:"care_actions_pair_key")
+  @@index([patientId,createdAt(sort: Desc),id(sort: Desc)], map:"care_actions_history_idx")
+  @@map("care_actions")
+}
+model CareActionDecision {
+  plan CarePlan @relation("DecisionPlan",fields:[carePlanId,patientId,templateId,ruleDefinitionId],references:[id,patientId,templateId,ruleDefinitionId],onUpdate:Restrict,onDelete:Restrict,map:"care_decision_plan_fk")
+  bp BloodPressureMeasurement @relation(fields:[bpId,patientId],references:[id,patientId],onUpdate:Restrict,onDelete:Restrict,map:"care_decision_bp_fk")
+  applicability ObservedClinicalApplicabilitySnapshot @relation(fields:[applicabilityId,patientId],references:[id,patientId],onUpdate:Restrict,onDelete:Restrict,map:"care_decision_app_fk")
+  selectingUser User @relation(fields:[selectingUserId],references:[id],onUpdate:Restrict,onDelete:Restrict)
+  assignment ClinicianPatientAssignment @relation(fields:[assignmentId],references:[id],onUpdate:Restrict,onDelete:Restrict)
+  action CareAction @relation("DecisionAction",fields:[actionId,id,patientId],references:[id,decisionId,patientId],onUpdate:Restrict,onDelete:Restrict,map:"care_decision_action_fk")
+  ownedAction CareAction? @relation("ActionDecision")
+  members CareActionApplicabilityInput[]
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actionId String @unique @map("action_id") @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  carePlanId String @map("care_plan_id") @db.Uuid
+  templateId String @map("template_id") @db.Uuid
+  ruleDefinitionId String @map("rule_definition_id") @db.Uuid
+  bpId String @map("bp_id") @db.Uuid
+  applicabilityId String @map("applicability_id") @db.Uuid
+  selectingUserId String @map("selecting_user_id") @db.Uuid
+  assignmentId String @map("assignment_id") @db.Uuid
+  operationKey String @map("operation_key") @db.Uuid
+  selectorProvenance Json @map("selector_provenance") @db.JsonB
+  accepted Boolean
+  inputs Json @db.JsonB
+  triggerAt DateTime @map("trigger_at") @db.Timestamptz(6)
+  recommendedAt DateTime @map("recommended_at") @db.Timestamptz(6)
+  dueBy DateTime @map("due_by") @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  creationXid Unsupported("xid8") @default(dbgenerated("pg_current_xact_id()")) @map("creation_xid")
+  @@unique([carePlanId,ruleDefinitionId], map:"care_decision_occurrence_key")
+  @@unique([selectingUserId,operationKey], map:"care_decision_operation_key")
+  @@unique([id,patientId], map:"care_decision_scope_key")
+  @@unique([actionId,id,patientId], map:"care_decision_pair_key")
+  @@index([bpId,patientId], map:"care_decision_bp_idx")
+  @@index([applicabilityId,patientId], map:"care_decision_app_idx")
+  @@index([assignmentId], map:"care_decision_assignment_idx")
+  @@map("care_action_decisions")
+}
+model CareActionApplicabilityInput {
+  decision CareActionDecision @relation(fields:[decisionId,patientId],references:[id,patientId],onUpdate:Restrict,onDelete:Restrict)
+  snapshot ObservedClinicalApplicabilitySnapshot @relation(fields:[snapshotId,patientId],references:[id,patientId],onUpdate:Restrict,onDelete:Restrict)
+  decisionId String @map("decision_id") @db.Uuid
+  snapshotId String @map("snapshot_id") @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  @@id([decisionId,snapshotId])
+  @@index([snapshotId,patientId], map:"care_input_snapshot_idx")
+  @@map("care_action_applicability_inputs")
 }

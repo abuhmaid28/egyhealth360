@@ -261,3 +261,8 @@ FR-021 remains incomplete; FR-024 remains foundation-only; AC-001/002/004/005 re
 | FR-021 / FR-024 / AC-004 / AC-005 | Incomplete / foundation-only / unsatisfied / unsatisfied | No action generation, scheduling classification or closure logic added |
 
 Exact source: [Issue #31 contract](BP_CORRECTION_INVALIDATION_CONTRACT.md). Results: [validation](BP_CORRECTION_INVALIDATION_VALIDATION.md). No new EH number. M2 IN PROGRESS.
+
+
+## EH-014 bounded INITIAL implementation — pending review
+
+FR-021 now has bounded INITIAL implementation pending independent review/merge/post-merge validation; R1–R8 map to tests/integration/care-actions.test.mjs and pnpm m2:verify. FR-023/FR-060/FR-061 gain exact protected decision lineage and atomic minimized selection/creation audits. FR-012/FR-040 have only minimal authorized internal read foundations, no UI. FR-024 remains foundation-only/incomplete; AC-004/AC-005 unsatisfied; M2 IN PROGRESS. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [validation](EH-014_VALIDATION.md).

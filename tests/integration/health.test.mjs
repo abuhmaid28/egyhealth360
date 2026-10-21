@@ -31,9 +31,18 @@ test('worker repeats database checks and shuts down cleanly', { timeout: 20000 }
   child.stderr.on('data', chunk => { output += chunk; });
   const exit = once(child, 'exit');
   try {
-    for (let i = 0; i < 100 && (output.match(/Worker database health: ok/g) ?? []).length < 2; i++) await delay(100);
+    let observedHeartbeat = 0;
+    // A subsequent write may temporarily truncate the file after two successful checks.
+    // Wait for both observations within the original bound instead of sampling mid-write.
+    for (let i = 0; i < 100; i++) {
+      if ((output.match(/Worker database health: ok/g) ?? []).length >= 2) {
+        observedHeartbeat = Number(await readFile(heartbeat, 'utf8').catch(() => '0'));
+        if (observedHeartbeat > 0) break;
+      }
+      await delay(100);
+    }
     assert.ok((output.match(/Worker database health: ok/g) ?? []).length >= 2, 'worker should perform repeated successful health checks');
-    assert.ok(Number(await readFile(heartbeat, 'utf8')) > 0);
+    assert.ok(observedHeartbeat > 0);
     child.kill('SIGTERM');
     const [code] = await exit;
     assert.equal(code, 0);
