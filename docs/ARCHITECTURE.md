@@ -86,3 +86,7 @@ Primary requirement: local/self-hosted Docker Compose demo that works without pa
 - paid auth providers
 - paid AI APIs
 - separate lab/pharmacy applications
+
+## Issue #31 BP amendment boundary
+
+Clinical Evidence now owns the internal principal-checked BP amendment service and three additive append-only records: operation, terminal exclusion and independent wrong-patient privacy target. Ordinary BP/encounter history masks private targets; normalized/effective projections also remove every excluded target. EH-015 applicability remains unchanged. D1 provides truthful local receipts, not historical transaction visibility; future B2 must capture decision inputs. See [the implemented contract](BP_CORRECTION_INVALIDATION_CONTRACT.md). No public amendment route, CareAction, B2/B3 or EACCE implementation; M2 IN PROGRESS.

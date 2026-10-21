@@ -168,3 +168,7 @@ All 5 streams are fetched in ONE single PostgreSQL statement snapshot using Comm
 - Public `@egyhealth/db` root index exports only `createNormalizedEvidencePersistence`, `NormalizedEvidenceError`, `RecordCoverageError`, and TypeScript types.
 - Low-level machine writers (`internalCreateRecordCoverageWindow`) and raw readers (`internalGetNormalizedPatientEvidence`) are internal modules and are not exported from package root.
 - `apps/api` contains zero imports of internal raw readers or writers.
+
+## Issue #31 approved evidence filtering extension
+
+The BP and structural encounter/BP rows above now additionally require no terminal exclusion and no wrong-patient privacy restriction. This filter applies within the existing single-statement authorized query; intervals/partitions, coverage normalization, appointment candidates and encounter facts remain unchanged. Excluded BP cannot return through an old encounter link. This is exclusion/privacy filtering only, with no qualification or completion inference. See [BP_CORRECTION_INVALIDATION_CONTRACT.md](BP_CORRECTION_INVALIDATION_CONTRACT.md).

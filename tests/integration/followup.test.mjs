@@ -174,7 +174,7 @@ test('EH-012 persists operational records with an empty clinical catalog and no 
   const {isolatedCatalog}=await import('../support/clinical-catalog.mjs'),{readFile}=await import('node:fs/promises'),{randomBytes}=await import('node:crypto'),{Buffer}=await import('node:buffer');
   const {createDemoPersistence,createAuthPersistence,createFollowUpAppointmentPersistence,createClinicalEncounterPersistence,createBloodPressureMeasurementPersistence}=await import('../../packages/db/dist/index.js');const {seedDemo}=await import('../../scripts/lib/m1-demo.mjs');
   await isolatedCatalog(async({pool,url})=>{
-    for(const name of ['20261016000000_eh010_care_plan_lifecycle','20261017000000_eh011_bp_provenance','20261018000000_eh012_followup_encounters'])await pool.query(await readFile(`packages/db/prisma/migrations/${name}/migration.sql`,'utf8'));
+    for(const name of ['20261016000000_eh010_care_plan_lifecycle','20261017000000_eh011_bp_provenance','20261018000000_eh012_followup_encounters','20261019000000_eh013_record_coverage_windows','20261020000000_eh015_observed_clinical_applicability','20261021000000_bp_correction_invalidation'])await pool.query(await readFile(`packages/db/prisma/migrations/${name}/migration.sql`,'utf8'));
     const demo=createDemoPersistence(url),auth=createAuthPersistence(url),appointments=createFollowUpAppointmentPersistence(url),encounters=createClinicalEncounterPersistence(url),bp=createBloodPressureMeasurementPersistence(url);
     try{
       const state=(await seedDemo(demo,Buffer.from(randomBytes(32).toString('base64url')))).state,actor=state.identities.find(i=>i.key==='clinician-assigned'),patientId=state.identities.find(i=>i.key==='patient-a').profileId;

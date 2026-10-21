@@ -186,3 +186,7 @@ cover product/API/web/worker/startup and transitive local/workspace imports,
 root-only exports, unchanged OpenAPI and sanitized runtime failure output.
 The upgrade verifier preserves populated appointment/encounter/BP associations
 and coverage as well as all previous rows and migration ledger entries.
+
+## Issue #31 correction/invalidation acceptance
+
+`tests/bp-amendments.test.mjs` covers strict canonical input and scope boundaries. `tests/integration/bp-amendments.test.mjs` runs against real isolated PostgreSQL databases: immutable source/full-pair corrections, one exclusion, bare restatement, F1 initial/already-excluded privacy, exact frozen predecessor sets, current-privacy retries, assignment/RBAC/IDOR denial, SQL constraints, audit-fault rollback, explicit duplicate provenance, real blocking concurrent operations and patient/clinician HTTP GET/HEAD/reference masking. Existing BP, encounter, normalized, auth and applicability regression suites remain required. Fixture helpers apply all read dependencies once; older migration checksums remain pinned. `pnpm test:migrations` proves fresh deploy, populated eight-to-nine upgrade with zero backfill/source changes and repeat deploy. Full commands/results and temporal limitations are in [BP_CORRECTION_INVALIDATION_VALIDATION.md](BP_CORRECTION_INVALIDATION_VALIDATION.md).

@@ -134,4 +134,8 @@ Immutability is enforced at the database layer via triggers rejecting UPDATE, DE
 Research noninterference: complete research ground truth is strictly inaccessible to the observed applicability engine. Missing observed fields (`null`) are preserved without inference or backfilling.
 Zero public HTTP routes are added in EH-015; `docs/openapi.json` is byte-for-byte unchanged.
 
+## Issue #31 correction and wrong-patient safety
 
+Only currently assigned active clinicians may correct, exclude, restate or determine wrong-patient privacy; self-patients and ADMIN cannot mutate old evidence. Reuse locked transaction authorization and final session checks. Scope denial is uniform, failures sanitized, canonical payloads copied before awaiting, actor/kind/operation keys reject changed-payload replay. Atomic audits use fixed actor/action/entity references and empty metadata; clinical reasons/linkage stay in protected records.
+
+Private BP payload/references are omitted from patient and clinician history, encounter association history, normalized/effective evidence and retry replacement references. F1 permits independent privacy on an already-excluded BP while preserving its original reason. Explicit same-lineage frozen targets never propagate dynamically. No new forensic role/raw-history endpoint/cross-patient movement; source persistence remains immutable. Absence of exclusion is not verification, plausibility or clinical qualification. D1 supplies no arbitrary historical visibility guarantee. Exact threat boundary and downstream decisions: [BP contract](BP_CORRECTION_INVALIDATION_CONTRACT.md).

@@ -65,3 +65,6 @@ export type {
   ObservedConditionStatus,
 } from './observed-applicability-values.js';
 
+
+export { createBpAmendmentPersistence, BpAmendmentError, BP_EXCLUSION_REASONS } from './bp-amendments.js';
+export type { BpExclusionReason, BpAmendmentKind, BpAmendmentResult } from './bp-amendments.js';
