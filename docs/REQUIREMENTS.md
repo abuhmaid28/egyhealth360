@@ -134,11 +134,15 @@ No implementation may reorder these in a way that changes approved acceptance be
 - `docs/research/EXPERIMENT_PROTOCOL_V1.md` defines research-evaluation behavior.
 - `docs/TESTING.md` and the traceability matrix define verification coverage.
 
-## Issue #31 implementation evidence boundary
+## Issue #31 implementation evidence boundary (historical prerequisite scope)
 
-BP source-history preservation, append-only amendment provenance, atomic audit and wrong-patient masking extend FR-023/FR-060/FR-061 foundations. FR-012/FR-043 history remains an API foundation without UI completion. Evidence semantics are specified in [the BP correction contract](BP_CORRECTION_INVALIDATION_CONTRACT.md) and verified in its validation report. This does not satisfy FR-021 (incomplete), FR-024 (foundation-only) or AC-004/AC-005 (unsatisfied). EH-014 remains open pending readiness re-review after this prerequisite's independent review, merge and post-merge validation. M2 IN PROGRESS; EACCE remains M3.
+BP source-history preservation, append-only amendment provenance, atomic audit and wrong-patient masking extend FR-023/FR-060/FR-061 foundations. FR-012/FR-043 history remains an API foundation without UI completion. Evidence semantics are specified in [the BP correction contract](BP_CORRECTION_INVALIDATION_CONTRACT.md) and verified in its validation report. Issue #31 alone did not satisfy FR-021, FR-024 or AC-004/AC-005. The later merged EH-014 evidence below satisfies only the approved FR-021 bounded INITIAL scope. EACCE remains M3.
 
 
-## EH-014 bounded INITIAL implementation — pending review
+## EH-014 bounded INITIAL implementation — merged and verified
 
-FR-021: bounded INITIAL generation is implemented on the EH-014 feature branch, pending independent implementation review, merge and post-merge CI/exit verification; recurring care and arbitrary versions remain unimplemented. FR-024 remains foundation-only/incomplete; AC-004/AC-005 remain unsatisfied. M2 IN PROGRESS. No closure classifications or design work are added. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [validation](EH-014_VALIDATION.md).
+FR-021 — satisfied for the approved Core V1 bounded INITIAL generation scope. FR-024 remains foundation-only / incomplete pending the final SCHEDULED evidence contract. AC-004 (`SCHEDULED`) and AC-005 (`COMPLETED`) remain unsatisfied. M2 completion does not imply completion of all Core V1 acceptance criteria or EACCE. Generalized recurrence, recurring action generation and arbitrary future rule workflows are not implemented. Normative requirement and acceptance wording above is unchanged.
+
+[PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. [Contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md); [validation](EH-014_VALIDATION.md#post-merge-validation).
+
+M2 is COMPLETE for its functional exit criterion. Final repository milestone closeout awaits independent review and merge of this documentation-only PR, exact-main post-merge validation/status verification, and a final M2 completion comment. Issue #28 remains OPEN until those steps finish. Next: M3 EACCE pre-implementation / contract work; M3 has NOT started. No recurrence, EACCE, scheduling/completion classification or design work is added.

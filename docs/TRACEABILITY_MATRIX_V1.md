@@ -138,6 +138,10 @@ An Issue is not Definition-of-Ready if its requirement/acceptance/test trace can
 
 A requirement is not considered implemented merely because a screen exists; verification evidence must include the planned automated/integration/E2E/security/research checks appropriate to that row.
 
+## Slice-specific historical foundation evidence
+
+The EH-007 through Issue #31 sections below record each delivered slice and its limitations at that time; their incomplete/deferred milestone statements are historical, not current project status. Current FR-021/M2 evidence is in [EH-014 merged verification](#eh-014-bounded-initial-implementation--merged-and-verified). This does not change the historical scopes.
+
 ## EH-007 foundation evidence
 
 | Requirement | Implemented surface | Verification |
@@ -263,6 +267,19 @@ FR-021 remains incomplete; FR-024 remains foundation-only; AC-001/002/004/005 re
 Exact source: [Issue #31 contract](BP_CORRECTION_INVALIDATION_CONTRACT.md). Results: [validation](BP_CORRECTION_INVALIDATION_VALIDATION.md). No new EH number. M2 IN PROGRESS.
 
 
-## EH-014 bounded INITIAL implementation — pending review
+## EH-014 bounded INITIAL implementation — merged and verified
 
-FR-021 now has bounded INITIAL implementation pending independent review/merge/post-merge validation; R1–R8 map to tests/integration/care-actions.test.mjs and pnpm m2:verify. FR-023/FR-060/FR-061 gain exact protected decision lineage and atomic minimized selection/creation audits. FR-012/FR-040 have only minimal authorized internal read foundations, no UI. FR-024 remains foundation-only/incomplete; AC-004/AC-005 unsatisfied; M2 IN PROGRESS. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [validation](EH-014_VALIDATION.md).
+FR-021 — satisfied for the approved Core V1 bounded INITIAL generation scope. FR-024 remains foundation-only / incomplete pending the final SCHEDULED evidence contract. AC-004 (`SCHEDULED`) and AC-005 (`COMPLETED`) remain unsatisfied. M2 completion does not imply completion of all Core V1 acceptance criteria or EACCE. FR-012/FR-040 still have only minimal authorized internal action-read foundations; no UI completion is claimed.
+
+| Requirement / boundary | Executable evidence | Verification |
+|---|---|---|
+| FR-021 bounded INITIAL | `CareAction`, `CareActionDecision`, `CareActionApplicabilityInput`; exact pinned rule/template and protected immutable evaluated decision snapshot | `tests/integration/care-actions.test.mjs`: R1–R8 acceptance, strict threshold, exact applicability/timing, immutable replay, calendar, idempotency and real concurrent transactions |
+| BR-003/004/005/018 | `packages/db/src/care-actions.ts`; additive `20261022000000_eh014_initial_care_action` migration, unique INITIAL and same-patient exact-pin FKs, immutable guards/deferred completeness | Fresh and populated upgrade/redeploy across 10 migrations, checksum/row/ledger preservation and zero fabricated backfill |
+| FR-023/060/061 | Exact protected selected evidence, selector provenance and atomic minimized selection/creation audits | Snapshot/linkage/immutability/audit rollback and current-privacy projection/count/retry tests |
+| BR-001/002/020 / AC-010/011 | Current assigned-clinician invocation, own/assigned minimized reads, Admin denied | Session/assignment/IDOR and both-order authority/evidence race regressions |
+| M2 functional exit | `scripts/lib/m2-action-proof.mjs`, `scripts/verify-care-action-runtime.mjs` (`pnpm m2:verify`) | `eh-m2-initial-action-proof-v1`: PASS, INITIAL_ONLY, four synthetic cases in exact-main runtime |
+| FR-024 / AC-004 / AC-005 | Foundation-only/incomplete / unsatisfied / unsatisfied | Final SCHEDULED evidence contract and future EACCE closure evaluation required; no action–appointment coupling or completion inference |
+
+[PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. Exact post-merge results: 67/67 unit, 407/407 integration (69 EH-014), 10 migrations, 7/7 container auth, synthetic runtime proof PASS. [Contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md); [validation](EH-014_VALIDATION.md#post-merge-validation).
+
+M2 is COMPLETE for its functional exit criterion. Final repository milestone closeout awaits independent review and merge of this documentation-only PR, exact-main post-merge validation/status verification, and a final M2 completion comment. Issue #28 remains OPEN until those steps finish. Next: M3 EACCE pre-implementation / contract work; M3 has NOT started. No recurrence, EACCE, scheduling/completion classification or design work is added.
