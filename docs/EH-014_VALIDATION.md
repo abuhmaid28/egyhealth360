@@ -50,3 +50,34 @@ The private synthetic verifier provisions disposable state through genuine servi
 Independent implementation review, approved PR merge, successful post-merge CI on the exact main merge SHA, and explicit M2 exit proof/review remain outstanding. Issue #28 remains OPEN. M2 IN PROGRESS. FR-024 incomplete; AC-004/AC-005 unsatisfied. No recurrence, EACCE or design work.
 
 New migration SHA-256: `244207da379c6db2a8132d2aabe8a138d5f9183054b519f58676848c9f80e228`.
+
+## Post-Merge Validation
+
+This section records later observed evidence. Everything above remains the historical pre-merge implementation/development report, including failed attempts and limitations; its outstanding-gate statements describe that earlier handoff. No product code or tests were rerun or changed during documentation closeout.
+
+[PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**.
+
+- Implementation head: `c6b4a9320f3b31db0db52efcdb71ae19d3402181`.
+- Functional main merge SHA: `4a717c4c6be5b1fa9d089823bb093eca43813853`. Remote main and origin/main were rechecked at this exact SHA before the closeout branch was created.
+- CI event `push`, head branch `main`, head SHA `4a717c4c6be5b1fa9d089823bb093eca43813853`, status `completed`, conclusion `success`; validate job [119446799791](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127/job/119446799791). The run metadata, job steps and decoded logs were independently inspected during this closeout.
+
+| Exact-main command group | Observed result |
+|---|---|
+| Frozen install, generation/Prisma validation, lint, build, typecheck | PASS |
+| `node --test tests/*.test.mjs` | **67/67**, zero failed/cancelled/skipped |
+| `pnpm test:integration` | **407/407**, including all 69 EH-014 tests, zero failed/cancelled/skipped |
+| `pnpm test:migrations` | **10 migrations**; fresh deploy, populated historical upgrades including nine-to-ten, repeat deploy/status, checksum/row/link/ledger preservation and zero fabricated action/decision backfill PASS |
+| Production and full dependency audits | PASS: no known vulnerabilities |
+| Docker config/build and healthy startup | PASS |
+| Container auth tests | **7/7**, zero failed/cancelled/skipped |
+| Host/container Argon2 measurement; auth, authorization, M1/EH-015 and clinical runtime probes | PASS |
+| `node scripts/verify-care-action-runtime.mjs` in built container | **PASS**, manifest `eh-m2-initial-action-proof-v1`, scope `INITIAL_ONLY`, **4 synthetic cases** |
+| Web/API smoke and final container/network/volume cleanup | PASS |
+
+The runtime proof still prints historical implementation-scope marker `M2_IN_PROGRESS`; this is the unchanged synthetic verifier's output, not the current milestone decision. This documentation-only task does not modify that executable marker. The accepted exit review evaluates the proof together with merge, full exact-main CI and traceable persistence. Earlier local failed/interrupted attempts remain failures; remote success does not rewrite their history or claim real-world clinical validation.
+
+The authoritative M2 exit criterion—“a synthetic patient can receive an active hypertension plan with traceable actions and evidence”—is satisfied by the merged INITIAL slice: active version-pinned plan, explicit observed applicability, clinician-selected BP, immutable decision, durable action, source/rule/evidence trace, deterministic calendar timing, retries/concurrency, correction/privacy-aware preservation and atomic audit. **M2 functional exit gate: PASS.**
+
+FR-021 — satisfied for the approved Core V1 bounded INITIAL generation scope. FR-024 remains foundation-only / incomplete pending the final SCHEDULED evidence contract. AC-004 (`SCHEDULED`) and AC-005 (`COMPLETED`) remain unsatisfied. M2 completion does not imply completion of all Core V1 acceptance criteria or EACCE.
+
+M2 is COMPLETE for its functional exit criterion. Final repository milestone closeout awaits independent review and merge of this documentation-only PR, exact-main post-merge validation/status verification, and a final M2 completion comment. Issue #28 remains OPEN until those steps finish. Next: M3 EACCE pre-implementation / contract work; M3 has NOT started. No recurrence, EACCE, scheduling/completion classification or design work is added.
