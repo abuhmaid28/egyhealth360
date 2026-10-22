@@ -1,5 +1,7 @@
 # EgyHealth 360 — Critical UX Validation V2
 
+> **V3 applicability:** Historical Product V2 interaction/reference document, not an active V3 screen specification or completed UX validation. **DESIGN FROZEN** under D35. Its nine-screen/Care-action-first scope does not define the five-workspace V3 journey. No screens, components or visual behavior are added/changed here. See [approved policy/lineage](PRODUCT_V3_DECISIONS.md).
+
 ## Purpose
 Convert the current visual direction into implementation-ready interaction rules for the nine critical screens. This document validates behavior/states, not pixel-perfect styling.
 

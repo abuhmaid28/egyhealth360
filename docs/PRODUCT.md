@@ -1,102 +1,88 @@
-# EgyHealth 360 — Product Definition V2
+# EgyHealth 360 — Product Definition V3
+
+## Authoritative status
+
+| Area | Status |
+|---|---|
+| Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
+| V3-G0 documentation reconciliation | **IN PROGRESS until this PR merges**; independent review, merge and post-merge verification remain required |
+| M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
+| V3-I1 | **NOT STARTED**; not authorized by this documentation change |
+| EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
+| Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
+
+Policy approval is not implementation completion or blanket implementation authorization. Product V2 remains the merged-main baseline until this reconciliation merges. The approved V3 direction below becomes repository source of truth through that merge; it does not retroactively redefine M0–M2.
 
 ## Vision
 
-EgyHealth 360 is a standards-oriented chronic-care coordination prototype that helps patients and clinicians track expected care actions and understand whether each action is completed, scheduled, unresolved, exempt, not yet due, or uncertain based on available longitudinal evidence.
+EgyHealth 360 is an integrated digital healthcare platform that connects patient access, booking, consultation, prescriptions, diagnostics, dispensing and follow-up into one longitudinal healthcare journey, enhanced by structured care coordination and bounded explainable evidence-aware monitoring.
 
-## Core problem
+The deployment/demo/research boundary remains a synthetic, free-first, self-hostable graduation prototype. Ordinary healthcare entry, consultation and fulfillment work without a hypertension CarePlan, CareAction or EACCE assessment.
 
-An overdue expected action with no visible completion event is not always a genuine care gap. Records can be incomplete or fragmented. The product therefore treats evidence quality and relevant record coverage as first-class inputs instead of equating absence with failure.
+## Product hierarchy
 
-## Roles
+1. **Layer A — Integrated Healthcare Journey:** patient entry → provider discovery → availability → booking → consultation → clinician documentation → prescription/tests → results/dispensing → follow-up.
+2. **Layer B — Longitudinal Continuity:** visits, human-entered problems, prescriptions, medications/dispenses, diagnostics, BP, follow-up, CarePlans and CareActions form a coherent authorized record.
+3. **Layer C — Research Differentiator:** bounded explainable evidence-aware continuity/EACCE distinguishes unresolved, scheduled, completed and uncertain care without diagnosing or choosing treatment.
 
-### Clinician — primary
-- View assigned patients
-- Review patient summary, care plan, timeline, measurements, and care actions
-- See EACCE classification and explanation
-- Confirm or override an assessment with a required reason
-- Schedule/manage follow-up
+## Five future workspaces — one application
 
-### Patient — secondary
-- View own plan and next actions
-- View completed/upcoming items
-- Enter permitted BP measurements
-- View follow-up information
-- Receive simple, non-accusatory wording for uncertain/attention states
+These are approved capabilities, **not claims of implemented portals**. The current backend roles are PATIENT, CLINICIAN and ADMIN; lab/pharmacy staff and organization membership are future work.
 
-### Admin — operational/research
-- Manage accounts/status
-- Load/reset demo data
-- Run/view Evaluation Lab experiments
-- No default unrestricted clinical-data editing
+| Workspace | Approved future capability | Essential boundary |
+|---|---|---|
+| Patient | Self-register, login/session, permitted own profile/demographics; discover doctors/specialties/clinics/availability; book/cancel/reschedule own appointments; view released summaries/problems, prescriptions, medication/dispense history, lab orders/final results, follow-up, timeline, BP and applicable CarePlan/actions; receive in-app updates | No privileged-role selection, clinical authoring or arbitrary action closure |
+| Doctor | Curated professional/public profile and clinic/specialty; finite availability/own schedule; authorized consultation, complaint/problems/diagnoses, minimal allergy/intolerance review including unknown/not-reviewed, measurements, protected notes, released summary/instructions, signed prescriptions/orders, follow-up and longitudinal review | Explicit patient authorization + clinician acceptance establish continuing current relationship; booking alone grants logistics only |
+| Laboratory / Diagnostics | Routed clinician order, meaningful processing, result entry, explicit verification/finalization, release, correction/retraction and history | Artifact-scoped current staff/org/membership authority; minimum necessary context; no production LIS; imaging optional within diagnostics |
+| Pharmacy | Routed valid signed prescription, full prescribed quantity per item, separate item fulfillment, attributable dispense history and appropriate status | No prescription editing, partial quantity, refill, substitution or adherence inference |
+| Admin | Users/providers/clinicians/specialties/labs/pharmacies, role/status/membership, safe demo/configuration and Evaluation Lab operations | ADMIN alone grants no clinical payload, impersonation, signing or fulfillment rights |
 
-## MVP modules
+Small curated catalogs and representative synthetic fixtures suffice. Doctor/site/specialty counts are fixture choices, not architecture limits. Use simple provider/clinic/location concepts, not an enterprise facility hierarchy. Keep the deterministic M1 seed intact; integrated fixtures are separately versioned.
 
-1. Authentication & roles
-2. Patient profile
-3. Clinician patient list
-4. Patient clinical summary
-5. Hypertension care-plan template/rules
-6. Care actions/tasks
-7. Patient timeline/evidence
-8. BP measurements
-9. Follow-up scheduling
-10. Evidence-Aware Care Closure Engine (EACCE)
-11. Clinician review/override
-12. Patient care view
-13. Evaluation Lab
+## Complete patient journey
 
-## Closure classifications
+Register/login → discover doctor → review public profile/clinic/availability → select and book → manage appointment → explicitly authorize relationship and receive clinician acceptance before or at consultation → encounter → optional human-entered problem/diagnosis, prescription, lab order and follow-up → released summary/instructions → authorized lab result and pharmacy full-item dispensing → longitudinal history → follow-up booking/home BP → CarePlan/CareActions where applicable → future EACCE under separately approved evidence contracts.
 
-- NOT_DUE
-- COMPLETED
-- SCHEDULED
-- TRUE_GAP
-- EXEMPT
-- UNCERTAIN
+Not every consultation creates every artifact. Signed source records preserve actors/provenance; amendments/addenda/retractions replace silent overwrites. Clinician-private notes remain author-only under current clinical authority, separate from patient-released summaries. Source records, operational state, timeline projections and audit are different concepts. Dispensing proves supply, not ingestion/adherence.
 
-Operational action lifecycle is separate from closure classification.
+## Scope tiers
 
-## Product principles
+### Tier 1 — MUST HAVE
 
-1. Care-action first
-2. Evidence before assumption
-3. Uncertainty is allowed
-4. Every classification must be explainable
-5. Clinician remains in control
-6. Standards-oriented, not standards-for-show
-7. Focused hypertension-first scope
+- Bounded patient self-registration/login/session/own profile; managed privileged accounts. No paid identity verification, production identity-assurance claim or mandatory full password-recovery subsystem.
+- Curated doctor discovery, specialties/clinic/public professional information; finite clinician-published availability with declared clinic timezone, overlap/capacity protection and clear booking cutoff. Duration, lead and horizon are bounded configuration choices.
+- Own booking/cancellation/rescheduling/history and doctor schedule; safe retries and failed replacement preserving the original. Patient/booked-clinician cancellation/replacement occurs before start/consultation opening; explicit attendance/no-show semantics; no fees.
+- Explicit patient authorization + clinician acceptance; continuing relationship until either ends it; current authority on later access and preserved relationship history, with no permanent author entitlement.
+- General consultation/encounter with actual treating provenance, human-entered problems/diagnoses and minimal allergy/intolerance review, private notes and signed/released summary/instructions.
+- Small medication catalog, clinician-signed prescriptions/items, preserved instructions/quantity/unit/clinician-entered validity, cancellation/replacement and reconciliation of prior dispensing; full-item-only pharmacy fulfillment.
+- Clinician lab order, explicit lab routing, meaningful processing, result entry/verification/finalization, final release and versioned corrections/retractions. **Laboratory is mandatory.** Same actor may enter and verify with truthful provenance; drafts stay hidden and no mandatory doctor-release queue is required in this synthetic demo.
+- Follow-up intent even without a booked slot, then one operational booking authority; preserve EH-012 historical behavior.
+- Source-linked authorized longitudinal record; in-app important events/basic bounded reminders; existing BP and exact-pinned CarePlan/INITIAL CareAction foundations; all five workspaces' authorization, privacy/history and golden-journey verification.
+- Retained academic deliverable later: bounded HTN EACCE, six classifications, immutable assessments/explanations, clinician review/override and reproducible isolated B0/B1/P1 evaluation. This is not a prerequisite for ordinary healthcare journeys.
 
-## Core differentiation
+### Tier 2 — SHOULD HAVE if capacity permits
 
-The graduation contribution is not generic reminders or a combined health record. It is the evidence-aware classification of expected care-action closure under incomplete longitudinal data, plus a reproducible controlled-missingness benchmark.
+Bounded imaging narrative/report fulfillment using shared diagnostics principles; additional measurement types with their own contracts; richer reminders/preferences, catalog/admin support, history/reconciliation and demo breadth. Imaging is not required for the mandatory diagnostics journey, adds no sixth portal and may not be claimed complete without implementation and proof.
 
-## Golden demo
+### Tier 3 — LATER / NON-GOAL
 
-1. Clinician opens a synthetic hypertensive patient.
-2. One overdue action with complete relevant coverage becomes TRUE_GAP.
-3. A similar case with missing relevant coverage becomes UNCERTAIN instead of a confirmed gap.
-4. Another case with a valid future follow-up becomes SCHEDULED.
-5. Patient view shows next steps in simple wording.
-6. Evaluation Lab compares the naive baseline with EACCE across controlled missingness.
+Payments, insurance, video consultation, national marketplace economics/ratings/advertising, delivery, stock/procurement/inventory ERP, hospital ERP, full LIS/analyzer integration, PACS/DICOM, medical-image upload infrastructure, diagnostic/image AI, autonomous treatment/dose recommendations, real-patient deployment, paid notification infrastructure, generalized multi-role IAM/permission builder, arbitrary rule editor and broad disease/recurrence engines. Partial quantities/refills/substitution are outside the frozen release, not optional polish; changing them needs a new scope decision.
 
-## Explicit non-goals
+## Differentiation and research boundary
 
-- Lab portal or laboratory ERP
-- Pharmacy portal/e-commerce/dispensing workflow
-- Doctor marketplace or reviews
-- Full appointment marketplace
-- Online consultation/video infrastructure
-- Hospital ERP
-- Insurance/payments
-- Diagnostic AI
-- Treatment recommendation or dose selection
-- Diabetes-risk prediction
-- Chatbot/OCR/image diagnosis
-- Real-patient clinical deployment
+Booking, profiles, appointments, clinical records, prescriptions, labs, medication history and follow-up are expected platform features. EgyHealth 360 connects them with a continuous cross-provider journey, structured plans/actions, provenance-aware evidence, patient next steps, explicit uncertainty and later explainable EACCE decisions/clinician overrides.
 
-## Success
+The bounded HTN contribution remains CR-HTN-FU-001, B0/B1/P1, controlled missingness and isolated ground truth. Retain NOT_DUE, COMPLETED, SCHEDULED, TRUE_GAP, EXEMPT and UNCERTAIN as future product classifications; UNCERTAIN is abstention, not truth. Operational booking, result or dispense never implies eligibility, coverage sufficiency, clinical completion or CareAction closure. No diagnostic AI, autonomous prescribing or dose choice is permitted.
 
-Product success: the golden journey works end-to-end with correct authorization, auditable assessments, understandable explanations, clinician override, and stable synthetic demo data.
+## Golden journeys and success
 
-Academic success: baseline and proposed engine are reproducibly evaluated on synthetic care-action cases under controlled incompleteness with transparent metrics and limitations.
+| Journey | Required backend/domain proof before claiming completion |
+|---|---|
+| A — Access and consultation | Register → discover → book → explicit relationship → consult → released summary, prescription, test order and follow-up; no prior CarePlan |
+| B — Laboratory | Clinician order → authorized routed lab → process/finalize → released patient/current-doctor result → timeline; corrections/history and wrong-provider denials |
+| C — Pharmacy | Signed valid prescription → authorized routed pharmacy → full-item dispense → preserved quantity/unit/actor/time → patient/current-doctor status; no duplicate entitlement/adherence claim |
+| D — Continuity | Longitudinal sources → follow-up → BP → preserved CarePlan/actions → later explicitly contracted EACCE; no automatic bridges or private-data leaks |
+
+These journeys passed the policy-coverage gate only; they are not implemented/tested V3 workflows. Graduation success requires real domain behavior, negative authorization/history/concurrency proof and honest reproducible academic results. If deadline/capacity cannot support the thin Tier 1 journey plus research, raise the specific scope tradeoff rather than silently omit fulfillment.
+
+The approved [D01–D36 record](PRODUCT_V3_DECISIONS.md), [Roadmap V3](IMPLEMENTATION_ROADMAP.md), [requirements](REQUIREMENTS.md) and [security policy](SECURITY.md) govern later work. Product V2's narrower positioning/exclusions are superseded through ADR-031; historical contracts remain unchanged. Design remains separately frozen.

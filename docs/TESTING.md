@@ -1,4 +1,20 @@
-# Testing Strategy V1
+# Testing Strategy — V3 Acceptance and Retained Slice Evidence
+
+## V3 policy versus delivered evidence
+
+Product V3 policy APPROVED; V3-G0 reconciliation IN PROGRESS until PR merge; V3-I1/EACCE/UI NOT STARTED and DESIGN FROZEN. The requirements below are future verification obligations, not new tests or passing implementation claims. Existing M0–M2 validation reports/test contracts remain unchanged.
+
+Prove [journeys A–D](PRODUCT.md#golden-journeys-and-success) through real backend/domain behavior: signup/discovery/booking/relationship/consultation, lab final results, full-item dispensing and longitudinal BP/plan/action continuity. Then prove future EACCE against its explicitly approved input/evidence contracts. Imaging is SHOULD only and claimed only after proof. Policy coverage PASS is not executable PASS.
+
+Extend security verification to public/private directory data, patient-only signup/no role escalation, own bookings, own schedule/minimal pre-relationship logistics, explicit authorization/acceptance/ending, current cross-provider clinical relationship and private-note/released-summary separation. Add recipient-scoped lab/pharmacy cross-patient/provider IDOR and D36 current user/org/membership/artifact suspension/cancellation checks, without weakening legacy ACTIVE-assignment tests.
+
+Later signed prescription/result/consultation tests must preserve source versions/corrections/retractions, wrong-patient payload/reference/count/notification masking and patient/current-doctor independent access; ADMIN must never gain clinical payload or fulfillment by role. Verify booking contention/retries/failed replacement, full-item duplicate dispensing and cancellation/replacement reconciliation in their own frozen contracts. No operational event implies adherence, applicability, coverage sufficiency or action completion.
+
+Map future evidence through [V3 requirements/traceability](TRACEABILITY_MATRIX_V1.md). Preserve the fixed M1 seed, ten historical migrations and M2 exact-pin/INITIAL/privacy regressions. Research B0/B1/P1/holdout isolation remains unchanged. Frontend/accessibility checks occur only after separate design-unfreeze approval and implemented relevant domain behavior.
+
+## Retained strategy and historical slice evidence
+
+General principles remain applicable; old screen-centric journey names and M3 references below are historical Layer C targets, mapped to V3-I5/I6/I7. They are not the complete V3 product journey or current design authorization.
 
 ## Principle
 A feature is not done because code compiles or a screen renders. Tests are selected by risk and requirement coverage.
@@ -198,4 +214,4 @@ EH-014 acceptance is in tests/integration/care-actions.test.mjs: R1–R8, exact/
 
 [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. The exact-main validate job passed **67/67 unit**, **407/407 integration** (including 69 EH-014), fresh/populated/repeat verification across **10 migrations**, **7/7 container auth**, and the **EH-014 synthetic runtime proof PASS** (`eh-m2-initial-action-proof-v1`, INITIAL_ONLY, four cases). Lint/generation/Prisma validation/build/typecheck, audits, Docker health, existing runtime probes and smoke/cleanup also passed. These are observed remote results, not reruns in this documentation task; historical development failures remain intact in the validation report.
 
-M2 functional exit gate PASS applies to traceable INITIAL generation, not EACCE. FR-024 remains foundation-only/incomplete; AC-004/AC-005 unsatisfied; M3 not started. Issue #28 stays OPEN pending documentation closeout review/merge, exact-main validation/status verification and final completion comment.
+M2 functional exit gate PASS applies to traceable INITIAL generation, not EACCE. FR-024 remains foundation-only/incomplete; AC-004/AC-005 unsatisfied. Issue #28 is CLOSED/completed at the reconciliation baseline; M0–M2 remain COMPLETE. Old unstarted M3 is superseded/resequenced to V3-I5; neither V3-I1 nor EACCE has started. Historical results above are retained evidence, not tests rerun for this documentation change.

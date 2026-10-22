@@ -1,4 +1,45 @@
-# Security & Medical Safety V1
+# Security & Medical Safety — V3 Policy, M0–M2 Enforcement
+
+## Policy versus implementation
+
+Product V3 is APPROVED at policy level; V3-I1 is NOT STARTED. Existing PATIENT/CLINICIAN/ADMIN roles, EH-006 session/CSRF/Origin and own/ACTIVE-assignment checks remain implemented and unchanged. LAB_STAFF/PHARMACY_STAFF, organization membership, general booking/relationship enrollment and fulfillment authority are **approved future policy, NOT IMPLEMENTED**. No current endpoint gains a booking/staff exception.
+
+## Approved future authorization boundary
+
+| Area | Policy for later reviewed implementation contracts |
+|---|---|
+| Registration / own data | Only patient self-registration; no privileged role selection. Permitted own profile/bookings/released clinical data only; no clinical authoring, arbitrary action closure or another patient's owner/reference assignment. Managed privileged accounts; no production identity-assurance or mandatory paid verification/recovery subsystem |
+| Public provider discovery | Curated published professional profile, clinic/specialty and availability only; no patient bookings, account/private identity data or clinical history |
+| Doctor schedule / booking | Own professional/provider scope and minimum identity/time/logistics only before a genuine relationship; complaint/history are clinical data, not scheduling metadata |
+| Relationship | Explicit patient authorization + clinician acceptance before/at consultation. Continue until either ends; preserve history. Recheck current authority on subsequent access; no author entitlement, automatic renewal or pending-result exception. Other doctors need their own current relationship |
+| Private notes / released summary | Private notes author-only under current clinical authority; no automatic patient/other-doctor/staff/ADMIN disclosure. Signed/released summaries/instructions have separate permitted projections and preserved addenda |
+| Lab | Active bounded staff, matching active organization/membership, valid routed order and minimum necessary patient/test context; own result/fulfillment history only |
+| Pharmacy | Equivalent current routed signed-prescription authority and own full-item dispense history only; cannot rewrite prescribing; no unrelated medication/diagnosis/timeline access |
+| Admin | Operational account/provider/membership/status/config/demo and research administration only; no clinical payload, impersonation, signing, finalization, dispensing or unconsented relationship creation by ADMIN alone |
+| IDOR/provider isolation | Patient and nested artifact identity never grants authority. Deny cross-patient/cross-provider access without protected existence/payload disclosure; no global staff patient search shortcut |
+| History/privacy | Preserve signed source versions/addenda/retractions/reversals; wrong-patient restriction independent of exclusion/correction. No cross-patient move; mask payload and revealing references/counts/notifications in ordinary projections. Patients/ADMIN may flag concerns without gaining clinical edit authority |
+
+## D36 — Cross-module fulfillment authority and suspension
+
+1. Ending a doctor relationship denies later doctor access but does not silently cancel an otherwise valid routed prescription/test order.
+2. Lab/pharmacy authority is artifact-scoped, never general patient-record access.
+3. Reads/writes require current active user, organization, membership and valid artifact authority; prior session, role or authorship alone is insufficient.
+4. Completed artifact access is limited to bounded source correction/audit under current organization/artifact authority and privacy restrictions; no future orders or permanent author entitlement.
+5. Effective staff/membership/organization suspension or revocation blocks subsequent staff clinical reads/writes, including pending work; no grandfathering. This means the next current-authority check, not recall of already authorized responses or reversal of committed facts.
+6. Preserve source/history across ending, suspension and cancellation.
+7. Patient own access and another currently authorized doctor's access rely on their own authority/release/privacy; source-organization suspension does not automatically hide already released history from them.
+8. Authorized cancellation/withdrawal blocks future fulfillment, preserves prior results/dispenses, and reasoned corrections/reversals do not silently restore entitlement.
+9. ADMIN may administer operational status/escalation, but no clinical payload/fulfillment rights. Pending work remains; restoration/rerouting needs fresh authority and history, never silent transfer of accepted/fulfilled artifacts.
+10. No break-glass, forensic/raw-history, permanent-author or legacy ACTIVE-assignment exception is created.
+
+The authorized clinician signs/routes to an approved recipient considering patient preference; patient does not rewrite the signed artifact. Authorized pre-acceptance rerouting preserves history; completed/processing work needs cancellation/reissue/reconciliation. New source-owning correction authority does not open existing BP/CarePlan/CareAction resources or protected generation decisions.
+
+**Policy completeness:** own data, public directory, schedule/logistics, relationship transitions/ending, artifact-scoped fulfillment, revocation, private notes, release, cancellation/correction, IDOR/provider isolation and timeline masking are covered by [D01–D36](PRODUCT_V3_DECISIONS.md). Technical enforcement/permission/error/race contracts and verification remain future work. No implementation-level permission table or transaction change is introduced here.
+
+## Retained security principles and accepted implementation notes
+
+The principles below remain applicable; slice notes describe their delivered scope at the time. They do not claim V3 enforcement or recall of in-flight reads after revocation.
+
 
 ## Security target
 Use OWASP ASVS 5.0 as the verification reference, with a practical L1 baseline plus risk-driven L2 controls for authorization, sessions, sensitive data, logging, and privacy.

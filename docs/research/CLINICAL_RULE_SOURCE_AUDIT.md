@@ -1,5 +1,7 @@
 # EgyHealth 360 — Clinical Rule Source Audit V1
 
+> **V3 applicability:** This retained source audit governs bounded HTN research (Layer C). Its medication-domain exclusions describe the earlier product/research boundary; approved V3 permits human-entered prescribing/dispensing, without promoting medication-change follow-up rules or changing this audit's clinical interpretation. Source evidence and rule parameters below are unchanged. See [approved policy](../PRODUCT_V3_DECISIONS.md) and [research boundary](../RESEARCH.md).
+
 ## Purpose
 Freeze the first hypertension follow-up rule only after checking authoritative clinical sources and separating clinical guidance from engineering interpretation.
 

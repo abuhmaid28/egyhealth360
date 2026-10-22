@@ -1,5 +1,7 @@
 # EgyHealth 360 — Competitor Evidence Matrix V1
 
+> **V3 applicability:** V3 context: this matrix retains historical evidence and Layer C research positioning. The integrated journey is the product center; the narrow question differentiates it rather than defining the whole platform. The EgyHealth 360 comparison column is a planned V2 design target, **not verified implemented capability**; EACCE/FHIR/evaluation remain unimplemented. No competitor evidence was refreshed in this documentation reconciliation. See [approved policy/lineage](../PRODUCT_V3_DECISIONS.md).
+
 ## Purpose
 Document what existing local/global healthcare systems already do so EgyHealth 360 does not claim common capabilities as novel.
 

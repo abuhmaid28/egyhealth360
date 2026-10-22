@@ -1,5 +1,7 @@
 # EgyHealth 360 — Related Work Matrix V1
 
+> **V3 applicability:** V3 context: research-differentiation statements and historical open questions below concern bounded Layer C, not the entire integrated product. The accepted HTN protocol/source audit and M0–M2 contracts resolve their own subsequent details; this historical matrix neither reopens them nor claims method implementation. Ordinary healthcare journeys do not require EACCE. See [approved policy/lineage](../PRODUCT_V3_DECISIONS.md).
+
 ## Purpose
 This matrix positions EgyHealth 360 against both academic work and commercial systems. It prevents unsupported novelty claims and makes the project’s actual contribution explicit.
 

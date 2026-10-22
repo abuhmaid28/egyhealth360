@@ -1,5 +1,7 @@
 # EgyHealth 360 — Clinical Rule Catalog V1
 
+> **V3 applicability:** The bounded HTN catalog and deferred candidates below are unchanged. General clinician-entered prescriptions/diagnoses in approved V3 do not promote a new clinical rule, infer applicability or expand research to recurrence/other diseases. Current product approval is not EACCE implementation. See [approved policy](../PRODUCT_V3_DECISIONS.md) and [research boundary](../RESEARCH.md).
+
 ## Rule CR-HTN-FU-001
 
 ### Identity

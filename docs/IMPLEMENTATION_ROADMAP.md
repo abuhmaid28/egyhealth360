@@ -1,132 +1,51 @@
-# Implementation Roadmap V1
+# Implementation Roadmap V3
 
-## Principle
-Build the smallest vertical slices that prove the architecture, security model, core closure engine, product workflow, and research methodology. Every task is issue-scoped and PR-reviewed.
+## Current gates
 
-## Milestone M0 — Repository Reboot
-- EH-002: synchronize source-of-truth documentation
-- EH-003: bootstrap monorepo V2
+Product V3 policy is APPROVED ([D01–D36 and lineage](PRODUCT_V3_DECISIONS.md)). V3-G0 documentation reconciliation is IN PROGRESS until this PR merges; independent review and post-merge verification remain required. V3-I1, EACCE and product UI are NOT STARTED. Design remains FROZEN until separate explicit approval. This roadmap starts no implementation and assigns no new EH numbers.
 
-Exit gate: repo structure, tooling, Docker, CI, health checks, and shared-package boundaries are stable.
+## Preserved completed milestones
 
-## Milestone M1 — Identity, Authorization, and Core Data Foundation
-1. Implement Prisma domain foundation for users/profiles/assignments and core audit primitives.
-2. Implement server-side sessions, Argon2id login/logout, CSRF protection, and session lifecycle.
-3. Implement backend RBAC + clinician-patient relationship authorization and IDOR tests.
-4. Add deterministic synthetic/demo identity seed (EH-008 merged and complete).
+| Historical ID and name | Status and evidence |
+|---|---|
+| M0 — Repository Reboot / Bootstrap | COMPLETE: EH-002 documentation and EH-003 monorepo/tooling/Docker/CI. [M0 validation](EH-003_VALIDATION.md) |
+| M1 — Identity, Authorization, and Core Data Foundation | COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`: EH-005–008 identity/session/auth/assignment/audit/deterministic demo. [Final exit evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884) |
+| M2 — Clinical Planning & Evidence | COMPLETE: EH-009 definitions, EH-010 CarePlan, EH-011 BP, EH-012 follow-up/encounter/BP links, EH-013 coverage, EH-015 applicability, Issue #31 correction/privacy, EH-014 bounded INITIAL. [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33), [functional exit PASS](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518), [post-merge validation](EH-014_VALIDATION.md#post-merge-validation) |
 
-Exit gate: Patient/Clinician/Admin can authenticate and protected-resource isolation is proven by tests. COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [recorded final evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884).
+Issue #28 is CLOSED/completed; verified main `ea777ce71c3639a37ec015739a12f0fadc0b4dcc` includes the M2 documentation closeout. Existing contracts, migration history, validations and IDs remain intact. M2 proves only its bounded INITIAL exit; FR-024 remains foundation-only/incomplete and AC-004/AC-005 remain unsatisfied. Historical slice deferrals are not new work authorizations.
 
-## Milestone M2 — Clinical Planning & Evidence — COMPLETE (functional exit)
-1. EH-009 (merged / complete): guideline source/template/rule-definition versioning model. See EH-009_CLINICAL_DEFINITION_CONTRACT.md.
-2. EH-010 (merged / complete foundation slice): version-pinned CarePlan lifecycle, transactional clinician authorization/audit and deterministic read-only deferred action specification. No CareAction persistence. See EH-010_CARE_PLAN_CONTRACT.md.
-   EH-010 itself added no actions; the remaining bounded INITIAL generation gate is now satisfied by EH-014 in step 8. Recurrence is outside this approved M2 scope.
-3. EH-011 (merged / complete): immutable paired BP measurements, server-derived entry provenance, Patient self / ACTIVE-assigned Clinician POST and paginated GET/HEAD history. See EH-011_BP_PROVENANCE_CONTRACT.md. Correction/privacy is supplied by Issue #31; bounded INITIAL generation by EH-014 below.
-4. EH-012 (merged / complete): operational SCHEDULED/CANCELLED follow-up appointments, immutable clinical encounters and immutable encounter-BP associations. See EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md. No action-linked schedule/closure evidence; FR-024 remains foundation-only.
-5. EH-013 (merged / complete): immutable source-scoped record-coverage windows and deterministic normalized evidence queries with explicit unasserted intervals, single-statement snapshot retrieval, authorized product read boundary and internal synthetic writer. No CareAction generation, EACCE classification, coverage-sufficiency decision, FHIR/Synthea ingestion or public HTTP routes. See EH-013_COVERAGE_NORMALIZED_EVIDENCE_CONTRACT.md.
-6. EH-015 (merged / complete): immutable observed clinical applicability snapshots and terminal retractions foundation (slice B1). Discriminated age assertion state (`NO_ASSERTION`, `UNKNOWN`, `ASSERTED_VALUE`), exact source partition `(patientId, sourceType, sourceReference, assertionReference)`, research noninterference (hidden complete truth never backfills missing observed data), authorized single-statement read service, and private synthetic observed-input writer. Zero public HTTP routes. B4 is completed by Issue #31; B2 selection and B3 INITIAL-only occurrence are completed by EH-014 below. Recurrence remains outside the frozen scope. See `EH-015_OBSERVED_APPLICABILITY_CONTRACT.md` and `EH-015_VALIDATION.md`.
+## Active V3 sequence — all implementation milestones NOT STARTED
 
-7. Issue #31 (merged / complete, PR #32): immutable BP correction/exclusion and independent wrong-patient privacy prerequisite.
-8. EH-014 (merged / verified, [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33)): explicit assigned-clinician INITIAL generation, protected immutable decision snapshot, durable action, exact traceability, calendar arithmetic, transactional revalidation/idempotency/concurrency/privacy/audit and synthetic runtime proof.
+| Milestone | Dependencies and approved future scope | Future exit evidence required |
+|---|---|---|
+| **V3-G0 — Scope & Authorization Freeze** | Policy approval COMPLETE; this documentation reconciliation completes the repository gate only after independent review, merge and post-merge verification | Consistent approved product/ADRs/requirements/security/roadmap/traceability; verified exact-main status; no implementation |
+| **V3-I1 — Integrated Domain & Access Foundations** | G0 reconciliation/verification and separate authorization; patient registration/profile, simple provider/clinic/specialty/public profiles, bounded lab/pharmacy actor/membership, relationship establishment/ending, visibility/history/access policy | Legacy regressions preserved; own-data/public boundary/ACTIVE relationship/org/artifact isolation and revocation proof |
+| **V3-I2 — Booking & Consultation** | I1; finite availability, booking/cancel/reschedule/schedule, general consultation/encounter linkage, actual treating provenance, problems/diagnoses/minimal allergy review, private notes/released summary, follow-up intent | Journey A's access/booking/consultation/summary/follow-up portion without a pre-existing CarePlan; booking contention/history/privacy/IDOR evidence. Full A additionally requires I3 prescription/test-order sources |
+| **V3-I3 — Prescription, Diagnostics & Pharmacy** | I1–I2 signed source/clinical authority; curated medication catalog, prescription/items/validity/cancel/replace, full-item dispensing, lab order/result/finalization/release, correction/privacy | Complete A's prescription/test-order portion plus journeys B/C, valid entitlement/routing, cross-provider denial, suspension, correction/history/concurrency proof. Laboratory required; imaging optional Tier 2 |
+| **V3-I4 — Longitudinal Continuity Integration** | I2–I3 + retained M2; authorized source-linked timeline, in-app important updates/bounded reminders, follow-up booking, BP/CarePlan/CareAction connections and separately versioned integrated fixture | Journey D and combined A–D backend proof; one booking authority, source/audit distinction, private payload/reference/count/notification masking |
+| **V3-I5 — Bounded EACCE & Research Input Contracts** | I4 plus explicit action-linked scheduling, qualifying completion/coverage, observed-input/concept feasibility and correction/stale/override contracts | Six classifications, immutable explainable assessments/reviews; shared deterministic engine and frozen B0/B1/P1 observed-input boundary; no recurrence/new disease |
+| **V3-I6 — Product UI** | Stable relevant implemented domain/contracts **and separate explicit design-unfreeze approval**; ordinary journey depends on I1–I4, EACCE-facing behavior additionally I5 | Later approved five-workspace user journeys and accessibility/authorization evidence; no design authorized now |
+| **V3-I7 — Research Pipeline & Evaluation** | I5 engine/input boundary; approved product integration for Evaluation Lab presentation; pinned FHIR/Synthea/concept sets, controlled corruption, isolated truth, worker/metrics | Real reproducible B0/B1/P1 manifests/counts/metrics, observable/silent missingness, no fabricated results |
+| **V3-I8 — Final Evaluation & Hardening** | Product/research evidence; freeze before untouched final holdout, final security/history/recovery/demo/thesis checks | Accurate implemented/evaluated claims, reproducible holdout results, golden demo and no known P0/P1 defects |
 
-Exit gate: a synthetic patient can receive an active hypertension plan with traceable actions and evidence. **COMPLETE / PASS** at `4a717c4c6be5b1fa9d089823bb093eca43813853`, with successful [exact-main CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) and [M2 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518). Final documentation/status closeout follows the gates recorded below; Issue #28 stays OPEN. FR-024 and AC-004/AC-005 remain later work.
+The order is dependency-safe with these qualifications: lab and pharmacy fulfillment depend on their respective signed sources, not artificially on each other. Research-input/concept-set feasibility needed by I5 must happen before I5, not wait for I7. Final experiment results are not a prerequisite for ordinary product UI; domain readiness and explicit design approval are. Security, history, testing, hardening and documentation occur throughout; I8 is the final pass.
 
-## Milestone M3 — EACCE Core
+## Superseded/resequenced unstarted planning history
 
-**NOT STARTED.** Next progression: M2 COMPLETE → M3 EACCE pre-implementation / contract work. The plan below is future scope, not implementation authorization.
+These historical IDs are preserved, not reused or renamed. Their former scope does not authorize execution.
 
-1. Freeze typed engine input/output contracts.
-2. Implement NOT_DUE, COMPLETED, SCHEDULED, EXEMPT, UNCERTAIN, TRUE_GAP decision logic.
-3. Implement reason codes/evidence trace.
-4. Implement immutable closure-assessment persistence and stale/superseded behavior.
-5. Implement clinician confirm/override workflow and audit.
-6. Complete golden-case, edge-case, determinism, and explanation-consistency tests.
+| Old milestone | Historical status | V3 cross-reference |
+|---|---|---|
+| M3 — EACCE Core | NOT STARTED; superseded/resequenced | V3-I5; integrated journey foundations now precede EACCE |
+| M4 — Clinician & Patient Product UI | NOT STARTED; superseded/resequenced | V3-I6; five future workspaces, separate design gate |
+| M5 — FHIR/Synthea Research Pipeline | NOT STARTED; superseded/resequenced | Input feasibility before I5; full pipeline at I7 |
+| M6 — Evaluation Lab | NOT STARTED; superseded/resequenced | I7 and approved product integration |
+| M7 — Final Experiment & Hardening | NOT STARTED; superseded/resequenced | I8; hardening also continuous |
 
-Exit gate: all EACCE golden cases pass and new evidence can change current assessment without erasing history.
+The [pre-V3 roadmap at the reconciliation baseline](https://github.com/abuhmaid28/egyhealth360/blob/ea777ce71c3639a37ec015739a12f0fadc0b4dcc/docs/IMPLEMENTATION_ROADMAP.md) preserves the former plan verbatim. The old M2 → M3 → UI progression is no longer the active sequence.
 
-## Milestone M4 — Clinician & Patient Product UI
-1. Implement design tokens/components.
-2. Clinician dashboard and patient list.
-3. Patient workspace/overview.
-4. Care Action Detail with explanation/evidence/review.
-5. Patient Home/My Plan/BP measurement flow.
-6. Schedule and core loading/empty/error/stale states.
-7. Responsive and accessibility QA for critical screens.
+## Delivery and readiness rules
 
-Exit gate: clinician and patient golden journeys pass end-to-end.
+Re-estimate V3 using actual academic deadline/capacity and explicit contingency ([D33 planning](PROJECT_PLAN_6_MONTHS.md)); no prior date/weight/buffer percentage is carried forward as a commitment. Prefer complete thin journeys over enterprise depth; raise a concrete owner scope/schedule tradeoff if Tier 1 plus bounded research is infeasible.
 
-## Milestone M5 — FHIR/Synthea Research Pipeline
-1. Pin Synthea version/config and import fixtures.
-2. Implement FHIR R4 adapter for required resource types only.
-3. Generate complete synthetic care-action cases and ground truth.
-4. Implement corruption engine with deterministic seeds.
-5. Implement naive baseline and research input isolation.
-6. Add research-integrity tests.
-
-Exit gate: a small reproducible benchmark can run baseline and EACCE on identical observed inputs with hidden ground truth.
-
-## Milestone M6 — Evaluation Lab
-1. Implement experiment-run persistence/state machine.
-2. Implement PostgreSQL-backed TypeScript worker.
-3. Implement metrics: false-gap rate, precision, recall, F1, decision coverage, abstention.
-4. Implement Evaluation Lab configuration/results screens.
-5. Add experiment smoke E2E.
-
-Exit gate: admin can run a small experiment and view real results/metadata.
-
-## Milestone M7 — Final Experiment & Hardening
-1. Freeze EACCE V1, rule set, metrics, and holdout config.
-2. Run missingness/corruption/seed matrix and ablations.
-3. Produce final reproducible results and limitations.
-4. Security regression pass and dependency review.
-5. Golden demo seed + `demo:verify` command.
-6. Local Docker demo rehearsal and backup/reset procedure.
-
-Exit gate: P0/P1 defects = 0, golden demo passes, final research results are reproducible, and no fake metrics/claims remain.
-
-## Dependency graph
-
-```text
-EH-002 docs sync
-   ↓
-EH-003 bootstrap
-   ↓
-Identity/data foundation
-   ↓
-Auth + authorization ───────────────┐
-   ↓                               │
-Clinical planning/evidence          │
-   ↓                               │
-EACCE core                          │
-   ↓                               │
-Product UI golden journey           │
-   │                               │
-   └──── FHIR/Synthea pipeline ─────┘
-                 ↓
-          Evaluation Lab
-                 ↓
-       Final experiments/hardening
-```
-
-## Task rules
-
-- One reviewable issue/PR per coherent unit.
-- High-risk tasks (auth, authorization, EACCE, clinical rules, migrations, research integrity) require independent second-pass review.
-- No future milestone feature is pulled forward without an explicit dependency need.
-- Tests/acceptance criteria are part of each implementation issue, not a later QA phase.
-
-
-## Issue #31 implementation status
-
-BP correction/invalidation prerequisite is merged in PR #32; Issue #31 is CLOSED/completed at the approved baseline. [Contract](BP_CORRECTION_INVALIDATION_CONTRACT.md); [validation](BP_CORRECTION_INVALIDATION_VALIDATION.md). EH-014 R1–R8 and the bounded INITIAL implementation are approved by Issue #28 comment 6317196946. EH-014 has since merged and passed exact-main post-merge CI and the functional M2 exit review, as recorded below. No additional EH number assigned.
-
-
-## EH-014 merged verification and M2 closeout
-
-[PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**.
-
-The merged INITIAL slice proves an active version-pinned hypertension CarePlan, explicit observed applicability and clinician-selected BP, immutable decision snapshot and source/rule/evidence traceability, one durable INITIAL CareAction, deterministic trigger/+3/+6 calendar schedule, exact retry, concurrency protection, correction/privacy-aware history and atomic audit. [Contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md); [post-merge validation](EH-014_VALIDATION.md#post-merge-validation).
-
-FR-021 — satisfied for the approved Core V1 bounded INITIAL generation scope. FR-024 remains foundation-only / incomplete pending the final SCHEDULED evidence contract. AC-004 (`SCHEDULED`) and AC-005 (`COMPLETED`) remain unsatisfied. M2 completion does not imply completion of all Core V1 acceptance criteria or EACCE.
-
-M2 is COMPLETE for its functional exit criterion. Final repository milestone closeout awaits independent review and merge of this documentation-only PR, exact-main post-merge validation/status verification, and a final M2 completion comment. Issue #28 remains OPEN until those steps finish. Next: M3 EACCE pre-implementation / contract work; M3 has NOT started. No recurrence, EACCE, scheduling/completion classification or design work is added.
+Each future coherent unit needs a ready issue, approved contracts, appropriate acceptance/security/history/concurrency tests and reviewable PR. High-risk auth/clinical/research/migration work needs independent second-pass review. No future feature is pulled forward merely because it is listed here. No V3-I1 issue, implementation or design begins in this reconciliation.

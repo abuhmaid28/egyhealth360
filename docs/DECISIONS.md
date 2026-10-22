@@ -1,20 +1,50 @@
-# EgyHealth 360 — Decision Register V2
+# EgyHealth 360 — Decision Register V3
 
 AI agents must not silently reverse accepted decisions.
 
-## Superseded decisions
+## Historical 2026 reboot supersessions
 
-The original five-role continuity-of-care scope, separate FastAPI/Python prediction service, diabetes-risk model, pharmacy/lab portals, and generic care-gap design are superseded by the 2026 reboot.
+At the 2026 reboot, the original five-role continuity-of-care scope, separate FastAPI/Python prediction service, diabetes-risk model, pharmacy/lab portals and generic care-gap design were superseded. ADR-031 now approves a bounded integrated journey and lab/pharmacy workspaces; it does not restore ML/FastAPI, the diabetes-risk model or enterprise/production scope.
 
-## Current accepted decisions
+## Current applicability and explicit supersession
+
+Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 reconciliation is IN PROGRESS until this PR merges; independent review/post-merge verification remain required. V3-I1/EACCE NOT STARTED; DESIGN FROZEN.
+
+| Existing decision / planning area | Current applicability | Relationship to ADR-031 |
+|---|---|---|
+| ADR-001 chronic-care-first product center | Historical accepted scope; superseded as current positioning | Superseded by ADR-031/D01; integrated journey precedes continuity/research |
+| ADR-002 three-experience wording | Single frontend retained; future workspace list amended | Amended by ADR-031/D04 for five future workspaces |
+| ADR-019 three-role first persistence slice | Accepted implementation unchanged | Future bounded staff/membership and patient entry approved by ADR-031/D05/06, not implemented; no profile/role invariant bypass |
+| ADR-021 relationship-aware authorization | Accepted current enforcement unchanged | Future genuine relationship establishment/ending and separate artifact authority added by ADR-031/D10/11/36; no booking-based clinical exception |
+| ADR-022 fixed M1 seed | Retained unchanged | Integrated fixture separately versioned under D02/06 |
+| ADR-026 EH-012 narrow scheduling/encounter scope | Accepted historical contract unchanged | General booking/consultation and follow-up intent later extend under D12/24; no retroactive patient mutation or new legacy statuses |
+| ADR-023–030 clinical/evidence/generation decisions | Accepted invariants and history retained | D15/26 preserve exact pins/immutability/privacy/INITIAL scope; no automatic diagnosis/result/dispense bridges |
+| Product V2 lab/pharmacy/booking and broad diagnosis/prescription exclusions | Superseded current scope statements | D01–36 permit bounded human-authored integrated journey; diagnostic AI/autonomous treatment/enterprise exclusions retained |
+| Old unstarted M3–M7 plan | Superseded/resequenced, IDs/history retained | Roadmap V3 under D32; EACCE moves to I5, design separate |
+
+The original ADR bodies below describe their accepted scope at the time; slice deferrals/old closeout status are historical. Current status is [PROJECT](PROJECT.md): M0–M2 COMPLETE; Issue #28 CLOSED/completed. No historical contract or validation report is rewritten to pretend it originally targeted V3.
+
+### ADR-031 — Approved Product V3 integrated journey and bounded authorization
+
+Status: Accepted at product-policy level; documentation adoption subject to this reconciliation's independent review/merge/post-merge verification. No implementation authorization.
+
+Decision: adopt the [approved D01–D36 package](PRODUCT_V3_DECISIONS.md) and [Product V3](PRODUCT.md): integrated access/booking/consultation/prescribing/lab/dispensing/follow-up as Layer A, longitudinal continuity Layer B, bounded HTN EACCE Layer C. One current-stack application targets Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin. Preserve M0–M2 invariants/evidence and the fixed M1 seed. Ordinary care requires no CarePlan/EACCE. Human clinical documentation is permitted; diagnostic AI/autonomous treatment is prohibited.
+
+Owner selections: D06-A patient-only bounded self-registration with managed privileged staff; D11-A explicit patient authorization + clinician acceptance, continuing until either ends, current checks/no permanent author rights; D18-A full-item dispensing with no partial/refill/substitution; D23-B laboratory MUST, imaging optional SHOULD.
+
+D36: current active user/org/membership/valid routed artifact authority governs lab/pharmacy; completed access only bounded source correction/audit, suspension blocks subsequent reads/writes, preserve history, doctor ending never silently cancels valid routed work, independent patient/current-doctor authority, cancellation prevents future fulfillment not prior history, ADMIN no clinical rights, no break-glass/forensic/author entitlement. See [SECURITY](SECURITY.md) for the consistent policy transcription.
+
+Consequences: version new V3 requirements and retain V2 evidence, separate implemented schema/API inventory from approved future concepts, adopt V3-G0/I1–I8 without renaming M0–M2, re-estimate actual capacity/deadline before commitments, keep design frozen until separate approval. Milestone-specific contracts/verification and explicit implementation authorization remain future work. No new database field/status, endpoint, technical permission engine or visual design is decided here.
+
+## Historical accepted ADRs and retained implementation decisions
 
 ### ADR-001 — Focused chronic-care coordination
-Status: Accepted
+Status: Superseded as current product positioning by ADR-031; historically Accepted
 
 Core V1 focuses on evidence-aware care-action closure, initially hypertension follow-up actions, rather than a generic healthcare super-app.
 
 ### ADR-002 — One Next.js frontend
-Status: Accepted
+Status: Accepted; workspace wording amended by ADR-031, single-application decision retained
 
 One responsive web application serves Patient, Clinician, and Admin experiences.
 

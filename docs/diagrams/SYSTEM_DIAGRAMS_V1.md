@@ -1,5 +1,7 @@
 # EgyHealth 360 — Formal System Diagrams V1
 
+> **V3 applicability:** Historical V1 diagram set; not the current V3 actor/module inventory or proof of implementation. Product V3 approves five future workspaces while retaining the single-application/modular-monolith stack. Existing diagrams are retained unchanged, including old exclusions/lifecycles; current domain/status/roadmap documents and accepted contracts govern. No visual product design or new diagram is introduced. See [approved policy/lineage](../PRODUCT_V3_DECISIONS.md).
+
 These diagrams are architecture/documentation source-of-truth aids. They describe approved boundaries; they are not generated screenshots and do not override detailed requirements or ADRs.
 
 ## 1. System context

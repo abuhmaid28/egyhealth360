@@ -1,53 +1,31 @@
-# Research Methodology V1
+# Research Methodology V1 — Retained HTN Study within Product V3
 
-## Research question
-Can an evidence-aware care-action closure method reduce false care-gap classifications compared with a simple overdue-and-absence rule when longitudinal health records are incomplete?
+## Product context and implementation status
 
-## Dataset
-- Synthetic longitudinal data from pinned Synthea v4.0.0
-- FHIR R4 import through the project adapter
-- Development benchmark and locked final holdout
-- Unit of evaluation: care-action case
+The approved [Product V3](PRODUCT.md) centers the integrated healthcare journey (Layer A), connects longitudinal continuity (Layer B), and retains bounded evidence-aware HTN research as Layer C. EACCE is a differentiator within the platform. Ordinary booking/consultation/fulfillment does not require a CarePlan or assessment. M0–M2 COMPLETE; EACCE implementation/experiments NOT STARTED. Engine/FHIR/worker scaffolds are not executed research.
 
-## Ground truth
-Ground truth is derived from the complete synthetic record before corruption. `UNCERTAIN` is not a ground-truth class; it is an abstention when observed evidence is insufficient.
+## Retained question and authoritative protocol
 
-## Baseline
-If an action is overdue and no visible qualifying completion exists, classify it as TRUE_GAP; otherwise NOT_TRUE_GAP.
+Can evidence-aware care-action closure reduce false confirmed HTN follow-up gaps under incomplete longitudinal records relative to coverage-blind detection? Keep CR-HTN-FU-001 controlled uncomplicated hypertension follow-up, authoritative source/version traceability and the existing binary overdue primary study.
 
-## Proposed method
-EACCE reasons over applicability, due state, valid completion evidence, future scheduling, exemption evidence, and relevant record-coverage sufficiency.
+The unchanged [formal protocol](research/EXPERIMENT_PROTOCOL_V1.md), [metric specification](research/METRICS_SPEC_V1.md), [clinical source audit](research/CLINICAL_RULE_SOURCE_AUDIT.md) and [rule catalog](research/CLINICAL_RULE_CATALOG_V1.md) govern exact definitions, source interpretation, seeds, concept freeze, splits, holdout, metrics and corruption. This summary does not amend them or add a broader disease/recurrence study. Human-entered general product diagnoses/prescriptions are not diagnostic/treatment AI or automatically new research predicates.
 
-## Corruption families
-- random event loss
-- time-window loss
-- source loss
-- targeted completion-event loss
-- silent missingness scenarios for limitation testing
+## Compared methods and inputs
 
-Candidate missingness levels: 0%, 10%, 20%, 30%, 40%, 50%.
+- **B0:** naive overdue/no visible qualifying completion detector; coverage-blind.
+- **B1:** normalized coverage-blind comparator, using P1's normalized matching representation without coverage-aware abstention.
+- **P1:** full EACCE with relevant record coverage; no completion under insufficient coverage may yield UNCERTAIN rather than a confirmed gap.
 
-## Primary evaluation
-Primary task: confirmed TRUE_GAP detection.
+Each receives the identical corrupted observed case. Complete-record ground truth remains isolated, derived before corruption and never serialized into product/engine observed inputs. Missing/unasserted data is not backfilled from truth. UNCERTAIN is abstention, not a ground-truth class.
 
-Primary metric: False-Gap Rate.
+## Evaluation and claims
 
-Secondary metrics: TRUE_GAP precision/recall/F1, macro-F1 where appropriate, decision coverage, abstention rate, per-state performance.
+Retain pinned Synthea v4.0.0 / release commit 0185c09 / FHIR R4, one index care-action case per patient, fixed overdue evaluation time and eligibility requirements defined in the protocol. Research-input/concept-set feasibility is required before I5 semantics freeze; full pipeline/evaluation remains I7. Product provider organizations/diagnoses/results do not automatically assert clinical applicability or complete coverage.
 
-## Experiment matrix
-Primary benchmark candidate: 4 corruption patterns × 6 missingness levels × 5 seeds = 120 configurations, with Baseline and EACCE evaluated on identical observed cases.
+The protocol declares random relevant-event loss, contiguous time-window occlusion, BP observation-channel loss and targeted completion loss; six missingness levels and five predeclared seeds yield 120 observable plus 120 silent configurations, each compared with B0/B1/P1. No new experiment parameters are introduced here.
 
-## Ablations
-- full EACCE
-- without coverage awareness
-- without future scheduling
-- without exception evidence
+Report primary false-gap rate with true-gap recall, decision coverage/abstention, raw counts and paired B0/B1/P1 comparisons. Preserve bootstrap confidence intervals, predeclared paired tests, stratification, development/untouched holdout separation and failed runs/manifests. Silent missingness is a required robustness limitation, not an optional appendix. A lower false-gap rate from nearly universal abstention is not sufficient improvement evidence.
 
-## Statistical reporting
-Use paired comparisons, bootstrap 95% confidence intervals for metric differences, and McNemar's test for paired binary errors where applicable. Report results across independent seeds rather than a single favorable run.
+All six product classifications remain required later product/golden cases: NOT_DUE, COMPLETED, SCHEDULED, TRUE_GAP, EXEMPT, UNCERTAIN. The primary study remains binary overdue gap versus qualifying completion; do not fabricate a balanced six-class dataset. Assessments/explanations are immutable, new evidence produces/requires re-evaluation, and clinician overrides preserve raw engine output/history. These are future I5 obligations, not implemented features.
 
-## Reproducibility
-Every run records dataset/Synthea version, seeds, case counts, clinical rule-set version, engine version, corruption configuration, and evaluation-time policy.
-
-## Boundaries
-No real patient data, no clinical-validation claim, no claim of generalization beyond the tested hypertension care-action domain, and no ML in Core V1.
+No real patient data, clinical effectiveness/generalization claim, diagnostic AI, autonomous treatment/dose recommendation, broad condition engine or recurrence is added. Laboratory/pharmacy extend the product journey, not the primary HTN benchmark. See [Roadmap V3](IMPLEMENTATION_ROADMAP.md), [requirements](REQUIREMENTS.md) and [thesis structure](THESIS_STRUCTURE_V1.md).

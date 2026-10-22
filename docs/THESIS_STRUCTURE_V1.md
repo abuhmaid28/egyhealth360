@@ -1,12 +1,17 @@
 # EgyHealth 360 — Graduation Thesis / Report Structure V1
 
+## Current product and evidence boundary
+
+Product V3 policy APPROVED; [integrated journey → continuity → bounded HTN research](PRODUCT.md) is current direction. M0–M2 COMPLETE; V3-I1/EACCE/UI NOT STARTED and DESIGN FROZEN. This structure's V1 filename is retained for stable references. Separate implemented foundations, approved future scope and real evaluated results throughout. [D01–D36 and approval lineage](PRODUCT_V3_DECISIONS.md) / [versioned requirements](REQUIREMENTS.md) / [Roadmap V3](IMPLEMENTATION_ROADMAP.md) supersede narrow product and old M3-next planning claims.
+
 ## Goal
 Start the academic report now and evolve it with the implementation instead of writing it at the end.
 
 ## Proposed structure
 
 ### Chapter 1 — Introduction
-- healthcare continuity problem
+- healthcare access through booking, consultation, lab/pharmacy fulfillment and follow-up
+- healthcare continuity and incomplete longitudinal evidence problem
 - longitudinal-record incompleteness problem
 - motivation
 - project scope
@@ -36,6 +41,9 @@ Deliverables already started:
 
 ### Chapter 3 — Problem Definition and Requirements
 - final problem statement
+- five workspaces: Patient, Doctor, Laboratory/Diagnostics, Pharmacy, Admin
+- approved tiers: lab MUST, imaging SHOULD, full-item dispensing and bounded signup
+- explicit relationship, artifact-scoped staff authority and D36
 - actors and scope
 - functional requirements
 - business rules
@@ -63,10 +71,10 @@ Sources:
 - research-integrity controls
 
 Sources:
-- `CLINICAL_RULE_SOURCE_AUDIT.md`
-- `CLINICAL_RULE_CATALOG_V1.md`
-- `EXPERIMENT_PROTOCOL_V1.md`
-- `METRICS_SPEC_V1.md`
+- `research/CLINICAL_RULE_SOURCE_AUDIT.md`
+- `research/CLINICAL_RULE_CATALOG_V1.md`
+- `research/EXPERIMENT_PROTOCOL_V1.md`
+- `research/METRICS_SPEC_V1.md`
 
 ### Chapter 5 — System Analysis and Design
 - system context
@@ -76,7 +84,7 @@ Sources:
 - data model
 - EACCE contract
 - security model
-- UX architecture/design system
+- conceptual journeys only while design is frozen; future visual work requires separate explicit approval
 - state machines
 - sequence diagrams
 - deployment model
@@ -87,7 +95,7 @@ Sources:
 - `DATA_MODEL.md`
 - `SECURITY.md`
 - `UX.md`
-- `DESIGN_SYSTEM.md`
+- `DESIGN_SYSTEM.md` — historical frozen reference, not current visual authority
 - `diagrams/SYSTEM_DIAGRAMS_V1.md`
 
 ### Chapter 6 — Implementation
@@ -96,9 +104,10 @@ Write progressively as milestones merge.
 Suggested sections:
 - monorepo/tooling
 - identity/session/authorization
-- clinical planning/evidence
-- closure engine
-- clinician/patient frontend
+- accepted M2 clinical planning/evidence/INITIAL generation and preserved historical contracts
+- future integrated registration/provider/relationship, booking/consultation and prescription/lab/full-item pharmacy workflows only as independently merged/proven
+- future longitudinal integration and bounded closure engine only as delivered
+- future five-workspace frontend only after explicit design approval and implementation
 - FHIR adapter
 - experiment worker
 - evaluation lab
@@ -145,7 +154,7 @@ No placeholder metrics.
 ### Chapter 10 — Security, Safety, Ethics and Limitations
 - synthetic-only data policy
 - no real-patient validation
-- no diagnosis/treatment scope
+- human clinician-recorded diagnoses/prescriptions permitted; no diagnostic AI/autonomous treatment/dose recommendation
 - access control
 - clinical-rule sourcing
 - ground-truth isolation
@@ -176,7 +185,7 @@ Potential, not promised:
 - experiment configs
 - API/OpenAPI excerpts
 - selected test matrix
-- screenshots of final critical flows
+- screenshots only of later approved and actually implemented final flows; no visual work authorized now
 - reproducibility instructions
 
 ## Writing policy

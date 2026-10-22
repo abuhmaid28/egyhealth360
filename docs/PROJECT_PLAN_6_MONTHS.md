@@ -1,311 +1,50 @@
-# EgyHealth 360 — Six-Month Execution Plan V1
+# EgyHealth 360 — V3 Capacity and Delivery Planning
 
-## Planning assumption
-Approximate project window: 6 months starting 12 Oct 2026. Calendar dates are planning aids, not academic deadlines; supervisor/course deadlines override them if formally provided.
+## Status and supersession — D33
 
-## Execution model
-- AI agents perform implementation, technical research synthesis, testing, documentation drafting, and second-pass review.
-- Student team coordinates, approves scope decisions, understands deliverables, presents, and submits.
-- No default dependency on field interviews, doctor visits, surveys, or real-patient data.
-- Work proceeds through GitHub Issues -> issue branch -> PR -> automated checks -> independent review for high-risk areas -> merge.
+Product V3 policy is APPROVED; M0–M2 COMPLETE; V3-G0 documentation reconciliation IN PROGRESS until this PR merges. V3-I1/EACCE/UI NOT STARTED, DESIGN FROZEN. The filename retains the previous planning reference; it does **not** assert a verified six-month V3 delivery commitment.
 
-## Cadence
-Two-week sprints with a lightweight checkpoint at the end of each sprint.
+The [pre-V3 six-month plan](https://github.com/abuhmaid28/egyhealth360/blob/ea777ce71c3639a37ec015739a12f0fadc0b4dcc/docs/PROJECT_PLAN_6_MONTHS.md) is preserved as historical planning. Its assumed 12 October 2026 start, month/sprint allocations, milestone weights and fixed buffer assumptions are **superseded as active scheduling assumptions**. They are not an approved V3 estimate, academic deadline or percentage-complete measure. Do not infer V3 velocity from the speed of M0–M2.
 
-Recommended checkpoint questions:
-1. What merged?
-2. Which acceptance criteria/tests prove it?
-3. What changed in the thesis/report?
-4. What is blocked?
-5. Did scope grow without approval?
-6. Can the current demo still run?
+## Inputs needed before a delivery commitment
 
----
+1. Actual supervisor/course submission and demonstration deadlines, including any mandated interim artifacts.
+2. Available agent execution/review capacity and student coordination/understanding/presentation time.
+3. Remaining approved Tier 1 vertical slices and bounded research deliverable, with implementation contracts, tests, independent reviews, integration and documentation effort.
+4. Research concept/input feasibility, dataset eligibility yield, reproducibility/holdout execution and demo environment constraints.
+5. Explicit contingency for security/history/concurrency defects, review iterations, CI/runtime failures and final thesis/demo rehearsal; size it using these inputs rather than copying a fixed percentage.
 
-# Month 1 — Deep foundation + executable bootstrap
-Approx. 12 Oct–11 Nov 2026
+These inputs are not verified by policy approval. Missing schedule data does not reopen the approved choices or authorize implementation. A later planning action must record estimates/assumptions and uncertainty before promising dates.
 
-## Goals
-- finish EH-004 Deep Planning Audit;
-- merge documentation/research deepening;
-- unpause EH-003 only after gate review;
-- bootstrap monorepo/tooling/CI/Docker;
-- establish executable skeleton without business-feature expansion.
+## Dependency plan and scope control
 
-## Sprint 1
-- literature/related work
-- competitor evidence
-- clinical-rule source audit
-- formal research protocol/metrics
-- diagrams/traceability/UX validation
-- thesis structure
-- six-month plan/risk register
+Use [Roadmap V3](IMPLEMENTATION_ROADMAP.md): G0 reconciliation → I1 access/domain → I2 booking/consultation → I3 prescriptions/lab/pharmacy → I4 longitudinal integration → I5 bounded EACCE → I6 separately approved product UI → I7 research pipeline/evaluation → I8 final evaluation/hardening. Preserve M0–M2 IDs and old M3–M7 as superseded/resequenced planning history.
 
-## Sprint 2
-- EH-003 Bootstrap V2
-- independent review of architecture/tooling
-- local developer/demo startup verification
-- update thesis Chapter 5 implementation baseline
+This is a dependency spine, not all-to-all serial waiting: prepare I5 research-input feasibility early; lab/pharmacy need their own signed sources; ordinary UI needs relevant I1–I4 plus separate design approval, not final research results. Security, clinical-history integrity, verification and documentation occur throughout.
 
-## Exit gate
-- repository source of truth consistent;
-- bootstrap CI green;
-- all planned apps/packages start/build;
-- no FastAPI/Python/old-scope reintroduction;
-- thesis skeleton exists.
+Prioritize complete thin journeys A–D over enterprise depth. Curated catalogs, finite availability, simple clinic/provider representation, full-item dispensing and laboratory fulfillment are frozen scope choices. Counts/slot length/horizon are fixture/configuration choices, not architectural limits. Imaging, extra measurement types, richer reminders/catalog/admin and fixture breadth are SHOULD, removed first if necessary.
 
----
+If actual capacity cannot cover Tier 1 **and retained bounded academic research**, raise that concrete owner scope/schedule tradeoff. Do not silently drop lab/pharmacy, replace backend behavior with a visual simulation, promote excluded partial/refill/substitution behavior, or report policy PASS as implementation completion.
 
-# Month 2 — Identity, authorization, and data foundation
-Approx. 12 Nov–11 Dec 2026
+## Execution and reporting cadence
 
-## Goals
-- executable Prisma domain foundation;
-- server-side sessions;
-- role + relationship authorization;
-- audit foundation;
-- deterministic synthetic/demo identity seed.
+Use issue → ready contracts/acceptance → branch → checks → independent review where risk requires → PR/merge → exact-main verification. No EH number or implementation issue is allocated by this reconciliation. AI agents execute technical work; students own product decisions, supervisor communication, understanding/presentation and submissions. No default fieldwork/interview/survey/real-patient dependency.
 
-## Expected issue groups
-1. users/profiles/clinician-patient assignments
-2. migration/constraints foundation
-3. login/logout/session lifecycle
-4. CSRF/session security
-5. RBAC + relationship authorization
-6. IDOR test matrix
-7. audit primitives
+At each lightweight checkpoint record merged evidence, requirement/acceptance status, current risks, thesis changes, next prerequisites and whether scope/claims changed. Progress is milestone exit evidence, not file/line counts or old weighted percentages. Report queued/in-progress CI honestly.
 
-## Independent review mandatory
-- authentication
-- authorization
-- migrations/security
+## V3 risks and planning controls
 
-## Exit gate
-- Patient/Clinician/Admin can authenticate;
-- patient isolation proven by tests;
-- unassigned clinician access denied;
-- admin overreach tested;
-- clean migration/seed workflow works.
+| Risk | Control / escalation |
+|---|---|
+| Integrated breadth crowds out research or finish | Thin vertical slices and explicit re-estimate; cut SHOULD first; owner decision for genuine Tier 1 tradeoff |
+| Clinical/provider authorization leakage | Deny-by-default ownership/current relationship/routed artifact policies, D36 suspension and independent review |
+| History/privacy loss | Source versions/addenda/retractions; independent wrong-patient masking across timeline/counts/notifications; preserve migrations/contracts |
+| Race/retry inconsistency | Later reviewed reservation/dispense/replacement contracts and contention proof, no invented legacy behavior |
+| Unsupported clinical inference | Human authoring/source-traceable rules; no adherence, coverage, eligibility or action-completion inference |
+| Synthea/input mismatch or hidden truth leakage | Concept feasibility before I5, pinned protocol/observed types, isolation tests and versioned manifests |
+| Apparent benefit only from abstention / silent missingness | Report false-gap rate with recall/coverage and required silent robustness analysis |
+| Holdout contamination / fabricated claims | Freeze before untouched holdout, retain failed runs and actual raw counts; new version if tuned |
+| Design starts early / integration rework | Separate design-unfreeze approval; stable domain first; historical design files are not active instructions |
+| Demo environment/thesis pressure | Local self-hosted rehearsal/recovery with preserved history, regular evidence-backed chapter updates and viva preparation |
 
----
-
-# Month 3 — Clinical planning, evidence, and EACCE core
-Approx. 12 Dec 2026–11 Jan 2027
-
-## Goals
-- guideline/rule versioning;
-- care plans/actions;
-- BP evidence/provenance;
-- follow-up/encounter/coverage windows;
-- pure TypeScript EACCE V1;
-- immutable assessments and clinician review.
-
-## Sequence
-1. guideline source + rule-definition persistence
-2. care-plan lifecycle
-3. deterministic/idempotent care-action generation
-4. BP measurement + provenance
-5. follow-up + encounter evidence
-6. RecordCoverageWindow
-7. freeze engine input/output contract
-8. implement six closure states
-9. explanation reason codes
-10. immutable assessment persistence/re-evaluation
-11. clinician confirm/override
-12. golden/edge/determinism tests
-
-## Exit gate
-- all golden closure cases pass;
-- TRUE_GAP vs UNCERTAIN behavior proven;
-- new evidence creates new assessment without overwriting history;
-- independent EACCE review complete.
-
----
-
-# Month 4 — Product UI + FHIR/Synthea pipeline
-Approx. 12 Jan–11 Feb 2027
-
-## Parallel streams
-### Product stream
-- design tokens/components
-- clinician dashboard/patient list
-- patient overview
-- Care Action Detail
-- Patient Home/My Plan
-- BP form
-- schedule
-- all critical loading/empty/error/stale/permission states
-- responsive/RTL/accessibility pass
-
-### Research-data stream
-- Synthea v4.0.0 pinned generation
-- FHIR R4 adapter
-- eligibility/code-set freeze
-- complete-record index-case builder
-- ground-truth builder
-- corruption engine
-- B0/B1 comparators
-- research-integrity tests
-
-## Exit gate
-- clinician golden journey E2E;
-- patient golden journey E2E;
-- small reproducible benchmark executes B0/B1/P1 on identical observed inputs;
-- no ground-truth leakage.
-
----
-
-# Month 5 — Evaluation Lab + development experiments
-Approx. 12 Feb–11 Mar 2027
-
-## Goals
-- experiment persistence/state machine;
-- PostgreSQL-backed TypeScript worker;
-- metric implementation + independent unit tests;
-- Evaluation Lab UI;
-- Experiment Results UI;
-- run development benchmark across corruption matrix;
-- fix implementation defects without inspecting/tuning on final holdout.
-
-## Required checks
-- metric formula fixtures
-- deterministic corruption
-- failed-run persistence
-- observable/silent missingness behavior
-- real metrics only in UI
-- paired input equality B0/B1/P1
-
-## Exit gate
-- 1,000-case development benchmark reproducible;
-- charts/results generated from real runs;
-- protocol implementation matches docs;
-- engine/rules/metrics ready for freeze candidate.
-
----
-
-# Month 6 — Final holdout, hardening, thesis, and demo
-Approx. 12 Mar–11 Apr 2027
-
-## Week 1 — Freeze
-Freeze/tag:
-- clinical rule
-- engine
-- comparators
-- FHIR normalization
-- eligibility concepts
-- corruption engine
-- metrics
-- final Synthea config/seed
-
-## Week 2 — Final experiments
-- generate locked holdout
-- run observable matrix
-- run silent-missingness robustness matrix
-- store raw counts/manifests
-- compute CI/statistical comparisons
-- no result-driven unversioned tuning
-
-## Week 3 — Discussion + hardening
-- error analysis
-- security regression
-- dependency review
-- accessibility regression
-- P0/P1 bug closure
-- demo reset/backup procedure
-
-## Week 4 — Final delivery package
-- thesis finalization
-- screenshots/diagrams
-- presentation deck
-- supervisor-facing competitor/problem/contribution summary
-- demo script
-- likely viva questions/answers
-- local Docker demo rehearsal
-- offline backup/demo contingency
-
-## Exit gate
-- golden demo passes from clean reset;
-- P0/P1 defects = 0;
-- final experiment reproducible;
-- thesis numbers match saved experiment results;
-- presentation claims match verified evidence;
-- no placeholder/fake metrics remain.
-
----
-
-# Buffer policy
-Do not schedule 100% of available six-month time as feature work.
-
-Reserve approximately:
-- 10% for unexpected technical/toolchain problems;
-- 10% for review, bugs, supervisor feedback, and documentation correction.
-
-If schedule pressure appears, reduce optional scope before weakening testing/research integrity.
-
-## Scope cuts in priority order
-Cut first:
-1. cosmetic animations/polish
-2. optional exports
-3. non-critical admin convenience features
-4. Arabic content completeness beyond architecture/critical demo needs
-5. optional charts
-
-Do NOT cut to save time:
-- authorization tests
-- EACCE golden tests
-- research-integrity tests
-- reproducibility manifests
-- ground-truth isolation
-- critical UX error/loading states
-- thesis evidence accuracy
-
----
-
-# Risk register
-
-| Risk | Probability | Impact | Mitigation | Trigger/action |
-|---|---|---|---|---|
-| Scope explosion | High | High | fixed Core V1 + traceability | reject features without approved problem/requirement |
-| AI agent adds old scope/architecture | Medium | High | AGENTS/PROJECT/ADRs + PR review | stop PR, correct source-of-truth conflict |
-| Authorization/IDOR bug | Medium | Critical | relationship auth tests + second-pass review | block merge/release |
-| EACCE logic bug | Medium | Critical | golden/edge/determinism tests + independent review | block dependent milestones |
-| Clinical rule guessed/unsourced | Low-Med | Critical | versioned source audit | mark unresolved; do not implement guess |
-| Synthea data mismatch/code issue | Medium | Medium-High | pin tag/commit/artifact hash; inspect FHIR; adapter fixtures | version adapter/concept set |
-| Ground-truth leakage | Low-Med | Critical | separate types/storage/runtime tests | invalidate affected experiment runs |
-| EACCE lowers false gaps only by abstaining | Medium | High | always report recall + coverage | discuss trade-off; no misleading claim |
-| Silent missingness defeats EACCE | Expected limitation | Medium | explicit robustness matrix | report honestly as limitation |
-| Final holdout accidentally tuned against | Low-Med | High | freeze/tag before run | generate new versioned holdout if violated |
-| Docker/demo environment failure | Medium | High | `demo:verify`, local backup/reset | use tested offline/local fallback |
-| Thesis written too late | Medium | High | update report every sprint | chapter checkpoint each sprint |
-| Supervisor changes requirement | Medium | Medium-High | record constraint/change decision | impact analysis before execution |
-| Agent outputs code team cannot explain | Medium | High | simple architecture + documented decisions + viva prep | generate explanation/training materials per milestone |
-
----
-
-# Student-team workload policy
-The plan must not depend on team members manually writing production code, conducting field visits, or personally debugging frameworks.
-
-Human work is primarily:
-- scope/decision approval;
-- supervisor communication;
-- understanding merged architecture/method/results;
-- presentation/demo rehearsal;
-- submission logistics.
-
-AI agents and automated tooling perform the technical execution subject to repository tests/review gates.
-
-# Progress accounting
-Overall progress should be reported by milestone exit gates, not by number of files or lines of code.
-
-Recommended rough project-weight model:
-- Planning/deep research: 20%
-- M0 bootstrap: 5%
-- M1 identity/security: 10%
-- M2 clinical planning/evidence: 15%
-- M3 EACCE: 15%
-- M4 product UI: 12%
-- M5 research pipeline: 10%
-- M6 Evaluation Lab: 6%
-- M7 final experiment/hardening/report/demo: 7%
-
-Weights are tracking aids, not grading claims.
+No dates, estimates, success probabilities, delivery commitments or new implementation authorization are created here.

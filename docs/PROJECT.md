@@ -1,165 +1,62 @@
 # EgyHealth 360 — Project State
 
-## What this project is
+## Authoritative status
 
-EgyHealth 360 is a graduation-research prototype for evidence-aware chronic-care coordination. It investigates whether a deterministic, explainable closure engine can reduce false care-gap classifications when longitudinal health records are incomplete.
+| Area | Status |
+|---|---|
+| Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
+| V3-G0 documentation reconciliation | **IN PROGRESS until this PR merges**; independent review, merge and post-merge verification remain required |
+| M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
+| V3-I1 | **NOT STARTED**; not authorized by this documentation change |
+| EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
+| Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 
-Initial evaluation domain: hypertension follow-up care actions.
+Policy approval is not implementation completion or blanket implementation authorization. Product V2 remains the merged-main baseline until this reconciliation merges. The approved V3 direction below becomes repository source of truth through that merge; it does not retroactively redefine M0–M2.
 
-## Core problem statement
+## Current direction
 
-Chronic-care systems often identify care gaps by checking whether an expected action is overdue and whether a completion event is present. Longitudinal records may be incomplete or fragmented, so absence of evidence does not always mean care was not delivered. EgyHealth 360 evaluates an evidence-aware method that distinguishes genuinely unresolved actions from insufficient/uncertain evidence.
+EgyHealth 360 is an integrated digital healthcare platform that connects patient access, booking, consultation, prescriptions, diagnostics, dispensing and follow-up into one longitudinal healthcare journey, enhanced by structured care coordination and bounded explainable evidence-aware monitoring.
 
-## Roles
-- Patient
-- Clinician
-- Admin
+The integrated journey is Layer A, longitudinal continuity Layer B, bounded HTN EACCE Layer C. Approved future workspaces are Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin in one application. Ordinary care does not require a CarePlan/EACCE. See [PRODUCT](PRODUCT.md) for scope and [approved D01–D36/lineage](PRODUCT_V3_DECISIONS.md) for policy. Final owner approval is product-policy approval only.
 
-## Core product modules
-- Authentication and role-aware access
-- Clinician patient list/summary
-- Hypertension care plan and expected care actions
-- Timeline/evidence and BP measurements
-- Follow-up scheduling
-- Evidence-Aware Care Closure Engine (EACCE)
-- Clinician confirm/override workflow
-- Patient care view
-- Evaluation Lab for synthetic benchmark runs
+## Accepted implementation foundation
 
-## Closure states
-- NOT_DUE
-- COMPLETED
-- SCHEDULED
-- TRUE_GAP
-- EXEMPT
-- UNCERTAIN
+| Milestone | Accepted delivered scope and evidence |
+|---|---|
+| M0 — Repository Reboot / Bootstrap | COMPLETE: EH-002 documentation, EH-003 tooling/monorepo/Docker/CI; EH-004 deep audit. [Bootstrap validation](EH-003_VALIDATION.md) |
+| M1 — Identity, Authorization, and Core Data Foundation | COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`: EH-005 users/profiles/assignments/audit, EH-006 sessions/auth/CSRF, EH-007 own/ACTIVE-assignment authorization, EH-008 deterministic seed and runtime proof. [Final exit evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884) |
+| M2 — Clinical Planning & Evidence | COMPLETE: EH-009 definitions, EH-010 exact-pinned plans, EH-011 immutable BP, EH-012 HTN follow-up/encounters/BP links, EH-013 coverage/normalized evidence, EH-015 observed applicability, Issue #31 correction/privacy, EH-014 immutable INITIAL generation. [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33), [functional exit PASS](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518), [post-merge validation](EH-014_VALIDATION.md#post-merge-validation) |
 
-`UNCERTAIN` is a system abstention under insufficient observed evidence, not ground truth.
+Issue [#28](https://github.com/abuhmaid28/egyhealth360/issues/28) is CLOSED/completed. `ea777ce71c3639a37ec015739a12f0fadc0b4dcc` is the verified authoritative main baseline for this reconciliation, including M2 documentation closeout. [Final M2 completion record](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6330230875) and [successful exact-baseline CI 39702452808](https://github.com/abuhmaid28/egyhealth360/actions/runs/39702452808) preserve that final closeout evidence. Older closeout-pending/Open statements in immutable validation reports describe an earlier review point and do not reopen M2. These are historical results, not CI rerun for this documentation change.
 
-## Non-goals
-No hospital ERP, lab/pharmacy portals, marketplace, insurance/payments, diagnostic AI, automated treatment, medication-dose recommendation, diabetes-risk model, chatbot, OCR, telemedicine infrastructure, or real-patient clinical deployment in Core V1.
+M0–M2 were built under the narrower V2 scope. They remain valuable accepted foundations, not completed V3 booking/consultation/fulfillment. Preserve contract text, migrations, fixed M1 seed and validation/issue/PR evidence. Exact implemented models are in [DATA_MODEL](DATA_MODEL.md); actual routes are in [API](API.md) and unchanged [OpenAPI](openapi.json). Internal services are not automatically public APIs.
 
-## Execution model
-The project is AI-agent-executed. The student team coordinates, approves scope decisions, understands the system/method/results, presents, and submits.
+FR-021 is satisfied only for the bounded INITIAL scope. FR-024 is foundation-only/incomplete; AC-004 SCHEDULED and AC-005 COMPLETED remain unsatisfied. There is no recurrence or EACCE implementation. Existing CareActionDecision is immutable generation provenance, not a closure assessment.
 
-The default methodology does not depend on visiting doctors, interviewing clinicians/patients, surveys, focus groups, or collecting real patient data. Desk research, authoritative published sources, standards, and public/synthetic data are used unless the academic supervisor explicitly adds a primary-research requirement.
+## Next gates
 
-See `docs/EXECUTION_POLICY.md`.
+1. Independently review and merge this documentation-only reconciliation, then verify exact main and source-of-truth status; Issue #35 remains OPEN until verified reconciliation.
+2. Confirm actual academic deadline/capacity and re-estimate selected V3 scope under D33; old dates/weights/buffer percentages are not V3 commitments.
+3. Prepare separately authorized milestone-specific contracts/issues for **V3-I1 — Integrated Domain & Access Foundations**. No V3-I1 implementation is authorized by this PR.
+4. Follow [Roadmap V3](IMPLEMENTATION_ROADMAP.md). Old unstarted M3–M7 are superseded/resequenced; EACCE moves to I5. Final schedule/completion/coverage/observed-input feasibility contracts precede EACCE.
 
-## Current architecture
-- Next.js + TypeScript
-- NestJS modular monolith
-- PostgreSQL 18 + Prisma 7
-- shared pure-TypeScript EACCE package
-- TypeScript experiment worker
-- FHIR R4 adapter
-- Synthea synthetic data
-- Docker Compose
-- GitHub Actions
+**Design is frozen** even after V3 policy approval/this merge: no screens, wireframes, Design System, branding, UI/UX or frontend visual work until separate explicit approval after scope/domain prerequisites. Existing visual documents are historical, not ready-to-implement instructions.
 
-No FastAPI/Python runtime or ML service in Core V1.
+## Architecture and execution
 
-## Frozen V1 research direction
-Primary rule:
-`CR-HTN-FU-001 — Controlled uncomplicated hypertension follow-up`.
+Retain Next.js/TypeScript, NestJS modular monolith, PostgreSQL 18/Prisma 7, shared packages, TypeScript experiment worker/FHIR adapter scaffolds, Docker and GitHub Actions. No microservice rewrite, FastAPI/Python runtime or ML service. Current auth/own-data/ACTIVE-assignment checks remain in force; future staff/relationship policies require reviewed extensions.
 
-Primary method question:
-Can explicit record-coverage reasoning reduce false confirmed follow-up gaps when observed longitudinal evidence is incomplete?
+AI agents execute issue-scoped work; the student team owns decisions, understands/presents deliverables and coordinates submission. No default fieldwork/interview/survey/real-patient dependency. Use authoritative sources, desk research and synthetic data. See [EXECUTION_POLICY](EXECUTION_POLICY.md).
 
-Research comparison:
-- B0 naive overdue detector
-- B1 normalized coverage-blind detector
-- P1 full EACCE
+## Retained research direction
 
-Primary outcome:
-False-gap rate, reported together with true-gap recall and decision coverage/abstention.
+CR-HTN-FU-001 controlled uncomplicated HTN follow-up; B0 naive overdue, B1 normalized coverage-blind, P1 EACCE. Primary false-gap rate must be reported with true-gap recall and decision coverage/abstention. Ground truth remains isolated; missingness/uncertainty is explicit. The integrated product does not broaden the clinical rule or benchmark.
 
-## Current project stage
-**EH-004 Deep Planning Audit Pass 2** is complete and merged.
+## Required reading
 
-**EH-003 — Bootstrap Monorepo V2** implementation and validation are complete. **Milestone M0 — Repository Reboot / Bootstrap** is complete at the current baseline. EH-003 provides infrastructure/bootstrap only.
-
-**EH-005 — M1 Identity & Core Data Foundation** implements the first persistence slice: users, role-bound profiles, assignment history, and audit primitives. See ADR-019 and `EH-005_PERSISTENCE.md`. EH-006 implements authentication/session/CSRF foundations (`EH-006_AUTH.md`). EH-007 authorization is merged. M1 is COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [final exit-gate evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884). EH-009 is merged and complete (M2 step 1). EH-010 is merged and complete: version-pinned CarePlan lifecycle and read-only deferred action specification. EH-011 is merged and complete: immutable paired BP persistence, explicit entry provenance and authenticated submission/history APIs. EH-012 is merged and complete: operational follow-up appointments, immutable encounters and immutable encounter-BP associations. EH-013 is merged and complete: immutable source-scoped record-coverage windows and deterministic normalized evidence queries with explicit unasserted intervals, single-statement snapshot retrieval, authorized product read boundary and internal synthetic writer. EH-015 applicability, Issue #31 correction/privacy and EH-014 bounded INITIAL generation are merged and post-merge verified. M2 functional exit gate is PASS at `4a717c4c6be5b1fa9d089823bb093eca43813853`; M3/EACCE has NOT started. See current milestone evidence below.
-
-Later product/clinical/research work requires its own GitHub Issue, branch, defined scope, acceptance criteria, and review gate.
-
-## Pre-coding deep-audit result
-No unresolved P0 planning blocker remains for EH-003.
-
-Known P1 items are milestone-gated, including:
-- final `SCHEDULED` validity contract before M3 scheduling/EACCE evaluation (not required by the approved M2 INITIAL generation contract);
-- complete FHIR eligibility concept-set freeze before the final research pipeline;
-- executable clinical-rule representation before M2/M3 implementation.
-
-These are not blockers for monorepo/bootstrap work.
-
-## Required reading by task type
-Every task:
-1. `AGENTS.md`
-2. this file
-3. current GitHub Issue
-4. `docs/EXECUTION_POLICY.md`
-
-Product/UI:
-- `PRODUCT.md`
-- `REQUIREMENTS.md`
-- `UX.md`
-- `UX_VALIDATION_V2.md`
-- `DESIGN_SYSTEM.md`
-- `TRACEABILITY_MATRIX_V1.md`
-
-Backend/data:
-- `DOMAIN.md`
-- `DATA_MODEL.md`
-- `ARCHITECTURE.md`
-- `SECURITY.md`
-- `API.md`
-- `TRACEABILITY_MATRIX_V1.md`
-
-Research:
-- `RESEARCH.md`
-- `TESTING.md`
-- `research/CLINICAL_RULE_SOURCE_AUDIT.md`
-- `research/CLINICAL_RULE_CATALOG_V1.md`
-- `research/EXPERIMENT_PROTOCOL_V1.md`
-- `research/METRICS_SPEC_V1.md`
-- `research/LITERATURE_REVIEW.md`
-- `research/RELATED_WORK_MATRIX.md`
-- `research/COMPETITOR_EVIDENCE_MATRIX.md`
-
-Project planning/reporting:
-- `DEEP_PLANNING_AUDIT_SUMMARY.md`
-- `PROJECT_PLAN_6_MONTHS.md`
-- `THESIS_STRUCTURE_V1.md`
-- `diagrams/SYSTEM_DIAGRAMS_V1.md`
-
-## EH-007 implementation slice
-
-EH-007 adds deny-by-default patient-profile authorization and actual HTTP IDOR
-coverage, using EH-006 principals and ACTIVE assignments. Review/validation evidence
-is in `EH-007_AUTHORIZATION.md` and `EH-007_VALIDATION.md`. FR-010/FR-011 are not
-complete. EH-008 deterministic identities and the full M1 exit gate are complete; see the recorded final evidence above.
-
-## M2 functional completion
-
-M1 is COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [final exit-gate evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884). EH-009 is merged and complete (M2 step 1). EH-010 is merged and complete: version-pinned CarePlan lifecycle and read-only deferred action specification. EH-011 is merged and complete: immutable paired BP persistence, explicit entry provenance and authenticated submission/history APIs. EH-012 is merged and complete: operational follow-up appointments, immutable encounters and immutable encounter-BP associations. EH-013 is merged and complete: immutable source-scoped record-coverage windows and deterministic normalized evidence queries with explicit unasserted intervals, single-statement snapshot retrieval, authorized product read boundary and internal synthetic writer. EH-015 is merged and complete: immutable observed clinical applicability snapshots and terminal retractions (slice B1). Issue #31 supplies completed B4 correction/privacy prerequisites. The approved EH-014 implementation below covers explicit BP selection and INITIAL-only durable generation; recurrence remains deferred. Milestone M2 functional exit is COMPLETE for this bounded INITIAL scope; no recurrence or EACCE completion is claimed.
-
-See `EH-009_CLINICAL_DEFINITION_CONTRACT.md`, `EH-009_VALIDATION.md`, `EH-010_CARE_PLAN_CONTRACT.md`, `EH-010_VALIDATION.md`, `EH-011_BP_PROVENANCE_CONTRACT.md` and `EH-011_VALIDATION.md`.
-
-See `EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md`, `EH-012_VALIDATION.md`, `EH-013_COVERAGE_NORMALIZED_EVIDENCE_CONTRACT.md`, `EH-013_VALIDATION.md`, `EH-015_OBSERVED_APPLICABILITY_CONTRACT.md`, and `EH-015_VALIDATION.md`. FR-024 remains foundation-only/incomplete; M2 functional exit gate PASS does not satisfy AC-004/AC-005.
-
-
-## Issue #31 implementation status
-
-BP correction/invalidation prerequisite is merged in PR #32; Issue #31 is CLOSED/completed at the approved baseline. [Contract](BP_CORRECTION_INVALIDATION_CONTRACT.md); [validation](BP_CORRECTION_INVALIDATION_VALIDATION.md). EH-014 R1–R8 and the bounded INITIAL implementation are approved by Issue #28 comment 6317196946. EH-014 has since merged and passed exact-main post-merge CI and the functional M2 exit review, as recorded below. No additional EH number assigned.
-
-
-## EH-014 merged verification and M2 closeout
-
-[PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**.
-
-The merged INITIAL slice proves an active version-pinned hypertension CarePlan, explicit observed applicability and clinician-selected BP, immutable decision snapshot and source/rule/evidence traceability, one durable INITIAL CareAction, deterministic trigger/+3/+6 calendar schedule, exact retry, concurrency protection, correction/privacy-aware history and atomic audit. [Contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md); [post-merge validation](EH-014_VALIDATION.md#post-merge-validation).
-
-FR-021 — satisfied for the approved Core V1 bounded INITIAL generation scope. FR-024 remains foundation-only / incomplete pending the final SCHEDULED evidence contract. AC-004 (`SCHEDULED`) and AC-005 (`COMPLETED`) remain unsatisfied. M2 completion does not imply completion of all Core V1 acceptance criteria or EACCE.
-
-M2 is COMPLETE for its functional exit criterion. Final repository milestone closeout awaits independent review and merge of this documentation-only PR, exact-main post-merge validation/status verification, and a final M2 completion comment. Issue #28 remains OPEN until those steps finish. Next: M3 EACCE pre-implementation / contract work; M3 has NOT started. No recurrence, EACCE, scheduling/completion classification or design work is added.
+- Every task: [AGENTS](../AGENTS.md), this file, current issue, [EXECUTION_POLICY](EXECUTION_POLICY.md), relevant accepted contracts/tests/branch/PR.
+- Product/planning: [PRODUCT](PRODUCT.md), [approved decisions](PRODUCT_V3_DECISIONS.md), [DECISIONS](DECISIONS.md), [REQUIREMENTS](REQUIREMENTS.md), [TRACEABILITY](TRACEABILITY_MATRIX_V1.md), [ROADMAP](IMPLEMENTATION_ROADMAP.md), [capacity planning](PROJECT_PLAN_6_MONTHS.md).
+- Backend: [DOMAIN](DOMAIN.md), [DATA_MODEL](DATA_MODEL.md), [ARCHITECTURE](ARCHITECTURE.md), [SECURITY](SECURITY.md), [API](API.md), plus the exact M0–M2 slice contracts and validation reports referenced there.
+- Conceptual journeys only: [UX](UX.md). UX_VALIDATION_V2 and DESIGN_SYSTEM are historical/frozen references, not permission to design.
+- Research: [RESEARCH](RESEARCH.md), [TESTING](TESTING.md), [clinical source audit](research/CLINICAL_RULE_SOURCE_AUDIT.md), [rule catalog](research/CLINICAL_RULE_CATALOG_V1.md), [protocol](research/EXPERIMENT_PROTOCOL_V1.md), [metrics](research/METRICS_SPEC_V1.md), literature/related-work/competitor matrices in `research/`.
+- Reporting: [THESIS_STRUCTURE_V1](THESIS_STRUCTURE_V1.md). [Deep audit](DEEP_PLANNING_AUDIT_SUMMARY.md) and [V1 diagrams](diagrams/SYSTEM_DIAGRAMS_V1.md) retain historical context; they do not supersede V3 policy or actual implementation evidence.

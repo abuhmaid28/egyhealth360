@@ -42,11 +42,15 @@ Core V1 explicitly has no FastAPI/Python runtime, ML service, Redis, Kafka, Rabb
 
 ## Product scope
 
-MVP roles: Patient, Clinician, Admin.
+Product V3 policy is APPROVED: integrated healthcare journey → longitudinal continuity → bounded HTN EACCE. Read `docs/PRODUCT_V3_DECISIONS.md` for D01–D36 and Issue #35 approval lineage; ADR-031 explicitly supersedes the narrower Product V2 positioning/exclusions. Ordinary care does not require a CarePlan/EACCE.
 
-Core product: chronic-care coordination around expected care actions and evidence-aware closure classification.
+One application targets five future workspaces: Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin. Current implemented roles remain PATIENT/CLINICIAN/ADMIN; LAB_STAFF/PHARMACY_STAFF, membership, self-registration, general booking/consultation and fulfillment are approved future scope, not existing implementation. Human-entered diagnoses/prescriptions are permitted; diagnostic AI and autonomous treatment/dose recommendation remain prohibited. Laboratory is MUST; imaging SHOULD/optional. Full-item dispensing only; no partial quantities/refills/substitution.
 
-Do not add lab/pharmacy portals, marketplace, telemedicine, diagnosis, treatment recommendation, diabetes-risk prediction, chatbot, OCR, or other removed features without an approved scope change.
+M0–M2 remain COMPLETE and historically unchanged. V3-G0 reconciliation is in progress until its PR merges and needs post-merge verification; V3-I1 and EACCE remain NOT STARTED. Do not treat policy approval as implementation authorization. Preserve accepted contracts, migration history, deterministic M1 seed and validation evidence; extend only through reviewed milestone-specific work.
+
+Design remains FROZEN: no UI/UX, screens, wireframes, Design System, branding or frontend visual work until separate explicit design-unfreeze approval. Historical visual docs are not active instructions.
+
+No real-patient deployment, paid service dependency, national marketplace economics, ERP/LIS/PACS, video infrastructure, diagnostic AI, generalized IAM/rule editor or broad disease/recurrence engine is authorized. See `docs/PRODUCT.md` for frozen scope tiers and `docs/IMPLEMENTATION_ROADMAP.md` for V3 sequencing.
 
 ## EACCE rules
 
@@ -69,6 +73,9 @@ Never invent a clinical rule. Every implemented clinical rule needs an authorita
 - Admin does not automatically receive unrestricted clinical access.
 - Never trust client-supplied identity/status fields when derivable server-side.
 - Never commit secrets or log passwords/session tokens/secrets/full medical payloads unnecessarily.
+- Preserve audit and clinical source history separately from timeline projections; apply wrong-patient masking.
+- Future relationships require explicit patient authorization and clinician acceptance; booking grants logistics only. Continue until explicitly ended, recheck current access, and grant no permanent author entitlement.
+- Future lab/pharmacy access is routed-artifact scoped with current active user/organization/membership/artifact authority (D36); suspension denies subsequent reads/writes. ADMIN has no clinical fulfillment entitlement. Do not use these future policies to bypass existing ACTIVE-assignment contracts.
 - Preserve audit history.
 - Research ground truth and product-facing data must remain logically isolated.
 
