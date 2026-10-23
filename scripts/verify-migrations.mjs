@@ -27,7 +27,7 @@ try {
   prisma('deploy');
   prisma('status');
   const before = (await connection.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
-  assert.deepEqual(before.map(row => row.migration_name), ['20261012200810_eh005_identity_core_foundation', '20261013014000_eh006_auth_sessions', '20261013235221_eh009_clinical_definition_foundation', '20261016000000_eh010_care_plan_lifecycle', '20261017000000_eh011_bp_provenance', '20261018000000_eh012_followup_encounters', '20261019000000_eh013_record_coverage_windows', '20261020000000_eh015_observed_clinical_applicability', '20261021000000_bp_correction_invalidation', '20261022000000_eh014_initial_care_action']);
+  assert.deepEqual(before.map(row => row.migration_name), ['20261012200810_eh005_identity_core_foundation', '20261013014000_eh006_auth_sessions', '20261013235221_eh009_clinical_definition_foundation', '20261016000000_eh010_care_plan_lifecycle', '20261017000000_eh011_bp_provenance', '20261018000000_eh012_followup_encounters', '20261019000000_eh013_record_coverage_windows', '20261020000000_eh015_observed_clinical_applicability', '20261021000000_bp_correction_invalidation', '20261022000000_eh014_initial_care_action', '20261023000000_v3_i1_staff_roles', '20261023000100_v3_i1_organizations']);
   for (const row of before) assert.equal(row.checksum, createHash('sha256').update(await readFile(`packages/db/prisma/migrations/${row.migration_name}/migration.sql`)).digest('hex'));
   assert.equal(before[0].checksum, 'd8396ed97e82550866a44055f308fb039ed29d6c8cdcdd74d95da060f441749a');
   assert.equal(before[1].checksum, '2fb1704ab28b698bfcf6995f6120cb1b1f0138ab18fcf7db562517f47d53b79b');
@@ -269,6 +269,24 @@ try {
       assert.deepEqual((await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows,actionLedger);
       for(let i=0;i<bp31Tables.length;i++)assert.deepEqual((await upgrade.query(`SELECT * FROM public.${bp31Tables[i]} ORDER BY id`)).rows,bp31Rows[i].rows);
       console.log('EH-014 populated nine-to-ten migration upgrade/redeploy preserved history/ledger; zero action/decision backfill');
+
+      // Populated M0–M2 -> Slice 2 through the real runner, with enum values committed first.
+      const i1OldTables=[...bp31Tables,'care_actions','care_action_decisions','care_action_applicability_inputs'];
+      const i1OldRows=await Promise.all(i1OldTables.map(table=>upgrade.query(`SELECT * FROM public.${table} ORDER BY ${table==='care_action_applicability_inputs'?'decision_id,snapshot_id':'id'}`)));
+      for(const migration of ['20261023000000_v3_i1_staff_roles','20261023000100_v3_i1_organizations']) {
+        await cp(`packages/db/prisma/migrations/${migration}`,join(directory,'migrations',migration),{recursive:true});
+      }
+      prisma('deploy',schema,upgradeUrl.toString());prisma('status',schema,upgradeUrl.toString());
+      const i1Ledger=(await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
+      assert.equal(i1Ledger.length,12);assert.deepEqual(i1Ledger.slice(0,10),actionLedger);
+      for(let i=0;i<i1OldTables.length;i++)assert.deepEqual((await upgrade.query(`SELECT * FROM public.${i1OldTables[i]} ORDER BY ${i1OldTables[i]==='care_action_applicability_inputs'?'decision_id,snapshot_id':'id'}`)).rows,i1OldRows[i].rows);
+      for(const table of ['organizations','organization_memberships'])assert.equal((await upgrade.query(`SELECT count(*)::int n FROM public.${table}`)).rows[0].n,0);
+      prisma('deploy',schema,upgradeUrl.toString());prisma('status',schema,upgradeUrl.toString());
+      assert.deepEqual((await upgrade.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows,i1Ledger);
+      for(let i=0;i<i1OldTables.length;i++)assert.deepEqual((await upgrade.query(`SELECT * FROM public.${i1OldTables[i]} ORDER BY ${i1OldTables[i]==='care_action_applicability_inputs'?'decision_id,snapshot_id':'id'}`)).rows,i1OldRows[i].rows);
+      assert.deepEqual((await seedCommand(env)).created,{users:0,profiles:0,assignments:0});
+      assert.equal((await verifyCommand(env)).result,'PASS');
+      console.log('I1 Slice 2 populated ten-to-twelve migration upgrade/redeploy: historical rows/ledger retained, committed enum extension, zero organization/membership backfill, M1 PASS');
 
       console.log('EH-013 -> EH-015: fifteen retained domain tables, coverage/followup/BP/care-plan/identity rows and ledger unchanged; observed applicability tables empty; repeat deploy/status and M1 HTTP PASS');
       console.log('EH-012 -> EH-013: fourteen retained domain tables, followup/BP/care-plan/identity rows and ledger unchanged; record_coverage_windows empty; repeat deploy/status and M1 HTTP PASS');

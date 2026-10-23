@@ -22,7 +22,7 @@ type IdentityInput = { email: string; passwordHash: string };
 export type CreateUserInput = IdentityInput & (
   | { role: 'PATIENT'; profile: { displayName: string; dateOfBirth?: Date; sex?: string } }
   | { role: 'CLINICIAN'; profile: { displayName: string; specialty?: string; professionalIdentifier?: string } }
-  | { role: 'ADMIN'; profile?: never }
+  | { role: 'ADMIN' | 'LAB_STAFF' | 'PHARMACY_STAFF'; profile?: never }
 );
 
 /** Narrow persistence operations; no general client, delete, or role-change API. */
@@ -35,8 +35,9 @@ export function createPersistence(connectionString: string | undefined) {
     async createUser(input: CreateUserInput) {
       const email = canonicalizeEmail(input.email);
       if (!input.passwordHash.trim()) throw new Error('Password hash must be nonblank');
-      if (!['PATIENT', 'CLINICIAN', 'ADMIN'].includes(input.role)) throw new Error('Invalid user role');
+      if (!['PATIENT', 'CLINICIAN', 'ADMIN', 'LAB_STAFF', 'PHARMACY_STAFF'].includes(input.role)) throw new Error('Invalid user role');
       if (input.role === 'ADMIN' && input.profile !== undefined) throw new Error('Admin cannot have a role-bound profile');
+      if (['LAB_STAFF', 'PHARMACY_STAFF'].includes(input.role) && input.profile !== undefined) throw new Error('Staff cannot have a role-bound profile');
       return client.$transaction(async transaction => {
         const user = await transaction.user.create({
           data: { email, passwordHash: input.passwordHash, role: input.role },

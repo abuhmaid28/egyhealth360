@@ -46,6 +46,7 @@ jobs:
       - run: docker compose exec -T api node scripts/verify-m1-runtime.mjs
       - run: docker compose exec -T api node scripts/verify-clinical-runtime.mjs
       - run: docker compose exec -T api node scripts/verify-care-action-runtime.mjs
+      - run: docker compose exec -T api node scripts/verify-organization-runtime.mjs
       - run: |
           curl --fail http://localhost:3000
           curl --fail http://localhost:3001/api/v1/health

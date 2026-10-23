@@ -11,6 +11,8 @@ enum UserRole {
   PATIENT
   CLINICIAN
   ADMIN
+  LAB_STAFF
+  PHARMACY_STAFF
 
   @@map("user_role")
 }
@@ -30,6 +32,11 @@ enum AssignmentStatus {
 }
 
 model User {
+  organizationCreations Organization[] @relation("OrganizationCreator")
+  organizationStatusChanges Organization[] @relation("OrganizationStatusActor")
+  organizationMemberships OrganizationMembership[] @relation("MembershipUser")
+  membershipGrants OrganizationMembership[] @relation("MembershipGrantActor")
+  membershipEnds OrganizationMembership[] @relation("MembershipEndActor")
   careActionSelections CareActionDecision[]
 
   bpAmendments BpAmendmentOperation[]
@@ -582,4 +589,64 @@ model CareActionApplicabilityInput {
   @@id([decisionId,snapshotId])
   @@index([snapshotId,patientId], map:"care_input_snapshot_idx")
   @@map("care_action_applicability_inputs")
+}
+
+
+enum OrganizationKind {
+  CLINIC
+  LABORATORY
+  PHARMACY
+  @@map("organization_kind")
+}
+enum OrganizationStatus {
+  ACTIVE
+  SUSPENDED
+  @@map("organization_status")
+}
+enum OrganizationMembershipStatus {
+  ACTIVE
+  ENDED
+  @@map("organization_membership_status")
+}
+
+model Organization {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  kind OrganizationKind
+  name String @db.VarChar(160)
+  status OrganizationStatus @default(ACTIVE)
+  statusVersion Int @default(0) @map("status_version")
+  createdByUserId String @map("created_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  statusChangedByUserId String @map("status_changed_by_user_id") @db.Uuid
+  statusChangedAt DateTime @default(now()) @map("status_changed_at") @db.Timestamptz(3)
+  creator User @relation("OrganizationCreator",fields:[createdByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"organizations_creator_fkey")
+  statusActor User @relation("OrganizationStatusActor",fields:[statusChangedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"organizations_status_actor_fkey")
+  memberships OrganizationMembership[]
+  @@unique([id,kind],map:"organizations_id_kind_key")
+  @@unique([createdByUserId,operationKey],map:"organizations_operation_key")
+  @@map("organizations")
+}
+
+model OrganizationMembership {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String @map("organization_id") @db.Uuid
+  organizationKind OrganizationKind @map("organization_kind")
+  userId String @map("user_id") @db.Uuid
+  userRole UserRole @map("user_role")
+  status OrganizationMembershipStatus @default(ACTIVE)
+  grantedByUserId String @map("granted_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  grantedAt DateTime @default(now()) @map("granted_at") @db.Timestamptz(3)
+  endedByUserId String? @map("ended_by_user_id") @db.Uuid
+  endedAt DateTime? @map("ended_at") @db.Timestamptz(3)
+  organization Organization @relation(fields:[organizationId,organizationKind],references:[id,kind],onUpdate:Restrict,onDelete:Restrict,map:"memberships_organization_kind_fkey")
+  user User @relation("MembershipUser",fields:[userId,userRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"memberships_user_role_fkey")
+  grantActor User @relation("MembershipGrantActor",fields:[grantedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"memberships_grant_actor_fkey")
+  endActor User? @relation("MembershipEndActor",fields:[endedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"memberships_end_actor_fkey")
+  @@unique([grantedByUserId,operationKey],map:"memberships_operation_key")
+  @@index([userId,organizationId,grantedAt],map:"memberships_user_history_idx")
+  @@map("organization_memberships")
 }
