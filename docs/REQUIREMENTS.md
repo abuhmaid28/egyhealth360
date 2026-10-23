@@ -1,6 +1,8 @@
 # EgyHealth 360 — Versioned Requirements V3
 
-[I1 contract](V3_I1_CONTRACT.md) is APPROVED by Issue #39 for V3-FR-001–004 and the I1 operational subset of V3-FR-018. Slice 1 is merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) is in review as a partial V3-FR-003/018 foundation. I1 NOT COMPLETE; Slice 3 NOT AUTHORIZED. These requirements remain NOT IMPLEMENTED as V3 capabilities; existing requirement IDs and evidence below are unchanged.
+Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
+
+[I1 contract](V3_I1_CONTRACT.md) is APPROVED by Issue #39. Slice 1/2 COMPLETE; [Slice 3 registration/profile](V3_I1_SLICE3.md) implements the bounded V3-FR-001 surface in review. I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED. V3-FR-003 and the operational V3-FR-018 subset have accepted Slice 2 foundations; remaining end-to-end V3 capabilities are future work. Existing requirement IDs and historical evidence below are unchanged.
 
 ## Current requirement authority and status
 
@@ -14,9 +16,9 @@ All rows below are approved future scope. Existing reusable foundations are iden
 
 | ID | Approved requirement | Decision | Future milestone | Current implementation boundary |
 |---|---|---|---|---|
-| V3-FR-001 | Patient-only bounded self-registration and permitted own profile/demographics; managed privileged accounts; preserve M1 seed and separately version integrated fixtures | D06-A / D03 | I1 | Existing sessions/profile read only; no registration/profile update |
+| V3-FR-001 | Patient-only bounded self-registration and permitted own profile/demographics; managed privileged accounts; preserve M1 seed and separately version integrated fixtures | D06-A / D03 | I1 | Slice 3 guarded registration/own profile implemented in review; preserved M1 fixture; no claim of complete integrated journey |
 | V3-FR-002 | Curated public doctors/profiles/specialties/clinic/location; simple provider affiliation, no fixed count limits or enterprise hierarchy | D02 / D07 | I1 | No public directory; Slice 2 operational Organization foundation only |
-| V3-FR-003 | Fixed LAB_STAFF/PHARMACY_STAFF operations under active organization membership; no generalized multi-role IAM | D05 / D28 / D36 | I1 | Slice 2 fixed staff roles/operational memberships implemented in review; no artifact fulfillment authority |
+| V3-FR-003 | Fixed LAB_STAFF/PHARMACY_STAFF operations under active organization membership; no generalized multi-role IAM | D05 / D28 / D36 | I1 | Slice 2 fixed staff roles/operational memberships COMPLETE; no artifact fulfillment authority |
 | V3-FR-004 | Explicit patient authorization + clinician acceptance before/at consultation; continuing current relationship until either ends; preserve history and deny subsequent access, including author | D10 / D11-A | I1 | ACTIVE/ENDED assignment checks/history only; no product establishment/ending workflow |
 | V3-FR-005 | Finite clinician-published start/end availability, declared clinic timezone, provider/patient overlap and capacity protection; bounded configurable duration/lead/horizon/cutoff | D08 | I2 | No availability/slots |
 | V3-FR-006 | Patient own booking/cancel/reschedule/history, clinician own schedule, explicit attendance/no-show; before-start/consultation-opening changes, safe retries, failed replacement preserves original; no fees | D09 / D10 | I2 | EH-012 HTN follow-up is not general booking |
@@ -31,7 +33,7 @@ All rows below are approved future scope. Existing reusable foundations are iden
 | V3-FR-015 | Follow-up clinical intent remains meaningful without a slot and connects to one operational booking authority; preserve EH-012 behavior and use legacy links only where needed | D24 | I2 / I4 | Legacy operational HTN appointment only, no unbooked intent/general booking |
 | V3-FR-016 | Authorized source-linked longitudinal view of booking/encounter/problems/prescriptions/dispenses/labs/follow-up/BP/plans/actions with occurrence/recording/correction provenance; separate clinical sources, operations, projection and audit | D25 / D26 | I4 | BP/encounter/internal normalized evidence only, not integrated timeline |
 | V3-FR-017 | In-app important appointment/result/prescription/dispense/follow-up/action updates and bounded reminders with deduplication/status/cancellation/current privacy; no paid channels | D27 | I4 | No notification module |
-| V3-FR-018 | Operational user/provider/affiliation/membership/status/catalog/demo/config and research administration without ADMIN clinical payload/impersonation/signing/fulfillment or routine history reset | D28 / D36 | I1–I4 / I7 | Identity/provisioning plus Slice 2 bounded organization/membership operations in review; no admin workspace |
+| V3-FR-018 | Operational user/provider/affiliation/membership/status/catalog/demo/config and research administration without ADMIN clinical payload/impersonation/signing/fulfillment or routine history reset | D28 / D36 | I1–I4 / I7 | Identity/provisioning plus Slice 2 bounded organization/membership operations COMPLETE; no admin workspace |
 | V3-FR-019 | Retain exact-pinned BP/CarePlan/immutable INITIAL action/protected decision and privacy behavior; future explicit links only, no automatic applicability/coverage/completion or recurrence bridge | D26 / D30 | I4 / I5 | M2 accepted; integrated exposure/evidence bridges not implemented |
 | V3-FR-020 | Retained bounded HTN EACCE/six classifications/immutable explanations and clinician overrides; isolated reproducible B0/B1/P1 evaluation, no all-disease/recurrence expansion | D29 / D30 | I5 / I7 / I8 | Engine/FHIR/worker scaffolds are not completed research functionality |
 

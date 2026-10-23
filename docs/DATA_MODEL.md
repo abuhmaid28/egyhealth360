@@ -1,10 +1,12 @@
 # EgyHealth 360 — Data Model Status and V3 Concepts
 
-[Slice 2 implementation](V3_I1_SLICE2.md) adds Organization and OrganizationMembership plus fixed staff roles; implementation in review, I1 NOT COMPLETE, Slice 3 NOT AUTHORIZED. Specialty and RelationshipRequest remain unimplemented. Historical schema/migration/clinical behavior is preserved.
+Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
 
-## Implemented model inventory — M0–M2 plus Slice 2 in review
+[Slice 2](V3_I1_SLICE2.md) Organization/OrganizationMembership and fixed staff roles are COMPLETE. [Slice 3](V3_I1_SLICE3.md) reuses User/PatientProfile/Session/AuditLog with no schema or migration change. I1 NOT COMPLETE; Slice 3 in review; Slice 4+ NOT AUTHORIZED. Specialty and RelationshipRequest remain unimplemented; historical schema/migration/clinical behavior is preserved.
 
-Exactly the following **25 Prisma models** exist on this Slice 2 branch: the unchanged 23 M0–M2 foundations plus Organization and OrganizationMembership. Two additive migrations follow the ten preserved historical migrations. The [Prisma schema](../packages/db/prisma/schema.prisma), migration SQL and accepted slice contracts are authoritative for executable fields/constraints.
+## Implemented model inventory — M0–M2 plus Slice 2 COMPLETE; Slice 3 in review
+
+Exactly the following **25 Prisma models** exist on this Slice 3 branch (unchanged from accepted Slice 2): the unchanged 23 M0–M2 foundations plus Organization and OrganizationMembership. Two additive migrations follow the ten preserved historical migrations. The [Prisma schema](../packages/db/prisma/schema.prisma), migration SQL and accepted slice contracts are authoritative for executable fields/constraints.
 
 - `User`
 - `Session`

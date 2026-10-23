@@ -1,6 +1,8 @@
 # Security & Medical Safety — V3 Policy, M0–M2 Enforcement
 
-[Issue #39 I1 contract](V3_I1_CONTRACT.md) is APPROVED; Slice 1 is merged/verified; [Slice 2 operational implementation](V3_I1_SLICE2.md) is in review, I1 NOT COMPLETE and Slice 3 NOT AUTHORIZED. Its authorization matrix, sole-assignment compatibility, current-authority and concurrency obligations govern later I1 work. D36 routed-artifact fulfillment remains I3; membership alone never suffices. Existing security contracts below are preserved.
+Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
+
+[Issue #39 I1 contract](V3_I1_CONTRACT.md) remains APPROVED. Slice 1/2 COMPLETE; [Slice 3](V3_I1_SLICE3.md) security contract implemented/in review; I1 NOT COMPLETE and Slice 4+ NOT AUTHORIZED. Registration is guarded anonymous patient-only creation; profile read/replace requires current PATIENT ownership, and writes retain session CSRF. No ADMIN/staff clinical or profile entitlement. D36 routed-artifact authority remains I3; membership alone never suffices. Existing security contracts below are preserved.
 
 ## Policy versus implementation
 

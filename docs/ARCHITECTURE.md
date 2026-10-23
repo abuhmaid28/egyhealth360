@@ -1,6 +1,8 @@
 # EgyHealth 360 — Architecture and V3 Extension Boundary
 
-[Slice 2 implementation](V3_I1_SLICE2.md) adds bounded organization/membership services and fixed staff roles under the approved I1 contract. No new HTTP routes or clinical authorization paths. Slice 1 merged/verified; Slice 2 in review, I1 NOT COMPLETE, Slice 3 NOT AUTHORIZED. Membership is operational only; D36 artifact authority remains I3.
+Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
+
+[Slice 2](V3_I1_SLICE2.md) operational memberships are COMPLETE. [Slice 3](V3_I1_SLICE3.md) adds a narrow patient-entry persistence service and isolated HTTP boundary, reusing existing schema/auth/password/audit. Slice 1 COMPLETE; Slice 3 in review; I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED. Membership remains operational only; D36 artifact authority is I3.
 
 ## Current architecture — retained
 

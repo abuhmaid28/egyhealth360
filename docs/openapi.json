@@ -3841,6 +3841,762 @@
           }
         }
       }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "operationId": "patientSelfRegister",
+        "summary": "Guarded anonymous patient registration; explicit login afterward",
+        "security": [],
+        "description": "Exactly email/password/displayName. Fixed PATIENT/ACTIVE. Canonical email rules match login. New identity and valid canonical duplicate/retry return identical 202 acknowledgement, no identifier/account state/session or Set-Cookie. No existing-session rotation. Atomic User/Profile/anonymous creation audit. Infrastructure failure is 503, not acknowledgement. No constant-time guarantee. Raw JSON <=16384 bytes; aggregate raw header names/values <=8192 UTF8 bytes. Identity encoding only; no query/idempotency-key. Cross-site Fetch Metadata denied; absent metadata does not bypass Origin/header. At most 2 concurrent registration operations including hashing, no queue; global process-local 30 validated attempts per 60000ms monotonic window (saturation consumes attempt). Both limits return identical 429 independent of email; no distributed abuse guarantee.",
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "description": "Exact configured browser application origin, including scheme/port; mandatory even when Fetch Metadata is absent.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sec-Fetch-Site",
+            "in": "header",
+            "required": false,
+            "description": "cross-site rejected. same-site/same-origin/none require exact Origin; absent metadata does not bypass Origin/custom-header checks.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-EH-Register",
+            "in": "header",
+            "required": true,
+            "description": "Required nonsecret anonymous mutation guard, exact value 1; never authentication. Origin is independently mandatory.",
+            "schema": {
+              "const": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Strict application/json with optional charset=utf-8; duplicate decoded keys, unknown fields, malformed UTF8 and nested fields rejected. See V3_I1_SLICE3.md for exact bounds.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PatientRegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported content type.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Registration temporarily unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REGISTRATION_BUSY",
+                      "message": "Registration temporarily unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_ENTRY_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Generic acknowledgement; explicit login required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "data": {
+                      "accepted": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/me/profile": {
+      "get": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "description": "Current ACTIVE PATIENT with exact current nonrevoked/unexpired session only. Identity derived from session, no target identifiers/query/body on reads. ADMIN/CLINICIAN/LAB_STAFF/PHARMACY_STAFF denied 404; membership grants nothing. Header aggregate <=8192 UTF8 bytes. No clinical payload/evidence inference; existing scoped clinician read stays unchanged. No-store, no conditional 304/ETag. Read-only own profile id locates existing patient-scoped resources, including BP, without granting additional access.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized profile or authentication infrastructure failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "PATIENT_ENTRY_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Only permitted own profile context.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/OwnPatientProfile"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "ownPatientProfileRead",
+        "summary": "Read permitted own patient profile"
+      },
+      "head": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "description": "Current ACTIVE PATIENT with exact current nonrevoked/unexpired session only. Identity derived from session, no target identifiers/query/body on reads. ADMIN/CLINICIAN/LAB_STAFF/PHARMACY_STAFF denied 404; membership grants nothing. Header aggregate <=8192 UTF8 bytes. No clinical payload/evidence inference; existing scoped clinician read stays unchanged. No-store, no conditional 304/ETag.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized profile or authentication infrastructure failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Only permitted own profile context.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "ownPatientProfileHead",
+        "summary": "Same own-profile authorization without response body"
+      },
+      "put": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "description": "Current ACTIVE PATIENT with exact current nonrevoked/unexpired session only. Identity derived from session, no target identifiers/query/body on reads. ADMIN/CLINICIAN/LAB_STAFF/PHARMACY_STAFF denied 404; membership grants nothing. Header aggregate <=8192 UTF8 bytes. No clinical payload/evidence inference; existing scoped clinician read stays unchanged. No-store, no conditional 304/ETag. PUT replaces all three fields atomically. User/session/profile locks serialize writes; last serialized replacement wins (no version/CAS claim). Exact stored-value no-op preserves updatedAt and adds no audit. Changed replacement plus empty-metadata genuine actor audit is atomic; final session check precedes commit. No role/status/email/password/owner or clinical changes.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "PATIENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Sanitized profile or authentication infrastructure failure.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "PATIENT_ENTRY_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Only permitted own profile context.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/OwnPatientProfile"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported content type.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "ownPatientProfileReplace",
+        "summary": "Replace the three permitted own-profile fields",
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "description": "Exact configured browser application origin, including scheme/port; mandatory even when Fetch Metadata is absent.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Sec-Fetch-Site",
+            "in": "header",
+            "required": false,
+            "description": "cross-site rejected. same-site/same-origin/none require exact Origin; absent metadata does not bypass Origin/custom-header checks.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Existing current-session-derived CSRF token."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Strict flat JSON <=16384 bytes, identity content encoding only; all three fields required, unknown/duplicate keys rejected.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "displayName",
+                  "dateOfBirth",
+                  "sex"
+                ],
+                "properties": {
+                  "displayName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 160,
+                    "description": "1\u2013160 Unicode scalar values; no outer whitespace, C0/C1 controls or unpaired surrogates. Not normalized."
+                  },
+                  "dateOfBirth": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "pattern": "^(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                    "description": "Null or valid calendar YYYY-MM-DD, years 0001\u20139999. Profile context only; no age/applicability assertion or future-date inference."
+                  },
+                  "sex": {
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "minLength": 1,
+                    "maxLength": 64,
+                    "description": "Null or 1\u201364 Unicode scalar values; same whitespace/control/surrogate restrictions as displayName. Opaque context; no clinical interpretation."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -4236,6 +4992,71 @@
               "unknown_fields",
               "representation"
             ]
+          }
+        }
+      },
+      "PatientRegistrationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "email",
+          "password",
+          "displayName"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 1024,
+            "description": "Request representation <=1024 UTF8 bytes before canonicalization; outer ASCII SP/HT/LF/VT/FF/CR trimmed, ASCII lowercased, printable nonwhitespace ASCII, exactly one @ with nonempty parts. No dot/plus/provider folding or Unicode addresses."
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024,
+            "description": "1\u20131024 UTF8 bytes, unmodified/untrimmed; existing Argon2id codec and login semantics. Byte limit overrides character count."
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160,
+            "description": "1\u2013160 Unicode scalar values; no outer whitespace, C0/C1 controls or unpaired surrogates. Not normalized."
+          }
+        }
+      },
+      "OwnPatientProfile": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "displayName",
+          "dateOfBirth",
+          "sex"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Server-derived own patient_profiles.id locator for existing scoped resources; never authority or a permitted PUT input."
+          },
+          "displayName": {
+            "type": "string",
+            "description": "Existing stored own display text. New writes use the bounded PUT contract; historical context is not rewritten."
+          },
+          "dateOfBirth": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Existing PostgreSQL ISO date text, including legacy years outside new-write bounds; null remains unknown. Historical context is preserved without backfill or truncation."
+          },
+          "sex": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Existing opaque own context; no clinical interpretation. New writes use bounded PUT validation."
           }
         }
       }

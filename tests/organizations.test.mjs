@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { beforeSlice3 } from './support/openapi-baseline.mjs';
 import assert from 'node:assert/strict';
 import { readFile,readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -15,7 +16,7 @@ test('I1S2 narrow runtime surface has no patient, fulfillment, publication or re
 });
 
 test('I1S2 HTTP paths and legacy OpenAPI remain exact, with only the two authenticated staff roles added',async()=>{
- const text=await readFile('docs/openapi.json','utf8'),api=JSON.parse(text);
+ const text=beforeSlice3(await readFile('docs/openapi.json','utf8')),api=JSON.parse(text);
  assert.deepEqual(api.components.schemas.AuthSuccess.properties.data.properties.user.properties.role.enum,['PATIENT','CLINICIAN','ADMIN','LAB_STAFF','PHARMACY_STAFF']);
  const old=text.replace(',\n                      "LAB_STAFF",\n                      "PHARMACY_STAFF"','');
  assert.equal(createHash('sha256').update(old).digest('hex'),'c4577d43f7c2d43b9ff2c0d4ef1516e2cd5a48d59176ae869ae34c26cdca9ae0');

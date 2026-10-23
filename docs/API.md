@@ -1,6 +1,8 @@
 # EgyHealth 360 — API Status and V3 Resource Boundaries
 
-[I1 future logical API groups](V3_I1_CONTRACT.md#future-logical-api-and-architecture-map) are approved contract scope, not live endpoints or OpenAPI changes. Slice 1 merged/verified. [Slice 2](V3_I1_SLICE2.md) is in review: no new routes, only the AuthSuccess staff-role enum extends OpenAPI; internal operational services require a genuine current principal. I1 NOT COMPLETE; Slice 3 NOT AUTHORIZED. Availability is I2 and fulfillment I3.
+Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
+
+[Slice 3](V3_I1_SLICE3.md) implements guarded anonymous registration and current-PATIENT own-profile operations. Slice 1/2 are COMPLETE; Slice 3 is in review, I1 NOT COMPLETE and Slice 4+ NOT AUTHORIZED. Existing auth/clinical routes remain unchanged. Internal Slice 2 operations are not public HTTP routes; availability remains I2 and fulfillment I3.
 
 ## Implemented HTTP boundary
 
@@ -10,12 +12,21 @@ The [OpenAPI](openapi.json) and accepted M0–M2 contracts define actual behavio
 |---|---|---|
 | Readiness | `/health` | Public database-backed readiness |
 | Authentication | `/auth/login`, `/auth/logout`, `/auth/me` | EH-006 frozen operations |
-| Patient profile | `/patients/{patientId}/profile` | Minimal own/ACTIVE-assigned read; no registration/update/list/summary |
+| Slice 3 entry/profile | `/auth/register`, `/me/profile` | Guarded anonymous creation and current PATIENT own read/replace; [exact contract](V3_I1_SLICE3.md) |
+| Patient profile | `/patients/{patientId}/profile` | Minimal own/ACTIVE-assigned read; legacy read only; separate Slice 3 own-profile route below |
 | BP | `/patients/{patientId}/blood-pressure-measurements` | EH-011 create/history with current correction/privacy filtering |
 | HTN follow-up | `/patients/{patientId}/follow-up-appointments` and `/{appointmentId}/cancel` beneath it | EH-012 clinician create/cancel, own/assigned history; not general patient booking |
 | Encounter / BP associations | `/patients/{patientId}/clinical-encounters`, `/{encounterId}/blood-pressure-measurements/{measurementId}` and `/{encounterId}/blood-pressure-associations` beneath it | EH-012 immutable HTN encounter/link and minimized history |
 
-Methods, validation, pagination, response/error shapes and status mappings remain exactly those in OpenAPI/contracts; this reconciliation changes none. Do not infer that generic examples in former API planning were frozen routes. Current patient reads require own identity; clinician access requires current ACTIVE assignment; ADMIN denied clinical payload. Staff roles can use existing authentication; no patient registration, organization/membership management HTTP route, marketplace or fulfillment API exists.
+Methods, validation, pagination, response/error shapes and status mappings remain exactly those in OpenAPI/contracts; this reconciliation changes none. Do not infer that generic examples in former API planning were frozen routes. Current patient reads require own identity; clinician access requires current ACTIVE assignment; ADMIN denied clinical payload. Staff roles can use existing authentication; Slice 3 adds patient registration/own-profile HTTP only; no organization/membership management HTTP route, marketplace or fulfillment API exists.
+
+## V3-I1 Slice 3 HTTP contract
+
+POST `/api/v1/auth/register` requires **`X-EH-Register: 1`**, exact configured Origin and strict JSON containing exactly email/password/displayName. Fetch Metadata cross-site/unknown/duplicate is denied; missing metadata does not bypass the mandatory Origin/header. New identity and valid canonical duplicate/retry share 202 `{ "data": { "accepted": true } }`, no account identifiers/state or Set-Cookie; explicit login follows. Infrastructure failure is sanitized 503, resource saturation/throttling 429.
+
+GET/HEAD/PUT `/api/v1/me/profile` are current authenticated PATIENT-only; no target IDs. GET exposes the server-derived read-only own profile id (a locator for existing scoped resources), plus displayName/dateOfBirth/sex context, preserving legacy stored values. No IDs are permitted as update input. PUT requires all three permitted fields, existing session-derived CSRF plus Origin, and bounded full-replacement validation; no role/status/email/password/owner changes. Other roles receive generic denial. All responses no-store; HEAD has no body.
+
+Exact bounds: 16384-byte body, 8192-byte aggregate raw header names/values, email representation <=1024 UTF-8 bytes, password 1–1024 unmodified UTF-8 bytes, displayName 1–160 Unicode scalar values, nullable valid-calendar DOB years 0001–9999, nullable opaque sex 1–64 scalars on writes. No outer name/sex whitespace, C0/C1 controls or unpaired surrogates. Local registration budget: two active operations, no queue, 30 validated attempts per 60000ms process window; no distributed guarantee. See [complete frozen contract](V3_I1_SLICE3.md), [OpenAPI](openapi.json) and [evidence](V3_I1_SLICE3_VALIDATION.md). Existing login/password/clinical routes are unchanged.
 
 ## PLANNED / NOT IMPLEMENTED — approved V3 resource groups
 
@@ -23,7 +34,6 @@ These are conceptual groups only; no endpoint paths, request fields, final enums
 
 | Future group | Product boundary |
 |---|---|
-| Patient enrollment/profile | Bounded patient-only registration and own permitted profile updates; privileged accounts managed, no user-selected role |
 | Public directory | Curated published doctor/specialty/clinic/profile/availability; no private account or patient data |
 | Professional schedule and booking | Clinician availability/own schedule; own patient booking/cancel/reschedule and preserved history; minimum logistics access before relationship |
 | Clinical relationship | Explicit patient authorization + clinician acceptance and ending; ongoing current checks, history, no authorship bypass |

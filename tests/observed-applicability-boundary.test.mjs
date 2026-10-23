@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { beforeSlice3 } from './support/openapi-baseline.mjs';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -50,7 +51,7 @@ test('EH-015 architectural boundary: apps/api does not import internal applicabi
 
 test('EH-015 architectural boundary: zero public HTTP routes; current OpenAPI includes approved Issue31 privacy and I1 staff login roles', async () => {
   const openapiContent = await readFile('docs/openapi.json', 'utf8');
-  const hash = createHash('sha256').update(openapiContent).digest('hex');
+  const hash = createHash('sha256').update(beforeSlice3(openapiContent)).digest('hex');
   assert.equal(hash, 'b658be382f191f8e7a23b8311cdbd18e0da46b14f7b3f78613b1514c6668956c');
 
   const openapi = JSON.parse(openapiContent);

@@ -1,6 +1,8 @@
 # EgyHealth 360 — Versioned Requirements Traceability
 
-[I1 acceptance trace](V3_I1_CONTRACT.md#acceptance-traceability-and-exit-proof) maps V3-FR-001–004, the I1 subset of V3-FR-018 and retained security/history requirements to future proof. Issue #39 approves the contract; Slice 1 is merged/verified; [Slice 2 implementation/validation](V3_I1_SLICE2.md) is in review for the bounded V3-FR-003 and operational V3-FR-018 subset. I1 NOT COMPLETE; Slice 3 NOT AUTHORIZED. Complete V3 journeys remain future obligations.
+Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
+
+[I1 acceptance trace](V3_I1_CONTRACT.md#acceptance-traceability-and-exit-proof) remains the complete I1 exit map. Slice 1/2 COMPLETE; [Slice 3 implementation](V3_I1_SLICE3.md) and [evidence](V3_I1_SLICE3_VALIDATION.md) cover V3-FR-001, D06-A, FR-060/061, patient ownership and retained security/history requirements. Slice 2 covers bounded V3-FR-003/018. I1 NOT COMPLETE; Slice 3 in review; Slice 4+ NOT AUTHORIZED. Complete integrated journeys remain later obligations.
 
 ## Current V3 authority and evidence status
 

@@ -1,5 +1,7 @@
 # V3-I1 Slice 2 — Bounded Organization Membership Implementation
 
+Current applicability: Slice 2 is COMPLETE (PR #41 merged at `2c96b2ce7cfd407a828f9ba510e563fe1e5983a9`; exact-main CI 40010140478 SUCCESS). Review/pending-Slice-3 wording below records the original Slice 2 submission point. [Slice 3](V3_I1_SLICE3.md) is separately authorized by comment 6374281944 and in review; Slice 4+ remain unauthorized. Historical evidence is retained.
+
 ## Authority and status
 
 [Issue #39 authorization 6366843150](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6366843150) authorizes Slice 2 only under the [approved I1 contract](V3_I1_CONTRACT.md). Starting main `a03c0b63a0ed44bcf39a32428002af0c92edc7e0` includes merged PR #40; exact-main [Bootstrap 39948145751](https://github.com/abuhmaid28/egyhealth360/actions/runs/39948145751) completed SUCCESS, including all validation/runtime steps. Slice 1 is merged/verified. Slice 2 implementation is submitted for independent review; **V3-I1 overall NOT COMPLETE; Slice 3 NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN**. No D01–D36 decision changes.
