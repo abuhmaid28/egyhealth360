@@ -1,5 +1,7 @@
 # EgyHealth 360 — Versioned Requirements Traceability
 
+[I1 acceptance trace](V3_I1_CONTRACT.md#acceptance-traceability-and-exit-proof) maps V3-FR-001–004, the I1 subset of V3-FR-018 and retained security/history requirements to future proof. Issue #39 approves the contract; Slice 1 documentation adoption is in progress, runtime NOT STARTED and Slice 2 NOT AUTHORIZED. No new implementation/test PASS is recorded.
+
 ## Current V3 authority and evidence status
 
 Product V3 policy APPROVED; [D01–D36/approval lineage](PRODUCT_V3_DECISIONS.md). V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); V3-I1/EACCE NOT STARTED; DESIGN FROZEN. The filename `TRACEABILITY_MATRIX_V1.md` is retained to preserve links, not to indicate V1 is the current product scope.

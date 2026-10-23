@@ -1,5 +1,7 @@
 # EgyHealth 360 — Versioned Requirements V3
 
+[I1 contract](V3_I1_CONTRACT.md) is APPROVED by Issue #39 for V3-FR-001–004 and the I1 operational subset of V3-FR-018. Slice 1 adopts the contract only; runtime NOT STARTED, Slice 2 NOT AUTHORIZED. These requirements remain NOT IMPLEMENTED as V3 capabilities; existing requirement IDs and evidence below are unchanged.
+
 ## Current requirement authority and status
 
 Product V3 policy is **APPROVED** by [Issue #35 final owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901); [D01–D36](PRODUCT_V3_DECISIONS.md) governs the complete frozen package. V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); V3-I1/EACCE NOT STARTED; DESIGN FROZEN. Policy approval does not mean any new workflow is implemented or authorized to start.

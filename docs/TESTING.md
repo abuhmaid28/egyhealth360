@@ -1,5 +1,7 @@
 # Testing Strategy — V3 Acceptance and Retained Slice Evidence
 
+[I1 compatibility inventory](V3_I1_CONTRACT.md#compatibility-inventory--reviewed-runtime-baseline), [race guarantees](V3_I1_CONTRACT.md#concurrency-and-revocation-guarantees) and [acceptance matrix](V3_I1_CONTRACT.md#acceptance-traceability-and-exit-proof) are approved future obligations under Issue #39. Slice 1 documentation adoption is in progress; runtime NOT STARTED and Slice 2 NOT AUTHORIZED. Do not weaken historical tests or represent future I1 concurrency tests as passing.
+
 ## V3 policy versus delivered evidence
 
 Product V3 policy APPROVED; V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); V3-I1/EACCE/UI NOT STARTED and DESIGN FROZEN. The requirements below are future verification obligations, not new tests or passing implementation claims. Existing M0–M2 validation reports/test contracts remain unchanged.

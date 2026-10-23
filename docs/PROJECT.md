@@ -7,7 +7,7 @@
 | Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
 | V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
-| V3-I1 | **NOT STARTED**; separate readiness/authorization gate required |
+| V3-I1 | **Contract APPROVED**; [Slice 1 contract adoption](V3_I1_CONTRACT.md) in progress; runtime **NOT STARTED**, Slice 2 **NOT AUTHORIZED** |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 
@@ -15,7 +15,7 @@ Product V3 is now the repository source of truth. Policy approval is not impleme
 
 ## V3-G0 completion evidence
 
-[PR #36](https://github.com/abuhmaid28/egyhealth360/pull/36) merged at `2ad6ecadcdd973bc7f61d6613d9b4d2c5ef81ddb`. Exact-main post-merge [Bootstrap CI 39881994529](https://github.com/abuhmaid28/egyhealth360/actions/runs/39881994529) completed **SUCCESS** (`event=push`, `branch=main`, exact head SHA above). [Issue #35 final verification](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6355210754) records **V3-G0 COMPLETE**; Issue #35 is **CLOSED/completed**. This closes reconciliation only; V3-I1 requires a separate readiness/authorization gate.
+[PR #36](https://github.com/abuhmaid28/egyhealth360/pull/36) merged at `2ad6ecadcdd973bc7f61d6613d9b4d2c5ef81ddb`. Exact-main post-merge [Bootstrap CI 39881994529](https://github.com/abuhmaid28/egyhealth360/actions/runs/39881994529) completed **SUCCESS** (`event=push`, `branch=main`, exact head SHA above). [Issue #35 final verification](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6355210754) records **V3-G0 COMPLETE**; Issue #35 is **CLOSED/completed**. This closes V3-G0 reconciliation only. Subsequent [Issue #39](https://github.com/abuhmaid28/egyhealth360/issues/39) approves the I1 contract; [Slice 1 authorization](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6356123914) permits documentation adoption only.
 
 ## Current direction
 
@@ -39,9 +39,9 @@ FR-021 is satisfied only for the bounded INITIAL scope. FR-024 is foundation-onl
 
 ## Next gates
 
-1. V3-G0 is COMPLETE with the merge, exact-main CI and Issue #35 closure evidence above. V3-I1 requires a separate readiness/authorization gate.
+1. V3-G0 is COMPLETE. I1 contract approval is recorded in Issue #39; [Slice 1 contract adoption](V3_I1_CONTRACT.md) is in progress. Independently review its PR, require successful CI, approved merge and exact-main verification.
 2. Confirm actual academic deadline/capacity and re-estimate selected V3 scope under D33; old dates/weights/buffer percentages are not V3 commitments.
-3. Prepare separately authorized milestone-specific contracts/issues for **V3-I1 — Integrated Domain & Access Foundations**. No V3-I1 implementation is authorized by this PR.
+3. Obtain separate Slice 2 authorization on Issue #39 after the Slice 1 gate. V3-I1 runtime implementation is NOT STARTED; Slice 2 remains NOT AUTHORIZED. No implementation-bearing work is authorized by contract adoption.
 4. Follow [Roadmap V3](IMPLEMENTATION_ROADMAP.md). Old unstarted M3–M7 are superseded/resequenced; EACCE moves to I5. Final schedule/completion/coverage/observed-input feasibility contracts precede EACCE.
 
 **Design is frozen** even after V3 policy approval/PR #36 merge: no screens, wireframes, Design System, branding, UI/UX or frontend visual work until separate explicit approval after scope/domain prerequisites. Existing visual documents are historical, not ready-to-implement instructions.

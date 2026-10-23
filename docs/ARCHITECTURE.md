@@ -1,5 +1,7 @@
 # EgyHealth 360 — Architecture and V3 Extension Boundary
 
+[I1 contract adoption](V3_I1_CONTRACT.md) preserves this architecture and the sole ClinicianPatientAssignment grant. Future enrollment records bilateral provenance; organization membership is operational authority only, never patient or routed-artifact authority. No runtime module changes in Slice 1; runtime NOT STARTED, Slice 2 NOT AUTHORIZED.
+
 ## Current architecture — retained
 
 One Next.js/TypeScript application, one NestJS/TypeScript modular-monolith API, PostgreSQL 18/Prisma 7 and shared packages in a pnpm monorepo. Retain REST/OpenAPI, server-side sessions/HttpOnly cookies, Argon2id, CSRF/Origin controls, Docker Compose and GitHub Actions. No microservice/FastAPI/Python/ML rewrite, Redis/BullMQ, Kafka/RabbitMQ, GraphQL, Kubernetes, MongoDB or paid auth/AI dependency.

@@ -7,7 +7,7 @@
 | Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
 | V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
-| V3-I1 | **NOT STARTED**; separate readiness/authorization gate required |
+| V3-I1 | **Contract APPROVED**; [Slice 1 contract adoption](V3_I1_CONTRACT.md) in progress; runtime **NOT STARTED**, Slice 2 **NOT AUTHORIZED** |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 

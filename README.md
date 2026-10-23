@@ -9,7 +9,7 @@ EgyHealth 360 is an **integrated digital healthcare journey** graduation prototy
 | Product V3 policy | **APPROVED** — [owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901), [D01–D36/lineage](docs/PRODUCT_V3_DECISIONS.md) |
 | V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [evidence](docs/PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**, accepted historical foundations; [project/evidence](docs/PROJECT.md) |
-| V3-I1 / EACCE implementation | **NOT STARTED**; V3-I1 requires a separate readiness/authorization gate; old unstarted M3–M7 superseded/resequenced by [Roadmap V3](docs/IMPLEMENTATION_ROADMAP.md) |
+| V3-I1 / EACCE implementation | **NOT STARTED**; I1 [contract APPROVED / Slice 1 adoption in progress](docs/V3_I1_CONTRACT.md); Slice 2 NOT AUTHORIZED; old unstarted M3–M7 superseded/resequenced by [Roadmap V3](docs/IMPLEMENTATION_ROADMAP.md) |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**, separate explicit design-unfreeze approval required |
 
 Approved future workspaces: **Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin**, one application. Bounded patient registration, doctor discovery/booking, human-authored consultation, prescriptions, full-item pharmacy dispensing and laboratory fulfillment are Tier 1 future work. Imaging is optional Tier 2. Ordinary healthcare does not require a CarePlan/EACCE. Current backend roles remain PATIENT/CLINICIAN/ADMIN; staff/membership and integrated workflows are not yet implemented.
