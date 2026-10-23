@@ -1,5 +1,7 @@
 # EgyHealth 360 — Data Model Status and V3 Concepts
 
+The [approved I1 contract and compatibility inventory](V3_I1_CONTRACT.md#compatibility-inventory--reviewed-runtime-baseline) define four future concepts and additive extensions, not implemented Prisma objects. Preserve all 23 current models and historical migrations; later exact schema inventories must be extended explicitly without weakening old invariants. Slice 1 adds no schema; runtime NOT STARTED, Slice 2 NOT AUTHORIZED.
+
 ## Implemented model inventory — M0–M2
 
 Exactly the following **23 Prisma models** exist at the reconciliation baseline `ea777ce71c3639a37ec015739a12f0fadc0b4dcc`. This PR changes none of them or the ten migration directories. The [Prisma schema](../packages/db/prisma/schema.prisma), migration SQL and accepted slice contracts are authoritative for executable fields/constraints.
@@ -32,7 +34,7 @@ Current User roles are PATIENT/CLINICIAN/ADMIN only. No provider organization, s
 
 ## APPROVED FUTURE V3 DOMAIN — NOT YET IMPLEMENTED
 
-Product V3 policy is APPROVED; V3-I1 is NOT STARTED. These are conceptual resource boundaries, not proposed Prisma fields or a mandatory one-table-per-concept design. Smallest safe representations are chosen in later reviewed implementation contracts.
+Product V3 policy is APPROVED; V3-I1 is NOT STARTED. These are conceptual resource boundaries, not proposed Prisma fields or a mandatory one-table-per-concept design. The linked I1 contract fixes its four minimum concepts and compatibility guarantees; physical schema details remain for separately authorized slices.
 
 | Concept | Approved meaning and integrity boundary |
 |---|---|

@@ -1,5 +1,7 @@
 # EgyHealth 360 — API Status and V3 Resource Boundaries
 
+[I1 future logical API groups](V3_I1_CONTRACT.md#future-logical-api-and-architecture-map) are approved contract scope, not live endpoints or OpenAPI changes. Slice 1 adopts documentation only; runtime NOT STARTED, Slice 2 NOT AUTHORIZED. Availability is I2 and fulfillment I3.
+
 ## Implemented HTTP boundary
 
 The unchanged [OpenAPI](openapi.json) and accepted M0–M2 contracts define actual behavior at baseline `ea777ce71c3639a37ec015739a12f0fadc0b4dcc`. REST under `/api/v1`, JSON, ISO timestamps, backend session/CSRF/Origin and per-resource authorization remain in force. Future conceptual names are not live routes.

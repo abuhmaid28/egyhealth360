@@ -1,5 +1,7 @@
 # Security & Medical Safety — V3 Policy, M0–M2 Enforcement
 
+[Issue #39 I1 contract](V3_I1_CONTRACT.md) is APPROVED; Slice 1 documentation adoption is in progress, runtime NOT STARTED and Slice 2 NOT AUTHORIZED. Its authorization matrix, sole-assignment compatibility, current-authority and concurrency obligations govern later I1 work. D36 routed-artifact fulfillment remains I3; membership alone never suffices. Existing security contracts below are preserved.
+
 ## Policy versus implementation
 
 Product V3 is APPROVED at policy level; V3-I1 is NOT STARTED. Existing PATIENT/CLINICIAN/ADMIN roles, EH-006 session/CSRF/Origin and own/ACTIVE-assignment checks remain implemented and unchanged. LAB_STAFF/PHARMACY_STAFF, organization membership, general booking/relationship enrollment and fulfillment authority are **approved future policy, NOT IMPLEMENTED**. No current endpoint gains a booking/staff exception.
