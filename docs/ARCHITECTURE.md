@@ -1,6 +1,6 @@
 # EgyHealth 360 — Architecture and V3 Extension Boundary
 
-[I1 contract adoption](V3_I1_CONTRACT.md) preserves this architecture and the sole ClinicianPatientAssignment grant. Future enrollment records bilateral provenance; organization membership is operational authority only, never patient or routed-artifact authority. No runtime module changes in Slice 1; runtime NOT STARTED, Slice 2 NOT AUTHORIZED.
+[Slice 2 implementation](V3_I1_SLICE2.md) adds bounded organization/membership services and fixed staff roles under the approved I1 contract. No new HTTP routes or clinical authorization paths. Slice 1 merged/verified; Slice 2 in review, I1 NOT COMPLETE, Slice 3 NOT AUTHORIZED. Membership is operational only; D36 artifact authority remains I3.
 
 ## Current architecture — retained
 
@@ -10,7 +10,7 @@ One Next.js/TypeScript application, one NestJS/TypeScript modular-monolith API, 
 |---|---|
 | `apps/web` | Bootstrap web surface; integrated product workspaces/UI NOT STARTED, design FROZEN |
 | `apps/api` | Health, auth/session and scoped profile/BP/EH-012 HTTP behavior; [API inventory](API.md) and OpenAPI govern actual routes |
-| `packages/db` | Implemented M0–M2 persistence/internal principal-checked services and ten migrations; exact [23-model inventory](DATA_MODEL.md) |
+| `packages/db` | Implemented M0–M2 persistence/internal principal-checked services and two Slice 2 operational models/twelve migrations; exact [25-model inventory](DATA_MODEL.md) |
 | `packages/clinical-rules` | Exact approved HTN definition/manifest/validation; no arbitrary rule editor/evaluator |
 | `packages/closure-engine` | Bootstrap import check only; EACCE implementation NOT STARTED |
 | `packages/fhir-adapter` | Scaffold; no completed import pipeline |

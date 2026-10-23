@@ -3877,7 +3877,9 @@
                     "enum": [
                       "PATIENT",
                       "CLINICIAN",
-                      "ADMIN"
+                      "ADMIN",
+                      "LAB_STAFF",
+                      "PHARMACY_STAFF"
                     ]
                   }
                 },

@@ -2,7 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
 import { randomBytes, randomUUID, createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdtemp, mkdir, cp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { Pool } from '../support/database.mjs';
@@ -172,13 +174,22 @@ test('ACTIVE unrelated clinician to demo patient is conflict, including cross-bo
 
 test('baseline migrate deploy/status twice preserves seeded rows and applied history',()=>isolated(async({pool,store,env})=>{
   await store.seedIdentities(input);const before=await snapshot(pool);const ledger=(await pool.query('SELECT * FROM _prisma_migrations ORDER BY id')).rows;
-  for(const command of ['deploy','status','deploy','status']) {
-    await new Promise((resolve,reject)=>{
-      const child=spawn('pnpm',['--filter','@egyhealth/db','exec','prisma','migrate',command],{env,stdio:'ignore'});
-      child.on('error',()=>reject(new Error('Migration child failed')));child.on('close',code=>code===0?resolve():reject(new Error('Migration regression failed')));
-    });
-  }
-  assert.deepEqual(await snapshot(pool),before);assert.deepEqual((await pool.query('SELECT * FROM _prisma_migrations ORDER BY id')).rows,ledger);
+  // This is a historical-baseline redeploy proof, not a latest-schema upgrade.
+  // Keep its exact ten-entry ledger assertion; Slice 2 upgrades have separate proof.
+  const directory=await mkdtemp(join(tmpdir(),'eh008-pinned-redeploy-'));
+  try {
+    await mkdir(join(directory,'migrations'));
+    await cp('packages/db/prisma/schema.prisma',join(directory,'schema.prisma'));
+    await cp('packages/db/prisma/migrations/migration_lock.toml',join(directory,'migrations/migration_lock.toml'));
+    for(const migration of migrationNames)await cp(`packages/db/prisma/migrations/${migration}`,join(directory,'migrations',migration),{recursive:true});
+    for(const command of ['deploy','status','deploy','status']) {
+      await new Promise((resolve,reject)=>{
+        const child=spawn('pnpm',['--filter','@egyhealth/db','exec','prisma','migrate',command,'--schema',join(directory,'schema.prisma')],{env,stdio:'ignore'});
+        child.on('error',()=>reject(new Error('Migration child failed')));child.on('close',code=>code===0?resolve():reject(new Error('Migration regression failed')));
+      });
+    }
+    assert.deepEqual(await snapshot(pool),before);assert.deepEqual((await pool.query('SELECT * FROM _prisma_migrations ORDER BY id')).rows,ledger);
+  } finally { await rm(directory,{recursive:true,force:true}); }
 }));
 
 test('repeat-only seed rejects incomplete state atomically instead of repairing it',()=>isolated(async({pool,store})=>{

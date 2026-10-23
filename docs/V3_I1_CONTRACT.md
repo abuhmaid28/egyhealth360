@@ -2,16 +2,17 @@
 
 ## Authority and delivery status
 
-[Issue #39](https://github.com/abuhmaid28/egyhealth360/issues/39) records Product Owner approval of the complete I1 contract; [comment 6356123914](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6356123914) authorizes **Slice 1 only: documentation adoption and compatibility inventory**. No D37+ product decision is required. [D01–D36](PRODUCT_V3_DECISIONS.md) remain frozen, including D06-A, D11-A, D18-A, D23-B and D36.
+[Issue #39](https://github.com/abuhmaid28/egyhealth360/issues/39) records Product Owner approval of the complete I1 contract; [comment 6356123914](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6356123914) authorized **Slice 1 only: documentation adoption and compatibility inventory**. Slice 1 is merged/verified through PR #40 at `a03c0b63a0ed44bcf39a32428002af0c92edc7e0` / CI 39948145751 SUCCESS; [comment 6366843150](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6366843150) separately authorizes Slice 2 only. See [bounded implementation](V3_I1_SLICE2.md) and [validation](V3_I1_SLICE2_VALIDATION.md). No D37+ product decision is required. [D01–D36](PRODUCT_V3_DECISIONS.md) remain frozen, including D06-A, D11-A, D18-A, D23-B and D36.
 
 | Area | Status |
 |---|---|
 | Product V3 policy / V3-G0 | APPROVED / COMPLETE |
 | M0 / M1 / M2 | COMPLETE; historical contracts and implementation preserved |
 | V3-I1 contract | APPROVED; this document adopts Issue #39 |
-| Slice 1 | Contract adoption work in progress until independent review, approved merge and exact-main verification |
-| V3-I1 runtime implementation | NOT STARTED / NOT IMPLEMENTED |
-| Slice 2 | NOT AUTHORIZED / NOT STARTED |
+| Slice 1 | Merged/verified (PR #40; exact-main CI 39948145751 SUCCESS) |
+| V3-I1 runtime implementation | Slice 2 implementation in review; overall NOT COMPLETE |
+| Slice 2 | AUTHORIZED / implementation in review |
+| Slice 3+ | NOT AUTHORIZED / NOT STARTED |
 | EACCE | NOT STARTED |
 | Product UI/design | FROZEN; no design unfreeze |
 
@@ -25,8 +26,8 @@ I1 establishes patient registration/own profile, curated public clinician/specia
 
 | Slice | Approved bounded scope | Authorization now |
 |---|---|---|
-| 1 | Contract adoption and compatibility inventory | Documentation only |
-| 2 | Fixed roles, organizations and memberships | NOT AUTHORIZED |
+| 1 | Contract adoption and compatibility inventory | Merged/verified |
+| 2 | Fixed roles, organizations and memberships | Authorized; implementation in review |
 | 3 | Patient registration and own profile | NOT AUTHORIZED |
 | 4 | Curated public provider directory | NOT AUTHORIZED |
 | 5 | Bilateral relationship lifecycle | NOT AUTHORIZED |
@@ -54,7 +55,7 @@ REUSE preserves an existing concept; EXTEND means bounded additive future work; 
 
 ## Fixed roles, organizations and memberships
 
-Future fixed roles are PATIENT, CLINICIAN, LAB_STAFF, PHARMACY_STAFF and ADMIN. Only the first, second and last exist today. One fixed role per account; no ordinary role switching, generalized IAM, arbitrary permission builder or client-selected privileged registration. Clinician/staff/admin accounts remain managed. Account role alone never confers patient clinical access.
+Future fixed roles are PATIENT, CLINICIAN, LAB_STAFF, PHARMACY_STAFF and ADMIN. At the Slice 1 baseline only PATIENT, CLINICIAN and ADMIN existed; Slice 2 implements the two staff roles for review. One fixed role per account; no ordinary role switching, generalized IAM, arbitrary permission builder or client-selected privileged registration. Clinician/staff/admin accounts remain managed. Account role alone never confers patient clinical access.
 
 Organizations have stable identity and kind (clinic, laboratory, pharmacy), bounded name/location information where needed and current operational status. Suspension disables organization-scoped authority without deleting identity/history. Restoration must be explicit and audited; it does not reactivate an ended membership. Publication is separate from operational status. No enterprise hierarchy or hard fixture-count limit is required.
 
@@ -215,7 +216,7 @@ No invented consent, organization membership, verified specialty or clinical evi
 
 ## Future logical API and architecture map
 
-All groups below are **PLANNED / NOT IMPLEMENTED**. They introduce no route names, HTTP mapping or generated contract. Keep public boundary/controller validation separate from narrow principal-checked persistence; no exported general Prisma client or alternate clinical authorizer.
+The organization/membership operational subset is implemented internally in Slice 2 for review. Other groups below remain **PLANNED / NOT IMPLEMENTED**. They introduce no route names, HTTP mapping or generated contract. Keep public boundary/controller validation separate from narrow principal-checked persistence; no exported general Prisma client or alternate clinical authorizer.
 
 | Group | Intended authority |
 |---|---|
@@ -250,4 +251,4 @@ Booking cannot imply relationship: I1 tests must show unrelated legacy appointme
 
 Before I1 COMPLETE: all separately authorized slices implemented, full required generate/lint/Prisma/build/typecheck/unit/migration/integration/auth measurement/audits/Docker/container/runtime/smoke/cleanup evidence, independent security/authorization review, successful exact-head CI, approved merges and exact-main post-merge verification. Record actual commands/counts/failures/limitations; no fabricated PASS and no fixed historical count requirement.
 
-For Slice 1 alone: documentation diff/link/anchor/status checks, unchanged D01–D36 decision text and historical contracts/evidence, explicit forbidden-file inventory, repository lint and independent normal PR CI. No future tests are represented as run. Next gate is independent Slice 1 PR review, successful CI, approved merge, exact-main verification, then separate Slice 2 authorization on Issue #39. Leave the issue open; this document authorizes no runtime work.
+For Slice 1 alone: documentation diff/link/anchor/status checks, unchanged D01–D36 decision text and historical contracts/evidence, explicit forbidden-file inventory, repository lint and independent normal PR CI. No future tests are represented as run. Slice 1 passed its merge/exact-main gate. Next gate is independent Slice 2 review, successful exact-head CI, Product Owner merge approval and exact-main post-merge verification, then separate Slice 3 authorization on Issue #39. Leave the issue open; this document authorizes no runtime work.

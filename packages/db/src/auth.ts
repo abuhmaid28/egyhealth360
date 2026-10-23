@@ -4,7 +4,7 @@ import { PrismaClient } from './generated/prisma/client.js';
 import { appendAuditRecord } from './audit.js';
 
 export type AuthPrincipal = {
-  userId: string; email: string; role: 'PATIENT' | 'CLINICIAN' | 'ADMIN';
+  userId: string; email: string; role: 'PATIENT' | 'CLINICIAN' | 'ADMIN' | 'LAB_STAFF' | 'PHARMACY_STAFF';
   sessionId: string; expiresAt: Date;
 };
 

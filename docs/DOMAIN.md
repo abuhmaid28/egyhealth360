@@ -1,10 +1,10 @@
 # EgyHealth 360 — Domain Boundaries V3
 
-The [approved I1 contract](V3_I1_CONTRACT.md#minimal-domain-foundation) bounds I1 to Organization, Specialty, OrganizationMembership and RelationshipRequest around reused identity/session/audit/assignment foundations. ClinicianPatientAssignment remains the sole effective clinical grant; no fabricated legacy consent or competing authority. Slice 1 adopts documentation only; runtime NOT STARTED, Slice 2 NOT AUTHORIZED.
+The [approved I1 contract](V3_I1_CONTRACT.md#minimal-domain-foundation) bounds I1 to Organization, Specialty, OrganizationMembership and RelationshipRequest around reused identity/session/audit/assignment foundations. ClinicianPatientAssignment remains the sole effective clinical grant; no fabricated legacy consent or competing authority. Slice 1 is merged/verified; [Slice 2](V3_I1_SLICE2.md) implements Organization/OrganizationMembership and fixed staff roles for review. Specialty and RelationshipRequest remain unimplemented. I1 NOT COMPLETE; Slice 3 NOT AUTHORIZED.
 
 ## Status and implementation boundary
 
-Product V3 policy is APPROVED; V3-I1/EACCE are NOT STARTED and design is FROZEN. [Approved D01–D36](PRODUCT_V3_DECISIONS.md) is the policy input. The concepts below are **APPROVED FUTURE V3 DOMAIN — NOT YET IMPLEMENTED** unless explicitly identified as M0–M2 foundations. This broad domain overview adds no physical schema or HTTP contract; the linked I1 contract freezes its bounded enrollment dispositions and concurrency guarantees for later implementation.
+Product V3 policy is APPROVED; V3-I1 overall is NOT COMPLETE; EACCE is NOT STARTED and design is FROZEN. [Approved D01–D36](PRODUCT_V3_DECISIONS.md) is the policy input. The concepts below are **APPROVED FUTURE V3 DOMAIN — NOT YET IMPLEMENTED** unless explicitly identified as M0–M2 foundations or the Slice 2 operational implementation in review. This broad domain overview adds no physical schema or HTTP contract; the linked I1 contract freezes its bounded enrollment dispositions and concurrency guarantees for later implementation.
 
 ## Boundaries and reuse
 

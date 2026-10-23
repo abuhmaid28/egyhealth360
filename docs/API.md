@@ -1,10 +1,10 @@
 # EgyHealth 360 — API Status and V3 Resource Boundaries
 
-[I1 future logical API groups](V3_I1_CONTRACT.md#future-logical-api-and-architecture-map) are approved contract scope, not live endpoints or OpenAPI changes. Slice 1 adopts documentation only; runtime NOT STARTED, Slice 2 NOT AUTHORIZED. Availability is I2 and fulfillment I3.
+[I1 future logical API groups](V3_I1_CONTRACT.md#future-logical-api-and-architecture-map) are approved contract scope, not live endpoints or OpenAPI changes. Slice 1 merged/verified. [Slice 2](V3_I1_SLICE2.md) is in review: no new routes, only the AuthSuccess staff-role enum extends OpenAPI; internal operational services require a genuine current principal. I1 NOT COMPLETE; Slice 3 NOT AUTHORIZED. Availability is I2 and fulfillment I3.
 
 ## Implemented HTTP boundary
 
-The unchanged [OpenAPI](openapi.json) and accepted M0–M2 contracts define actual behavior at baseline `ea777ce71c3639a37ec015739a12f0fadc0b4dcc`. REST under `/api/v1`, JSON, ISO timestamps, backend session/CSRF/Origin and per-resource authorization remain in force. Future conceptual names are not live routes.
+The [OpenAPI](openapi.json) and accepted M0–M2 contracts define actual behavior at baseline `ea777ce71c3639a37ec015739a12f0fadc0b4dcc`. REST under `/api/v1`, JSON, ISO timestamps, backend session/CSRF/Origin and per-resource authorization remain in force. Future conceptual names are not live routes.
 
 | Implemented group | Actual routes relative to `/api/v1` | Scope |
 |---|---|---|
@@ -15,7 +15,7 @@ The unchanged [OpenAPI](openapi.json) and accepted M0–M2 contracts define actu
 | HTN follow-up | `/patients/{patientId}/follow-up-appointments` and `/{appointmentId}/cancel` beneath it | EH-012 clinician create/cancel, own/assigned history; not general patient booking |
 | Encounter / BP associations | `/patients/{patientId}/clinical-encounters`, `/{encounterId}/blood-pressure-measurements/{measurementId}` and `/{encounterId}/blood-pressure-associations` beneath it | EH-012 immutable HTN encounter/link and minimized history |
 
-Methods, validation, pagination, response/error shapes and status mappings remain exactly those in OpenAPI/contracts; this reconciliation changes none. Do not infer that generic examples in former API planning were frozen routes. Current patient reads require own identity; clinician access requires current ACTIVE assignment; ADMIN denied clinical payload. No staff role, patient registration, marketplace or fulfillment API exists.
+Methods, validation, pagination, response/error shapes and status mappings remain exactly those in OpenAPI/contracts; this reconciliation changes none. Do not infer that generic examples in former API planning were frozen routes. Current patient reads require own identity; clinician access requires current ACTIVE assignment; ADMIN denied clinical payload. Staff roles can use existing authentication; no patient registration, organization/membership management HTTP route, marketplace or fulfillment API exists.
 
 ## PLANNED / NOT IMPLEMENTED — approved V3 resource groups
 
