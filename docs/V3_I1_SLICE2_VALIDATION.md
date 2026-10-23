@@ -1,5 +1,7 @@
 # V3-I1 Slice 2 — Validation and Review Handoff
 
+Current applicability: Slice 2 is COMPLETE (PR #41 merged at `2c96b2ce7cfd407a828f9ba510e563fe1e5983a9`; exact-main CI 40010140478 SUCCESS). Review/pending-Slice-3 wording below records the original Slice 2 submission point. [Slice 3](V3_I1_SLICE3.md) is separately authorized by comment 6374281944 and in review; Slice 4+ remain unauthorized. Historical evidence is retained.
+
 ## Baseline and authorization
 
 Starting main: `a03c0b63a0ed44bcf39a32428002af0c92edc7e0`. PR #40 MERGED; [exact-main Bootstrap 39948145751](https://github.com/abuhmaid28/egyhealth360/actions/runs/39948145751) was independently verified as push/main, that exact SHA, completed SUCCESS. Actual job steps and logs were inspected: baseline 67 unit / 407 integration, migration/audits/Docker/runtime/smoke/cleanup PASS. These are prior remote observations, not new local counts.

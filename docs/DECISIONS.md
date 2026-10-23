@@ -8,7 +8,7 @@ At the 2026 reboot, the original five-role continuity-of-care scope, separate Fa
 
 ## Current applicability and explicit supersession
 
-Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 is COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); Product V3 is the repository source of truth. V3-I1 Slice 2 in review / overall NOT COMPLETE; EACCE NOT STARTED; DESIGN FROZEN.
+Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 is COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); Product V3 is the repository source of truth. V3-I1 Slice 1/2 COMPLETE, [Slice 3](V3_I1_SLICE3.md) implemented / in review; overall NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; DESIGN FROZEN. Earlier ADR status statements record their adoption points, not current delivery authorization.
 
 | Existing decision / planning area | Current applicability | Relationship to ADR-031 |
 |---|---|---|
@@ -334,6 +334,17 @@ Status: Slice 2 implementation in review under [Issue #39 authorization 63668431
 [Slice 2 implementation contract](V3_I1_SLICE2.md): add only fixed staff roles, Organization and OrganizationMembership, with declarative role/kind foreign keys, terminal grant/end history, current principal/organization/membership checks and atomic minimized audit. Internal operational services follow the existing narrow service pattern; no new HTTP routes. OpenAPI expands only the existing AuthSuccess role enum. Separate additive role-enum and organization migrations preserve historical SQL/checksums. Organization-before-membership locking extends the user/session prefix without clinical lock inversion. Membership never authorizes a patient or routed artifact. No D01–D36 change; D36 fulfillment remains I3.
 
 Slice 1 merged/verified; Slice 2 awaits independent review/CI/approved merge/exact-main verification. I1 NOT COMPLETE; Slice 3 NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN. Earlier ADR status wording remains historical.
+
+
+### ADR-034 — Guarded patient registration and own profile
+
+Status: Slice 3 implementation in review under [Issue #39 authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). Slice 2 is COMPLETE through PR #41 at `2c96b2ce7cfd407a828f9ba510e563fe1e5983a9`, exact-main CI 40010140478 SUCCESS.
+
+Adopt [Slice 3 contract](V3_I1_SLICE3.md): anonymous patient-only registration with exact X-EH-Register: 1 plus Origin/Fetch Metadata/strict JSON guards, bounded local resource protection, atomic identity/profile/minimized anonymous audit, generic 202 duplicate-safe acknowledgement and explicit separate login. Reuse canonical email and the existing Argon2id codec/1–1024 UTF-8 byte password semantics. No schema/migration/dependency change.
+
+Own-profile GET/HEAD/PUT derive ownership from a current authenticated PATIENT, expose only existing displayName/dateOfBirth/sex context, and deny other roles. PUT is bounded full replacement under current user/session/profile locks, last serialized replacement wins, exact no-op adds no audit, and changed context/audit commit atomically. Legacy read context is preserved; it never becomes clinical applicability evidence. [Validation](V3_I1_SLICE3_VALIDATION.md) records actual proof.
+
+This implements the Slice 3 portion of ADR-032 without changing D01–D36 or historical ADR/M0–M2 invariants. Membership/ADMIN/registration do not create clinical authority; ClinicianPatientAssignment remains the sole grant. Slice 4+ NOT AUTHORIZED, I1 NOT COMPLETE, EACCE NOT STARTED, design FROZEN. Independent review, successful exact-head CI, explicit merge approval and exact-main verification remain mandatory.
 
 ## Change process
 

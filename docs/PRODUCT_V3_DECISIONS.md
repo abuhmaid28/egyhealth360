@@ -1,5 +1,7 @@
 # Product V3 — Approved Policy and Supersession Record
 
+Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
+
 ## Authoritative status
 
 | Area | Status |
@@ -7,7 +9,7 @@
 | Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
 | V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
-| V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) in review; I1 overall **NOT COMPLETE**, Slice 3 **NOT AUTHORIZED** |
+| V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) COMPLETE; I1 overall **NOT COMPLETE**, Slice 3 **implemented / in review**; Slice 4+ **NOT AUTHORIZED** |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 
@@ -110,4 +112,4 @@ ADR-031 in [DECISIONS](DECISIONS.md) supersedes Product V2's chronic-care-first 
 
 Existing M0–M2 contracts, migrations, validation reports, issue/PR evidence and deterministic M1 seed are preserved. Slice-era statements in those records describe their time, not today's current scope/status. EH-012 remains HTN follow-up evidence, not a complete booking system. EH-014 remains immutable INITIAL-only generation; CareActionDecision is generation provenance, not a ClosureAssessment. FR-024 is foundation-only/incomplete; AC-004/AC-005 remain unsatisfied until later explicit evidence contracts and implementation.
 
-See [PRODUCT](PRODUCT.md), [REQUIREMENTS](REQUIREMENTS.md), [ROADMAP](IMPLEMENTATION_ROADMAP.md) and [SECURITY](SECURITY.md) for the current direction. Design remains frozen after policy approval and the verified PR #36 merge. The subsequent [I1 contract](V3_I1_CONTRACT.md) is approved in Issue #39; Slice 1 is merged/verified and Slice 2 is separately authorized by comment 6366843150. Its [organization/membership implementation](V3_I1_SLICE2.md) is in review; I1 NOT COMPLETE, Slice 3 NOT AUTHORIZED. D01–D36 above are unchanged.
+See [PRODUCT](PRODUCT.md), [REQUIREMENTS](REQUIREMENTS.md), [ROADMAP](IMPLEMENTATION_ROADMAP.md) and [SECURITY](SECURITY.md) for the current direction. Design remains frozen after policy approval and the verified PR #36 merge. The subsequent [I1 contract](V3_I1_CONTRACT.md) is approved in Issue #39; Slice 1 is merged/verified and Slice 2 is separately authorized by comment 6366843150. Its [organization/membership implementation](V3_I1_SLICE2.md) is COMPLETE; I1 NOT COMPLETE, Slice 3 implemented / in review; Slice 4+ NOT AUTHORIZED. D01–D36 above are unchanged.
