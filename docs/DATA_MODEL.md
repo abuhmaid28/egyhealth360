@@ -1,10 +1,10 @@
 # EgyHealth 360 — Data Model Status and V3 Concepts
 
-The [approved I1 contract and compatibility inventory](V3_I1_CONTRACT.md#compatibility-inventory--reviewed-runtime-baseline) define four future concepts and additive extensions, not implemented Prisma objects. Preserve all 23 current models and historical migrations; later exact schema inventories must be extended explicitly without weakening old invariants. Slice 1 adds no schema; runtime NOT STARTED, Slice 2 NOT AUTHORIZED.
+[Slice 2 implementation](V3_I1_SLICE2.md) adds Organization and OrganizationMembership plus fixed staff roles; implementation in review, I1 NOT COMPLETE, Slice 3 NOT AUTHORIZED. Specialty and RelationshipRequest remain unimplemented. Historical schema/migration/clinical behavior is preserved.
 
-## Implemented model inventory — M0–M2
+## Implemented model inventory — M0–M2 plus Slice 2 in review
 
-Exactly the following **23 Prisma models** exist at the reconciliation baseline `ea777ce71c3639a37ec015739a12f0fadc0b4dcc`. This PR changes none of them or the ten migration directories. The [Prisma schema](../packages/db/prisma/schema.prisma), migration SQL and accepted slice contracts are authoritative for executable fields/constraints.
+Exactly the following **25 Prisma models** exist on this Slice 2 branch: the unchanged 23 M0–M2 foundations plus Organization and OrganizationMembership. Two additive migrations follow the ten preserved historical migrations. The [Prisma schema](../packages/db/prisma/schema.prisma), migration SQL and accepted slice contracts are authoritative for executable fields/constraints.
 
 - `User`
 - `Session`
@@ -29,12 +29,14 @@ Exactly the following **23 Prisma models** exist at the reconciliation baseline 
 - `CareAction`
 - `CareActionDecision`
 - `CareActionApplicabilityInput`
+- `Organization`
+- `OrganizationMembership`
 
-Current User roles are PATIENT/CLINICIAN/ADMIN only. No provider organization, staff membership, general booking, prescription, lab order/result, notification, ClosureAssessment or experiment-result model is implemented. A model's existence does not imply a public route, workspace or completed product requirement.
+Current branch User roles are PATIENT/CLINICIAN/ADMIN/LAB_STAFF/PHARMACY_STAFF. Organization and OrganizationMembership provide operational scope only. No Specialty, RelationshipRequest, general booking, prescription, lab order/result, notification, ClosureAssessment or experiment-result model is implemented. A model's existence does not imply a public route, workspace or completed product requirement.
 
 ## APPROVED FUTURE V3 DOMAIN — NOT YET IMPLEMENTED
 
-Product V3 policy is APPROVED; V3-I1 is NOT STARTED. These are conceptual resource boundaries, not proposed Prisma fields or a mandatory one-table-per-concept design. The linked I1 contract fixes its four minimum concepts and compatibility guarantees; physical schema details remain for separately authorized slices.
+Product V3 policy is APPROVED; V3-I1 overall is NOT COMPLETE. These are conceptual resource boundaries, not proposed Prisma fields or a mandatory one-table-per-concept design. The linked I1 contract fixes its four minimum concepts and compatibility guarantees; physical schema details remain for separately authorized slices.
 
 | Concept | Approved meaning and integrity boundary |
 |---|---|

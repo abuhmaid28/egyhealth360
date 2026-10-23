@@ -7,7 +7,7 @@
 | Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
 | V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
-| V3-I1 | **Contract APPROVED**; [Slice 1 contract adoption](V3_I1_CONTRACT.md) in progress; runtime **NOT STARTED**, Slice 2 **NOT AUTHORIZED** |
+| V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) in review; I1 overall **NOT COMPLETE**, Slice 3 **NOT AUTHORIZED** |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 
@@ -33,15 +33,15 @@ The integrated journey is Layer A, longitudinal continuity Layer B, bounded HTN 
 
 Issue [#28](https://github.com/abuhmaid28/egyhealth360/issues/28) is CLOSED/completed. `ea777ce71c3639a37ec015739a12f0fadc0b4dcc` was the original verified main baseline for PR #36, including M2 documentation closeout. [Final M2 completion record](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6330230875) and [successful exact-baseline CI 39702452808](https://github.com/abuhmaid28/egyhealth360/actions/runs/39702452808) preserve that final closeout evidence. Older closeout-pending/Open statements in immutable validation reports describe an earlier review point and do not reopen M2. These are historical results, not CI rerun for this documentation change.
 
-M0–M2 were built under the narrower V2 scope. They remain valuable accepted foundations, not completed V3 booking/consultation/fulfillment. Preserve contract text, migrations, fixed M1 seed and validation/issue/PR evidence. Exact implemented models are in [DATA_MODEL](DATA_MODEL.md); actual routes are in [API](API.md) and unchanged [OpenAPI](openapi.json). Internal services are not automatically public APIs.
+M0–M2 were built under the narrower V2 scope. They remain valuable accepted foundations, not completed V3 booking/consultation/fulfillment. Preserve contract text, migrations, fixed M1 seed and validation/issue/PR evidence. Exact implemented models are in [DATA_MODEL](DATA_MODEL.md); actual routes are in [API](API.md) and [OpenAPI](openapi.json). Internal services are not automatically public APIs.
 
 FR-021 is satisfied only for the bounded INITIAL scope. FR-024 is foundation-only/incomplete; AC-004 SCHEDULED and AC-005 COMPLETED remain unsatisfied. There is no recurrence or EACCE implementation. Existing CareActionDecision is immutable generation provenance, not a closure assessment.
 
 ## Next gates
 
-1. V3-G0 is COMPLETE. I1 contract approval is recorded in Issue #39; [Slice 1 contract adoption](V3_I1_CONTRACT.md) is in progress. Independently review its PR, require successful CI, approved merge and exact-main verification.
+1. V3-G0 is COMPLETE. Slice 1 contract adoption is merged in [PR #40](https://github.com/abuhmaid28/egyhealth360/pull/40) at `a03c0b63a0ed44bcf39a32428002af0c92edc7e0`; exact-main [CI 39948145751](https://github.com/abuhmaid28/egyhealth360/actions/runs/39948145751) SUCCESS. [Authorization 6366843150](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6366843150) permits Slice 2 only. Its [bounded implementation](V3_I1_SLICE2.md) is in review, not accepted by PR existence.
 2. Confirm actual academic deadline/capacity and re-estimate selected V3 scope under D33; old dates/weights/buffer percentages are not V3 commitments.
-3. Obtain separate Slice 2 authorization on Issue #39 after the Slice 1 gate. V3-I1 runtime implementation is NOT STARTED; Slice 2 remains NOT AUTHORIZED. No implementation-bearing work is authorized by contract adoption.
+3. Independent Slice 2 review + successful exact-head CI + Product Owner merge approval + exact-main post-merge verification precede separate Slice 3 authorization. I1 overall remains NOT COMPLETE.
 4. Follow [Roadmap V3](IMPLEMENTATION_ROADMAP.md). Old unstarted M3–M7 are superseded/resequenced; EACCE moves to I5. Final schedule/completion/coverage/observed-input feasibility contracts precede EACCE.
 
 **Design is frozen** even after V3 policy approval/PR #36 merge: no screens, wireframes, Design System, branding, UI/UX or frontend visual work until separate explicit approval after scope/domain prerequisites. Existing visual documents are historical, not ready-to-implement instructions.

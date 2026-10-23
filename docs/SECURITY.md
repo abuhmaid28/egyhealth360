@@ -1,10 +1,10 @@
 # Security & Medical Safety — V3 Policy, M0–M2 Enforcement
 
-[Issue #39 I1 contract](V3_I1_CONTRACT.md) is APPROVED; Slice 1 documentation adoption is in progress, runtime NOT STARTED and Slice 2 NOT AUTHORIZED. Its authorization matrix, sole-assignment compatibility, current-authority and concurrency obligations govern later I1 work. D36 routed-artifact fulfillment remains I3; membership alone never suffices. Existing security contracts below are preserved.
+[Issue #39 I1 contract](V3_I1_CONTRACT.md) is APPROVED; Slice 1 is merged/verified; [Slice 2 operational implementation](V3_I1_SLICE2.md) is in review, I1 NOT COMPLETE and Slice 3 NOT AUTHORIZED. Its authorization matrix, sole-assignment compatibility, current-authority and concurrency obligations govern later I1 work. D36 routed-artifact fulfillment remains I3; membership alone never suffices. Existing security contracts below are preserved.
 
 ## Policy versus implementation
 
-Product V3 is APPROVED at policy level; V3-I1 is NOT STARTED. Existing PATIENT/CLINICIAN/ADMIN roles, EH-006 session/CSRF/Origin and own/ACTIVE-assignment checks remain implemented and unchanged. LAB_STAFF/PHARMACY_STAFF, organization membership, general booking/relationship enrollment and fulfillment authority are **approved future policy, NOT IMPLEMENTED**. No current endpoint gains a booking/staff exception.
+Product V3 is APPROVED at policy level; V3-I1 overall is NOT COMPLETE. Existing PATIENT/CLINICIAN/ADMIN roles, EH-006 session/CSRF/Origin and own/ACTIVE-assignment checks remain implemented and unchanged. Slice 2 adds fixed LAB_STAFF/PHARMACY_STAFF and operational organization membership under review; booking/relationship enrollment and fulfillment remain **NOT IMPLEMENTED**. No current endpoint gains a booking/staff exception.
 
 ## Approved future authorization boundary
 
