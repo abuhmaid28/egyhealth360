@@ -1,114 +1,45 @@
-# EgyHealth 360 — API Principles V1
+# EgyHealth 360 — API Status and V3 Resource Boundaries
 
-## Style
+## Implemented HTTP boundary
 
-- REST
-- base path `/api/v1`
-- JSON
-- OpenAPI is the formal contract
-- UTC storage and ISO 8601 timestamps
-- stable machine-readable error codes
+The unchanged [OpenAPI](openapi.json) and accepted M0–M2 contracts define actual behavior at baseline `ea777ce71c3639a37ec015739a12f0fadc0b4dcc`. REST under `/api/v1`, JSON, ISO timestamps, backend session/CSRF/Origin and per-resource authorization remain in force. Future conceptual names are not live routes.
 
-## Security
+| Implemented group | Actual routes relative to `/api/v1` | Scope |
+|---|---|---|
+| Readiness | `/health` | Public database-backed readiness |
+| Authentication | `/auth/login`, `/auth/logout`, `/auth/me` | EH-006 frozen operations |
+| Patient profile | `/patients/{patientId}/profile` | Minimal own/ACTIVE-assigned read; no registration/update/list/summary |
+| BP | `/patients/{patientId}/blood-pressure-measurements` | EH-011 create/history with current correction/privacy filtering |
+| HTN follow-up | `/patients/{patientId}/follow-up-appointments` and `/{appointmentId}/cancel` beneath it | EH-012 clinician create/cancel, own/assigned history; not general patient booking |
+| Encounter / BP associations | `/patients/{patientId}/clinical-encounters`, `/{encounterId}/blood-pressure-measurements/{measurementId}` and `/{encounterId}/blood-pressure-associations` beneath it | EH-012 immutable HTN encounter/link and minimized history |
 
-- Server-side sessions via secure HttpOnly cookies
-- Backend authorization is mandatory
-- Clinician access requires an active patient assignment
-- Admin does not automatically receive unrestricted clinical access
-- Server-owned identity/status fields are derived server-side
-- State-changing requests require CSRF protection in the cookie-session architecture
+Methods, validation, pagination, response/error shapes and status mappings remain exactly those in OpenAPI/contracts; this reconciliation changes none. Do not infer that generic examples in former API planning were frozen routes. Current patient reads require own identity; clinician access requires current ACTIVE assignment; ADMIN denied clinical payload. No staff role, patient registration, marketplace or fulfillment API exists.
 
-## Response shapes
+## PLANNED / NOT IMPLEMENTED — approved V3 resource groups
 
-Single result:
-```json
-{ "data": {} }
-```
+These are conceptual groups only; no endpoint paths, request fields, final enums or HTTP mappings are added/frozen here.
 
-Collection:
-```json
-{ "data": [], "meta": { "page": 1, "pageSize": 20, "total": 0 } }
-```
+| Future group | Product boundary |
+|---|---|
+| Patient enrollment/profile | Bounded patient-only registration and own permitted profile updates; privileged accounts managed, no user-selected role |
+| Public directory | Curated published doctor/specialty/clinic/profile/availability; no private account or patient data |
+| Professional schedule and booking | Clinician availability/own schedule; own patient booking/cancel/reschedule and preserved history; minimum logistics access before relationship |
+| Clinical relationship | Explicit patient authorization + clinician acceptance and ending; ongoing current checks, history, no authorship bypass |
+| Consultation | Actual treating/booking/encounter links, human-entered problems/minimal allergy context, protected notes and signed/released summaries/addenda |
+| Prescribing and medication history | Signed prescription/items/validity/cancel/replace; prescribed versus dispensed versus actual-use distinctions |
+| Diagnostics | Routed lab order/processing/result/finalization/release/corrections; imaging optional, not implemented |
+| Pharmacy fulfillment | Current routed valid prescription access and full-item dispense/history; no prescription modification/adherence inference |
+| Longitudinal coordination | Authorized source-linked timeline, follow-up intent/booking, in-app important updates/reminders; current privacy on payload/references/counts |
+| Operational administration | Bounded users/providers/memberships/status/catalog/demo/config; no clinical entitlement or impersonation |
+| Later continuity/research | Approved product exposure of retained M2 internal services; later EACCE/review and isolated Evaluation Lab, not protected generation snapshot export |
 
-Error:
-```json
-{ "error": { "code": "ACCESS_DENIED", "message": "Access denied." } }
-```
+Future exposure needs milestone-specific auth, IDOR/provider isolation, privacy/history, retry/concurrency and input contracts before implementation. [D36](PRODUCT_V3_DECISIONS.md#d36--fulfillment-authorization-and-suspension) requires current user/org/membership/artifact authority for lab/pharmacy; booking or role alone never grants whole-record access. Separate released summaries/final results from private notes/drafts. Current OpenAPI must change only in a separately authorized implementation task.
 
-## Planned endpoint groups
+The former V2 conceptual endpoint list is superseded as an active API plan; it never overrode frozen EH-006/007/011/012 paths. Source/history operations and timeline/audit are different resources. EACCE stays a future shared TypeScript package, not an HTTP microservice.
 
-### Auth
-- POST `/auth/login`
-- POST `/auth/logout`
-- GET `/auth/me`
+## Accepted implementation notes
 
-### Clinician patients
-- GET `/clinician/patients`
-- GET `/clinician/patients/:patientId/summary`
-- GET `/clinician/patients/:patientId/timeline`
-- GET `/clinician/patients/:patientId/measurements`
-
-### Care plans/actions
-- POST `/patients/:patientId/care-plans`
-- GET `/care-plans/:id`
-- POST `/care-plans/:id/activate`
-- POST `/care-plans/:id/cancel`
-- GET `/care-plans/:id/actions`
-- GET `/care-actions/:id`
-
-### Evidence / measurements
-- POST `/patients/me/measurements/blood-pressure`
-- GET `/patients/me/measurements/blood-pressure`
-- POST `/patients/:patientId/measurements/blood-pressure` (clinician-authorized)
-
-### Follow-up
-- POST `/patients/:patientId/follow-ups`
-- GET `/patients/me/follow-ups`
-- POST `/follow-ups/:id/cancel`
-
-### Closure assessments
-- GET `/care-actions/:id/assessments/current`
-- GET `/care-actions/:id/assessments`
-- POST `/care-actions/:id/re-evaluate`
-- POST `/assessments/:id/confirm`
-- POST `/assessments/:id/override`
-
-### Patient view
-- GET `/patients/me/care-plan`
-- GET `/patients/me/care-actions`
-- GET `/patients/me/timeline`
-
-### Admin / research
-- GET `/admin/users`
-- POST `/admin/users/:id/disable`
-- POST `/admin/demo/reset`
-- POST `/admin/experiments`
-- GET `/admin/experiments`
-- GET `/admin/experiments/:id`
-
-Endpoint names are conceptual until implementation issues freeze their contracts.
-
-## Closure-engine boundary
-
-EACCE is not an HTTP microservice. NestJS and the experiment worker call the shared TypeScript package directly.
-
-## Error-code examples
-
-- AUTH_INVALID_CREDENTIALS
-- AUTH_SESSION_EXPIRED
-- ACCESS_DENIED
-- PATIENT_NOT_FOUND
-- CARE_PLAN_INVALID_STATE
-- CARE_ACTION_NOT_FOUND
-- ASSESSMENT_STALE
-- ASSESSMENT_UNAVAILABLE
-- OVERRIDE_REASON_REQUIRED
-- EXPERIMENT_NOT_FOUND
-- EXPERIMENT_FAILED
-
-## Pagination
-
-Potentially large collections such as patients, care actions, and experiment runs must support pagination/filtering.
+The slice notes below retain implemented contracts and limitations. Statements that a slice left OpenAPI unchanged are historical relative to that slice; the file as committed on current main governs today's complete interface.
 
 ## EH-006 frozen authentication contract
 
@@ -135,11 +66,11 @@ HTTP exposes id/patientId/systolic/diastolic/unit/measuredAt/createdAt/sourceKin
 internal recordedByUserId is never projected. All responses no-store; HEAD performs
 GET checks with no body; unsupported methods 405 Allow GET, HEAD, POST. Exact errors,
 input/time/provenance and transaction contracts are in openapi.json and
-EH-011_BP_PROVENANCE_CONTRACT.md. Other endpoint names above remain conceptual.
+EH-011_BP_PROVENANCE_CONTRACT.md. Former V2 conceptual endpoint names are not implemented contracts.
 
 ## EH-012 frozen follow-up and encounter API
 
-POST and paginated GET/HEAD /patients/{patientId}/follow-up-appointments; POST /patients/{patientId}/follow-up-appointments/{appointmentId}/cancel. POST and paginated GET/HEAD /patients/{patientId}/clinical-encounters; POST /patients/{patientId}/clinical-encounters/{encounterId}/blood-pressure-measurements/{measurementId}; paginated GET/HEAD /patients/{patientId}/clinical-encounters/{encounterId}/blood-pressure-associations. The final read returns association references only; EH-011 retains BP-resource history. These replace conceptual follow-up names above for this implemented slice.
+POST and paginated GET/HEAD /patients/{patientId}/follow-up-appointments; POST /patients/{patientId}/follow-up-appointments/{appointmentId}/cancel. POST and paginated GET/HEAD /patients/{patientId}/clinical-encounters; POST /patients/{patientId}/clinical-encounters/{encounterId}/blood-pressure-measurements/{measurementId}; paginated GET/HEAD /patients/{patientId}/clinical-encounters/{encounterId}/blood-pressure-associations. The final read returns association references only; EH-011 retains BP-resource history. These are the frozen follow-up names for this implemented slice.
 
 Create accepts exactly scheduledAt/purpose or occurredAt/purpose and returns 201; cancellation/link accept {}. Cancel returns 200; new association 201/exact pair 200/different encounter 409 after full scope authorization. Internal creator/recorder/canceller omitted. Patient reads own; assigned clinician writes; Admin denied. Strict timestamp/JSON/UUID, session/Origin/CSRF, no-store/no ETag/304, canonical pagination default 1/20/max100, generic 404 and method Allow contracts are frozen in openapi.json and EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md. No action-linked SCHEDULED or qualifying completion evidence is claimed.
 

@@ -1,99 +1,43 @@
-# EgyHealth 360 — Technical Architecture V1
+# EgyHealth 360 — Architecture and V3 Extension Boundary
 
-## Goal
+## Current architecture — retained
 
-Keep the architecture professional, free-first, self-hostable, testable, and easy for interchangeable AI agents to understand.
+One Next.js/TypeScript application, one NestJS/TypeScript modular-monolith API, PostgreSQL 18/Prisma 7 and shared packages in a pnpm monorepo. Retain REST/OpenAPI, server-side sessions/HttpOnly cookies, Argon2id, CSRF/Origin controls, Docker Compose and GitHub Actions. No microservice/FastAPI/Python/ML rewrite, Redis/BullMQ, Kafka/RabbitMQ, GraphQL, Kubernetes, MongoDB or paid auth/AI dependency.
 
-## Runtime architecture
+| Workspace package | Actual baseline status versus intended responsibility |
+|---|---|
+| `apps/web` | Bootstrap web surface; integrated product workspaces/UI NOT STARTED, design FROZEN |
+| `apps/api` | Health, auth/session and scoped profile/BP/EH-012 HTTP behavior; [API inventory](API.md) and OpenAPI govern actual routes |
+| `packages/db` | Implemented M0–M2 persistence/internal principal-checked services and ten migrations; exact [23-model inventory](DATA_MODEL.md) |
+| `packages/clinical-rules` | Exact approved HTN definition/manifest/validation; no arbitrary rule editor/evaluator |
+| `packages/closure-engine` | Bootstrap import check only; EACCE implementation NOT STARTED |
+| `packages/fhir-adapter` | Scaffold; no completed import pipeline |
+| `apps/experiment-worker` | Database health polling scaffold, not a running experiment pipeline |
+| `packages/ui` | Scaffold; no V3 Design System/components authorized |
+| `packages/config` | Shared validated runtime configuration |
 
-```text
-Browser
-  ↓
-Next.js Web App
-  ↓ REST /api/v1
-NestJS Modular-Monolith API
-  ├── PostgreSQL 18 / Prisma 7
-  ├── shared EACCE package
-  └── FHIR R4 adapter
+Node 24.21.0 and pnpm 10.34.6 remain pinned. Local/self-hosted Docker Compose without paid services is the demo target; optional cloud hosting does not imply production healthcare readiness. Browser/API same-origin integration remains later reviewed work, not a new CORS allowance.
 
-Experiment Worker (TypeScript)
-  ├── Synthea/FHIR benchmark input
-  ├── same shared EACCE package
-  └── experiment/result persistence
-```
+## Approved future modules — NOT IMPLEMENTED
 
-## Applications
+[Product V3](PRODUCT.md) targets **Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin workspaces in the same application**, not five applications/microservices. Imaging adds no sixth portal. Conceptual modular extensions are provider/directory/membership, patient onboarding, genuine clinical relationship, availability/booking, consultation/documentation/problems, medication/prescription, diagnostics/result, dispensing, longitudinal projection and in-app coordination. Their final package/table/route layout remains milestone-specific reviewed work.
 
-- `apps/web` — Next.js 16.x + TypeScript
-- `apps/api` — NestJS v11 + TypeScript modular monolith
-- `apps/experiment-worker` — TypeScript background research worker
+Keep clinical sources owned by their modules. Connect them through explicit same-patient/source links and authorized read projections, not a universal clinical JSON event table, event-sourcing rewrite or messaging platform. Timeline and audit are separate. Clinical occurrence, signing/availability and local recording provenance must remain truthful; no generalized historical-knowledge guarantee is created.
 
-## Shared packages
+Authorization remains backend-first: public directory is published professional data only; booking logistics do not grant clinical access; current patient ownership/ACTIVE relationship governs clinical records; future current organization membership plus routed artifact scope governs staff fulfillment under [D36](PRODUCT_V3_DECISIONS.md#d36--fulfillment-authorization-and-suspension). Private notes, release and wrong-patient masking apply through projections/counts/notifications. ADMIN remains operational.
 
-- `packages/closure-engine` — pure deterministic TypeScript EACCE; no Nest/Prisma/Next imports
-- `packages/clinical-rules` — versioned source-traceable care-rule definitions
-- `packages/fhir-adapter` — FHIR R4 ↔ internal normalized model
-- `packages/db` — Prisma schema/client/migrations/seed helpers
-- `packages/ui` — design-system and healthcare UI components
-- `packages/config` — shared validated configuration where useful
+## Preserved M2 service boundaries
 
-## Core decisions
+CarePlan, catalog, normalized coverage/applicability, BP amendment and INITIAL action services are not automatically public routes. Existing session/transaction locks, exact plan/rule pins, history guards and minimized atomic audit remain as frozen in their contracts. New booking or staff authority cannot bypass legacy checks. EH-012 retains HTN follow-up/immutable encounter-BP semantics; new general consultation is an explicit later extension.
 
-- Modular monolith, not microservices
-- REST + OpenAPI, not GraphQL
-- PostgreSQL 18
-- Prisma 7 pinned/stable
-- Node.js 24 LTS
-- pnpm workspace
-- Docker Compose
-- GitHub Actions
-- Server-side sessions with HttpOnly cookies
-- Argon2id password hashing
-- Same-origin browser/API setup where practical
+EH-014 adds principal-checked INITIAL generation and protected immutable decision records, without HTTP route or autonomous hook. Ordinary action views are minimized/current-privacy-safe; generation snapshots never become timeline expansions. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md), [post-merge validation](EH-014_VALIDATION.md#post-merge-validation), [BP correction/privacy](BP_CORRECTION_INVALIDATION_CONTRACT.md).
 
-## EACCE boundary
+## Future research boundary — I5/I7
 
-The closure engine is pure domain logic. It receives typed action/evidence/coverage inputs and returns classification, reason codes, evidence trace, and missing-evidence information. It does not access the database or HTTP layer directly.
+EACCE remains pure deterministic shared TypeScript called by API and worker, with no Nest/Prisma/Next imports in domain logic or database/HTTP access by the engine. It will consume approved observed action/evidence/coverage/evaluation-time inputs and emit classification/explanation; implementation NOT STARTED. CareActionDecision is generation provenance, not a closure assessment.
 
-The product API and research worker must use the same engine implementation.
+Use FHIR R4 at the adapter boundary, not as the primary database. Pin Synthea/config/concept sets; prepare observed-input feasibility before I5. Planned experiment execution uses PostgreSQL-backed TypeScript worker states and isolated ground truth, with no new queue service. Research B0/B1/P1 and the HTN protocol remain bounded and unchanged.
 
-## Research worker
+## Files, notifications and design
 
-Experiment runs are asynchronous. PostgreSQL stores run state (`PENDING`, `RUNNING`, `COMPLETED`, `FAILED`); a worker claims and executes jobs. Redis/BullMQ/Kafka/RabbitMQ are not required in Core V1.
-
-## FHIR
-
-Use FHIR R4 for interchange, especially Synthea imports. The internal relational model is not a FHIR server/database. A dedicated adapter maps resources such as Patient, Observation, Encounter, Appointment, CarePlan/Task where useful.
-
-## Files and notifications
-
-Core V1 has no medical-file upload/storage requirement. Notifications are in-app only if implemented; no paid SMS/WhatsApp/email dependency is required.
-
-## Deployment
-
-Primary requirement: local/self-hosted Docker Compose demo that works without paid services. Optional cloud deployment may use the same standard containers and PostgreSQL.
-
-## Explicitly rejected in Core V1
-
-- FastAPI/Python runtime service
-- ML inference service
-- Redis/BullMQ
-- Kafka/RabbitMQ
-- Kubernetes
-- GraphQL
-- MongoDB primary storage
-- Firebase primary backend
-- paid auth providers
-- paid AI APIs
-- separate lab/pharmacy applications
-
-## Issue #31 BP amendment boundary
-
-Clinical Evidence now owns the internal principal-checked BP amendment service and three additive append-only records: operation, terminal exclusion and independent wrong-patient privacy target. Ordinary BP/encounter history masks private targets; normalized/effective projections also remove every excluded target. EH-015 applicability remains unchanged. D1 provides truthful local receipts, not historical transaction visibility; EH-014 below captures the exact decision inputs. See [the implemented contract](BP_CORRECTION_INVALIDATION_CONTRACT.md). Issue #31 itself added no public amendment route, CareAction/B2/B3 or EACCE implementation; the later EH-014 extension below supplies bounded INITIAL generation.
-
-
-## EH-014 bounded INITIAL implementation — merged and verified
-
-EH-014 adds a narrow root-exported principal-checked internal action service and three immutable persistence tables. Explicit assigned-clinician generation only; no startup/BP/activation hook, public HTTP route or research-worker authority. SQL guards/retained locks enforce exact INITIAL identity, immutable replay and atomic audits. Protected decision data never forms an ordinary product expansion. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [validation](EH-014_VALIDATION.md).
-
-Status evidence: [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. [Post-merge validation](EH-014_VALIDATION.md#post-merge-validation). No behavioral or R1–R8 contract change is introduced by this status closeout.
+No medical file/image storage infrastructure is required. Laboratory final results are Tier 1; imaging narrative/report is Tier 2 and unimplemented. Important in-app events/bounded reminders are approved future scope; paid SMS/WhatsApp/email is not required. Separate explicit design-unfreeze approval remains mandatory after scope/domain prerequisites; this document specifies no screens, components or visual work.

@@ -1,4 +1,4 @@
-You are continuing implementation of the EgyHealth 360 project.
+You are continuing the issue-scoped EgyHealth 360 project. Work may be documentation/planning only; implementation is never implied by product-policy approval.
 
 Before writing code:
 
@@ -18,7 +18,9 @@ Before making changes, summarize:
 - your implementation plan,
 - any conflict or ambiguity that blocks safe execution.
 
-Then implement only the defined issue scope.
+Then perform only the defined issue scope.
+
+Product V3 policy is APPROVED; read docs/PRODUCT_V3_DECISIONS.md and the current PROJECT status. M0–M2 remain accepted COMPLETE history. V3-G0 source-of-truth reconciliation requires independent review, merge and post-merge verification before V3-I1 implementation authorization. V3-I1 and EACCE remain NOT STARTED. Design remains FROZEN until separate explicit design-unfreeze approval. Preserve historical contracts, validations, migrations and fixed M1 seed. Approved future entities/roles/resources are not implemented capabilities; do not bypass current ownership/ACTIVE-assignment security or claim a policy-covered golden journey as delivered.
 
 Required operating rules:
 - preserve the free-first/self-hostable policy,

@@ -1,72 +1,50 @@
-# EgyHealth 360 — Domain Model V1
+# EgyHealth 360 — Domain Boundaries V3
 
-## Domain boundaries
+## Status and implementation boundary
 
-### 1. Identity & Access
-Owns users, patient/clinician profiles, roles, sessions, and clinician-patient assignments.
+Product V3 policy is APPROVED; V3-I1/EACCE are NOT STARTED and design is FROZEN. [Approved D01–D36](PRODUCT_V3_DECISIONS.md) is the policy input. The concepts below are **APPROVED FUTURE V3 DOMAIN — NOT YET IMPLEMENTED** unless explicitly identified as M0–M2 foundations. No schemas, final state enums or API/transaction contracts are frozen here.
 
-### 2. Clinical Planning
-Owns guideline sources, care-plan templates, rule definitions, patient care plans, and care actions.
+## Boundaries and reuse
 
-### 3. Clinical Evidence
-Owns normalized evidence used by closure reasoning, initially including BP measurements, follow-up appointments, clinical encounters, data sources, and record-coverage windows.
+| Domain | Accepted M0–M2 foundation | Approved future addition |
+|---|---|---|
+| Identity, providers and access | User, PatientProfile, ClinicianProfile, Session, ACTIVE/ENDED assignment history, own-data/assigned-clinician checks | Bounded patient registration/profile; simple curated provider/clinic/location/specialty/public doctor information; fixed lab/pharmacy staff membership; explicit relationship authorization/acceptance/ending |
+| Access to care | EH-012 HTN-only FollowUpAppointment | Finite clinician-published availability, general booking/changes/schedule and one operational booking authority; follow-up intent remains meaningful without a slot |
+| Consultation and documentation | Immutable ClinicalEncounter and encounter-BP association | Actual treating/provider/booking provenance, general consultation, human-entered complaint/problem/diagnosis/minimal allergy review, signed private notes and released summaries/addenda |
+| Medications and pharmacy | None | Curated medication definition, signed prescription/items, clinician-entered instructions/validity, cancellation/replacement and full-item dispense/reversal history; no adherence inference |
+| Diagnostics | None | Clinician lab order, routed lab processing, result entry/verification/finalization/release and versioned amendment/retraction. Imaging optional Tier 2 using shared principles |
+| Longitudinal record/coordination | BP history and internal normalized evidence candidates | Authorized source-linked cross-module projection, important in-app updates/bounded reminders and follow-up links; no generic audit feed |
+| Care planning/evidence | Published definition versions, exact-pinned CarePlan, immutable BP/coverage/applicability/correction/privacy, INITIAL CareAction and protected decision | Product integration under later explicit boundaries; no automatic bridge from a diagnosis/result/booking into applicability, coverage or action closure |
+| Care closure/review | Package bootstrap only; generation decision is not a closure assessment | Later deterministic EACCE, immutable assessments/evidence explanations, stale/superseded handling and clinician override preserving engine output at I5 |
+| Audit/research/admin | Append-only audit primitives; worker/FHIR scaffolds | Bounded operational administration/Evaluation Lab and isolated reproducible HTN B0/B1/P1 pipeline; ground truth never reaches observed engine inputs |
 
-### 4. Care Closure Intelligence
-Owns immutable closure assessments, evidence traces, reason codes, and stale/superseded assessment relationships.
+## Distinct records and meanings
 
-### 5. Clinician Review & Audit
-Owns clinician confirmations/overrides and append-only audit events. Human review never overwrites the raw engine result.
+- **Clinical source records:** encounter/document/problem assertions, signed prescription/order, finalized result and its versions, dispense facts, BP, follow-up instructions, exact-pinned plans/actions/decisions. Preserve source, patient, human actor, clinical occurrence and local recording/signing provenance. Correction is attributable history, not silent overwrite or cross-patient movement.
+- **Operational records:** provider/membership/status, availability/booking/change history, fulfillment progress/routing, notification state. They do not prove clinical completion, record coverage, diagnosis or medication use.
+- **Timeline projections:** patient/current-doctor authorized views of relevant source events, booking and follow-up milestones. Include appropriate event/recording time, source and correction status. They do not become a second writable clinical truth.
+- **Audit:** immutable safe actor/action/target/time provenance, distinct from clinical source history and patient timeline; no raw medical payload store.
 
-### 6. Research / Evaluation
-Owns experiment runs, benchmark cases, corruption events, engine predictions, metrics, and ground truth. Ground truth is never exposed to runtime engine inputs.
+Prescription ≠ dispense ≠ patient reported use. Order ≠ result. Booking ≠ clinical relationship ≠ encounter ≠ qualifying completion. CareActionDecision ≠ ClosureAssessment. Record coverage assertions ≠ the existence of a provider organization. Missing/unknown/unreviewed facts never become negative clinical assertions.
 
-## Core distinctions
+## Relationship, privacy and fulfillment
 
-- CarePlanTemplate ≠ CarePlan instance
-- CareAction lifecycle ≠ ClosureAssessment classification
-- FollowUpAppointment ≠ ClinicalEncounter
-- Engine assessment ≠ Clinician review
-- Patient-facing product data ≠ research ground truth
+Booking gives minimal identity/time/logistics only. Patient authorization + clinician acceptance establishes a continuing ACTIVE relationship before or at consultation; either may explicitly end it. Every subsequent clinical access checks current authority; neither authorship nor pending results revives an ended relationship. Another doctor needs their own relationship.
 
-## Care-action lifecycle
+Private notes are author-only under current clinical authority. Signed/released patient summaries and permitted final results are separate. Lab/pharmacy receive only minimum necessary routed-artifact context and own fulfillment history under [D36](PRODUCT_V3_DECISIONS.md#d36--fulfillment-authorization-and-suspension). ADMIN is operational, not clinically entitled. Source/history preservation never overrides current wrong-patient masking of payload, references, counts and notifications.
 
-Operational states:
-- PLANNED
-- ACTIVE
-- COMPLETED
-- CANCELLED
+## Consultation and booking semantics
 
-Closure classifications:
-- NOT_DUE
-- COMPLETED
-- SCHEDULED
-- TRUE_GAP
-- EXEMPT
-- UNCERTAIN
+Patient books → explicit relationship → consultation starts/links encounter → clinician documents → optional problem/prescription/test/follow-up → signed/released summary and consultation ends. Not every consultation creates every artifact; ending an encounter does not silently sign drafts or close a CareAction. Preserve actual treating participants separately from the recorder. No hospital admission/reception/ERP subsystem is required.
 
-A closure classification is a time-specific inference and must not be stored as the mutable lifecycle state of a CareAction.
+New booking protects clinician/patient overlap and capacity; finite start/end availability has declared clinic timezone and bounded configurable duration/lead/horizon. Preserve changes and explicit attendance/no-show semantics, safe retries and original reservation on failed replacement. Patient/booked doctor cancellation/replacement is before start/consultation opening. This does not retroactively change EH-012 patient-read-only permissions, post-time cancellation or cancel/create behavior.
 
-## Core business invariants
+## Preserved clinical invariants
 
-1. No CareAction without a CarePlan.
-2. No ClosureAssessment without a CareAction.
-3. ClosureAssessments are immutable after creation.
-4. Published clinical definitions are immutable; changes create versions.
-5. Clinician access requires an authorized patient relationship.
-6. Overrides preserve the original engine assessment and require a reason.
-7. Patient-entered evidence preserves provenance.
-8. Missing relevant evidence does not automatically imply a true gap.
-9. Research engines cannot read ground truth.
-10. The closure engine never diagnoses or prescribes treatment.
+Published definitions and exact plan/rule pins are immutable. Existing CareAction requires a CarePlan and remains one bounded INITIAL occurrence per exact plan/rule; no mutable completion lifecycle or recurrence is implemented. M2 snapshots/selection/privacy/atomic audit behavior remain as accepted in [EH-014](EH-014_INITIAL_CARE_ACTION_CONTRACT.md).
 
-## Evidence and coverage
+Fresh BP is independent evidence. Correction creates a fresh complete paired assertion and terminally excludes its exact predecessor; wrong-patient privacy is independently frozen and does not dynamically propagate through correction chains. Effective evidence removes exclusions/private targets without claiming clinical qualification. See [BP correction contract](BP_CORRECTION_INVALIDATION_CONTRACT.md).
 
-Record completeness is modeled explicitly through relevant coverage windows. Missing data outside an action's relevant evidence window must not automatically make that action uncertain.
+Later EACCE retains NOT_DUE, COMPLETED, SCHEDULED, TRUE_GAP, EXEMPT, UNCERTAIN as time-specific classifications, separate from operational state. It needs explicit later applicability/exemption, relevant schedule, qualifying completion, coverage and correction/stale/override contracts. Existing operational events do not satisfy these by inference. The HTN research scope remains bounded, versioned and source-traceable.
 
-## Current clinical scope
-
-Hypertension follow-up care actions are the first evaluation domain. Clinical rules must remain traceable to authoritative sources and versioned independently of patient instances.
-
-## Issue #31 evidence interpretation
-
-A fresh measurement is independent evidence. Correction creates a fresh complete paired assertion and terminally excludes its exact predecessor; exclusion never removes history. Wrong-patient privacy is a separate immutable determination that can mask an already-excluded record without replacing its reason. Explicit frozen targets prevent privacy spreading automatically along a correction chain. Effective evidence excludes every terminal exclusion and privacy target; eligibility/qualification remains B2 scope. See [the amendment contract](BP_CORRECTION_INVALIDATION_CONTRACT.md).
+See [DATA_MODEL](DATA_MODEL.md) for the exact implemented model inventory, [SECURITY](SECURITY.md) for current/future authority and [Roadmap V3](IMPLEMENTATION_ROADMAP.md) for dependencies. Legacy V1 domain lifecycle sketches are superseded by actual M0–M2 contracts and this approved conceptual direction, not implemented as new behavior.

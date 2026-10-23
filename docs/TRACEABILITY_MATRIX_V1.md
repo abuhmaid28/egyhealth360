@@ -1,4 +1,53 @@
-# EgyHealth 360 — Requirements Traceability Matrix V1
+# EgyHealth 360 — Versioned Requirements Traceability
+
+## Current V3 authority and evidence status
+
+Product V3 policy APPROVED; [D01–D36/approval lineage](PRODUCT_V3_DECISIONS.md). V3-G0 reconciliation IN PROGRESS until PR merge; V3-I1/EACCE NOT STARTED; DESIGN FROZEN. The filename `TRACEABILITY_MATRIX_V1.md` is retained to preserve links, not to indicate V1 is the current product scope.
+
+**APPROVED FUTURE** means a policy obligation, **FOUNDATION** means an accepted reusable slice, and **IMPLEMENTED** requires specific merged verification evidence. No V3 golden journey is marked implemented here. New requirement wording is in [REQUIREMENTS](REQUIREMENTS.md).
+
+## V3 requirement → decision → milestone → future verification
+
+| Requirements | Policy | Milestone | Required future evidence / golden journey |
+|---|---|---|---|
+| V3-FR-001 | D06-A/03 | I1 | Patient-only signup, own profile, managed staff/no privilege escalation; preserve M1 seed; A |
+| V3-FR-002/003 | D02/05/07/28/36 | I1 | Public/private directory boundary, active org/membership and fixed staff scope, cross-provider denials; A/B/C |
+| V3-FR-004 | D10/11-A | I1 | Explicit authorization + acceptance/ending, current ACTIVE checks, no booking/author bypass; A–D |
+| V3-FR-005/006 | D08/09/10 | I2 | Capacity/provider/patient overlap, change history/safe retry/failed replacement, own schedule/booking isolation; A |
+| V3-FR-007/008/009 | D12/13/14/15 | I2 | Actual treating provenance, human-only documentation, private notes/released summary, signed addenda/wrong-patient masking; A |
+| V3-FR-010 | D16/17 | I3 | Signed prescribing/validity/cancel/replace, original history and prior-dispense reconciliation; A/C |
+| V3-FR-011 | D18-A/19/36 | I3 | Routed full-item dispense, duplicate/concurrent entitlement protection, quantity/unit/actor/time, no adherence claim; C |
+| V3-FR-012/013/014 | D20/21/22/23-B/36 | I3 | Order/result identity/provenance, final release/draft denial, correction/retraction versions, lab isolation/suspension; B |
+| V3-FR-015/016 | D24/25 | I2/I4 | Unbooked follow-up intent, one booking authority, authorized source timeline, audit separation and masking; A/D |
+| V3-FR-017/018 | D27/28/36 | I1–I4/I7 | In-app dedup/status/privacy; ADMIN no payload/impersonation/clinical fulfillment; A–D |
+| V3-FR-019 | D26/30 | I4/I5 | Legacy regressions, explicit evidence links only, no auto applicability/coverage/closure; D |
+| V3-FR-020 | D29/30 | I5/I7/I8 | Six product states/immutable explanations/override; frozen HTN B0/B1/P1 observed inputs/holdout/manifests/counts; D/research |
+
+All rows are APPROVED FUTURE as complete V3 behavior. [DATA_MODEL](DATA_MODEL.md) / [API](API.md) show existing foundations; [Roadmap V3](IMPLEMENTATION_ROADMAP.md) defines dependency/readiness gates. Tier 2 imaging/measurements/richer reminder/admin work has no implementation evidence. Tier 3 and partial/refill/substitution exclusions remain active in [PRODUCT](PRODUCT.md).
+
+## Cross-cutting safety trace
+
+| Policy area | Decisions | Required future verification |
+|---|---|---|
+| Own data, public directory, own bookings/schedule and minimal pre-relationship access | D06–11 | Cross-patient IDOR and schedule/directory clinical payload denial |
+| Clinical access/ending/private notes/released summaries | D10/11/12/13 | Current genuine relationship, other clinician own authority, no authorship entitlement, signed release/correction |
+| Routed lab/pharmacy minimum necessary access | D05/17–22/36 | Wrong provider/artifact denied; current active user/org/membership/artifact required |
+| Cancellation, suspension, completed source correction and independent patient/doctor authority | D15/17/20/21/36 | Subsequent revoked staff denied; no silent cancellation from relationship ending; preserve sources; no permanent author rights |
+| Wrong-patient/longitudinal masking and audit separation | D15/25/26/27 | Payload/reference/count/notification non-disclosure, source history retained, no raw forensic view |
+| Admin operations | D28/36 | No clinical payload/signing/fulfillment/impersonation or unconsented relationships by ADMIN alone |
+| Research and clinical inference boundaries | D03/19/26/29/30 | No adherence/eligibility/completion/coverage inference; hidden truth isolated; unchanged bounded HTN study |
+
+## Accepted M0–M2 implementation evidence
+
+M0/M1/M2 are COMPLETE. Issue #28 CLOSED/completed. M2 functional proof: [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33), [exit PASS](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518), [validation](EH-014_VALIDATION.md#post-merge-validation). The baseline already includes later documentation closeout. Historical reported counts remain historical results; they are not rerun claims for this docs PR.
+
+FR-021 bounded INITIAL is satisfied; FR-024 remains foundation-only/incomplete; AC-004/005 unsatisfied. The [V2→V3 crosswalk](REQUIREMENTS.md#v2--v3-crosswalk-and-supersession) preserves old IDs/evidence. No old planned endpoint/screen/table is implementation evidence.
+
+## Retained V2 traceability — historical scope and planned surfaces
+
+The original matrix below preserves requirement IDs, planned test names and slice evidence. Its lab/pharmacy/general booking exclusions, three-experience and M3-next references are **superseded for current direction by ADR-031**. Visual/screen entries remain historical and frozen; they are not an instruction to build designs. Slice-era incomplete statuses remain historical. Use the V3 sections above for current scope/status.
+
+## V1 matrix retained from Product V2
 
 ## Purpose
 Trace every Core V1 problem and requirement to its planned product surface, API/domain boundary, acceptance criteria, and verification evidence.
@@ -281,5 +330,3 @@ FR-021 — satisfied for the approved Core V1 bounded INITIAL generation scope. 
 | FR-024 / AC-004 / AC-005 | Foundation-only/incomplete / unsatisfied / unsatisfied | Final SCHEDULED evidence contract and future EACCE closure evaluation required; no action–appointment coupling or completion inference |
 
 [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. Exact post-merge results: 67/67 unit, 407/407 integration (69 EH-014), 10 migrations, 7/7 container auth, synthetic runtime proof PASS. [Contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md); [validation](EH-014_VALIDATION.md#post-merge-validation).
-
-M2 is COMPLETE for its functional exit criterion. Final repository milestone closeout awaits independent review and merge of this documentation-only PR, exact-main post-merge validation/status verification, and a final M2 completion comment. Issue #28 remains OPEN until those steps finish. Next: M3 EACCE pre-implementation / contract work; M3 has NOT started. No recurrence, EACCE, scheduling/completion classification or design work is added.

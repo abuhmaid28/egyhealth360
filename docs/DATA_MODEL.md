@@ -1,226 +1,62 @@
-# EgyHealth 360 — Conceptual Data Model V1
+# EgyHealth 360 — Data Model Status and V3 Concepts
 
-This is a logical model, not executable Prisma/SQL.
+## Implemented model inventory — M0–M2
 
-## Identity
+Exactly the following **23 Prisma models** exist at the reconciliation baseline `ea777ce71c3639a37ec015739a12f0fadc0b4dcc`. This PR changes none of them or the ten migration directories. The [Prisma schema](../packages/db/prisma/schema.prisma), migration SQL and accepted slice contracts are authoritative for executable fields/constraints.
 
-### users
-- id
-- email (unique)
-- password_hash
-- role: PATIENT | CLINICIAN | ADMIN
-- status
-- created_at / updated_at
+- `User`
+- `Session`
+- `PatientProfile`
+- `ClinicianProfile`
+- `ClinicianPatientAssignment`
+- `AuditLog`
+- `GuidelineSource`
+- `CarePlanTemplate`
+- `CareRuleDefinition`
+- `CarePlan`
+- `BloodPressureMeasurement`
+- `FollowUpAppointment`
+- `ClinicalEncounter`
+- `EncounterBloodPressureAssociation`
+- `RecordCoverageWindow`
+- `ObservedClinicalApplicabilitySnapshot`
+- `ObservedClinicalApplicabilityRetraction`
+- `BpAmendmentOperation`
+- `BpExclusion`
+- `BpPrivacyTarget`
+- `CareAction`
+- `CareActionDecision`
+- `CareActionApplicabilityInput`
 
-### patient_profiles
-- id
-- user_id (unique FK)
-- display_name
-- date_of_birth
-- sex
+Current User roles are PATIENT/CLINICIAN/ADMIN only. No provider organization, staff membership, general booking, prescription, lab order/result, notification, ClosureAssessment or experiment-result model is implemented. A model's existence does not imply a public route, workspace or completed product requirement.
 
-### clinician_profiles
-- id
-- user_id (unique FK)
-- display_name
-- specialty
-- professional_identifier_optional
+## APPROVED FUTURE V3 DOMAIN — NOT YET IMPLEMENTED
 
-### clinician_patient_assignments
-- id
-- clinician_id
-- patient_id
-- status
-- assigned_at
-- ended_at
+Product V3 policy is APPROVED; V3-I1 is NOT STARTED. These are conceptual resource boundaries, not proposed Prisma fields or a mandatory one-table-per-concept design. Smallest safe representations are chosen in later reviewed implementation contracts.
 
-## Clinical planning
+| Concept | Approved meaning and integrity boundary |
+|---|---|
+| Provider / Clinic / location / Specialty | Simple curated public discovery and explicit affiliation/routing identity, not enterprise facility hierarchy or an assertion of record completeness |
+| Provider membership | Bounded LAB_STAFF/PHARMACY_STAFF plus current active organization/membership and fixed operation scope; not generalized IAM |
+| Published availability / general booking | Finite start/end, clinic timezone, overlap/capacity protection, own patient operations and clinician schedule/change history; one operational booking authority |
+| Genuine clinical relationship | Explicit patient authorization + clinician acceptance, continuing until ended, preserved history/current checks; extend existing assignment foundation without altering history |
+| General consultation documentation | Booking/encounter/provider/actual treating provenance; signed protected author-only notes versus released summaries/addenda; optional artifacts |
+| Problem / Diagnosis / allergy context | Human-entered clinical assertions and minimal unknown/not-reviewed safety context with provenance; no inferred eligibility or diagnosis |
+| Medication / Prescription / item | Small catalog and signed immutable prescribed identity/quantity/unit/instructions/validity; cancellation/replacement preserves linkage and reconciles previous dispensing |
+| Medication dispense | Routed pharmacy's full-item fulfillment fact/history with actual quantity/unit/actor/time; not medication ingestion; no partial/refill/substitution engine |
+| Lab order / result | Distinct clinician request and recipient lab fulfillment/final result; original patient/order/test/source/author/validator/time/status retained; corrections/amendments/retractions preserve prior versions |
+| Optional imaging order/report | Tier 2 only, shared diagnostics principles where useful; report/reference metadata, no PACS/DICOM/required binary upload infrastructure |
+| Follow-up intent | Clinical intent exists without a slot, may later link to the one new operational booking; no competing editable legacy booking |
+| Timeline / in-app notification | Authorized source-linked projection and bounded important updates/reminders; filter current privacy/authority, including revealing counts/references; not generic audit |
+| Later closure/review/research | Immutable assessments/explanation/evidence/reviews and isolated experiment manifests/predictions/metrics; I5/I7 scope, not new broad disease/recurrence research |
 
-### guideline_sources
-- id
-- name / publisher / version / publication_date
-- reference_url
-- status
+Source clinical records, operational records, timeline projections and immutable audit remain distinct. Signed clinical records use reasoned versions/addenda/retractions/reversals; no silent overwrite or cross-patient move. Apply [D36](PRODUCT_V3_DECISIONS.md#d36--fulfillment-authorization-and-suspension) to new lab/pharmacy artifacts. Completed fulfillment and relationship ending never erase historical sources or imply ongoing personal entitlement.
 
-### care_plan_templates
-- id
-- name
-- condition_code
-- version
-- guideline_source_id
-- status: DRAFT | PUBLISHED | RETIRED
-- published_at
+The former V1 field/lifecycle sketches are not a schema specification; conceptual COMPLETED CarePlan, mutable CareAction lifecycle, DataSource, four-state legacy follow-up and generic research tables were never made executable by documentation. Existing CarePlan remains DRAFT/ACTIVE/CANCELLED; EH-012 only SCHEDULED/CANCELLED; EH-014 immutable INITIAL with no operational status. No schema/SQL is added by this reconciliation.
 
-### care_rule_definitions
-- id
-- template_id
-- rule_key / rule_version
-- action_type
-- applicability_definition
-- timing_definition
-- completion_definition
-- source_reference
+## Historical executable slice notes — retained implementation truth
 
-### care_plans
-- id
-- patient_id
-- template_id / template_version
-- created_by_clinician_id
-- status: DRAFT | ACTIVE | COMPLETED | CANCELLED
-- started_at / completed_at / cancelled_at
-
-### care_actions
-- id
-- care_plan_id
-- patient_id
-- rule_definition_id
-- action_type
-- operational_status: PLANNED | ACTIVE | COMPLETED | CANCELLED
-- not_before_at / due_at
-- stable_occurrence_key
-- created_at / completed_at / cancelled_at
-
-## Clinical evidence
-
-### data_sources
-- id
-- name
-- type: PATIENT | CLINIC | EXTERNAL_PROVIDER | SYNTHETIC_GENERATOR | BENCHMARK
-
-### record_coverage_windows
-- id
-- patient_id
-- data_source_id
-- start_at / end_at
-- coverage_status: COMPLETE | INCOMPLETE | UNKNOWN
-
-### blood_pressure_measurements
-- id
-- patient_id
-- systolic / diastolic
-- measured_at
-- source_type
-- entered_by_user_id
-- data_source_id
-- created_at
-
-### follow_up_appointments
-- id
-- patient_id / clinician_id
-- scheduled_at
-- status: SCHEDULED | COMPLETED | CANCELLED | MISSED
-- created_by / created_at
-
-### clinical_encounters
-- id
-- patient_id / clinician_id
-- occurred_at
-- encounter_type
-- source/data_source_id
-
-## Closure intelligence
-
-### closure_assessments
-- id
-- care_action_id
-- classification: NOT_DUE | COMPLETED | SCHEDULED | TRUE_GAP | EXEMPT | UNCERTAIN
-- evaluated_at
-- rule_version / engine_version
-- explanation_summary
-- reason_codes
-- is_stale
-- supersedes_assessment_id
-- created_at
-
-Assessments are immutable.
-
-### assessment_evidence
-- id
-- assessment_id
-- evidence_kind
-- evidence_reference_id_optional
-- evidence_role: SUPPORTING | CONTRADICTING | MISSING | CONTEXT
-- reason
-
-### clinician_assessment_reviews
-- id
-- assessment_id
-- clinician_id
-- review_status: CONFIRMED | OVERRIDDEN
-- override_classification_optional
-- override_reason_optional
-- reviewed_at
-
-## System
-
-### audit_logs
-- id
-- actor_user_id
-- action_type
-- entity_type / entity_id
-- timestamp
-- safe_metadata
-
-Application audit is append-only and distinct from the patient clinical timeline.
-
-## Research
-
-### experiment_runs
-- id
-- dataset_version / synthea_version
-- patient_count / random_seed
-- missingness_level / corruption_profile
-- baseline_engine_version / proposed_engine_version
-- rule_set_version
-- status: PENDING | RUNNING | COMPLETED | FAILED
-- started_at / completed_at
-
-### benchmark_cases
-- id
-- experiment_run_id
-- synthetic_patient_id
-- case_key
-- ground_truth_classification
-- scenario_type
-
-### corruption_events
-- id
-- benchmark_case_id
-- corruption_type
-- target_type / target_reference
-- corruption_metadata
-
-### engine_predictions
-- id
-- benchmark_case_id
-- engine_type: BASELINE | PROPOSED
-- engine_version
-- predicted_classification
-- reason_codes
-- execution_time_ms
-
-### evaluation_metrics
-- id
-- experiment_run_id
-- engine_type
-- metric_name / metric_value
-- class_label_optional
-
-## Key constraints
-
-- `users.email` unique
-- one corresponding profile per user
-- no duplicate active clinician-patient assignment for the same pair
-- care-plan template `(name, version)` unique
-- rule `(template/version, rule_key)` unique
-- one ACTIVE hypertension care plan per patient in MVP V1
-- generated care actions idempotent by patient+plan+rule+expected occurrence
-- foreign-key integrity for all core relationships
-- product-facing APIs must never expose benchmark ground truth
-
-## Time/versioning
-
-Technical timestamps use UTC. Date-only clinical concepts use date types when appropriate. Published templates/rules and closure assessments are not silently mutated; new versions/assessments preserve history.
+The notes below describe what each slice introduced at its time. Later slices extend earlier deferrals; read them together with the exact inventory above and accepted contracts. In particular, Issue #31 supplies BP correction/privacy and EH-014 supplies INITIAL actions; no EACCE, recurrence or V3 models are claimed. References to old conceptual fields/lifecycles describe the [baseline V1 sketches](https://github.com/abuhmaid28/egyhealth360/blob/ea777ce71c3639a37ec015739a12f0fadc0b4dcc/docs/DATA_MODEL.md), not implemented models or newly frozen V3 fields.
 
 ## EH-009 executable clinical-definition slice
 

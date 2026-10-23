@@ -1,77 +1,40 @@
 # EgyHealth 360
 
-EgyHealth 360 is a graduation-research prototype for **evidence-aware chronic-care coordination**.
+EgyHealth 360 is an **integrated digital healthcare journey** graduation prototype: patient access, discovery, booking, consultation, prescriptions, diagnostics, dispensing and follow-up connect through a longitudinal record, structured care coordination and later bounded explainable evidence-aware monitoring.
 
-The core problem is that an expected care action may look overdue simply because the available longitudinal record is incomplete. The project evaluates whether an explainable Evidence-Aware Care Closure Engine (EACCE) can reduce false care-gap classifications compared with coverage-blind gap detection.
+## Product and implementation status
 
-## Core V1
+| Area | Status |
+|---|---|
+| Product V3 policy | **APPROVED** — [owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901), [D01–D36/lineage](docs/PRODUCT_V3_DECISIONS.md) |
+| V3-G0 documentation reconciliation | **IN PROGRESS until this PR merges**; independent review and post-merge verification required |
+| M0 / M1 / M2 | **COMPLETE**, accepted historical foundations; [project/evidence](docs/PROJECT.md) |
+| V3-I1 / EACCE implementation | **NOT STARTED**; old unstarted M3–M7 superseded/resequenced by [Roadmap V3](docs/IMPLEMENTATION_ROADMAP.md) |
+| Product UI/design | **NOT STARTED / DESIGN FROZEN**, separate explicit design-unfreeze approval required |
 
-Roles:
-- Patient
-- Clinician
-- Admin
+Approved future workspaces: **Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin**, one application. Bounded patient registration, doctor discovery/booking, human-authored consultation, prescriptions, full-item pharmacy dispensing and laboratory fulfillment are Tier 1 future work. Imaging is optional Tier 2. Ordinary healthcare does not require a CarePlan/EACCE. Current backend roles remain PATIENT/CLINICIAN/ADMIN; staff/membership and integrated workflows are not yet implemented.
 
-Clinical evaluation domain:
-- Hypertension follow-up care actions
+The current implementation includes secure identity/session/ACTIVE-assignment foundations, version-pinned HTN plans, immutable BP and encounter/follow-up evidence, coverage/applicability/correction/privacy, and bounded INITIAL CareAction generation. These remain unchanged; they do not constitute complete V3 journeys. [API](docs/API.md) and [DATA_MODEL](docs/DATA_MODEL.md) distinguish actual interfaces/models from future concepts.
 
-Core states:
-- NOT_DUE
-- COMPLETED
-- SCHEDULED
-- TRUE_GAP
-- EXEMPT
-- UNCERTAIN
-
-`UNCERTAIN` is an abstention caused by insufficient observed evidence; it is not ground truth.
+The research differentiator remains bounded HTN care closure under incomplete records, with six future product classifications, explicit uncertainty and isolated B0/B1/P1 evaluation. Engine/worker/FHIR scaffolds are not completed EACCE or experiments. Clinical actors enter diagnoses/prescriptions; no diagnostic AI, autonomous treatment/dose recommendation or adherence inference.
 
 ## Architecture
 
-- `apps/web` — Next.js + TypeScript
-- `apps/api` — NestJS modular monolith
-- `apps/experiment-worker` — TypeScript research worker
-- PostgreSQL 18
-- Prisma 7
-- REST + OpenAPI
-- shared pure-TypeScript EACCE package
-- FHIR R4 adapter
-- Synthea synthetic research data
-- Docker Compose
-- GitHub Actions
+Next.js/TypeScript web application; NestJS modular-monolith API; PostgreSQL 18/Prisma 7; REST/OpenAPI; shared TypeScript packages; experiment worker/FHIR adapter boundaries; Docker Compose/GitHub Actions. No microservice/FastAPI/Python/ML rewrite or paid service requirement.
 
-Core V1 has **no FastAPI service, no Python runtime, and no ML model**.
+## Scope boundaries
 
-## Explicit non-goals
+Synthetic/free-first/self-hostable graduation scope only. No real-patient deployment, payments/insurance, video infrastructure, national marketplace economics, delivery, inventory/hospital ERP, full LIS/PACS/DICOM, diagnostic AI, generalized IAM/rule editor or broad disease/recurrence engine. Pharmacy partial quantities/refills/substitution are outside the frozen release. See [PRODUCT](docs/PRODUCT.md) for complete tiers.
 
-No lab portal, pharmacy portal, doctor marketplace, full appointment marketplace, telemedicine platform, diagnostic AI, treatment recommender, diabetes-risk model, chatbot, OCR, hospital ERP, insurance, payments, or real-patient deployment.
-
-The project does not depend by default on doctor visits, interviews, surveys, or real-patient data collection. See `docs/EXECUTION_POLICY.md`.
+No default fieldwork/interview/survey/real-patient data dependency; see [execution policy](docs/EXECUTION_POLICY.md). ADMIN has no clinical entitlement. Current authority, source history and privacy masking remain mandatory, including future artifact-scoped lab/pharmacy [D36](docs/SECURITY.md#d36--cross-module-fulfillment-authority-and-suspension).
 
 ## Source of truth
 
-AI coding agents must not rely on prior chat history. Read:
-1. `AGENTS.md`
-2. `docs/PROJECT.md`
-3. the current GitHub Issue
-4. task-relevant documentation
-5. existing tests/contracts and implementation
+Read [AGENTS](AGENTS.md), [PROJECT](docs/PROJECT.md), current issue, relevant approved docs and existing contracts/tests/implementation. [Requirements](docs/REQUIREMENTS.md) and [traceability](docs/TRACEABILITY_MATRIX_V1.md) preserve V2 IDs/evidence and version new V3 scope. [ADR-031](docs/DECISIONS.md#adr-031--approved-product-v3-integrated-journey-and-bounded-authorization) records explicit supersession; no historical contract is rewritten. Product V2 remains merged-main truth until this reconciliation merges. Product approval is not implementation completion/authorization.
 
-Major scope or architecture changes require a recorded decision.
+## Executable workspace and local tooling
 
-## Project status
-
-**Milestone M0 — Repository Reboot / Bootstrap** is complete and validated. EH-004 Deep Planning Audit Pass 2 is complete and merged; EH-003 Bootstrap Monorepo V2 implementation and validation are complete. See `docs/EH-003_VALIDATION.md` for observed results and limitations.
-
-**EH-005 — M1 Identity & Core Data Foundation** adds the first migration-backed users, profiles, relationship history, and append-only audit primitives. See ADR-019 and `docs/EH-005_PERSISTENCE.md`. EH-006 adds password authentication, database-backed sessions, and CSRF-protected login/logout/me; see `docs/EH-006_AUTH.md`. EH-007 authorization and EH-008 deterministic demo identities are merged; M1 is complete at `a4b2f2a4a496daba32aead5b612cb105e8873d27`. Clinical/research product behavior remains later work. Later work remains issue-scoped and review-gated.
-
-Important planning references:
-- `docs/DEEP_PLANNING_AUDIT_SUMMARY.md`
-- `docs/PROJECT_PLAN_6_MONTHS.md`
-- `docs/TRACEABILITY_MATRIX_V1.md`
-- `docs/research/EXPERIMENT_PROTOCOL_V1.md`
-
-## EH-003 executable workspace
-
-Infrastructure only: the web page, `/api/v1/health`, and worker database health polling contain no product, clinical, or experiment functionality. The machine-readable bootstrap contract is `docs/openapi.json`. Shared clinical-rules, FHIR-adapter, and UI packages are intentionally empty.
+The commands below retain the working bootstrap/M1/M2 setup. The web surface and worker remain scaffolds; API/persistence includes the accepted slices in PROJECT. Shared clinical-rules now contains the exact approved HTN definition; closure-engine, FHIR adapter and UI remain scaffolds. No integrated product UI is claimed.
 
 ### Pinned toolchain
 
@@ -129,7 +92,7 @@ pnpm audit --prod --audit-level high
 pnpm audit --audit-level high
 ```
 
-Integration tests require the loopback PostgreSQL service above, `.env`, and `prisma migrate deploy`. Unit tests include the pure deterministic engine import, configuration validation, sanitized API failure response, and bounded email policy. Integration tests verify database constraints/catalog, audit and assignment history, the persistence boundary, API health, and worker polling/shutdown. No seed/authentication/clinical behavior is introduced.
+Integration tests require the loopback PostgreSQL service above, `.env`, and `prisma migrate deploy`. Unit tests include the pure deterministic engine import, configuration validation, sanitized API failure response, and bounded email policy. Integration tests verify database constraints/catalog, audit and assignment history, the persistence boundary, API health, and worker polling/shutdown. The original EH-003 bootstrap introduced no seed/authentication/clinical behavior; later M1/M2 tests and runtime verifiers now cover the accepted foundations. See [TESTING](docs/TESTING.md) for slice-specific evidence.
 
 For a **clean disposable database only**, `pnpm test:migrations` verifies emptiness, deploy/status, second deploy/status, and preservation of migration history and a rolled-back sentinel. It refuses an already migrated database. CI runs it before integration tests and keeps the migrated volume for Docker regression. Both `pnpm audit --prod --audit-level high` and `pnpm audit --audit-level high` are required. No production/container migration runner is provided.
 
@@ -149,5 +112,4 @@ After build and migration, explicitly run `pnpm clinical:bootstrap` with DATABAS
 It loads only the exact approved WHO CR-HTN-FU-001 catalog, fails on conflicts and
 preserves identical repeat state. It does not run on application startup. See
 [clinical-definition contract](docs/EH-009_CLINICAL_DEFINITION_CONTRACT.md) and
-[validation](docs/EH-009_VALIDATION.md). M2 remains in progress; no evaluator or patient
-care plan/action/evidence model is included.
+[validation](docs/EH-009_VALIDATION.md). This describes the EH-009 catalog slice only. Later M2 slices add patient plans, BP/evidence and INITIAL actions; M2 is COMPLETE. No EACCE evaluator is implemented.

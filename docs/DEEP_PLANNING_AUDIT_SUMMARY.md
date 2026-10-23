@@ -1,5 +1,7 @@
 # EgyHealth 360 — Deep Planning Audit Pass 2 Summary
 
+> **V3 applicability:** Historical EH-004 planning audit. Its product/UI/month-plan and old milestone references describe that audit stage. Product V3 policy supersedes current direction; M0–M2 are COMPLETE, V3-I1/EACCE/UI NOT STARTED and design FROZEN. Clinical-source/research evidence remains bounded and retained; this is not a new audit or implementation-readiness declaration. See [approved policy/lineage](PRODUCT_V3_DECISIONS.md).
+
 ## Audit objective
 Prevent the graduation project from entering implementation with only breadth-level planning. This pass deepens the academic evidence, clinical-rule sourcing, experimental methodology, engineering traceability, UX behavior, thesis structure, and six-month execution plan.
 

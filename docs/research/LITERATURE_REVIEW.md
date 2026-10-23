@@ -1,5 +1,7 @@
 # EgyHealth 360 — Literature Review V1
 
+> **V3 applicability:** This retained literature synthesis supports the bounded Layer C research contribution inside the approved integrated healthcare journey. Narrow rule-selection/medication exclusions concern research logic, not a prohibition on human clinician documentation/prescribing in Product V3. No literature evidence or research rule is changed/refreshed here. See [current product](../PRODUCT.md) and [research boundary](../RESEARCH.md).
+
 ## Purpose
 This review supports the graduation-project problem definition and research methodology. It is intentionally focused on evidence relevant to the project’s actual contribution: evidence-aware closure of chronic-care actions under incomplete longitudinal records.
 

@@ -1,5 +1,7 @@
 # Design System V1
 
+> **V3 applicability:** Historical V1 visual reference only. **DESIGN FROZEN** under approved D35; this file grants no implementation/design authority. No visual specification is changed by the V3 reconciliation. Separate explicit design-unfreeze approval is required after scope/domain prerequisites. See [approved policy/lineage](PRODUCT_V3_DECISIONS.md).
+
 ## Brand direction
 Calm Clinical Intelligence: clear, calm, reliable, evidence-driven.
 

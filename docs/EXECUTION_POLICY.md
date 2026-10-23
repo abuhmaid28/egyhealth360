@@ -27,7 +27,7 @@ Students and AI agents must not invent medical rules. Clinical rules must come f
 No individual student is expected to personally possess medical expertise sufficient to validate clinical rules from memory.
 
 ## Data policy
-Core research and demos use public or synthetic data only. Real patient data is out of scope for Core V1.
+Product V3 clinical research and demos use synthetic patient data only. Public literature, standards and other non-patient reference material support desk research; they do not authorize real-patient records or deployment. The approved V3 policy preserves the synthetic/free-first graduation boundary and makes no production identity-assurance or clinical-validation claim. See [approved policy and lineage](PRODUCT_V3_DECISIONS.md).
 
 Synthetic datasets, including Synthea-generated longitudinal records, are the default research substrate for benchmark generation, corruption experiments, reproducibility, and demo scenarios.
 
