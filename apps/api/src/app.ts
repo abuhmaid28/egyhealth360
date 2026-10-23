@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import { patientEntryController, patientEntryRequestBoundary, type PatientEntryRuntime } from './patient-entry.js';
 import { ArgumentsHost, Catch, Controller, ExceptionFilter, Get, HttpException, Module, ServiceUnavailableException } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
@@ -10,7 +11,7 @@ import { bootstrapSmoke } from '@egyhealth/closure-engine';
 import type { ServerResponse } from 'node:http';
 import { authController, authError, authRequestBoundary, type AuthRuntime } from './auth.js';
 
-export async function createApp(database: Database, auth?: AuthRuntime, authorization?: AuthorizationPersistence, bloodPressure?: BloodPressureMeasurementPersistence, followup?: { appointments: FollowUpAppointmentPersistence; encounters: ClinicalEncounterPersistence }) {
+export async function createApp(database: Database, auth?: AuthRuntime, authorization?: AuthorizationPersistence, bloodPressure?: BloodPressureMeasurementPersistence, followup?: { appointments: FollowUpAppointmentPersistence; encounters: ClinicalEncounterPersistence }, patientEntry?: PatientEntryRuntime) {
   @Controller('health')
   class HealthController {
     @Get()
@@ -20,13 +21,14 @@ export async function createApp(database: Database, auth?: AuthRuntime, authoriz
       return { data: { status: bootstrapSmoke('ok') } };
     }
   }
-  @Module({ controllers: auth ? [authController(auth), ...(authorization ? [patientController(auth, authorization)] : []), ...(bloodPressure ? [bloodPressureController(auth, bloodPressure)] : []), ...(followup ? [followupController(auth, followup.appointments, followup.encounters)] : [])] : [] })
+  @Module({ controllers: auth ? [authController(auth), ...(patientEntry ? [patientEntryController(auth, patientEntry)] : []), ...(authorization ? [patientController(auth, authorization)] : []), ...(bloodPressure ? [bloodPressureController(auth, bloodPressure)] : []), ...(followup ? [followupController(auth, followup.appointments, followup.encounters)] : [])] : [] })
   class AuthModule {}
   @Module({ controllers: [HealthController], imports: [AuthModule] })
   class AppModule {}
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: false, bodyParser: false });
   app.setGlobalPrefix('api/v1');
   if (auth) app.use(authRequestBoundary(auth));
+  if (auth && patientEntry) app.use(patientEntryRequestBoundary(auth));
   app.use(patientRequestBoundary);
   if (auth && bloodPressure) app.use(bloodPressureRequestBoundary(auth));
   if (auth && followup) app.use(followupRequestBoundary(auth));

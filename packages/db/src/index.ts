@@ -73,3 +73,6 @@ export type { CareActionPersistence, CareActionTarget, CareActionSelection, Gene
 
 export { createOrganizationPersistence, OrganizationError } from './organizations.js';
 export type { OrganizationPersistence, OrganizationKind, OrganizationStatus, OrganizationSnapshot, MembershipSnapshot } from './organizations.js';
+
+export { createPatientEntryPersistence, PatientEntryError, profileValues, registrationIdentity } from './patient-entry.js';
+export type { PatientEntryPersistence, OwnProfile } from './patient-entry.js';
