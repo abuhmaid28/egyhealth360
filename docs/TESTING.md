@@ -2,7 +2,7 @@
 
 ## V3 policy versus delivered evidence
 
-Product V3 policy APPROVED; V3-G0 reconciliation IN PROGRESS until PR merge; V3-I1/EACCE/UI NOT STARTED and DESIGN FROZEN. The requirements below are future verification obligations, not new tests or passing implementation claims. Existing M0–M2 validation reports/test contracts remain unchanged.
+Product V3 policy APPROVED; V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); V3-I1/EACCE/UI NOT STARTED and DESIGN FROZEN. The requirements below are future verification obligations, not new tests or passing implementation claims. Existing M0–M2 validation reports/test contracts remain unchanged.
 
 Prove [journeys A–D](PRODUCT.md#golden-journeys-and-success) through real backend/domain behavior: signup/discovery/booking/relationship/consultation, lab final results, full-item dispensing and longitudinal BP/plan/action continuity. Then prove future EACCE against its explicitly approved input/evidence contracts. Imaging is SHOULD only and claimed only after proof. Policy coverage PASS is not executable PASS.
 

@@ -2,7 +2,7 @@
 
 ## Current V3 authority and evidence status
 
-Product V3 policy APPROVED; [D01–D36/approval lineage](PRODUCT_V3_DECISIONS.md). V3-G0 reconciliation IN PROGRESS until PR merge; V3-I1/EACCE NOT STARTED; DESIGN FROZEN. The filename `TRACEABILITY_MATRIX_V1.md` is retained to preserve links, not to indicate V1 is the current product scope.
+Product V3 policy APPROVED; [D01–D36/approval lineage](PRODUCT_V3_DECISIONS.md). V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); V3-I1/EACCE NOT STARTED; DESIGN FROZEN. The filename `TRACEABILITY_MATRIX_V1.md` is retained to preserve links, not to indicate V1 is the current product scope.
 
 **APPROVED FUTURE** means a policy obligation, **FOUNDATION** means an accepted reusable slice, and **IMPLEMENTED** requires specific merged verification evidence. No V3 golden journey is marked implemented here. New requirement wording is in [REQUIREMENTS](REQUIREMENTS.md).
 
