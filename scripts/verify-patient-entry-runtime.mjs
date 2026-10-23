@@ -38,11 +38,14 @@ try{
  const prior=(await pool.query('SELECT * FROM sessions WHERE user_id=$1 ORDER BY id',[row.id])).rows;
  const sameSession=await register(input,{Cookie:patient.cookie});assert.equal(sameSession.r.headers.get('set-cookie'),null);assert.equal(sameSession.r.status,202);
  assert.deepEqual((await pool.query('SELECT * FROM sessions WHERE user_id=$1 ORDER BY id',[row.id])).rows,prior);
- assert.deepEqual((await send('/me/profile',{headers})).body,{data:{displayName:input.displayName,dateOfBirth:null,sex:null}});
+ assert.deepEqual((await send('/me/profile',{headers})).body,{data:{id:row.profile_id,displayName:input.displayName,dateOfBirth:null,sex:null}});
+ // The authenticated locator also addresses the unchanged self-scoped M0–M2 BP API.
+ assert.equal((await send('/patients/'+row.profile_id+'/blood-pressure-measurements',{headers})).r.status,200);
  const updated={displayName:'Synthetic Slice 3 Updated',dateOfBirth:'2000-02-29',sex:'opaque context'};
- for(let i=0;i<2;i++){const r=await send('/me/profile',{method:'PUT',headers,body:JSON.stringify(updated)});assert.equal(r.r.status,200);assert.deepEqual(r.body,{data:updated});}
+ for(let i=0;i<2;i++){const r=await send('/me/profile',{method:'PUT',headers,body:JSON.stringify(updated)});assert.equal(r.r.status,200);assert.deepEqual(r.body,{data:{id:row.profile_id,...updated}});}
  assert.equal((await send('/me/profile',{method:'PUT',headers:{...headers,'X-CSRF-Token':'wrong'},body:JSON.stringify(updated)})).r.status,403);
  assert.equal((await send('/me/profile',{method:'PUT',headers,body:JSON.stringify({...updated,userId:randomUUID()})})).r.status,400);
+ assert.equal((await send('/me/profile',{method:'PUT',headers,body:JSON.stringify({...updated,id:row.profile_id})})).r.status,400);
  assert.equal((await send('/me/profile?patientId='+randomUUID(),{headers})).r.status,400);
  const hash=await hashPassword(Buffer.from(password));
  for(const role of ['ADMIN','CLINICIAN','LAB_STAFF','PHARMACY_STAFF']){

@@ -64,12 +64,14 @@ test('I1S3 exact OpenAPI inventory/delta leaves every prior route/schema unchang
  const {readFile}=await import('node:fs/promises');const {createHash}=await import('node:crypto');
  const {beforeSlice3}=await import('./support/openapi-baseline.mjs');
  const text=await readFile('docs/openapi.json','utf8'),api=JSON.parse(text);
- assert.equal(createHash('sha256').update(text).digest('hex'),'493e9aa9bbba6e1b51cfb5061227c1e95ef03357d1595440d3c571a9a9edd551');
+ assert.equal(createHash('sha256').update(text).digest('hex'),'df91fb3f7c84bd6df258972b8d695316c984fbaa426f08cae4240dc2002f2c4c');
  assert.equal(createHash('sha256').update(beforeSlice3(text)).digest('hex'),'b658be382f191f8e7a23b8311cdbd18e0da46b14f7b3f78613b1514c6668956c');
  assert.equal(Object.keys(api.paths).length,13);assert.equal(Object.keys(api.components.schemas).length,13);
  assert.deepEqual(Object.keys(api.paths['/api/v1/auth/register']),['post']);
  assert.deepEqual(Object.keys(api.paths['/api/v1/me/profile']),['get','head','put']);
  assert.deepEqual(api.components.schemas.PatientRegistrationRequest.required,['email','password','displayName']);
- assert.deepEqual(api.components.schemas.OwnPatientProfile.required,['displayName','dateOfBirth','sex']);
+ assert.deepEqual(api.components.schemas.OwnPatientProfile.required,['id','displayName','dateOfBirth','sex']);
  assert.equal(api.components.schemas.PatientRegistrationRequest.additionalProperties,false);
+ assert.equal(api.components.schemas.OwnPatientProfile.properties.id.readOnly,true);
+ assert.deepEqual(api.paths['/api/v1/me/profile'].put.requestBody.content['application/json'].schema.required,['displayName','dateOfBirth','sex']);
 });

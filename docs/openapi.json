@@ -4074,7 +4074,7 @@
             "sessionCookie": []
           }
         ],
-        "description": "Current ACTIVE PATIENT with exact current nonrevoked/unexpired session only. Identity derived from session, no target identifiers/query/body on reads. ADMIN/CLINICIAN/LAB_STAFF/PHARMACY_STAFF denied 404; membership grants nothing. Header aggregate <=8192 UTF8 bytes. No clinical payload/evidence inference; existing scoped clinician read stays unchanged. No-store, no conditional 304/ETag.",
+        "description": "Current ACTIVE PATIENT with exact current nonrevoked/unexpired session only. Identity derived from session, no target identifiers/query/body on reads. ADMIN/CLINICIAN/LAB_STAFF/PHARMACY_STAFF denied 404; membership grants nothing. Header aggregate <=8192 UTF8 bytes. No clinical payload/evidence inference; existing scoped clinician read stays unchanged. No-store, no conditional 304/ETag. Read-only own profile id locates existing patient-scoped resources, including BP, without granting additional access.",
         "responses": {
           "400": {
             "description": "Invalid request.",
@@ -5028,11 +5028,18 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
+          "id",
           "displayName",
           "dateOfBirth",
           "sex"
         ],
         "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true,
+            "description": "Server-derived own patient_profiles.id locator for existing scoped resources; never authority or a permitted PUT input."
+          },
           "displayName": {
             "type": "string",
             "description": "Existing stored own display text. New writes use the bounded PUT contract; historical context is not rewritten."

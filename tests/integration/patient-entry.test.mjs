@@ -112,11 +112,11 @@ for(const rollback of [false,true])test(`I1S3 real canonical duplicate INSERT bl
 
 test('I1S3 profile HTTP owns exact fields; current PATIENT only; CSRF, target injection and no-op audit',()=>use(async f=>{
  const p=await f.login(f.users.patient.email),headers={Cookie:p.cookie,Origin:f.config.origin,'X-CSRF-Token':p.csrf,'Content-Type':'application/json'};
- let r=await f.send('/me/profile',{headers:{Cookie:p.cookie}});assert.equal(r.response.status,200);assert.deepEqual(r.body,{data:{displayName:'Synthetic Slice 2',dateOfBirth:null,sex:null}});
+ let r=await f.send('/me/profile',{headers:{Cookie:p.cookie}});assert.equal(r.response.status,200);assert.deepEqual(r.body,{data:{id:f.users.patient.profileId,displayName:'Synthetic Slice 2',dateOfBirth:null,sex:null}});
  assert.equal(r.response.headers.get('cache-control'),'no-store');assert.equal(r.response.headers.get('etag'),null);
  assert.equal((await f.send('/me/profile',{headers:{Cookie:p.cookie,'If-None-Match':'*'}})).response.status,200);
  const before=await entryAudits(f.pool);
- r=await f.send('/me/profile',{method:'PUT',headers,body:JSON.stringify(profile)});assert.equal(r.response.status,200);assert.deepEqual(r.body,{data:profile});
+ r=await f.send('/me/profile',{method:'PUT',headers,body:JSON.stringify(profile)});assert.equal(r.response.status,200);assert.deepEqual(r.body,{data:{id:f.users.patient.profileId,...profile}});
  let audit=await entryAudits(f.pool);assert.equal(audit.length,before.length+1);assert.equal(audit.at(-1).actor_user_id,f.users.patient.id);assert.equal(audit.at(-1).entity_id,f.users.patient.profileId);assert.deepEqual(audit.at(-1).safe_metadata,{});
  const stored=(await f.pool.query('SELECT * FROM patient_profiles WHERE user_id=$1',[f.users.patient.id])).rows;
  for(let i=0;i<2;i++)assert.equal((await f.send('/me/profile',{method:'PUT',headers,body:JSON.stringify(profile)})).response.status,200);
@@ -130,7 +130,7 @@ test('I1S3 profile HTTP owns exact fields; current PATIENT only; CSRF, target in
   for(const method of ['GET','HEAD','PUT'])assert.equal((await f.send('/me/profile',{method,headers:h,...(method==='PUT'?{body:JSON.stringify(profile)}:{})})).response.status,404);
  }
  const other=await f.identities.createUser({email:`${randomUUID()}@example.invalid`,role:'PATIENT',passwordHash:f.hash,profile:{displayName:'Other Synthetic'}});
- const b=await f.login(other.email);assert.equal((await f.send('/me/profile',{headers:{Cookie:b.cookie,'X-Patient-Id':f.users.patient.profileId,'X-User-Id':f.users.patient.id}})).body.data.displayName,'Other Synthetic');
+ const b=await f.login(other.email);const ownB=(await f.send('/me/profile',{headers:{Cookie:b.cookie,'X-Patient-Id':f.users.patient.profileId,'X-User-Id':f.users.patient.id}})).body.data;assert.equal(ownB.displayName,'Other Synthetic');assert.equal(ownB.id,other.profileId);
  assert.equal((await f.send('/me/profile',{method:'HEAD',headers})).response.status,200);
  assert.equal((await f.send('/me/profile',{method:'DELETE',headers})).response.status,405);
  assert.deepEqual(await entryAudits(f.pool),audit);
@@ -190,7 +190,7 @@ test('I1S3 concurrent identical profile replacements serialize on real user lock
  try{
   one=f.entry.replaceOwnProfile(f.actors.patient,profile);await entered.promise;
   two=f.entry.replaceOwnProfile(f.actors.patient,profile);const waiter=await waitBlockedBy(f.pool,blocker);release.resolve();
-  assert.deepEqual(await Promise.all([one,two]),[profile,profile]);assert.equal((await entryAudits(f.pool)).length,1);
+  assert.deepEqual(await Promise.all([one,two]),[{id:f.users.patient.profileId,...profile},{id:f.users.patient.profileId,...profile}]);assert.equal((await entryAudits(f.pool)).length,1);
   console.log(JSON.stringify({scope:'I1S3_PROFILE_RETRY',blocker,waiter,audits:1}));
  }finally{release.resolve();restore();await Promise.allSettled([one,two].filter(Boolean));}
 }));
@@ -232,7 +232,7 @@ for(const first of ['profile','M2'])test(`I1S3 real own profile and accepted M2 
  try{
   one=first==='profile'?profileWork():bpWork();await entered.promise;two=first==='profile'?bpWork():profileWork();const waiter=await waitBlockedBy(f.pool,blocker);release.resolve();
   const results=await Promise.allSettled([one,two]);assert.ok(results.every(r=>r.status==='fulfilled'));
-  assert.deepEqual(await f.entry.readOwnProfile(f.actors.patient),profile);
+  assert.deepEqual(await f.entry.readOwnProfile(f.actors.patient),{id:f.users.patient.profileId,...profile});
   assert.equal((await f.pool.query('SELECT count(*)::int n FROM blood_pressure_measurements WHERE patient_id=$1',[f.users.patient.profileId])).rows[0].n,1);
   assert.equal((await entryAudits(f.pool)).length,1);console.log(JSON.stringify({scope:'I1S3_M2_LOCK_COMPATIBILITY',first,blocker,waiter,outcomes:results.map(r=>r.status)}));
  }finally{release.resolve();restore();await Promise.allSettled([one,two].filter(Boolean));await bp.close();}
@@ -266,10 +266,10 @@ test('I1S3 genuine unavailable PostgreSQL registration is a sanitized failure ra
 test('I1S3 own read preserves legacy free profile context outside new-write bounds without backfill or truncation',()=>use(async f=>{
  const displayName='x'.repeat(200),sex='context'.repeat(30);
  await f.pool.query("UPDATE patient_profiles SET display_name=$1,sex=$2,date_of_birth=DATE '10000-01-01' WHERE user_id=$3",[displayName,sex,f.users.patient.id]);
- assert.deepEqual(await f.entry.readOwnProfile(f.actors.patient),{displayName,sex,dateOfBirth:'10000-01-01'});
+ assert.deepEqual(await f.entry.readOwnProfile(f.actors.patient),{id:f.users.patient.profileId,displayName,sex,dateOfBirth:'10000-01-01'});
  assert.equal((await entryAudits(f.pool)).length,0);
  await reject(f.entry.replaceOwnProfile(f.actors.patient,{displayName,sex,dateOfBirth:'10000-01-01'}),'PATIENT_ENTRY_INVALID');
  for(const dateOfBirth of ['0001-01-01','9999-12-31']){
-  const next={...profile,dateOfBirth};assert.deepEqual(await f.entry.replaceOwnProfile(f.actors.patient,next),next);assert.deepEqual(await f.entry.readOwnProfile(f.actors.patient),next);
+  const next={...profile,dateOfBirth};assert.deepEqual(await f.entry.replaceOwnProfile(f.actors.patient,next),{id:f.users.patient.profileId,...next});assert.deepEqual(await f.entry.readOwnProfile(f.actors.patient),{id:f.users.patient.profileId,...next});
  }
 }));

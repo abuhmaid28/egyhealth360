@@ -10,7 +10,7 @@ const fail = (code: PatientEntryError['code']): never => { throw new PatientEntr
 const uuid = (v: unknown): v is string => typeof v === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v);
 type Tx = Prisma.TransactionClient;
 const select = { id: true, displayName: true, dateOfBirth: true, sex: true } as const;
-const view = (p: { displayName: string; dateOfBirth: Date | string | null; sex: string | null }): OwnProfile => ({ displayName: p.displayName, dateOfBirth: p.dateOfBirth instanceof Date ? p.dateOfBirth.toISOString().split('T', 1)[0] : p.dateOfBirth, sex: p.sex });
+const view = (p: { id: string; displayName: string; dateOfBirth: Date | string | null; sex: string | null }): OwnProfile & { id: string } => ({ id: p.id, displayName: p.displayName, dateOfBirth: p.dateOfBirth instanceof Date ? p.dateOfBirth.toISOString().split('T', 1)[0] : p.dateOfBirth, sex: p.sex });
 async function storedProfile(tx: Tx, actor: AuthPrincipal) {
   // Read existing DATE as text so legacy years outside the new write bounds never
   // pass through Prisma's narrower JSON DateTime codec or get truncated by JS.
@@ -69,14 +69,14 @@ export function createPatientEntryPersistence(connectionString: string | undefin
         await appendAuditRecord(tx, { actorUserId: null, actionType: 'PATIENT_SELF_REGISTERED', entityType: 'user', entityId: userId });
       });
     },
-    async readOwnProfile(principal: AuthPrincipal): Promise<OwnProfile> {
+    async readOwnProfile(principal: AuthPrincipal): Promise<OwnProfile & { id: string }> {
       return own(principal, async (tx, actor) => {
         const profile = await storedProfile(tx, actor);
         if (!profile) fail('PATIENT_ENTRY_NOT_FOUND');
         return view(profile!);
       });
     },
-    async replaceOwnProfile(principal: AuthPrincipal, input: OwnProfile): Promise<OwnProfile> {
+    async replaceOwnProfile(principal: AuthPrincipal, input: OwnProfile): Promise<OwnProfile & { id: string }> {
       const values = profileValues(input);
       return own(principal, async (tx, actor) => {
         const old = await storedProfile(tx, actor);
