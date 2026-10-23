@@ -7,9 +7,9 @@ EgyHealth 360 is an **integrated digital healthcare journey** graduation prototy
 | Area | Status |
 |---|---|
 | Product V3 policy | **APPROVED** — [owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901), [D01–D36/lineage](docs/PRODUCT_V3_DECISIONS.md) |
-| V3-G0 documentation reconciliation | **IN PROGRESS until this PR merges**; independent review and post-merge verification required |
+| V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [evidence](docs/PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**, accepted historical foundations; [project/evidence](docs/PROJECT.md) |
-| V3-I1 / EACCE implementation | **NOT STARTED**; old unstarted M3–M7 superseded/resequenced by [Roadmap V3](docs/IMPLEMENTATION_ROADMAP.md) |
+| V3-I1 / EACCE implementation | **NOT STARTED**; V3-I1 requires a separate readiness/authorization gate; old unstarted M3–M7 superseded/resequenced by [Roadmap V3](docs/IMPLEMENTATION_ROADMAP.md) |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**, separate explicit design-unfreeze approval required |
 
 Approved future workspaces: **Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin**, one application. Bounded patient registration, doctor discovery/booking, human-authored consultation, prescriptions, full-item pharmacy dispensing and laboratory fulfillment are Tier 1 future work. Imaging is optional Tier 2. Ordinary healthcare does not require a CarePlan/EACCE. Current backend roles remain PATIENT/CLINICIAN/ADMIN; staff/membership and integrated workflows are not yet implemented.
@@ -30,7 +30,7 @@ No default fieldwork/interview/survey/real-patient data dependency; see [executi
 
 ## Source of truth
 
-Read [AGENTS](AGENTS.md), [PROJECT](docs/PROJECT.md), current issue, relevant approved docs and existing contracts/tests/implementation. [Requirements](docs/REQUIREMENTS.md) and [traceability](docs/TRACEABILITY_MATRIX_V1.md) preserve V2 IDs/evidence and version new V3 scope. [ADR-031](docs/DECISIONS.md#adr-031--approved-product-v3-integrated-journey-and-bounded-authorization) records explicit supersession; no historical contract is rewritten. Product V2 remains merged-main truth until this reconciliation merges. Product approval is not implementation completion/authorization.
+Read [AGENTS](AGENTS.md), [PROJECT](docs/PROJECT.md), current issue, relevant approved docs and existing contracts/tests/implementation. [Requirements](docs/REQUIREMENTS.md) and [traceability](docs/TRACEABILITY_MATRIX_V1.md) preserve V2 IDs/evidence and version new V3 scope. [ADR-031](docs/DECISIONS.md#adr-031--approved-product-v3-integrated-journey-and-bounded-authorization) records explicit supersession; no historical contract is rewritten. Product V3 is now the repository source of truth. Product approval is not implementation completion/authorization.
 
 ## Executable workspace and local tooling
 

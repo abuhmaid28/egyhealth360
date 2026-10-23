@@ -5,13 +5,13 @@
 | Area | Status |
 |---|---|
 | Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
-| V3-G0 documentation reconciliation | **IN PROGRESS until this PR merges**; independent review, merge and post-merge verification remain required |
+| V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
-| V3-I1 | **NOT STARTED**; not authorized by this documentation change |
+| V3-I1 | **NOT STARTED**; separate readiness/authorization gate required |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 
-Policy approval is not implementation completion or blanket implementation authorization. Product V2 remains the merged-main baseline until this reconciliation merges. The approved V3 direction below becomes repository source of truth through that merge; it does not retroactively redefine M0–M2.
+Product V3 is now the repository source of truth. Policy approval is not implementation completion or blanket implementation authorization; it does not retroactively redefine M0–M2.
 
 ## Vision
 

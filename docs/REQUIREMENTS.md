@@ -2,7 +2,7 @@
 
 ## Current requirement authority and status
 
-Product V3 policy is **APPROVED** by [Issue #35 final owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901); [D01–D36](PRODUCT_V3_DECISIONS.md) governs the complete frozen package. V3-G0 documentation reconciliation remains IN PROGRESS until this PR merges; V3-I1/EACCE NOT STARTED; DESIGN FROZEN. Policy approval does not mean any new workflow is implemented or authorized to start.
+Product V3 policy is **APPROVED** by [Issue #35 final owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901); [D01–D36](PRODUCT_V3_DECISIONS.md) governs the complete frozen package. V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); V3-I1/EACCE NOT STARTED; DESIGN FROZEN. Policy approval does not mean any new workflow is implemented or authorized to start.
 
 The new `V3-FR-*` grouping is versioned separately from existing `FR-*`, `BR-*`, `AC-*`, `ERR-*`, `NFR-*` and `P-*` IDs. Those historical requirements/evidence are retained below. No ID is recycled and no unfinished acceptance criterion is relabeled satisfied.
 

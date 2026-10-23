@@ -5,17 +5,17 @@
 | Area | Status |
 |---|---|
 | Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
-| V3-G0 documentation reconciliation | **IN PROGRESS until this PR merges**; independent review, merge and post-merge verification remain required |
+| V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
-| V3-I1 | **NOT STARTED**; not authorized by this documentation change |
+| V3-I1 | **NOT STARTED**; separate readiness/authorization gate required |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 
-Policy approval is not implementation completion or blanket implementation authorization. Product V2 remains the merged-main baseline until this reconciliation merges. The approved V3 direction below becomes repository source of truth through that merge; it does not retroactively redefine M0–M2.
+Product V3 is now the repository source of truth. Policy approval is not implementation completion or blanket implementation authorization; it does not retroactively redefine M0–M2.
 
 ## Approval lineage and precedence
 
-Issue [#35 — Product Scope V3](https://github.com/abuhmaid28/egyhealth360/issues/35) remains OPEN through reconciliation and verification.
+Issue [#35 — Product Scope V3](https://github.com/abuhmaid28/egyhealth360/issues/35) is CLOSED/completed; [final verification — 6355210754](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6355210754) confirms V3-G0 COMPLETE.
 
 1. [Initial planning report — 6331091738](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6331091738).
 2. [Decision consolidation — 6331360070](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6331360070).
@@ -25,7 +25,7 @@ Issue [#35 — Product Scope V3](https://github.com/abuhmaid28/egyhealth360/issu
 
 Final approval accepts the complete 36-decision package: 24 unchanged defaults, seven revised defaults, four owner selections and D36. The revised consolidation defaults and selected values replace earlier alternatives and arbitrary planning numbers. The original report is lineage, not an independent source of conflicting current defaults.
 
-Reconciliation baseline: `ea777ce71c3639a37ec015739a12f0fadc0b4dcc`. No V3 implementation existed on the verified main, remote branch inventory or open-PR inventory when this work began. Issue #28 is CLOSED/completed. This documentation branch changes no application behavior.
+Original PR #36 reconciliation baseline: `ea777ce71c3639a37ec015739a12f0fadc0b4dcc`. No V3 implementation existed on the verified main, remote branch inventory or open-PR inventory when this work began. Issue #28 is CLOSED/completed. This documentation branch changes no application behavior.
 
 ## Approved decision register — D01–D36
 
@@ -110,4 +110,4 @@ ADR-031 in [DECISIONS](DECISIONS.md) supersedes Product V2's chronic-care-first 
 
 Existing M0–M2 contracts, migrations, validation reports, issue/PR evidence and deterministic M1 seed are preserved. Slice-era statements in those records describe their time, not today's current scope/status. EH-012 remains HTN follow-up evidence, not a complete booking system. EH-014 remains immutable INITIAL-only generation; CareActionDecision is generation provenance, not a ClosureAssessment. FR-024 is foundation-only/incomplete; AC-004/AC-005 remain unsatisfied until later explicit evidence contracts and implementation.
 
-See [PRODUCT](PRODUCT.md), [REQUIREMENTS](REQUIREMENTS.md), [ROADMAP](IMPLEMENTATION_ROADMAP.md) and [SECURITY](SECURITY.md) for the current direction. Design remains frozen after policy approval and after this merge. V3-I1 requires its own readiness/authorization after independent review, merge and post-merge verification; no milestone is started here.
+See [PRODUCT](PRODUCT.md), [REQUIREMENTS](REQUIREMENTS.md), [ROADMAP](IMPLEMENTATION_ROADMAP.md) and [SECURITY](SECURITY.md) for the current direction. Design remains frozen after policy approval and the verified PR #36 merge. V3-I1 requires its own separate readiness/authorization gate; no implementation milestone is started here.

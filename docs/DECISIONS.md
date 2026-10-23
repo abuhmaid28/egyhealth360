@@ -8,7 +8,7 @@ At the 2026 reboot, the original five-role continuity-of-care scope, separate Fa
 
 ## Current applicability and explicit supersession
 
-Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 reconciliation is IN PROGRESS until this PR merges; independent review/post-merge verification remain required. V3-I1/EACCE NOT STARTED; DESIGN FROZEN.
+Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 is COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); Product V3 is the repository source of truth. V3-I1/EACCE NOT STARTED; DESIGN FROZEN.
 
 | Existing decision / planning area | Current applicability | Relationship to ADR-031 |
 |---|---|---|
@@ -26,7 +26,7 @@ The original ADR bodies below describe their accepted scope at the time; slice d
 
 ### ADR-031 — Approved Product V3 integrated journey and bounded authorization
 
-Status: Accepted at product-policy level; documentation adoption subject to this reconciliation's independent review/merge/post-merge verification. No implementation authorization.
+Status: Accepted at product-policy level and adopted as repository source of truth through the verified PR #36 merge; V3-G0 COMPLETE. No implementation authorization.
 
 Decision: adopt the [approved D01–D36 package](PRODUCT_V3_DECISIONS.md) and [Product V3](PRODUCT.md): integrated access/booking/consultation/prescribing/lab/dispensing/follow-up as Layer A, longitudinal continuity Layer B, bounded HTN EACCE Layer C. One current-stack application targets Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin. Preserve M0–M2 invariants/evidence and the fixed M1 seed. Ordinary care requires no CarePlan/EACCE. Human clinical documentation is permitted; diagnostic AI/autonomous treatment is prohibited.
 

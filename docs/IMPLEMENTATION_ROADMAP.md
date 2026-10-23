@@ -2,7 +2,7 @@
 
 ## Current gates
 
-Product V3 policy is APPROVED ([D01–D36 and lineage](PRODUCT_V3_DECISIONS.md)). V3-G0 documentation reconciliation is IN PROGRESS until this PR merges; independent review and post-merge verification remain required. V3-I1, EACCE and product UI are NOT STARTED. Design remains FROZEN until separate explicit approval. This roadmap starts no implementation and assigns no new EH numbers.
+Product V3 policy is APPROVED ([D01–D36 and lineage](PRODUCT_V3_DECISIONS.md)). V3-G0 documentation reconciliation is COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); Product V3 is the repository source of truth. V3-I1, EACCE and product UI are NOT STARTED. Design remains FROZEN until separate explicit approval. This roadmap starts no implementation and assigns no new EH numbers.
 
 ## Preserved completed milestones
 
@@ -18,8 +18,8 @@ Issue #28 is CLOSED/completed; verified main `ea777ce71c3639a37ec015739a12f0fadc
 
 | Milestone | Dependencies and approved future scope | Future exit evidence required |
 |---|---|---|
-| **V3-G0 — Scope & Authorization Freeze** | Policy approval COMPLETE; this documentation reconciliation completes the repository gate only after independent review, merge and post-merge verification | Consistent approved product/ADRs/requirements/security/roadmap/traceability; verified exact-main status; no implementation |
-| **V3-I1 — Integrated Domain & Access Foundations** | G0 reconciliation/verification and separate authorization; patient registration/profile, simple provider/clinic/specialty/public profiles, bounded lab/pharmacy actor/membership, relationship establishment/ending, visibility/history/access policy | Legacy regressions preserved; own-data/public boundary/ACTIVE relationship/org/artifact isolation and revocation proof |
+| **V3-G0 — Scope & Authorization Freeze** | **COMPLETE**: policy approved, PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed | [Verified completion evidence](PROJECT.md#v3-g0-completion-evidence); no implementation authorized |
+| **V3-I1 — Integrated Domain & Access Foundations** | G0 COMPLETE; separate V3-I1 readiness/authorization gate required; patient registration/profile, simple provider/clinic/specialty/public profiles, bounded lab/pharmacy actor/membership, relationship establishment/ending, visibility/history/access policy | Legacy regressions preserved; own-data/public boundary/ACTIVE relationship/org/artifact isolation and revocation proof |
 | **V3-I2 — Booking & Consultation** | I1; finite availability, booking/cancel/reschedule/schedule, general consultation/encounter linkage, actual treating provenance, problems/diagnoses/minimal allergy review, private notes/released summary, follow-up intent | Journey A's access/booking/consultation/summary/follow-up portion without a pre-existing CarePlan; booking contention/history/privacy/IDOR evidence. Full A additionally requires I3 prescription/test-order sources |
 | **V3-I3 — Prescription, Diagnostics & Pharmacy** | I1–I2 signed source/clinical authority; curated medication catalog, prescription/items/validity/cancel/replace, full-item dispensing, lab order/result/finalization/release, correction/privacy | Complete A's prescription/test-order portion plus journeys B/C, valid entitlement/routing, cross-provider denial, suspension, correction/history/concurrency proof. Laboratory required; imaging optional Tier 2 |
 | **V3-I4 — Longitudinal Continuity Integration** | I2–I3 + retained M2; authorized source-linked timeline, in-app important updates/bounded reminders, follow-up booking, BP/CarePlan/CareAction connections and separately versioned integrated fixture | Journey D and combined A–D backend proof; one booking authority, source/audit distinction, private payload/reference/count/notification masking |
