@@ -1,6 +1,8 @@
 # EgyHealth 360 — Project State
 
-Current Slice 3 delivery: [Slice 1 and Slice 2 COMPLETE; Slice 3 implemented / in review; I1 overall NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN](V3_I1_SLICE3.md). [Authorization](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944); starting main `2c96b2ce7cfd407a828f9ba510e563fe1e5983a9`, exact-main [CI 40010140478](https://github.com/abuhmaid28/egyhealth360/actions/runs/40010140478) SUCCESS. No later slice is authorized.
+Current security gate: PR #42 is MERGED at `c25969421459a2151b39ff8072165628b3053caa`; exact-main CI 40039896473 failed at dependency audit. Slice 3 is MERGED but **not COMPLETE**, awaiting approved security restoration and successful exact-main verification. [Hotfix evidence](POST_SLICE3_DEPENDENCY_SECURITY_HOTFIX.md) records the review-ready dependency patch and narrow parser-error sanitization authorized by Issue #39 comment 6381469953; local validation passed and independent review, exact-head CI and explicit merge approval are required. Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
+
+Current Slice 3 delivery: [Slice 1 and Slice 2 COMPLETE; Slice 3 MERGED / security gate pending; I1 overall NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN](V3_I1_SLICE3.md). [Authorization](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944); starting main `2c96b2ce7cfd407a828f9ba510e563fe1e5983a9`, exact-main [CI 40010140478](https://github.com/abuhmaid28/egyhealth360/actions/runs/40010140478) SUCCESS. No later slice is authorized.
 
 ## Authoritative status
 
@@ -9,7 +11,7 @@ Current Slice 3 delivery: [Slice 1 and Slice 2 COMPLETE; Slice 3 implemented / i
 | Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
 | V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
-| V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) COMPLETE; I1 overall **NOT COMPLETE**, Slice 3 **implemented / in review**; Slice 4+ **NOT AUTHORIZED** |
+| V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) COMPLETE; I1 overall **NOT COMPLETE**, Slice 3 **MERGED / security gate pending**; Slice 4+ **NOT AUTHORIZED** |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 
@@ -43,7 +45,7 @@ FR-021 is satisfied only for the bounded INITIAL scope. FR-024 is foundation-onl
 
 1. V3-G0 is COMPLETE. Slice 1 contract adoption is merged in [PR #40](https://github.com/abuhmaid28/egyhealth360/pull/40) at `a03c0b63a0ed44bcf39a32428002af0c92edc7e0`; exact-main [CI 39948145751](https://github.com/abuhmaid28/egyhealth360/actions/runs/39948145751) SUCCESS. [Authorization 6366843150](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6366843150) permits Slice 2 only. Its [bounded implementation](V3_I1_SLICE2.md) is COMPLETE: PR #41 merged at `2c96b2ce7cfd407a828f9ba510e563fe1e5983a9`, exact-main CI 40010140478 SUCCESS.
 2. Confirm actual academic deadline/capacity and re-estimate selected V3 scope under D33; old dates/weights/buffer percentages are not V3 commitments.
-3. Slice 3 is authorized by comment 6374281944. Independent exact-head Slice 3 review, successful CI, explicit Product Owner merge approval and exact-main verification precede any separate Slice 4 authorization. I1 overall remains NOT COMPLETE.
+3. Slice 3 is authorized by comment 6374281944. PR #42 merged, but exact-main audit failed. The authorized dependency hotfix requires independent review, successful exact-head CI, explicit merge approval and successful exact-main security restoration before Slice 3 is fully post-merge verified or Slice 4 may be authorized. I1 overall remains NOT COMPLETE.
 4. Follow [Roadmap V3](IMPLEMENTATION_ROADMAP.md). Old unstarted M3–M7 are superseded/resequenced; EACCE moves to I5. Final schedule/completion/coverage/observed-input feasibility contracts precede EACCE.
 
 **Design is frozen** even after V3 policy approval/PR #36 merge: no screens, wireframes, Design System, branding, UI/UX or frontend visual work until separate explicit approval after scope/domain prerequisites. Existing visual documents are historical, not ready-to-implement instructions.

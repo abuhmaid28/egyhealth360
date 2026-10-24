@@ -11,6 +11,28 @@ import { bootstrapSmoke } from '@egyhealth/closure-engine';
 import type { ServerResponse } from 'node:http';
 import { authController, authError, authRequestBoundary, type AuthRuntime } from './auth.js';
 
+/** Only the exact data envelopes emitted by our error helpers, including the
+ * existing BP/follow-up field diagnostics. Nest's { message, error, statusCode }
+ * parser/route errors are not application envelopes and must be sanitized. */
+function applicationErrorEnvelope(body: unknown): boolean {
+  const record = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === 'object'
+    && [Object.prototype, null].includes(Object.getPrototypeOf(value))
+    && Reflect.ownKeys(value).every(key => {
+      const property = Object.getOwnPropertyDescriptor(value, key)!;
+      return typeof key === 'string' && property.enumerable && 'value' in property;
+    });
+  if (!record(body) || Object.keys(body).length !== 1 || !Object.hasOwn(body, 'error') || !record(body.error)) return false;
+  const error = body.error;
+  if (!Object.hasOwn(error, 'code') || !Object.hasOwn(error, 'message')
+    || Object.keys(error).some(key => !['code', 'message', 'fields'].includes(key))
+    || typeof error.code !== 'string' || !/^[A-Z][A-Z0-9_]*$/.test(error.code)
+    || typeof error.message !== 'string' || error.message.length === 0) return false;
+  return !Object.hasOwn(error, 'fields') || (Array.isArray(error.fields) && Object.getPrototypeOf(error.fields) === Array.prototype
+    && Reflect.ownKeys(error.fields).length === error.fields.length + 1 && Array.from(error.fields).every(field => record(field)
+    && Object.keys(field).length === 2 && Object.hasOwn(field, 'field') && Object.hasOwn(field, 'reason')
+    && typeof field.field === 'string' && typeof field.reason === 'string'));
+}
+
 export async function createApp(database: Database, auth?: AuthRuntime, authorization?: AuthorizationPersistence, bloodPressure?: BloodPressureMeasurementPersistence, followup?: { appointments: FollowUpAppointmentPersistence; encounters: ClinicalEncounterPersistence }, patientEntry?: PatientEntryRuntime) {
   @Controller('health')
   class HealthController {
@@ -39,7 +61,7 @@ export async function createApp(database: Database, auth?: AuthRuntime, authoriz
       const response = host.switchToHttp().getResponse<ServerResponse>();
       let failure: HttpException;
       const body = error instanceof HttpException ? error.getResponse() : null;
-      if (error instanceof HttpException && body !== null && typeof body === 'object' && 'error' in body) failure = error;
+      if (error instanceof HttpException && applicationErrorEnvelope(body)) failure = error;
       else if (error instanceof HttpException && error.getStatus() === 413) failure = authError(413, 'REQUEST_TOO_LARGE', 'Request too large.');
       else if (error instanceof HttpException && error.getStatus() === 400) failure = authError(400, 'REQUEST_INVALID', 'Invalid request.');
       else if (error instanceof HttpException && error.getStatus() === 404) failure = authError(404, 'ROUTE_NOT_FOUND', 'Not found.');

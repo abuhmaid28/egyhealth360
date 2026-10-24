@@ -11,3 +11,6 @@ onlyBuiltDependencies:
 overrides:
   deepmerge-ts: 8.0.0
   mysql2: 3.23.1
+
+  # Nest 11.2.7 pins multer 2.4.0; same-major security fix for GHSA-q7qp-rjg7-q26m.
+  '@nestjs/platform-express@11.2.7>multer': 2.5.0
