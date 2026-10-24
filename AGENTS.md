@@ -1,6 +1,6 @@
 # EgyHealth 360 — AI Agent Instructions
 
-Current security gate: PR #42 is MERGED at `c25969421459a2151b39ff8072165628b3053caa`; exact-main CI 40039896473 failed at dependency audit. Slice 3 is MERGED but **not COMPLETE**, awaiting approved security restoration and successful exact-main verification. [Hotfix evidence](docs/POST_SLICE3_DEPENDENCY_SECURITY_HOTFIX.md) records the locally prepared dependency patch and a pre-existing parser-error reflection blocker; delivery is BLOCKED pending runtime-sanitization scope authorization. Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
+Current security gate: PR #42 is MERGED at `c25969421459a2151b39ff8072165628b3053caa`; exact-main CI 40039896473 failed at dependency audit. Slice 3 is MERGED but **not COMPLETE**, awaiting approved security restoration and successful exact-main verification. [Hotfix evidence](docs/POST_SLICE3_DEPENDENCY_SECURITY_HOTFIX.md) records the review-ready dependency patch and narrow parser-error sanitization authorized by Issue #39 comment 6381469953; local validation passed and independent review, exact-head CI and explicit merge approval are required. Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
 
 Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](docs/V3_I1_SLICE3.md) MERGED / security gate pending under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
 
