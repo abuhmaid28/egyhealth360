@@ -29,13 +29,13 @@ This contract governs later separately authorized I1 slices. It adds no runtime 
 
 I1 establishes patient registration/own profile, curated public clinician/specialty/clinic information, bounded organizations/staff membership, bilateral enrollment around the existing clinical grant, and current-authority/history/privacy foundations. Retain Next.js, NestJS modular monolith, PostgreSQL, Prisma, shared TypeScript packages, Docker and GitHub Actions. No architectural rewrite or new dependency is implied.
 
-| Slice | Approved bounded scope | Authorization now |
+| Slice | Approved bounded scope | Current authorization / delivery |
 |---|---|---|
 | 1 | Contract adoption and compatibility inventory | Merged/verified |
 | 2 | Fixed roles, organizations and memberships | COMPLETE |
 | 3 | Patient registration and own profile | COMPLETE |
-| 4 | Curated public provider directory | AUTHORIZED 6391008285; implemented / in review |
-| 5 | Bilateral relationship lifecycle | NOT AUTHORIZED |
+| 4 | Curated public provider directory | COMPLETE — PR #44 merged; exact-main CI 40195060034 SUCCESS |
+| 5 | Bilateral relationship lifecycle | IMPLEMENTED / IN REVIEW — authorization 6401378826; not complete |
 | 6 | Combined I1 exit proof and independent security review | NOT AUTHORIZED |
 
 **Out of I1:** availability/slots/reservations/booking engine; general consultations/encounters, diagnoses/problems, private notes/released summaries; prescriptions/dispensing; lab order/result fulfillment; imaging; timeline/notifications/reminders; EACCE/recurrence/research pipeline; product UI/UX/wireframes/screens/branding/Design System; payments/insurance/video/delivery; ERP/LIS/PACS; diagnostic AI/treatment or dose recommendation; production deployment. Existing EH-012 follow-up behavior remains intact; it is not an I1 booking implementation.
@@ -117,7 +117,7 @@ One unresolved request per pair and one active assignment per pair are concurren
 
 ## Authorization matrix
 
-All entries are future I1 contract obligations, not delivered endpoints. Every nonpublic operation requires a current ACTIVE user and valid current session. Unlisted permissions are denied. Public directory access is the same minimized projection for every actor.
+This matrix is the approved I1 authority policy, not an endpoint inventory or an I1 completion claim. Slices 2–4 have delivered their applicable operational membership, registration/profile and published-directory subsets; Slice 5 relationship entries are IMPLEMENTED / IN REVIEW. Remaining undelivered I1 obligations remain future work requiring separate authorization. Current API and slice contracts identify delivered methods. Every nonpublic operation requires a current ACTIVE user and valid current session. Unlisted permissions are denied. Public directory access is the same minimized projection for every actor.
 
 | Resource/action | Public | PATIENT | CLINICIAN | LAB_STAFF / PHARMACY_STAFF | ADMIN |
 |---|---|---|---|---|---|
@@ -147,7 +147,7 @@ Retain wrong-patient masking of clinical payload, references, counts and retries
 
 ## Concurrency and revocation guarantees
 
-These are **future proof obligations, not currently passing I1 tests**. Database constraints protect cardinality/history; scoped transactions serialize mutations and audit, and current-authority rechecks follow waits. Never rely only on a preflight query or an API guard.
+The table originated as required I1 proof obligations at the Slice 1 baseline; it remains the required concurrency contract. Authorized implemented slices now provide executed evidence for their applicable cases: [Slice 2](V3_I1_SLICE2_VALIDATION.md), [Slice 3](V3_I1_SLICE3_VALIDATION.md), [Slice 4](V3_I1_SLICE4_VALIDATION.md) and [Slice 5](V3_I1_SLICE5_VALIDATION.md). Slice 5 is IMPLEMENTED / IN REVIEW with real PostgreSQL independent-connection blocking/race/rollback evidence, including M2 clinical and M1 seed-lock overlap. Slice 6 combined exit proof remains NOT AUTHORIZED; V3-I1 remains INCOMPLETE. Database constraints protect cardinality/history; scoped transactions serialize mutations and audit, and current-authority rechecks follow waits. Never rely only on a preflight query or an API guard.
 
 | Race/failure | Required outcome and mechanism |
 |---|---|
@@ -167,11 +167,11 @@ These are **future proof obligations, not currently passing I1 tests**. Database
 
 Preserve existing M2 ordering: actor user FOR NO KEY UPDATE → exact session FOR UPDATE → clinician profile FOR SHARE → ACTIVE/null-ended assignment FOR SHARE → patient lock → scoped resource locks. EH-014 generation takes patient FOR UPDATE before plan/template/selected BP, while other operations use their accepted compatible modes. Do not acquire an exclusive patient lock and then wait for an assignment held by an M2 operation that is waiting for that patient.
 
-Future pair serialization must also cover absent rows (row locks alone cannot serialize absence); combine uniqueness with a bounded pair-scoped transaction lock or equivalent demonstrated serialization. For operations locking multiple users/peers, establish a stable ordering before descending to session/profile/assignment locks. Organization-before-membership ordering must be consistent across scoped operations and revocation. The implementation slice must review the complete lock graph against existing M2 helpers, not change those helpers casually.
+Pair serialization must also cover absent rows (row locks alone cannot serialize absence); combine uniqueness with a bounded pair-scoped transaction lock or equivalent demonstrated serialization. For operations locking multiple users/peers, establish a stable ordering before descending to session/profile/assignment locks. Organization-before-membership ordering must be consistent across scoped operations and revocation. Slice 5 implements pair-scoped transaction advisory locking and a reviewed lock graph against existing M2 helpers; its [transaction contract](V3_I1_SLICE5.md#transactions-races-and-revocation) and [executed overlap evidence](V3_I1_SLICE5_VALIDATION.md#real-postgresql-concurrency-and-rollback-evidence) record the result without changing those helpers. Further authorized changes must preserve and re-review the complete lock graph, not change M2 helpers casually.
 
 Existing M2 uses READ COMMITTED, lock timeout 5s, statement timeout 10s, maxWait 5s and transaction bound 30s, with final expiry checks and no automatic stale retry. Preserve those accepted assumptions. A final clock check cannot stop time; no claim of response recall or universal serializable reads is made. EH-007's single-statement snapshot may overlap a later committed revocation; the next current-authority check must deny. No cached membership/relationship authority is a substitute.
 
-Prove both operation orderings and winner commit/rollback on real PostgreSQL, with independent connections, bounded waits and observed blocker evidence (not sleep-only mock races). Include overlap with existing M2 clinical operations and seed locking. Locks/SQL details may be finalized only in the separately authorized implementation slice while meeting these guarantees.
+Prove both operation orderings and winner commit/rollback on real PostgreSQL, with independent connections, bounded waits and observed blocker evidence (not sleep-only mock races). Include overlap with existing M2 clinical operations and seed locking. Authorized Slice 5 finalized its locks/SQL under these guarantees and records the executed cases in its implementation/validation contracts linked above. Those details remain subject to independent exact-head review; future authorized implementation must meet the same guarantees, and no Slice 6 combined exit proof or I1 completion is claimed here.
 
 ## Compatibility inventory — reviewed runtime baseline
 
