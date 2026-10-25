@@ -1,8 +1,8 @@
 # EgyHealth 360 — Versioned Requirements Traceability
 
-Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix COMPLETE; Slices 1/2/3 COMPLETE after PR #43 merge and exact-main CI 40116846242 SUCCESS at `e1a87df5031e7be48a43d99e2b311dbe397b2e7e`. [Slice 4 curated directory](V3_I1_SLICE4.md) IMPLEMENTED / IN REVIEW under [authorization 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285). I1 NOT COMPLETE; Issue #39 OPEN; Slice 5/6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
 
-[I1 acceptance trace](V3_I1_CONTRACT.md#acceptance-traceability-and-exit-proof) remains the complete I1 exit map. Slice 1/2 COMPLETE; [Slice 3 implementation](V3_I1_SLICE3.md) and [evidence](V3_I1_SLICE3_VALIDATION.md) cover V3-FR-001, D06-A, FR-060/061, patient ownership and retained security/history requirements. Slice 2 covers bounded V3-FR-003/018. I1 NOT COMPLETE; Slice 3 in review; Slice 4+ NOT AUTHORIZED. Complete integrated journeys remain later obligations.
+[I1 acceptance trace](V3_I1_CONTRACT.md#acceptance-traceability-and-exit-proof) remains the complete I1 exit map. Slice 1/2 COMPLETE; [Slice 3 implementation](V3_I1_SLICE3.md) and [evidence](V3_I1_SLICE3_VALIDATION.md) cover V3-FR-001, D06-A, FR-060/061, patient ownership and retained security/history requirements. Slice 2 covers bounded V3-FR-003/018. [Slice 4](V3_I1_SLICE4.md) / [evidence](V3_I1_SLICE4_VALIDATION.md) covers V3-FR-002 and the internal catalog/publication portion of V3-FR-018, D02/07/28 and retained privacy/history requirements. I1 NOT COMPLETE; Slice 3 COMPLETE; Slice 4 implemented / in review; Slice 5+ NOT AUTHORIZED. Complete integrated journeys remain later obligations.
 
 ## Current V3 authority and evidence status
 

@@ -1,6 +1,6 @@
 # V3-I1 — Integrated Domain & Access Foundations Contract
 
-Current Slice 3 delivery: [Slice 1 and Slice 2 COMPLETE; Slice 3 implemented / in review; I1 overall NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN](V3_I1_SLICE3.md). [Authorization](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944); starting main `2c96b2ce7cfd407a828f9ba510e563fe1e5983a9`, exact-main [CI 40010140478](https://github.com/abuhmaid28/egyhealth360/actions/runs/40010140478) SUCCESS. No later slice is authorized.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix COMPLETE; Slices 1/2/3 COMPLETE after PR #43 merge and exact-main CI 40116846242 SUCCESS at `e1a87df5031e7be48a43d99e2b311dbe397b2e7e`. [Slice 4 curated directory](V3_I1_SLICE4.md) IMPLEMENTED / IN REVIEW under [authorization 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285). I1 NOT COMPLETE; Issue #39 OPEN; Slice 5/6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
 
 ## Authority and delivery status
 
@@ -12,10 +12,11 @@ Current Slice 3 delivery: [Slice 1 and Slice 2 COMPLETE; Slice 3 implemented / i
 | M0 / M1 / M2 | COMPLETE; historical contracts and implementation preserved |
 | V3-I1 contract | APPROVED; this document adopts Issue #39 |
 | Slice 1 | Merged/verified (PR #40; exact-main CI 39948145751 SUCCESS) |
-| V3-I1 runtime implementation | Slice 2 COMPLETE; Slice 3 implemented / in review; overall NOT COMPLETE |
+| V3-I1 runtime implementation | Slice 2 COMPLETE; Slice 3 COMPLETE; overall NOT COMPLETE |
 | Slice 2 | COMPLETE — PR #41 merged, exact-main CI 40010140478 SUCCESS |
-| Slice 3 | AUTHORIZED by comment 6374281944; implemented / in review |
-| Slice 4+ | NOT AUTHORIZED / NOT STARTED |
+| Slice 3 | COMPLETE after PR #43 / exact-main CI 40116846242 SUCCESS |
+| Slice 4 | AUTHORIZED by comment 6391008285; IMPLEMENTED / IN REVIEW |
+| Slice 5/6 | NOT AUTHORIZED / NOT STARTED |
 | EACCE | NOT STARTED |
 | Product UI/design | FROZEN; no design unfreeze |
 
@@ -31,8 +32,8 @@ I1 establishes patient registration/own profile, curated public clinician/specia
 |---|---|---|
 | 1 | Contract adoption and compatibility inventory | Merged/verified |
 | 2 | Fixed roles, organizations and memberships | COMPLETE |
-| 3 | Patient registration and own profile | AUTHORIZED; implemented / in review |
-| 4 | Curated public provider directory | NOT AUTHORIZED |
+| 3 | Patient registration and own profile | COMPLETE |
+| 4 | Curated public provider directory | AUTHORIZED 6391008285; implemented / in review |
 | 5 | Bilateral relationship lifecycle | NOT AUTHORIZED |
 | 6 | Combined I1 exit proof and independent security review | NOT AUTHORIZED |
 
@@ -95,6 +96,8 @@ Slice 3 freezes the approved implementation details in [registration/profile con
 ## Published directory foundation
 
 Expose only explicitly published doctor display identity, curated specialty, approved clinic affiliation and bounded public clinic/location information. An intentional public directory identifier is a locator, never authority. Publication requires eligible current account/organization/affiliation state; unpublication or suspension removes the affected public projection on the next current read. Do not publish account email/user identifiers, private professional identifiers, internal membership/grant data, patient associations, appointments or clinical content. No availability, slot, rating, marketplace or clinical search capability is included. Managed publication must not automatically publish every existing clinician or infer verified specialty from old free text.
+
+Slice 4 freezes the physical/API implementation of this published-directory subset in [its contract](V3_I1_SLICE4.md) and [validation](V3_I1_SLICE4_VALIDATION.md), under comment 6391008285. It adds no clinical authority. The original Slice 1 compatibility inventory below remains historical; new model/route inventories are explicit in the Slice 4 inventory and current DATA_MODEL/API.
 
 ## Bilateral enrollment and assignment compatibility
 
@@ -222,7 +225,7 @@ No invented consent, organization membership, verified specialty or clinical evi
 
 ## Future logical API and architecture map
 
-The organization/membership operational subset is accepted internally in Slice 2. Registration/own-profile HTTP is implemented in Slice 3 for review; [its contract](V3_I1_SLICE3.md) and OpenAPI define actual routes. Directory, specialty/publication and relationship groups below remain **PLANNED / NOT IMPLEMENTED**. This conceptual map introduces no additional route or generated contract. Keep public boundary/controller validation separate from narrow principal-checked persistence; no exported general Prisma client or alternate clinical authorizer.
+The organization/membership operational subset is COMPLETE internally in Slice 2; registration/own-profile HTTP COMPLETE in Slice 3. Slice 4 implements the approved public directory routes and internal ADMIN specialty/publication service for review; see [exact contract](V3_I1_SLICE4.md). Relationship groups remain **PLANNED / NOT IMPLEMENTED**. Keep public validation separate from narrow current-principal persistence, without raw client or alternate clinical authority.
 
 | Group | Intended authority |
 |---|---|
@@ -234,7 +237,7 @@ The organization/membership operational subset is accepted internally in Slice 2
 | Patient relationship authorization/withdrawal/history/end | Exact patient participant, minimal provenance |
 | Clinician request acceptance/decline/history/end | Exact designated clinician/assignment participant; pending status never clinical access |
 
-Existing [API/OpenAPI](API.md) remains authoritative for delivered methods. Registration/own-profile reuse current session/browser controls; later directory and membership HTTP must do so as well; relationship operations bind the existing assignment. No booking, consultation, prescription, lab-result or dispensing API belongs to I1. No frontend or visual work is implied by these resource groups.
+Existing [API/OpenAPI](API.md) remains authoritative for delivered methods. Registration/own-profile reuse current session/browser controls; any future managed directory/membership HTTP adapter must do so as well; relationship operations bind the existing assignment. No booking, consultation, prescription, lab-result or dispensing API belongs to I1. No frontend or visual work is implied by these resource groups.
 
 ## Acceptance, traceability and exit proof
 
@@ -257,4 +260,4 @@ Booking cannot imply relationship: I1 tests must show unrelated legacy appointme
 
 Before I1 COMPLETE: all separately authorized slices implemented, full required generate/lint/Prisma/build/typecheck/unit/migration/integration/auth measurement/audits/Docker/container/runtime/smoke/cleanup evidence, independent security/authorization review, successful exact-head CI, approved merges and exact-main post-merge verification. Record actual commands/counts/failures/limitations; no fabricated PASS and no fixed historical count requirement.
 
-For Slice 1 alone: documentation diff/link/anchor/status checks, unchanged D01–D36 decision text and historical contracts/evidence, explicit forbidden-file inventory, repository lint and independent normal PR CI. No future tests are represented as run. Slice 1 passed its merge/exact-main gate. Slice 2 completed those gates in PR #41 / exact-main CI 40010140478. Slice 3 is authorized by comment 6374281944. Next gate is independent Slice 3 review, successful exact-head CI, Product Owner merge approval and exact-main post-merge verification, then separate Slice 4 authorization on Issue #39. Leave the issue open; this document authorizes no runtime work.
+For Slice 1 alone: documentation diff/link/anchor/status checks, unchanged D01–D36 decision text and historical contracts/evidence, explicit forbidden-file inventory, repository lint and independent normal PR CI. No future tests are represented as run. Slice 1 passed its merge/exact-main gate. Slice 2 completed those gates in PR #41 / exact-main CI 40010140478. Slice 3 is COMPLETE after PR #43 / exact-main CI 40116846242. Slice 4 is separately authorized by comment 6391008285 and implemented / in review. Next gate: independent exact-head Slice 4 review, successful CI, explicit Product Owner merge approval and exact-main verification; Slice 5/6 remain unauthorized. Leave the issue open; this document authorizes no runtime work.

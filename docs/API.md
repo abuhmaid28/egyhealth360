@@ -1,8 +1,8 @@
 # EgyHealth 360 — API Status and V3 Resource Boundaries
 
-Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix COMPLETE; Slices 1/2/3 COMPLETE after PR #43 merge and exact-main CI 40116846242 SUCCESS at `e1a87df5031e7be48a43d99e2b311dbe397b2e7e`. [Slice 4 curated directory](V3_I1_SLICE4.md) IMPLEMENTED / IN REVIEW under [authorization 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285). I1 NOT COMPLETE; Issue #39 OPEN; Slice 5/6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
 
-[Slice 3](V3_I1_SLICE3.md) implements guarded anonymous registration and current-PATIENT own-profile operations. Slice 1/2 are COMPLETE; Slice 3 is in review, I1 NOT COMPLETE and Slice 4+ NOT AUTHORIZED. Existing auth/clinical routes remain unchanged. Internal Slice 2 operations are not public HTTP routes; availability remains I2 and fulfillment I3.
+[Slice 3](V3_I1_SLICE3.md) implements guarded anonymous registration and current-PATIENT own-profile operations. Slice 1/2/3 are COMPLETE; I1 NOT COMPLETE and Slice 4 implemented / in review; Slice 5+ NOT AUTHORIZED. Existing auth/clinical routes remain unchanged. Internal Slice 2 operations are not public HTTP routes; availability remains I2 and fulfillment I3.
 
 ## Implemented HTTP boundary
 
@@ -18,7 +18,11 @@ The [OpenAPI](openapi.json) and accepted M0–M2 contracts define actual behavio
 | HTN follow-up | `/patients/{patientId}/follow-up-appointments` and `/{appointmentId}/cancel` beneath it | EH-012 clinician create/cancel, own/assigned history; not general patient booking |
 | Encounter / BP associations | `/patients/{patientId}/clinical-encounters`, `/{encounterId}/blood-pressure-measurements/{measurementId}` and `/{encounterId}/blood-pressure-associations` beneath it | EH-012 immutable HTN encounter/link and minimized history |
 
-Methods, validation, pagination, response/error shapes and status mappings remain exactly those in OpenAPI/contracts; this reconciliation changes none. Do not infer that generic examples in former API planning were frozen routes. Current patient reads require own identity; clinician access requires current ACTIVE assignment; ADMIN denied clinical payload. Staff roles can use existing authentication; Slice 3 adds patient registration/own-profile HTTP only; no organization/membership management HTTP route, marketplace or fulfillment API exists.
+Methods, validation, pagination, response/error shapes and status mappings remain exactly those in OpenAPI/contracts; this reconciliation changes none. Do not infer that generic examples in former API planning were frozen routes. Current patient reads require own identity; clinician access requires current ACTIVE assignment; ADMIN denied clinical payload. Staff roles can use existing authentication; Slice 3 adds patient registration/own-profile HTTP; Slice 4 adds four public directory GET/HEAD resources. No organization/membership/directory management HTTP route, marketplace or fulfillment API exists.
+
+## V3-I1 Slice 4 public directory
+
+[Exact Slice 4 contract](V3_I1_SLICE4.md#public-http-contract) / [validation](V3_I1_SLICE4_VALIDATION.md). Actual GET/HEAD routes: `/api/v1/directory/specialties`, `/api/v1/directory/clinics`, `/api/v1/directory/providers`, `/api/v1/directory/providers/{publicId}`. Public allowlist identical for every role, no-store/current reads/no conditional 304; exact bounded page/pageSize and specialty/clinic filters only. Separate generated public locators never grant clinical access. Management is internal current-ADMIN service, matching Slice 2; no new management browser endpoint or CSRF exception. OpenAPI pins the exact response/errors; no availability, clinical payload, private identifiers or future routes.
 
 ## V3-I1 Slice 3 HTTP contract
 
