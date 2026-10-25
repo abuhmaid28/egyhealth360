@@ -5428,6 +5428,2590 @@
           }
         }
       }
+    },
+    "/api/v1/me/relationship-requests": {
+      "get": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant read requests",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "RELATIONSHIP_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RelationshipRequest"
+                      }
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/RelationshipPage"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            },
+            "description": "Canonical unencoded positive decimal, no duplicate/unknown parameters."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical unencoded positive decimal, no duplicate/unknown parameters."
+          }
+        ]
+      },
+      "head": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant read requests",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            },
+            "description": "Canonical unencoded positive decimal, no duplicate/unknown parameters."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical unencoded positive decimal, no duplicate/unknown parameters."
+          }
+        ]
+      },
+      "post": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant read requests",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicting relationship operation.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_CONFLICT",
+                      "message": "Conflicting relationship operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported content type.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "RELATIONSHIP_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "request",
+                        "changed"
+                      ],
+                      "properties": {
+                        "request": {
+                          "$ref": "#/components/schemas/RelationshipRequest"
+                        },
+                        "changed": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipAuthorization"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact configured browser origin; reject cross-site Fetch Metadata when supplied."
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Existing current-session CSRF contract."
+          }
+        ]
+      }
+    },
+    "/api/v1/me/relationship-requests/{requestId}": {
+      "get": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant read requests",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "RELATIONSHIP_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/RelationshipRequest"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ]
+      },
+      "head": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant read requests",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/me/relationship-requests/{requestId}/accept": {
+      "put": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant accept requests",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicting relationship operation.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_CONFLICT",
+                      "message": "Conflicting relationship operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported content type.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "RELATIONSHIP_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "request",
+                        "changed"
+                      ],
+                      "properties": {
+                        "request": {
+                          "$ref": "#/components/schemas/RelationshipRequest"
+                        },
+                        "changed": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipCommand"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact configured browser origin; reject cross-site Fetch Metadata when supplied."
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Existing current-session CSRF contract."
+          }
+        ]
+      }
+    },
+    "/api/v1/me/relationship-requests/{requestId}/decline": {
+      "put": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant decline requests",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicting relationship operation.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_CONFLICT",
+                      "message": "Conflicting relationship operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported content type.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "RELATIONSHIP_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "request",
+                        "changed"
+                      ],
+                      "properties": {
+                        "request": {
+                          "$ref": "#/components/schemas/RelationshipRequest"
+                        },
+                        "changed": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipCommand"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact configured browser origin; reject cross-site Fetch Metadata when supplied."
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Existing current-session CSRF contract."
+          }
+        ]
+      }
+    },
+    "/api/v1/me/relationship-requests/{requestId}/withdraw": {
+      "put": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant withdraw requests",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicting relationship operation.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_CONFLICT",
+                      "message": "Conflicting relationship operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported content type.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "RELATIONSHIP_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "request",
+                        "changed"
+                      ],
+                      "properties": {
+                        "request": {
+                          "$ref": "#/components/schemas/RelationshipRequest"
+                        },
+                        "changed": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipCommand"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact configured browser origin; reject cross-site Fetch Metadata when supplied."
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Existing current-session CSRF contract."
+          }
+        ]
+      }
+    },
+    "/api/v1/me/relationships": {
+      "get": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant read relationships",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "RELATIONSHIP_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ParticipantRelationship"
+                      }
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/RelationshipPage"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            },
+            "description": "Canonical unencoded positive decimal, no duplicate/unknown parameters."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical unencoded positive decimal, no duplicate/unknown parameters."
+          }
+        ]
+      },
+      "head": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant read relationships",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            },
+            "description": "Canonical unencoded positive decimal, no duplicate/unknown parameters."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Canonical unencoded positive decimal, no duplicate/unknown parameters."
+          }
+        ]
+      }
+    },
+    "/api/v1/me/relationships/{assignmentId}": {
+      "get": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant read relationships",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "RELATIONSHIP_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ParticipantRelationship"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "assignmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ]
+      },
+      "head": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant read relationships",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "assignmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/me/relationships/{assignmentId}/end": {
+      "put": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Participant end relationships",
+        "description": "Current ACTIVE PATIENT/CLINICIAN participant with exact current nonrevoked/unexpired session. ADMIN/staff denied 404. Assignment remains sole clinical grant; requests are bilateral provenance only. No-store, no ETag/304. Legacy assignments work without request; accepted withdrawal retains ACCEPTED history and atomically ends its exact bound assignment. Exact immutable-target replay changes nothing, never ends a newer grant. No booking, availability or clinical payload. Canonical lowercase UUIDv4 locators only. Body <=16384 bytes; raw header aggregate <=8192 bytes; URL <=2048 characters. Strict JSON, duplicate/unknown keys rejected, identity Content-Encoding only. Client identities/roles are never credentials.",
+        "responses": {
+          "400": {
+            "description": "Invalid request.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicting relationship operation.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "RELATIONSHIP_CONFLICT",
+                      "message": "Conflicting relationship operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request too large.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported content type.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "const": {
+                        "error": {
+                          "code": "RELATIONSHIP_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    },
+                    {
+                      "const": {
+                        "error": {
+                          "code": "AUTH_SERVICE_UNAVAILABLE",
+                          "message": "Service unavailable."
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Participant-scoped result; changed false on exact replay/no-op. No authority is derived from request state alone.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "relationship",
+                        "changed"
+                      ],
+                      "properties": {
+                        "relationship": {
+                          "$ref": "#/components/schemas/ParticipantRelationship"
+                        },
+                        "changed": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationshipCommand"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "assignmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Exact configured browser origin; reject cross-site Fetch Metadata when supplied."
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Existing current-session CSRF contract."
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -5979,6 +8563,219 @@
         }
       },
       "PublicDirectoryPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "page",
+          "pageSize",
+          "total"
+        ],
+        "properties": {
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "RelationshipAuthorization": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "providerId",
+              "operationKey"
+            ],
+            "properties": {
+              "providerId": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "operationKey": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assignmentId",
+              "operationKey"
+            ],
+            "properties": {
+              "assignmentId": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "operationKey": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              }
+            },
+            "description": "Own exact ACTIVE legacy assignment confirmation. No public-directory publication prerequisite."
+          }
+        ]
+      },
+      "RelationshipCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {}
+      },
+      "RelationshipRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "providerId",
+          "patientDisplayName",
+          "clinicianDisplayName",
+          "status",
+          "authorizedAt",
+          "acceptedAt",
+          "declinedAt",
+          "authorizationWithdrawnAt",
+          "assignmentId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "providerId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Public discovery locator, or null for exact legacy-assignment confirmation."
+          },
+          "patientDisplayName": {
+            "type": "string"
+          },
+          "clinicianDisplayName": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "PENDING",
+              "ACCEPTED",
+              "DECLINED",
+              "WITHDRAWN"
+            ]
+          },
+          "authorizedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "acceptedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "declinedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "authorizationWithdrawnAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "assignmentId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        }
+      },
+      "ParticipantRelationship": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "patientId",
+          "patientDisplayName",
+          "clinicianDisplayName",
+          "status",
+          "assignedAt",
+          "endedAt",
+          "endedByRole"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "patientId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Own patient ID or currently ACTIVE assigned clinician only. Ended clinician history masks this locator."
+          },
+          "patientDisplayName": {
+            "type": "string"
+          },
+          "clinicianDisplayName": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ACTIVE",
+              "ENDED"
+            ]
+          },
+          "assignedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "endedByRole": {
+            "enum": [
+              "PATIENT",
+              "CLINICIAN",
+              null
+            ],
+            "description": "Null for historical endings with no recorded participant provenance."
+          }
+        }
+      },
+      "RelationshipPage": {
         "type": "object",
         "additionalProperties": false,
         "required": [

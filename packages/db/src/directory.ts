@@ -71,6 +71,11 @@ const eligibleSql = Prisma.sql `SELECT p.public_id id,p.display_name,s.key speci
  JOIN public.organizations o ON o.id=m.organization_id AND o.kind='CLINIC' AND o.status='ACTIVE'
  JOIN public.clinic_directory c ON c.organization_id=o.id AND c.organization_kind='CLINIC' AND c.is_published
  WHERE p.is_published`;
+/** Internal enrollment locator resolution. Publication is discovery, never a clinical grant. */
+export async function resolveRelationshipProvider(tx: Tx, publicId: string) {
+    const rows = await tx.$queryRaw<{clinicianId:string;clinicianUserId:string}[]>(Prisma.sql`SELECT p.clinician_id AS "clinicianId",p.clinician_user_id AS "clinicianUserId" FROM public.clinician_directory p WHERE p.public_id=${publicId}::uuid AND EXISTS(SELECT 1 FROM (${eligibleSql}) e WHERE e.id=p.public_id)`);
+    return rows[0] ?? null;
+}
 const providerJson = Prisma.sql `jsonb_build_object('id',id,'displayName',display_name,'specialty',jsonb_build_object('key',specialty_key,'displayName',specialty_name),
  'clinics',jsonb_agg(jsonb_build_object('id',clinic_id,'displayName',clinic_name,'city',city,'address',address) ORDER BY clinic_id))`;
 /** Curated operational service and current public projection only. No clinical authorizer. */

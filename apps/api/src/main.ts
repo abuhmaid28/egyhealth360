@@ -1,4 +1,4 @@
-import { createDirectoryPersistence, createPatientEntryPersistence, createFollowUpAppointmentPersistence, createClinicalEncounterPersistence, createBloodPressureMeasurementPersistence, createAuthPersistence, createAuthorizationPersistence, createDatabase } from '@egyhealth/db';
+import { createRelationshipPersistence, createDirectoryPersistence, createPatientEntryPersistence, createFollowUpAppointmentPersistence, createClinicalEncounterPersistence, createBloodPressureMeasurementPersistence, createAuthPersistence, createAuthorizationPersistence, createDatabase } from '@egyhealth/db';
 import { authConfiguration, positiveInteger } from '@egyhealth/config';
 import { patientEntryRuntime } from './patient-entry.js';
 import { createApp } from './app.js';
@@ -7,6 +7,7 @@ import { createPasswordVerifier } from './password.js';
 async function main() {
   const config = authConfiguration(process.env);
   const passwords = await createPasswordVerifier();
+  const relationships = createRelationshipPersistence(process.env.DATABASE_URL);
   const directory = createDirectoryPersistence(process.env.DATABASE_URL);
   const patientEntry = createPatientEntryPersistence(process.env.DATABASE_URL);
   const database = createDatabase(process.env.DATABASE_URL);
@@ -15,13 +16,14 @@ async function main() {
   const bloodPressure = createBloodPressureMeasurementPersistence(process.env.DATABASE_URL);
   const appointments = createFollowUpAppointmentPersistence(process.env.DATABASE_URL);
   const encounters = createClinicalEncounterPersistence(process.env.DATABASE_URL);
-  const app = await createApp(database, { config, passwords, store }, authorization, bloodPressure, { appointments, encounters }, patientEntryRuntime(patientEntry), directory);
+  const app = await createApp(database, { config, passwords, store }, authorization, bloodPressure, { appointments, encounters }, patientEntryRuntime(patientEntry), directory, relationships);
   let closing = false;
   const close = async () => {
     if (closing) return;
     closing = true;
     await app.close();
     await database.close();
+    await relationships.close();
     await directory.close();
     await patientEntry.close();
     await store.close();

@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import {relationshipController,relationshipRequestBoundary} from './relationships.js';
+import type {RelationshipPersistence} from '@egyhealth/db';
 import { directoryController, directoryRequestBoundary } from './directory.js';
 import type { PublicDirectory } from '@egyhealth/db';
 import { patientEntryController, patientEntryRequestBoundary, type PatientEntryRuntime } from './patient-entry.js';
@@ -35,7 +37,7 @@ function applicationErrorEnvelope(body: unknown): boolean {
     && typeof field.field === 'string' && typeof field.reason === 'string'));
 }
 
-export async function createApp(database: Database, auth?: AuthRuntime, authorization?: AuthorizationPersistence, bloodPressure?: BloodPressureMeasurementPersistence, followup?: { appointments: FollowUpAppointmentPersistence; encounters: ClinicalEncounterPersistence }, patientEntry?: PatientEntryRuntime, directory?: PublicDirectory) {
+export async function createApp(database: Database, auth?: AuthRuntime, authorization?: AuthorizationPersistence, bloodPressure?: BloodPressureMeasurementPersistence, followup?: { appointments: FollowUpAppointmentPersistence; encounters: ClinicalEncounterPersistence }, patientEntry?: PatientEntryRuntime, directory?: PublicDirectory, relationships?: RelationshipPersistence) {
   @Controller('health')
   class HealthController {
     @Get()
@@ -45,7 +47,7 @@ export async function createApp(database: Database, auth?: AuthRuntime, authoriz
       return { data: { status: bootstrapSmoke('ok') } };
     }
   }
-  @Module({ controllers: auth ? [authController(auth), ...(patientEntry ? [patientEntryController(auth, patientEntry)] : []), ...(authorization ? [patientController(auth, authorization)] : []), ...(bloodPressure ? [bloodPressureController(auth, bloodPressure)] : []), ...(followup ? [followupController(auth, followup.appointments, followup.encounters)] : [])] : [] })
+  @Module({ controllers: auth ? [authController(auth), ...(relationships ? [relationshipController(auth,relationships)] : []), ...(patientEntry ? [patientEntryController(auth, patientEntry)] : []), ...(authorization ? [patientController(auth, authorization)] : []), ...(bloodPressure ? [bloodPressureController(auth, bloodPressure)] : []), ...(followup ? [followupController(auth, followup.appointments, followup.encounters)] : [])] : [] })
   class AuthModule {}
   @Module({ controllers: [HealthController, ...(directory ? [directoryController(directory)] : [])], imports: [AuthModule] })
   class AppModule {}
@@ -54,6 +56,7 @@ export async function createApp(database: Database, auth?: AuthRuntime, authoriz
   app.use(directoryRequestBoundary);
   if (auth) app.use(authRequestBoundary(auth));
   if (auth && patientEntry) app.use(patientEntryRequestBoundary(auth));
+  if (auth && relationships) app.use(relationshipRequestBoundary(auth));
   app.use(patientRequestBoundary);
   if (auth && bloodPressure) app.use(bloodPressureRequestBoundary(auth));
   if (auth && followup) app.use(followupRequestBoundary(auth));
