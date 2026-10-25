@@ -1,6 +1,6 @@
 # V3-I1 — Integrated Domain & Access Foundations Contract
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix COMPLETE; Slices 1/2/3 COMPLETE after PR #43 merge and exact-main CI 40116846242 SUCCESS at `e1a87df5031e7be48a43d99e2b311dbe397b2e7e`. [Slice 4 curated directory](V3_I1_SLICE4.md) IMPLEMENTED / IN REVIEW under [authorization 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285). I1 NOT COMPLETE; Issue #39 OPEN; Slice 5/6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix and Slices 1–4 COMPLETE; PR #44 merged at `e75671ec0adfdf0f0d71485eebb104728b619e91`, exact-main [Bootstrap 40195060034](https://github.com/abuhmaid28/egyhealth360/actions/runs/40195060034) SUCCESS. [Slice 5 bilateral lifecycle](V3_I1_SLICE5.md) IMPLEMENTED / IN REVIEW under [authorization 6401378826](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6401378826). V3-I1 INCOMPLETE; Issue #39 OPEN; Slice 6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
 
 ## Authority and delivery status
 
@@ -15,12 +15,13 @@ Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotf
 | V3-I1 runtime implementation | Slice 2 COMPLETE; Slice 3 COMPLETE; overall NOT COMPLETE |
 | Slice 2 | COMPLETE — PR #41 merged, exact-main CI 40010140478 SUCCESS |
 | Slice 3 | COMPLETE after PR #43 / exact-main CI 40116846242 SUCCESS |
-| Slice 4 | AUTHORIZED by comment 6391008285; IMPLEMENTED / IN REVIEW |
-| Slice 5/6 | NOT AUTHORIZED / NOT STARTED |
+| Slice 4 | COMPLETE — PR #44 merged, exact-main CI 40195060034 SUCCESS |
+| Slice 5 | IMPLEMENTED / IN REVIEW (separate authorization 6401378826) |
+| Slice 6 | NOT AUTHORIZED / NOT STARTED |
 | EACCE | NOT STARTED |
 | Product UI/design | FROZEN; no design unfreeze |
 
-Reviewed starting main: `091c612aca77ae41941fd1183f2de1cc380b1b30`; [PR #38](https://github.com/abuhmaid28/egyhealth360/pull/38) MERGED. [Bootstrap 39889035960](https://github.com/abuhmaid28/egyhealth360/actions/runs/39889035960), push/main on that exact SHA, completed SUCCESS. Its validate job completed install/generate/lint/Prisma/build/typecheck/unit, PostgreSQL/migrations/integration/auth measurement, both audits, Docker/config/build/startup, container auth/authorization, auth/authorization/M1/clinical/CareAction runtime, smoke and cleanup. Observed logs report 67 unit and 407 integration tests passing and both audits clean. These are baseline remote results, not execution of future I1 tests.
+Historical Slice 1 reviewed starting main (not the Slice 5 starting gate): `091c612aca77ae41941fd1183f2de1cc380b1b30`; [PR #38](https://github.com/abuhmaid28/egyhealth360/pull/38) MERGED. [Bootstrap 39889035960](https://github.com/abuhmaid28/egyhealth360/actions/runs/39889035960), push/main on that exact SHA, completed SUCCESS. Its validate job completed install/generate/lint/Prisma/build/typecheck/unit, PostgreSQL/migrations/integration/auth measurement, both audits, Docker/config/build/startup, container auth/authorization, auth/authorization/M1/clinical/CareAction runtime, smoke and cleanup. Observed logs report 67 unit and 407 integration tests passing and both audits clean. These are baseline remote results, not execution of future I1 tests.
 
 This contract governs later separately authorized I1 slices. It adds no runtime capability, schema, SQL, endpoint or OpenAPI change. Accepted M0–M2 contracts retain their original applicability; this document does not fabricate historical consent or retroactively redefine them.
 
@@ -201,7 +202,7 @@ PRESERVE EXACTLY protects existing observable behavior/invariants; EXTEND ADDITI
 | [Correction/privacy](BP_CORRECTION_INVALIDATION_CONTRACT.md) | PRESERVE EXACTLY | Fresh full-pair same-patient corrections, terminal exclusion, independent wrong-patient masking including references/counts/retries, no source move/raw forensic route |
 | [INITIAL CareAction](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) | PRESERVE EXACTLY | R1–R8, explicit clinician selection, exact plan/rule/applicability/BP snapshot, unique INITIAL/replay, protected decision/history and calendar, current privacy, atomic audits; no recurrence/closure/automatic bridge |
 | Existing authorization locks/concurrency | PRESERVE EXACTLY | Current user/session/profile/assignment/patient/resource order, bounded waits, final expiry, no stale retry; retain EH-007 snapshot limitation rather than claiming stronger historic guarantees |
-| Organization / Specialty / OrganizationMembership / RelationshipRequest | FUTURE NEW | No such schema/runtime now; approved minimum concepts only; no generalized IAM/facility/workflow engine |
+| Organization / Specialty / OrganizationMembership / RelationshipRequest | EXTEND ADDITIVELY | First three delivered in Slices 2/4; RelationshipRequest delivered in Slice 5 for review, provenance only; no generalized IAM/facility/workflow engine |
 | Registration / own-profile update / public directory / bilateral enrollment APIs | FUTURE NEW | No live endpoint/OpenAPI contract; existing authenticated routes unchanged |
 | General booking/consultation, fulfillment, timeline, notifications, EACCE/UI | DEFER | Later milestone contracts only; D36 artifact authorization deferred to I3 |
 
@@ -225,7 +226,7 @@ No invented consent, organization membership, verified specialty or clinical evi
 
 ## Future logical API and architecture map
 
-The organization/membership operational subset is COMPLETE internally in Slice 2; registration/own-profile HTTP COMPLETE in Slice 3. Slice 4 implements the approved public directory routes and internal ADMIN specialty/publication service for review; see [exact contract](V3_I1_SLICE4.md). Relationship groups remain **PLANNED / NOT IMPLEMENTED**. Keep public validation separate from narrow current-principal persistence, without raw client or alternate clinical authority.
+The organization/membership operational subset is COMPLETE internally in Slice 2; registration/own-profile HTTP COMPLETE in Slice 3. Slice 4 completed the approved public directory routes and internal ADMIN specialty/publication service via PR #44; see [exact contract](V3_I1_SLICE4.md). [Slice 5](V3_I1_SLICE5.md) implements participant enrollment/history/end for review. Keep public validation separate from narrow current-principal persistence, without raw client or alternate clinical authority.
 
 | Group | Intended authority |
 |---|---|
@@ -260,4 +261,8 @@ Booking cannot imply relationship: I1 tests must show unrelated legacy appointme
 
 Before I1 COMPLETE: all separately authorized slices implemented, full required generate/lint/Prisma/build/typecheck/unit/migration/integration/auth measurement/audits/Docker/container/runtime/smoke/cleanup evidence, independent security/authorization review, successful exact-head CI, approved merges and exact-main post-merge verification. Record actual commands/counts/failures/limitations; no fabricated PASS and no fixed historical count requirement.
 
-For Slice 1 alone: documentation diff/link/anchor/status checks, unchanged D01–D36 decision text and historical contracts/evidence, explicit forbidden-file inventory, repository lint and independent normal PR CI. No future tests are represented as run. Slice 1 passed its merge/exact-main gate. Slice 2 completed those gates in PR #41 / exact-main CI 40010140478. Slice 3 is COMPLETE after PR #43 / exact-main CI 40116846242. Slice 4 is separately authorized by comment 6391008285 and implemented / in review. Next gate: independent exact-head Slice 4 review, successful CI, explicit Product Owner merge approval and exact-main verification; Slice 5/6 remain unauthorized. Leave the issue open; this document authorizes no runtime work.
+For Slice 1 alone: documentation diff/link/anchor/status checks, unchanged D01–D36 decision text and historical contracts/evidence, explicit forbidden-file inventory, repository lint and independent normal PR CI. No future tests are represented as run. Slice 1 passed its merge/exact-main gate. Slice 2 completed those gates in PR #41 / exact-main CI 40010140478. Slice 3 is COMPLETE after PR #43 / exact-main CI 40116846242. Slice 4 is COMPLETE via PR #44 / exact-main CI 40195060034. Slice 5 is authorized by comment 6401378826 and implemented / in review. Next gate: independent exact-head Slice 5 review, successful CI, separate Product Owner merge approval and exact-main verification; Slice 6 remains unauthorized. Leave the issue open; this document authorizes no runtime work.
+
+## Current Slice 5 applicability
+
+The authoritative implementation extension is [V3_I1_SLICE5](V3_I1_SLICE5.md), with [executed validation](V3_I1_SLICE5_VALIDATION.md). It adds participant-only request/accept/decline/withdraw/history/exact assignment end, additive request/end provenance and current-authority locks; the sole clinical grant remains ClinicianPatientAssignment. Earlier slice-local “future/not implemented” notes are historical to those slices. Slice 4 is COMPLETE via PR #44 / exact-main CI 40195060034. Slice 5 is in review; Slice 6 is not authorized. No I1 completion, booking, fulfillment, EACCE or design work is claimed.

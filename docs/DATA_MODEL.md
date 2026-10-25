@@ -1,12 +1,12 @@
 # EgyHealth 360 — Data Model Status and V3 Concepts
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix COMPLETE; Slices 1/2/3 COMPLETE after PR #43 merge and exact-main CI 40116846242 SUCCESS at `e1a87df5031e7be48a43d99e2b311dbe397b2e7e`. [Slice 4 curated directory](V3_I1_SLICE4.md) IMPLEMENTED / IN REVIEW under [authorization 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285). I1 NOT COMPLETE; Issue #39 OPEN; Slice 5/6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix and Slices 1–4 COMPLETE; PR #44 merged at `e75671ec0adfdf0f0d71485eebb104728b619e91`, exact-main [Bootstrap 40195060034](https://github.com/abuhmaid28/egyhealth360/actions/runs/40195060034) SUCCESS. [Slice 5 bilateral lifecycle](V3_I1_SLICE5.md) IMPLEMENTED / IN REVIEW under [authorization 6401378826](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6401378826). V3-I1 INCOMPLETE; Issue #39 OPEN; Slice 6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
 
-[Slice 2](V3_I1_SLICE2.md) Organization/OrganizationMembership and fixed staff roles are COMPLETE. [Slice 3](V3_I1_SLICE3.md) reuses User/PatientProfile/Session/AuditLog with no schema or migration change. I1 NOT COMPLETE; Slice 3 COMPLETE; Slice 4 implemented / in review; Slice 5+ NOT AUTHORIZED. Specialty/public directory are implemented in Slice 4 for review; RelationshipRequest remains unimplemented; historical schema/migration/clinical behavior is preserved.
+[Slice 2](V3_I1_SLICE2.md) Organization/OrganizationMembership and fixed staff roles are COMPLETE. [Slice 3](V3_I1_SLICE3.md) reuses User/PatientProfile/Session/AuditLog with no schema or migration change. I1 NOT COMPLETE; Slice 3 COMPLETE; Slice 4 COMPLETE; Slice 5 implemented / in review; Slice 6 NOT AUTHORIZED. Specialty/public directory are implemented in Slice 4 for review; RelationshipRequest remains unimplemented; historical schema/migration/clinical behavior is preserved.
 
-## Implemented model inventory — 29 models; Slice 4 in review
+## Implemented model inventory — 31 models; Slice 5 in review
 
-Exactly the following **29 Prisma models** exist on this Slice 4 branch: the 25 accepted M0–M2/Slice 2 models plus Specialty, ClinicDirectory, ClinicianDirectory and DirectoryAffiliation. One additive Slice 4 migration follows twelve immutable historical migrations. The [Prisma schema](../packages/db/prisma/schema.prisma), migration SQL and accepted slice contracts are authoritative for executable fields/constraints.
+Exactly the following **31 Prisma models** exist on this Slice 5 branch: 29 accepted models through Slice 4 plus RelationshipRequest and AssignmentEndProvenance. One additive Slice 5 migration follows thirteen immutable historical migrations. The [Prisma schema](../packages/db/prisma/schema.prisma), migration SQL and accepted slice contracts are authoritative for executable fields/constraints.
 
 - `User`
 - `Session`
@@ -37,8 +37,10 @@ Exactly the following **29 Prisma models** exist on this Slice 4 branch: the 25 
 - `ClinicDirectory`
 - `ClinicianDirectory`
 - `DirectoryAffiliation`
+- `RelationshipRequest`
+- `AssignmentEndProvenance`
 
-Current branch User roles are PATIENT/CLINICIAN/ADMIN/LAB_STAFF/PHARMACY_STAFF. Organization and OrganizationMembership provide operational scope only. No RelationshipRequest, general booking, prescription, lab order/result, notification, ClosureAssessment or experiment-result model is implemented. A model's existence does not imply a public route, workspace or completed product requirement.
+Current branch User roles are PATIENT/CLINICIAN/ADMIN/LAB_STAFF/PHARMACY_STAFF. Organization and OrganizationMembership provide operational scope only. RelationshipRequest is provenance only; no general booking, prescription, lab order/result, notification, ClosureAssessment or experiment-result model is implemented. A model's existence does not imply a public route, workspace or completed product requirement.
 
 ## APPROVED FUTURE V3 DOMAIN — NOT YET IMPLEMENTED
 
@@ -157,3 +159,7 @@ BpAmendmentOperation freezes actor/patient/kind/client operation key, exact BP t
 The executable EH-014 slice supersedes the conceptual care_actions lifecycle above: CareAction has only exact patient/plan/template/rule pins, INITIAL/type, immutable triggerAt/recommendedAt/dueBy/createdAt and one-to-one protected decision. CareActionDecision stores explicit selection, clinician/assignment/command provenance and a fixed-shape exact evaluated snapshot. CareActionApplicabilityInput pins exact point membership. No operational status/completed/cancelled/superseded fields. SQL-owned deferred completeness and same-patient composite RESTRICT FKs accompany the Prisma models. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [validation](EH-014_VALIDATION.md).
 
 Status evidence: [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. [Post-merge validation](EH-014_VALIDATION.md#post-merge-validation). No behavioral or R1–R8 contract change is introduced by this status closeout.
+
+## Current Slice 5 applicability
+
+The authoritative implementation extension is [V3_I1_SLICE5](V3_I1_SLICE5.md), with [executed validation](V3_I1_SLICE5_VALIDATION.md). It adds participant-only request/accept/decline/withdraw/history/exact assignment end, additive request/end provenance and current-authority locks; the sole clinical grant remains ClinicianPatientAssignment. Earlier slice-local “future/not implemented” notes are historical to those slices. Slice 4 is COMPLETE via PR #44 / exact-main CI 40195060034. Slice 5 is in review; Slice 6 is not authorized. No I1 completion, booking, fulfillment, EACCE or design work is claimed.
