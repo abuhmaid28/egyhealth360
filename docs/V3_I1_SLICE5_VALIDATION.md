@@ -104,7 +104,7 @@ Legacy confirmation works through the patient's own exact ACTIVE assignment even
 
 OpenAPI appends exactly eight participant-only resources and five schemas (25 paths / 22 schemas total). GET/HEAD on four resources, POST authorization, PUT four exact commands; all authenticated. Historical 17-path API bytes retain SHA256 `cd005b69cc22f783ced7458545360adf839b7f6861d4316943dcf64a8384f371`, including previous numeric-response key/escape formatting; independent tests pin the complete current hash, exact inventory and public allowlists. Historical exact inventories are extended deliberately, never weakened into subsets.
 
-Current D01–D36 decision register and cross-provider interpretation bytes retain SHA256 `f79fc639968c21b2351e90e369c9e97b654310f28076b667df8e41d6f2e1ea53`; only surrounding delivery-status metadata is reconciled. Relative Markdown verification at publication checked 266 links across 19 changed Markdown files, zero failures. Protected-file inventory and git diff --check passed.
+Current D01–D36 decision register and cross-provider interpretation bytes retain SHA256 `f79fc639968c21b2351e90e369c9e97b654310f28076b667df8e41d6f2e1ea53`; only surrounding delivery-status metadata is reconciled. Relative Markdown verification at publication checked 265 links across 19 changed Markdown files, zero failures. Protected-file inventory and git diff --check passed.
 
 No change to existing clinical authorizer, auth/session/password implementation, registration/profile rules, M1 fixture, M0–M2 clinical source, prior migrations, package manifests/lockfile or dependencies. CI adds exactly one runtime-proof step; all old gates/severity thresholds retained. No Slice 6/I2+ schema/routes, EACCE/research or frontend/design work.
 
