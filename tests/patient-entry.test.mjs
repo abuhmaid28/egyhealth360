@@ -62,8 +62,8 @@ test('I1S3 throttling has fixed memory, 30 attempts/window independent of identi
 
 test('I1S3 exact OpenAPI inventory/delta leaves every prior route/schema unchanged', async()=>{
  const {readFile}=await import('node:fs/promises');const {createHash}=await import('node:crypto');
- const {beforeSlice3}=await import('./support/openapi-baseline.mjs');
- const text=await readFile('docs/openapi.json','utf8'),api=JSON.parse(text);
+ const {beforeSlice3,beforeSlice4}=await import('./support/openapi-baseline.mjs');
+ const text=beforeSlice4(await readFile('docs/openapi.json','utf8')),api=JSON.parse(text);
  assert.equal(createHash('sha256').update(text).digest('hex'),'df91fb3f7c84bd6df258972b8d695316c984fbaa426f08cae4240dc2002f2c4c');
  assert.equal(createHash('sha256').update(beforeSlice3(text)).digest('hex'),'b658be382f191f8e7a23b8311cdbd18e0da46b14f7b3f78613b1514c6668956c');
  assert.equal(Object.keys(api.paths).length,13);assert.equal(Object.keys(api.components.schemas).length,13);

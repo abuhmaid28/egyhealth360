@@ -1,15 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
+import {migrationRunner} from '../support/migration-runner.mjs';
 import { isolatedCareActions } from '../support/care-actions.mjs';
 import { createOrganizationPersistence } from '../../packages/db/dist/index.js';
 import { randomUUID } from 'node:crypto';
 import { observeApplicabilityQueries,signal,waitBlockedBy } from '../support/observed-applicability.mjs';
 
-function migrate(url, command) {
- const r=spawnSync('pnpm',['--filter','@egyhealth/db','exec','prisma','migrate',command],{encoding:'utf8',env:{...process.env,DATABASE_URL:url},timeout:30000});
- assert.equal(r.status,0,`actual migration runner ${command} failed: ${r.stderr}`);
-}
+const migrate=(url,command)=>migrationRunner(url,command,12);
 test('I1S2 real runner upgrades populated ten-migration INITIAL/action provenance, retains exact rows/ledger and repeats safely',()=>isolatedCareActions(async f=>{
  await f.actions.generateInitialAction(f.actor,await f.command());
  const tables=(await f.pool.query("SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename")).rows.map(x=>x.tablename);
