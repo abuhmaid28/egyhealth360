@@ -29,7 +29,7 @@ The deployment/demo/research boundary remains a synthetic, free-first, self-host
 
 ## Five future workspaces — one application
 
-These are approved capabilities, **not claims of implemented portals**. The Slice 2 implementation supports PATIENT, CLINICIAN, ADMIN, LAB_STAFF and PHARMACY_STAFF plus bounded operational organization membership. Slice 2 is COMPLETE; Slice 3 entry/profile is COMPLETE; Slice 4 adds curated public directory for review, not a portal/UI, enrollment or clinical fulfillment.
+These are approved capabilities, **not claims of implemented portals**. The Slice 2 implementation supports PATIENT, CLINICIAN, ADMIN, LAB_STAFF and PHARMACY_STAFF plus bounded operational organization membership. Slices 2–4 are COMPLETE, including entry/profile and curated public discovery. Slice 5 bilateral enrollment is IMPLEMENTED / IN REVIEW; Slice 6 is NOT AUTHORIZED and I1 remains INCOMPLETE. This does not deliver portal/UI or clinical fulfillment.
 
 | Workspace | Approved future capability | Essential boundary |
 |---|---|---|

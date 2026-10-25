@@ -8,14 +8,14 @@ At the 2026 reboot, the original five-role continuity-of-care scope, separate Fa
 
 ## Current applicability and explicit supersession
 
-Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 is COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); Product V3 is the repository source of truth. V3-I1 Slices 1/2/3 COMPLETE; [Slice 4](V3_I1_SLICE4.md) authorized by comment 6391008285, implemented / in review; overall NOT COMPLETE; Slice 5+ NOT AUTHORIZED; EACCE NOT STARTED; DESIGN FROZEN. Earlier ADR status statements record their adoption points, not current delivery authorization.
+Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 is COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); Product V3 is the repository source of truth. V3-I1 Slices 1–4 COMPLETE; [Slice 4](V3_I1_SLICE4.md) verified through PR #44 / exact-main CI 40195060034; [Slice 5](V3_I1_SLICE5.md) authorized by comment 6401378826 and IMPLEMENTED / IN REVIEW; overall INCOMPLETE; Slice 6 NOT AUTHORIZED; EACCE NOT STARTED; DESIGN FROZEN. Earlier ADR status statements record their adoption points, not current delivery authorization.
 
 | Existing decision / planning area | Current applicability | Relationship to ADR-031 |
 |---|---|---|
 | ADR-001 chronic-care-first product center | Historical accepted scope; superseded as current positioning | Superseded by ADR-031/D01; integrated journey precedes continuity/research |
 | ADR-002 three-experience wording | Single frontend retained; future workspace list amended | Amended by ADR-031/D04 for five future workspaces |
-| ADR-019 three-role first persistence slice | Accepted implementation unchanged | Future bounded staff/membership and patient entry approved by ADR-031/D05/06, not implemented; no profile/role invariant bypass |
-| ADR-021 relationship-aware authorization | Accepted current enforcement unchanged | Future genuine relationship establishment/ending and separate artifact authority added by ADR-031/D10/11/36; no booking-based clinical exception |
+| ADR-019 three-role first persistence slice | Accepted implementation unchanged | Fixed staff/membership COMPLETE in Slice 2 and patient entry COMPLETE in Slice 3 under ADR-031/D05/06; no profile/role invariant bypass |
+| ADR-021 relationship-aware authorization | Accepted current enforcement unchanged | Bilateral relationship lifecycle IMPLEMENTED / IN REVIEW in Slice 5 under ADR-031/D10/11, with assignment as the sole clinical grant; D36 artifact authority remains future I3; no booking-based clinical exception |
 | ADR-022 fixed M1 seed | Retained unchanged | Integrated fixture separately versioned under D02/06 |
 | ADR-026 EH-012 narrow scheduling/encounter scope | Accepted historical contract unchanged | General booking/consultation and follow-up intent later extend under D12/24; no retroactive patient mutation or new legacy statuses |
 | ADR-023–030 clinical/evidence/generation decisions | Accepted invariants and history retained | D15/26 preserve exact pins/immutability/privacy/INITIAL scope; no automatic diagnosis/result/dispense bridges |

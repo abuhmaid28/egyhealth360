@@ -2,7 +2,7 @@
 
 Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix and Slices 1–4 COMPLETE; PR #44 merged at `e75671ec0adfdf0f0d71485eebb104728b619e91`, exact-main [Bootstrap 40195060034](https://github.com/abuhmaid28/egyhealth360/actions/runs/40195060034) SUCCESS. [Slice 5 bilateral lifecycle](V3_I1_SLICE5.md) IMPLEMENTED / IN REVIEW under [authorization 6401378826](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6401378826). V3-I1 INCOMPLETE; Issue #39 OPEN; Slice 6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
 
-[Slice 2](V3_I1_SLICE2.md) Organization/OrganizationMembership and fixed staff roles are COMPLETE. [Slice 3](V3_I1_SLICE3.md) reuses User/PatientProfile/Session/AuditLog with no schema or migration change. I1 NOT COMPLETE; Slice 3 COMPLETE; Slice 4 COMPLETE; Slice 5 implemented / in review; Slice 6 NOT AUTHORIZED. Specialty/public directory are implemented in Slice 4 for review; RelationshipRequest remains unimplemented; historical schema/migration/clinical behavior is preserved.
+[Slice 2](V3_I1_SLICE2.md) Organization/OrganizationMembership and fixed staff roles are COMPLETE. [Slice 3](V3_I1_SLICE3.md) reuses User/PatientProfile/Session/AuditLog with no schema or migration change. I1 NOT COMPLETE; Slice 3 COMPLETE; Slice 4 COMPLETE; Slice 5 implemented / in review; Slice 6 NOT AUTHORIZED. Specialty/public directory are COMPLETE in Slice 4. RelationshipRequest and AssignmentEndProvenance are IMPLEMENTED / IN REVIEW in Slice 5; this is not Slice 5 completion. Historical schema/migration/clinical behavior is preserved.
 
 ## Implemented model inventory — 31 models; Slice 5 in review
 
@@ -42,16 +42,16 @@ Exactly the following **31 Prisma models** exist on this Slice 5 branch: 29 acce
 
 Current branch User roles are PATIENT/CLINICIAN/ADMIN/LAB_STAFF/PHARMACY_STAFF. Organization and OrganizationMembership provide operational scope only. RelationshipRequest is provenance only; no general booking, prescription, lab order/result, notification, ClosureAssessment or experiment-result model is implemented. A model's existence does not imply a public route, workspace or completed product requirement.
 
-## APPROVED FUTURE V3 DOMAIN — NOT YET IMPLEMENTED
+## Approved V3 domain concepts — delivered foundations and future scope
 
-Product V3 policy is APPROVED; V3-I1 overall is NOT COMPLETE. These are conceptual resource boundaries, not proposed Prisma fields or a mandatory one-table-per-concept design. The linked I1 contract fixes its four minimum concepts and compatibility guarantees; physical schema details remain for separately authorized slices.
+Product V3 policy is APPROVED; V3-I1 overall is INCOMPLETE. The table distinguishes delivered I1 foundations from broader future concepts; the exact 31-model inventory above governs this branch. These concepts do not prescribe one table per concept. Further physical schema changes require separately authorized slices; Slice 6 remains NOT AUTHORIZED.
 
-| Concept | Approved meaning and integrity boundary |
+| Concept | Approved meaning, current delivery and integrity boundary |
 |---|---|
-| Provider / Clinic / location / Specialty | [Slice 4](V3_I1_SLICE4.md) implements curated public discovery; richer provider/routing capabilities remain future, without enterprise hierarchy or record-completeness inference |
-| Provider membership | Bounded LAB_STAFF/PHARMACY_STAFF plus current active organization/membership and fixed operation scope; not generalized IAM |
+| Provider / Clinic / location / Specialty | [Slice 4](V3_I1_SLICE4.md) curated Specialty/directory foundation COMPLETE; richer provider/routing capabilities remain future, without enterprise hierarchy or record-completeness inference |
+| Provider membership | Slice 2 operational foundation COMPLETE: bounded LAB_STAFF/PHARMACY_STAFF with current active organization/membership and fixed operation scope; not generalized IAM or routed-artifact authority |
 | Published availability / general booking | Finite start/end, clinic timezone, overlap/capacity protection, own patient operations and clinician schedule/change history; one operational booking authority |
-| Genuine clinical relationship | Explicit patient authorization + clinician acceptance, continuing until ended, preserved history/current checks; extend existing assignment foundation without altering history |
+| Genuine clinical relationship | Slice 5 RelationshipRequest / AssignmentEndProvenance IMPLEMENTED / IN REVIEW: bilateral workflow/provenance around the sole ClinicianPatientAssignment grant, preserved history/current checks; no legacy consent backfill or I1 completion claim |
 | General consultation documentation | Booking/encounter/provider/actual treating provenance; signed protected author-only notes versus released summaries/addenda; optional artifacts |
 | Problem / Diagnosis / allergy context | Human-entered clinical assertions and minimal unknown/not-reviewed safety context with provenance; no inferred eligibility or diagnosis |
 | Medication / Prescription / item | Small catalog and signed immutable prescribed identity/quantity/unit/instructions/validity; cancellation/replacement preserves linkage and reconciles previous dispensing |
@@ -64,7 +64,7 @@ Product V3 policy is APPROVED; V3-I1 overall is NOT COMPLETE. These are conceptu
 
 Source clinical records, operational records, timeline projections and immutable audit remain distinct. Signed clinical records use reasoned versions/addenda/retractions/reversals; no silent overwrite or cross-patient move. Apply [D36](PRODUCT_V3_DECISIONS.md#d36--fulfillment-authorization-and-suspension) to new lab/pharmacy artifacts. Completed fulfillment and relationship ending never erase historical sources or imply ongoing personal entitlement.
 
-The former V1 field/lifecycle sketches are not a schema specification; conceptual COMPLETED CarePlan, mutable CareAction lifecycle, DataSource, four-state legacy follow-up and generic research tables were never made executable by documentation. Existing CarePlan remains DRAFT/ACTIVE/CANCELLED; EH-012 only SCHEDULED/CANCELLED; EH-014 immutable INITIAL with no operational status. That original V3 reconciliation added no schema/SQL; separately authorized Slice 4 adds the four directory models above.
+The former V1 field/lifecycle sketches are not a schema specification; conceptual COMPLETED CarePlan, mutable CareAction lifecycle, DataSource, four-state legacy follow-up and generic research tables were never made executable by documentation. Existing CarePlan remains DRAFT/ACTIVE/CANCELLED; EH-012 only SCHEDULED/CANCELLED; EH-014 immutable INITIAL with no operational status. That original V3 reconciliation added no schema/SQL. Subsequent Slice 4 delivered the four directory models; Slice 5 adds the two provenance models above, IMPLEMENTED / IN REVIEW. Historical schema and migrations remain preserved.
 
 ## Historical executable slice notes — retained implementation truth
 

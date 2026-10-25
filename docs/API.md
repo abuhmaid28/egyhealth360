@@ -38,13 +38,11 @@ Exact bounds: 16384-byte body, 8192-byte aggregate raw header names/values, emai
 
 ## PLANNED / NOT IMPLEMENTED — approved V3 resource groups
 
-These are conceptual groups only; no endpoint paths, request fields, final enums or HTTP mappings are added/frozen here.
+These are remaining future groups only. Delivered registration/own-profile (Slice 3 COMPLETE), public directory (Slice 4 COMPLETE) and participant bilateral lifecycle (Slice 5 IMPLEMENTED / IN REVIEW) are specified above and in current OpenAPI; they are not absent/future APIs. No additional endpoint paths, fields or HTTP mappings are frozen by this future map; I1 remains INCOMPLETE.
 
 | Future group | Product boundary |
 |---|---|
-| Public directory | Curated published doctor/specialty/clinic/profile/availability; no private account or patient data |
 | Professional schedule and booking | Clinician availability/own schedule; own patient booking/cancel/reschedule and preserved history; minimum logistics access before relationship |
-| Clinical relationship | Explicit patient authorization + clinician acceptance and ending; ongoing current checks, history, no authorship bypass |
 | Consultation | Actual treating/booking/encounter links, human-entered problems/minimal allergy context, protected notes and signed/released summaries/addenda |
 | Prescribing and medication history | Signed prescription/items/validity/cancel/replace; prescribed versus dispensed versus actual-use distinctions |
 | Diagnostics | Routed lab order/processing/result/finalization/release/corrections; imaging optional, not implemented |

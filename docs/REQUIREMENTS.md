@@ -12,7 +12,7 @@ The new `V3-FR-*` grouping is versioned separately from existing `FR-*`, `BR-*`,
 
 ## Approved future V3 requirements — NOT IMPLEMENTED as complete V3 capabilities
 
-All rows below are approved future scope. Existing reusable foundations are identified explicitly in the last column; they do not complete the new end-to-end requirement. Exact implementation contracts/fields/endpoints/lifecycle names belong to later reviewed issues. Five workspaces operate in one application; ordinary care needs no CarePlan/EACCE.
+The rows define approved V3 scope, with current delivery identified in the last column: registration/own profile are COMPLETE in Slice 3, public directory is COMPLETE in Slice 4, and the Slice 5 bilateral lifecycle is IMPLEMENTED / IN REVIEW. Broader end-to-end journeys remain future work; these delivered subsets do not complete I1. Current slice contracts and OpenAPI govern delivered methods; further implementation needs separately authorized reviewed work. Five workspaces operate in one application; ordinary care needs no CarePlan/EACCE.
 
 | ID | Approved requirement | Decision | Future milestone | Current implementation boundary |
 |---|---|---|---|---|

@@ -42,7 +42,7 @@ I1 establishes patient registration/own profile, curated public clinician/specia
 
 ## Minimal domain foundation
 
-REUSE preserves an existing concept; EXTEND means bounded additive future work; NEW means an approved future I1 concept; DEFER excludes implementation from I1. These are concepts, not claims of Prisma models or final physical fields.
+REUSE, EXTEND, NEW and DEFER retain the approved Slice 1 design classifications, not current implementation status. NEW identified concepts absent at that historical baseline; subsequent authorized slices deliver the subsets listed in the current status and API delivery rows. The current DATA_MODEL/API inventories and slice contracts identify executable models, fields and methods; DEFER still excludes implementation from I1.
 
 | Concept | Treatment | Contract |
 |---|---|---|
@@ -175,7 +175,7 @@ Prove both operation orderings and winner commit/rollback on real PostgreSQL, wi
 
 ## Compatibility inventory — reviewed runtime baseline
 
-PRESERVE EXACTLY protects existing observable behavior/invariants; EXTEND ADDITIVELY permits only later authorized additions; FUTURE NEW is absent today; DEFER is outside I1. The conceptual reuse map above and this behavioral inventory use different labels deliberately.
+PRESERVE EXACTLY protects existing observable behavior/invariants; EXTEND ADDITIVELY permits bounded authorized additions; FUTURE NEW described absence at the reviewed Slice 1 baseline; DEFER is outside I1. The invariant rows and baseline schema/test evidence retain that historical context. The explicit API delivery rows below record the current Slice 3–5 status without rewriting Slice 1 evidence. Existing historical clinical APIs remain governed by their accepted contracts; V3-I1 is INCOMPLETE.
 
 | Existing behavior / source | Classification | Protected invariant and future extension boundary |
 |---|---|---|
@@ -203,7 +203,9 @@ PRESERVE EXACTLY protects existing observable behavior/invariants; EXTEND ADDITI
 | [INITIAL CareAction](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) | PRESERVE EXACTLY | R1–R8, explicit clinician selection, exact plan/rule/applicability/BP snapshot, unique INITIAL/replay, protected decision/history and calendar, current privacy, atomic audits; no recurrence/closure/automatic bridge |
 | Existing authorization locks/concurrency | PRESERVE EXACTLY | Current user/session/profile/assignment/patient/resource order, bounded waits, final expiry, no stale retry; retain EH-007 snapshot limitation rather than claiming stronger historic guarantees |
 | Organization / Specialty / OrganizationMembership / RelationshipRequest | EXTEND ADDITIVELY | First three delivered in Slices 2/4; RelationshipRequest delivered in Slice 5 for review, provenance only; no generalized IAM/facility/workflow engine |
-| Registration / own-profile update / public directory / bilateral enrollment APIs | FUTURE NEW | No live endpoint/OpenAPI contract; existing authenticated routes unchanged |
+| Registration / own-profile APIs | DELIVERED — Slice 3 COMPLETE | Guarded registration and authenticated own-profile GET/HEAD/PUT are live; [Slice 3 contract](V3_I1_SLICE3.md) and current OpenAPI govern them; historical clinical API contracts remain unchanged |
+| Public directory APIs | DELIVERED — Slice 4 COMPLETE | Published specialty/clinic/provider GET/HEAD resources are live; [Slice 4 contract](V3_I1_SLICE4.md) and current OpenAPI govern the minimized public projection |
+| Bilateral enrollment APIs | IMPLEMENTED / IN REVIEW — Slice 5 | Participant authorization/accept/decline/withdraw/history/exact assignment end are implemented in this PR; [Slice 5 contract](V3_I1_SLICE5.md) and current OpenAPI govern them; ClinicianPatientAssignment remains the sole clinical grant; this does not complete I1 |
 | General booking/consultation, fulfillment, timeline, notifications, EACCE/UI | DEFER | Later milestone contracts only; D36 artifact authorization deferred to I3 |
 
 Database guards protect ordinary writes, not schema owners/superusers. Existing schema has no mandatory-profile SQL constraint, global role-immutability trigger or universal user/profile delete guard. Do not confuse future managed API restrictions with already-enforced database guarantees.
