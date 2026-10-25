@@ -1,19 +1,23 @@
 # Security & Medical Safety — V3 Policy, M0–M2 Enforcement
 
-Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix COMPLETE; Slices 1/2/3 COMPLETE after PR #43 merge and exact-main CI 40116846242 SUCCESS at `e1a87df5031e7be48a43d99e2b311dbe397b2e7e`. [Slice 4 curated directory](V3_I1_SLICE4.md) IMPLEMENTED / IN REVIEW under [authorization 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285). I1 NOT COMPLETE; Issue #39 OPEN; Slice 5/6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
 
-[Issue #39 I1 contract](V3_I1_CONTRACT.md) remains APPROVED. Slice 1/2 COMPLETE; [Slice 3](V3_I1_SLICE3.md) security contract implemented/in review; I1 NOT COMPLETE and Slice 4+ NOT AUTHORIZED. Registration is guarded anonymous patient-only creation; profile read/replace requires current PATIENT ownership, and writes retain session CSRF. No ADMIN/staff clinical or profile entitlement. D36 routed-artifact authority remains I3; membership alone never suffices. Existing security contracts below are preserved.
+[Issue #39 I1 contract](V3_I1_CONTRACT.md) remains APPROVED. Slice 1/2 COMPLETE; [Slice 3](V3_I1_SLICE3.md) security contract implemented/in review; I1 NOT COMPLETE and Slice 4 implemented / in review; Slice 5+ NOT AUTHORIZED. Registration is guarded anonymous patient-only creation; profile read/replace requires current PATIENT ownership, and writes retain session CSRF. No ADMIN/staff clinical or profile entitlement. D36 routed-artifact authority remains I3; membership alone never suffices. Existing security contracts below are preserved.
+
+## Slice 4 directory enforcement
+
+[Contract](V3_I1_SLICE4.md) separates public locator/projection from current clinical authority. All directory queries recheck current User/profile, curated Specialty, exact approved publication, exact ACTIVE compatible membership, ACTIVE CLINIC organization and separate clinic publication. Public reads are one SQL statement, no-store/no ETag or 304; no cookies/roles widen the allowlist. Public routes never query clinical tables. Internal ADMIN management rechecks user/session before and after locks and at transaction end; no new browser mutation bypass. Minimized audit is atomic; exact replay/no-op creates no event. Database composite FKs/history guards and real PostgreSQL revocation/deadlock tests support these guarantees. No directory state creates assignments, consent or D36 fulfillment authority.
 
 ## Policy versus implementation
 
-Product V3 is APPROVED at policy level; V3-I1 overall is NOT COMPLETE. Existing PATIENT/CLINICIAN/ADMIN roles, EH-006 session/CSRF/Origin and own/ACTIVE-assignment checks remain implemented and unchanged. Slice 2 adds fixed LAB_STAFF/PHARMACY_STAFF and operational organization membership under review; booking/relationship enrollment and fulfillment remain **NOT IMPLEMENTED**. No current endpoint gains a booking/staff exception.
+Product V3 is APPROVED at policy level; V3-I1 overall is NOT COMPLETE. Existing PATIENT/CLINICIAN/ADMIN roles, EH-006 session/CSRF/Origin and own/ACTIVE-assignment checks remain implemented and unchanged. Slice 2 adds fixed LAB_STAFF/PHARMACY_STAFF and operational organization membership COMPLETE; booking/relationship enrollment and fulfillment remain **NOT IMPLEMENTED**. No current endpoint gains a booking/staff exception.
 
 ## Approved future authorization boundary
 
 | Area | Policy for later reviewed implementation contracts |
 |---|---|
 | Registration / own data | Only patient self-registration; no privileged role selection. Permitted own profile/bookings/released clinical data only; no clinical authoring, arbitrary action closure or another patient's owner/reference assignment. Managed privileged accounts; no production identity-assurance or mandatory paid verification/recovery subsystem |
-| Public provider discovery | Curated published professional profile, clinic/specialty and availability only; no patient bookings, account/private identity data or clinical history |
+| Public provider discovery | Slice 4 curated published professional profile and clinic/specialty only; availability is deferred to I2; no patient bookings, account/private identity data or clinical history |
 | Doctor schedule / booking | Own professional/provider scope and minimum identity/time/logistics only before a genuine relationship; complaint/history are clinical data, not scheduling metadata |
 | Relationship | Explicit patient authorization + clinician acceptance before/at consultation. Continue until either ends; preserve history. Recheck current authority on subsequent access; no author entitlement, automatic renewal or pending-result exception. Other doctors need their own current relationship |
 | Private notes / released summary | Private notes author-only under current clinical authority; no automatic patient/other-doctor/staff/ADMIN disclosure. Signed/released summaries/instructions have separate permitted projections and preserved addenda |

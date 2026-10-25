@@ -92,7 +92,10 @@ test('I1S2 direct SQL constraints prevent role/kind substitution and history mut
     await rejectsConstraint(c, 'UPDATE organization_memberships SET ended_at=now() WHERE id=$1', [f.membership.id], '23514','memberships_history_guard');
     await rejectsConstraint(c, 'UPDATE organization_memberships SET status=\'ENDED\',ended_at=granted_at-interval \'1 second\',ended_by_user_id=$1 WHERE id=$2', [f.users.admin.id,f.membership.id], '23514','memberships_lifecycle_check');
     await rejectsConstraint(c, 'DELETE FROM organization_memberships WHERE false', [], '23514','i1_history_removal_guard');
-    await rejectsConstraint(c, 'TRUNCATE organization_memberships', [], '23514','i1_history_removal_guard');
+    // Slice 4 adds a retained affiliation FK. PostgreSQL rejects the plain
+    // TRUNCATE before triggers; CASCADE must still reach the original guard.
+    await rejectsConstraint(c, 'TRUNCATE organization_memberships', [], '0A000',undefined);
+    await rejectsConstraint(c, 'TRUNCATE organization_memberships CASCADE', [], '23514','i1_history_removal_guard');
     await rejectsConstraint(c, 'UPDATE organizations SET kind=\'PHARMACY\' WHERE id=$1', [f.organization.id], '23514','organizations_history_guard');
     await rejectsConstraint(c, 'UPDATE organizations SET status=\'SUSPENDED\' WHERE id=$1', [f.organization.id], '23514','organizations_history_guard');
     await rejectsConstraint(c, 'DELETE FROM organizations WHERE false', [], '23514','i1_history_removal_guard');

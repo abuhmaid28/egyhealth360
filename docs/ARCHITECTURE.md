@@ -1,8 +1,8 @@
 # EgyHealth 360 — Architecture and V3 Extension Boundary
 
-Current delivery: Slice 1/2 COMPLETE; [Slice 3 registration/own profile](V3_I1_SLICE3.md) implemented / in review under [authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix COMPLETE; Slices 1/2/3 COMPLETE after PR #43 merge and exact-main CI 40116846242 SUCCESS at `e1a87df5031e7be48a43d99e2b311dbe397b2e7e`. [Slice 4 curated directory](V3_I1_SLICE4.md) IMPLEMENTED / IN REVIEW under [authorization 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285). I1 NOT COMPLETE; Issue #39 OPEN; Slice 5/6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
 
-[Slice 2](V3_I1_SLICE2.md) operational memberships are COMPLETE. [Slice 3](V3_I1_SLICE3.md) adds a narrow patient-entry persistence service and isolated HTTP boundary, reusing existing schema/auth/password/audit. Slice 1 COMPLETE; Slice 3 in review; I1 NOT COMPLETE; Slice 4+ NOT AUTHORIZED. Membership remains operational only; D36 artifact authority is I3.
+[Slice 2](V3_I1_SLICE2.md) operational memberships are COMPLETE. [Slice 3](V3_I1_SLICE3.md) adds a narrow patient-entry persistence service and isolated HTTP boundary, reusing existing schema/auth/password/audit. Slice 1 COMPLETE; Slice 3 COMPLETE; I1 NOT COMPLETE; Slice 4 implemented / in review; Slice 5+ NOT AUTHORIZED. Membership remains operational only; D36 artifact authority is I3.
 
 ## Current architecture — retained
 
@@ -11,8 +11,8 @@ One Next.js/TypeScript application, one NestJS/TypeScript modular-monolith API, 
 | Workspace package | Actual baseline status versus intended responsibility |
 |---|---|
 | `apps/web` | Bootstrap web surface; integrated product workspaces/UI NOT STARTED, design FROZEN |
-| `apps/api` | Health, auth/session and scoped profile/BP/EH-012 HTTP behavior; [API inventory](API.md) and OpenAPI govern actual routes |
-| `packages/db` | Implemented M0–M2 persistence/internal principal-checked services and two Slice 2 operational models/twelve migrations; exact [25-model inventory](DATA_MODEL.md) |
+| `apps/api` | Health, auth/session, scoped profile/BP/EH-012 and Slice 4 public directory HTTP behavior; [API inventory](API.md) and OpenAPI govern actual routes |
+| `packages/db` | Implemented M0–M2 persistence/internal principal-checked services and Slice 2/4 operational-directory models/thirteen migrations; exact [29-model inventory](DATA_MODEL.md) |
 | `packages/clinical-rules` | Exact approved HTN definition/manifest/validation; no arbitrary rule editor/evaluator |
 | `packages/closure-engine` | Bootstrap import check only; EACCE implementation NOT STARTED |
 | `packages/fhir-adapter` | Scaffold; no completed import pipeline |
@@ -22,9 +22,9 @@ One Next.js/TypeScript application, one NestJS/TypeScript modular-monolith API, 
 
 Node 24.21.0 and pnpm 10.34.6 remain pinned. Local/self-hosted Docker Compose without paid services is the demo target; optional cloud hosting does not imply production healthcare readiness. Browser/API same-origin integration remains later reviewed work, not a new CORS allowance.
 
-## Approved future modules — NOT IMPLEMENTED
+## Approved modules — bounded delivery versus future scope
 
-[Product V3](PRODUCT.md) targets **Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin workspaces in the same application**, not five applications/microservices. Imaging adds no sixth portal. Conceptual modular extensions are provider/directory/membership, patient onboarding, genuine clinical relationship, availability/booking, consultation/documentation/problems, medication/prescription, diagnostics/result, dispensing, longitudinal projection and in-app coordination. Their final package/table/route layout remains milestone-specific reviewed work.
+[Product V3](PRODUCT.md) targets **Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin workspaces in the same application**, not five applications/microservices. Imaging adds no sixth portal. Slice 2 memberships, Slice 3 patient onboarding and Slice 4 public directory are implemented within their bounded contracts. Remaining conceptual modular extensions are genuine clinical relationship, availability/booking, consultation/documentation/problems, medication/prescription, diagnostics/result, dispensing, longitudinal projection and in-app coordination. Their final package/table/route layout remains milestone-specific reviewed work.
 
 Keep clinical sources owned by their modules. Connect them through explicit same-patient/source links and authorized read projections, not a universal clinical JSON event table, event-sourcing rewrite or messaging platform. Timeline and audit are separate. Clinical occurrence, signing/availability and local recording provenance must remain truthful; no generalized historical-knowledge guarantee is created.
 

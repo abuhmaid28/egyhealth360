@@ -8,7 +8,7 @@ At the 2026 reboot, the original five-role continuity-of-care scope, separate Fa
 
 ## Current applicability and explicit supersession
 
-Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 is COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); Product V3 is the repository source of truth. V3-I1 Slice 1/2 COMPLETE, [Slice 3](V3_I1_SLICE3.md) implemented / in review; overall NOT COMPLETE; Slice 4+ NOT AUTHORIZED; EACCE NOT STARTED; DESIGN FROZEN. Earlier ADR status statements record their adoption points, not current delivery authorization.
+Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 is COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); Product V3 is the repository source of truth. V3-I1 Slices 1/2/3 COMPLETE; [Slice 4](V3_I1_SLICE4.md) authorized by comment 6391008285, implemented / in review; overall NOT COMPLETE; Slice 5+ NOT AUTHORIZED; EACCE NOT STARTED; DESIGN FROZEN. Earlier ADR status statements record their adoption points, not current delivery authorization.
 
 | Existing decision / planning area | Current applicability | Relationship to ADR-031 |
 |---|---|---|
@@ -349,3 +349,10 @@ This implements the Slice 3 portion of ADR-032 without changing D01–D36 or his
 ## Change process
 
 A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.
+
+
+## ADR-035 — Curated public directory and independent publication
+
+Status: Accepted implementation design within approved Slice 4; PR review/merge still required. Authority: [Issue #39 comment 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285). Extends ADR-032/034 operationally; changes no D01–D36 product decision or historical ADR scope.
+
+Adopt [Slice 4](V3_I1_SLICE4.md): four minimal directory models, independent public IDs, explicit curated specialty (legacy free text unchanged), separate clinic operational/publication state, global provider switch and exact terminal membership-affiliation approvals. Internal current-ADMIN management follows Slice 2; four minimized public GET/HEAD resources only, current SQL/no-store, no clinical authority. Additive thirteenth migration with zero data backfill; retained history/atomic audit/current-source eligibility and real PostgreSQL concurrency proof. No directory UI, availability, RelationshipRequest, fulfillment or EACCE. [Validation](V3_I1_SLICE4_VALIDATION.md) supplies execution evidence, not I1 completion.

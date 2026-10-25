@@ -32,6 +32,14 @@ enum AssignmentStatus {
 }
 
 model User {
+  directorySpecialtyCreations Specialty[] @relation("SpecialtyCreator")
+  directorySpecialtyChanges Specialty[] @relation("SpecialtyActor")
+  directoryClinicDirectoryCreations ClinicDirectory[] @relation("ClinicDirectoryCreator")
+  directoryClinicDirectoryChanges ClinicDirectory[] @relation("ClinicDirectoryActor")
+  directoryClinicianDirectoryCreations ClinicianDirectory[] @relation("ClinicianDirectoryCreator")
+  directoryClinicianDirectoryChanges ClinicianDirectory[] @relation("ClinicianDirectoryActor")
+  directoryPublications DirectoryAffiliation[] @relation("DirectoryPublisher")
+  directoryWithdrawals DirectoryAffiliation[] @relation("DirectoryWithdrawer")
   organizationCreations Organization[] @relation("OrganizationCreator")
   organizationStatusChanges Organization[] @relation("OrganizationStatusActor")
   organizationMemberships OrganizationMembership[] @relation("MembershipUser")
@@ -105,6 +113,8 @@ model PatientProfile {
 }
 
 model ClinicianProfile {
+  directory ClinicianDirectory?
+  @@unique([id,userId],map:"clinician_profiles_id_user_key")
   id                     String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId                 String                       @unique(map: "clinician_profiles_user_id_key") @map("user_id") @db.Uuid
   userRole               UserRole                     @default(CLINICIAN) @map("user_role")
@@ -610,6 +620,7 @@ enum OrganizationMembershipStatus {
 }
 
 model Organization {
+  directory ClinicDirectory?
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   kind OrganizationKind
   name String @db.VarChar(160)
@@ -630,6 +641,8 @@ model Organization {
 }
 
 model OrganizationMembership {
+  directoryAffiliations DirectoryAffiliation[]
+  @@unique([id,userId,organizationId,userRole,organizationKind],map:"memberships_directory_scope_key")
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   organizationId String @map("organization_id") @db.Uuid
   organizationKind OrganizationKind @map("organization_kind")
@@ -649,4 +662,110 @@ model OrganizationMembership {
   @@unique([grantedByUserId,operationKey],map:"memberships_operation_key")
   @@index([userId,organizationId,grantedAt],map:"memberships_user_history_idx")
   @@map("organization_memberships")
+}
+
+model Specialty {
+  key String @unique(map:"directory_specialty_public_key") @db.VarChar(48)
+  displayName String @map("display_name") @db.VarChar(80)
+  @@index([isPublished,key],map:"directory_specialty_published_idx")
+  providers ClinicianDirectory[]
+  publications DirectoryAffiliation[]
+
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  isPublished Boolean @default(false) @map("is_published")
+  version Int @default(0)
+  createdByUserId String @map("created_by_user_id") @db.Uuid
+  changedByUserId String @map("changed_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  creationFingerprint String @map("creation_fingerprint") @db.Char(64)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  changedAt DateTime @default(now()) @map("changed_at") @db.Timestamptz(3)
+  creator User @relation("SpecialtyCreator",fields:[createdByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"specialties_creator_fk")
+  actor User @relation("SpecialtyActor",fields:[changedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"specialties_actor_fk")
+  @@unique([createdByUserId,operationKey],map:"specialties_operation_key")
+  @@map("specialties")
+}
+
+model ClinicDirectory {
+  @@unique([organizationId,organizationKind],map:"directory_clinic_org_kind_key")
+  @@index([isPublished,publicId],map:"directory_clinic_published_idx")
+  publicId String @unique(map:"directory_clinic_public_key") @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
+  organizationId String @unique(map:"directory_clinic_organization_key") @map("organization_id") @db.Uuid
+  organizationKind OrganizationKind @default(CLINIC) @map("organization_kind")
+  displayName String @map("display_name") @db.VarChar(160)
+  city String @db.VarChar(80)
+  address String @db.VarChar(240)
+  organization Organization @relation(fields:[organizationId,organizationKind],references:[id,kind],onUpdate:Restrict,onDelete:Restrict,map:"directory_clinic_organization_fk")
+  publications DirectoryAffiliation[]
+
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  isPublished Boolean @default(false) @map("is_published")
+  version Int @default(0)
+  createdByUserId String @map("created_by_user_id") @db.Uuid
+  changedByUserId String @map("changed_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  creationFingerprint String @map("creation_fingerprint") @db.Char(64)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  changedAt DateTime @default(now()) @map("changed_at") @db.Timestamptz(3)
+  creator User @relation("ClinicDirectoryCreator",fields:[createdByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"clinic_directory_creator_fk")
+  actor User @relation("ClinicDirectoryActor",fields:[changedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"clinic_directory_actor_fk")
+  @@unique([createdByUserId,operationKey],map:"clinic_directory_operation_key")
+  @@map("clinic_directory")
+}
+
+model ClinicianDirectory {
+  @@unique([clinicianId,clinicianUserId],map:"directory_provider_profile_key")
+  publicId String @unique(map:"directory_provider_public_key") @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
+  clinicianId String @unique(map:"directory_provider_clinician_key") @map("clinician_id") @db.Uuid
+  clinicianUserId String @map("clinician_user_id") @db.Uuid
+  specialtyId String @map("specialty_id") @db.Uuid
+  displayName String @map("display_name") @db.VarChar(160)
+  clinician ClinicianProfile @relation(fields:[clinicianId,clinicianUserId],references:[id,userId],onUpdate:Restrict,onDelete:Restrict,map:"directory_provider_profile_fk")
+  specialty Specialty @relation(fields:[specialtyId],references:[id],onUpdate:Restrict,onDelete:Restrict,map:"directory_provider_specialty_fk")
+  publications DirectoryAffiliation[]
+  @@unique([id,clinicianUserId],map:"directory_provider_user_key")
+  @@index([specialtyId,isPublished,publicId],map:"directory_provider_specialty_idx")
+
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  isPublished Boolean @default(false) @map("is_published")
+  version Int @default(0)
+  createdByUserId String @map("created_by_user_id") @db.Uuid
+  changedByUserId String @map("changed_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  creationFingerprint String @map("creation_fingerprint") @db.Char(64)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  changedAt DateTime @default(now()) @map("changed_at") @db.Timestamptz(3)
+  creator User @relation("ClinicianDirectoryCreator",fields:[createdByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"clinician_directory_creator_fk")
+  actor User @relation("ClinicianDirectoryActor",fields:[changedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"clinician_directory_actor_fk")
+  @@unique([createdByUserId,operationKey],map:"clinician_directory_operation_key")
+  @@map("clinician_directory")
+}
+
+model DirectoryAffiliation {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  providerId String @map("provider_id") @db.Uuid
+  clinicianUserId String @map("clinician_user_id") @db.Uuid
+  membershipId String @map("membership_id") @db.Uuid
+  organizationId String @map("organization_id") @db.Uuid
+  userRole UserRole @default(CLINICIAN) @map("user_role")
+  organizationKind OrganizationKind @default(CLINIC) @map("organization_kind")
+  specialtyId String @map("specialty_id") @db.Uuid
+  publishedByUserId String @map("published_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  publishedAt DateTime @default(now()) @map("published_at") @db.Timestamptz(3)
+  withdrawnByUserId String? @map("withdrawn_by_user_id") @db.Uuid
+  withdrawnAt DateTime? @map("withdrawn_at") @db.Timestamptz(3)
+  provider ClinicianDirectory @relation(fields:[providerId,clinicianUserId],references:[id,clinicianUserId],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_provider_fk")
+  membership OrganizationMembership @relation(fields:[membershipId,clinicianUserId,organizationId,userRole,organizationKind],references:[id,userId,organizationId,userRole,organizationKind],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_membership_fk")
+  clinic ClinicDirectory @relation(fields:[organizationId],references:[organizationId],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_clinic_fk")
+  specialty Specialty @relation(fields:[specialtyId],references:[id],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_specialty_fk")
+  publisher User @relation("DirectoryPublisher",fields:[publishedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_publisher_fk")
+  withdrawer User? @relation("DirectoryWithdrawer",fields:[withdrawnByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_withdrawer_fk")
+  @@unique([publishedByUserId,operationKey],map:"directory_affiliation_operation_key")
+  @@index([organizationId,providerId],map:"directory_affiliation_clinic_idx")
+  @@map("directory_affiliations")
 }

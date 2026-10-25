@@ -76,3 +76,8 @@ export type { OrganizationPersistence, OrganizationKind, OrganizationStatus, Org
 
 export { createPatientEntryPersistence, PatientEntryError, profileValues, registrationIdentity } from './patient-entry.js';
 export type { PatientEntryPersistence, OwnProfile } from './patient-entry.js';
+
+export { createDirectoryPersistence } from './directory.js';
+export type { DirectoryPersistence, PublicDirectory } from './directory.js';
+export { DirectoryError, directoryExact, directoryId, directoryText, specialtyKey, directoryPage, providerPage } from './directory-values.js';
+export type { DirectoryPage, ProviderPage, PublicClinic, PublicProvider, PublicSpecialty } from './directory-values.js';
