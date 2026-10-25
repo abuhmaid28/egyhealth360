@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
+import {request as rawRequest} from 'node:http';
 import {isolatedDirectory as use,directoryAudits} from '../support/directory.mjs';
 const reject=(p,code='DIRECTORY_INVALID')=>assert.rejects(p,e=>e.code===code);
 
@@ -61,4 +62,6 @@ test('I1S4 deterministic pagination separates multiple providers and rejects ove
  await f.directory.publishAffiliation(f.actors.admin,{providerId:p.id,membershipId:m.id,operationKey:randomUUID()});await f.directory.setProvider(f.actors.admin,{providerId:p.id,specialtyId:p.specialtyId,displayName:p.displayName,isPublished:true,expectedVersion:0});
  const a=(await f.request('/directory/providers?page=1&pageSize=1')).json,b=(await f.request('/directory/providers?page=2&pageSize=1')).json;assert.equal(a.meta.total,2);assert.equal(b.meta.total,2);assert.deepEqual([...a.data,...b.data].map(x=>x.id),[p.publicId,f.provider.publicId].sort());assert.equal((await f.request('/directory/providers?page=3&pageSize=1')).json.data.length,0);
  const big=await f.request('/directory/providers',{headers:{'X-Bounded':'x'.repeat(8200)}});assert.equal(big.response.status,400);assert.deepEqual(big.json,{error:{code:'REQUEST_INVALID',message:'Invalid request.'}});
+ const raw=await new Promise((resolve,reject)=>{const req=rawRequest(big.response.url,{method:'GET',headers:{'Content-Type':'application/json','Content-Length':'2'}},res=>{let body='';res.setEncoding('utf8');res.on('data',part=>{body+=part;});res.on('end',()=>resolve({status:res.statusCode,body}));});req.on('error',reject);req.setTimeout(3000,()=>req.destroy(Error('Bounded HTTP timeout')));req.end('{}');});
+ assert.equal(raw.status,400);assert.deepEqual(JSON.parse(raw.body),{error:{code:'REQUEST_INVALID',message:'Invalid request.'}});
 }));
