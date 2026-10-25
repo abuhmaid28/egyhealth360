@@ -5,7 +5,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {directoryExact,directoryId,directoryText,specialtyKey,directoryPage,providerPage,createDirectoryPersistence} from '../packages/db/dist/index.js';
 import {parseDirectoryQuery} from '../apps/api/dist/directory.js';
 import {createApp} from '../apps/api/dist/app.js';
-import {beforeSlice4} from './support/openapi-baseline.mjs';
+import {beforeSlice4,beforeSlice5} from './support/openapi-baseline.mjs';
 
 test('I1S4 bounded immutable public locators, curated keys/text and exact primitive shapes',()=>{
  const id=randomUUID();assert.equal(directoryId(id,true),id);assert.equal(directoryId(id.toUpperCase()),id);
@@ -32,13 +32,13 @@ test('I1S4 no HTTP management or clinical authorizer exported; exact service sur
  try{assert.deepEqual(Object.keys(store).sort(),['createSpecialty','setSpecialty','createClinic','setClinic','createProvider','setProvider','publishAffiliation','withdrawAffiliation','inspect','listSpecialties','listClinics','listProviders','getProvider','close'].sort());}finally{await store.close();}
  const schema=await readFile('packages/db/prisma/schema.prisma','utf8');
  for(const name of ['Specialty','ClinicDirectory','ClinicianDirectory','DirectoryAffiliation'])assert.match(schema,new RegExp('model '+name+' \\{'));
- assert.doesNotMatch(schema,/model (RelationshipRequest|Booking|Availability|Slot|Prescription|LabOrder|LabResult|Notification|ClosureAssessment)\b/);
+ assert.doesNotMatch(schema,/model (Booking|Availability|Slot|Prescription|LabOrder|LabResult|Notification|ClosureAssessment)\b/);
  const source=await readFile('packages/db/src/directory.ts','utf8');assert.doesNotMatch(source,/patient_profiles|clinician_patient_assignments|care_plans|blood_pressure_measurements|clinical_encounters|professional_identifier|u\.email/);
  assert.doesNotMatch(await readFile('packages/db/src/authorization.ts','utf8'),/directory|membership/);
 });
 
 test('I1S4 exact OpenAPI append preserves every pre-Slice-4 byte and exposes only approved public keys',async()=>{
- const text=await readFile('docs/openapi.json','utf8'),api=JSON.parse(text);
+ const text=beforeSlice5(await readFile('docs/openapi.json','utf8')),api=JSON.parse(text);
  assert.equal(createHash('sha256').update(text).digest('hex'),'cd005b69cc22f783ced7458545360adf839b7f6861d4316943dcf64a8384f371');
  assert.equal(createHash('sha256').update(beforeSlice4(text)).digest('hex'),'df91fb3f7c84bd6df258972b8d695316c984fbaa426f08cae4240dc2002f2c4c');
  const old=JSON.parse(beforeSlice4(text));assert.deepEqual(Object.keys(api.paths),[...Object.keys(old.paths),'/api/v1/directory/specialties','/api/v1/directory/clinics','/api/v1/directory/providers','/api/v1/directory/providers/{publicId}']);
@@ -59,8 +59,8 @@ test('I1S4 public failure projection uses the existing global safe-error boundar
 
 test('I1S4 exact migration addition retains twelve historical SQL files unchanged',async()=>{
  const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();
- assert.equal(names.length,13);assert.equal(names.at(-1),'20261024000000_v3_i1_directory');
- const sql=await readFile('packages/db/prisma/migrations/'+names.at(-1)+'/migration.sql','utf8');
+ assert.equal(names.length,14);assert.equal(names.at(-2),'20261024000000_v3_i1_directory');
+ const sql=await readFile('packages/db/prisma/migrations/'+names.at(-2)+'/migration.sql','utf8');
  assert.doesNotMatch(sql,/UPDATE public\.(users|clinician_profiles|organizations|organization_memberships)|INSERT INTO public\.(specialties|clinic_directory|clinician_directory|directory_affiliations)/);
  assert.match(sql,/SET search_path=pg_catalog,public,pg_temp/);assert.match(sql,/REFERENCES public\.organization_memberships\(id,user_id,organization_id,user_role,organization_kind\)/);
 });
