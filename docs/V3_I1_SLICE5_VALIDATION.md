@@ -10,14 +10,14 @@ Starting main `e75671ec0adfdf0f0d71485eebb104728b619e91`, PR #44 MERGED, exact-m
 
 ## Local execution
 
-Pinned Node 24.21.0 / pnpm 10.34.6. PostgreSQL 18.6. Validation runs use disposable local PostgreSQL databases; production secrets/data are absent. This is the local evidence snapshot before publication. Subsequent exact-head reruns, final counts and remote CI are recorded on the PR and in the handoff; no running gate is represented as PASS.
+Pinned Node 24.21.0 / pnpm 10.34.6. PostgreSQL 18.6. Validation runs use disposable local PostgreSQL databases; production secrets/data are absent. Final local validation of the complete Slice 5 runtime/test content is complete. [PR #45](https://github.com/abuhmaid28/egyhealth360/pull/45) records subsequent exact-head remote CI and independent review; no running remote gate is represented as PASS. This evidence-only closeout changes no runtime or test behavior.
 
 | Gate | Executed result |
 |---|---|
 | Frozen install, generate, lint, Prisma validate, build, typecheck | PASS |
 | Unit | 98 PASS, zero fail/skip (93 historical plus five Slice 5 contract tests) |
-| Focused real-PostgreSQL Slice 5 integration | Initial 46 PASS; final lifecycle HTTP file 14 PASS including one additional pending-legacy regression, zero fail/skip |
-| Full integration | 556 PASS, zero fail/skip; additional final legacy regression passed in the 14-test lifecycle file. Complete current population is 557; independent final reruns are recorded on the PR |
+| Focused real-PostgreSQL Slice 5 integration | All 47 Slice 5 tests PASS within the final complete integration run; zero fail/skip |
+| Full integration | 557 PASS, zero fail/cancel/skip, final fresh database and final source/test set (994110ms); 510 historical + 47 Slice 5 tests |
 | Migration verifier | PASS, including final nullable legacy-target draft against a fresh disposable database and all historical upgrade/redeploy gates |
 | Auth host measurement | PASS; Argon2 hash median 151.78ms, verify 143.01ms; four HTTP logins 497.12ms; health responsive; no material regression |
 | Production HIGH audit | PASS; zero HIGH/CRITICAL, two LOW/two MODERATE |
@@ -27,7 +27,7 @@ Pinned Node 24.21.0 / pnpm 10.34.6. PostgreSQL 18.6. Validation runs use disposa
 | Runtime auth/authorization/M1/clinical/CareAction/organization/patient-entry/directory | PASS final image; preserved CareAction four / organization four / patient-entry eight / directory twelve cases |
 | Slice 5 runtime | Final host and container 15 cases PASS, `eh-v3-i1-slice5-bilateral-proof-v1` |
 | Web/API smoke | PASS final image; web HTTP 200, API health `{data:{status:"ok"}}` |
-| Runtime cleanup | PASS: Compose down --volumes, runtime services/network/volume removed |
+| Cleanup | PASS: both runtime and host validation Compose projects down --volumes; services/networks/volumes removed |
 
 Container auth measurement: PASS, hash median 161.73ms, verify 150.52ms, four-login batch 727.05ms while sharing the two-CPU environment with full integration; health remained responsive. Timing is observational, not an identical-timing promise. Local Docker builds used an ephemeral out-of-repository proxy/CA overlay with TLS verification intact; no Dockerfile/dependency change. Unused build cache was reclaimed to keep the VFS workspace within disk capacity.
 
@@ -61,6 +61,41 @@ Every race uses independent service/PG connections, live pg_blocking_pids observ
 | Genuine M1 seed vs legacy confirmation, both orders | Real seed table lock and enrollment wait observed; seed creates zero users/profiles/assignments, accepted request binds original unchanged M1 assignment |
 | Create / accept / accepted-withdraw audit fault | Entire relevant request/grant/end-provenance/audit transaction rolls back |
 
+
+### Observed final local blocking evidence
+
+The final 557-test run recorded the following **27 actual blocker/waiter pairs**. PIDs are ephemeral evidence from that execution, not reusable identifiers. Final-row/audit assertions for each case are in the executable tests and outcome matrix above. Commit/rollback winners use two independent live PostgreSQL connections; deadlock service PID is the victim.
+
+| Executed case | Blocker PID → waiter/service PID | Observed outcomes |
+|---|---|---|
+| exact assignment end overlaps M2 INITIAL generation, end first | 15743 → 15742 | committed, CARE_ACTION_NOT_FOUND |
+| exact assignment end overlaps M2 INITIAL generation, clinical first | 15761 → 15762 | committed, committed |
+| genuine M1 seed table-lock overlap with legacy bilateral confirmation, seed first | 15781 → 15780 | committed, committed |
+| genuine M1 seed table-lock overlap with legacy bilateral confirmation, accept first | 15792 → 15793 | committed, committed |
+| duplicate authorization absent-row serialization, winner commit | 15807 → 15808 | committed, committed |
+| duplicate authorization absent-row serialization, winner rollback | 15815 → 15816 | winner rollback; RELATIONSHIP_UNAVAILABLE, committed |
+| concurrent acceptance, winner commit | 15823 → 15824 | committed, committed |
+| concurrent acceptance, winner rollback | 15831 → 15832 | winner rollback; RELATIONSHIP_UNAVAILABLE, committed |
+| acceptance vs withdraw, accept first | 15847 → 15848 | committed, committed |
+| acceptance vs withdraw, other first | 15856 → 15857 | committed, RELATIONSHIP_CONFLICT |
+| acceptance vs decline, accept first | 15864 → 15865 | committed, RELATIONSHIP_CONFLICT |
+| acceptance vs decline, other first | 15872 → 15873 | committed, RELATIONSHIP_CONFLICT |
+| patient disable vs accept, disable first | 15875 → 15880 | revocation committed first; waiting operation denied |
+| patient disable vs accept, accept first | 15897 → 15898 | committed, committed |
+| clinician disable vs accept, disable first | 15901 → 15906 | revocation committed first; waiting operation denied |
+| clinician disable vs accept, accept first | 15914 → 15916 | committed, committed |
+| revoked session committed while acceptance waits denies, no state/audit | 15918 → 15923 | revocation committed first; waiting operation denied |
+| expired session committed while acceptance waits denies, no state/audit | 15926 → 15931 | revocation committed first; waiting operation denied |
+| old exact end A vs fresh accept B: old-end first, no retarget/audit | 15962 → 15963 | committed, committed |
+| old exact end A vs fresh accept B: new-grant first, no retarget/audit | 15978 → 15979 | committed, committed |
+| pair advisory lock serializes absence, bounded timeout rolls back without stale retry | 15981 → 15987 | sanitized timeout; no state/audit |
+| real deadlock victim sanitizes and rolls back, no hidden stale retry | 15998 → 16003 | service deadlock victim rolled back; no retry |
+| exact end versus accepted authorization withdrawal, clinician end first | 16011 → 16012 | committed, committed |
+| exact end versus accepted authorization withdrawal, patient withdrawal first | 16027 → 16028 | committed, committed |
+| different operation keys cannot create duplicate unresolved requests, winner commit | 16035 → 16036 | committed, RELATIONSHIP_CONFLICT |
+| different operation keys cannot create duplicate unresolved requests, winner rollback | 16043 → 16044 | winner rollback; RELATIONSHIP_UNAVAILABLE, committed |
+| acceptance serialized before session revocation commits truthfully, subsequent decision is denied | 16051 → 16048 | committed, committed |
+
 ## Privacy, input, API and regression review
 
 Actual HTTP tests cover no grant from PENDING/directory/membership; designated acceptance; patient/clinician exact ownership and cross-patient/cross-clinician IDOR; ADMIN/LAB_STAFF/PHARMACY_STAFF denial; injected actor/role/unknown keys; malformed/escaped duplicate JSON; origin/CSRF; strict locators/query/pagination; HEAD/no-store; body bounds; database-failure sanitization and empty HEAD failure. Canary malformed request content never appears in errors. Application logger remains disabled as in accepted bootstrap; no new logging/secret/audit-body path is introduced.
@@ -69,7 +104,7 @@ Legacy confirmation works through the patient's own exact ACTIVE assignment even
 
 OpenAPI appends exactly eight participant-only resources and five schemas (25 paths / 22 schemas total). GET/HEAD on four resources, POST authorization, PUT four exact commands; all authenticated. Historical 17-path API bytes retain SHA256 `cd005b69cc22f783ced7458545360adf839b7f6861d4316943dcf64a8384f371`, including previous numeric-response key/escape formatting; independent tests pin the complete current hash, exact inventory and public allowlists. Historical exact inventories are extended deliberately, never weakened into subsets.
 
-Current D01–D36 decision register and cross-provider interpretation bytes retain SHA256 `f79fc639968c21b2351e90e369c9e97b654310f28076b667df8e41d6f2e1ea53`; only surrounding delivery-status metadata is reconciled. Relative Markdown verification at publication checked 264 links across 19 changed Markdown files, zero failures. Protected-file inventory and git diff --check passed.
+Current D01–D36 decision register and cross-provider interpretation bytes retain SHA256 `f79fc639968c21b2351e90e369c9e97b654310f28076b667df8e41d6f2e1ea53`; only surrounding delivery-status metadata is reconciled. Relative Markdown verification at publication checked 266 links across 19 changed Markdown files, zero failures. Protected-file inventory and git diff --check passed.
 
 No change to existing clinical authorizer, auth/session/password implementation, registration/profile rules, M1 fixture, M0–M2 clinical source, prior migrations, package manifests/lockfile or dependencies. CI adds exactly one runtime-proof step; all old gates/severity thresholds retained. No Slice 6/I2+ schema/routes, EACCE/research or frontend/design work.
 
