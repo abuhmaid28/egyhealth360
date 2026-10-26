@@ -1,8 +1,8 @@
 # Security & Medical Safety — V3 Policy, M0–M2 Enforcement
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix and Slices 1–4 COMPLETE; PR #44 merged at `e75671ec0adfdf0f0d71485eebb104728b619e91`, exact-main [Bootstrap 40195060034](https://github.com/abuhmaid28/egyhealth360/actions/runs/40195060034) SUCCESS. [Slice 5 bilateral lifecycle](V3_I1_SLICE5.md) IMPLEMENTED / IN REVIEW under [authorization 6401378826](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6401378826). V3-I1 INCOMPLETE; Issue #39 OPEN; Slice 6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–5 COMPLETE; PR #45 merged at `9fc25a4cd2428b2aa990b39fad8208867c7c0201`, exact-main [Bootstrap 40252309467](https://github.com/abuhmaid28/egyhealth360/actions/runs/40252309467) SUCCESS; [Slice 5 completion 6406188558](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406188558). [Slice 6 exit/security review](V3_I1_SLICE6_EXIT_REVIEW.md) AUTHORIZED / IN PROGRESS under [authorization 6406691109](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406691109). V3-I1 INCOMPLETE; Issue #39 OPEN; V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
 
-[Issue #39 I1 contract](V3_I1_CONTRACT.md) remains APPROVED. Slice 1/2 COMPLETE; [Slice 3](V3_I1_SLICE3.md) security contract COMPLETE; I1 NOT COMPLETE and Slice 4 COMPLETE; Slice 5 implemented / in review; Slice 6 NOT AUTHORIZED. Registration is guarded anonymous patient-only creation; profile read/replace requires current PATIENT ownership, and writes retain session CSRF. No ADMIN/staff clinical or profile entitlement. D36 routed-artifact authority remains I3; membership alone never suffices. Existing security contracts below are preserved.
+[Issue #39 I1 contract](V3_I1_CONTRACT.md) remains APPROVED. Slice 1/2 COMPLETE; [Slice 3](V3_I1_SLICE3.md) security contract COMPLETE; I1 NOT COMPLETE and Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 AUTHORIZED / IN PROGRESS. Registration is guarded anonymous patient-only creation; profile read/replace requires current PATIENT ownership, and writes retain session CSRF. No ADMIN/staff clinical or profile entitlement. D36 routed-artifact authority remains I3; membership alone never suffices. Existing security contracts below are preserved.
 
 ## Slice 4 directory enforcement
 
@@ -10,7 +10,7 @@ Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotf
 
 ## Policy versus implementation
 
-Product V3 is APPROVED at policy level; V3-I1 overall is NOT COMPLETE. Existing PATIENT/CLINICIAN/ADMIN roles, EH-006 session/CSRF/Origin and own/ACTIVE-assignment checks remain implemented and unchanged. Slice 2 adds fixed LAB_STAFF/PHARMACY_STAFF and operational organization membership COMPLETE; booking/relationship enrollment and fulfillment remain **NOT IMPLEMENTED**. No current endpoint gains a booking/staff exception.
+Product V3 is APPROVED at policy level; V3-I1 overall is NOT COMPLETE. Existing PATIENT/CLINICIAN/ADMIN roles, EH-006 session/CSRF/Origin and own/ACTIVE-assignment checks remain implemented and unchanged. Slice 2 adds fixed LAB_STAFF/PHARMACY_STAFF and operational organization membership COMPLETE; bilateral enrollment is COMPLETE in Slice 5; booking and fulfillment remain **NOT IMPLEMENTED**. No current endpoint gains a booking/staff exception.
 
 ## Approved future authorization boundary
 
@@ -196,6 +196,6 @@ EH-014 generation requires current ACTIVE assigned-clinician authority and exact
 
 Status evidence: [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. [Post-merge validation](EH-014_VALIDATION.md#post-merge-validation). No behavioral or R1–R8 contract change is introduced by this status closeout.
 
-## Current Slice 5 applicability
+## Current Slice 6 applicability
 
-The authoritative implementation extension is [V3_I1_SLICE5](V3_I1_SLICE5.md), with [executed validation](V3_I1_SLICE5_VALIDATION.md). It adds participant-only request/accept/decline/withdraw/history/exact assignment end, additive request/end provenance and current-authority locks; the sole clinical grant remains ClinicianPatientAssignment. Earlier slice-local “future/not implemented” notes are historical to those slices. Slice 4 is COMPLETE via PR #44 / exact-main CI 40195060034. Slice 5 is in review; Slice 6 is not authorized. No I1 completion, booking, fulfillment, EACCE or design work is claimed.
+Slices 1–5 are COMPLETE through [PR #45](https://github.com/abuhmaid28/egyhealth360/pull/45), exact-main Bootstrap 40252309467 and [completion comment 6406188558](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406188558). [Slice 6](V3_I1_SLICE6_EXIT_REVIEW.md) is AUTHORIZED / IN PROGRESS by comment 6406691109 for combined verification/security review and strictly necessary contract fixes only. Historical slice/ADR status text records its adoption point. V3-I1 remains INCOMPLETE pending independent exact-head review, successful CI, separate Product Owner merge approval, merge and independently confirmed exact-main verification. Issue #39 OPEN; V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
