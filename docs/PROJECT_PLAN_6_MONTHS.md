@@ -2,7 +2,7 @@
 
 ## Status and supersession — D33
 
-Product V3 policy is APPROVED; M0–M2 COMPLETE; V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)). V3-I1 Slices 1/2/3 COMPLETE after PR #43 / exact-main CI 40116846242; [Slice 4](V3_I1_SLICE4.md) COMPLETE via PR #44 / exact-main CI 40195060034; [Slice 5](V3_I1_SLICE5.md) COMPLETE via PR #45 / exact-main CI 40252309467; overall NOT COMPLETE; Slice 6 AUTHORIZED / IN PROGRESS; EACCE/UI NOT STARTED, DESIGN FROZEN. The filename retains the previous planning reference; it does **not** assert a verified six-month V3 delivery commitment.
+Product V3 policy is APPROVED; M0–M2 COMPLETE; V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)). V3-I1 Slices 1/2/3 COMPLETE after PR #43 / exact-main CI 40116846242; [Slice 4](V3_I1_SLICE4.md) COMPLETE via PR #44 / exact-main CI 40195060034; [Slice 5](V3_I1_SLICE5.md) COMPLETE via PR #45 / exact-main CI 40252309467; overall NOT COMPLETE; Slice 6 IMPLEMENTED / IN REVIEW; EACCE/UI NOT STARTED, DESIGN FROZEN. The filename retains the previous planning reference; it does **not** assert a verified six-month V3 delivery commitment.
 
 The [pre-V3 six-month plan](https://github.com/abuhmaid28/egyhealth360/blob/ea777ce71c3639a37ec015739a12f0fadc0b4dcc/docs/PROJECT_PLAN_6_MONTHS.md) is preserved as historical planning. Its assumed 12 October 2026 start, month/sprint allocations, milestone weights and fixed buffer assumptions are **superseded as active scheduling assumptions**. They are not an approved V3 estimate, academic deadline or percentage-complete measure. Do not infer V3 velocity from the speed of M0–M2.
 

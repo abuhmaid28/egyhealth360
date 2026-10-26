@@ -1,6 +1,6 @@
 # V3-I1 Slice 6 — Combined exit and security review
 
-Slice 6 AUTHORIZED / IN PROGRESS. **V3-I1 INCOMPLETE; Issue #39 OPEN.** No merge is authorized. This is the implementation agent's review, **not independent approval**. The separate reviewer must inspect the exact final head and CI before separate Product Owner merge approval.
+Slice 6 IMPLEMENTED / IN REVIEW. **V3-I1 INCOMPLETE; Issue #39 OPEN.** No merge is authorized. This is the implementation agent's review, **not independent approval**. The separate reviewer must inspect the exact final head and CI before separate Product Owner merge approval.
 
 ## Authority and independently fetched baseline
 
@@ -91,7 +91,7 @@ Source locations: `packages/db/src/{auth,patient-entry,organizations,directory,r
 | Directory management | Sorted actor/clinician User NO KEY UPDATE → Session UPDATE → ClinicianProfile SHARE → Specialty SHARE (catalog mutation UPDATE) → sorted Organization/ClinicDirectory SHARE (clinic edits UPDATE on directory row) → Membership SHARE → ClinicianDirectory UPDATE → DirectoryAffiliation UPDATE/write |
 | Relationship mutation | Four-table ROW EXCLUSIVE intent **before rows** → sorted participant User NO KEY UPDATE → Session UPDATE → ClinicianProfile SHARE → PatientProfile SHARE → transaction pair advisory lock → exact Assignment UPDATE → Request UPDATE → end provenance/audit; read takes table intent then actor/session locks |
 | M1 deterministic seed | users/patient_profiles/clinician_profiles/assignments SHARE ROW EXCLUSIVE table locks before rows; no fixture-semantic rewrite |
-| M2 clinical | Actor User NO KEY UPDATE → Session UPDATE → ClinicianProfile SHARE → ACTIVE Assignment SHARE → PatientProfile SHARE, or UPDATE initially for EH-014 generation/amendment scope → exact resource locks (plan/template, encounter/BP etc.) → final expiry check |
+| M2 clinical | Actor User NO KEY UPDATE → Session UPDATE → ClinicianProfile SHARE → ACTIVE Assignment SHARE → PatientProfile SHARE, or UPDATE initially for EH-014 generation → exact resource locks (plan/template, encounter/BP; amendments take ordered BP UPDATE locks) → final expiry check |
 | Public directory | One READ COMMITTED statement, no row-authority locks/cache; prior committed state until revocation COMMIT, next statement reflects it |
 | AssignmentEndProvenance | Insert while exact assignment is ACTIVE/locked; deferred commit check requires that exact assignment ENDED at the same endedAt; no historical actor backfill |
 
@@ -134,7 +134,7 @@ Audit is append-only for ordinary UPDATE/DELETE/TRUNCATE (including zero-row sta
 
 | Severity | Finding / handling |
 | --- | --- |
-| Critical / High | No unresolved defect identified by the executed scope; candidate status still requires final validation and independent review |
+| Critical / High | No unresolved defect identified by the executed scope; local full validation is green; independent review remains mandatory |
 | Medium | Two existing MODERATE fast-uri dependency advisories, unchanged and unsuppressed; approved HIGH gate remains clean. No new contract defect identified |
 | Low | Two existing LOW fast-uri dependency advisories remain unchanged. Current mutable docs/Issue status lagged Slice 5 completion and Slice 6 authorization. Reconcile current delivery/inventories/gates; retain historical reports and ADR bodies. This prevents authorization/status confusion; no permission policy changed |
 | Informational | Existing unsuppressed fast-uri advisories: 2 LOW / 2 MODERATE, both HIGH gates pass; no dependency/suppression change |
@@ -151,4 +151,4 @@ No V3-I2–I5, D37+, generalized IAM, new permissions/roles/ADMIN powers, UI/UX/
 
 ## Candidate verdict and reviewer instructions
 
-Final execution result and exact tested revision are recorded in [Slice 6 validation](V3_I1_SLICE6_VALIDATION.md). This document does not predeclare an unfinished gate green. Independent review must recheck the sole-grant predicates (including SQL), lock-prefix reasoning and actual race logs, final 13→14/31-table preservation, operation-key/exact-old-target behavior, ended participant projections/Issue #31 masking, HTTP parser/failure canaries, immutable contract bytes, additive CI gate and governance. The implementing agent must not approve its own PR or merge it.
+Final execution result and exact tested revision are recorded in [Slice 6 validation](V3_I1_SLICE6_VALIDATION.md). **V3-I1 Slice 6 candidate verdict: READY FOR INDEPENDENT REVIEW.** Combined evidence is implemented and locally green; this is not independent approval or I1 completion. Remote exact-head CI is a separate gate reported on the PR/final handoff after actual completion. Independent review must recheck the sole-grant predicates (including SQL), lock-prefix reasoning and actual race logs, final 13→14/31-table preservation, operation-key/exact-old-target behavior, ended participant projections/Issue #31 masking, HTTP parser/failure canaries, immutable contract bytes, additive CI gate and governance. The implementing agent must not approve its own PR or merge it.

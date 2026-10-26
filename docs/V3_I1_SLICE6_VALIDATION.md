@@ -4,7 +4,7 @@
 
 ## Revision and environment
 
-Validation is running against the Slice 6 working tree; exact committed content and final CI are recorded at closeout below. Unfinished gates are not PASS. Tests operate only on disposable synthetic databases.
+The final local runtime/test content is committed in **`00171bdc2a2606e66ae5dd7e76ee09501accc903`**. The evidence/status closeout changes documentation only (including a correction to the lock-map description), with no runtime/test/schema/dependency delta. The complete local suite ran against that exact runtime/test content. The final documentation-inclusive head must separately pass exact-head Bootstrap CI, recorded on the PR and final handoff. Tests operate only on disposable synthetic databases.
 
 Pinned Node **24.21.0**, pnpm **10.34.6**, PostgreSQL **18.6**, Prisma **7.10.0**, Docker **28.4.0** / Compose **2.40.3**. Default workspace Node 24.19.0/pnpm 11.25.0 were replaced for task commands by an external `/tmp/egyhealth-slice6-tools/node_modules/.bin` PATH, with no repository dependency change. Docker uses the managed local socket. Host PostgreSQL and runtime Compose have separate task-owned projects/volumes, preventing running API writes from interfering with historical regression fixtures.
 
@@ -25,7 +25,7 @@ The task sets `PATH=/tmp/egyhealth-slice6-tools/node_modules/.bin:$PATH`, synthe
 | `docker compose -p egyhealth-slice6-host -f compose.yaml -f compose.local.yaml up -d --wait postgres` | PASS |
 | `pnpm test:migrations` | PASS; fourteen fresh migrations, migrate status/redeploy and historical populated chains/M1 |
 | `node --test tests/integration/v3-i1-slice6-*.test.mjs` | Focused 25 PASS before added standalone end audit-fault case; final full suite covers complete source |
-| `pnpm test:integration` | RUNNING |
+| `pnpm test:integration` | **583 PASS**, zero fail/cancel/skip; 557 retained + 26 new, duration 1044420.76ms |
 | `node scripts/measure-auth.mjs` | PASS; existing Argon2id policy unchanged |
 | `pnpm audit --prod --audit-level high` | PASS; 0 HIGH/CRITICAL, 2 LOW / 2 MODERATE |
 | `pnpm audit --audit-level high` | PASS; 0 HIGH/CRITICAL, 2 LOW / 2 MODERATE |
@@ -45,7 +45,7 @@ The task sets `PATH=/tmp/egyhealth-slice6-tools/node_modules/.bin:$PATH`, synthe
 | Container Slice 5 relationship runtime | PASS; 15 cases |
 | Container Slice 6 combined runtime | PASS; 25 cases |
 | Web/API smoke | PASS; web 200, API `{data:{status:"ok"}}` |
-| Docker/volume cleanup | PENDING |
+| Docker/volume cleanup | PASS; both task stacks/networks/volumes removed, no task container/volume remains |
 
 Runtime commands use `docker compose -p egyhealth-slice6-runtime exec -T api node scripts/verify-<name>-runtime.mjs` in exactly this order: auth, authorization, m1, clinical, care-action, organization, patient-entry, directory, relationship, v3-i1-exit. Slice 6 is additive after Slice 5 in Bootstrap CI. No existing test/runtime/audit/build/smoke/cleanup gate or threshold is removed, skipped or weakened; no continue-on-error.
 
@@ -65,7 +65,19 @@ Protected comparison against starting main verified **63 file comparisons**, fou
 
 Nine new integration cases: eight live lock overlaps in both orderings plus standalone participant-end audit failure. The complete suite reruns actual timeout/deadlock victims, absent pair serialization, registration duplicates, disable/revoke/expiry, org/member/directory revocation, M1 seed and M2 clinical overlaps. The [exit review](V3_I1_SLICE6_EXIT_REVIEW.md#combined-concurrency-evidence-map) maps required races to executable files.
 
-Final actual blocker/waiter records and suite totals will be filled after completion. Transport observers pause only after real SQL executes; `pg_blocking_pids` independently proves distinct backend waits. No Promise-order-only concurrency claim. Failed audit insert must roll back exact source/provenance/audit; no new successful audit on denied/no-op/replay reads.
+The complete final 583-test execution passed all actual overlapping transactions and fault cases. New blocker/waiter records are below; both operations committed in all eight cases, with the required final authority/domain assertions. The full run additionally observed actual deadlock victims: directory 4557→4561, organization 6624→6627 and relationship 7188→7194. The competing writer was rolled back; no stale retry or partial successful event. Real bounded timeout cases also passed. Transport observers pause only after real SQL executes; `pg_blocking_pids` independently proves distinct backend waits. No Promise-order-only concurrency claim. Failed audit insert must roll back exact source/provenance/audit; no new successful audit on denied/no-op/replay reads.
+
+
+| Final executed new overlap | Blocker PID → waiter PID | Outcome |
+| --- | --- | --- |
+| Relationship read first / exact end | 7401 → 7402 | Both committed; exact domain assertions PASS |
+| Exact end first / relationship read | 7409 → 7410 | Both committed; exact domain assertions PASS |
+| Relationship end first / own profile | 7417 → 7418 | Both committed; exact domain assertions PASS |
+| Own profile first / relationship end | 7434 → 7433 | Both committed; exact domain assertions PASS |
+| M2 BP read first / member end | 7442 → 7439 | Both committed; exact domain assertions PASS |
+| Member end first / M2 BP read | 7447 → 7450 | Both committed; exact domain assertions PASS |
+| M2 BP read first / provider unpublish | 7458 → 7456 | Both committed; exact domain assertions PASS |
+| Provider unpublish first / M2 BP read | 7464 → 7466 | Both committed; exact domain assertions PASS |
 
 ## Failures, warnings and cleanup transparency
 
@@ -77,4 +89,6 @@ Existing non-blocking warnings: pg adapter concurrent-query deprecation (no skip
 
 ## Final gate
 
-Local execution is still in progress. V3-I1 remains INCOMPLETE; Issue #39 OPEN; V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN. Final exact-head CI and independent review must follow. No merge performed.
+**V3-I1 Slice 6 candidate verdict: READY FOR INDEPENDENT REVIEW.**
+
+Combined I1 exit/security evidence is implemented and locally green. No unresolved P0/P1 I1 defect was identified. This is the implementation agent's review, not independent approval. V3-I1 remains INCOMPLETE; Issue #39 OPEN; V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN. Successful final exact-head CI and independent review remain separate required gates; only actually completed results may be reported on the PR/final handoff. No merge performed.
