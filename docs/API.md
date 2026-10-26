@@ -1,8 +1,8 @@
 # EgyHealth 360 — API Status and V3 Resource Boundaries
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix COMPLETE; Slices 1/2/3 COMPLETE after PR #43 merge and exact-main CI 40116846242 SUCCESS at `e1a87df5031e7be48a43d99e2b311dbe397b2e7e`. [Slice 4 curated directory](V3_I1_SLICE4.md) IMPLEMENTED / IN REVIEW under [authorization 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285). I1 NOT COMPLETE; Issue #39 OPEN; Slice 5/6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix and Slices 1–4 COMPLETE; PR #44 merged at `e75671ec0adfdf0f0d71485eebb104728b619e91`, exact-main [Bootstrap 40195060034](https://github.com/abuhmaid28/egyhealth360/actions/runs/40195060034) SUCCESS. [Slice 5 bilateral lifecycle](V3_I1_SLICE5.md) IMPLEMENTED / IN REVIEW under [authorization 6401378826](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6401378826). V3-I1 INCOMPLETE; Issue #39 OPEN; Slice 6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
 
-[Slice 3](V3_I1_SLICE3.md) implements guarded anonymous registration and current-PATIENT own-profile operations. Slice 1/2/3 are COMPLETE; I1 NOT COMPLETE and Slice 4 implemented / in review; Slice 5+ NOT AUTHORIZED. Existing auth/clinical routes remain unchanged. Internal Slice 2 operations are not public HTTP routes; availability remains I2 and fulfillment I3.
+[Slice 3](V3_I1_SLICE3.md) implements guarded anonymous registration and current-PATIENT own-profile operations. Slice 1/2/3 are COMPLETE; I1 NOT COMPLETE and Slice 4 COMPLETE; Slice 5 implemented / in review; Slice 6 NOT AUTHORIZED. Existing auth/clinical routes remain unchanged. Internal Slice 2 operations are not public HTTP routes; availability remains I2 and fulfillment I3.
 
 ## Implemented HTTP boundary
 
@@ -20,6 +20,10 @@ The [OpenAPI](openapi.json) and accepted M0–M2 contracts define actual behavio
 
 Methods, validation, pagination, response/error shapes and status mappings remain exactly those in OpenAPI/contracts; this reconciliation changes none. Do not infer that generic examples in former API planning were frozen routes. Current patient reads require own identity; clinician access requires current ACTIVE assignment; ADMIN denied clinical payload. Staff roles can use existing authentication; Slice 3 adds patient registration/own-profile HTTP; Slice 4 adds four public directory GET/HEAD resources. No organization/membership/directory management HTTP route, marketplace or fulfillment API exists.
 
+## V3-I1 Slice 5 participant relationships
+
+[Exact Slice 5 API/privacy contract](V3_I1_SLICE5.md#participant-api-and-privacy). GET/HEAD/POST `/me/relationship-requests`, GET/HEAD detail, PUT accept/decline/withdraw on exact request; GET/HEAD `/me/relationships` and exact assignment detail; PUT end on exact assignment. Only current PATIENT/CLINICIAN participants, existing session/Origin/CSRF; no ADMIN manufacture. Requests never authorize clinical access. Accepted withdrawal retains acceptance and atomically ends the exact bound grant. OpenAPI appends exactly eight paths/five schemas without historical-byte changes.
+
 ## V3-I1 Slice 4 public directory
 
 [Exact Slice 4 contract](V3_I1_SLICE4.md#public-http-contract) / [validation](V3_I1_SLICE4_VALIDATION.md). Actual GET/HEAD routes: `/api/v1/directory/specialties`, `/api/v1/directory/clinics`, `/api/v1/directory/providers`, `/api/v1/directory/providers/{publicId}`. Public allowlist identical for every role, no-store/current reads/no conditional 304; exact bounded page/pageSize and specialty/clinic filters only. Separate generated public locators never grant clinical access. Management is internal current-ADMIN service, matching Slice 2; no new management browser endpoint or CSRF exception. OpenAPI pins the exact response/errors; no availability, clinical payload, private identifiers or future routes.
@@ -34,13 +38,11 @@ Exact bounds: 16384-byte body, 8192-byte aggregate raw header names/values, emai
 
 ## PLANNED / NOT IMPLEMENTED — approved V3 resource groups
 
-These are conceptual groups only; no endpoint paths, request fields, final enums or HTTP mappings are added/frozen here.
+These are remaining future groups only. Delivered registration/own-profile (Slice 3 COMPLETE), public directory (Slice 4 COMPLETE) and participant bilateral lifecycle (Slice 5 IMPLEMENTED / IN REVIEW) are specified above and in current OpenAPI; they are not absent/future APIs. No additional endpoint paths, fields or HTTP mappings are frozen by this future map; I1 remains INCOMPLETE.
 
 | Future group | Product boundary |
 |---|---|
-| Public directory | Curated published doctor/specialty/clinic/profile/availability; no private account or patient data |
 | Professional schedule and booking | Clinician availability/own schedule; own patient booking/cancel/reschedule and preserved history; minimum logistics access before relationship |
-| Clinical relationship | Explicit patient authorization + clinician acceptance and ending; ongoing current checks, history, no authorship bypass |
 | Consultation | Actual treating/booking/encounter links, human-entered problems/minimal allergy context, protected notes and signed/released summaries/addenda |
 | Prescribing and medication history | Signed prescription/items/validity/cancel/replace; prescribed versus dispensed versus actual-use distinctions |
 | Diagnostics | Routed lab order/processing/result/finalization/release/corrections; imaging optional, not implemented |
@@ -112,3 +114,7 @@ No new HTTP endpoints. BP GET/HEAD history omits wrong-patient privacy targets (
 EH-014 adds zero HTTP routes and leaves OpenAPI unchanged. Root internal factory createCareActionPersistence provides previewSelection, generateInitialAction, inspectAction, listActions and close with genuine current principals. Preview/generation are assigned-clinician-only; ordinary reads allow self-patient/current assigned clinician and expose minimized action fields only. No raw decision snapshot route, forensic role or autonomous/research generation API. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [validation](EH-014_VALIDATION.md).
 
 Status evidence: [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. [Post-merge validation](EH-014_VALIDATION.md#post-merge-validation). No behavioral or R1–R8 contract change is introduced by this status closeout.
+
+## Current Slice 5 applicability
+
+The authoritative implementation extension is [V3_I1_SLICE5](V3_I1_SLICE5.md), with [executed validation](V3_I1_SLICE5_VALIDATION.md). It adds participant-only request/accept/decline/withdraw/history/exact assignment end, additive request/end provenance and current-authority locks; the sole clinical grant remains ClinicianPatientAssignment. Earlier slice-local “future/not implemented” notes are historical to those slices. Slice 4 is COMPLETE via PR #44 / exact-main CI 40195060034. Slice 5 is in review; Slice 6 is not authorized. No I1 completion, booking, fulfillment, EACCE or design work is claimed.

@@ -31,7 +31,19 @@ enum AssignmentStatus {
   @@map("assignment_status")
 }
 
+enum RelationshipRequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  WITHDRAWN
+  @@map("relationship_request_status")
+}
+
 model User {
+  relationshipEnds AssignmentEndProvenance[]
+  relationshipAcceptances RelationshipRequest[] @relation("RelationshipAcceptor")
+  relationshipDeclines RelationshipRequest[] @relation("RelationshipDecliner")
+  relationshipWithdrawals RelationshipRequest[] @relation("RelationshipWithdrawer")
   directorySpecialtyCreations Specialty[] @relation("SpecialtyCreator")
   directorySpecialtyChanges Specialty[] @relation("SpecialtyActor")
   directoryClinicDirectoryCreations ClinicDirectory[] @relation("ClinicDirectoryCreator")
@@ -84,6 +96,8 @@ model Session {
 }
 
 model PatientProfile {
+  relationshipRequests RelationshipRequest[]
+  @@unique([id,userId],map:"patient_profiles_id_user_key")
   bpAmendments BpAmendmentOperation[]
   bpExclusions BpExclusion[]
   bpPrivacyTargets BpPrivacyTarget[]
@@ -113,6 +127,7 @@ model PatientProfile {
 }
 
 model ClinicianProfile {
+  relationshipRequests RelationshipRequest[]
   directory ClinicianDirectory?
   @@unique([id,userId],map:"clinician_profiles_id_user_key")
   id                     String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -131,6 +146,10 @@ model ClinicianProfile {
 }
 
 model ClinicianPatientAssignment {
+  relationshipRequests RelationshipRequest[] @relation("AcceptedAssignment")
+  authorizationContexts RelationshipRequest[] @relation("AuthorizationAssignment")
+  endProvenance AssignmentEndProvenance[]
+  @@unique([id,clinicianId,patientId],map:"assignments_relationship_scope_key")
   careActionSelections CareActionDecision[]
 
   id          String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -716,6 +735,8 @@ model ClinicDirectory {
 }
 
 model ClinicianDirectory {
+  relationshipRequests RelationshipRequest[]
+  @@unique([publicId,clinicianId,clinicianUserId],map:"directory_relationship_locator_key")
   @@unique([clinicianId,clinicianUserId],map:"directory_provider_profile_key")
   publicId String @unique(map:"directory_provider_public_key") @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
   clinicianId String @unique(map:"directory_provider_clinician_key") @map("clinician_id") @db.Uuid
@@ -768,4 +789,51 @@ model DirectoryAffiliation {
   @@unique([publishedByUserId,operationKey],map:"directory_affiliation_operation_key")
   @@index([organizationId,providerId],map:"directory_affiliation_clinic_idx")
   @@map("directory_affiliations")
+}
+
+// Bilateral provenance only. Clinical authorization continues to use Assignment.
+model RelationshipRequest {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  patientUserId String @map("patient_user_id") @db.Uuid
+  clinicianId String @map("clinician_id") @db.Uuid
+  clinicianUserId String @map("clinician_user_id") @db.Uuid
+  providerPublicId String? @map("provider_public_id") @db.Uuid
+  operationKey String @map("operation_key") @db.Uuid
+  status RelationshipRequestStatus @default(PENDING)
+  authorizedAt DateTime @map("authorized_at") @db.Timestamptz(3)
+  authorizedAssignmentId String? @map("authorized_assignment_id") @db.Uuid
+  assignmentCountAtAuthorization Int @map("assignment_count_at_authorization")
+  assignmentId String? @unique(map:"relationship_requests_assignment_key") @map("assignment_id") @db.Uuid
+  acceptedAt DateTime? @map("accepted_at") @db.Timestamptz(3)
+  acceptedByUserId String? @map("accepted_by_user_id") @db.Uuid
+  declinedAt DateTime? @map("declined_at") @db.Timestamptz(3)
+  declinedByUserId String? @map("declined_by_user_id") @db.Uuid
+  authorizationWithdrawnAt DateTime? @map("authorization_withdrawn_at") @db.Timestamptz(3)
+  withdrawnByUserId String? @map("withdrawn_by_user_id") @db.Uuid
+  patient PatientProfile @relation(fields:[patientId,patientUserId],references:[id,userId],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_patient_fk")
+  clinician ClinicianProfile @relation(fields:[clinicianId,clinicianUserId],references:[id,userId],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_clinician_fk")
+  provider ClinicianDirectory? @relation(fields:[providerPublicId,clinicianId,clinicianUserId],references:[publicId,clinicianId,clinicianUserId],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_provider_fk")
+  assignment ClinicianPatientAssignment? @relation("AcceptedAssignment",fields:[assignmentId,clinicianId,patientId],references:[id,clinicianId,patientId],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_assignment_fk")
+  authorizationAssignment ClinicianPatientAssignment? @relation("AuthorizationAssignment",fields:[authorizedAssignmentId,clinicianId,patientId],references:[id,clinicianId,patientId],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_context_fk")
+  acceptor User? @relation("RelationshipAcceptor",fields:[acceptedByUserId],references:[id],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_acceptor_fk")
+  decliner User? @relation("RelationshipDecliner",fields:[declinedByUserId],references:[id],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_decliner_fk")
+  withdrawer User? @relation("RelationshipWithdrawer",fields:[withdrawnByUserId],references:[id],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_withdrawer_fk")
+  @@unique([patientUserId,operationKey],map:"relationship_requests_operation_key")
+  @@index([patientUserId,authorizedAt,id],map:"relationship_requests_patient_history_idx")
+  @@index([clinicianUserId,authorizedAt,id],map:"relationship_requests_clinician_history_idx")
+  @@map("relationship_requests")
+}
+
+// New participant endings only. Historical endings receive no invented actor.
+model AssignmentEndProvenance {
+  assignmentId String @id @map("assignment_id") @db.Uuid
+  clinicianId String @map("clinician_id") @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  actorUserId String @map("actor_user_id") @db.Uuid
+  actorRole UserRole @map("actor_role")
+  endedAt DateTime @map("ended_at") @db.Timestamptz(3)
+  assignment ClinicianPatientAssignment @relation(fields:[assignmentId,clinicianId,patientId],references:[id,clinicianId,patientId],onDelete:Restrict,onUpdate:Restrict,map:"assignment_end_provenance_assignment_fk")
+  actor User @relation(fields:[actorUserId,actorRole],references:[id,role],onDelete:Restrict,onUpdate:Restrict,map:"assignment_end_provenance_actor_fk")
+  @@map("assignment_end_provenance")
 }

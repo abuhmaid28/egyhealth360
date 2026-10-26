@@ -81,3 +81,7 @@ export { createDirectoryPersistence } from './directory.js';
 export type { DirectoryPersistence, PublicDirectory } from './directory.js';
 export { DirectoryError, directoryExact, directoryId, directoryText, specialtyKey, directoryPage, providerPage } from './directory-values.js';
 export type { DirectoryPage, ProviderPage, PublicClinic, PublicProvider, PublicSpecialty } from './directory-values.js';
+
+export { createRelationshipPersistence } from './relationships.js';
+export type { RelationshipPersistence } from './relationships.js';
+export { RelationshipError, relationshipId, relationshipInput, relationshipAuthorization, relationshipPage } from './relationship-values.js';

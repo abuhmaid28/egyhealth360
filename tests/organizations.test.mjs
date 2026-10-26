@@ -11,7 +11,7 @@ test('I1S2 narrow runtime surface has no patient, fulfillment, publication or re
  finally{await store.close();}
  const schema=await readFile('packages/db/prisma/schema.prisma','utf8');
  for(const model of ['Organization','OrganizationMembership'])assert.match(schema,new RegExp(`model ${model} \\{`));
- assert.doesNotMatch(schema,/model (RelationshipRequest|Prescription|LabOrder|LabResult|Notification|Booking)\b/);
+ assert.doesNotMatch(schema,/model (Prescription|LabOrder|LabResult|Notification|Booking)\b/);
  assert.doesNotMatch(await readFile('packages/db/src/authorization.ts','utf8'),/organization_memberships|membership|LAB_STAFF|PHARMACY_STAFF/);
 });
 
@@ -38,7 +38,8 @@ test('I1S2 exact additive migration inventory and all historical SQL hashes rema
   "20261022000000_eh014_initial_care_action": "244207da379c6db2a8132d2aabe8a138d5f9183054b519f58676848c9f80e228",
   "20261023000000_v3_i1_staff_roles": "fe77189c4dddbf4dbc2f1ef7faf958103b1202de57c0bac47d30cb48dba48a3b",
   "20261023000100_v3_i1_organizations": "f6a14d2fa1bbaabb0b1b6e4a0ce8215820a2b6b4da23cee62d5a67d28a235b31",
-  "20261024000000_v3_i1_directory": "2175f8d202f1e774ba3465a5afda1652ceccf4e3ef98150eb54ab8dd0ed8f104"
+  "20261024000000_v3_i1_directory": "2175f8d202f1e774ba3465a5afda1652ceccf4e3ef98150eb54ab8dd0ed8f104",
+  "20261025190000_v3_i1_relationships": "44a6848ac658afeec01b6ea1005d226589b9b96967f11fcc62623089ac9e729d"
 };
  assert.deepEqual(names,Object.keys(expected));
  for(const [name,hash] of Object.entries(expected))assert.equal(createHash('sha256').update(await readFile(`packages/db/prisma/migrations/${name}/migration.sql`)).digest('hex'),hash,name);
