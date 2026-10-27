@@ -73,3 +73,8 @@ test('I2S2 current ADMIN final expiry rolls back new immutable config version an
  await f.pool.query("UPDATE sessions SET expires_at=clock_timestamp()+interval '2 seconds' WHERE id=$1",[f.actors.admin.sessionId]);const stop=observeApplicabilityQueries((q,next)=>{if(!once&&/INSERT INTO public\.clinic_scheduling_settings/.test(q.text)){once=true;return Promise.resolve(next()).then(async r=>{entered.resolve();await release.promise;return r;});}return next();});
  try{p=f.availability.setConfiguration(f.actors.admin,{...f.settings,expectedVersion:1});p.catch(()=>{});await entered.promise;await f.pool.query('SELECT pg_sleep(2.1)');release.resolve();await reject(p,'AVAILABILITY_UNAUTHENTICATED');}finally{release.resolve();stop();await Promise.allSettled([p]);}assert.deepEqual(await availabilityAudits(f.pool),before);assert.equal((await f.availability.configurationHistory(f.actors.admin2,f.clinicOrg.id)).length,1);
 }));
+test('I2S2 public one-statement projection has bounded PostgreSQL DDL waits and safe HTTP failure',()=>isolatedAvailability(async f=>{
+ await f.publish();const c=await f.pool.connect();let request;
+ try{await c.query('BEGIN');const blocker=(await c.query('SELECT pg_backend_pid() pid')).rows[0].pid;await c.query('LOCK TABLE public.availability_slots IN ACCESS EXCLUSIVE MODE');const start=Date.now();request=f.request(f.path);const waiter=await waitBlockedBy(f.pool,blocker),response=await request;assert.equal(response.response.status,503);assert.ok(Date.now()-start<8000);assert.doesNotMatch(response.raw,/SELECT|availability_slots|SQL|stack|password/);console.log('I2S2_POSTGRES_PUBLIC_TIMEOUT',JSON.stringify({blockerPid:blocker,waiterPid:waiter}));
+ }finally{await c.query('ROLLBACK');c.release();await Promise.allSettled([request]);}
+}));

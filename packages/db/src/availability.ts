@@ -64,7 +64,7 @@ const historyJson = `jsonb_build_object('id',v.id,'providerId',p.public_id,'clin
 export function createAvailabilityPersistence(connectionString: string | undefined) {
     if (!connectionString)
         fail('AVAILABILITY_UNAVAILABLE');
-    const pool = new pg.Pool({ connectionString, max: 4, connectionTimeoutMillis: 5000 });
+    const pool = new pg.Pool({ connectionString, max: 4, connectionTimeoutMillis: 5000, lock_timeout: 5000, statement_timeout: 10000 });
     pool.on('error', () => { });
     async function run<T>(principal: AuthPrincipal, role: 'ADMIN' | 'CLINICIAN', action: (tx: Tx, a: Actor) => Promise<T>): Promise<T> {
         const d: PropertyDescriptorMap = principal && typeof principal === 'object' ? Object.getOwnPropertyDescriptors(principal) : {};
