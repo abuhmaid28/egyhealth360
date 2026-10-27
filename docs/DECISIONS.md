@@ -8,7 +8,7 @@ At the 2026 reboot, the original five-role continuity-of-care scope, separate Fa
 
 ## Current applicability and explicit supersession
 
-Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 is COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); Product V3 is the repository source of truth. V3-I1 Slices 1–4 COMPLETE; [Slice 4](V3_I1_SLICE4.md) verified through PR #44 / exact-main CI 40195060034; [Slice 5](V3_I1_SLICE5.md) authorized by comment 6401378826 and IMPLEMENTED / IN REVIEW; overall INCOMPLETE; Slice 6 NOT AUTHORIZED; EACCE NOT STARTED; DESIGN FROZEN. Earlier ADR status statements record their adoption points, not current delivery authorization.
+Product V3 policy APPROVED by [Issue #35 final approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901). [D01–D36](PRODUCT_V3_DECISIONS.md) records all five lineage comments and the exact approved package. V3-G0 is COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); Product V3 is the repository source of truth. V3-I1 Slices 1–5 COMPLETE through PR #45 / exact-main CI 40252309467; Slice 6 IMPLEMENTED / IN REVIEW by comment 6406691109; overall INCOMPLETE; EACCE NOT STARTED; DESIGN FROZEN. Earlier ADR status statements record their adoption points, not current delivery authorization.
 
 | Existing decision / planning area | Current applicability | Relationship to ADR-031 |
 |---|---|---|
@@ -357,9 +357,9 @@ Status: Accepted implementation design within approved Slice 4; PR review/merge 
 
 Adopt [Slice 4](V3_I1_SLICE4.md): four minimal directory models, independent public IDs, explicit curated specialty (legacy free text unchanged), separate clinic operational/publication state, global provider switch and exact terminal membership-affiliation approvals. Internal current-ADMIN management follows Slice 2; four minimized public GET/HEAD resources only, current SQL/no-store, no clinical authority. Additive thirteenth migration with zero data backfill; retained history/atomic audit/current-source eligibility and real PostgreSQL concurrency proof. No directory UI, availability, RelationshipRequest, fulfillment or EACCE. [Validation](V3_I1_SLICE4_VALIDATION.md) supplies execution evidence, not I1 completion.
 
-## Current Slice 5 applicability
+## Current Slice 6 applicability
 
-The authoritative implementation extension is [V3_I1_SLICE5](V3_I1_SLICE5.md), with [executed validation](V3_I1_SLICE5_VALIDATION.md). It adds participant-only request/accept/decline/withdraw/history/exact assignment end, additive request/end provenance and current-authority locks; the sole clinical grant remains ClinicianPatientAssignment. Earlier slice-local “future/not implemented” notes are historical to those slices. Slice 4 is COMPLETE via PR #44 / exact-main CI 40195060034. Slice 5 is in review; Slice 6 is not authorized. No I1 completion, booking, fulfillment, EACCE or design work is claimed.
+Slices 1–5 are COMPLETE through [PR #45](https://github.com/abuhmaid28/egyhealth360/pull/45), exact-main Bootstrap 40252309467 and [completion comment 6406188558](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406188558). [Slice 6](V3_I1_SLICE6_EXIT_REVIEW.md) is IMPLEMENTED / IN REVIEW by comment 6406691109 for combined verification/security review and strictly necessary contract fixes only. Historical slice/ADR status text records its adoption point. V3-I1 remains INCOMPLETE pending independent exact-head review, successful CI, separate Product Owner merge approval, merge and independently confirmed exact-main verification. Issue #39 OPEN; V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
 
 ## ADR-036 — Bilateral provenance around the sole assignment grant
 

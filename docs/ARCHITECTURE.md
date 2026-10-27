@@ -1,8 +1,8 @@
 # EgyHealth 360 — Architecture and V3 Extension Boundary
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Security hotfix and Slices 1–4 COMPLETE; PR #44 merged at `e75671ec0adfdf0f0d71485eebb104728b619e91`, exact-main [Bootstrap 40195060034](https://github.com/abuhmaid28/egyhealth360/actions/runs/40195060034) SUCCESS. [Slice 5 bilateral lifecycle](V3_I1_SLICE5.md) IMPLEMENTED / IN REVIEW under [authorization 6401378826](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6401378826). V3-I1 INCOMPLETE; Issue #39 OPEN; Slice 6 NOT AUTHORIZED; EACCE NOT STARTED; design/UI FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–5 COMPLETE; PR #45 merged at `9fc25a4cd2428b2aa990b39fad8208867c7c0201`, exact-main [Bootstrap 40252309467](https://github.com/abuhmaid28/egyhealth360/actions/runs/40252309467) SUCCESS; [Slice 5 completion 6406188558](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406188558). [Slice 6 exit/security review](V3_I1_SLICE6_EXIT_REVIEW.md) IMPLEMENTED / IN REVIEW under [authorization 6406691109](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406691109). V3-I1 INCOMPLETE; Issue #39 OPEN; V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
 
-[Slice 2](V3_I1_SLICE2.md) operational memberships are COMPLETE. [Slice 3](V3_I1_SLICE3.md) adds a narrow patient-entry persistence service and isolated HTTP boundary, reusing existing schema/auth/password/audit. Slice 1 COMPLETE; Slice 3 COMPLETE; I1 NOT COMPLETE; Slice 4 COMPLETE; Slice 5 implemented / in review; Slice 6 NOT AUTHORIZED. Membership remains operational only; D36 artifact authority is I3.
+[Slice 2](V3_I1_SLICE2.md) operational memberships are COMPLETE. [Slice 3](V3_I1_SLICE3.md) adds a narrow patient-entry persistence service and isolated HTTP boundary, reusing existing schema/auth/password/audit. Slice 1 COMPLETE; Slice 3 COMPLETE; I1 NOT COMPLETE; Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 IMPLEMENTED / IN REVIEW. Membership remains operational only; D36 artifact authority is I3.
 
 ## Current architecture — retained
 
@@ -12,7 +12,7 @@ One Next.js/TypeScript application, one NestJS/TypeScript modular-monolith API, 
 |---|---|
 | `apps/web` | Bootstrap web surface; integrated product workspaces/UI NOT STARTED, design FROZEN |
 | `apps/api` | Health, auth/session, scoped profile/BP/EH-012 and Slice 4 public directory HTTP behavior; [API inventory](API.md) and OpenAPI govern actual routes |
-| `packages/db` | Implemented M0–M2 persistence/internal principal-checked services and Slice 2/4 operational-directory models/thirteen migrations; exact [29-model inventory](DATA_MODEL.md) |
+| `packages/db` | Implemented M0–M2 persistence/internal principal-checked services and Slice 2/4 operational-directory and relationship models/fourteen migrations; exact [31-model inventory](DATA_MODEL.md) |
 | `packages/clinical-rules` | Exact approved HTN definition/manifest/validation; no arbitrary rule editor/evaluator |
 | `packages/closure-engine` | Bootstrap import check only; EACCE implementation NOT STARTED |
 | `packages/fhir-adapter` | Scaffold; no completed import pipeline |
@@ -24,7 +24,7 @@ Node 24.21.0 and pnpm 10.34.6 remain pinned. Local/self-hosted Docker Compose wi
 
 ## Approved modules — bounded delivery versus future scope
 
-[Product V3](PRODUCT.md) targets **Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin workspaces in the same application**, not five applications/microservices. Imaging adds no sixth portal. Slice 2 memberships, Slice 3 patient onboarding and Slice 4 public directory are COMPLETE within their bounded contracts. Slice 5 bilateral relationship lifecycle is IMPLEMENTED / IN REVIEW around the sole ClinicianPatientAssignment grant. Remaining conceptual modular extensions are availability/booking, consultation/documentation/problems, medication/prescription, diagnostics/result, dispensing, longitudinal projection and in-app coordination; Slice 6 remains NOT AUTHORIZED and I1 remains INCOMPLETE. Their final package/table/route layout remains milestone-specific reviewed work.
+[Product V3](PRODUCT.md) targets **Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin workspaces in the same application**, not five applications/microservices. Imaging adds no sixth portal. Slice 2 memberships, Slice 3 patient onboarding and Slice 4 public directory are COMPLETE within their bounded contracts. Slice 5 bilateral relationship lifecycle is COMPLETE around the sole ClinicianPatientAssignment grant. Remaining conceptual modular extensions are availability/booking, consultation/documentation/problems, medication/prescription, diagnostics/result, dispensing, longitudinal projection and in-app coordination; Slice 6 is IMPLEMENTED / IN REVIEW and I1 remains INCOMPLETE. Their final package/table/route layout remains milestone-specific reviewed work.
 
 Keep clinical sources owned by their modules. Connect them through explicit same-patient/source links and authorized read projections, not a universal clinical JSON event table, event-sourcing rewrite or messaging platform. Timeline and audit are separate. Clinical occurrence, signing/availability and local recording provenance must remain truthful; no generalized historical-knowledge guarantee is created.
 
@@ -46,6 +46,6 @@ Use FHIR R4 at the adapter boundary, not as the primary database. Pin Synthea/co
 
 No medical file/image storage infrastructure is required. Laboratory final results are Tier 1; imaging narrative/report is Tier 2 and unimplemented. Important in-app events/bounded reminders are approved future scope; paid SMS/WhatsApp/email is not required. Separate explicit design-unfreeze approval remains mandatory after scope/domain prerequisites; this document specifies no screens, components or visual work.
 
-## Current Slice 5 applicability
+## Current Slice 6 applicability
 
-The authoritative implementation extension is [V3_I1_SLICE5](V3_I1_SLICE5.md), with [executed validation](V3_I1_SLICE5_VALIDATION.md). It adds participant-only request/accept/decline/withdraw/history/exact assignment end, additive request/end provenance and current-authority locks; the sole clinical grant remains ClinicianPatientAssignment. Earlier slice-local “future/not implemented” notes are historical to those slices. Slice 4 is COMPLETE via PR #44 / exact-main CI 40195060034. Slice 5 is in review; Slice 6 is not authorized. No I1 completion, booking, fulfillment, EACCE or design work is claimed.
+Slices 1–5 are COMPLETE through [PR #45](https://github.com/abuhmaid28/egyhealth360/pull/45), exact-main Bootstrap 40252309467 and [completion comment 6406188558](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406188558). [Slice 6](V3_I1_SLICE6_EXIT_REVIEW.md) is IMPLEMENTED / IN REVIEW by comment 6406691109 for combined verification/security review and strictly necessary contract fixes only. Historical slice/ADR status text records its adoption point. V3-I1 remains INCOMPLETE pending independent exact-head review, successful CI, separate Product Owner merge approval, merge and independently confirmed exact-main verification. Issue #39 OPEN; V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
