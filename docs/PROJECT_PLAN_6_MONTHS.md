@@ -48,3 +48,7 @@ At each lightweight checkpoint record merged evidence, requirement/acceptance st
 | Demo environment/thesis pressure | Local self-hosted rehearsal/recovery with preserved history, regular evidence-backed chapter updates and viva preparation |
 
 No dates, estimates, success probabilities, delivery commitments or new implementation authorization are created here.
+
+## V3-I2 contract/readiness boundary
+
+See the [I2 contract](V3_I2_CONTRACT.md) for the frozen scope/exclusions, actual schema/API/lock inventories, proposed technical model, authorization matrix, additive migration strategy, PostgreSQL concurrency obligations, seven proposed slices and exit gate. Slice 1 is documentation only; future implementation and full Journey A are not delivered. Historical evidence and D01–D36 retain their original meaning.

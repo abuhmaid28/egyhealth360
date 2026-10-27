@@ -1,6 +1,6 @@
 # EgyHealth 360
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–6 COMPLETE; V3-I1 COMPLETE (technical and implementation exit). [PR #46](https://github.com/abuhmaid28/egyhealth360/pull/46) merged at `7f977466252dcf96caca7510e85c66aee24b9cd8`; exact-main [Bootstrap 40433851129](https://github.com/abuhmaid28/egyhealth360/actions/runs/40433851129), event `push`, branch `main`, exact SHA `7f977466252dcf96caca7510e85c66aee24b9cd8`, SUCCESS. Final documentation closeout IN REVIEW; Issue #39 OPEN pending closeout PR merge and successful exact-main verification. V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
+Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. PR #47 merged; verified main `d1b0a017896bdbef0062951264d2e0176732e6b9`; exact-main [Bootstrap 40496696728](https://github.com/abuhmaid28/egyhealth360/actions/runs/40496696728) SUCCESS (push/main, attempt 1, validate 122163838525). Issue #39 CLOSED / completed; [completion 6441304825](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6441304825). [Issue #48](https://github.com/abuhmaid28/egyhealth360/issues/48) authorizes V3-I2 Slice 1 contract/readiness only. V3-I2 implementation NOT STARTED; implementation-bearing Slice 2+ NOT AUTHORIZED; I3 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
 
 EgyHealth 360 is an **integrated digital healthcare journey** graduation prototype: patient access, discovery, booking, consultation, prescriptions, diagnostics, dispensing and follow-up connect through a longitudinal record, structured care coordination and later bounded explainable evidence-aware monitoring.
 
@@ -40,7 +40,7 @@ The commands below retain the working bootstrap/M1/M2 setup. The web surface and
 
 ### Pinned toolchain
 
-Node **24.21.0**, pnpm **10.34.6**, TypeScript **5.9.3**, Next.js **16.4.0**, React **19.3.0**, NestJS **11.2.7**, Prisma **7.10.0**, PostgreSQL **18.6**. Root `packageManager`, `.nvmrc`, CI, and Docker fix the runtime/toolchain versions. Direct dependencies are exact and transitive resolutions are in `pnpm-lock.yaml`.
+Node **24.21.0**, pnpm **10.34.6**, TypeScript **5.9.3**, Next.js **16.4.1**, React **19.3.0**, NestJS **11.2.7**, Prisma **7.10.0**, PostgreSQL **18.6**. Root `packageManager`, `.nvmrc`, CI, and Docker fix the runtime/toolchain versions. Direct dependencies are exact and transitive resolutions are in `pnpm-lock.yaml`.
 
 ### Local startup
 
@@ -115,3 +115,7 @@ It loads only the exact approved WHO CR-HTN-FU-001 catalog, fails on conflicts a
 preserves identical repeat state. It does not run on application startup. See
 [clinical-definition contract](docs/EH-009_CLINICAL_DEFINITION_CONTRACT.md) and
 [validation](docs/EH-009_VALIDATION.md). This describes the EH-009 catalog slice only. Later M2 slices add patient plans, BP/evidence and INITIAL actions; M2 is COMPLETE. No EACCE evaluator is implemented.
+
+## V3-I2 contract/readiness boundary
+
+See the [I2 contract](docs/V3_I2_CONTRACT.md) for the frozen scope/exclusions, actual schema/API/lock inventories, proposed technical model, authorization matrix, additive migration strategy, PostgreSQL concurrency obligations, seven proposed slices and exit gate. Slice 1 is documentation only; future implementation and full Journey A are not delivered. Historical evidence and D01–D36 retain their original meaning.

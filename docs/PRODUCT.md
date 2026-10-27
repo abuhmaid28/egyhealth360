@@ -1,6 +1,6 @@
 # EgyHealth 360 — Product Definition V3
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–6 COMPLETE; V3-I1 COMPLETE (technical and implementation exit). [PR #46](https://github.com/abuhmaid28/egyhealth360/pull/46) merged at `7f977466252dcf96caca7510e85c66aee24b9cd8`; exact-main [Bootstrap 40433851129](https://github.com/abuhmaid28/egyhealth360/actions/runs/40433851129), event `push`, branch `main`, exact SHA `7f977466252dcf96caca7510e85c66aee24b9cd8`, SUCCESS. Final documentation closeout IN REVIEW; Issue #39 OPEN pending closeout PR merge and successful exact-main verification. V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
+Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. PR #47 merged; verified main `d1b0a017896bdbef0062951264d2e0176732e6b9`; exact-main [Bootstrap 40496696728](https://github.com/abuhmaid28/egyhealth360/actions/runs/40496696728) SUCCESS (push/main, attempt 1, validate 122163838525). Issue #39 CLOSED / completed; [completion 6441304825](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6441304825). [Issue #48](https://github.com/abuhmaid28/egyhealth360/issues/48) authorizes V3-I2 Slice 1 contract/readiness only. V3-I2 implementation NOT STARTED; implementation-bearing Slice 2+ NOT AUTHORIZED; I3 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
 
 ## Authoritative status
 
@@ -10,6 +10,7 @@ Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–6 
 | V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
 | V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) COMPLETE; I1 overall **COMPLETE**, Slice 3 **COMPLETE**; Slice 4 **COMPLETE**; Slice 5 **COMPLETE**; Slice 6 **COMPLETE** |
+| V3-I2 | Slice 1 contract/readiness AUTHORIZED in Issue #48; implementation NOT STARTED; Slice 2+ NOT AUTHORIZED |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 
@@ -88,3 +89,7 @@ The bounded HTN contribution remains CR-HTN-FU-001, B0/B1/P1, controlled missing
 These journeys passed the policy-coverage gate only; they are not implemented/tested V3 workflows. Graduation success requires real domain behavior, negative authorization/history/concurrency proof and honest reproducible academic results. If deadline/capacity cannot support the thin Tier 1 journey plus research, raise the specific scope tradeoff rather than silently omit fulfillment.
 
 The approved [D01–D36 record](PRODUCT_V3_DECISIONS.md), [Roadmap V3](IMPLEMENTATION_ROADMAP.md), [requirements](REQUIREMENTS.md) and [security policy](SECURITY.md) govern later work. Product V2's narrower positioning/exclusions are superseded through ADR-031; historical contracts remain unchanged. Design remains separately frozen.
+
+## V3-I2 contract/readiness boundary
+
+See the [I2 contract](V3_I2_CONTRACT.md) for the frozen scope/exclusions, actual schema/API/lock inventories, proposed technical model, authorization matrix, additive migration strategy, PostgreSQL concurrency obligations, seven proposed slices and exit gate. Slice 1 is documentation only; future implementation and full Journey A are not delivered. Historical evidence and D01–D36 retain their original meaning.

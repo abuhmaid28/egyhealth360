@@ -1,6 +1,6 @@
 # Product V3 — Approved Policy and Supersession Record
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–6 COMPLETE; V3-I1 COMPLETE (technical and implementation exit). [PR #46](https://github.com/abuhmaid28/egyhealth360/pull/46) merged at `7f977466252dcf96caca7510e85c66aee24b9cd8`; exact-main [Bootstrap 40433851129](https://github.com/abuhmaid28/egyhealth360/actions/runs/40433851129), event `push`, branch `main`, exact SHA `7f977466252dcf96caca7510e85c66aee24b9cd8`, SUCCESS. Final documentation closeout IN REVIEW; Issue #39 OPEN pending closeout PR merge and successful exact-main verification. V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
+Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. PR #47 merged; verified main `d1b0a017896bdbef0062951264d2e0176732e6b9`; exact-main [Bootstrap 40496696728](https://github.com/abuhmaid28/egyhealth360/actions/runs/40496696728) SUCCESS (push/main, attempt 1, validate 122163838525). Issue #39 CLOSED / completed; [completion 6441304825](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6441304825). [Issue #48](https://github.com/abuhmaid28/egyhealth360/issues/48) authorizes V3-I2 Slice 1 contract/readiness only. V3-I2 implementation NOT STARTED; implementation-bearing Slice 2+ NOT AUTHORIZED; I3 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
 
 ## Authoritative status
 
@@ -10,6 +10,7 @@ Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–6 
 | V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
 | V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) COMPLETE; I1 overall **COMPLETE**, Slice 3 **COMPLETE**; Slice 4 **COMPLETE** (PR #44 / CI 40195060034); Slice 5 **COMPLETE**; Slice 6 **COMPLETE** |
+| V3-I2 | Slice 1 contract/readiness AUTHORIZED in Issue #48; implementation NOT STARTED; Slice 2+ NOT AUTHORIZED |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 
@@ -113,3 +114,7 @@ ADR-031 in [DECISIONS](DECISIONS.md) supersedes Product V2's chronic-care-first 
 Existing M0–M2 contracts, migrations, validation reports, issue/PR evidence and deterministic M1 seed are preserved. Slice-era statements in those records describe their time, not today's current scope/status. EH-012 remains HTN follow-up evidence, not a complete booking system. EH-014 remains immutable INITIAL-only generation; CareActionDecision is generation provenance, not a ClosureAssessment. FR-024 is foundation-only/incomplete; AC-004/AC-005 remain unsatisfied until later explicit evidence contracts and implementation.
 
 See [PRODUCT](PRODUCT.md), [REQUIREMENTS](REQUIREMENTS.md), [ROADMAP](IMPLEMENTATION_ROADMAP.md) and [SECURITY](SECURITY.md) for the current direction. Design remains frozen after policy approval and the verified PR #36 merge. The subsequent [I1 contract](V3_I1_CONTRACT.md) is approved in Issue #39; Slice 1 is merged/verified and Slice 2 is separately authorized by comment 6366843150. Its [organization/membership implementation](V3_I1_SLICE2.md) is COMPLETE; I1 COMPLETE, Slice 3 COMPLETE after PR #43 / CI 40116846242; [Slice 4](V3_I1_SLICE4.md) COMPLETE via PR #44 / exact-main CI 40195060034; [Slice 5](V3_I1_SLICE5.md) COMPLETE via PR #45 / exact-main CI 40252309467; Slice 6 COMPLETE. D01–D36 above are unchanged.
+
+## V3-I2 contract/readiness boundary
+
+See the [I2 contract](V3_I2_CONTRACT.md) for the frozen scope/exclusions, actual schema/API/lock inventories, proposed technical model, authorization matrix, additive migration strategy, PostgreSQL concurrency obligations, seven proposed slices and exit gate. Slice 1 is documentation only; future implementation and full Journey A are not delivered. Historical evidence and D01–D36 retain their original meaning.
