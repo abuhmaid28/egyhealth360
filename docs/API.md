@@ -1,8 +1,8 @@
 # EgyHealth 360 — API Status and V3 Resource Boundaries
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–5 COMPLETE; PR #45 merged at `9fc25a4cd2428b2aa990b39fad8208867c7c0201`, exact-main [Bootstrap 40252309467](https://github.com/abuhmaid28/egyhealth360/actions/runs/40252309467) SUCCESS; [Slice 5 completion 6406188558](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406188558). [Slice 6 exit/security review](V3_I1_SLICE6_EXIT_REVIEW.md) IMPLEMENTED / IN REVIEW under [authorization 6406691109](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406691109). V3-I1 INCOMPLETE; Issue #39 OPEN; V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–6 COMPLETE; V3-I1 COMPLETE (technical and implementation exit). [PR #46](https://github.com/abuhmaid28/egyhealth360/pull/46) merged at `7f977466252dcf96caca7510e85c66aee24b9cd8`; exact-main [Bootstrap 40433851129](https://github.com/abuhmaid28/egyhealth360/actions/runs/40433851129), event `push`, branch `main`, exact SHA `7f977466252dcf96caca7510e85c66aee24b9cd8`, SUCCESS. Final documentation closeout IN REVIEW; Issue #39 OPEN pending closeout PR merge and successful exact-main verification. V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
 
-[Slice 3](V3_I1_SLICE3.md) implements guarded anonymous registration and current-PATIENT own-profile operations. Slice 1/2/3 are COMPLETE; I1 NOT COMPLETE and Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 IMPLEMENTED / IN REVIEW. Existing auth/clinical routes remain unchanged. Internal Slice 2 operations are not public HTTP routes; availability remains I2 and fulfillment I3.
+[Slice 3](V3_I1_SLICE3.md) implements guarded anonymous registration and current-PATIENT own-profile operations. Slice 1/2/3 are COMPLETE; I1 COMPLETE and Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. Existing auth/clinical routes remain unchanged. Internal Slice 2 operations are not public HTTP routes; availability remains I2 and fulfillment I3.
 
 ## Implemented HTTP boundary
 
@@ -38,7 +38,7 @@ Exact bounds: 16384-byte body, 8192-byte aggregate raw header names/values, emai
 
 ## PLANNED / NOT IMPLEMENTED — approved V3 resource groups
 
-These are remaining future groups only. Delivered registration/own-profile (Slice 3 COMPLETE), public directory (Slice 4 COMPLETE) and participant bilateral lifecycle (Slice 5 COMPLETE) are specified above and in current OpenAPI; they are not absent/future APIs. No additional endpoint paths, fields or HTTP mappings are frozen by this future map; I1 remains INCOMPLETE.
+These are remaining future groups only. Delivered registration/own-profile (Slice 3 COMPLETE), public directory (Slice 4 COMPLETE) and participant bilateral lifecycle (Slice 5 COMPLETE) are specified above and in current OpenAPI; they are not absent/future APIs. No additional endpoint paths, fields or HTTP mappings are frozen by this future map; I1 technical exit is COMPLETE.
 
 | Future group | Product boundary |
 |---|---|
@@ -117,4 +117,4 @@ Status evidence: [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) me
 
 ## Current Slice 6 applicability
 
-Slices 1–5 are COMPLETE through [PR #45](https://github.com/abuhmaid28/egyhealth360/pull/45), exact-main Bootstrap 40252309467 and [completion comment 6406188558](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406188558). [Slice 6](V3_I1_SLICE6_EXIT_REVIEW.md) is IMPLEMENTED / IN REVIEW by comment 6406691109 for combined verification/security review and strictly necessary contract fixes only. Historical slice/ADR status text records its adoption point. V3-I1 remains INCOMPLETE pending independent exact-head review, successful CI, separate Product Owner merge approval, merge and independently confirmed exact-main verification. Issue #39 OPEN; V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
+Slices 1–6 COMPLETE; Slice 6 COMPLETE; V3-I1 technical and implementation exit COMPLETE following [PR #46](https://github.com/abuhmaid28/egyhealth360/pull/46) merged at `7f977466252dcf96caca7510e85c66aee24b9cd8`; exact-main [Bootstrap 40433851129](https://github.com/abuhmaid28/egyhealth360/actions/runs/40433851129), event `push`, branch `main`, exact SHA `7f977466252dcf96caca7510e85c66aee24b9cd8`, SUCCESS. Final documentation closeout IN REVIEW; Issue #39 OPEN pending closeout PR merge and successful exact-main verification. V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN. Historical slice/ADR/validation statements retain their adoption or execution-time meaning; see [closeout evidence](V3_I1_CLOSEOUT.md).

@@ -1,6 +1,6 @@
 # EgyHealth 360 — Product Definition V3
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–5 COMPLETE; PR #45 merged at `9fc25a4cd2428b2aa990b39fad8208867c7c0201`, exact-main [Bootstrap 40252309467](https://github.com/abuhmaid28/egyhealth360/actions/runs/40252309467) SUCCESS; [Slice 5 completion 6406188558](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406188558). [Slice 6 exit/security review](V3_I1_SLICE6_EXIT_REVIEW.md) IMPLEMENTED / IN REVIEW under [authorization 6406691109](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6406691109). V3-I1 INCOMPLETE; Issue #39 OPEN; V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
+Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–6 COMPLETE; V3-I1 COMPLETE (technical and implementation exit). [PR #46](https://github.com/abuhmaid28/egyhealth360/pull/46) merged at `7f977466252dcf96caca7510e85c66aee24b9cd8`; exact-main [Bootstrap 40433851129](https://github.com/abuhmaid28/egyhealth360/actions/runs/40433851129), event `push`, branch `main`, exact SHA `7f977466252dcf96caca7510e85c66aee24b9cd8`, SUCCESS. Final documentation closeout IN REVIEW; Issue #39 OPEN pending closeout PR merge and successful exact-main verification. V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
 
 ## Authoritative status
 
@@ -9,7 +9,7 @@ Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–5 
 | Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
 | V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
-| V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) COMPLETE; I1 overall **NOT COMPLETE**, Slice 3 **COMPLETE**; Slice 4 **COMPLETE**; Slice 5 **COMPLETE**; Slice 6 **IMPLEMENTED / IN REVIEW** |
+| V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) COMPLETE; I1 overall **COMPLETE**, Slice 3 **COMPLETE**; Slice 4 **COMPLETE**; Slice 5 **COMPLETE**; Slice 6 **COMPLETE** |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 
@@ -29,7 +29,7 @@ The deployment/demo/research boundary remains a synthetic, free-first, self-host
 
 ## Five future workspaces — one application
 
-These are approved capabilities, **not claims of implemented portals**. The Slice 2 implementation supports PATIENT, CLINICIAN, ADMIN, LAB_STAFF and PHARMACY_STAFF plus bounded operational organization membership. Slices 2–4 are COMPLETE, including entry/profile and curated public discovery. Slice 5 bilateral enrollment is COMPLETE; Slice 6 is IMPLEMENTED / IN REVIEW and I1 remains INCOMPLETE. This does not deliver portal/UI or clinical fulfillment.
+These are approved capabilities, **not claims of implemented portals**. The Slice 2 implementation supports PATIENT, CLINICIAN, ADMIN, LAB_STAFF and PHARMACY_STAFF plus bounded operational organization membership. Slices 2–4 are COMPLETE, including entry/profile and curated public discovery. Slice 5 bilateral enrollment is COMPLETE; Slice 6 is COMPLETE and I1 technical exit is COMPLETE. This does not deliver portal/UI or clinical fulfillment.
 
 | Workspace | Approved future capability | Essential boundary |
 |---|---|---|
