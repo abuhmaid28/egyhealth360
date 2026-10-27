@@ -1,0 +1,59 @@
+# V3-I2 Slice 2 — finite availability foundation
+
+Status: **IMPLEMENTED / IN REVIEW**, not COMPLETE. [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) was the first mutation. Earlier comments are unchanged. Starting main `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`, normal PR #49 merge, ordered parents `d1b0a017896bdbef0062951264d2e0176732e6b9` / `9ae2e1f39e0ee3a2d280818adb5ebc85bb454dc3`. Slice 1 COMPLETE; exact-main Bootstrap 40519168675 / validate 122241181235, push/main, attempt 1 SUCCESS. Issue #48 OPEN, no open PR or competing availability branch at the starting gate. Branch `feat/v3-i2-slice2-availability-foundation` starts at that exact main.
+
+The [frozen contract](V3_I2_CONTRACT.md) and D01–D36 are preserved. Only current-status sections are reconciled. [Validation](V3_I2_SLICE2_VALIDATION.md) distinguishes actual results from pending remote review. One bounded PR; no automatic merge. Independent review of the exact head, separate Product Owner merge authorization, normal merge and exact-main verification remain mandatory.
+
+## Database and configuration
+
+Additive migration `20261027210000_v3_i2_availability`, after the fourteen unchanged historical migrations. Three new models/tables: ClinicSchedulingSettings / `clinic_scheduling_settings`, AvailabilitySlot / `availability_slots`, AvailabilityOperation / `availability_operations`. No existing scalar columns change, historical SQL changes or data backfill. Existing clinics receive zero settings or slots automatically.
+
+Settings are immutable per-clinic version rows, primary key `(organization_id,version)`. Current means highest committed version; no independently writable current flag exists. A serialized insertion trigger requires exactly max+1, positive versions, exact CLINIC organization and ADMIN role FKs, a PostgreSQL-recognized timezone, database-owned receipt time, duration integer 5–240 minutes, minimumBookingLead integer 0–10080 minutes and horizon integer 1–90 days. UPDATE/DELETE/TRUNCATE are rejected, including empty statements. Old versions remain readable internally.
+
+`createAvailabilityPersistence` exposes only setConfiguration, configurationHistory, publish, withdraw, history, publicAvailability and close. Its narrow internal ADMIN configuration command takes exact organizationId, expectedVersion (0 for creation), timeZone, durationMinutes, minimumBookingLead and publicationHorizonDays. Actor and change time are derived. Every read/change requires current ACTIVE ADMIN and the exact valid unexpired/unrevoked session and CLINIC. Non-ADMIN denied, version mismatch conflicts. No ADMIN HTTP route, panel, generic registry or IAM framework. Settings confer no patient, clinical, relationship, assignment or impersonation authority.
+
+## Slots, lifecycle and provenance
+
+Slots retain exact clinician profile/user, clinic organization, provider, membership and directory affiliation, immutable UTC start/end, configuration version, IANA zone, bounded settings snapshot, capacity=1, publication actor/time/key and terminal withdrawal actor/time/version. Composite RESTRICT FKs bind profile/user, provider/user, membership/user/org/role/kind and configuration/org/version. An insert guard checks the snapshot and exact affiliation provenance. Identities and source fields cannot change. Slots start PUBLISHED/version 1 and advance once to WITHDRAWN/version 2; terminal rewriting, DELETE and TRUNCATE fail. Expiry and public eligibility are derived, never lifecycle mutations.
+
+PostgreSQL `btree_gist` supplies UUID equality for the `availability_clinician_overlap` GiST exclusion on `(clinician_id WITH =, tstzrange(start_at,end_at,'[)') WITH &&) WHERE state='PUBLISHED'`. This applies across all clinics and ordinary SQL connections. Adjacent half-open intervals are legal. The extension is additive, ships with PostgreSQL, requires no application dependency, and is exercised on fresh and populated databases. Database-owner/superuser bypass is outside the ordinary-write claim.
+
+## Authority, clocks and locking
+
+Publication and withdrawal require current ACTIVE CLINICIAN, valid session/profile, ACTIVE CLINIC, exact ACTIVE/unended compatible membership, published specialty/provider/clinic and exact unwithdrawn affiliation. No patient or ClinicianPatientAssignment lookup, requirement or creation. An ended membership regrant cannot rebind an old slot or publication replay. Own history needs current clinician/session/profile but survives later operational affiliation loss.
+
+READ COMMITTED; 5s lock_timeout, 10s statement_timeout, 30s PostgreSQL transaction_timeout, bounded 5s pool acquisition, no application retries. The service uses the existing pg transport for parameterized SQL and explicit transaction ownership; Prisma models describe the additive schema. Before row locks, compatible ROW EXCLUSIVE intent on the four existing M1 identity/assignment tables prevents the known seed table-lock inversion. This is a lock only, not clinical data access.
+
+Actor User NO KEY UPDATE → exact Session UPDATE → clinician Profile SHARE → Specialty SHARE → Organization SHARE → ClinicDirectory SHARE → Membership SHARE → ClinicianDirectory SHARE → DirectoryAffiliation SHARE → current Settings SHARE → slot. Source lookup before locks grants no authority. After all waits, current eligibility and session are re-read. Locked source rows remain protected through commit; database clock checks happen after waits and again after mutation/audit. Revocation first denies, publication first may commit before later revocation, and subsequent public discovery uses current state. No response recall or stale-authority retry is claimed.
+
+ADMIN uses the same compatible User/Session prefix → exact Organization UPDATE → current Settings UPDATE → immutable next version. The stronger organization lock serializes creation of an absent version and publication's max-version lookup, so an immutable-version implementation needs no mutable head registry. It follows the frozen lock intent and changes no legacy runtime order. Config-first publication captures committed new settings; publication-first preserves old snapshot; rolled-back config leaves the committed old version authoritative. Tests observe actual blockers, expiry, timeout, deadlock, rollback and M1/M2 overlaps.
+
+Timezone is server-owned. Node Intl validates/canonicalizes the ADMIN IANA zone with no new library; PostgreSQL validates persisted names. Existing strict finite calendar/millisecond parsing rejects local-only times, impossible dates, non-finite values and unknown negative-zero offset. Supplied explicit offsets must match the configured zone at each instant, including DST folds/gaps and fractional-hour zones. UTC arithmetic requires exact configured duration, start<end, future start and the complete slot within the current database-time horizon. No rounding or client duration/timezone/version override. Later settings changes never reinterpret old instants/snapshots.
+
+## Idempotency and audit
+
+Canonical lowercase UUIDv4 operationKey, scoped `(actor_user_id,command,operation_key)` for PUBLISH/WITHDRAW. SHA256 fingerprints use validated primitive canonical payloads: public clinic locator + exact UTC instants, or slot locator + expectedVersion. The ledger retains the original minimized result in the same transaction as the slot transition and success audit. Exact replay returns that original result, adds no slot/audit, and never reopens a withdrawn slot. Changed payload conflicts. Rolled-back commands consume no key. Current authority, including the original publication's membership/affiliation, is rechecked before returning any replay.
+
+Fixed minimized atomic audit actions: CLINIC_SCHEDULING_CREATED, CLINIC_SCHEDULING_CHANGED, AVAILABILITY_PUBLISHED, AVAILABILITY_WITHDRAWN. Real actor, exact organization or slot target, database clock receipt time and safeMetadata={}. No dates/timezone/body/key/reasons/secrets in metadata. Audit failure rolls back settings, slots and ledger together. Reads/denials/replays have no success audit.
+
+## HTTP and projection
+
+| Live route | Methods and boundary |
+|---|---|
+| `/api/v1/directory/providers/{publicId}/availability` | GET/HEAD; identical anonymous/all-role/invalid-cookie projection |
+| `/api/v1/me/availability` | GET/HEAD own history; POST exact `{clinicId,startAt,endAt,operationKey}` |
+| `/api/v1/me/availability/{slotId}/withdraw` | PUT exact `{operationKey,expectedVersion}`; owner/current scope only |
+
+POST and PUT return 200 `{data:slot}` including exact replay. History returns `{data:[slot],meta:{page,pageSize,total}}`. Own slot keys: id, providerId, clinicId, startAt, endAt, timeZone, state, version, publishedAt, withdrawnAt. No internal profile/user/member/affiliation/configuration/operation/audit data. Resource id is the slot locator; providerId and clinicId are directory public locators.
+
+Public rows contain **only** id, providerId, clinicId, startAt, endAt, timeZone, bookable=true. One SQL statement checks current provider eligibility, exact original slot provenance, PUBLISHED state and current clinic settings/lead/horizon and builds items + count. Missing/unpublished/ineligible provider gives existing DIRECTORY_NOT_FOUND/404; an eligible provider with no eligible slots returns an empty page. Cutoff is `startAt - current minimumBookingLead`; equality is closed. There is no occupancy query or booking implementation. Revocation hides discovery without rewriting slot history.
+
+Ordering is startAt ASC,id ASC; page 1–10000, pageSize 1–100, defaults 1/20. Public optional `clinic` uses public clinic UUID. Optional `from`/`to` must appear together, explicit-offset finite timestamps, increasing span ≤90 days; rows must fit the interval and their own current clinic horizon. No arbitrary search, sort, private/internal/status filters. Own history accepts only page/pageSize. Page and count share one SQL snapshot; multi-request snapshot stability is not promised.
+
+Strict flat JSON, own enumerable data properties, duplicate decoded-key/unknown-key rejection, fatal UTF-8, 16384-byte body, 8192-byte raw headers, 2048-byte URL, exact media/encoding and canonical paths/UUIDs. Reject mutation query and Idempotency-Key. Existing mandatory Origin/Fetch Metadata/session CSRF protections are reused. Public routes do not resolve session cookies. All availability responses are no-store, manual serialization without ETag/Last-Modified/304. HEAD executes the same checks and emits no body, including errors. Safe 400/401/403/404/405/409/413/415/503 errors; uniform missing/cross-owner denial precedes conflict disclosure; no SQL/stack/canary reflection.
+
+## Proofs and exclusions
+
+Unit, real HTTP, ordinary SQL, populated migration and independent PostgreSQL concurrency suites are additive. Historical exact migration assertions are projected to their original fourteen entries; a new exact fifteen-entry/34-model/API delta test guards all additions. Historical OpenAPI byte hashes remain unchanged after stripping only these three appended path/four schema blocks. Existing test behavior and CI gates are retained. The new 22-case isolated real-HTTP runtime manifest is `eh-v3-i2-slice2-availability-proof-v1`; it runs additively after the accepted I1 exit proof in Bootstrap.
+
+No Booking, reservation/capacity consumption, patient overlap/history, booking cancellation/rescheduling/attendance/no-show, consultation, clinical document/problem/diagnosis/allergy/note/summary, follow-up intent/EH-012 bridge, I3, EACCE, notifications, payment or frontend/UI work. Availability grants zero clinical authority. Finite explicit slots only; no recurrence, templates, external calendars or variable capacity. Full legacy regression and exact-head remote evidence are required before declaring the candidate review-ready; completion remains a later merge/exact-main gate.

@@ -85,3 +85,6 @@ export type { DirectoryPage, ProviderPage, PublicClinic, PublicProvider, PublicS
 export { createRelationshipPersistence } from './relationships.js';
 export type { RelationshipPersistence } from './relationships.js';
 export { RelationshipError, relationshipId, relationshipInput, relationshipAuthorization, relationshipPage } from './relationship-values.js';
+export {createAvailabilityPersistence} from './availability.js';
+export type {AvailabilityPersistence,AvailabilityProjection} from './availability.js';
+export {AvailabilityError,availabilityExact,availabilityId,availabilityInteger,availabilityTime,schedulingZone,schedulingValues,offsetMatches,availabilityPage} from './availability-values.js';
