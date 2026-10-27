@@ -2,7 +2,7 @@
 
 ## Current product and evidence boundary
 
-Product V3 policy APPROVED; [integrated journey → continuity → bounded HTN research](PRODUCT.md) is current direction. M0–M2 COMPLETE; V3-I1 Slice 2 in review / overall NOT COMPLETE, Slice 3 NOT AUTHORIZED; EACCE/UI NOT STARTED and DESIGN FROZEN. This structure's V1 filename is retained for stable references. Separate implemented foundations, approved future scope and real evaluated results throughout. [D01–D36 and approval lineage](PRODUCT_V3_DECISIONS.md) / [versioned requirements](REQUIREMENTS.md) / [Roadmap V3](IMPLEMENTATION_ROADMAP.md) supersede narrow product and old M3-next planning claims.
+Product V3 policy APPROVED; [integrated journey → continuity → bounded HTN research](PRODUCT.md) is current direction. M0–M2 COMPLETE; V3-I1 COMPLETE after PR #47 / exact-main CI 40496696728 SUCCESS; Issue #39 CLOSED / completed. [I2 Slice 1 contract/readiness](V3_I2_CONTRACT.md) authorized in Issue #48; I2 implementation NOT STARTED, Slice 2+ NOT AUTHORIZED; I3 NOT AUTHORIZED; EACCE/UI NOT STARTED and DESIGN FROZEN. This structure's V1 filename is retained for stable references. Separate implemented foundations, approved future scope and real evaluated results throughout. [D01–D36 and approval lineage](PRODUCT_V3_DECISIONS.md) / [versioned requirements](REQUIREMENTS.md) / [Roadmap V3](IMPLEMENTATION_ROADMAP.md) supersede narrow product and old M3-next planning claims.
 
 ## Goal
 Start the academic report now and evolve it with the implementation instead of writing it at the end.

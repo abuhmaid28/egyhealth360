@@ -1,6 +1,6 @@
 # EgyHealth 360 — Versioned Requirements V3
 
-Current delivery: Product V3 APPROVED; V3-G0 and M0–M2 COMPLETE. Slices 1–6 COMPLETE; V3-I1 COMPLETE (technical and implementation exit). [PR #46](https://github.com/abuhmaid28/egyhealth360/pull/46) merged at `7f977466252dcf96caca7510e85c66aee24b9cd8`; exact-main [Bootstrap 40433851129](https://github.com/abuhmaid28/egyhealth360/actions/runs/40433851129), event `push`, branch `main`, exact SHA `7f977466252dcf96caca7510e85c66aee24b9cd8`, SUCCESS. Final documentation closeout IN REVIEW; Issue #39 OPEN pending closeout PR merge and successful exact-main verification. V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
+Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. PR #47 merged; verified main `d1b0a017896bdbef0062951264d2e0176732e6b9`; exact-main [Bootstrap 40496696728](https://github.com/abuhmaid28/egyhealth360/actions/runs/40496696728) SUCCESS (push/main, attempt 1, validate 122163838525). Issue #39 CLOSED / completed; [completion 6441304825](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6441304825). [Issue #48](https://github.com/abuhmaid28/egyhealth360/issues/48) authorizes V3-I2 Slice 1 contract/readiness only. V3-I2 implementation NOT STARTED; implementation-bearing Slice 2+ NOT AUTHORIZED; I3 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
 
 [I1 contract](V3_I1_CONTRACT.md) is APPROVED by Issue #39. Slice 1/2 COMPLETE; [Slice 3 registration/profile](V3_I1_SLICE3.md) completes the bounded V3-FR-001 surface after PR #43 / exact-main CI 40116846242. I1 COMPLETE; Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. V3-FR-003 and the operational V3-FR-018 subset have accepted Slice 2 foundations; remaining end-to-end V3 capabilities are future work. Existing requirement IDs and historical evidence below are unchanged.
 
@@ -12,7 +12,7 @@ The new `V3-FR-*` grouping is versioned separately from existing `FR-*`, `BR-*`,
 
 ## Approved future V3 requirements — NOT IMPLEMENTED as complete V3 capabilities
 
-The rows define approved V3 scope, with current delivery identified in the last column: registration/own profile are COMPLETE in Slice 3, public directory is COMPLETE in Slice 4, and the Slice 5 bilateral lifecycle is COMPLETE. Broader end-to-end journeys remain future work; these delivered subsets do not complete I1. Current slice contracts and OpenAPI govern delivered methods; further implementation needs separately authorized reviewed work. Five workspaces operate in one application; ordinary care needs no CarePlan/EACCE.
+The rows define approved V3 scope, with current delivery identified in the last column: registration/own profile are COMPLETE in Slice 3, public directory is COMPLETE in Slice 4, and the Slice 5 bilateral lifecycle is COMPLETE. Broader end-to-end journeys remain future work; I1 is COMPLETE through its separate combined exit and final closeout gates. Current slice contracts and OpenAPI govern delivered methods; further implementation needs separately authorized reviewed work. Five workspaces operate in one application; ordinary care needs no CarePlan/EACCE.
 
 | ID | Approved requirement | Decision | Future milestone | Current implementation boundary |
 |---|---|---|---|---|
@@ -222,6 +222,10 @@ FR-021 — satisfied for the approved Core V1 bounded INITIAL generation scope. 
 
 M0–M2 COMPLETE; Issue #28 CLOSED/completed at the reconciliation baseline. This corrects prior pending-closeout status, not historical behavior. FR-021 bounded INITIAL only; FR-024 incomplete; AC-004/005 unsatisfied. No V3 capability, EACCE assessment/research result or design completion is created by this documentation reconciliation.
 
-## Current Slice 6 applicability
+## Current I2 Slice 1 applicability
 
-Slices 1–6 COMPLETE; Slice 6 COMPLETE; V3-I1 technical and implementation exit COMPLETE following [PR #46](https://github.com/abuhmaid28/egyhealth360/pull/46) merged at `7f977466252dcf96caca7510e85c66aee24b9cd8`; exact-main [Bootstrap 40433851129](https://github.com/abuhmaid28/egyhealth360/actions/runs/40433851129), event `push`, branch `main`, exact SHA `7f977466252dcf96caca7510e85c66aee24b9cd8`, SUCCESS. Final documentation closeout IN REVIEW; Issue #39 OPEN pending closeout PR merge and successful exact-main verification. V3-I2 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN. Historical slice/ADR/validation statements retain their adoption or execution-time meaning; see [closeout evidence](V3_I1_CLOSEOUT.md).
+Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. PR #47 merged; verified main `d1b0a017896bdbef0062951264d2e0176732e6b9`; exact-main [Bootstrap 40496696728](https://github.com/abuhmaid28/egyhealth360/actions/runs/40496696728) SUCCESS (push/main, attempt 1, validate 122163838525). Issue #39 CLOSED / completed; [completion 6441304825](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6441304825). [Issue #48](https://github.com/abuhmaid28/egyhealth360/issues/48) authorizes V3-I2 Slice 1 contract/readiness only. V3-I2 implementation NOT STARTED; implementation-bearing Slice 2+ NOT AUTHORIZED; I3 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN. Historical slice/ADR/validation statements retain their adoption or execution-time meaning; see [closeout evidence](V3_I1_CLOSEOUT.md) and [I2 contract](V3_I2_CONTRACT.md).
+
+## V3-I2 contract/readiness boundary
+
+See the [I2 contract](V3_I2_CONTRACT.md) for the frozen scope/exclusions, actual schema/API/lock inventories, proposed technical model, authorization matrix, additive migration strategy, PostgreSQL concurrency obligations, seven proposed slices and exit gate. Slice 1 is documentation only; future implementation and full Journey A are not delivered. Historical evidence and D01–D36 retain their original meaning.
