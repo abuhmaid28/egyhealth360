@@ -329,6 +329,14 @@ try {
     });
     if (req.url().endsWith("/auth/login")) liveAuthenticated = true;
     if (req.url().endsWith("/auth/logout")) {
+      if (
+        req.postData() !== "{}" ||
+        req.headers()["content-type"] !== "application/json"
+      )
+        return route.fulfill({
+          status: 415,
+          json: { error: { message: "JSON required" } },
+        });
       liveAuthenticated = false;
       return route.fulfill({ status: 204 });
     }

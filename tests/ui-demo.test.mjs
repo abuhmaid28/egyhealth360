@@ -239,6 +239,10 @@ test("live requests use existing OpenAPI routes, session CSRF, own-only profile 
     assert.equal("id" in JSON.parse(calls[1].init.body), false);
     assert.equal(calls[0].init.credentials, "same-origin");
     assert.equal(calls[0].init.cache, "no-store");
+    await api.logout();
+    assert.equal(calls[2].init.headers["Content-Type"], "application/json");
+    assert.equal(calls[2].init.headers["X-CSRF-Token"], "session-csrf");
+    assert.equal(calls[2].init.body, "{}");
     const spec = JSON.parse(readFileSync("docs/openapi.json", "utf8"));
     for (const c of calls) assert.ok(spec.paths[c.url]);
   } finally {

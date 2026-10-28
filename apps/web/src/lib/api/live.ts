@@ -66,6 +66,7 @@ export function createLiveAdapter(): HealthcareAdapter {
     async logout() {
       await request("/auth/logout", {
         method: "POST",
+        body: JSON.stringify({}),
         headers: { "X-CSRF-Token": csrf },
       });
       csrf = "";
