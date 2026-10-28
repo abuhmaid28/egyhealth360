@@ -88,3 +88,5 @@ export { RelationshipError, relationshipId, relationshipInput, relationshipAutho
 export {createAvailabilityPersistence} from './availability.js';
 export type {AvailabilityPersistence,AvailabilityProjection} from './availability.js';
 export {AvailabilityError,availabilityExact,availabilityId,availabilityInteger,availabilityTime,schedulingZone,schedulingValues,offsetMatches,availabilityPage} from './availability-values.js';
+export {createBookingPersistence,BookingError,bookingInput} from './bookings.js';
+export type {BookingPersistence} from './bookings.js';

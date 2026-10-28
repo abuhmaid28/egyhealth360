@@ -9,7 +9,7 @@ test('I1S2 narrow runtime surface has no patient, fulfillment, publication or re
  const store=createOrganizationPersistence('postgresql://unused:unused@127.0.0.1:1/unused');
  try{assert.deepEqual(Object.keys(store).sort(),['createOrganization','inspectOrganization','setOrganizationStatus','grantMembership','endMembership','inspectMembership','readMemberOrganization','close'].sort());}
  finally{await store.close();}
- const schema=await readFile('packages/db/prisma/schema.prisma','utf8');
+ const schema=(await readFile('packages/db/prisma/schema.prisma','utf8')).split('// Slice 3 logistics.')[0];
  for(const model of ['Organization','OrganizationMembership'])assert.match(schema,new RegExp(`model ${model} \\{`));
  assert.doesNotMatch(schema,/model (Prescription|LabOrder|LabResult|Notification|Booking)\b/);
  assert.doesNotMatch(await readFile('packages/db/src/authorization.ts','utf8'),/organization_memberships|membership|LAB_STAFF|PHARMACY_STAFF/);

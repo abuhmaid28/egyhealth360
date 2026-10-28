@@ -19,7 +19,7 @@ test('I1S5 bounded deterministic history pagination; no authority or arbitrary q
 test('I1S5 exact narrow service and sole clinical grant boundary, no future slice/domain leakage',async()=>{
  const store=createRelationshipPersistence('postgresql://unused:unused@127.0.0.1:1/unused');try{assert.deepEqual(Object.keys(store).sort(),['authorize','decide','end','read','close'].sort());}finally{await store.close();}
  const source=await readFile('packages/db/src/authorization.ts','utf8');assert.doesNotMatch(source,/relationship_requests|RelationshipRequest|membership|directory/i);
- const schema=await readFile('packages/db/prisma/schema.prisma','utf8');assert.doesNotMatch(schema,/model (Booking|Availability|Prescription|LabOrder|LabResult|Notification|ClosureAssessment)\b/);
+ const schema=(await readFile('packages/db/prisma/schema.prisma','utf8')).split('// Slice 3 logistics.')[0];assert.doesNotMatch(schema,/model (Booking|Availability|Prescription|LabOrder|LabResult|Notification|ClosureAssessment)\b/);
  assert.match(schema,/model RelationshipRequest \{/);assert.match(schema,/model AssignmentEndProvenance \{/);
 });
 test('I1S5 exact API append preserves all historical bytes and route/schema inventories',async()=>{

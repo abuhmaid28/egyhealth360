@@ -31,13 +31,13 @@ test('I2S2 bounded public interval, exact query fields and deterministic paginat
  assert.equal(parseAvailabilityQuery('?page=2&pageSize=5',true).page,'2');
 });
 test('I2S2 exact additive schema/API/migration boundary preserves complete historical OpenAPI bytes',async()=>{
- const {readFile,readdir}=await import('node:fs/promises'),{createHash}=await import('node:crypto'),{beforeI2Slice2}=await import('./support/openapi-baseline.mjs');
- const raw=await readFile('docs/openapi.json','utf8'),old=beforeI2Slice2(raw),api=JSON.parse(raw),prior=JSON.parse(old);
+ const {readFile,readdir}=await import('node:fs/promises'),{createHash}=await import('node:crypto'),{beforeI2Slice2,beforeI2Slice3}=await import('./support/openapi-baseline.mjs');
+ const raw=beforeI2Slice3(await readFile('docs/openapi.json','utf8')),old=beforeI2Slice2(raw),api=JSON.parse(raw),prior=JSON.parse(old);
  assert.equal(createHash('sha256').update(old).digest('hex'),'29929536d16f7c1abd21c21aed8dafbc97a1150f58bf9bcbc67d1e46dc02b48b');
  assert.deepEqual(Object.keys(api.paths),[...Object.keys(prior.paths),'/api/v1/directory/providers/{publicId}/availability','/api/v1/me/availability','/api/v1/me/availability/{slotId}/withdraw']);
  assert.deepEqual(Object.keys(api.components.schemas),[...Object.keys(prior.components.schemas),'AvailabilityPublish','AvailabilityWithdraw','PublicAvailabilitySlot','OwnAvailabilitySlot']);
  assert.deepEqual(Object.keys(api.components.schemas.PublicAvailabilitySlot.properties),['id','providerId','clinicId','startAt','endAt','timeZone','bookable']);
- const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();assert.equal(names.length,15);assert.equal(names[14],'20261027210000_v3_i2_availability');
- const schema=await readFile('packages/db/prisma/schema.prisma','utf8');assert.equal([...schema.matchAll(/^model /gm)].length,34);assert.doesNotMatch(schema,/model (Booking|BookingEvent|Consultation|ConsultationDocumentVersion|FollowUpIntent)\b/);
+ const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort().slice(0,15);assert.equal(names.length,15);assert.equal(names[14],'20261027210000_v3_i2_availability');
+ const schema=(await readFile('packages/db/prisma/schema.prisma','utf8')).split('// Slice 3 logistics.')[0];assert.equal([...schema.matchAll(/^model /gm)].length,34);assert.doesNotMatch(schema,/model (Booking|BookingEvent|Consultation|ConsultationDocumentVersion|FollowUpIntent)\b/);
  const sql=await readFile('packages/db/prisma/migrations/'+names[14]+'/migration.sql','utf8');assert.match(sql,/EXCLUDE USING gist/);assert.match(sql,/tstzrange\(start_at,end_at,'\[\)'\)/);assert.doesNotMatch(sql,/INSERT INTO public\.(clinic_scheduling_settings|availability_slots)|UPDATE public\.(users|sessions|organization_memberships|clinician_patient_assignments)/);
 });
