@@ -30,7 +30,7 @@ test('I1S4 query grammar rejects ambiguity, encoding and authority-bearing filte
 test('I1S4 no HTTP management or clinical authorizer exported; exact service surface and schema scope',async()=>{
  const store=createDirectoryPersistence('postgresql://unused:unused@127.0.0.1:1/unused');
  try{assert.deepEqual(Object.keys(store).sort(),['createSpecialty','setSpecialty','createClinic','setClinic','createProvider','setProvider','publishAffiliation','withdrawAffiliation','inspect','listSpecialties','listClinics','listProviders','getProvider','close'].sort());}finally{await store.close();}
- const schema=await readFile('packages/db/prisma/schema.prisma','utf8');
+ const schema=(await readFile('packages/db/prisma/schema.prisma','utf8')).split('// Slice 3 logistics.')[0];
  for(const name of ['Specialty','ClinicDirectory','ClinicianDirectory','DirectoryAffiliation'])assert.match(schema,new RegExp('model '+name+' \\{'));
  assert.doesNotMatch(schema,/model (Booking|Availability|Slot|Prescription|LabOrder|LabResult|Notification|ClosureAssessment)\b/);
  const source=await readFile('packages/db/src/directory.ts','utf8');assert.doesNotMatch(source,/patient_profiles|clinician_patient_assignments|care_plans|blood_pressure_measurements|clinical_encounters|professional_identifier|u\.email/);
