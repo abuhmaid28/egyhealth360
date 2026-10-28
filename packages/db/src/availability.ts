@@ -84,8 +84,10 @@ export function createAvailabilityPersistence(connectionString: string | undefin
             await tx.query("SET LOCAL transaction_timeout='30s'");
             await tx.query("SET LOCAL lock_timeout='5s'");
             await tx.query("SET LOCAL statement_timeout='10s'");
-            // Compatible table intent precedes row locks, matching the M1 seed graph.
-            await tx.query('LOCK TABLE public.users,public.patient_profiles,public.clinician_profiles,public.clinician_patient_assignments IN ROW EXCLUSIVE MODE');
+            // Only the clinician path takes M1-compatible intent before row locks.
+            // ADMIN configuration/history must stay in the operational subset.
+            if (role === 'CLINICIAN')
+                await tx.query('LOCK TABLE public.users,public.patient_profiles,public.clinician_profiles,public.clinician_patient_assignments IN ROW EXCLUSIVE MODE');
             await tx.query('SELECT id FROM public.users WHERE id=$1 FOR NO KEY UPDATE', [a.userId]);
             await tx.query('SELECT id FROM public.sessions WHERE id=$1 FOR UPDATE', [a.sessionId]);
             await current(tx, a, role);
@@ -166,6 +168,11 @@ export function createAvailabilityPersistence(connectionString: string | undefin
                 const s = await scope(tx, a, resolvedClinic, prior), c = await config(tx, s.organization_id);
                 if (!c)
                     fail('AVAILABILITY_NOT_FOUND');
+                await current(tx, a, 'CLINICIAN');
+                // EH2C: dedicated two-int advisory namespace, disjoint from the
+                // legacy one-bigint relationship/clinical advisory domains.
+                // Identity comes from the locked profile, never the request clinic.
+                await tx.query('SELECT pg_catalog.pg_advisory_xact_lock(1162359363, pg_catalog.hashtext($1::text))', [s.clinician_id]);
                 await current(tx, a, 'CLINICIAN');
                 const previous = await replay(tx, a, 'PUBLISH', operationKey, fp);
                 if (previous)
