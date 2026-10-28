@@ -915,3 +915,63 @@ model AvailabilityOperation {
  @@id([actorUserId,command,operationKey])
  @@map("availability_operations")
 }
+
+// Slice 3 logistics. SQL owns composite RESTRICT FKs, partial/exclusion constraints and history guards.
+model Booking {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ patientUserId String @map("patient_user_id") @db.Uuid
+ clinicianId String @map("clinician_id") @db.Uuid
+ clinicianUserId String @map("clinician_user_id") @db.Uuid
+ organizationId String @map("organization_id") @db.Uuid
+ slotId String @map("slot_id") @db.Uuid
+ startAt DateTime @map("start_at") @db.Timestamptz(3)
+ endAt DateTime @map("end_at") @db.Timestamptz(3)
+ timeZone String @map("time_zone") @db.VarChar(100)
+ slotConfigurationVersion Int @map("slot_configuration_version")
+ admissionConfigurationVersion Int @map("admission_configuration_version")
+ createdByUserId String @map("created_by_user_id") @db.Uuid
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ predecessorId String? @unique @map("predecessor_id") @db.Uuid
+ state String @default("BOOKED") @db.VarChar(16)
+ version Int @default(1)
+ @@index([patientUserId,startAt(sort:Desc),id],map:"booking_patient_history")
+ @@index([clinicianUserId,startAt(sort:Desc),id],map:"booking_clinician_history")
+ @@map("bookings")
+}
+model BookingOperation {
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String @db.VarChar(16)
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ bookingId String @map("booking_id") @db.Uuid
+ result Json
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@id([actorUserId,command,operationKey])
+ @@map("booking_operations")
+}
+model BookingEvent {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ bookingId String @map("booking_id") @db.Uuid
+ version Int
+ command String @db.VarChar(16)
+ fromState String? @map("from_state") @db.VarChar(16)
+ toState String @map("to_state") @db.VarChar(16)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ operationKey String @map("operation_key") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@unique([bookingId,version])
+ @@map("booking_events")
+}
+model BookingAttendance {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ bookingId String @map("booking_id") @db.Uuid
+ version Int
+ observation String @db.VarChar(16)
+ supersedesId String? @unique @map("supersedes_id") @db.Uuid
+ reason String? @db.VarChar(4000)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@unique([bookingId,version])
+ @@map("booking_attendance")
+}

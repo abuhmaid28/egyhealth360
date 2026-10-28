@@ -1,0 +1,17 @@
+import {randomUUID,randomBytes} from 'node:crypto';
+import {isolatedAvailability} from './availability.mjs';
+export const bookingTables=['bookings','booking_events','booking_operations','booking_attendance'];
+export const rejectBooking=(p,code)=>import('node:assert/strict').then(({default:a})=>a.rejects(p,e=>e.code===code));
+export async function isolatedBookings(run,options={}){return isolatedAvailability(async f=>{
+ const add=async(role='PATIENT',name='other')=>{const user=await f.identities.createUser({email:randomUUID()+'@example.invalid',passwordHash:f.hash,role,profile:{displayName:'Synthetic '+name}});const actor=await f.auth.createSession({userId:user.id,verifiedHash:f.hash,tokenHash:randomBytes(32).toString('hex'),previousHash:null});f.users[name]=user;f.actors[name]=actor;return {user,actor};};
+ await add();
+ const otherClinician=async()=>{const {user,actor}=await add('CLINICIAN','otherClinician');const member=(await f.grant(user,f.clinicOrg)).membership;let provider=(await f.directory.createProvider(f.actors.admin,{clinicianId:user.profileId,specialtyId:f.specialty.id,displayName:'Other synthetic doctor',operationKey:randomUUID()})).provider;await f.directory.publishAffiliation(f.actors.admin,{providerId:provider.id,membershipId:member.id,operationKey:randomUUID()});provider=(await f.directory.setProvider(f.actors.admin,{providerId:provider.id,specialtyId:f.specialty.id,displayName:provider.displayName,isPublished:true,expectedVersion:0})).provider;return {user,actor,provider};};
+ const create=async(slot,who=f.actors.patient,key=randomUUID())=>f.bookings.create(who,{slotId:slot.id,operationKey:key});
+ const counts=async()=>Object.fromEntries(await Promise.all([...bookingTables,'audit_logs','clinician_patient_assignments','relationship_requests','clinical_encounters'].map(async t=>[t,(await f.pool.query(`SELECT count(*)::int n FROM public.${t}`)).rows[0].n])));
+ const http=async(path,body,who='patient',method='PUT')=>f.request(path,{method,headers:{...await f.login(who),Origin:f.config.origin,'Content-Type':'application/json'},body:JSON.stringify(body)});
+ await run({...f,add,otherClinician,create,counts,http});
+ },{...options,bookings:true});}
+// Synthetic clock-boundary fixture ONLY: schema-owner setup changes both immutable
+// snapshots coherently before assertions, with guards restored in the same tx.
+// Live writers cannot do this. The runtime proof additionally waits for real time.
+export async function pastBooking(f,b,ended=true){const c=await f.pool.connect();try{await c.query('BEGIN');await c.query('ALTER TABLE public.availability_slots DISABLE TRIGGER availability_write');await c.query('ALTER TABLE public.bookings DISABLE TRIGGER booking_guard');await c.query("WITH t AS(SELECT clock_timestamp() now) UPDATE public.availability_slots SET start_at=t.now-interval '1 minute'-$2::int*interval '30 minutes',end_at=t.now+interval '29 minutes'-$2::int*interval '30 minutes' FROM t WHERE id=$1",[b.slotId,ended?1:0]);await c.query('UPDATE public.bookings b SET start_at=s.start_at,end_at=s.end_at FROM public.availability_slots s WHERE b.id=$1 AND s.id=b.slot_id',[b.id]);await c.query('SET CONSTRAINTS ALL IMMEDIATE');await c.query('ALTER TABLE public.bookings ENABLE TRIGGER booking_guard');await c.query('ALTER TABLE public.availability_slots ENABLE TRIGGER availability_write');await c.query('COMMIT');return (await f.bookings.detail(f.actors.patient,b.id)).data;}catch(e){await c.query('ROLLBACK');throw e;}finally{c.release();}}
