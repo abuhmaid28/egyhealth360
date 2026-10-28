@@ -1,4 +1,5 @@
 "use client";
+import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -26,6 +27,8 @@ import {
   useResource,
 } from "./ui";
 export function PatientScreen({ path }: { path: string }) {
+  const { t } = useLocale();
+
   if (path === "/patient") return <Dashboard />;
   if (path === "/patient/discover") return <Discovery />;
   if (path.startsWith("/patient/doctors/"))
@@ -49,10 +52,16 @@ export function PatientScreen({ path }: { path: string }) {
   )
     return <RecordScreen section={path.split("/")[2]} />;
   return (
-    <Empty title="Page not found" href="/patient" action="Back to overview" />
+    <Empty
+      title={t("Page not found")}
+      href="/patient"
+      action={t("Back to overview")}
+    />
   );
 }
 function Dashboard() {
+  const { t } = useLocale();
+
   const { api, session, preview, refresh } = useApp();
   const overview = useResource(
     () => Promise.all([api.profile(), api.record(), api.providers()]),
@@ -62,13 +71,13 @@ function Dashboard() {
   return (
     <>
       <Heading
-        eyebrow="Your health, all together"
-        title={`Good morning, ${session.name.split(" ")[0]}.`}
-        description="A little clarity. A lot more confidence in your care."
+        eyebrow={t("Your health, all together")}
+        title={t("Good morning, {name}.", { name: session.name.split(" ")[0] })}
+        description={t("A little clarity. A lot more confidence in your care.")}
       >
         <Link className="button primary" href="/patient/discover">
           <Icon name="plus" size={18} />
-          Book an appointment
+          {t("Book an appointment")}
         </Link>
       </Heading>
       <Resource resource={overview} preview={preview}>
@@ -78,39 +87,39 @@ function Dashboard() {
               <div className="hero-copy">
                 <span className="hero-label">
                   <span className="status-dot" />
-                  YOUR CONNECTED HEALTH JOURNEY
+                  {t("YOUR CONNECTED HEALTH JOURNEY")}
                 </span>
                 <h2>
-                  Better care starts
+                  {t("Better care starts")}
                   <br />
-                  with the right connection.
+                  {t("with the right connection.")}
                 </h2>
                 <p>
-                  Find your doctor, plan your visit, and keep every
-                  <br className="desktop-only" /> step of your health journey in
-                  one place.
+                  {t("Find your doctor, plan your visit, and keep every")}
+                  <br className="desktop-only" />{" "}
+                  {t("step of your health journey in one place.")}
                 </p>
                 <Link className="button white" href="/patient/discover">
-                  Find your doctor
+                  {t("Find your doctor")}
                   <Icon name="arrow" size={18} />
                 </Link>
               </div>
               <div className="health-illustration" aria-hidden="true">
                 <div className="orbit orbit-one" />
                 <div className="orbit orbit-two" />
-                <div className="medical-cross">+</div>
+                <div className="medical-cross">{t("+")}</div>
                 <div className="float-label float-one">
                   <span className="mini-icon">
                     <Icon name="heart" />
                   </span>
                   <div>
-                    <strong>Care that connects</strong>
-                    <small>Every step, together</small>
+                    <strong>{t("Care that connects")}</strong>
+                    <small>{t("Every step, together")}</small>
                   </div>
                 </div>
                 <div className="float-label float-two">
                   <Icon name="shield" />
-                  <span>Your health story</span>
+                  <span>{t("Your health story")}</span>
                   <Icon name="check" size={15} />
                 </div>
                 <svg viewBox="0 0 220 55" className="pulse-line">
@@ -121,7 +130,7 @@ function Dashboard() {
             <div className="stats-grid">
               <Stat
                 icon="calendar"
-                label="Upcoming appointments"
+                label={t("Upcoming appointments")}
                 value={
                   appointments.data
                     ? String(
@@ -134,13 +143,13 @@ function Dashboard() {
               />
               <Stat
                 icon="record"
-                label="Visit summaries"
+                label={t("Visit summaries")}
                 value={String(record.consultations.length).padStart(2, "0")}
                 note="Your story, in one place"
               />
               <Stat
                 icon="activity"
-                label="Latest blood pressure"
+                label={t("Latest blood pressure")}
                 value={
                   record.measurements[0]
                     ? `${record.measurements[0].systolic}/${record.measurements[0].diastolic}`
@@ -157,7 +166,7 @@ function Dashboard() {
               <div className="stack">
                 <Card>
                   <CardTitle
-                    title="Your next appointment"
+                    title={t("Your next appointment")}
                     href="/patient/appointments"
                   />
                   <Resource resource={appointments} preview={preview}>
@@ -167,8 +176,10 @@ function Dashboard() {
                         <AppointmentRow appointment={next} />
                       ) : (
                         <Empty
-                          title="Make time for your health"
-                          description="Find a doctor and choose a time that works for you."
+                          title={t("Make time for your health")}
+                          description={t(
+                            "Find a doctor and choose a time that works for you.",
+                          )}
                           href="/patient/discover"
                         />
                       );
@@ -177,9 +188,9 @@ function Dashboard() {
                 </Card>
                 <Card>
                   <CardTitle
-                    title="Your care timeline"
+                    title={t("Your care timeline")}
                     href="/patient/record"
-                    action="Open record"
+                    action={t("Open record")}
                   />
                   <div className="timeline">
                     {record.consultations
@@ -191,25 +202,25 @@ function Dashboard() {
                             <Icon name="check" size={14} />
                           </span>
                           <div>
-                            <Badge tone="soft">Visit summary</Badge>
-                            <h3>{c.diagnosis || "Consultation summary"}</h3>
+                            <Badge tone="soft">{t("Visit summary")}</Badge>
+                            <h3>{c.diagnosis || t("Consultation summary")}</h3>
                             <p>{c.instructions}</p>
                             <Link className="text-link" href="/patient/history">
-                              View consultation
+                              {t("View consultation")}
                               <Icon name="arrow" size={15} />
                             </Link>
                           </div>
                         </div>
                       ))}
                     {record.consultations.length === 0 && (
-                      <Empty title="Your health story starts here" />
+                      <Empty title={t("Your health story starts here")} />
                     )}
                   </div>
                 </Card>
               </div>
               <div className="stack">
                 <Card className="quick-actions">
-                  <CardTitle title="What would you like to do?" />
+                  <CardTitle title={t("What would you like to do?")} />
                   {[
                     [
                       "search",
@@ -235,8 +246,8 @@ function Dashboard() {
                         <Icon name={icon as "search"} />
                       </span>
                       <span>
-                        <strong>{title}</strong>
-                        <small>{sub}</small>
+                        <strong>{t(title)}</strong>
+                        <small>{t(sub)}</small>
                       </span>
                       <Icon name="chevron" size={16} />
                     </Link>
@@ -248,19 +259,21 @@ function Dashboard() {
                     <div>
                       <h3>{profile.displayName}</h3>
                       <small className="muted">
-                        Your personal health profile
+                        {t("Your personal health profile")}
                       </small>
                     </div>
                   </div>
                   <div className="profile-line">
-                    <span>Profile details</span>
-                    <Badge tone="soft">Ready to review</Badge>
+                    <span>{t("Profile details")}</span>
+                    <Badge tone="soft">{t("Ready to review")}</Badge>
                   </div>
                   <p className="muted">
-                    Keep your personal details up to date for your next visit.
+                    {t(
+                      "Keep your personal details up to date for your next visit.",
+                    )}
                   </p>
                   <Link className="text-link" href="/patient/settings">
-                    Manage your profile
+                    {t("Manage your profile")}
                     <Icon name="arrow" size={16} />
                   </Link>
                 </Card>
@@ -268,13 +281,13 @@ function Dashboard() {
             </div>
             <div className="section-heading">
               <div>
-                <h2>Meet your next care partner</h2>
+                <h2>{t("Meet your next care partner")}</h2>
                 <p className="muted">
-                  Explore doctors in our curated directory.
+                  {t("Explore doctors in our curated directory.")}
                 </p>
               </div>
               <Link className="text-link" href="/patient/discover">
-                Explore directory
+                {t("Explore directory")}
                 <Icon name="arrow" size={16} />
               </Link>
             </div>
@@ -300,12 +313,13 @@ export function Stat({
   value: string;
   note: string;
 }) {
+  const { t } = useLocale();
   return (
     <Card className="stat">
       <div>
-        <span>{label}</span>
+        <span>{t(label)}</span>
         <strong>{value}</strong>
-        <small>{note}</small>
+        <small>{t(note)}</small>
       </div>
       <span className="icon-tile">
         <Icon name={icon} size={23} />
@@ -314,6 +328,8 @@ export function Stat({
   );
 }
 export function ProviderCard({ provider }: { provider: Provider }) {
+  const { t } = useLocale();
+
   return (
     <Card className="provider-card">
       <div className="provider-top">
@@ -329,20 +345,23 @@ export function ProviderCard({ provider }: { provider: Provider }) {
       <div className="provider-clinic">
         <Icon name="pin" size={16} />
         <span>
-          {provider.clinics[0]?.displayName} · {provider.clinics[0]?.city}
+          {provider.clinics[0]?.displayName} {t("·")}
+          {provider.clinics[0]?.city}
         </span>
       </div>
       <Link
         className="button secondary full"
         href={`/patient/doctors/${provider.id}`}
       >
-        View profile & availability
+        {t("View profile & availability")}
         <Icon name="arrow" size={16} />
       </Link>
     </Card>
   );
 }
 function Discovery() {
+  const { t } = useLocale();
+
   const { api, preview } = useApp();
   const [query, setQuery] = useState("");
   const [specialty, setSpecialty] = useState("");
@@ -354,9 +373,11 @@ function Discovery() {
   return (
     <>
       <Heading
-        eyebrow="Find your care partner"
-        title="The right doctor. A better next step."
-        description="Explore specialties, get to know your doctor, and plan your visit."
+        eyebrow={t("Find your care partner")}
+        title={t("The right doctor. A better next step.")}
+        description={t(
+          "Explore specialties, get to know your doctor, and plan your visit.",
+        )}
       />
       <Resource resource={data} preview={preview}>
         {([providers, specialties, clinics]) => {
@@ -373,18 +394,18 @@ function Discovery() {
                 <div className="search-input">
                   <Icon name="search" />
                   <input
-                    aria-label="Search doctors"
+                    aria-label={t("Search doctors")}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search by doctor’s name"
+                    placeholder={t("Search by doctor’s name")}
                   />
                 </div>
                 <select
-                  aria-label="Specialty"
+                  aria-label={t("Specialty")}
                   value={specialty}
                   onChange={(e) => setSpecialty(e.target.value)}
                 >
-                  <option value="">All specialties</option>
+                  <option value="">{t("All specialties")}</option>
                   {specialties.map((s) => (
                     <option value={s.key} key={s.key}>
                       {s.displayName}
@@ -392,11 +413,11 @@ function Discovery() {
                   ))}
                 </select>
                 <select
-                  aria-label="Clinic"
+                  aria-label={t("Clinic")}
                   value={clinic}
                   onChange={(e) => setClinic(e.target.value)}
                 >
-                  <option value="">All clinics</option>
+                  <option value="">{t("All clinics")}</option>
                   {clinics.map((c) => (
                     <option value={c.id} key={c.id}>
                       {c.displayName}
@@ -409,7 +430,7 @@ function Discovery() {
                   className={!specialty ? "selected" : ""}
                   onClick={() => setSpecialty("")}
                 >
-                  All specialties
+                  {t("All specialties")}
                 </button>
                 {specialties.map((s) => (
                   <button
@@ -423,9 +444,11 @@ function Discovery() {
               </div>
               <div className="section-heading">
                 <p className="muted">
-                  {filtered.length} doctors in this directory view
+                  {filtered.length} {t("doctors in this directory view")}
                 </p>
-                <span className="muted small">Curated public profiles</span>
+                <span className="muted small">
+                  {t("Curated public profiles")}
+                </span>
               </div>
               {filtered.length ? (
                 <div className="provider-grid">
@@ -435,15 +458,16 @@ function Discovery() {
                 </div>
               ) : (
                 <Empty
-                  title="No doctors match your search"
-                  description="Try a different name, specialty, or clinic."
+                  title={t("No doctors match your search")}
+                  description={t("Try a different name, specialty, or clinic.")}
                 />
               )}
               <Card className="directory-note">
                 <Icon name="shield" />
                 <p>
-                  Directory profiles help you discover care. A profile or
-                  booking does not grant access to your medical record.
+                  {t(
+                    "Directory profiles help you discover care. A profile or booking does not grant access to your medical record.",
+                  )}
                 </p>
               </Card>
             </>
@@ -454,6 +478,8 @@ function Discovery() {
   );
 }
 function DoctorProfile({ id }: { id: string }) {
+  const { t } = useLocale();
+
   const { api, preview, changed, notify, startDemoBooking } = useApp();
   const router = useRouter();
   const data = useResource(() => api.provider(id), [api, id]);
@@ -465,7 +491,7 @@ function DoctorProfile({ id }: { id: string }) {
   return (
     <>
       <Link href="/patient/discover" className="back-link">
-        ← Back to doctors
+        {t("← Back to doctors")}
       </Link>
       <Resource resource={data} preview={preview}>
         {(p) => (
@@ -476,7 +502,7 @@ function DoctorProfile({ id }: { id: string }) {
                 <Badge tone="soft">{p.specialty.displayName}</Badge>
                 <h1>{p.displayName}</h1>
                 <p className="muted">
-                  {p.specialty.displayName} ·{" "}
+                  {p.specialty.displayName} {t("·")}{" "}
                   {p.clinics.map((c) => c.city).join(", ")}
                 </p>
                 <div className="inline muted">
@@ -487,29 +513,33 @@ function DoctorProfile({ id }: { id: string }) {
               <div className="profile-seal">
                 <Icon name="heart" size={32} />
                 <span>
-                  A more connected
+                  {t("A more connected")}
                   <br />
-                  care experience
+                  {t("care experience")}
                 </span>
               </div>
             </Card>
             <div className="two-column">
               <div className="stack">
                 <Card>
-                  <CardTitle title="About this doctor" />
+                  <CardTitle title={t("About this doctor")} />
                   <p className="body-copy">
-                    Explore {p.displayName}’s{" "}
-                    {p.specialty.displayName.toLowerCase()} appointments at the
-                    clinics below. Select an available time to plan an in-person
-                    visit.
+                    {t(
+                      "Explore appointments with {name} in {specialty}. Select a published time for an in-person visit.",
+                      {
+                        name: p.displayName,
+                        specialty: p.specialty.displayName,
+                      },
+                    )}
                   </p>
                   <p className="muted">
-                    Your consultation is a space to discuss your concerns and
-                    decide the next steps together.
+                    {t(
+                      "Your consultation is a space to discuss your concerns and decide the next steps together.",
+                    )}
                   </p>
                 </Card>
                 <Card>
-                  <CardTitle title="Clinic & location" />
+                  <CardTitle title={t("Clinic & location")} />
                   {p.clinics.map((c) => (
                     <div key={c.id} className="clinic-detail">
                       <Detail icon="pin" title={c.city}>
@@ -530,19 +560,19 @@ function DoctorProfile({ id }: { id: string }) {
                   ))}
                 </Card>
                 <Card>
-                  <CardTitle title="Before your visit" />
+                  <CardTitle title={t("Before your visit")} />
                   <ul className="check-list">
                     <li>
                       <Icon name="check" />
-                      Bring a list of your current medications.
+                      {t("Bring a list of your current medications.")}
                     </li>
                     <li>
                       <Icon name="check" />
-                      Have any previous results ready to discuss.
+                      {t("Have any previous results ready to discuss.")}
                     </li>
                     <li>
                       <Icon name="check" />
-                      Write down the questions that matter to you.
+                      {t("Write down the questions that matter to you.")}
                     </li>
                   </ul>
                 </Card>
@@ -565,7 +595,7 @@ function DoctorProfile({ id }: { id: string }) {
                 slot={slot}
                 reason={reason}
                 busy={busy}
-                error={error}
+                error={t(error)}
                 close={() => setConfirm(false)}
                 submit={async () => {
                   setBusy(true);
@@ -610,6 +640,8 @@ function BookingDialog({
   busy: boolean;
   error: string;
 }) {
+  const { t } = useLocale();
+
   // Native modal provides focus containment, Escape handling and focus restoration.
   return (
     <dialog
@@ -630,48 +662,47 @@ function BookingDialog({
         </span>
         <button
           className="icon-button"
-          aria-label="Close booking"
+          aria-label={t("Close booking")}
           disabled={busy}
           onClick={close}
         >
           <Icon name="close" />
         </button>
       </div>
-      <p className="eyebrow">One step closer to care</p>
-      <h2 id="booking-title">Let’s confirm your visit.</h2>
-      <p className="muted">Review your appointment details below.</p>
+      <p className="eyebrow">{t("One step closer to care")}</p>
+      <h2 id="booking-title">{t("Let’s confirm your visit.")}</h2>
+      <p className="muted">{t("Review your appointment details below.")}</p>
       {liveBoundary && (
         <div className="boundary-notice">
-          <Badge tone="amber">Live availability → Demo booking</Badge>
+          <Badge tone="amber">{t("Live availability → Demo booking")}</Badge>
           <p>
-            Confirming switches to synthetic Patient Ahmed. The selected public
-            slot is copied only for a browser preview, remains unreserved on the
-            backend, and creates no relationship with this live provider. The
-            clinical continuation uses the separate synthetic Ahmed–Mariam
-            story.
+            {t(
+              "Confirming switches to synthetic Patient Ahmed. The selected public slot is copied only for a browser preview, remains unreserved on the backend, and creates no relationship with this live provider. The clinical continuation uses the separate synthetic Ahmed–Mariam story.",
+            )}
           </p>
         </div>
       )}
       <div className="confirmation-details">
-        <Detail icon="user" title="Your doctor">
+        <Detail icon="user" title={t("Your doctor")}>
           {provider.displayName}
         </Detail>
-        <Detail icon="calendar" title="Date & time">
-          {date(slot.startAt, slot.timeZone)} ·{" "}
-          {time(slot.startAt, slot.timeZone)} –{" "}
-          {date(slot.endAt, slot.timeZone)} · {time(slot.endAt, slot.timeZone)}
+        <Detail icon="calendar" title={t("Date & time")}>
+          {date(slot.startAt, slot.timeZone)} {t("·")}{" "}
+          {time(slot.startAt, slot.timeZone)} {t("–")}{" "}
+          {date(slot.endAt, slot.timeZone)} {t("·")}
+          {time(slot.endAt, slot.timeZone)}
           <small className="muted">{slot.timeZone}</small>
         </Detail>
-        <Detail icon="pin" title="Clinic">
+        <Detail icon="pin" title={t("Clinic")}>
           {provider.clinics.find((c) => c.id === slot.clinicId)?.displayName}
         </Detail>
-        <Detail icon="record" title="Reason for visit">
+        <Detail icon="record" title={t("Reason for visit")}>
           {reason}
         </Detail>
       </div>
       {error && (
         <p className="form-error" role="alert">
-          {error}
+          {t(error)}
         </p>
       )}
       <button
@@ -682,19 +713,21 @@ function BookingDialog({
         }}
       >
         {busy
-          ? "Confirming…"
+          ? t("Confirming…")
           : liveBoundary
-            ? "Confirm demo booking"
-            : "Confirm booking"}
+            ? t("Confirm demo booking")
+            : t("Confirm booking")}
         <Icon name="check" size={18} />
       </button>
       <button className="button subtle full" disabled={busy} onClick={close}>
-        Go back
+        {t("Go back")}
       </button>
     </dialog>
   );
 }
 function ClinicScreen({ id }: { id: string }) {
+  const { t } = useLocale();
+
   const { api, preview } = useApp();
   const data = useResource(
     () => Promise.all([api.clinics(), api.providers()]),
@@ -703,7 +736,7 @@ function ClinicScreen({ id }: { id: string }) {
   return (
     <>
       <Link href="/patient/discover" className="back-link">
-        ← Back to directory
+        {t("← Back to directory")}
       </Link>
       <Resource resource={data} preview={preview}>
         {([clinics, providers]) => {
@@ -711,17 +744,17 @@ function ClinicScreen({ id }: { id: string }) {
           return c ? (
             <>
               <Heading
-                eyebrow="Your local care"
+                eyebrow={t("Your local care")}
                 title={c.displayName}
                 description={`${c.address} · ${c.city}`}
               />
               <Card className="map-art large-map">
                 <Icon name="pin" size={40} />
                 <strong>{c.displayName}</strong>
-                <span>Address overview · illustrative map</span>
+                <span>{t("Address overview · illustrative map")}</span>
               </Card>
               <div className="section-heading">
-                <h2>Doctors at this clinic</h2>
+                <h2>{t("Doctors at this clinic")}</h2>
               </div>
               <div className="provider-grid">
                 {providers
@@ -732,7 +765,7 @@ function ClinicScreen({ id }: { id: string }) {
               </div>
             </>
           ) : (
-            <Empty title="Clinic not found" />
+            <Empty title={t("Clinic not found")} />
           );
         }}
       </Resource>
@@ -746,6 +779,8 @@ export function AppointmentRow({
   appointment: Appointment;
   doctor?: boolean;
 }) {
+  const { t } = useLocale();
+
   return (
     <div className="appointment-row">
       <div className="appointment-date">
@@ -768,8 +803,9 @@ export function AppointmentRow({
         </Badge>
         <h3>{doctor ? a.patientName : a.provider.displayName}</h3>
         <p>
-          {a.provider.specialty.displayName} ·{" "}
-          {time(a.slot.startAt, a.slot.timeZone)}–
+          {a.provider.specialty.displayName} {t("·")}{" "}
+          {time(a.slot.startAt, a.slot.timeZone)}
+          {t("–")}
           {time(a.slot.endAt, a.slot.timeZone)}
         </p>
         <small>
@@ -788,22 +824,26 @@ export function AppointmentRow({
             : `/patient/appointments/${a.id}`
         }
       >
-        {doctor ? "Open patient" : "View details"}
+        {doctor ? t("Open patient") : t("View details")}
         <Icon name="arrow" size={16} />
       </Link>
     </div>
   );
 }
 function Appointments({ id }: { id?: string }) {
+  const { t } = useLocale();
+
   const { api, preview, refresh } = useApp();
   const [tab, setTab] = useState("Upcoming");
   const data = useResource(() => api.appointments(), [api, refresh]);
   return (
     <>
       <Heading
-        eyebrow="Your next steps"
+        eyebrow={t("Your next steps")}
         title={id ? "Your appointment" : "Appointments"}
-        description="Keep your upcoming visits and past appointments together."
+        description={t(
+          "Keep your upcoming visits and past appointments together.",
+        )}
       />
       <Resource resource={data} preview={preview}>
         {(rows) => {
@@ -816,15 +856,19 @@ function Appointments({ id }: { id?: string }) {
                   <div>
                     <strong>
                       {a.availabilitySource === "live"
-                        ? "Demo appointment saved — live slot not reserved"
+                        ? t("Demo appointment saved — live slot not reserved")
                         : a.status === "Completed"
-                          ? "Your visit summary is ready"
-                          : "You’re all set for your visit"}
+                          ? t("Your visit summary is ready")
+                          : t("You’re all set for your visit")}
                     </strong>
                     <p>
                       {a.status === "Completed"
-                        ? "Your doctor has shared the next steps in your medical record."
-                        : "Your appointment is saved. You can find it here anytime."}
+                        ? t(
+                            "Your doctor has shared the next steps in your medical record.",
+                          )
+                        : t(
+                            "Your appointment is saved. You can find it here anytime.",
+                          )}
                     </p>
                   </div>
                   <Badge>{a.status}</Badge>
@@ -832,19 +876,18 @@ function Appointments({ id }: { id?: string }) {
                 {a.availabilitySource === "live" && (
                   <div className="boundary-notice">
                     <Badge tone="amber">
-                      Synthetic continuation from live availability
+                      {t("Synthetic continuation from live availability")}
                     </Badge>
                     <p>
-                      No backend booking or live-provider clinical relationship
-                      was created. The Doctor demo continues with the
-                      independent synthetic Ahmed–Mariam relationship. The
-                      public slot may change or be withdrawn independently.
+                      {t(
+                        "No backend booking or live-provider clinical relationship was created. The Doctor demo continues with the independent synthetic Ahmed–Mariam relationship. The public slot may change or be withdrawn independently.",
+                      )}
                     </p>
                   </div>
                 )}
                 <div className="two-column">
                   <Card>
-                    <CardTitle title="Appointment details" />
+                    <CardTitle title={t("Appointment details")} />
                     <div className="inline">
                       <Avatar name={a.provider.displayName} large />
                       <div>
@@ -855,67 +898,72 @@ function Appointments({ id }: { id?: string }) {
                       </div>
                     </div>
                     <div className="confirmation-details">
-                      <Detail icon="calendar" title="Date">
+                      <Detail icon="calendar" title={t("Date")}>
                         {date(a.slot.startAt, a.slot.timeZone)}
                       </Detail>
-                      <Detail icon="clock" title="Time">
-                        {time(a.slot.startAt, a.slot.timeZone)}–
-                        {time(a.slot.endAt, a.slot.timeZone)} ·{" "}
+                      <Detail icon="clock" title={t("Time")}>
+                        {time(a.slot.startAt, a.slot.timeZone)}
+                        {t("–")}
+                        {time(a.slot.endAt, a.slot.timeZone)} {t("·")}{" "}
                         {a.slot.timeZone}
                       </Detail>
-                      <Detail icon="pin" title="Location">
+                      <Detail icon="pin" title={t("Location")}>
                         {
                           a.provider.clinics.find(
                             (c) => c.id === a.slot.clinicId,
                           )?.displayName
                         }
                       </Detail>
-                      <Detail icon="record" title="Reason for visit">
+                      <Detail icon="record" title={t("Reason for visit")}>
                         {a.reason}
                       </Detail>
                     </div>
                   </Card>
                   <div className="stack">
                     <Card className="tinted">
-                      <CardTitle title="A connected care experience" />
+                      <CardTitle title={t("A connected care experience")} />
                       <p className="body-copy">
-                        After your visit, your released summary, prescriptions,
-                        and test requests will appear in your health record.
+                        {t(
+                          "After your visit, your released summary, prescriptions, and test requests will appear in your health record.",
+                        )}
                       </p>
                       <Link className="button secondary" href="/patient/record">
-                        Open medical record
+                        {t("Open medical record")}
                         <Icon name="arrow" size={16} />
                       </Link>
                     </Card>
                     <Card>
-                      <CardTitle title="Getting ready" />
+                      <CardTitle title={t("Getting ready")} />
                       <p className="muted">
-                        Bring your previous results and a current medication
-                        list. Arrive a little early to get settled.
+                        {t(
+                          "Bring your previous results and a current medication list. Arrive a little early to get settled.",
+                        )}
                       </p>
                     </Card>
                   </div>
                 </div>
                 <Link href="/patient/appointments" className="back-link">
-                  ← All appointments
+                  {t("← All appointments")}
                 </Link>
               </>
             ) : (
-              <Empty title="Appointment not found" />
+              <Empty title={t("Appointment not found")} />
             );
           }
           const filtered = rows.filter((a) => a.status === tab);
           return (
             <>
               <div className="tabs">
-                {["Upcoming", "Completed"].map((t) => (
+                {["Upcoming", "Completed"].map((tabLabel) => (
                   <button
-                    key={t}
-                    className={tab === t ? "active" : ""}
-                    onClick={() => setTab(t)}
+                    key={t(tabLabel)}
+                    className={tab === tabLabel ? "active" : ""}
+                    onClick={() => setTab(tabLabel)}
                   >
-                    {t}
-                    <span>{rows.filter((a) => a.status === t).length}</span>
+                    {t(tabLabel)}
+                    <span>
+                      {rows.filter((a) => a.status === tabLabel).length}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -931,7 +979,9 @@ function Appointments({ id }: { id?: string }) {
                         ? "Your next visit starts here"
                         : "No completed visits yet"
                     }
-                    description="Your appointments will appear here as your journey continues."
+                    description={t(
+                      "Your appointments will appear here as your journey continues.",
+                    )}
                     href="/patient/discover"
                   />
                 )}
@@ -944,6 +994,8 @@ function Appointments({ id }: { id?: string }) {
   );
 }
 function RecordScreen({ section }: { section: string }) {
+  const { t } = useLocale();
+
   const { api, preview, refresh } = useApp();
   const record = useResource(() => api.record(), [api, refresh]);
   const titles: Record<string, string> = {
@@ -956,9 +1008,11 @@ function RecordScreen({ section }: { section: string }) {
   return (
     <>
       <Heading
-        eyebrow="Continuity, made simple"
+        eyebrow={t("Continuity, made simple")}
         title={titles[section]}
-        description="Your released visit summaries and next steps, together in one place."
+        description={t(
+          "Your released visit summaries and next steps, together in one place.",
+        )}
       />
       <div className="tabs record-tabs">
         {[
@@ -973,7 +1027,7 @@ function RecordScreen({ section }: { section: string }) {
             href={`/patient/${s}`}
             className={section === s ? "active" : ""}
           >
-            {label}
+            {t(label)}
           </Link>
         ))}
       </div>
@@ -986,21 +1040,21 @@ function RecordScreen({ section }: { section: string }) {
                 <Card className="directory-note">
                   <Icon name="shield" />
                   <p>
-                    Live record scope: blood pressure, HTN encounters and HTN
-                    follow-ups. General consultation, prescription, laboratory
-                    and follow-up intention capabilities are not integrated yet.
+                    {t(
+                      "Live record scope: blood pressure, HTN encounters and HTN follow-ups. General consultation, prescription, laboratory and follow-up intention capabilities are not integrated yet.",
+                    )}
                   </p>
                 </Card>
               )}
               {(section === "record" || section === "history") &&
                 r.encounters.length > 0 && (
                   <Card>
-                    <CardTitle title="Recorded HTN encounters" />
+                    <CardTitle title={t("Recorded HTN encounters")} />
                     {r.encounters.map((e) => (
                       <Detail
                         key={e.id}
                         icon="record"
-                        title="HTN BP follow-up encounter"
+                        title={t("HTN BP follow-up encounter")}
                       >
                         {date(e.occurredAt)}
                       </Detail>
@@ -1010,15 +1064,19 @@ function RecordScreen({ section }: { section: string }) {
               {(section === "record" || section === "follow-up") &&
                 r.legacyFollowUps.length > 0 && (
                   <Card>
-                    <CardTitle title="Recorded HTN follow-up appointments" />
+                    <CardTitle
+                      title={t("Recorded HTN follow-up appointments")}
+                    />
                     {r.legacyFollowUps.map((f) => (
                       <Detail key={f.id} icon="calendar" title={f.status}>
-                        {date(f.scheduledAt)} · {time(f.scheduledAt)}
+                        {date(f.scheduledAt)} {t("·")}
+                        {time(f.scheduledAt)}
                       </Detail>
                     ))}
                     <p className="small muted">
-                      Existing EH-012 records are separate from general bookings
-                      and follow-up intentions.
+                      {t(
+                        "Existing EH-012 records are separate from general bookings and follow-up intentions.",
+                      )}
                     </p>
                   </Card>
                 )}
@@ -1026,17 +1084,17 @@ function RecordScreen({ section }: { section: string }) {
               {section === "record" && (
                 <div className="two-column">
                   <Card>
-                    <CardTitle title="Recent care" />
+                    <CardTitle title={t("Recent care")} />
                     {visits.length ? (
                       visits.map((c) => (
                         <VisitSummary c={c} key={c.appointmentId} compact />
                       ))
                     ) : (
-                      <Empty title="No released summaries yet" />
+                      <Empty title={t("No released summaries yet")} />
                     )}
                   </Card>
                   <Card>
-                    <CardTitle title="Recorded measurements" />
+                    <CardTitle title={t("Recorded measurements")} />
                     {r.measurements.length ? (
                       r.measurements.map((m) => (
                         <div className="measurement" key={m.id}>
@@ -1044,20 +1102,23 @@ function RecordScreen({ section }: { section: string }) {
                             <Icon name="activity" />
                           </span>
                           <div>
-                            <small>Blood pressure</small>
+                            <small>{t("Blood pressure")}</small>
                             <strong>
-                              {m.systolic}/{m.diastolic} <span>mmHg</span>
+                              {m.systolic}
+                              {t("/")}
+                              {m.diastolic} <span>{t("mmHg")}</span>
                             </strong>
                             <small>{date(m.measuredAt)}</small>
                           </div>
                         </div>
                       ))
                     ) : (
-                      <Empty title="No measurements recorded" />
+                      <Empty title={t("No measurements recorded")} />
                     )}
                     <p className="small muted">
-                      Recorded values are shown without an automated clinical
-                      interpretation.
+                      {t(
+                        "Recorded values are shown without an automated clinical interpretation.",
+                      )}
                     </p>
                   </Card>
                 </div>
@@ -1071,12 +1132,12 @@ function RecordScreen({ section }: { section: string }) {
                   ))
                 ) : (
                   <Card>
-                    <Empty title="No consultation summaries yet" />
+                    <Empty title={t("No consultation summaries yet")} />
                   </Card>
                 ))}
               {section === "medications" && (
                 <Card>
-                  <CardTitle title="Prescriptions from your care team" />
+                  <CardTitle title={t("Prescriptions from your care team")} />
                   {visits.filter((c) => c.medication).length ? (
                     visits
                       .filter((c) => c.medication)
@@ -1089,7 +1150,7 @@ function RecordScreen({ section }: { section: string }) {
                             <h3>{c.medication}</h3>
                             <p>{c.dosage}</p>
                             <small className="muted">
-                              Human-entered at your consultation ·{" "}
+                              {t("Human-entered at your consultation ·")}{" "}
                               {c.appointmentId}
                             </small>
                           </div>
@@ -1098,19 +1159,22 @@ function RecordScreen({ section }: { section: string }) {
                       ))
                   ) : (
                     <Empty
-                      title="No prescriptions shared yet"
-                      description="A prescription appears here after your doctor releases it."
+                      title={t("No prescriptions shared yet")}
+                      description={t(
+                        "A prescription appears here after your doctor releases it.",
+                      )}
                     />
                   )}
                   <p className="small muted">
-                    Only your clinician decides your medication and dose. This
-                    view does not recommend treatment.
+                    {t(
+                      "Only your clinician decides your medication and dose. This view does not recommend treatment.",
+                    )}
                   </p>
                 </Card>
               )}
               {section === "laboratory" && (
                 <Card>
-                  <CardTitle title="Your laboratory requests" />
+                  <CardTitle title={t("Your laboratory requests")} />
                   {visits.filter((c) => c.lab).length ? (
                     visits
                       .filter((c) => c.lab)
@@ -1123,7 +1187,7 @@ function RecordScreen({ section }: { section: string }) {
                             <div>
                               <h3>{c.lab}</h3>
                               <p className="muted">
-                                Requested by your care team
+                                {t("Requested by your care team")}
                               </p>
                             </div>
                           </div>
@@ -1132,15 +1196,17 @@ function RecordScreen({ section }: { section: string }) {
                       ))
                   ) : (
                     <Empty
-                      title="No laboratory requests yet"
-                      description="Your requested tests and released results will appear here."
+                      title={t("No laboratory requests yet")}
+                      description={t(
+                        "Your requested tests and released results will appear here.",
+                      )}
                     />
                   )}
                 </Card>
               )}
               {section === "follow-up" && (
                 <Card>
-                  <CardTitle title="Follow-up intentions" />
+                  <CardTitle title={t("Follow-up intentions")} />
                   {visits
                     .filter((c) => c.followUp)
                     .map((c) => (
@@ -1149,24 +1215,25 @@ function RecordScreen({ section }: { section: string }) {
                           <Icon name="heart" />
                         </span>
                         <div>
-                          <Badge tone="amber">Not booked</Badge>
+                          <Badge tone="amber">{t("Not booked")}</Badge>
                           <h3>{c.followUp}</h3>
                           <p className="muted">
-                            This is an intention from your visit, not an
-                            appointment or completed action.
+                            {t(
+                              "This is an intention from your visit, not an appointment or completed action.",
+                            )}
                           </p>
                         </div>
                         <Link
                           className="button secondary"
                           href="/patient/discover"
                         >
-                          Plan a visit
+                          {t("Plan a visit")}
                           <Icon name="arrow" size={16} />
                         </Link>
                       </div>
                     ))}
                   {!visits.some((c) => c.followUp) && (
-                    <Empty title="No follow-up intentions shared" />
+                    <Empty title={t("No follow-up intentions shared")} />
                   )}
                 </Card>
               )}
@@ -1184,33 +1251,35 @@ function VisitSummary({
   c: Consultation;
   compact?: boolean;
 }) {
+  const { t } = useLocale();
+
   return (
     <article className="visit-summary">
       <div className="card-title">
-        <h3>{c.diagnosis || "Consultation summary"}</h3>
-        <Badge tone="soft">Released summary</Badge>
+        <h3>{c.diagnosis || t("Consultation summary")}</h3>
+        <Badge tone="soft">{t("Released summary")}</Badge>
       </div>
       <p className="muted">{c.complaint}</p>
       <p className="body-copy">{c.instructions}</p>
       {!compact && (
         <div className="summary-grid">
-          <Detail icon="shield" title="Allergy review">
+          <Detail icon="shield" title={t("Allergy review")}>
             {c.allergies}
           </Detail>
-          <Detail icon="pill" title="Prescription">
-            {c.medication ? `${c.medication} · ${c.dosage}` : "None shared"}
+          <Detail icon="pill" title={t("Prescription")}>
+            {c.medication ? `${c.medication} · ${c.dosage}` : t("None shared")}
           </Detail>
-          <Detail icon="lab" title="Laboratory request">
-            {c.lab || "None shared"}
+          <Detail icon="lab" title={t("Laboratory request")}>
+            {c.lab || t("None shared")}
           </Detail>
-          <Detail icon="heart" title="Follow-up intention">
-            {c.followUp || "None shared"}
+          <Detail icon="heart" title={t("Follow-up intention")}>
+            {c.followUp || t("None shared")}
           </Detail>
         </div>
       )}
       {compact && (
         <Link className="text-link" href="/patient/history">
-          Read summary
+          {t("Read summary")}
           <Icon name="arrow" size={16} />
         </Link>
       )}
@@ -1218,14 +1287,18 @@ function VisitSummary({
   );
 }
 export function Settings() {
+  const { t } = useLocale();
+
   const { api, preview, refresh, notify, changed } = useApp();
   const data = useResource(() => api.profile(), [api, refresh]);
   return (
     <>
       <Heading
-        eyebrow="Make it yours"
-        title="Profile & settings"
-        description="Review the personal details shared with your care experience."
+        eyebrow={t("Make it yours")}
+        title={t("Profile & settings")}
+        description={t(
+          "Review the personal details shared with your care experience.",
+        )}
       />
       <Resource resource={data} preview={preview}>
         {(p) => (
@@ -1258,6 +1331,8 @@ function ProfileForm({
     sex: string | null;
   }) => Promise<void>;
 }) {
+  const { t } = useLocale();
+
   const [name, setName] = useState(p.displayName);
   const [dob, setDob] = useState(p.dateOfBirth ?? "");
   const [sex, setSex] = useState(p.sex ?? "");
@@ -1266,7 +1341,7 @@ function ProfileForm({
   return (
     <div className="two-column">
       <Card>
-        <CardTitle title="Personal information" />
+        <CardTitle title={t("Personal information")} />
         <form
           onSubmit={async (e) => {
             e.preventDefault();
@@ -1285,7 +1360,7 @@ function ProfileForm({
             }
           }}
         >
-          <Field label="Display name">
+          <Field label={t("Display name")}>
             <input
               required
               maxLength={160}
@@ -1294,7 +1369,7 @@ function ProfileForm({
             />
           </Field>
           <div className="form-grid">
-            <Field label="Date of birth">
+            <Field label={t("Date of birth")}>
               <input
                 type="date"
                 value={dob}
@@ -1302,40 +1377,42 @@ function ProfileForm({
               />
             </Field>
             <Field
-              label="Sex"
-              hint="Optional profile context; no clinical interpretation."
+              label={t("Sex")}
+              hint={t("Optional profile context; no clinical interpretation.")}
             >
               <input
                 maxLength={64}
                 value={sex}
                 onChange={(e) => setSex(e.target.value)}
-                placeholder="Not specified"
+                placeholder={t("Not specified")}
               />
             </Field>
           </div>
           {error && (
             <p role="alert" className="form-error">
-              {error}
+              {t(error)}
             </p>
           )}
           <button className="button primary" disabled={busy || !name.trim()}>
-            {busy ? "Saving…" : "Save changes"}
+            {busy ? t("Saving…") : t("Save changes")}
             <Icon name="check" size={17} />
           </button>
         </form>
       </Card>
       <Card className="tinted">
-        <CardTitle title="Your privacy matters" />
+        <CardTitle title={t("Your privacy matters")} />
         <p className="body-copy">
-          Your profile helps put your care in context. Access to your clinical
-          record is separate from booking and directory discovery.
+          {t(
+            "Your profile helps put your care in context. Access to your clinical record is separate from booking and directory discovery.",
+          )}
         </p>
-        <Detail icon="shield" title="Language architecture">
-          English primary · Arabic translation planned
+        <Detail icon="shield" title={t("Language architecture")}>
+          {t("English and Arabic interfaces available")}
         </Detail>
         <p className="muted small">
-          Presentation fixtures are synthetic. Profile edits in demo mode stay
-          in this browser.
+          {t(
+            "Presentation fixtures are synthetic. Profile edits in demo mode stay in this browser.",
+          )}
         </p>
       </Card>
     </div>
@@ -1343,6 +1420,8 @@ function ProfileForm({
 }
 
 function ArtifactStatus({ id, lab = false }: { id: string; lab?: boolean }) {
+  const { t } = useLocale();
+
   const { api, refresh } = useApp();
   const data = useResource(() => api.fulfillment(id), [api, id, refresh]);
   return (
@@ -1354,10 +1433,12 @@ function ArtifactStatus({ id, lab = false }: { id: string; lab?: boolean }) {
           </Badge>
           {lab && f.lab === "Result ready" && (
             <div className="result-text">
-              <h3>Shared result</h3>
+              <h3>{t("Shared result")}</h3>
               <p>{f.result}</p>
               <small className="muted">
-                Synthetic lab entry. Discuss interpretation with your doctor.
+                {t(
+                  "Synthetic lab entry. Discuss interpretation with your doctor.",
+                )}
               </small>
             </div>
           )}

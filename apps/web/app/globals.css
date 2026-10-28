@@ -2767,3 +2767,167 @@ tr:last-child td {
     flex-wrap: wrap;
   }
 }
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  direction: ltr;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.language-switch button {
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: var(--muted);
+}
+.language-switch button[aria-pressed="true"] {
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-weight: 700;
+}
+.login-box > .language-switch {
+  margin-bottom: 22px;
+}
+.top-actions {
+  flex-wrap: wrap;
+}
+html[lang="ar"] {
+  font-family: Tahoma, Arial, sans-serif;
+  letter-spacing: 0;
+}
+html[dir="rtl"] .sidebar {
+  inset-inline-start: 0;
+  inset-inline-end: auto;
+}
+html[dir="rtl"] .brand,
+html[dir="rtl"] .eyebrow,
+html[dir="rtl"] h1,
+html[dir="rtl"] h2 {
+  letter-spacing: 0;
+}
+html[dir="rtl"] .brand {
+  white-space: normal;
+}
+html[dir="rtl"] .brand-mark {
+  flex-shrink: 0;
+}
+html[dir="rtl"] svg[data-directional="true"] {
+  transform: scaleX(-1);
+}
+html[dir="rtl"] .health-illustration {
+  direction: ltr;
+}
+html[dir="rtl"] input[type="email"],
+html[dir="rtl"] input[type="password"],
+html[dir="rtl"] input[type="date"] {
+  direction: ltr;
+  text-align: start;
+}
+html[dir="rtl"] .login-story:after {
+  inset-inline-end: -200px;
+  right: auto;
+}
+html[dir="rtl"] .sidebar-user strong,
+html[dir="rtl"] h1,
+html[dir="rtl"] .own-slot,
+html[dir="rtl"] .provider-clinic {
+  overflow-wrap: anywhere;
+}
+html[dir="rtl"] .slots button strong,
+html[dir="rtl"] .appointment-date,
+html[dir="rtl"] .measurement strong {
+  unicode-bidi: plaintext;
+}
+html[dir="rtl"] .modal {
+  text-align: start;
+}
+.modal-header {
+  gap: 20px;
+}
+.sidebar-user > div {
+  min-width: 0;
+}
+.brand small {
+  white-space: normal;
+}
+.content .form-error {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 760px) {
+  html[dir="rtl"] .sidebar {
+    transform: translateX(100%);
+  }
+  html[dir="rtl"] .sidebar.open {
+    transform: translateX(0);
+  }
+  .topbar {
+    min-height: 78px;
+    height: auto;
+    padding-block: 10px;
+  }
+  .top-actions {
+    gap: 7px;
+    justify-content: flex-end;
+  }
+  .top-actions .language-switch {
+    font-size: 11px;
+  }
+  .top-actions .language-switch button {
+    padding: 4px;
+  }
+  .login-story h1 {
+    line-height: 1.4;
+  }
+  html[dir="rtl"] .health-illustration {
+    inset-inline-end: 0;
+    inset-inline-start: auto;
+  }
+}
+@media (max-width: 560px) {
+  .breadcrumbs {
+    max-width: 30%;
+  }
+  .top-actions {
+    max-width: 70%;
+  }
+  .mode-indicator {
+    white-space: normal;
+    text-align: center;
+    max-width: 100px;
+  }
+  .modal {
+    padding: 20px;
+  }
+  .button {
+    white-space: normal;
+  }
+  html[dir="rtl"] .page-heading h1 {
+    line-height: 1.5;
+  }
+  .slots button {
+    min-width: 0;
+  }
+}
+
+.demo-popover {
+  left: auto;
+  right: auto;
+  inset-inline-end: 0;
+  inset-inline-start: auto;
+}
+html[dir="rtl"] .skip {
+  left: auto;
+  inset-inline-start: 260px;
+}
+@media (max-width: 760px) {
+  html[dir="rtl"] .skip {
+    inset-inline-start: 20px;
+  }
+}
+html[dir="rtl"] .slots button strong {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+textarea {
+  unicode-bidi: plaintext;
+}

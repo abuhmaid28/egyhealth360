@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import "./globals.css";
+import { LocaleProvider } from "../src/lib/i18n/context";
 export const metadata = {
   title: "EgyHealth 360 · Your care, connected",
   description:
@@ -8,7 +9,9 @@ export const metadata = {
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <LocaleProvider>{children}</LocaleProvider>
+      </body>
     </html>
   );
 }

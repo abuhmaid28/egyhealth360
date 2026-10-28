@@ -133,6 +133,7 @@ try {
       await page.goto(
         `http://localhost:3000/patient/doctors/${f.provider.publicId}`,
       );
+      await page.getByRole("button", { name: "العربية", exact: true }).click();
       await page.locator(".live-slots button").first().waitFor();
       assert.ok(
         (await page.locator(".live-slots").innerText()).includes("UTC"),
@@ -140,10 +141,10 @@ try {
       const before = (await f.availability.history(f.actors.clinician, {}))
         .data;
       await page.locator(".live-slots button").first().click();
-      await page.getByRole("button", { name: "Review demo booking" }).click();
-      await page.getByRole("button", { name: "Confirm demo booking" }).click();
+      await page.getByRole("button", { name: "مراجعة الحجز التجريبي" }).click();
+      await page.getByRole("button", { name: "تأكيد الحجز التجريبي" }).click();
       await page
-        .getByText("Demo appointment saved — live slot not reserved", {
+        .getByText("تم حفظ الموعد التجريبي — لم تُحجز الفترة الفعلية", {
           exact: true,
         })
         .waitFor();

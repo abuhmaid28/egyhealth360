@@ -1,4 +1,5 @@
 "use client";
+import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { useState } from "react";
 import type { Fulfillment } from "../lib/api/contracts";
@@ -18,19 +19,24 @@ import {
   useResource,
 } from "./ui";
 export function OperationsScreen({ path }: { path: string }) {
+  const { t } = useLocale();
+
   const { session } = useApp();
   if (session.role === "ADMIN") return <Admin path={path} />;
   if (path.endsWith("/settings"))
     return (
       <>
         <Heading
-          title="Workspace settings"
-          description="Your operational scope follows your current organization membership."
+          title={t("Workspace settings")}
+          description={t(
+            "Your operational scope follows your current organization membership.",
+          )}
         />
         <Card>
-          <Detail icon="shield" title="Artifact-scoped workspace">
-            Only routed prescriptions or laboratory requests belong in this
-            workspace. No patient record browsing is provided.
+          <Detail icon="shield" title={t("Artifact-scoped workspace")}>
+            {t(
+              "Only routed prescriptions or laboratory requests belong in this workspace. No patient record browsing is provided.",
+            )}
           </Detail>
         </Card>
       </>
@@ -38,6 +44,8 @@ export function OperationsScreen({ path }: { path: string }) {
   return <FulfillmentInbox lab={session.role === "LAB_STAFF"} />;
 }
 function FulfillmentInbox({ lab }: { lab: boolean }) {
+  const { t } = useLocale();
+
   const { api, preview, refresh } = useApp();
   const [selected, setSelected] = useState("");
   const rows = useResource(() => api.artifacts(), [api, refresh]);
@@ -72,10 +80,11 @@ function FulfillmentInbox({ lab }: { lab: boolean }) {
                 <Card className="scope-card">
                   <Icon name="shield" size={28} />
                   <div>
-                    <h3>Only what you need for this task</h3>
+                    <h3>{t("Only what you need for this task")}</h3>
                     <p>
-                      No patient record, clinician notes, or unrelated
-                      artifacts.
+                      {t(
+                        "No patient record, clinician notes, or unrelated artifacts.",
+                      )}
                     </p>
                   </div>
                 </Card>
@@ -110,7 +119,9 @@ function FulfillmentInbox({ lab }: { lab: boolean }) {
                           ? "Your request inbox is clear"
                           : "Your prescription inbox is clear"
                       }
-                      description="Release a consultation with a matching artifact from the Doctor workspace to continue the Golden Demo."
+                      description={t(
+                        "Release a consultation with a matching artifact from the Doctor workspace to continue the Golden Demo.",
+                      )}
                     />
                   )}
                 </Card>
@@ -122,12 +133,13 @@ function FulfillmentInbox({ lab }: { lab: boolean }) {
                   />
                 ) : (
                   <Card className="tinted">
-                    <CardTitle title="A connected handoff" />
+                    <CardTitle title={t("A connected handoff")} />
                     <p className="body-copy">
-                      The clinician’s released artifact appears here with the
-                      minimum context needed to complete the task.
+                      {t(
+                        "The clinician’s released artifact appears here with the minimum context needed to complete the task.",
+                      )}
                     </p>
-                    <Badge tone="soft">Synthetic fulfillment only</Badge>
+                    <Badge tone="soft">{t("Synthetic fulfillment only")}</Badge>
                   </Card>
                 )}
               </div>
@@ -152,6 +164,8 @@ function ArtifactDetail({
   };
   lab: boolean;
 }) {
+  const { t } = useLocale();
+
   const { api, refresh, preview, notify, changed } = useApp();
   const data = useResource(() => api.fulfillment(a.id), [api, a.id, refresh]);
   const [result, setResult] = useState("");
@@ -198,13 +212,13 @@ function ArtifactDetail({
                 {lab ? a.lab : a.medication}
               </Detail>
               {!lab && (
-                <Detail icon="record" title="Clinician directions">
+                <Detail icon="record" title={t("Clinician directions")}>
                   {a.dosage}
                 </Detail>
               )}
-              <Detail icon="shield" title="Routing scope">
-                {lab ? "Nile Diagnostics" : "CarePoint Pharmacy"} · synthetic
-                routed artifact
+              <Detail icon="shield" title={t("Routing scope")}>
+                {lab ? t("Nile Diagnostics") : t("CarePoint Pharmacy")}{" "}
+                {t("· synthetic routed artifact")}
               </Detail>
             </div>
             {lab ? (
@@ -217,7 +231,7 @@ function ArtifactDetail({
                       void save({ ...f, lab: "In progress" });
                     }}
                   >
-                    Start processing
+                    {t("Start processing")}
                     <Icon name="arrow" size={17} />
                   </button>
                 )}
@@ -233,8 +247,10 @@ function ArtifactDetail({
                     }}
                   >
                     <Field
-                      label="Result text"
-                      hint="Human-entered synthetic result. No automated interpretation."
+                      label={t("Result text")}
+                      hint={t(
+                        "Human-entered synthetic result. No automated interpretation.",
+                      )}
                     >
                       <textarea
                         rows={4}
@@ -242,21 +258,23 @@ function ArtifactDetail({
                         maxLength={2000}
                         value={result}
                         onChange={(e) => setResult(e.target.value)}
-                        placeholder="Enter result, units and reference context as applicable"
+                        placeholder={t(
+                          "Enter result, units and reference context as applicable",
+                        )}
                       />
                     </Field>
                     <button
                       className="button primary"
                       disabled={busy || !result.trim()}
                     >
-                      Share demo result
+                      {t("Share demo result")}
                       <Icon name="check" size={18} />
                     </button>
                   </form>
                 )}
                 {f.lab === "Result ready" && (
                   <div className="result-text">
-                    <h3>Shared result</h3>
+                    <h3>{t("Shared result")}</h3>
                     <p>{f.result}</p>
                   </div>
                 )}
@@ -276,7 +294,7 @@ function ArtifactDetail({
                       key={s}
                     >
                       <b>{i + 1}</b>
-                      {s}
+                      {t(s)}
                     </span>
                   ))}
                 </div>
@@ -295,20 +313,21 @@ function ArtifactDetail({
                     }}
                   >
                     {f.prescription === "Received"
-                      ? "Begin preparation"
-                      : "Confirm full-item dispensing"}
+                      ? t("Begin preparation")
+                      : t("Confirm full-item dispensing")}
                     <Icon name="check" size={17} />
                   </button>
                 )}
                 <p className="small muted">
-                  Full-item simulation only. No partial quantities,
-                  substitutions, refills, or inventory management.
+                  {t(
+                    "Full-item simulation only. No partial quantities, substitutions, refills, or inventory management.",
+                  )}
                 </p>
               </>
             )}
             {error && (
               <p className="form-error" role="alert">
-                {error}
+                {t(error)}
               </p>
             )}
           </>
@@ -318,6 +337,8 @@ function ArtifactDetail({
   );
 }
 function Admin({ path }: { path: string }) {
+  const { t } = useLocale();
+
   const { api, preview } = useApp();
   const data = useResource(() => api.operations(), [api]);
   const names: Record<string, string> = {
@@ -330,9 +351,11 @@ function Admin({ path }: { path: string }) {
   return (
     <>
       <Heading
-        eyebrow="Operational workspace"
+        eyebrow={t("Operational workspace")}
         title={names[path] ?? "Operations"}
-        description="Coordinate the platform without access to patient clinical records."
+        description={t(
+          "Coordinate the platform without access to patient clinical records.",
+        )}
       />
       <Resource resource={data} preview={preview}>
         {(o) => (
@@ -342,19 +365,19 @@ function Admin({ path }: { path: string }) {
                 <div className="stats-grid">
                   <Stat
                     icon="building"
-                    label="Organizations"
+                    label={t("Organizations")}
                     value={String(o.organizations.length).padStart(2, "0")}
                     note="Synthetic operating network"
                   />
                   <Stat
                     icon="user"
-                    label="Workspace users"
+                    label={t("Workspace users")}
                     value={String(o.users.length).padStart(2, "0")}
                     note="Fixed role overview"
                   />
                   <Stat
                     icon="calendar"
-                    label="Scheduling scope"
+                    label={t("Scheduling scope")}
                     value="02"
                     note="Clinic configuration overview"
                   />
@@ -362,7 +385,7 @@ function Admin({ path }: { path: string }) {
                 <div className="two-column">
                   <Card>
                     <CardTitle
-                      title="Your operating network"
+                      title={t("Your operating network")}
                       href="/admin/organizations"
                     />
                     {o.organizations.map((v) => (
@@ -372,7 +395,7 @@ function Admin({ path }: { path: string }) {
                         </span>
                         <div>
                           <h3>{v.name}</h3>
-                          <p>{v.kind}</p>
+                          <p>{t(v.kind)}</p>
                         </div>
                         <Badge>{v.status}</Badge>
                       </div>
@@ -380,29 +403,34 @@ function Admin({ path }: { path: string }) {
                   </Card>
                   <div className="stack">
                     <Card className="tinted">
-                      <CardTitle title="Administration, with boundaries" />
-                      <Detail icon="shield" title="No clinical entitlement">
-                        Admin has no patient-record, consultation, prescription,
-                        or lab-result access.
+                      <CardTitle title={t("Administration, with boundaries")} />
+                      <Detail
+                        icon="shield"
+                        title={t("No clinical entitlement")}
+                      >
+                        {t(
+                          "Admin has no patient-record, consultation, prescription, or lab-result access.",
+                        )}
                       </Detail>
                       <p className="muted">
-                        Membership and directory publication are operational
-                        scope. They never grant clinical authority.
+                        {t(
+                          "Membership and directory publication are operational scope. They never grant clinical authority.",
+                        )}
                       </p>
                     </Card>
                     <Card>
-                      <CardTitle title="Quick links" />
+                      <CardTitle title={t("Quick links")} />
                       <div className="admin-links">
                         <Link href="/admin/users">
-                          Review users
+                          {t("Review users")}
                           <Icon name="arrow" size={16} />
                         </Link>
                         <Link href="/admin/directory">
-                          Review directory
+                          {t("Review directory")}
                           <Icon name="arrow" size={16} />
                         </Link>
                         <Link href="/admin/scheduling">
-                          Scheduling overview
+                          {t("Scheduling overview")}
                           <Icon name="arrow" size={16} />
                         </Link>
                       </div>
@@ -413,14 +441,14 @@ function Admin({ path }: { path: string }) {
             )}
             {path === "/admin/organizations" && (
               <Card>
-                <CardTitle title="Organization network" />
+                <CardTitle title={t("Organization network")} />
                 <div className="table-wrap">
                   <table>
                     <thead>
                       <tr>
-                        <th>Organization</th>
-                        <th>Kind</th>
-                        <th>Status</th>
+                        <th>{t("Organization")}</th>
+                        <th>{t("Kind")}</th>
+                        <th>{t("Status")}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -429,7 +457,7 @@ function Admin({ path }: { path: string }) {
                           <td>
                             <strong>{v.name}</strong>
                           </td>
-                          <td>{v.kind}</td>
+                          <td>{t(v.kind)}</td>
                           <td>
                             <Badge>{v.status}</Badge>
                           </td>
@@ -442,21 +470,21 @@ function Admin({ path }: { path: string }) {
             )}
             {path === "/admin/users" && (
               <Card>
-                <CardTitle title="Account overview" />
+                <CardTitle title={t("Account overview")} />
                 <div className="table-wrap">
                   <table>
                     <thead>
                       <tr>
-                        <th>Name</th>
-                        <th>Role</th>
-                        <th>Status</th>
+                        <th>{t("Name")}</th>
+                        <th>{t("Role")}</th>
+                        <th>{t("Status")}</th>
                       </tr>
                     </thead>
                     <tbody>
                       {o.users.map((v) => (
                         <tr key={v.name}>
                           <td>{v.name}</td>
-                          <td>{v.role}</td>
+                          <td>{t(v.role)}</td>
                           <td>
                             <Badge>{v.status}</Badge>
                           </td>
@@ -470,14 +498,14 @@ function Admin({ path }: { path: string }) {
             {path === "/admin/directory" && <DirectoryOverview />}
             {path === "/admin/scheduling" && (
               <Card>
-                <CardTitle title="Clinic settings overview" />
+                <CardTitle title={t("Clinic settings overview")} />
                 <div className="table-wrap">
                   <table>
                     <thead>
                       <tr>
-                        <th>Clinic</th>
-                        <th>Time zone</th>
-                        <th>Publication</th>
+                        <th>{t("Clinic")}</th>
+                        <th>{t("Time zone")}</th>
+                        <th>{t("Publication")}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -486,9 +514,9 @@ function Admin({ path }: { path: string }) {
                         .map((v) => (
                           <tr key={v.name}>
                             <td>{v.name}</td>
-                            <td>Africa/Cairo</td>
+                            <td>{t("Africa/Cairo")}</td>
                             <td>
-                              <Badge tone="soft">Finite intervals</Badge>
+                              <Badge tone="soft">{t("Finite intervals")}</Badge>
                             </td>
                           </tr>
                         ))}
@@ -496,17 +524,18 @@ function Admin({ path }: { path: string }) {
                   </table>
                 </div>
                 <p className="muted">
-                  Read-only UI overview. No configuration mutation endpoint
-                  exists on main. Lead-time and horizon values will come from
-                  the approved backend integration.
+                  {t(
+                    "Read-only UI overview. No configuration mutation endpoint exists on main. Lead-time and horizon values will come from the approved backend integration.",
+                  )}
                 </p>
               </Card>
             )}
             <Card className="directory-note">
               <Icon name="shield" />
               <p>
-                Operational presentation data only. This shell does not execute
-                organization, user, publication, or configuration mutations.
+                {t(
+                  "Operational presentation data only. This shell does not execute organization, user, publication, or configuration mutations.",
+                )}
               </p>
             </Card>
           </>
@@ -516,20 +545,22 @@ function Admin({ path }: { path: string }) {
   );
 }
 function DirectoryOverview() {
+  const { t } = useLocale();
+
   const { api, preview } = useApp();
   const d = useResource(() => api.providers(), [api]);
   return (
     <Card>
-      <CardTitle title="Published provider directory" />
+      <CardTitle title={t("Published provider directory")} />
       <Resource resource={d} preview={preview}>
         {(rows) => (
           <div className="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Provider</th>
-                  <th>Specialty</th>
-                  <th>Clinic</th>
+                  <th>{t("Provider")}</th>
+                  <th>{t("Specialty")}</th>
+                  <th>{t("Clinic")}</th>
                 </tr>
               </thead>
               <tbody>

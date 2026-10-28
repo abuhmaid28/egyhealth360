@@ -1,4 +1,5 @@
 "use client";
+import { LanguageSwitch, useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -63,6 +64,8 @@ const navigation: Record<Role, [string, string, IconName][]> = {
   ],
 };
 export function Application() {
+  const { t } = useLocale();
+
   const pathname = usePathname();
   const router = useRouter();
   const [api, setApi] = useState<HealthcareAdapter>();
@@ -180,12 +183,12 @@ export function Application() {
       }}
     >
       <a className="skip" href="#main">
-        Skip to content
+        {t("Skip to content")}
       </a>
       {mobile && (
         <button
           className="nav-backdrop"
-          aria-label="Close navigation"
+          aria-label={t("Close navigation")}
           onClick={() => setMobile(false)}
         />
       )}
@@ -194,9 +197,11 @@ export function Application() {
           <Logo />
         </Link>
         <div className="workspace-label">
-          {roles.find((r) => r.role === session.role)?.name} workspace
+          {t("{role} workspace", {
+            role: t(roles.find((r) => r.role === session.role)?.name ?? ""),
+          })}
         </div>
-        <nav aria-label="Main navigation">
+        <nav aria-label={t("Main navigation")}>
           {navigation[session.role].map(([href, label, icon]) => (
             <Link
               key={href}
@@ -205,7 +210,7 @@ export function Application() {
               className={pathname === href ? "active" : ""}
             >
               <Icon name={icon} />
-              <span>{label}</span>
+              <span>{t(label)}</span>
               {pathname === href && <span className="nav-dot" />}
             </Link>
           ))}
@@ -215,19 +220,19 @@ export function Application() {
             <span className="icon-tile">
               <Icon name="shield" />
             </span>
-            <strong>Your care, connected.</strong>
-            <p>One place for every step of your health journey.</p>
+            <strong>{t("Your care, connected.")}</strong>
+            <p>{t("One place for every step of your health journey.")}</p>
           </div>
           <Link
             href={`${homes[session.role]}/settings`}
             className="nav-settings"
           >
             <Icon name="settings" />
-            Profile & settings
+            {t("Profile & settings")}
           </Link>
           <button onClick={logout} className="nav-settings">
             <Icon name="logout" />
-            Sign out
+            {t("Sign out")}
           </button>
           <div className="sidebar-user">
             <Avatar name={session.name} />
@@ -235,8 +240,8 @@ export function Application() {
               <strong>{session.name}</strong>
               <small>
                 {session.mode === "demo"
-                  ? "Synthetic demo account"
-                  : "Live account"}
+                  ? t("Synthetic demo account")
+                  : t("Live account")}
               </small>
             </div>
           </div>
@@ -247,27 +252,28 @@ export function Application() {
           <div className="breadcrumbs">
             <button
               className="icon-button mobile-toggle"
-              aria-label="Open navigation"
+              aria-label={t("Open navigation")}
               onClick={() => setMobile(true)}
             >
               <Icon name="menu" />
             </button>
-            <span>My workspace</span>
+            <span>{t("My workspace")}</span>
             <Icon name="chevron" size={13} />
-            <strong>{page}</strong>
+            <strong>{t(page)}</strong>
           </div>
           <div className="top-actions">
+            <LanguageSwitch />
             <span className={`mode-indicator ${api.mode}`}>
-              {api.mode === "demo" ? "Graduation demo" : "Live API"}
+              {api.mode === "demo" ? t("Graduation demo") : t("Live API")}
             </span>
             {api.mode === "demo" && (
               <>
                 <label className="sr-only" htmlFor="workspace-switch">
-                  Demo workspace
+                  {t("Demo workspace")}
                 </label>
                 <select
                   id="workspace-switch"
-                  aria-label="Demo workspace"
+                  aria-label={t("Demo workspace")}
                   value={session.role}
                   onChange={(e) => {
                     void enter(e.target.value as Role);
@@ -275,7 +281,7 @@ export function Application() {
                 >
                   {roles.map((r) => (
                     <option key={r.role} value={r.role}>
-                      {r.name}
+                      {t(r.name)}
                     </option>
                   ))}
                 </select>
@@ -288,22 +294,24 @@ export function Application() {
           <div className="demo-bar">
             <span>
               <span className="status-dot" />
-              Synthetic presentation · 28 October 2026 · browser-only state
+              {t(
+                "Synthetic presentation · 28 October 2026 · browser-only state",
+              )}
             </span>
             <details>
-              <summary>Demo controls</summary>
+              <summary>{t("Demo controls")}</summary>
               <div className="demo-popover">
                 <label>
-                  Screen state
+                  {t("Screen state")}
                   <select
-                    aria-label="Screen state"
+                    aria-label={t("Screen state")}
                     value={preview}
                     onChange={(e) => setPreview(e.target.value as Preview)}
                   >
-                    <option value="ready">Populated</option>
-                    <option value="loading">Loading</option>
-                    <option value="empty">Empty</option>
-                    <option value="error">Error</option>
+                    <option value="ready">{t("Populated")}</option>
+                    <option value="loading">{t("Loading")}</option>
+                    <option value="empty">{t("Empty")}</option>
+                    <option value="error">{t("Error")}</option>
                   </select>
                 </label>
                 <button
@@ -313,7 +321,7 @@ export function Application() {
                     router.push("/login");
                   }}
                 >
-                  Reset demo journey
+                  {t("Reset demo journey")}
                 </button>
               </div>
             </details>
@@ -322,13 +330,14 @@ export function Application() {
         <main id="main" className="content">
           {!allowed ? (
             <div className="empty">
-              <h1>Choose your workspace</h1>
+              <h1>{t("Choose your workspace")}</h1>
               <p>
-                Your current account opens the{" "}
-                {roles.find((r) => r.role === session.role)?.name} workspace.
+                {t("Your current account opens the")}{" "}
+                {t(roles.find((r) => r.role === session.role)?.name ?? "")}{" "}
+                {t("workspace.")}
               </p>
               <Link className="button primary" href={homes[session.role]}>
-                Open workspace
+                {t("Open workspace")}
                 <Icon name="arrow" />
               </Link>
             </div>
@@ -341,23 +350,23 @@ export function Application() {
           )}
         </main>
         <footer className="footer">
-          <span>© 2026 EgyHealth 360</span>
-          <span>Care that stays with you.</span>
+          <span>{t("© 2026 EgyHealth 360")}</span>
+          <span>{t("Care that stays with you.")}</span>
           <span>
-            English ·{" "}
+            {t("English ·")}{" "}
             <span lang="ar" dir="rtl">
-              العربية
+              {t("العربية")}
             </span>{" "}
-            planned
+            {t("available")}
           </span>
         </footer>
       </div>
       {toast && (
         <div className="toast" role="status">
           <Icon name="check" />
-          {toast}
+          {t(toast)}
           <button
-            aria-label="Dismiss notification"
+            aria-label={t("Dismiss notification")}
             onClick={() => setToast("")}
           >
             <Icon name="close" size={16} />
@@ -374,6 +383,8 @@ function Login({
   enter: (role: Role) => Promise<void>;
   onLive: (email: string, password: string) => Promise<void>;
 }) {
+  const { t } = useLocale();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -383,17 +394,18 @@ function Login({
       <section className="login-story">
         <Logo />
         <div>
-          <p className="eyebrow">A healthier journey starts here</p>
+          <p className="eyebrow">{t("A healthier journey starts here")}</p>
           <h1>
-            All your care.
+            {t("All your care.")}
             <br />
-            One connected
+            {t("One connected")}
             <br />
-            <em>experience.</em>
+            <em>{t("experience.")}</em>
           </h1>
           <p>
-            From finding the right doctor to your next follow-up. Feel supported
-            at every step.
+            {t(
+              "From finding the right doctor to your next follow-up. Feel supported at every step.",
+            )}
           </p>
           <div className="journey-art">
             <span>
@@ -411,25 +423,28 @@ function Login({
           <div className="login-points">
             <span>
               <Icon name="check" />
-              Find your care team
+              {t("Find your care team")}
             </span>
             <span>
               <Icon name="check" />
-              Keep your health story together
+              {t("Keep your health story together")}
             </span>
             <span>
               <Icon name="check" />
-              Stay connected after your visit
+              {t("Stay connected after your visit")}
             </span>
           </div>
         </div>
-        <small>Designed for the EgyHealth 360 graduation project.</small>
+        <small>{t("Designed for the EgyHealth 360 graduation project.")}</small>
       </section>
       <section className="login-form">
         <div className="login-box">
-          <span className="eyebrow">Welcome to EgyHealth 360</span>
-          <h2>Good to see you.</h2>
-          <p className="muted">Sign in to continue your healthcare journey.</p>
+          <LanguageSwitch />
+          <span className="eyebrow">{t("Welcome to EgyHealth 360")}</span>
+          <h2>{t("Good to see you.")}</h2>
+          <p className="muted">
+            {t("Sign in to continue your healthcare journey.")}
+          </p>
           <form
             onSubmit={async (e) => {
               e.preventDefault();
@@ -444,17 +459,17 @@ function Login({
               }
             }}
           >
-            <Field label="Email address">
+            <Field label={t("Email address")}>
               <input
                 type="email"
                 autoComplete="username"
                 required
-                placeholder="you@example.com"
+                placeholder={t("you@example.com")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Field>
-            <Field label="Password">
+            <Field label={t("Password")}>
               <input
                 type="password"
                 autoComplete="current-password"
@@ -462,21 +477,21 @@ function Login({
                 minLength={1}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder={t("Enter your password")}
               />
             </Field>
             {error && (
               <p className="form-error" role="alert">
-                {error}
+                {t(error)}
               </p>
             )}
             <button className="button primary full" disabled={pending}>
-              {pending ? "Signing in…" : "Sign in with live account"}
+              {pending ? t("Signing in…") : t("Sign in with live account")}
               <Icon name="arrow" size={18} />
             </button>
           </form>
           <div className="divider">
-            <span>Here for the presentation?</span>
+            <span>{t("Here for the presentation?")}</span>
           </div>
           <button
             className="button demo-button full"
@@ -484,7 +499,7 @@ function Login({
               void enter("PATIENT");
             }}
           >
-            Explore the patient demo
+            {t("Explore the patient demo")}
             <Icon name="arrow" size={18} />
           </button>
           <div className="demo-role-links">
@@ -495,14 +510,15 @@ function Login({
                   void enter(r.role);
                 }}
               >
-                {r.name}
+                {t(r.name)}
               </button>
             ))}
           </div>
           <p className="login-disclosure">
             <Icon name="shield" size={16} />
-            The demo uses synthetic data saved only in this browser. It does not
-            create a live session or backend clinical records.
+            {t(
+              "The demo uses synthetic data saved only in this browser. It does not create a live session or backend clinical records.",
+            )}
           </p>
         </div>
       </section>
