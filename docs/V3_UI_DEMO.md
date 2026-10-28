@@ -59,7 +59,7 @@ The simulation does not constitute backend Journey A exit proof. No backend book
 - `src/lib/mock/{fixtures,adapter}.ts`: all synthetic data and state transitions. Storage key `eh360-ui-demo-v1` is browser-only JSON; no remote write, backend fixture, shared seed or database model. State controls are a presentation feature, not backend authorization.
 - `next.config.ts`: same-origin `/api/v1/*` rewrite to the existing API. Set **`EH_UI_API_ORIGIN` at build time** if not using the default `http://127.0.0.1:3001`. For Compose networking use `http://api:3001` at web build time. No backend CORS or CSRF weakening; configure backend `AUTH_BROWSER_ORIGIN` to the exact browser origin. Existing Compose files are unchanged.
 
-English is complete for this candidate. Logical CSS properties, document language and Intl timezone formatting support future localization work. Arabic copy, an actual language switch and full RTL verification remain future work; the UI labels Arabic as planned.
+English and Arabic/RTL are supported by the separate [UI Phase 2 implementation](V3_UI_AR_RTL.md), with a locally persisted presentation-only language switch. Clinical/free-text content remains verbatim; backend timezone semantics and live/demo boundaries are unchanged.
 
 ## Screens and routes
 

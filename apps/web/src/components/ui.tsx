@@ -1,4 +1,5 @@
 "use client";
+import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 export type IconName =
@@ -117,6 +118,7 @@ export function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
     <svg
       width={size}
       height={size}
+      data-directional={["arrow", "chevron", "logout"].includes(name)}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -130,14 +132,17 @@ export function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
   );
 }
 export function Logo() {
+  const { t } = useLocale();
+
   return (
     <span className="brand">
       <span className="brand-mark">
         <Icon name="plus" size={29} />
       </span>
       <span>
-        EgyHealth <b>360</b>
-        <small>CONNECTED CARE. BETTER HEALTH.</small>
+        {t("EgyHealth")}
+        <b>{t("360")}</b>
+        <small>{t("CONNECTED CARE. BETTER HEALTH.")}</small>
       </span>
     </span>
   );
@@ -149,10 +154,11 @@ export function Badge({
   children: ReactNode;
   tone?: string;
 }) {
+  const { t } = useLocale();
   return (
     <span className={`badge ${tone}`}>
       <span className="status-dot" />
-      {children}
+      {typeof children === "string" ? t(children) : children}
     </span>
   );
 }
@@ -192,12 +198,13 @@ export function CardTitle({
   href?: string;
   action?: string;
 }) {
+  const { t } = useLocale();
   return (
     <div className="card-title">
-      <h2>{title}</h2>
+      <h2>{t(title)}</h2>
       {href && (
         <Link href={href} className="text-link">
-          {action}
+          {t(action)}
           <Icon name="arrow" size={16} />
         </Link>
       )}
@@ -215,12 +222,13 @@ export function Heading({
   description: string;
   children?: ReactNode;
 }) {
+  const { t } = useLocale();
   return (
     <div className="page-heading">
       <div>
-        {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-        <h1>{title}</h1>
-        <p className="muted">{description}</p>
+        {eyebrow && <p className="eyebrow">{t(eyebrow ?? "")}</p>}
+        <h1>{t(title)}</h1>
+        <p className="muted">{t(description)}</p>
       </div>
       {children}
     </div>
@@ -237,16 +245,17 @@ export function Empty({
   href?: string;
   action?: string;
 }) {
+  const { t } = useLocale();
   return (
     <div className="empty">
       <span className="icon-tile">
         <Icon name="calendar" size={28} />
       </span>
-      <h3>{title}</h3>
-      <p>{description}</p>
+      <h3>{t(title)}</h3>
+      <p>{t(description)}</p>
       {href && (
         <Link className="button primary" href={href}>
-          {action ?? "Find a doctor"}
+          {t(action ?? "Find a doctor")}
           <Icon name="arrow" size={16} />
         </Link>
       )}
@@ -254,12 +263,14 @@ export function Empty({
   );
 }
 export function Loading() {
+  const { t } = useLocale();
+
   return (
-    <div className="loading" role="status" aria-label="Loading">
+    <div className="loading" role="status" aria-label={t("Loading")}>
       <div className="skeleton wide" />
       <div className="skeleton" />
       <div className="skeleton tall" />
-      <span className="muted">Loading your workspace…</span>
+      <span className="muted">{t("Loading your workspace…")}</span>
     </div>
   );
 }
@@ -303,26 +314,32 @@ export function Resource<T>({
   children: (data: T) => ReactNode;
   preview?: Preview;
 }) {
+  const { t } = useLocale();
+
   if (preview === "loading" || resource.pending) return <Loading />;
   if (preview === "error" || resource.error)
     return (
       <div className="error-panel" role="alert">
         <Icon name="activity" size={28} />
-        <h3>We couldn’t load this view</h3>
+        <h3>{t("We couldn’t load this view")}</h3>
         <p>
-          {resource.error ??
-            "Demo error preview. Choose “Populated” to restore the view."}
+          {t(
+            resource.error ??
+              "Demo error preview. Choose “Populated” to restore the view.",
+          )}
         </p>
         <button className="button secondary" onClick={resource.retry}>
-          Try again
+          {t("Try again")}
         </button>
       </div>
     );
   if (preview === "empty")
     return (
       <Empty
-        title="Nothing here yet"
-        description="This is the empty-state preview. Choose “Populated” to resume the demo."
+        title={t("Nothing here yet")}
+        description={t(
+          "This is the empty-state preview. Choose “Populated” to resume the demo.",
+        )}
       />
     );
   return resource.data !== undefined ? children(resource.data) : null;
@@ -336,13 +353,14 @@ export function Detail({
   title: string;
   children: ReactNode;
 }) {
+  const { t } = useLocale();
   return (
     <div className="detail">
       <span className="icon-tile">
         <Icon name={icon} />
       </span>
       <div>
-        <small className="muted">{title}</small>
+        <small className="muted">{t(title)}</small>
         <div>{children}</div>
       </div>
     </div>
@@ -357,11 +375,12 @@ export function Field({
   children: ReactNode;
   hint?: string;
 }) {
+  const { t } = useLocale();
   return (
     <label className="field">
-      <span>{label}</span>
+      <span>{t(label)}</span>
       {children}
-      {hint && <small className="muted">{hint}</small>}
+      {hint && <small className="muted">{t(hint ?? "")}</small>}
     </label>
   );
 }
