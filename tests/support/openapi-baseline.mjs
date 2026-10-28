@@ -17,7 +17,14 @@ export function beforeSlice4(text) {
 
 /** Slice 5 appends participant-only enrollment paths/schemas, no historical edits. */
 export function beforeSlice5(text) {
- return text
+ return beforeI2Slice2(text)
   .replace(/,\n {4}"\/api\/v1\/me\/relationship-requests": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
   .replace(/,\n {6}"RelationshipAuthorization": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
+}
+
+/** Strip only the exact appended I2 Slice 2 blocks; old hashes remain pinned. */
+export function beforeI2Slice2(text) {
+ return text
+  .replace(/,\n {4}"\/api\/v1\/directory\/providers\/\{publicId\}\/availability": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
+  .replace(/,\n {6}"AvailabilityPublish": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
 }

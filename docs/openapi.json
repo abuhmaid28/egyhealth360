@@ -8012,6 +8012,1087 @@
           }
         ]
       }
+    },
+    "/api/v1/directory/providers/{publicId}/availability": {
+      "get": {
+        "security": [],
+        "summary": "Current public provider availability",
+        "description": "Slice 2 only. Current ACTIVE clinician/session/profile and exact current clinic/membership/directory/affiliation for mutations. Availability grants no clinical authority. Configuration is ADMIN-only internal, never HTTP. Strict unknown/duplicate JSON and query rejection; 16KiB body, 8192-byte headers, 2048-byte URL. Canonical paths/UUIDv4. Writes require exact Origin, Fetch Metadata and session CSRF. No Idempotency-Key header; operationKey scoped to actor/command with immutable canonical payload. Replay rechecks authority and creates no duplicate audit. Public projection identical for anonymous, any role and invalid cookies; current eligibility and page/count use one SQL statement. Fixed startAt ASC,id ASC. Public from/to must appear together and span at most 90 days; each row additionally uses its current clinic horizon/lead. Booking cutoff equality is closed. No booking or clinical fields.",
+        "responses": {
+          "400": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "DIRECTORY_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AVAILABILITY_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PublicAvailabilitySlot"
+                      }
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/RelationshipPage"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "publicId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "clinic",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+            }
+          }
+        ]
+      },
+      "head": {
+        "security": [],
+        "summary": "Current public provider availability",
+        "description": "Slice 2 only. Current ACTIVE clinician/session/profile and exact current clinic/membership/directory/affiliation for mutations. Availability grants no clinical authority. Configuration is ADMIN-only internal, never HTTP. Strict unknown/duplicate JSON and query rejection; 16KiB body, 8192-byte headers, 2048-byte URL. Canonical paths/UUIDv4. Writes require exact Origin, Fetch Metadata and session CSRF. No Idempotency-Key header; operationKey scoped to actor/command with immutable canonical payload. Replay rechecks authority and creates no duplicate audit. Public projection identical for anonymous, any role and invalid cookies; current eligibility and page/count use one SQL statement. Fixed startAt ASC,id ASC. Public from/to must appear together and span at most 90 days; each row additionally uses its current clinic horizon/lead. Booking cutoff equality is closed. No booking or clinical fields.",
+        "responses": {
+          "400": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "publicId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "clinic",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+            }
+          }
+        ]
+      }
+    },
+    "/api/v1/me/availability": {
+      "get": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Own finite publication history",
+        "description": "Slice 2 only. Current ACTIVE clinician/session/profile and exact current clinic/membership/directory/affiliation for mutations. Availability grants no clinical authority. Configuration is ADMIN-only internal, never HTTP. Strict unknown/duplicate JSON and query rejection; 16KiB body, 8192-byte headers, 2048-byte URL. Canonical paths/UUIDv4. Writes require exact Origin, Fetch Metadata and session CSRF. No Idempotency-Key header; operationKey scoped to actor/command with immutable canonical payload. Replay rechecks authority and creates no duplicate audit. Public projection identical for anonymous, any role and invalid cookies; current eligibility and page/count use one SQL statement. Fixed startAt ASC,id ASC. Public from/to must appear together and span at most 90 days; each row additionally uses its current clinic horizon/lead. Booking cutoff equality is closed. No booking or clinical fields.",
+        "responses": {
+          "400": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AVAILABILITY_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AVAILABILITY_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/OwnAvailabilitySlot"
+                      }
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/RelationshipPage"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ]
+      },
+      "head": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Own finite publication history",
+        "description": "Slice 2 only. Current ACTIVE clinician/session/profile and exact current clinic/membership/directory/affiliation for mutations. Availability grants no clinical authority. Configuration is ADMIN-only internal, never HTTP. Strict unknown/duplicate JSON and query rejection; 16KiB body, 8192-byte headers, 2048-byte URL. Canonical paths/UUIDv4. Writes require exact Origin, Fetch Metadata and session CSRF. No Idempotency-Key header; operationKey scoped to actor/command with immutable canonical payload. Replay rechecks authority and creates no duplicate audit. Public projection identical for anonymous, any role and invalid cookies; current eligibility and page/count use one SQL statement. Fixed startAt ASC,id ASC. Public from/to must appear together and span at most 90 days; each row additionally uses its current clinic horizon/lead. Booking cutoff equality is closed. No booking or clinical fields.",
+        "responses": {
+          "400": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ]
+      },
+      "post": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Publish one finite availability slot",
+        "description": "Slice 2 only. Current ACTIVE clinician/session/profile and exact current clinic/membership/directory/affiliation for mutations. Availability grants no clinical authority. Configuration is ADMIN-only internal, never HTTP. Strict unknown/duplicate JSON and query rejection; 16KiB body, 8192-byte headers, 2048-byte URL. Canonical paths/UUIDv4. Writes require exact Origin, Fetch Metadata and session CSRF. No Idempotency-Key header; operationKey scoped to actor/command with immutable canonical payload. Replay rechecks authority and creates no duplicate audit. Public projection identical for anonymous, any role and invalid cookies; current eligibility and page/count use one SQL statement. Fixed startAt ASC,id ASC. Public from/to must appear together and span at most 90 days; each row additionally uses its current clinic horizon/lead. Booking cutoff equality is closed. No booking or clinical fields.",
+        "responses": {
+          "400": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AVAILABILITY_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AVAILABILITY_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AVAILABILITY_CONFLICT",
+                      "message": "Conflicting availability operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/OwnAvailabilitySlot"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AvailabilityPublish"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/me/availability/{slotId}/withdraw": {
+      "put": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Withdraw own exact PUBLISHED slot terminally",
+        "description": "Slice 2 only. Current ACTIVE clinician/session/profile and exact current clinic/membership/directory/affiliation for mutations. Availability grants no clinical authority. Configuration is ADMIN-only internal, never HTTP. Strict unknown/duplicate JSON and query rejection; 16KiB body, 8192-byte headers, 2048-byte URL. Canonical paths/UUIDv4. Writes require exact Origin, Fetch Metadata and session CSRF. No Idempotency-Key header; operationKey scoped to actor/command with immutable canonical payload. Replay rechecks authority and creates no duplicate audit. Public projection identical for anonymous, any role and invalid cookies; current eligibility and page/count use one SQL statement. Fixed startAt ASC,id ASC. Public from/to must appear together and span at most 90 days; each row additionally uses its current clinic horizon/lead. Booking cutoff equality is closed. No booking or clinical fields.",
+        "responses": {
+          "400": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AVAILABILITY_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AVAILABILITY_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AVAILABILITY_CONFLICT",
+                      "message": "Conflicting availability operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/OwnAvailabilitySlot"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "slotId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AvailabilityWithdraw"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -8797,6 +9878,182 @@
           "total": {
             "type": "integer",
             "minimum": 0
+          }
+        }
+      },
+      "AvailabilityPublish": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "clinicId",
+          "startAt",
+          "endAt",
+          "operationKey"
+        ],
+        "properties": {
+          "clinicId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "startAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+          },
+          "endAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+          },
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          }
+        }
+      },
+      "AvailabilityWithdraw": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          }
+        }
+      },
+      "PublicAvailabilitySlot": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "providerId",
+          "clinicId",
+          "startAt",
+          "endAt",
+          "timeZone",
+          "bookable"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "providerId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "clinicId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "startAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+          },
+          "endAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+          },
+          "timeZone": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "bookable": {
+            "const": true
+          }
+        }
+      },
+      "OwnAvailabilitySlot": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "providerId",
+          "clinicId",
+          "startAt",
+          "endAt",
+          "timeZone",
+          "state",
+          "version",
+          "publishedAt",
+          "withdrawnAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "providerId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "clinicId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "startAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+          },
+          "endAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+          },
+          "timeZone": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "state": {
+            "enum": [
+              "PUBLISHED",
+              "WITHDRAWN"
+            ]
+          },
+          "version": {
+            "type": "integer",
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+          },
+          "withdrawnAt": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "description": "Explicit offset required; valid calendar and millisecond precision. Publication offsets must match the server-owned clinic IANA zone at each instant."
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         }
       }

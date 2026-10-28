@@ -58,7 +58,7 @@ test('I1S4 public failure projection uses the existing global safe-error boundar
 });
 
 test('I1S4 exact migration addition retains twelve historical SQL files unchanged',async()=>{
- const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();
+ const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort().slice(0,14);
  assert.equal(names.length,14);assert.equal(names.at(-2),'20261024000000_v3_i1_directory');
  const sql=await readFile('packages/db/prisma/migrations/'+names.at(-2)+'/migration.sql','utf8');
  assert.doesNotMatch(sql,/UPDATE public\.(users|clinician_profiles|organizations|organization_memberships)|INSERT INTO public\.(specialties|clinic_directory|clinician_directory|directory_affiliations)/);
