@@ -54,6 +54,8 @@ export async function testPolish(browser, origin, shots) {
     await button("Explore the patient demo").click();
     await ready();
     await responsive("dashboard");
+    // Wait for the media-query effect, not only browser viewport metrics.
+    await page.locator(".sidebar[inert]").waitFor({ state: "attached" });
     // Closed mobile navigation is absent from keyboard/accessibility traversal.
     assert.equal(
       await page.locator(".sidebar").evaluate((el) => el.inert),
@@ -91,6 +93,8 @@ export async function testPolish(browser, origin, shots) {
       .getByRole("navigation")
       .getByRole("link", { name: t("Find a doctor"), exact: true })
       .click();
+    await page.waitForURL("**/patient/discover");
+    await page.locator(".sidebar[inert]").waitFor({ state: "attached" });
     await ready();
     assert.equal(
       await page.locator(".sidebar").evaluate((el) => el.inert),
@@ -138,6 +142,11 @@ export async function testPolish(browser, origin, shots) {
       ),
     );
     await page.keyboard.press("Escape");
+    await dialog.waitFor({ state: "hidden" });
+    await page.waitForFunction(
+      (el) => el === globalThis.document.activeElement,
+      await reviewButton.elementHandle(),
+    );
     assert.equal(
       await reviewButton.evaluate(
         (el) => el === globalThis.document.activeElement,
