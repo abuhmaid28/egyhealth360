@@ -1,4 +1,5 @@
 "use client";
+import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -10,6 +11,7 @@ import type {
   Provider,
 } from "../lib/api/contracts";
 import { useApp } from "./context";
+import { BookingUnavailable, DemoContinuation } from "./journey";
 import { PublicAvailability } from "./availability";
 import {
   Avatar,
@@ -23,6 +25,7 @@ import {
   Heading,
   Icon,
   Resource,
+  Modal,
   time,
   useResource,
 } from "./ui";
@@ -62,12 +65,12 @@ export function PatientScreen({ path }: { path: string }) {
 function Dashboard() {
   const { t } = useLocale();
 
-  const { api, session, preview, refresh } = useApp();
+  const { api, booking, session, preview, refresh } = useApp();
   const overview = useResource(
     () => Promise.all([api.profile(), api.record(), api.providers()]),
     [api, refresh],
   );
-  const appointments = useResource(() => api.appointments(), [api, refresh]);
+  const appointments = useResource(() => booking.listOwn(), [api, refresh]);
   return (
     <>
       <Heading
@@ -83,7 +86,9 @@ function Dashboard() {
       <Resource resource={overview} preview={preview}>
         {([profile, record, providers]) => (
           <>
-            <div className="hero">
+            <div
+              className={`hero ${appointments.data?.some((a) => a.status === "Upcoming") ? "hero-compact" : ""}`}
+            >
               <div className="hero-copy">
                 <span className="hero-label">
                   <span className="status-dot" />
@@ -169,22 +174,26 @@ function Dashboard() {
                     title={t("Your next appointment")}
                     href="/patient/appointments"
                   />
-                  <Resource resource={appointments} preview={preview}>
-                    {(rows) => {
-                      const next = rows.find((a) => a.status === "Upcoming");
-                      return next ? (
-                        <AppointmentRow appointment={next} />
-                      ) : (
-                        <Empty
-                          title={t("Make time for your health")}
-                          description={t(
-                            "Find a doctor and choose a time that works for you.",
-                          )}
-                          href="/patient/discover"
-                        />
-                      );
-                    }}
-                  </Resource>
+                  {booking.implementation === "unavailable" ? (
+                    <BookingUnavailable />
+                  ) : (
+                    <Resource resource={appointments} preview={preview}>
+                      {(rows) => {
+                        const next = rows.find((a) => a.status === "Upcoming");
+                        return next ? (
+                          <AppointmentRow appointment={next} />
+                        ) : (
+                          <Empty
+                            title={t("Make time for your health")}
+                            description={t(
+                              "Find a doctor and choose a time that works for you.",
+                            )}
+                            href="/patient/discover"
+                          />
+                        );
+                      }}
+                    </Resource>
+                  )}
                 </Card>
                 <Card>
                   <CardTitle
@@ -334,7 +343,9 @@ export function ProviderCard({ provider }: { provider: Provider }) {
     <Card className="provider-card">
       <div className="provider-top">
         <Avatar name={provider.displayName} large />
-        <Badge tone="soft">{provider.specialty.displayName}</Badge>
+        <Badge tone="soft">
+          <bdi>{provider.specialty.displayName}</bdi>
+        </Badge>
       </div>
       <h3>
         <Link href={`/patient/doctors/${provider.id}`}>
@@ -425,6 +436,18 @@ function Discovery() {
                   ))}
                 </select>
               </Card>
+              {(query || specialty || clinic) && (
+                <button
+                  className="text-link filter-reset"
+                  onClick={() => {
+                    setQuery("");
+                    setSpecialty("");
+                    setClinic("");
+                  }}
+                >
+                  {t("Clear search & filters")}
+                </button>
+              )}
               <div className="filter-chips">
                 <button
                   className={!specialty ? "selected" : ""}
@@ -457,10 +480,24 @@ function Discovery() {
                   ))}
                 </div>
               ) : (
-                <Empty
-                  title={t("No doctors match your search")}
-                  description={t("Try a different name, specialty, or clinic.")}
-                />
+                <Card className="search-empty">
+                  <Empty
+                    title={t("No doctors match your search")}
+                    description={t(
+                      "Try a different name, specialty, or clinic.",
+                    )}
+                  />
+                  <button
+                    className="button secondary"
+                    onClick={() => {
+                      setQuery("");
+                      setSpecialty("");
+                      setClinic("");
+                    }}
+                  >
+                    {t("Clear search & filters")}
+                  </button>
+                </Card>
               )}
               <Card className="directory-note">
                 <Icon name="shield" />
@@ -480,7 +517,7 @@ function Discovery() {
 function DoctorProfile({ id }: { id: string }) {
   const { t } = useLocale();
 
-  const { api, preview, changed, notify, startDemoBooking } = useApp();
+  const { api, booking, preview, changed, notify, startDemoBooking } = useApp();
   const router = useRouter();
   const data = useResource(() => api.provider(id), [api, id]);
   const [slot, setSlot] = useState<Availability>();
@@ -499,7 +536,9 @@ function DoctorProfile({ id }: { id: string }) {
             <Card className="doctor-profile">
               <Avatar name={p.displayName} large />
               <div>
-                <Badge tone="soft">{p.specialty.displayName}</Badge>
+                <Badge tone="soft">
+                  <bdi>{p.specialty.displayName}</bdi>
+                </Badge>
                 <h1>{p.displayName}</h1>
                 <p className="muted">
                   {p.specialty.displayName} {t("·")}{" "}
@@ -542,7 +581,7 @@ function DoctorProfile({ id }: { id: string }) {
                   <CardTitle title={t("Clinic & location")} />
                   {p.clinics.map((c) => (
                     <div key={c.id} className="clinic-detail">
-                      <Detail icon="pin" title={c.city}>
+                      <Detail icon="pin" title={<bdi>{c.city}</bdi>}>
                         <Link
                           className="text-link"
                           href={`/patient/clinics/${c.id}`}
@@ -603,12 +642,12 @@ function DoctorProfile({ id }: { id: string }) {
                     const a =
                       api.mode === "live"
                         ? await startDemoBooking(p, slot, reason.trim())
-                        : await api.book(slot.id, reason.trim());
+                        : await booking.create(slot.id, reason.trim());
                     changed();
                     notify("Your appointment is confirmed.");
                     router.push(`/patient/appointments/${a.id}`);
                   } catch (e) {
-                    setError((e as Error).message);
+                    setError(safeErrorMessage(e));
                   } finally {
                     setBusy(false);
                   }
@@ -644,17 +683,15 @@ function BookingDialog({
 
   // Native modal provides focus containment, Escape handling and focus restoration.
   return (
-    <dialog
+    <Modal
       className="modal"
-      ref={(node) => {
-        if (node && !node.open) node.showModal();
-      }}
       onCancel={(e) => {
         if (busy) e.preventDefault();
         else close();
       }}
       onClose={close}
       aria-labelledby="booking-title"
+      aria-describedby="booking-description"
     >
       <div className="modal-header">
         <span className="icon-tile">
@@ -671,7 +708,9 @@ function BookingDialog({
       </div>
       <p className="eyebrow">{t("One step closer to care")}</p>
       <h2 id="booking-title">{t("Let’s confirm your visit.")}</h2>
-      <p className="muted">{t("Review your appointment details below.")}</p>
+      <p className="muted" id="booking-description">
+        {t("Review your appointment details below.")}
+      </p>
       {liveBoundary && (
         <div className="boundary-notice">
           <Badge tone="amber">{t("Live availability → Demo booking")}</Badge>
@@ -681,6 +720,18 @@ function BookingDialog({
             )}
           </p>
         </div>
+      )}
+      <ol className="workflow-steps" aria-label={t("Booking progress")}>
+        <li>{t("Choose a time")}</li>
+        <li aria-current="step">{t("Review details")}</li>
+        <li>{t("Demo confirmation")}</li>
+      </ol>
+      {!liveBoundary && (
+        <p className="booking-disclosure">
+          {t(
+            "Demo booking only. No live slot is reserved and no clinical access is granted.",
+          )}
+        </p>
       )}
       <div className="confirmation-details">
         <Detail icon="user" title={t("Your doctor")}>
@@ -697,7 +748,7 @@ function BookingDialog({
           {provider.clinics.find((c) => c.id === slot.clinicId)?.displayName}
         </Detail>
         <Detail icon="record" title={t("Reason for visit")}>
-          {reason}
+          <bdi>{reason}</bdi>
         </Detail>
       </div>
       {error && (
@@ -722,7 +773,7 @@ function BookingDialog({
       <button className="button subtle full" disabled={busy} onClick={close}>
         {t("Go back")}
       </button>
-    </dialog>
+    </Modal>
   );
 }
 function ClinicScreen({ id }: { id: string }) {
@@ -745,7 +796,7 @@ function ClinicScreen({ id }: { id: string }) {
             <>
               <Heading
                 eyebrow={t("Your local care")}
-                title={c.displayName}
+                title={<bdi>{c.displayName}</bdi>}
                 description={`${c.address} · ${c.city}`}
               />
               <Card className="map-art large-map">
@@ -808,6 +859,9 @@ export function AppointmentRow({
           {t("–")}
           {time(a.slot.endAt, a.slot.timeZone)}
         </p>
+        <small className="appointment-zone">
+          <bdi>{a.slot.timeZone}</bdi>
+        </small>
         <small>
           <Icon name="pin" size={13} />
           {
@@ -833,9 +887,26 @@ export function AppointmentRow({
 function Appointments({ id }: { id?: string }) {
   const { t } = useLocale();
 
-  const { api, preview, refresh } = useApp();
+  const { booking, preview, refresh } = useApp();
   const [tab, setTab] = useState("Upcoming");
-  const data = useResource(() => api.appointments(), [api, refresh]);
+  const data = useResource(async () => {
+    if (!id) return booking.listOwn();
+    const appointment = await booking.detail(id);
+    return appointment ? [appointment] : [];
+  }, [booking, id, refresh]);
+  if (booking.implementation === "unavailable")
+    return (
+      <>
+        <Heading
+          title={t("Appointments")}
+          description={t(
+            "Keep your upcoming visits and past appointments together.",
+          )}
+        />
+        <BookingUnavailable />
+      </>
+    );
+
   return (
     <>
       <Heading
@@ -942,6 +1013,11 @@ function Appointments({ id }: { id?: string }) {
                     </Card>
                   </div>
                 </div>
+                {a.status === "Upcoming" &&
+                  (a.provider.id === "mariam-hassan" ||
+                    a.availabilitySource === "live") && (
+                    <DemoContinuation next={["doctor"]} />
+                  )}
                 <Link href="/patient/appointments" className="back-link">
                   {t("← All appointments")}
                 </Link>
@@ -958,6 +1034,7 @@ function Appointments({ id }: { id?: string }) {
                   <button
                     key={t(tabLabel)}
                     className={tab === tabLabel ? "active" : ""}
+                    aria-pressed={tab === tabLabel}
                     onClick={() => setTab(tabLabel)}
                   >
                     {t(tabLabel)}
@@ -1026,6 +1103,7 @@ function RecordScreen({ section }: { section: string }) {
             key={s}
             href={`/patient/${s}`}
             className={section === s ? "active" : ""}
+            aria-current={section === s ? "page" : undefined}
           >
             {t(label)}
           </Link>
@@ -1354,7 +1432,7 @@ function ProfileForm({
                 sex: sex || null,
               });
             } catch (e) {
-              setError((e as Error).message);
+              setError(safeErrorMessage(e));
             } finally {
               setBusy(false);
             }

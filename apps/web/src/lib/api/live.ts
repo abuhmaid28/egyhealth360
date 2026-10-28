@@ -1,3 +1,4 @@
+import { UiError } from "./errors";
 import { availabilityPage, ownSlot, publicSlot } from "./availability";
 import type {
   HealthcareAdapter,
@@ -33,13 +34,13 @@ export function createLiveAdapter(): HealthcareAdapter {
         413: "The availability request is too large.",
         415: "The availability request must use JSON.",
       };
-      throw new Error(
+      throw new UiError(
         messages[response.status] ??
           "The availability service is unavailable. Please try again.",
       );
     }
     if (!response.ok)
-      throw new Error(
+      throw new UiError(
         response.status === 401
           ? "Your session has ended. Please sign in again."
           : response.status === 404
@@ -55,7 +56,7 @@ export function createLiveAdapter(): HealthcareAdapter {
     return { role: a.user.role, name: a.user.email, mode: "live" };
   };
   const unavailable = async (): Promise<never> => {
-    throw new Error(
+    throw new UiError(
       "This capability is not integrated on main yet. Use the graduation demo to explore this journey.",
     );
   };
@@ -153,7 +154,7 @@ export function createLiveAdapter(): HealthcareAdapter {
     },
     async availability(providerId, query) {
       if (!providerId)
-        throw new Error("Choose a provider to view public availability.");
+        throw new UiError("Choose a provider to view public availability.");
       return (await this.availabilityPage(providerId, query)).data;
     },
     async availabilityPage(providerId, query = {}) {

@@ -1,4 +1,5 @@
 "use client";
+import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import { useRef, useState } from "react";
 import type {
@@ -141,7 +142,9 @@ export function PublicAvailability({
                           {t("–")}
                           {time(s.endAt, s.timeZone)}
                         </strong>
-                        <small>{s.timeZone}</small>
+                        <small>
+                          <bdi>{s.timeZone}</bdi>
+                        </small>
                         {date(s.startAt, s.timeZone) !==
                           date(s.endAt, s.timeZone) && (
                           <small>
@@ -171,6 +174,7 @@ export function PublicAvailability({
                 <>
                   <Field label={t("What brings you in?")}>
                     <textarea
+                      dir="auto"
                       rows={3}
                       maxLength={500}
                       value={reason}
@@ -295,7 +299,7 @@ export function DoctorAvailability() {
                                   changed();
                                   notify("Availability withdrawn.");
                                 } catch (e) {
-                                  setError((e as Error).message);
+                                  setError(safeErrorMessage(e));
                                 } finally {
                                   setWithdrawing("");
                                 }
@@ -355,7 +359,7 @@ export function DoctorAvailability() {
                       changed();
                       notify("Availability published.");
                     } catch (e) {
-                      setError((e as Error).message);
+                      setError(safeErrorMessage(e));
                     } finally {
                       setBusy(false);
                     }

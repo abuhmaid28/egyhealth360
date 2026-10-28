@@ -1,8 +1,9 @@
 "use client";
+import { safeErrorMessage } from "../lib/api/errors";
 import { LanguageSwitch, useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type {
   HealthcareAdapter,
   Mode,
@@ -11,6 +12,8 @@ import type {
 } from "../lib/api/contracts";
 import { createDemoAdapter } from "../lib/mock/adapter";
 import { createLiveAdapter } from "../lib/api/live";
+import { createBookingService } from "../lib/api/booking";
+import { previewDemoBooking } from "../lib/mock/booking";
 import { Context } from "./context";
 import {
   Avatar,
@@ -75,6 +78,52 @@ export function Application() {
   const [refresh, setRefresh] = useState(0);
   const [toast, setToast] = useState("");
   const [mobile, setMobile] = useState(false);
+  const [compact, setCompact] = useState(false);
+  const sidebar = useRef<HTMLElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const booking = useMemo(() => api && createBookingService(api), [api]);
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 760px)");
+    const sync = () => {
+      setCompact(media.matches);
+      if (!media.matches) setMobile(false);
+    };
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+  useEffect(() => {
+    if (!mobile) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const controls = () =>
+      Array.from(
+        sidebar.current?.querySelectorAll<HTMLElement>(
+          "a[href], button:not(:disabled), select:not(:disabled)",
+        ) ?? [],
+      );
+    controls()[0]?.focus();
+    const keyboard = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobile(false);
+      if (event.key !== "Tab") return;
+      const items = controls();
+      const first = items[0];
+      const last = items.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+    document.addEventListener("keydown", keyboard);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", keyboard);
+      menuButton.current?.focus();
+    };
+  }, [mobile]);
   useEffect(() => {
     let active = true;
     let mode: Mode = "demo";
@@ -120,12 +169,12 @@ export function Application() {
     setApi(adapter);
     return adapter;
   };
-  const enter = async (role: Role) => {
+  const enter = async (role: Role, path?: string) => {
     const demo = chooseMode("demo") as ReturnType<typeof createDemoAdapter>;
     const s = await demo.enter(role);
     setSession(s);
     setRefresh((v) => v + 1);
-    router.push(homes[role]);
+    router.push(path?.startsWith(`${homes[role]}/`) ? path : homes[role]);
   };
   const logout = async () => {
     try {
@@ -133,10 +182,10 @@ export function Application() {
       setSession(null);
       router.push("/login");
     } catch (e) {
-      setToast((e as Error).message);
+      setToast(safeErrorMessage(e));
     }
   };
-  if (!ready || !api)
+  if (!ready || !api || !booking)
     return (
       <main className="boot">
         <Logo />
@@ -158,24 +207,44 @@ export function Application() {
   const allowed =
     pathname === homes[session.role] ||
     pathname.startsWith(`${homes[session.role]}/`);
+  const detailTitle = pathname.startsWith("/patient/doctors/")
+    ? "Doctor profile"
+    : pathname.startsWith("/patient/clinics/")
+      ? "Clinic & location"
+      : pathname.startsWith("/patient/appointments/")
+        ? "Your appointment"
+        : pathname.startsWith("/doctor/appointments/")
+          ? "Patient appointment"
+          : pathname.startsWith("/doctor/consultation/")
+            ? "Consultation workspace"
+            : pathname.endsWith("/settings")
+              ? "Profile & settings"
+              : pathname === "/patient/history"
+                ? "Consultations & history"
+                : "Care workspace";
   const page =
-    navigation[session.role].find((n) => n[0] === pathname)?.[1] ??
-    "Care workspace";
+    navigation[session.role].find((n) => n[0] === pathname)?.[1] ?? detailTitle;
   return (
     <Context.Provider
       value={{
         api,
+        booking,
         session,
         preview,
         refresh,
         notify: setToast,
         changed: () => setRefresh((v) => v + 1),
+        openDemoWorkspace: enter,
         startDemoBooking: async (provider, slot, reason) => {
           const demo = chooseMode("demo") as ReturnType<
             typeof createDemoAdapter
           >;
-          const synthetic = await demo.enter("PATIENT");
-          const appointment = await demo.bookPreview(provider, slot, reason);
+          const { session: synthetic, appointment } = await previewDemoBooking(
+            demo,
+            provider,
+            slot,
+            reason,
+          );
           setSession(synthetic);
           setRefresh((v) => v + 1);
           return appointment;
@@ -188,11 +257,26 @@ export function Application() {
       {mobile && (
         <button
           className="nav-backdrop"
+          tabIndex={-1}
           aria-label={t("Close navigation")}
           onClick={() => setMobile(false)}
         />
       )}
-      <aside className={`sidebar ${mobile ? "open" : ""}`}>
+      <aside
+        id="workspace-navigation"
+        ref={sidebar}
+        inert={compact && !mobile}
+        className={`sidebar ${mobile ? "open" : ""}`}
+      >
+        {compact && (
+          <button
+            className="icon-button drawer-close"
+            aria-label={t("Close navigation")}
+            onClick={() => setMobile(false)}
+          >
+            <Icon name="close" />
+          </button>
+        )}
         <Link href={homes[session.role]} className="logo-link">
           <Logo />
         </Link>
@@ -247,11 +331,14 @@ export function Application() {
           </div>
         </div>
       </aside>
-      <div className="app-body">
+      <div className="app-body" inert={mobile}>
         <header className="topbar">
           <div className="breadcrumbs">
             <button
               className="icon-button mobile-toggle"
+              ref={menuButton}
+              aria-controls="workspace-navigation"
+              aria-expanded={mobile}
               aria-label={t("Open navigation")}
               onClick={() => setMobile(true)}
             >
@@ -327,7 +414,7 @@ export function Application() {
             </details>
           </div>
         )}
-        <main id="main" className="content">
+        <main id="main" className="content" tabIndex={-1}>
           {!allowed ? (
             <div className="empty">
               <h1>{t("Choose your workspace")}</h1>
@@ -453,7 +540,7 @@ function Login({
               try {
                 await onLive(email, password);
               } catch (e) {
-                setError((e as Error).message);
+                setError(safeErrorMessage(e));
               } finally {
                 setPending(false);
               }

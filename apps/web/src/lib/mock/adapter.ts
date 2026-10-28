@@ -1,3 +1,4 @@
+import { UiError } from "../api/errors";
 import type {
   Appointment,
   Availability,
@@ -89,7 +90,7 @@ export function createDemoAdapter(
   };
   const requireRole = (...roles: Role[]) => {
     if (!read().session || !roles.includes(read().session!.role))
-      throw new Error("This demo workspace cannot access this information.");
+      throw new UiError("This demo workspace cannot access this information.");
   };
   const ownHistory = (s: State) =>
     s.ownSlots ??
@@ -117,7 +118,9 @@ export function createDemoAdapter(
         slot.providerId !== provider.id ||
         !provider.clinics.some((c) => c.id === slot.clinicId)
       )
-        throw new Error("Choose an available slot at this provider’s clinic.");
+        throw new UiError(
+          "Choose an available slot at this provider’s clinic.",
+        );
       const s = read();
       const prior = s.appointments.find(
         (a) => a.availabilitySource === "live" && a.slot.id === slot.id,
@@ -170,7 +173,7 @@ export function createDemoAdapter(
     },
     async provider(id) {
       const p = providers.find((p) => p.id === id);
-      if (!p) throw new Error("Doctor not found.");
+      if (!p) throw new UiError("Doctor not found.");
       return p;
     },
     async specialties() {
@@ -228,10 +231,10 @@ export function createDemoAdapter(
       const s = read();
       s.ownSlots = ownHistory(s);
       const slot = s.ownSlots.find((v) => v.id === input.slotId);
-      if (!slot) throw new Error("Availability not found.");
+      if (!slot) throw new UiError("Availability not found.");
       if (slot.state === "WITHDRAWN") return slot;
       if (slot.version !== input.expectedVersion)
-        throw new Error("Availability changed. Please refresh.");
+        throw new UiError("Availability changed. Please refresh.");
       slot.state = "WITHDRAWN";
       slot.version = 2;
       slot.withdrawnAt = "2026-10-28T08:00:00Z";
@@ -248,7 +251,7 @@ export function createDemoAdapter(
         !Number.isFinite(Date.parse(endAt)) ||
         Date.parse(startAt) >= Date.parse(endAt)
       )
-        throw new Error("End time must be after start time.");
+        throw new UiError("End time must be after start time.");
       if (
         ownHistory(s).some(
           (v) =>
@@ -258,10 +261,10 @@ export function createDemoAdapter(
             Date.parse(startAt) < Date.parse(v.endAt),
         )
       )
-        throw new Error("This interval overlaps an existing slot.");
+        throw new UiError("This interval overlaps an existing slot.");
       s.ownSlots = ownHistory(s);
       if (clinicId !== clinics[0].id)
-        throw new Error("Choose the demo clinician’s clinic.");
+        throw new UiError("Choose the demo clinician’s clinic.");
       const slot: Availability = {
         id: `demo-slot-${s.slots.length + 1}`,
         providerId: providers[0].id,
@@ -305,7 +308,7 @@ export function createDemoAdapter(
       const s = read();
       const slot = s.slots.find((v) => v.id === slotId && v.bookable);
       if (!slot)
-        throw new Error(
+        throw new UiError(
           "This time is no longer available. Please choose another.",
         );
       const appointment: Appointment = {
@@ -350,7 +353,7 @@ export function createDemoAdapter(
               a.availabilitySource === "live"),
         )
       )
-        throw new Error("Appointment not found.");
+        throw new UiError("Appointment not found.");
       return (
         read().consultations.find((c) => c.appointmentId === id) ??
         blankConsultation(id)
@@ -364,13 +367,13 @@ export function createDemoAdapter(
         !a ||
         (a.provider.id !== providers[0].id && a.availabilitySource !== "live")
       )
-        throw new Error("Appointment not found.");
+        throw new UiError("Appointment not found.");
       if (
         s.consultations.some(
           (c) => c.appointmentId === value.appointmentId && c.released,
         )
       )
-        throw new Error("This demo visit is already released.");
+        throw new UiError("This demo visit is already released.");
       s.consultations.push({ ...value, released: true });
       a.status = "Completed";
       write(s);

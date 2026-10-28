@@ -1,9 +1,11 @@
 "use client";
+import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { useState } from "react";
 import type { Consultation } from "../lib/api/contracts";
 import { useApp } from "./context";
+import { BookingUnavailable, DemoContinuation } from "./journey";
 import { DoctorAvailability } from "./availability";
 import { AppointmentRow, Stat } from "./patient";
 import {
@@ -18,6 +20,7 @@ import {
   Heading,
   Icon,
   Resource,
+  Modal,
   time,
   useResource,
 } from "./ui";
@@ -65,9 +68,25 @@ export function DoctorScreen({ path }: { path: string }) {
 function Schedule({ dashboard }: { dashboard: boolean }) {
   const { t } = useLocale();
 
-  const { api, preview, refresh, session } = useApp();
+  const { api, booking, preview, refresh, session } = useApp();
   const [filter, setFilter] = useState("All");
-  const appointments = useResource(() => api.appointments(), [api, refresh]);
+  const appointments = useResource(
+    () => booking.clinicianSchedule(),
+    [api, refresh],
+  );
+  if (booking.implementation === "unavailable")
+    return (
+      <>
+        <Heading
+          title={t("My schedule")}
+          description={t(
+            "The schedule provides logistics only. A booking does not establish patient authorization or clinician acceptance.",
+          )}
+        />
+        <BookingUnavailable doctor />
+      </>
+    );
+
   return (
     <>
       <Heading
@@ -143,6 +162,7 @@ function Schedule({ dashboard }: { dashboard: boolean }) {
                     <button
                       key={t(tabLabel)}
                       className={filter === tabLabel ? "active" : ""}
+                      aria-pressed={filter === tabLabel}
                       onClick={() => setFilter(tabLabel)}
                     >
                       {t(tabLabel)}
@@ -209,8 +229,11 @@ function Schedule({ dashboard }: { dashboard: boolean }) {
 function PatientAppointment({ id }: { id: string }) {
   const { t } = useLocale();
 
-  const { api, preview, refresh } = useApp();
-  const data = useResource(() => api.appointments(), [api, refresh]);
+  const { booking, preview, refresh } = useApp();
+  const data = useResource(async () => {
+    const appointment = await booking.detail(id);
+    return appointment ? [appointment] : [];
+  }, [booking, id, refresh]);
   return (
     <>
       <Link href="/doctor/schedule" className="back-link">
@@ -253,9 +276,16 @@ function PatientAppointment({ id }: { id: string }) {
                   <Detail icon="calendar" title={t("Visit time")}>
                     {date(a.slot.startAt, a.slot.timeZone)} {t("·")}{" "}
                     {time(a.slot.startAt, a.slot.timeZone)}
+                    <small className="muted">
+                      <bdi>{a.slot.timeZone}</bdi>
+                    </small>
                   </Detail>
                   <Detail icon="pin" title={t("Clinic")}>
-                    {a.provider.clinics[0].displayName}
+                    {
+                      a.provider.clinics.find(
+                        (clinic) => clinic.id === a.slot.clinicId,
+                      )?.displayName
+                    }
                   </Detail>
                   <Detail icon="record" title={t("Reason for visit")}>
                     {a.reason}
@@ -396,11 +426,35 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
         setReview(true);
       }}
     >
+      <div
+        className="consultation-outline"
+        role="group"
+        aria-label={t("Consultation sections")}
+      >
+        <a href="#consultation-assessment">{t("Assessment & allergies")}</a>
+        <a href="#consultation-treatment">{t("Prescription & tests")}</a>
+        <a href="#consultation-instructions">{t("Instructions & follow-up")}</a>
+      </div>
+      {form.released && (
+        <p className="released-note">
+          {t(
+            "Released summary · read-only. Private notes remain excluded from the patient record.",
+          )}
+        </p>
+      )}
       <fieldset disabled={form.released || busy} className="fieldset">
         <Card>
+          <h2
+            className="section-anchor"
+            id="consultation-assessment"
+            tabIndex={-1}
+          >
+            {t("Assessment & allergies")}
+          </h2>
           <CardTitle title={t("01 · Complaint & assessment")} />
           <Field label={t("Presenting complaint / problems")}>
             <textarea
+              dir="auto"
               required
               maxLength={2000}
               rows={3}
@@ -416,6 +470,7 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
             hint={t("Human-authored text. No automated diagnosis.")}
           >
             <input
+              dir="auto"
               required
               maxLength={500}
               value={form.diagnosis}
@@ -445,6 +500,7 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
             hint={t("Not included in the patient-facing summary.")}
           >
             <textarea
+              dir="auto"
               rows={3}
               maxLength={2000}
               value={form.notes}
@@ -454,10 +510,18 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
           </Field>
         </Card>
         <Card>
+          <h2
+            className="section-anchor"
+            id="consultation-treatment"
+            tabIndex={-1}
+          >
+            {t("Prescription & tests")}
+          </h2>
           <CardTitle title={t("02 · Prescription & laboratory")} />
           <div className="form-grid">
             <Field label={t("Medication name (optional)")}>
               <input
+                dir="auto"
                 maxLength={200}
                 value={form.medication}
                 onChange={(e) => update("medication", e.target.value)}
@@ -469,6 +533,7 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
               hint={t("Enter manually; no suggested dose.")}
             >
               <input
+                dir="auto"
                 required={!!form.medication}
                 maxLength={500}
                 value={form.dosage}
@@ -479,6 +544,7 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
           </div>
           <Field label={t("Laboratory request (optional)")}>
             <textarea
+              dir="auto"
               rows={2}
               maxLength={500}
               value={form.lab}
@@ -493,9 +559,17 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
           </p>
         </Card>
         <Card>
+          <h2
+            className="section-anchor"
+            id="consultation-instructions"
+            tabIndex={-1}
+          >
+            {t("Instructions & follow-up")}
+          </h2>
           <CardTitle title={t("03 · Patient summary & follow-up")} />
           <Field label={t("Released patient instructions / summary")}>
             <textarea
+              dir="auto"
               required
               rows={4}
               maxLength={2000}
@@ -511,6 +585,7 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
             )}
           >
             <input
+              dir="auto"
               maxLength={500}
               value={form.followUp}
               onChange={(e) => update("followUp", e.target.value)}
@@ -546,13 +621,17 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
           </button>
         </div>
       )}
+      {form.released && (
+        <DemoContinuation next={["pharmacy", "laboratory", "patient"]} />
+      )}
       {review && (
-        <dialog
+        <Modal
           className="modal"
-          ref={(n) => {
-            if (n && !n.open) n.showModal();
+          onCancel={(event) => {
+            if (busy) event.preventDefault();
+            else setReview(false);
           }}
-          onCancel={() => setReview(false)}
+          aria-describedby="release-description"
           aria-labelledby="release-title"
         >
           <div className="modal-header">
@@ -563,20 +642,29 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
               type="button"
               className="icon-button"
               aria-label={t("Close review")}
+              disabled={busy}
               onClick={() => setReview(false)}
             >
               <Icon name="close" />
             </button>
           </div>
           <h2 id="release-title">{t("Share this visit summary?")}</h2>
-          <p className="muted">
+          <p className="muted" id="release-description">
             {t(
               "Review the patient-facing content. Private notes are excluded.",
             )}
           </p>
           <div className="confirmation-details">
-            <h3>{form.diagnosis}</h3>
-            <p>{form.instructions}</p>
+            <h3 dir="auto">{form.diagnosis}</h3>
+            <Detail icon="record" title={t("Presenting complaint / problems")}>
+              <bdi>{form.complaint}</bdi>
+            </Detail>
+            <Detail icon="shield" title={t("Allergy review")}>
+              <bdi>{t(form.allergies)}</bdi>
+            </Detail>
+            <Detail icon="record" title={t("Patient instructions")}>
+              <bdi>{form.instructions}</bdi>
+            </Detail>
             {form.medication && (
               <Detail icon="pill" title={t("Prescription")}>
                 {form.medication} {t("·")}
@@ -611,7 +699,7 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
                 notify("Summary released to the patient’s demo record.");
                 changed();
               } catch (e) {
-                setError((e as Error).message);
+                setError(safeErrorMessage(e));
               } finally {
                 setBusy(false);
               }
@@ -620,7 +708,7 @@ function ConsultationForm({ initial }: { initial: Consultation }) {
             {busy ? t("Sharing…") : t("Release demo summary")}
             <Icon name="check" size={18} />
           </button>
-        </dialog>
+        </Modal>
       )}
     </form>
   );
