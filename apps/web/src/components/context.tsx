@@ -1,6 +1,12 @@
 "use client";
 import { createContext, useContext } from "react";
-import type { HealthcareAdapter, Session } from "../lib/api/contracts";
+import type {
+  HealthcareAdapter,
+  Session,
+  Provider,
+  Availability,
+  Appointment,
+} from "../lib/api/contracts";
 import type { Preview } from "./ui";
 export interface AppContext {
   api: HealthcareAdapter;
@@ -9,6 +15,11 @@ export interface AppContext {
   refresh: number;
   notify: (message: string) => void;
   changed: () => void;
+  startDemoBooking: (
+    provider: Provider,
+    slot: Availability,
+    reason: string,
+  ) => Promise<Appointment>;
 }
 export const Context = createContext<AppContext | null>(null);
 export function useApp() {

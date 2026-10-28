@@ -4,10 +4,13 @@ import type {
   Consultation,
   Fulfillment,
   HealthcareAdapter,
+  OwnAvailability,
+  Provider,
   Profile,
   Role,
   Session,
 } from "../api/contracts";
+import { publicSlot } from "../api/availability";
 import {
   blankConsultation,
   clinics,
@@ -22,6 +25,7 @@ interface State {
   session: Session | null;
   profile: Profile;
   slots: Availability[];
+  ownSlots?: OwnAvailability[];
   appointments: Appointment[];
   consultations: Consultation[];
   fulfillment: Record<string, Fulfillment>;
@@ -38,7 +42,15 @@ const fresh = (): State => ({
 // UI simulation only. No API calls, database, backend seeds, consent or assignment creation.
 export function createDemoAdapter(
   storage?: Pick<Storage, "getItem" | "setItem" | "removeItem">,
-): HealthcareAdapter & { enter(role: Role): Promise<Session>; reset(): void } {
+): HealthcareAdapter & {
+  enter(role: Role): Promise<Session>;
+  reset(): void;
+  bookPreview(
+    provider: Provider,
+    slot: Availability,
+    reason: string,
+  ): Promise<Appointment>;
+} {
   let memory = fresh();
   const read = (): State => {
     try {
@@ -79,8 +91,64 @@ export function createDemoAdapter(
     if (!read().session || !roles.includes(read().session!.role))
       throw new Error("This demo workspace cannot access this information.");
   };
+  const ownHistory = (s: State) =>
+    s.ownSlots ??
+    s.slots
+      .filter((slot) => slot.providerId === providers[0].id)
+      .map((slot) => ({
+        id: slot.id,
+        providerId: slot.providerId,
+        clinicId: slot.clinicId,
+        startAt: slot.startAt,
+        endAt: slot.endAt,
+        timeZone: slot.timeZone,
+        state: "PUBLISHED" as const,
+        version: 1,
+        publishedAt: "2026-10-27T09:00:00Z",
+        withdrawnAt: null,
+      }));
   return {
     mode: "demo",
+    async bookPreview(provider, selection, reason) {
+      requireRole("PATIENT");
+      const slot = publicSlot(selection);
+      if (
+        !slot.bookable ||
+        slot.providerId !== provider.id ||
+        !provider.clinics.some((c) => c.id === slot.clinicId)
+      )
+        throw new Error("Choose an available slot at this provider’s clinic.");
+      const s = read();
+      const prior = s.appointments.find(
+        (a) => a.availabilitySource === "live" && a.slot.id === slot.id,
+      );
+      if (prior) return prior;
+      const appointment: Appointment = {
+        id: `demo-appointment-${s.appointments.length + 1}`,
+        patientName: s.profile.displayName,
+        provider: {
+          id: provider.id,
+          displayName: provider.displayName,
+          specialty: {
+            key: provider.specialty.key,
+            displayName: provider.specialty.displayName,
+          },
+          clinics: provider.clinics.map((c) => ({
+            id: c.id,
+            displayName: c.displayName,
+            city: c.city,
+            address: c.address,
+          })),
+        },
+        slot,
+        status: "Upcoming",
+        reason,
+        availabilitySource: "live",
+      };
+      s.appointments.push(appointment);
+      write(s);
+      return appointment;
+    },
     enter,
     reset() {
       memory = fresh();
@@ -128,7 +196,51 @@ export function createDemoAdapter(
         (s) => s.bookable && (!providerId || s.providerId === providerId),
       );
     },
-    async publishSlot(startAt, endAt) {
+    async availabilityPage(providerId, query = {}) {
+      const all = (await this.availability(providerId)).filter(
+        (s) =>
+          (!query.clinic || s.clinicId === query.clinic) &&
+          (!query.from || Date.parse(s.startAt) >= Date.parse(query.from)) &&
+          (!query.to || Date.parse(s.endAt) <= Date.parse(query.to)),
+      );
+      const page = query.page ?? 1,
+        pageSize = query.pageSize ?? 20;
+      return {
+        data: all.slice((page - 1) * pageSize, page * pageSize),
+        meta: { page, pageSize, total: all.length },
+      };
+    },
+    async ownAvailability(page = 1) {
+      requireRole("CLINICIAN");
+      const all = ownHistory(read())
+        .slice()
+        .sort(
+          (a, b) =>
+            a.startAt.localeCompare(b.startAt) || a.id.localeCompare(b.id),
+        );
+      return {
+        data: all.slice((page - 1) * 20, page * 20),
+        meta: { page, pageSize: 20, total: all.length },
+      };
+    },
+    async withdrawSlot(input) {
+      requireRole("CLINICIAN");
+      const s = read();
+      s.ownSlots = ownHistory(s);
+      const slot = s.ownSlots.find((v) => v.id === input.slotId);
+      if (!slot) throw new Error("Availability not found.");
+      if (slot.state === "WITHDRAWN") return slot;
+      if (slot.version !== input.expectedVersion)
+        throw new Error("Availability changed. Please refresh.");
+      slot.state = "WITHDRAWN";
+      slot.version = 2;
+      slot.withdrawnAt = "2026-10-28T08:00:00Z";
+      const publicValue = s.slots.find((v) => v.id === slot.id);
+      if (publicValue) publicValue.bookable = false;
+      write(s);
+      return slot;
+    },
+    async publishSlot({ clinicId, startAt, endAt }) {
       requireRole("CLINICIAN");
       const s = read();
       if (
@@ -138,31 +250,54 @@ export function createDemoAdapter(
       )
         throw new Error("End time must be after start time.");
       if (
-        s.slots.some(
+        ownHistory(s).some(
           (v) =>
+            v.state === "PUBLISHED" &&
             v.providerId === providers[0].id &&
             Date.parse(v.startAt) < Date.parse(endAt) &&
             Date.parse(startAt) < Date.parse(v.endAt),
         )
       )
         throw new Error("This interval overlaps an existing slot.");
-      s.slots.push({
+      s.ownSlots = ownHistory(s);
+      if (clinicId !== clinics[0].id)
+        throw new Error("Choose the demo clinician’s clinic.");
+      const slot: Availability = {
         id: `demo-slot-${s.slots.length + 1}`,
         providerId: providers[0].id,
-        clinicId: clinics[0].id,
+        clinicId,
         startAt,
         endAt,
         timeZone: "Africa/Cairo",
         bookable: true,
-      });
+      };
+      s.slots.push(slot);
+      const base = {
+        id: slot.id,
+        providerId: slot.providerId,
+        clinicId: slot.clinicId,
+        startAt: slot.startAt,
+        endAt: slot.endAt,
+        timeZone: slot.timeZone,
+      };
+      const own: OwnAvailability = {
+        ...base,
+        state: "PUBLISHED",
+        version: 1,
+        publishedAt: "2026-10-28T08:00:00Z",
+        withdrawnAt: null,
+      };
+      s.ownSlots.push(own);
       write(s);
+      return own;
     },
     async appointments() {
       requireRole("PATIENT", "CLINICIAN");
       return read().appointments.filter(
         (a) =>
           read().session?.role !== "CLINICIAN" ||
-          a.provider.id === providers[0].id,
+          a.provider.id === providers[0].id ||
+          a.availabilitySource === "live",
       );
     },
     async book(slotId, reason) {
@@ -209,7 +344,10 @@ export function createDemoAdapter(
       requireRole("CLINICIAN");
       if (
         !read().appointments.some(
-          (a) => a.id === id && a.provider.id === providers[0].id,
+          (a) =>
+            a.id === id &&
+            (a.provider.id === providers[0].id ||
+              a.availabilitySource === "live"),
         )
       )
         throw new Error("Appointment not found.");
@@ -222,7 +360,10 @@ export function createDemoAdapter(
       requireRole("CLINICIAN");
       const s = read();
       const a = s.appointments.find((a) => a.id === value.appointmentId);
-      if (!a || a.provider.id !== providers[0].id)
+      if (
+        !a ||
+        (a.provider.id !== providers[0].id && a.availabilitySource !== "live")
+      )
         throw new Error("Appointment not found.");
       if (
         s.consultations.some(

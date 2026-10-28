@@ -32,6 +32,34 @@ export interface Availability {
   timeZone: string;
   bookable: boolean;
 }
+export interface Page<T> {
+  data: T[];
+  meta: { page: number; pageSize: number; total: number };
+}
+export interface AvailabilityQuery {
+  page?: number;
+  pageSize?: number;
+  clinic?: string;
+  from?: string;
+  to?: string;
+}
+export interface OwnAvailability extends Omit<Availability, "bookable"> {
+  state: "PUBLISHED" | "WITHDRAWN";
+  version: number;
+  publishedAt: string;
+  withdrawnAt: string | null;
+}
+export interface PublishSlot {
+  clinicId: string;
+  startAt: string;
+  endAt: string;
+  operationKey: string;
+}
+export interface WithdrawSlot {
+  slotId: string;
+  expectedVersion: number;
+  operationKey: string;
+}
 export interface Profile {
   id: string;
   displayName: string;
@@ -46,6 +74,7 @@ export interface Session {
 export interface Appointment {
   id: string;
   patientName: string;
+  availabilitySource?: "live";
   provider: Provider;
   slot: Availability;
   status: "Upcoming" | "Completed";
@@ -100,8 +129,17 @@ export interface HealthcareAdapter {
   clinics(): Promise<Clinic[]>;
   profile(): Promise<Profile>;
   saveProfile(profile: Omit<Profile, "id">): Promise<void>;
-  availability(providerId?: string): Promise<Availability[]>;
-  publishSlot(startAt: string, endAt: string): Promise<void>;
+  availability(
+    providerId?: string,
+    query?: AvailabilityQuery,
+  ): Promise<Availability[]>;
+  availabilityPage(
+    providerId: string,
+    query?: AvailabilityQuery,
+  ): Promise<Page<Availability>>;
+  ownAvailability(page?: number): Promise<Page<OwnAvailability>>;
+  publishSlot(input: PublishSlot): Promise<OwnAvailability>;
+  withdrawSlot(input: WithdrawSlot): Promise<OwnAvailability>;
   appointments(): Promise<Appointment[]>;
   book(slotId: string, reason: string): Promise<Appointment>;
   record(): Promise<RecordOverview>;

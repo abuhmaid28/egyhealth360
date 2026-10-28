@@ -2672,3 +2672,98 @@ tr:last-child td {
     scroll-behavior: auto !important;
   }
 }
+/* Slice 2 finite availability and explicit demo handoff. */
+.live-slots {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.live-slots button {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.live-slots button strong {
+  display: block;
+  font-size: 13px;
+}
+.live-slots button small {
+  margin-top: 5px;
+}
+.live-slots button:disabled {
+  background: #f2f4f4;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 20px 0;
+  font-size: 12px;
+}
+.pagination .button {
+  font-size: 11px;
+  padding: 8px 10px;
+}
+.boundary-notice {
+  margin: 18px 0;
+  padding: 15px;
+  background: #fff9ed;
+  border: 1px solid #ecdfbd;
+  border-radius: 10px;
+}
+.boundary-notice p {
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 10px 0 0;
+  color: #705e39;
+}
+.own-slot {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.own-slot:last-child {
+  border-bottom: 0;
+}
+.own-slot p {
+  font-size: 12px;
+  margin: 5px 0;
+}
+.own-slot small {
+  overflow-wrap: anywhere;
+  display: block;
+}
+.own-slot-actions {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 12px;
+}
+.own-slot-actions .button {
+  font-size: 11px;
+}
+.form-error .text-link {
+  display: block;
+  margin-top: 10px;
+}
+@media (max-width: 1100px) {
+  .availability-columns {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .live-slots {
+    grid-template-columns: 1fr;
+  }
+  .own-slot {
+    flex-direction: column;
+  }
+  .own-slot-actions {
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

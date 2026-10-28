@@ -20,7 +20,8 @@
     "m2:verify": "node --env-file-if-exists=.env scripts/verify-care-action-runtime.mjs",
     "clinical:bootstrap": "node --env-file-if-exists=.env scripts/bootstrap-clinical-catalog.mjs",
     "test:ui": "node --test tests/ui-demo.test.mjs",
-    "test:ui:browser": "node scripts/test-ui-browser.mjs"
+    "test:ui:browser": "node scripts/test-ui-browser.mjs",
+    "test:ui:real": "node scripts/test-ui-availability-real.mjs"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

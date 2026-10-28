@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { Consultation } from "../lib/api/contracts";
 import { useApp } from "./context";
+import { DoctorAvailability } from "./availability";
 import { AppointmentRow, Stat } from "./patient";
 import {
   Avatar,
@@ -22,7 +23,7 @@ import {
 export function DoctorScreen({ path }: { path: string }) {
   if (path === "/doctor" || path === "/doctor/schedule")
     return <Schedule dashboard={path === "/doctor"} />;
-  if (path === "/doctor/availability") return <Availability />;
+  if (path === "/doctor/availability") return <DoctorAvailability />;
   if (path.startsWith("/doctor/appointments/"))
     return <PatientAppointment id={path.split("/")[3]} />;
   if (path.startsWith("/doctor/consultation/"))
@@ -177,118 +178,6 @@ function Schedule({ dashboard }: { dashboard: boolean }) {
     </>
   );
 }
-function Availability() {
-  const { api, preview, refresh, changed, notify } = useApp();
-  const slots = useResource(() => api.availability(), [api, refresh]);
-  const [start, setStart] = useState("2026-10-29T09:00");
-  const [end, setEnd] = useState("2026-10-29T09:30");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
-  return (
-    <>
-      <Heading
-        eyebrow="Make room for care"
-        title="Availability"
-        description="Publish a finite appointment interval at your clinic."
-      />
-      <div className="two-column">
-        <Card>
-          <CardTitle title="Published times" />
-          <Resource resource={slots} preview={preview}>
-            {(rows) =>
-              rows.length ? (
-                <div className="table-wrap">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Time · Africa/Cairo</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {rows.map((s) => (
-                        <tr key={s.id}>
-                          <td>{date(s.startAt)}</td>
-                          <td>
-                            {time(s.startAt, s.timeZone)}–
-                            {time(s.endAt, s.timeZone)}
-                          </td>
-                          <td>
-                            <Badge>Bookable</Badge>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <Empty title="No bookable times" />
-              )
-            }
-          </Resource>
-        </Card>
-        <Card>
-          <CardTitle title="Add an appointment interval" />
-          <p className="muted">Nile Care Clinic · Africa/Cairo</p>
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              setBusy(true);
-              setError("");
-              try {
-                await api.publishSlot(`${start}:00+03:00`, `${end}:00+03:00`);
-                changed();
-                notify("Demo availability published.");
-              } catch (e) {
-                setError((e as Error).message);
-              } finally {
-                setBusy(false);
-              }
-            }}
-          >
-            <Field
-              label="Starts at"
-              hint="Fixed Cairo +03:00 demonstration dates only, 28–29 October 2026."
-            >
-              <input
-                type="datetime-local"
-                min="2026-10-28T00:00"
-                max="2026-10-29T23:59"
-                required
-                value={start}
-                onChange={(e) => setStart(e.target.value)}
-              />
-            </Field>
-            <Field label="Ends at">
-              <input
-                type="datetime-local"
-                min={start}
-                max="2026-10-29T23:59"
-                required
-                value={end}
-                onChange={(e) => setEnd(e.target.value)}
-              />
-            </Field>
-            {error && (
-              <p className="form-error" role="alert">
-                {error}
-              </p>
-            )}
-            <button className="button primary" disabled={busy}>
-              {busy ? "Publishing…" : "Publish demo interval"}
-              <Icon name="plus" size={17} />
-            </button>
-          </form>
-          <p className="small muted">
-            No recurrence or capacity controls. Live publication will use the
-            clinic timezone resolved by the backend after Slice 2 integration.
-          </p>
-        </Card>
-      </div>
-    </>
-  );
-}
 function PatientAppointment({ id }: { id: string }) {
   const { api, preview, refresh } = useApp();
   const data = useResource(() => api.appointments(), [api, refresh]);
@@ -309,6 +198,19 @@ function PatientAppointment({ id }: { id: string }) {
             <div className="two-column">
               <Card>
                 <CardTitle title="Appointment logistics" />
+                {a.availabilitySource === "live" && (
+                  <div className="boundary-notice">
+                    <Badge tone="amber">
+                      Live-slot preview · synthetic clinical continuation
+                    </Badge>
+                    <p>
+                      This is not the live provider’s schedule. Synthetic Dr.
+                      Mariam simulates the continuation with Ahmed through their
+                      pre-existing demo relationship. No live booking or
+                      clinical authority was created.
+                    </p>
+                  </div>
+                )}
                 <div className="inline">
                   <Avatar name={a.patientName} large />
                   <div>
@@ -318,7 +220,7 @@ function PatientAppointment({ id }: { id: string }) {
                 </div>
                 <div className="confirmation-details">
                   <Detail icon="calendar" title="Visit time">
-                    {date(a.slot.startAt)} ·{" "}
+                    {date(a.slot.startAt, a.slot.timeZone)} ·{" "}
                     {time(a.slot.startAt, a.slot.timeZone)}
                   </Detail>
                   <Detail icon="pin" title="Clinic">

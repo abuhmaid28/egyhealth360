@@ -365,12 +365,12 @@ export function Field({
     </label>
   );
 }
-export const date = (value: string) =>
+export const date = (value: string, timeZone = "Africa/Cairo") =>
   new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "short",
     year: "numeric",
-    timeZone: "Africa/Cairo",
+    timeZone,
   }).format(new Date(value));
 export const time = (value: string, timeZone = "Africa/Cairo") =>
   new Intl.DateTimeFormat("en-GB", {

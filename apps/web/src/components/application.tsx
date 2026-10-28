@@ -167,6 +167,16 @@ export function Application() {
         refresh,
         notify: setToast,
         changed: () => setRefresh((v) => v + 1),
+        startDemoBooking: async (provider, slot, reason) => {
+          const demo = chooseMode("demo") as ReturnType<
+            typeof createDemoAdapter
+          >;
+          const synthetic = await demo.enter("PATIENT");
+          const appointment = await demo.bookPreview(provider, slot, reason);
+          setSession(synthetic);
+          setRefresh((v) => v + 1);
+          return appointment;
+        },
       }}
     >
       <a className="skip" href="#main">

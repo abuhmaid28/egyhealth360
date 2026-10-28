@@ -9,6 +9,7 @@ import type {
   Provider,
 } from "../lib/api/contracts";
 import { useApp } from "./context";
+import { PublicAvailability } from "./availability";
 import {
   Avatar,
   Badge,
@@ -453,13 +454,9 @@ function Discovery() {
   );
 }
 function DoctorProfile({ id }: { id: string }) {
-  const { api, preview, refresh, changed, notify } = useApp();
+  const { api, preview, changed, notify, startDemoBooking } = useApp();
   const router = useRouter();
   const data = useResource(() => api.provider(id), [api, id]);
-  const availability = useResource(
-    () => api.availability(id),
-    [api, id, refresh],
-  );
   const [slot, setSlot] = useState<Availability>();
   const [reason, setReason] = useState("Routine health review");
   const [confirm, setConfirm] = useState(false);
@@ -550,71 +547,21 @@ function DoctorProfile({ id }: { id: string }) {
                   </ul>
                 </Card>
               </div>
-              <Card className="booking-card">
-                <CardTitle title="Choose your appointment" />
-                <p className="muted">Available times · in-person visit</p>
-                <Resource resource={availability} preview={preview}>
-                  {(rows) =>
-                    rows.length ? (
-                      <>
-                        <div className="date-tile">
-                          <Icon name="calendar" />
-                          <div>
-                            <strong>{date(rows[0].startAt)}</strong>
-                            <small>Times shown in {rows[0].timeZone}</small>
-                          </div>
-                        </div>
-                        <div className="slots">
-                          {rows.map((s) => (
-                            <button
-                              key={s.id}
-                              aria-pressed={slot?.id === s.id}
-                              className={slot?.id === s.id ? "selected" : ""}
-                              onClick={() => setSlot(s)}
-                            >
-                              <small>{date(s.startAt)}</small>
-                              {time(s.startAt, s.timeZone)}
-                            </button>
-                          ))}
-                        </div>
-                        <Field label="What brings you in?">
-                          <textarea
-                            rows={3}
-                            maxLength={500}
-                            value={reason}
-                            onChange={(e) => setReason(e.target.value)}
-                            placeholder="A brief reason for your visit"
-                          />
-                        </Field>
-                        <button
-                          className="button primary full"
-                          disabled={!slot || !reason.trim()}
-                          onClick={() => {
-                            setError("");
-                            setConfirm(true);
-                          }}
-                        >
-                          Review appointment
-                          <Icon name="arrow" size={17} />
-                        </button>
-                        <p className="small muted">
-                          Booking is logistics only. Medical record access
-                          requires a separate active care relationship.
-                        </p>
-                      </>
-                    ) : (
-                      <Empty
-                        title="No available times"
-                        description="Please check another doctor or return later."
-                      />
-                    )
-                  }
-                </Resource>
-              </Card>
+              <PublicAvailability
+                provider={p}
+                reason={reason}
+                setReason={setReason}
+                onReview={(selection) => {
+                  setSlot(selection);
+                  setError("");
+                  setConfirm(true);
+                }}
+              />
             </div>
             {confirm && slot && (
               <BookingDialog
                 provider={p}
+                liveBoundary={api.mode === "live"}
                 slot={slot}
                 reason={reason}
                 busy={busy}
@@ -623,7 +570,10 @@ function DoctorProfile({ id }: { id: string }) {
                 submit={async () => {
                   setBusy(true);
                   try {
-                    const a = await api.book(slot.id, reason.trim());
+                    const a =
+                      api.mode === "live"
+                        ? await startDemoBooking(p, slot, reason.trim())
+                        : await api.book(slot.id, reason.trim());
                     changed();
                     notify("Your appointment is confirmed.");
                     router.push(`/patient/appointments/${a.id}`);
@@ -643,6 +593,7 @@ function DoctorProfile({ id }: { id: string }) {
 }
 function BookingDialog({
   provider,
+  liveBoundary,
   slot,
   reason,
   close,
@@ -651,6 +602,7 @@ function BookingDialog({
   error,
 }: {
   provider: Provider;
+  liveBoundary: boolean;
   slot: Availability;
   reason: string;
   close: () => void;
@@ -688,12 +640,26 @@ function BookingDialog({
       <p className="eyebrow">One step closer to care</p>
       <h2 id="booking-title">Let’s confirm your visit.</h2>
       <p className="muted">Review your appointment details below.</p>
+      {liveBoundary && (
+        <div className="boundary-notice">
+          <Badge tone="amber">Live availability → Demo booking</Badge>
+          <p>
+            Confirming switches to synthetic Patient Ahmed. The selected public
+            slot is copied only for a browser preview, remains unreserved on the
+            backend, and creates no relationship with this live provider. The
+            clinical continuation uses the separate synthetic Ahmed–Mariam
+            story.
+          </p>
+        </div>
+      )}
       <div className="confirmation-details">
         <Detail icon="user" title="Your doctor">
           {provider.displayName}
         </Detail>
         <Detail icon="calendar" title="Date & time">
-          {date(slot.startAt)} · {time(slot.startAt, slot.timeZone)}
+          {date(slot.startAt, slot.timeZone)} ·{" "}
+          {time(slot.startAt, slot.timeZone)} –{" "}
+          {date(slot.endAt, slot.timeZone)} · {time(slot.endAt, slot.timeZone)}
           <small className="muted">{slot.timeZone}</small>
         </Detail>
         <Detail icon="pin" title="Clinic">
@@ -715,7 +681,11 @@ function BookingDialog({
           void submit();
         }}
       >
-        {busy ? "Confirming…" : "Confirm booking"}
+        {busy
+          ? "Confirming…"
+          : liveBoundary
+            ? "Confirm demo booking"
+            : "Confirm booking"}
         <Icon name="check" size={18} />
       </button>
       <button className="button subtle full" disabled={busy} onClick={close}>
@@ -779,11 +749,16 @@ export function AppointmentRow({
   return (
     <div className="appointment-row">
       <div className="appointment-date">
-        <strong>{new Date(a.slot.startAt).getUTCDate()}</strong>
+        <strong>
+          {new Intl.DateTimeFormat("en", {
+            day: "numeric",
+            timeZone: a.slot.timeZone,
+          }).format(new Date(a.slot.startAt))}
+        </strong>
         <span>
           {new Date(a.slot.startAt).toLocaleString("en", {
             month: "short",
-            timeZone: "UTC",
+            timeZone: a.slot.timeZone,
           })}
         </span>
       </div>
@@ -840,9 +815,11 @@ function Appointments({ id }: { id?: string }) {
                   <Icon name="check" />
                   <div>
                     <strong>
-                      {a.status === "Completed"
-                        ? "Your visit summary is ready"
-                        : "You’re all set for your visit"}
+                      {a.availabilitySource === "live"
+                        ? "Demo appointment saved — live slot not reserved"
+                        : a.status === "Completed"
+                          ? "Your visit summary is ready"
+                          : "You’re all set for your visit"}
                     </strong>
                     <p>
                       {a.status === "Completed"
@@ -852,6 +829,19 @@ function Appointments({ id }: { id?: string }) {
                   </div>
                   <Badge>{a.status}</Badge>
                 </div>
+                {a.availabilitySource === "live" && (
+                  <div className="boundary-notice">
+                    <Badge tone="amber">
+                      Synthetic continuation from live availability
+                    </Badge>
+                    <p>
+                      No backend booking or live-provider clinical relationship
+                      was created. The Doctor demo continues with the
+                      independent synthetic Ahmed–Mariam relationship. The
+                      public slot may change or be withdrawn independently.
+                    </p>
+                  </div>
+                )}
                 <div className="two-column">
                   <Card>
                     <CardTitle title="Appointment details" />
@@ -866,7 +856,7 @@ function Appointments({ id }: { id?: string }) {
                     </div>
                     <div className="confirmation-details">
                       <Detail icon="calendar" title="Date">
-                        {date(a.slot.startAt)}
+                        {date(a.slot.startAt, a.slot.timeZone)}
                       </Detail>
                       <Detail icon="clock" title="Time">
                         {time(a.slot.startAt, a.slot.timeZone)}–

@@ -186,13 +186,20 @@ test("demo publish rejects overlapping intervals and accepts adjacent finite int
   const api = createDemoAdapter();
   await api.enter("CLINICIAN");
   await assert.rejects(
-    api.publishSlot("2026-10-28T09:15:00+03:00", "2026-10-28T09:45:00+03:00"),
+    api.publishSlot({
+      clinicId: "cairo-clinic",
+      startAt: "2026-10-28T09:15:00+03:00",
+      endAt: "2026-10-28T09:45:00+03:00",
+      operationKey: "demo-overlap",
+    }),
     /overlaps/,
   );
-  await api.publishSlot(
-    "2026-10-28T09:30:00+03:00",
-    "2026-10-28T10:00:00+03:00",
-  );
+  await api.publishSlot({
+    clinicId: "cairo-clinic",
+    startAt: "2026-10-28T09:30:00+03:00",
+    endAt: "2026-10-28T10:00:00+03:00",
+    operationKey: "demo-adjacent",
+  });
   assert.ok(
     (await api.availability("mariam-hassan")).some((s) =>
       s.startAt.includes("09:30"),
@@ -260,7 +267,6 @@ test("live future capabilities fail explicitly without network calls or demo fal
     const api = createLiveAdapter();
     for (const fn of [
       () => api.book("slot", "reason"),
-      () => api.availability(),
       () => api.release(visit("x")),
       () => api.artifacts(),
       () => api.operations(),
@@ -283,4 +289,257 @@ test("live service errors are sanitized and never replace records with synthetic
   } finally {
     globalThis.fetch = original;
   }
+});
+
+const publicAvailability = {
+  id: "11111111-1111-4111-8111-111111111111",
+  providerId: "22222222-2222-4222-8222-222222222222",
+  clinicId: "33333333-3333-4333-8333-333333333333",
+  startAt: "2026-11-02T23:30:00-05:00",
+  endAt: "2026-11-03T00:00:00-05:00",
+  timeZone: "America/New_York",
+  bookable: true,
+};
+const ownAvailability = {
+  id: publicAvailability.id,
+  providerId: publicAvailability.providerId,
+  clinicId: publicAvailability.clinicId,
+  startAt: publicAvailability.startAt,
+  endAt: publicAvailability.endAt,
+  timeZone: publicAvailability.timeZone,
+  state: "PUBLISHED",
+  version: 1,
+  publishedAt: "2026-10-28T12:00:00Z",
+  withdrawnAt: null,
+};
+const pageOf = (data) => ({
+  data,
+  meta: { page: 1, pageSize: 20, total: data.length },
+});
+test("live availability projects seven fields, retains disabled slots, sends canonical pagination/clinic/date filters and no-store", async () => {
+  const original = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    calls.push({ url, init });
+    return new globalThis.Response(
+      JSON.stringify(
+        pageOf([
+          { ...publicAvailability, internalSecret: "do-not-project" },
+          { ...publicAvailability, id: "disabled", bookable: false },
+        ]),
+      ),
+    );
+  };
+  try {
+    const api = createLiveAdapter();
+    const result = await api.availabilityPage(publicAvailability.providerId, {
+      page: 2,
+      pageSize: 20,
+      clinic: publicAvailability.clinicId,
+      from: "2026-11-01T00:00:00+02:00",
+      to: "2026-11-07T00:00:00+02:00",
+    });
+    assert.deepEqual(
+      Object.keys(result.data[0]).sort(),
+      Object.keys(publicAvailability).sort(),
+    );
+    assert.equal(result.data[1].bookable, false);
+    assert.equal(result.data[0].timeZone, "America/New_York");
+    assert.equal(calls[0].init.cache, "no-store");
+    const url = new URL(calls[0].url, "http://localhost");
+    assert.equal(
+      url.pathname,
+      `/api/v1/directory/providers/${publicAvailability.providerId}/availability`,
+    );
+    assert.equal(url.searchParams.get("page"), "2");
+    assert.equal(url.searchParams.get("clinic"), publicAvailability.clinicId);
+    assert.equal(url.searchParams.get("from"), "2026-11-01T00:00:00+02:00");
+    assert.equal([...url.searchParams.keys()].length, 5);
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+test("live availability has real empty/error paths and rejects malformed responses without synthetic fallback", async () => {
+  const original = globalThis.fetch;
+  try {
+    globalThis.fetch = async () =>
+      new globalThis.Response(JSON.stringify(pageOf([])));
+    assert.deepEqual(
+      (await createLiveAdapter().availabilityPage("provider")).data,
+      [],
+    );
+    globalThis.fetch = async () =>
+      new globalThis.Response("PRIVATE SQL", { status: 503 });
+    await assert.rejects(
+      createLiveAdapter().availabilityPage("provider"),
+      (e) =>
+        e.message.includes("unavailable") && !e.message.includes("PRIVATE"),
+    );
+    globalThis.fetch = async () =>
+      new globalThis.Response(
+        JSON.stringify(
+          pageOf([{ ...publicAvailability, timeZone: "not/a/zone" }]),
+        ),
+      );
+    await assert.rejects(
+      createLiveAdapter().availabilityPage("provider"),
+      /invalid response/,
+    );
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+test("clinician live list/publish/withdraw use exact Slice 2 paths, CSRF, operation keys and CAS version without authority injection", async () => {
+  const original = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    calls.push({ url, init });
+    const data = url.endsWith("/auth/login")
+      ? {
+          user: { role: "CLINICIAN", email: "synthetic@example.invalid" },
+          csrfToken: "csrf-current",
+        }
+      : url.includes("?")
+        ? null
+        : { ...ownAvailability, internalUser: "do-not-project" };
+    return new globalThis.Response(
+      JSON.stringify(data ? { data } : pageOf([ownAvailability])),
+    );
+  };
+  try {
+    const api = createLiveAdapter();
+    await api.login("synthetic@example.invalid", "synthetic");
+    const own = await api.ownAvailability(2);
+    assert.equal(own.data[0].state, "PUBLISHED");
+    assert.equal(calls[1].url, "/api/v1/me/availability?page=2&pageSize=20");
+    const command = {
+      clinicId: publicAvailability.clinicId,
+      startAt: publicAvailability.startAt,
+      endAt: publicAvailability.endAt,
+      operationKey: "44444444-4444-4444-8444-444444444444",
+      timeZone: "must-not-send",
+      clinicianId: "must-not-send",
+    };
+    const result = await api.publishSlot(command);
+    assert.equal("internalUser" in result, false);
+    assert.deepEqual(
+      Object.keys(JSON.parse(calls[2].init.body)).sort(),
+      ["clinicId", "startAt", "endAt", "operationKey"].sort(),
+    );
+    await api.withdrawSlot({
+      slotId: ownAvailability.id,
+      expectedVersion: 1,
+      operationKey: command.operationKey,
+      owner: "must-not-send",
+    });
+    assert.equal(
+      calls[3].url,
+      `/api/v1/me/availability/${ownAvailability.id}/withdraw`,
+    );
+    assert.equal(calls[3].init.method, "PUT");
+    assert.equal(calls[3].init.headers["X-CSRF-Token"], "csrf-current");
+    assert.deepEqual(JSON.parse(calls[3].init.body), {
+      operationKey: command.operationKey,
+      expectedVersion: 1,
+    });
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+test("live publication and withdrawal preserve backend validation/conflict/authority errors without leaking raw payloads", async () => {
+  const original = globalThis.fetch;
+  try {
+    for (const status of [400, 401, 403, 404, 409, 503]) {
+      globalThis.fetch = async () =>
+        new globalThis.Response("PRIVATE SQL ERROR", { status });
+      const api = createLiveAdapter();
+      await assert.rejects(
+        api.publishSlot({}),
+        (e) => !e.message.includes("PRIVATE"),
+      );
+      await assert.rejects(
+        api.withdrawSlot({
+          slotId: "slot",
+          operationKey: "key",
+          expectedVersion: 1,
+        }),
+        (e) => !e.message.includes("PRIVATE"),
+      );
+    }
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+test("demo own history and withdrawal remain deterministic and separate from the public allowlist", async () => {
+  const api = createDemoAdapter();
+  await api.enter("CLINICIAN");
+  const before = await api.ownAvailability();
+  const slot = before.data[0];
+  await api.withdrawSlot({
+    slotId: slot.id,
+    expectedVersion: 1,
+    operationKey: "demo-withdraw",
+  });
+  assert.equal(
+    (await api.ownAvailability()).data.find((s) => s.id === slot.id).state,
+    "WITHDRAWN",
+  );
+  assert.ok(
+    !(await api.availability("mariam-hassan")).some((s) => s.id === slot.id),
+  );
+  api.reset();
+  await api.enter("CLINICIAN");
+  assert.deepEqual(await api.ownAvailability(), before);
+});
+test("explicit live-slot to demo booking copies only public selection, uses synthetic identity and no live booking API", async () => {
+  const store = storage();
+  const api = createDemoAdapter(store);
+  await api.enter("PATIENT");
+  const provider = {
+    id: publicAvailability.providerId,
+    displayName: "Public doctor",
+    specialty: { key: "general", displayName: "General" },
+    clinics: [
+      {
+        id: publicAvailability.clinicId,
+        displayName: "Public clinic",
+        city: "City",
+        address: "Public address",
+      },
+    ],
+    privateEmail: "do-not-copy",
+  };
+  const a = await api.bookPreview(
+    provider,
+    {
+      ...publicAvailability,
+      patient: "PRIVATE PATIENT",
+      session: "PRIVATE SESSION",
+    },
+    "Synthetic visit",
+  );
+  assert.equal(a.patientName, "Ahmed Mostafa");
+  assert.equal(a.availabilitySource, "live");
+  assert.equal(a.slot.providerId, provider.id);
+  assert.deepEqual(
+    Object.keys(a.slot).sort(),
+    Object.keys(publicAvailability).sort(),
+  );
+  assert.equal("privateEmail" in a.provider, false);
+  assert.equal(
+    (await api.bookPreview(provider, publicAvailability, "repeat")).id,
+    a.id,
+  );
+  await api.enter("CLINICIAN");
+  assert.equal((await api.appointments())[0].id, a.id);
+  await api.release(visit(a.id));
+  await api.enter("PATIENT");
+  assert.equal(
+    (await api.record()).consultations.at(-1).instructions,
+    "Shared visit instructions",
+  );
+  await assert.rejects(
+    createLiveAdapter().book(a.slot.id, "reason"),
+    /not integrated/,
+  );
 });
