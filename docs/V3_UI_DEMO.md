@@ -6,7 +6,7 @@ Branch: `feat/v3-ui-demo-shell`. Scope: [Issue #51](https://github.com/abuhmaid2
 
 The same UI branch now includes a normal merge of current main **`9252a1f06b9a851c09b7410882f9e4c0fddd4c53`**, containing approved PR #50 / V3-I2 Slice 2. Pre-mutation gate: PR #52 OPEN/unmerged at `5424b65e50b4ca16e06bd4136e98cbb0c111a3f3`, clean worktree, exact expected main, no competing UI PR. Merge commit `0533d560f13709c2cf876ec713c2ed8ff81553d0` preserves both parents. README/PROJECT conflicts were resolved by keeping main's backend status and the separate UI authorization note. Backend files, migrations, OpenAPI and Slice 2 tests are inherited unchanged from main, not modified by this integration.
 
-Live patient availability and live clinician list/publication/withdrawal are **IMPLEMENTED / IN REVIEW**. Booking onward remains frontend-only. Slice 3 is **NOT AUTHORIZED**. No backend booking/consultation/fulfillment or clinical authority is introduced. Exact-head Bootstrap evidence is recorded in PR #52 after completion; the PR stays OPEN / UNMERGED.
+Live patient availability and live clinician list/publication/withdrawal are **IMPLEMENTED / IN REVIEW**. Booking onward remains frontend-only. V3-I2 Slice 3 backend is separately AUTHORIZED under [Issue #48 comment 6458202424](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6458202424), but it is not implemented or completed by this UI PR. This UI task grants no backend authority and does not expand Slice 3 scope. No backend booking/consultation/fulfillment or clinical authority is introduced. Exact-head Bootstrap evidence is recorded in PR #52 after completion; the PR stays OPEN / UNMERGED.
 
 ## Run and present
 
