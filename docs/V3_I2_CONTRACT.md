@@ -2,13 +2,9 @@
 
 ## 1. Status and authority
 
-[Issue #48 — V3-I2 — Booking & Consultation](https://github.com/abuhmaid28/egyhealth360/issues/48) is the I2 governance umbrella. [Authorization 6441448885](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6441448885) records the Product Owner's instruction: **Slice 1 contract/readiness/current-status reconciliation ONLY**. **V3-I2 Slice 1 contract/readiness IMPLEMENTED / IN REVIEW** in [PR #49](https://github.com/abuhmaid28/egyhealth360/pull/49), OPEN / UNMERGED; scheduling contract reconciliation pending final independent exact-head approval. This documentation freeze is not implemented booking/consultation behavior or blanket implementation approval.
+Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
 
-**M0, M1, M2, V3-G0 and V3-I1 COMPLETE. I2 runtime implementation NOT STARTED. Slices 2–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.**
-
-Verified starting main: `d1b0a017896bdbef0062951264d2e0176732e6b9`. [PR #47](https://github.com/abuhmaid28/egyhealth360/pull/47) MERGED, ordered parents `7f977466252dcf96caca7510e85c66aee24b9cd8`, `63af9483964263114ce234470c584f678830a964`. [Bootstrap 40496696728](https://github.com/abuhmaid28/egyhealth360/actions/runs/40496696728), push/main, exact head, attempt 1, COMPLETED / SUCCESS; validate `122163838525`, all 37 steps SUCCESS. [Issue #39](https://github.com/abuhmaid28/egyhealth360/issues/39) CLOSED / completed; [final completion 6441304825](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6441304825). Baseline evidence is 98 unit / 583 integration / 7 container / 14 migrations PASS, zero failures/skips/cancellations; both audits 0 HIGH / 0 CRITICAL; Slice 6 25/25, runtime, smoke and cleanup PASS. These are accepted I1 baseline results, not I2 executable proof.
-
-Live main/merge/run/job/issue/comment, all issue titles and open PRs were independently checked before mutation. No competing I2 umbrella/active PR or later conflicting owner instruction was found. Historical comments denying I2 were truthful when recorded; the current bounded instruction supersedes that gate for Slice 1 only. Material main drift requires stopping and reporting before rebasing this contract onto unknown state.
+Slice 2 starting main is the exact merged Slice 1 commit above, with ordered parents `d1b0a017896bdbef0062951264d2e0176732e6b9` and `9ae2e1f39e0ee3a2d280818adb5ebc85bb454dc3`. Issue #48 remains OPEN. Prior authorization and completion comments are retained. [Slice 1 execution record](V3_I2_SLICE1.md) preserves the pre-merge evidence and original baseline; [Slice 2](V3_I2_SLICE2.md) and [validation](V3_I2_SLICE2_VALIDATION.md) describe only this authorized implementation. Normative sections below retain their frozen future-slice semantics; Booking and later objects/routes are proposals, not live Slice 2 capabilities.
 
 ## 2. Dependencies and policy preservation
 
@@ -328,8 +324,8 @@ Slice 1 checks: frozen install, lint, generate/Prisma validation/build/typecheck
 
 | Slice | Boundary | Authorization |
 |---|---|---|
-| 1 | Contract/readiness/current-status reconciliation | AUTHORIZED docs only; PR handoff unmerged |
-| 2 | Finite availability + clinician schedule publication foundation | NOT AUTHORIZED |
+| 1 | Contract/readiness/current-status reconciliation | COMPLETE — PR #49 merged; exact-main success |
+| 2 | Finite availability + clinician schedule publication foundation | AUTHORIZED — IMPLEMENTED / IN REVIEW |
 | 3 | Booking/cancel/reschedule/patient history/clinician schedule/attendance/no-show/concurrency | NOT AUTHORIZED |
 | 4 | Consultation opening + booking/encounter/actual-treating provenance + current relationship gate | NOT AUTHORIZED |
 | 5 | Complaint/problems/diagnoses/allergy review/private notes/released summary/instructions/signed addenda/corrections | NOT AUTHORIZED |
@@ -342,4 +338,4 @@ No concrete repository reason required changing the Product Owner's proposed dep
 
 I2 remains **INCOMPLETE** until every approved slice is merged after independent review of each exact PR head, successful exact-head CI, separate explicit merge authorization and successful exact-main post-merge CI. Preserve migration history and M0–M2/I1 regressions/invariants. Require real PostgreSQL booking/concurrency/revocation/expiry proof, IDOR/privacy/private-note boundary, released summary/signed correction/history proof, EH-012 compatibility, bounded Journey A I2 proof and combined independent I2 security exit review. Record actual evidence and unresolved limitations, never a predetermined test total or fabricated PASS.
 
-Current handoff: **V3-I2 Slice 1 IMPLEMENTED / IN REVIEW — scheduling contract reconciliation pending final independent exact-head approval.** PR #49 OPEN / UNMERGED; Issue #48 OPEN. V3-I1 COMPLETE; I2 runtime implementation NOT STARTED. Slices 2–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. Do not merge or start Slice 2.
+Current handoff: **V3-I2 Slice 1 COMPLETE; Slice 2 IMPLEMENTED / IN REVIEW.** PR #49 MERGED; exact-main 40519168675 SUCCESS. Issue #48 OPEN. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. Independent exact-head review and separate Product Owner merge authorization remain required. Do not merge or start Slice 3.
