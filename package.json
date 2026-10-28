@@ -18,13 +18,16 @@
     "demo:seed": "node --env-file-if-exists=.env scripts/demo-seed.mjs",
     "m1:verify": "node --env-file-if-exists=.env scripts/verify-m1.mjs",
     "m2:verify": "node --env-file-if-exists=.env scripts/verify-care-action-runtime.mjs",
-    "clinical:bootstrap": "node --env-file-if-exists=.env scripts/bootstrap-clinical-catalog.mjs"
+    "clinical:bootstrap": "node --env-file-if-exists=.env scripts/bootstrap-clinical-catalog.mjs",
+    "test:ui": "node --test tests/ui-demo.test.mjs",
+    "test:ui:browser": "node scripts/test-ui-browser.mjs"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
-    "eslint": "9.39.5",
     "@eslint/js": "9.39.5",
-    "typescript-eslint": "8.71.1",
-    "@types/node": "24.19.2"
+    "@types/node": "24.19.2",
+    "eslint": "9.39.5",
+    "playwright": "1.64.1",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.1"
   }
 }

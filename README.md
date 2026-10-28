@@ -1,5 +1,7 @@
 # EgyHealth 360
 
+> Separate bounded UI track: Product Owner session authorization (27 October 2026), [Issue #51](https://github.com/abuhmaid28/egyhealth360/issues/51), unfreezes graduation-demo frontend work only. See [UI candidate, live/demo boundaries and screenshots](docs/V3_UI_DEMO.md). Backend milestone/governance status and historical evidence below retain their meaning; no backend completion or merge is claimed.
+
 Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. PR #47 merged; verified main `d1b0a017896bdbef0062951264d2e0176732e6b9`; exact-main [Bootstrap 40496696728](https://github.com/abuhmaid28/egyhealth360/actions/runs/40496696728) SUCCESS (push/main, attempt 1, validate 122163838525). Issue #39 CLOSED / completed; [completion 6441304825](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6441304825). [Issue #48](https://github.com/abuhmaid28/egyhealth360/issues/48) authorizes V3-I2 Slice 1 contract/readiness only. V3-I2 implementation NOT STARTED; implementation-bearing Slice 2+ NOT AUTHORIZED; I3 NOT AUTHORIZED; EACCE NOT STARTED; Design/UI FROZEN.
 
 EgyHealth 360 is an **integrated digital healthcare journey** graduation prototype: patient access, discovery, booking, consultation, prescriptions, diagnostics, dispensing and follow-up connect through a longitudinal record, structured care coordination and later bounded explainable evidence-aware monitoring.
