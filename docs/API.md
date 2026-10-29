@@ -1,5 +1,9 @@
 # EgyHealth 360 — API Status and V3 Resource Boundaries
 
+## Current Slice 4 consultation-opening boundary
+
+Live Slice 4 adds only POST `/api/v1/me/bookings/{bookingId}/consultation`, exact `{operationKey}`. Current booked clinician + ACTIVE assignment + exact clinic scope; no booking clinical authority. Strict eight-field opening result, no clinical payload. See [exact route/security](V3_I2_SLICE4.md). No close/document APIs. Historical status/validation statements below retain their original point-in-time meaning.
+
 Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
 
 [Slice 3](V3_I1_SLICE3.md) implements guarded anonymous registration and current-PATIENT own-profile operations. Slice 1/2/3 are COMPLETE; I1 COMPLETE and Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. Existing auth/clinical routes remain unchanged. Internal Slice 2 operations are not public HTTP routes; availability remains I2 and fulfillment I3.

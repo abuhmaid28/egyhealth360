@@ -1,5 +1,9 @@
 # Security & Medical Safety — V3 Policy, M0–M2 Enforcement
 
+## Current Slice 4 consultation-opening boundary
+
+Booking remains ZERO clinical authority. Consultation opening requires exact booked current clinician, valid session, ACTIVE assignment and exact current clinic scope with final after-wait checks. No consent/assignment writer or ADMIN shortcut. Strict request/projection, atomic empty-metadata audit, canonical locks and safe replay are in [Slice 4](V3_I2_SLICE4.md). EH-012 remains HTN-only. Historical status/validation statements below retain their original point-in-time meaning.
+
 Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
 
 [Issue #39 I1 contract](V3_I1_CONTRACT.md) remains APPROVED. Slice 1/2 COMPLETE; [Slice 3](V3_I1_SLICE3.md) security contract COMPLETE; I1 COMPLETE and Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. Registration is guarded anonymous patient-only creation; profile read/replace requires current PATIENT ownership, and writes retain session CSRF. No ADMIN/staff clinical or profile entitlement. D36 routed-artifact authority remains I3; membership alone never suffices. Existing security contracts below are preserved.

@@ -90,3 +90,6 @@ export type {AvailabilityPersistence,AvailabilityProjection} from './availabilit
 export {AvailabilityError,availabilityExact,availabilityId,availabilityInteger,availabilityTime,schedulingZone,schedulingValues,offsetMatches,availabilityPage} from './availability-values.js';
 export {createBookingPersistence,BookingError,bookingInput} from './bookings.js';
 export type {BookingPersistence} from './bookings.js';
+
+export {createConsultationPersistence,consultationInput} from './consultations.js';
+export type {ConsultationPersistence} from './consultations.js';

@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Put, Req, Res, Param, UseGuards, HttpException } from '@nestjs/common';
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { BookingError, bookingInput, availabilityExact, availabilityId, type BookingPersistence, type AuthPrincipal } from '@egyhealth/db';
+import { BookingError, bookingInput, availabilityExact, availabilityId, consultationInput, type ConsultationPersistence, type BookingPersistence, type AuthPrincipal } from '@egyhealth/db';
 import { authError, verifyOrigin, requireJson, SessionAuthGuard, SessionAuthenticator, CsrfGuard, sessionCookie, type AuthRuntime } from './auth.js';
 import { parseAvailabilityQuery } from './availability.js';
 type Request = IncomingMessage & {
     body?: unknown;
     principal?: AuthPrincipal;
 };
-type Command = 'CREATE' | 'CANCEL' | 'RESCHEDULE' | 'ATTEND' | 'CORRECT';
+type Command = 'CREATE' | 'CANCEL' | 'RESCHEDULE' | 'ATTEND' | 'CORRECT' | 'OPEN';
 const invalid = () => authError(400, 'REQUEST_INVALID', 'Invalid request.');
 function failure(e: unknown) { if (e instanceof HttpException)
     return e; if (e instanceof BookingError) {
@@ -32,9 +32,10 @@ export function parseBookingJson(raw: string, command: Command) {
                 throw invalid();
             seen.add(key);
         }
-        const fields = command === 'CREATE' ? ['slotId', 'operationKey'] : command === 'RESCHEDULE' ? ['slotId', 'operationKey', 'expectedVersion'] : command === 'ATTEND' ? ['observation', 'operationKey', 'expectedVersion'] : command === 'CORRECT' ? ['observation', 'reason', 'operationKey', 'expectedVersion'] : ['operationKey', 'expectedVersion'];
+        const fields = command === 'OPEN' ? ['operationKey'] : command === 'CREATE' ? ['slotId', 'operationKey'] : command === 'RESCHEDULE' ? ['slotId', 'operationKey', 'expectedVersion'] : command === 'ATTEND' ? ['observation', 'operationKey', 'expectedVersion'] : command === 'CORRECT' ? ['observation', 'reason', 'operationKey', 'expectedVersion'] : ['operationKey', 'expectedVersion'];
         availabilityExact(v, fields);
-        bookingInput(command, command === 'CREATE' ? v : { ...v, bookingId: '00000000-0000-4000-8000-000000000001' });
+        if (command === 'OPEN') consultationInput({ ...v, bookingId: '00000000-0000-4000-8000-000000000001' });
+        else bookingInput(command, command === 'CREATE' ? v : { ...v, bookingId: '00000000-0000-4000-8000-000000000001' });
         return v;
     }
     catch {
@@ -54,14 +55,14 @@ export function bookingRequestBoundary(auth: AuthRuntime) {
             return next();
         s.setHeader('Cache-Control', 'no-store');
         const reject = (e: unknown) => { const x = failure(e); send(q, s, x.getStatus(), x.getResponse()); };
-        const collection = path === '/api/v1/me/bookings', schedule = path === '/api/v1/me/schedule', detail = /^\/api\/v1\/me\/bookings\/[^/]+$/.test(path), match = /^\/api\/v1\/me\/bookings\/[^/]+\/(cancel|reschedule|attendance|attendance\/correct)$/.exec(path);
+        const collection = path === '/api/v1/me/bookings', schedule = path === '/api/v1/me/schedule', detail = /^\/api\/v1\/me\/bookings\/[^/]+$/.test(path), match = /^\/api\/v1\/me\/bookings\/[^/]+\/(cancel|reschedule|attendance|attendance\/correct|consultation)$/.exec(path);
         let command: Command = 'CREATE';
         try {
             if (Buffer.byteLength(raw) > 2048 || q.rawHeaders.reduce((n, v) => n + Buffer.byteLength(v), 0) > 8192)
                 throw invalid();
             if (path !== normalized || path.includes('%') || (!collection && !schedule && !detail && !match))
                 throw authError(404, 'BOOKING_NOT_FOUND', 'Not found.');
-            const methods = collection ? ['GET', 'HEAD', 'POST'] : match ? ['PUT'] : ['GET', 'HEAD'];
+            const methods = collection ? ['GET', 'HEAD', 'POST'] : match ? (match[1] === 'consultation' ? ['POST'] : ['PUT']) : ['GET', 'HEAD'];
             if (!methods.includes(q.method ?? '')) {
                 s.setHeader('Allow', methods.join(', '));
                 throw authError(405, 'METHOD_NOT_ALLOWED', 'Method not allowed.');
@@ -81,7 +82,7 @@ export function bookingRequestBoundary(auth: AuthRuntime) {
                 throw invalid();
             if (count('content-encoding') > 1 || q.headers['content-encoding'] !== undefined && q.headers['content-encoding'] !== 'identity')
                 throw authError(415, 'REQUEST_CONTENT_TYPE_INVALID', 'Unsupported content type.');
-            command = collection ? 'CREATE' : match![1] === 'cancel' ? 'CANCEL' : match![1] === 'reschedule' ? 'RESCHEDULE' : match![1] === 'attendance' ? 'ATTEND' : 'CORRECT';
+            command = match?.[1] === 'consultation' ? 'OPEN' : collection ? 'CREATE' : match![1] === 'cancel' ? 'CANCEL' : match![1] === 'reschedule' ? 'RESCHEDULE' : match![1] === 'attendance' ? 'ATTEND' : 'CORRECT';
         }
         catch (e) {
             q.resume();
@@ -102,7 +103,7 @@ export function bookingRequestBoundary(auth: AuthRuntime) {
         } q.body = parseBookingJson(text, command); next(); })().catch(reject);
     };
 }
-export function bookingController(auth: AuthRuntime, store: BookingPersistence) {
+export function bookingController(auth: AuthRuntime, store: BookingPersistence, consultations?: ConsultationPersistence) {
     const session = new SessionAuthGuard(new SessionAuthenticator(auth)), csrf = new CsrfGuard(auth.config);
     const target = (value: string) => { try {
         return availabilityId(value);
@@ -151,6 +152,14 @@ export function bookingController(auth: AuthRuntime, store: BookingPersistence) 
         q: Request,
         @Res()
         s: ServerResponse) { return invoke(q, s, async () => ({ data: await store.create(q.principal!, q.body) })); }
+        @Post('me/bookings/:bookingId/consultation')
+        @UseGuards(session, csrf)
+        open(@Req() q: Request, @Res() s: ServerResponse, @Param('bookingId') id: string) {
+            return invoke(q, s, async () => {
+                if (!consultations) throw new BookingError('BOOKING_UNAVAILABLE');
+                return { data: await consultations.open(q.principal!, { ...q.body as Record<string, unknown>, bookingId: target(id) }) };
+            });
+        }
         @Put('me/bookings/:bookingId/cancel')
         @UseGuards(session, csrf)
         cancel(
