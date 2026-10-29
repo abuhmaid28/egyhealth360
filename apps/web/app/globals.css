@@ -3213,3 +3213,10 @@ textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* Consultation opening reuses the logical, responsive card/dialog system. */
+.opening-card { margin-block: 1.25rem; }
+.opening-card .logistics-boundary { margin-block: .75rem; }
+.opening-card > .button { max-inline-size: 100%; white-space: normal; }
+.opening-success { display: flex; align-items: center; gap: .6rem; font-weight: 700; }
+.opening-timestamp { font-size: clamp(1.05rem, 2vw, 1.5rem); font-weight: 700; overflow-wrap: anywhere; }

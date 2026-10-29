@@ -1,5 +1,9 @@
 "use client";
 import Link from "next/link";
+import {
+  ConsultationOpeningCard,
+  OpeningScheduleStatus,
+} from "./consultation-opening";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { Availability, Provider } from "../lib/api/contracts";
@@ -31,6 +35,7 @@ import {
 
 export const bookingLabels = {
   BOOKED: "Booked",
+  IN_CONSULTATION: "Consultation opened",
   CANCELLED: "Cancelled",
   RESCHEDULED: "Rescheduled",
   NO_SHOW: "No-show",
@@ -41,6 +46,7 @@ export const bookingLabels = {
   RESCHEDULE: "Booking rescheduled",
   ATTEND: "Attendance recorded",
   CORRECT: "Attendance corrected",
+  OPEN: "Consultation opened",
 } as const;
 function useLiveBookings() {
   const { api } = useApp();
@@ -48,7 +54,7 @@ function useLiveBookings() {
     throw new Error("Live booking context missing.");
   return api.liveBookings;
 }
-function useNow() {
+export function useNow() {
   const [now, setNow] = useState(Date.now());
   useEffect(() => {
     const timer = setInterval(() => setNow(Date.now()), 1000);
@@ -69,7 +75,7 @@ export function BookingBoundary() {
     </div>
   );
 }
-function useDirectoryNames() {
+export function useDirectoryNames() {
   const { api } = useApp();
   // Directory enrichment never gates history, detail or cancellation after provider revocation.
   const names = useResource(async () => {
@@ -84,7 +90,7 @@ function useDirectoryNames() {
   }, [api]);
   return names.data;
 }
-function BookingIdentity({
+export function BookingIdentity({
   booking: b,
   clinician = false,
   names,
@@ -197,6 +203,7 @@ export function LiveBookingList({
                   <article className="live-booking-row" key={b.id}>
                     <div>
                       <Status booking={b} />
+                      {clinician && <OpeningScheduleStatus booking={b} />}
                       <BookingIdentity
                         booking={b}
                         clinician={clinician}
@@ -420,7 +427,11 @@ function BookingDetails({
 }) {
   const { t } = useLocale();
   const now = useNow();
-  const eligible = bookingEligibility(b, now);
+  const { api } = useApp();
+  const opened = !!api.consultationOpening?.receipt(b.id);
+  const eligible = opened
+    ? { change: false, attend: false, noShow: false, correct: false }
+    : bookingEligibility(b, now);
   const names = useDirectoryNames();
   const [action, setAction] = useState<
     "cancel" | "reschedule" | "attend" | "correct"
@@ -530,6 +541,7 @@ function BookingDetails({
           </div>
         </Card>
       </div>
+      {clinician && <ConsultationOpeningCard booking={b} refresh={reload} />}
       <Card>
         <CardTitle title={t("Attendance observations")} />
         {b.attendanceHistory.length ? (

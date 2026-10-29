@@ -1,8 +1,14 @@
 import { UiError } from "./errors";
 import type { Availability, Page } from "./contracts";
 
-/** Exact merged Slice 3 logistics projection. Never a clinical/patient-record contract. */
-export type BookingState = "BOOKED" | "CANCELLED" | "RESCHEDULED" | "NO_SHOW";
+/** Slice 3 logistics projection; anticipated IN_CONSULTATION is from the frozen
+ * I2 opening lifecycle and must be reconciled against merged Slice 4 in Stage B. Never a clinical/patient-record contract. */
+export type BookingState =
+  | "BOOKED"
+  | "CANCELLED"
+  | "RESCHEDULED"
+  | "NO_SHOW"
+  | "IN_CONSULTATION";
 export type Observation = "ATTENDED" | "NO_SHOW";
 export interface LiveBooking {
   id: string;
@@ -21,7 +27,7 @@ export interface LiveBooking {
   attendance: "UNKNOWN" | Observation;
   transitions: {
     id: string;
-    command: "CREATE" | "CANCEL" | "RESCHEDULE" | "ATTEND" | "CORRECT";
+    command: "CREATE" | "CANCEL" | "RESCHEDULE" | "ATTEND" | "CORRECT" | "OPEN";
     fromState: "BOOKED" | "NO_SHOW" | null;
     toState: BookingState;
     recordedAt: string;
@@ -91,7 +97,13 @@ const timestamp = (value: unknown): string =>
 const oneOf = <T extends string>(value: unknown, values: readonly T[]): T =>
   values.includes(value as T) ? (value as T) : invalid();
 const state = (value: unknown) =>
-  oneOf(value, ["BOOKED", "CANCELLED", "RESCHEDULED", "NO_SHOW"] as const);
+  oneOf(value, [
+    "BOOKED",
+    "CANCELLED",
+    "RESCHEDULED",
+    "NO_SHOW",
+    "IN_CONSULTATION",
+  ] as const);
 const observation = (value: unknown) =>
   oneOf(value, ["ATTENDED", "NO_SHOW"] as const);
 /** Allowlist every nested projection. Unknown upstream identifiers/clinical fields are discarded. */
@@ -142,6 +154,7 @@ export function projectBooking(value: unknown): LiveBooking {
           "RESCHEDULE",
           "ATTEND",
           "CORRECT",
+          "OPEN",
         ] as const),
         fromState:
           e.fromState === null

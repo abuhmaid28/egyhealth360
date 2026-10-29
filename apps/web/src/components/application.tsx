@@ -11,7 +11,7 @@ import type {
   Session,
 } from "../lib/api/contracts";
 import { createDemoAdapter } from "../lib/mock/adapter";
-import { createLiveAdapter } from "../lib/api/live";
+import { useLiveSession } from "./live-session";
 import { createBookingService } from "../lib/api/booking";
 import { Context } from "./context";
 import {
@@ -66,6 +66,7 @@ const navigation: Record<Role, [string, string, IconName][]> = {
   ],
 };
 export function Application() {
+  const liveSession = useLiveSession();
   const { t } = useLocale();
 
   const pathname = usePathname();
@@ -133,7 +134,7 @@ export function Application() {
     }
     const adapter =
       mode === "live"
-        ? createLiveAdapter()
+        ? liveSession.adapter()
         : createDemoAdapter(window.localStorage);
     setApi(adapter);
     adapter.session().then((s) => {
@@ -145,7 +146,7 @@ export function Application() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [liveSession]);
   useEffect(() => {
     if (!toast) return;
     const timer = setTimeout(() => setToast(""), 4500);
@@ -156,6 +157,7 @@ export function Application() {
     setPreview("ready");
   }, [pathname]);
   const chooseMode = (mode: Mode) => {
+    liveSession.clear();
     try {
       localStorage.setItem("eh360-ui-mode", mode);
     } catch {
@@ -163,7 +165,7 @@ export function Application() {
     }
     const adapter =
       mode === "live"
-        ? createLiveAdapter()
+        ? liveSession.adapter()
         : createDemoAdapter(window.localStorage);
     setApi(adapter);
     return adapter;

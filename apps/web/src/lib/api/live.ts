@@ -1,3 +1,7 @@
+import {
+  createConsultationOpeningApi,
+  OpeningUiError,
+} from "./consultation-opening";
 import { BookingUiError, createLiveBookingApi } from "./live-booking";
 import { UiError } from "./errors";
 import { availabilityPage, ownSlot, publicSlot } from "./availability";
@@ -15,6 +19,7 @@ type Auth = { user: { email: string; role: Role }; csrfToken: string };
 /** Same-origin Next rewrite; HttpOnly backend cookie stays browser-managed. Never persist credentials. */
 export function createLiveAdapter(): HealthcareAdapter {
   let csrf = "";
+  let sessionIdentity = "";
   const request = async <T>(path: string, init?: RequestInit): Promise<T> => {
     const response = await fetch(`/api/v1${path}`, {
       ...init,
@@ -25,6 +30,8 @@ export function createLiveAdapter(): HealthcareAdapter {
         ...init?.headers,
       },
     });
+    if (!response.ok && path.endsWith("/consultation"))
+      throw new OpeningUiError(response.status);
     if (
       !response.ok &&
       (path.startsWith("/me/bookings") || path.startsWith("/me/schedule"))
@@ -58,6 +65,12 @@ export function createLiveAdapter(): HealthcareAdapter {
       : (response.json() as Promise<T>);
   };
   const session = (a: Auth): Session => {
+    const identity = JSON.stringify([a.user.role, a.user.email]);
+    if (sessionIdentity && sessionIdentity !== identity) {
+      liveBookings.clearCommands();
+      consultationOpening.clear();
+    }
+    sessionIdentity = identity;
     csrf = a.csrfToken;
     return { role: a.user.role, name: a.user.email, mode: "live" };
   };
@@ -67,13 +80,25 @@ export function createLiveAdapter(): HealthcareAdapter {
     );
   };
   const liveBookings = createLiveBookingApi(request, () => csrf);
+  // Stage A: disabled in normal builds. The explicit test-build flag permits
+  // controlled HTTP fixtures only; it is NOT a claim of merged backend support.
+  const consultationOpening = createConsultationOpeningApi(
+    request,
+    () => csrf,
+    process.env.NEXT_PUBLIC_EH_OPENING_FIXTURE === "stage-a-controlled-fixture",
+  );
   return {
     mode: "live",
+    consultationOpening,
     liveBookings,
     async session() {
       try {
         return session((await request<{ data: Auth }>("/auth/me")).data);
       } catch {
+        csrf = "";
+        sessionIdentity = "";
+        liveBookings.clearCommands();
+        consultationOpening.clear();
         return null;
       }
     },
@@ -95,7 +120,9 @@ export function createLiveAdapter(): HealthcareAdapter {
         headers: { "X-CSRF-Token": csrf },
       });
       csrf = "";
+      sessionIdentity = "";
       liveBookings.clearCommands();
+      consultationOpening.clear();
     },
     async providers() {
       return (
