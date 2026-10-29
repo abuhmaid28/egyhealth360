@@ -246,7 +246,7 @@ export async function testArabic(browser, origin, shots) {
   );
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.goto(origin + "/patient/doctors/" + providerId);
-  await page.getByText("أوقات فعلية ← حجز تجريبي", { exact: true }).waitFor();
+  await page.getByText("أوقات فعلية ← حجز فعلي", { exact: true }).waitFor();
   await page.locator(".slots button").first().click();
   await snap("28-ar-live-availability");
   for (const width of [834, 390]) {
@@ -261,10 +261,10 @@ export async function testArabic(browser, origin, shots) {
     );
   }
   await page.setViewportSize({ width: 1440, height: 1100 });
-  await page.getByRole("button", { name: "مراجعة الحجز التجريبي" }).click();
+  await page.getByRole("button", { name: "مراجعة الحجز الفعلي" }).click();
   await page
     .getByRole("dialog")
-    .getByText("أوقات فعلية ← حجز تجريبي", { exact: true })
+    .getByText("تأكيد حجزك", { exact: true })
     .waitFor();
   await page.keyboard.press("Escape");
   assert.deepEqual(errors, []);

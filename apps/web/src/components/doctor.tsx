@@ -5,7 +5,12 @@ import Link from "next/link";
 import { useState } from "react";
 import type { Consultation } from "../lib/api/contracts";
 import { useApp } from "./context";
-import { BookingUnavailable, DemoContinuation } from "./journey";
+import {
+  LiveBookingList,
+  LiveBookingDetail,
+  BookingBoundary,
+} from "./live-booking";
+import { DemoContinuation } from "./journey";
 import { DoctorAvailability } from "./availability";
 import { AppointmentRow, Stat } from "./patient";
 import {
@@ -27,6 +32,26 @@ import {
 export function DoctorScreen({ path }: { path: string }) {
   const { t } = useLocale();
 
+  const { api } = useApp();
+  if (
+    api.mode === "live" &&
+    (path === "/doctor" || path === "/doctor/schedule")
+  )
+    return <LiveBookingList clinician />;
+  if (api.mode === "live" && path.startsWith("/doctor/appointments/"))
+    return <LiveBookingDetail clinician id={path.split("/")[3]} />;
+  if (api.mode === "live" && path.startsWith("/doctor/consultation/"))
+    return (
+      <>
+        <Heading
+          title={t("Consultation workspace")}
+          description={t(
+            "Clinical consultation is not integrated in Live mode.",
+          )}
+        />
+        <BookingBoundary />
+      </>
+    );
   if (path === "/doctor" || path === "/doctor/schedule")
     return <Schedule dashboard={path === "/doctor"} />;
   if (path === "/doctor/availability") return <DoctorAvailability />;
@@ -74,18 +99,6 @@ function Schedule({ dashboard }: { dashboard: boolean }) {
     () => booking.clinicianSchedule(),
     [api, refresh],
   );
-  if (booking.implementation === "unavailable")
-    return (
-      <>
-        <Heading
-          title={t("My schedule")}
-          description={t(
-            "The schedule provides logistics only. A booking does not establish patient authorization or clinician acceptance.",
-          )}
-        />
-        <BookingUnavailable doctor />
-      </>
-    );
 
   return (
     <>

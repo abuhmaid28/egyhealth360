@@ -11,7 +11,12 @@ import type {
   Provider,
 } from "../lib/api/contracts";
 import { useApp } from "./context";
-import { BookingUnavailable, DemoContinuation } from "./journey";
+import {
+  LiveBookingList,
+  LiveBookingDetail,
+  LiveCreateReview,
+} from "./live-booking";
+import { DemoContinuation } from "./journey";
 import { PublicAvailability } from "./availability";
 import {
   Avatar,
@@ -32,6 +37,17 @@ import {
 export function PatientScreen({ path }: { path: string }) {
   const { t } = useLocale();
 
+  const { api } = useApp();
+  if (
+    api.mode === "live" &&
+    (path === "/patient/appointments" ||
+      path.startsWith("/patient/appointments/"))
+  )
+    return path.split("/")[3] ? (
+      <LiveBookingDetail id={path.split("/")[3]} />
+    ) : (
+      <LiveBookingList />
+    );
   if (path === "/patient") return <Dashboard />;
   if (path === "/patient/discover") return <Discovery />;
   if (path.startsWith("/patient/doctors/"))
@@ -70,7 +86,10 @@ function Dashboard() {
     () => Promise.all([api.profile(), api.record(), api.providers()]),
     [api, refresh],
   );
-  const appointments = useResource(() => booking.listOwn(), [api, refresh]);
+  const appointments = useResource(
+    () => (api.mode === "demo" ? booking.listOwn() : Promise.resolve([])),
+    [api, refresh],
+  );
   return (
     <>
       <Heading
@@ -137,7 +156,7 @@ function Dashboard() {
                 icon="calendar"
                 label={t("Upcoming appointments")}
                 value={
-                  appointments.data
+                  api.mode === "demo" && appointments.data
                     ? String(
                         appointments.data.filter((a) => a.status === "Upcoming")
                           .length,
@@ -169,14 +188,14 @@ function Dashboard() {
             </div>
             <div className="dashboard-columns">
               <div className="stack">
-                <Card>
-                  <CardTitle
-                    title={t("Your next appointment")}
-                    href="/patient/appointments"
-                  />
-                  {booking.implementation === "unavailable" ? (
-                    <BookingUnavailable />
-                  ) : (
+                {api.mode === "live" ? (
+                  <LiveBookingList compact />
+                ) : (
+                  <Card>
+                    <CardTitle
+                      title={t("Your next appointment")}
+                      href="/patient/appointments"
+                    />
                     <Resource resource={appointments} preview={preview}>
                       {(rows) => {
                         const next = rows.find((a) => a.status === "Upcoming");
@@ -193,8 +212,8 @@ function Dashboard() {
                         );
                       }}
                     </Resource>
-                  )}
-                </Card>
+                  </Card>
+                )}
                 <Card>
                   <CardTitle
                     title={t("Your care timeline")}
@@ -517,7 +536,7 @@ function Discovery() {
 function DoctorProfile({ id }: { id: string }) {
   const { t } = useLocale();
 
-  const { api, booking, preview, changed, notify, startDemoBooking } = useApp();
+  const { api, booking, preview, changed, notify } = useApp();
   const router = useRouter();
   const data = useResource(() => api.provider(id), [api, id]);
   const [slot, setSlot] = useState<Availability>();
@@ -627,32 +646,38 @@ function DoctorProfile({ id }: { id: string }) {
                 }}
               />
             </div>
-            {confirm && slot && (
-              <BookingDialog
+            {confirm && slot && api.mode === "live" ? (
+              <LiveCreateReview
                 provider={p}
-                liveBoundary={api.mode === "live"}
                 slot={slot}
-                reason={reason}
-                busy={busy}
-                error={t(error)}
                 close={() => setConfirm(false)}
-                submit={async () => {
-                  setBusy(true);
-                  try {
-                    const a =
-                      api.mode === "live"
-                        ? await startDemoBooking(p, slot, reason.trim())
-                        : await booking.create(slot.id, reason.trim());
-                    changed();
-                    notify("Your appointment is confirmed.");
-                    router.push(`/patient/appointments/${a.id}`);
-                  } catch (e) {
-                    setError(safeErrorMessage(e));
-                  } finally {
-                    setBusy(false);
-                  }
-                }}
               />
+            ) : (
+              confirm &&
+              slot && (
+                <BookingDialog
+                  provider={p}
+                  liveBoundary={api.mode === "live"}
+                  slot={slot}
+                  reason={reason}
+                  busy={busy}
+                  error={t(error)}
+                  close={() => setConfirm(false)}
+                  submit={async () => {
+                    setBusy(true);
+                    try {
+                      const a = await booking.create(slot.id, reason.trim());
+                      changed();
+                      notify("Your appointment is confirmed.");
+                      router.push(`/patient/appointments/${a.id}`);
+                    } catch (e) {
+                      setError(safeErrorMessage(e));
+                    } finally {
+                      setBusy(false);
+                    }
+                  }}
+                />
+              )
             )}
           </>
         )}
@@ -894,18 +919,6 @@ function Appointments({ id }: { id?: string }) {
     const appointment = await booking.detail(id);
     return appointment ? [appointment] : [];
   }, [booking, id, refresh]);
-  if (booking.implementation === "unavailable")
-    return (
-      <>
-        <Heading
-          title={t("Appointments")}
-          description={t(
-            "Keep your upcoming visits and past appointments together.",
-          )}
-        />
-        <BookingUnavailable />
-      </>
-    );
 
   return (
     <>

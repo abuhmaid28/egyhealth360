@@ -1,4 +1,5 @@
 /** Real-browser Golden Demo regression. Built Next app; no API or database required. */
+import { testLiveBooking } from "./support/ui-booking-browser.mjs";
 import { testPolish } from "./support/ui-polish-browser.mjs";
 import assert from "node:assert/strict";
 import { testArabic } from "./support/ui-rtl-browser.mjs";
@@ -398,6 +399,7 @@ try {
   await testLiveAvailability(browser, origin, shots);
   await testArabic(browser, origin, shots);
   await testPolish(browser, origin, shots);
+  await testLiveBooking(browser, origin, shots);
   assert.deepEqual(errors, []);
   console.log(
     "PASS: browser Golden Demo, role boundaries, patient privacy, reload continuity, 23 route state variants + live HTTP contract probe, desktop/tablet/mobile navigation and overflow; no browser exceptions.",

@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { createServer, request } from "node:http";
 import { chromium } from "playwright";
-import { isolatedAvailability } from "../tests/support/availability.mjs";
+import { isolatedBookings } from "../tests/support/bookings.mjs";
+import { testRealBooking } from "./support/ui-booking-real.mjs";
 assert.ok(
   process.env.DATABASE_URL,
   "A disposable PostgreSQL DATABASE_URL is required.",
@@ -16,7 +17,7 @@ try {
       ? { executablePath: process.env.EH_UI_CHROMIUM }
       : {}),
   });
-  await isolatedAvailability(async (f) => {
+  await isolatedBookings(async (f) => {
     const backend = new URL((await f.request()).response.url).origin;
     const proxy = createServer((incoming, outgoing) => {
       const upstream = request(
@@ -140,31 +141,17 @@ try {
       );
       const before = (await f.availability.history(f.actors.clinician, {}))
         .data;
-      await page.locator(".live-slots button").first().click();
-      await page.getByRole("button", { name: "مراجعة الحجز التجريبي" }).click();
-      await page.getByRole("button", { name: "تأكيد الحجز التجريبي" }).click();
-      await page
-        .getByText("تم حفظ الموعد التجريبي — لم تُحجز الفترة الفعلية", {
-          exact: true,
-        })
-        .waitFor();
-      assert.equal((await f.request(f.path)).json.meta.total, 1);
+      await testRealBooking(page, f);
       assert.deepEqual(
-        (await f.availability.history(f.actors.clinician, {})).data,
+        (await f.availability.history(f.actors.clinician, {})).data.filter(
+          (s) => before.some((v) => v.id === s.id),
+        ),
         before,
-      );
-      assert.equal(
-        (
-          await f.pool.query(
-            "SELECT count(*)::int n FROM clinician_patient_assignments",
-          )
-        ).rows[0].n,
-        0,
       );
       assert.deepEqual(errors, []);
       await page.close();
       console.log(
-        "PASS: real Nest/PostgreSQL/browser availability list, finite publish, overlap error, terminal withdrawal, public clinic timezone, explicit demo handoff; publication history unchanged by demo booking, zero clinical assignments.",
+        "PASS: real Nest/PostgreSQL/browser availability list, finite publish, overlap error, terminal withdrawal, public clinic timezone, real Booking lifecycle; original availability publication history retained, zero clinical assignments.",
       );
     } finally {
       web.kill("SIGTERM");

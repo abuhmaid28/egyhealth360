@@ -61,7 +61,7 @@ test("booking presentation service is demo-only and uses existing scoped adapter
   await assert.rejects(service.clinicianSchedule(), /cannot access/);
   await assert.rejects(service.detail(appointment.id), /cannot access/);
 });
-test("unintegrated live booking service never invokes adapter methods or speculative HTTP", async () => {
+test("live logistics cannot be coerced into clinical-shaped demo appointment methods", async () => {
   const service = createBookingService(
     new Proxy(
       { mode: "live" },
@@ -73,7 +73,7 @@ test("unintegrated live booking service never invokes adapter methods or specula
       },
     ),
   );
-  assert.equal(service.implementation, "unavailable");
+  assert.equal(service.implementation, "live");
   for (const action of [
     () => service.create("slot", "reason"),
     () => service.listOwn(),
@@ -332,7 +332,7 @@ test("live requests use existing OpenAPI routes, session CSRF, own-only profile 
     globalThis.fetch = original;
   }
 });
-test("live future capabilities fail explicitly without network calls or demo fallback", async () => {
+test("legacy clinical-shaped demo methods remain unavailable without network calls or synthetic fallback", async () => {
   const original = globalThis.fetch;
   let count = 0;
   globalThis.fetch = async () => {

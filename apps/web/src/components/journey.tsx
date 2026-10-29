@@ -1,34 +1,9 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import type { Role } from "../lib/api/contracts";
 import { useLocale } from "../lib/i18n/context";
 import { useApp } from "./context";
 import { Badge, Card, Icon } from "./ui";
-
-export function BookingUnavailable({ doctor = false }: { doctor?: boolean }) {
-  const { t } = useLocale();
-  return (
-    <Card className="booking-unavailable">
-      <span className="icon-tile">
-        <Icon name="calendar" />
-      </span>
-      <h3>{t("Live booking is not connected")}</h3>
-      <p className="muted">
-        {t(
-          "Published availability is live. Booking and visit workflows are available in the graduation demo only.",
-        )}
-      </p>
-      <Link
-        href={doctor ? "/doctor/availability" : "/patient/discover"}
-        className="button secondary"
-      >
-        {doctor ? t("Manage availability") : t("Find a doctor")}
-        <Icon name="arrow" size={16} />
-      </Link>
-    </Card>
-  );
-}
 
 const destinations = {
   doctor: {

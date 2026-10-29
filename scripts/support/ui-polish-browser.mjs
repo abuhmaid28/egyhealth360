@@ -268,20 +268,35 @@ export async function testPolish(browser, origin, shots) {
         },
       }),
     );
+    await page.route("**/api/v1/directory/**", (route) =>
+      route.fulfill({ json: { data: [] } }),
+    );
+    await page.route("**/api/v1/me/bookings?*", (route) =>
+      route.fulfill({
+        json: { data: [], meta: { page: 1, pageSize: 20, total: 0 } },
+      }),
+    );
     await page.evaluate(() =>
       globalThis.localStorage.setItem("eh360-ui-mode", "live"),
     );
     await page.goto(origin + "/patient/appointments");
     await page
       .getByRole("heading", {
-        name: t("Live booking is not connected"),
+        name: t("No bookings yet"),
         exact: true,
       })
       .waitFor();
-    await responsive("unavailable live booking");
+    await responsive("empty live booking history");
     assert.equal(await page.locator(".journey-continuation").count(), 0);
     assert.ok(
-      requests.every((url) => new URL(url).pathname === "/api/v1/auth/me"),
+      requests.every((url) =>
+        [
+          "/api/v1/auth/me",
+          "/api/v1/me/bookings",
+          "/api/v1/directory/providers",
+          "/api/v1/directory/clinics",
+        ].includes(new URL(url).pathname),
+      ),
     );
     assert.deepEqual(errors, []);
     await page.close();

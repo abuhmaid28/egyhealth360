@@ -1,3 +1,4 @@
+import { BookingUiError, createLiveBookingApi } from "./live-booking";
 import { UiError } from "./errors";
 import { availabilityPage, ownSlot, publicSlot } from "./availability";
 import type {
@@ -24,6 +25,11 @@ export function createLiveAdapter(): HealthcareAdapter {
         ...init?.headers,
       },
     });
+    if (
+      !response.ok &&
+      (path.startsWith("/me/bookings") || path.startsWith("/me/schedule"))
+    )
+      throw new BookingUiError(response.status);
     if (!response.ok && path.includes("availability")) {
       const messages: Record<number, string> = {
         400: "Check the clinic and explicit timestamp offsets, interval duration, lead time and horizon against clinic settings.",
@@ -60,8 +66,10 @@ export function createLiveAdapter(): HealthcareAdapter {
       "This capability is not integrated on main yet. Use the graduation demo to explore this journey.",
     );
   };
+  const liveBookings = createLiveBookingApi(request, () => csrf);
   return {
     mode: "live",
+    liveBookings,
     async session() {
       try {
         return session((await request<{ data: Auth }>("/auth/me")).data);
@@ -87,6 +95,7 @@ export function createLiveAdapter(): HealthcareAdapter {
         headers: { "X-CSRF-Token": csrf },
       });
       csrf = "";
+      liveBookings.clearCommands();
     },
     async providers() {
       return (

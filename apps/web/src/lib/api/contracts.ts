@@ -1,3 +1,4 @@
+import type { LiveBookingApi } from "./live-booking";
 /** Frontend contracts. Public directory mirrors main OpenAPI; future capabilities are UI-only. */
 export type Role =
   | "PATIENT"
@@ -120,6 +121,7 @@ export interface Operations {
 }
 export interface HealthcareAdapter {
   readonly mode: Mode;
+  readonly liveBookings?: LiveBookingApi;
   session(): Promise<Session | null>;
   login(email: string, password: string): Promise<Session>;
   logout(): Promise<void>;

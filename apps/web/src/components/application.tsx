@@ -13,7 +13,6 @@ import type {
 import { createDemoAdapter } from "../lib/mock/adapter";
 import { createLiveAdapter } from "../lib/api/live";
 import { createBookingService } from "../lib/api/booking";
-import { previewDemoBooking } from "../lib/mock/booking";
 import { Context } from "./context";
 import {
   Avatar,
@@ -235,20 +234,6 @@ export function Application() {
         notify: setToast,
         changed: () => setRefresh((v) => v + 1),
         openDemoWorkspace: enter,
-        startDemoBooking: async (provider, slot, reason) => {
-          const demo = chooseMode("demo") as ReturnType<
-            typeof createDemoAdapter
-          >;
-          const { session: synthetic, appointment } = await previewDemoBooking(
-            demo,
-            provider,
-            slot,
-            reason,
-          );
-          setSession(synthetic);
-          setRefresh((v) => v + 1);
-          return appointment;
-        },
       }}
     >
       <a className="skip" href="#main">

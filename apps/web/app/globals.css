@@ -3103,3 +3103,113 @@ textarea {
     padding: 20px;
   }
 }
+
+/* Real Booking uses logistics cards, separate from clinical demo appointments. */
+.logistics-boundary {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 18px;
+  margin-block: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--teal-soft);
+  color: #215b51;
+}
+.logistics-boundary p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.logistics-boundary > svg {
+  flex-shrink: 0;
+  margin-block-start: 3px;
+}
+.live-booking-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 22px;
+  border-block-end: 1px solid var(--line);
+}
+.live-booking-row:last-child {
+  border: 0;
+}
+.live-booking-row > div {
+  min-width: 0;
+}
+.booking-identity h3 {
+  margin-block: 12px 8px;
+  overflow-wrap: anywhere;
+}
+.booking-identity p {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 13px;
+}
+.booking-identity p svg {
+  flex-shrink: 0;
+}
+.booking-status,
+.booking-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.booking-actions {
+  margin-block: 22px 14px;
+}
+.booking-time {
+  font-size: 13px;
+  line-height: 1.8;
+  margin-block: 12px;
+  overflow-wrap: anywhere;
+}
+.booking-time small {
+  display: block;
+  color: var(--muted);
+}
+.observation-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-block: 18px;
+  border-block-end: 1px solid var(--line);
+  font-size: 13px;
+}
+.observation-row p {
+  flex-basis: 100%;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.reschedule-modal .slots {
+  max-height: 38dvh;
+  overflow-y: auto;
+}
+.reschedule-modal .slots button {
+  padding: 12px;
+}
+.reschedule-modal .booking-time {
+  margin: 0;
+}
+.booking-status .badge {
+  white-space: normal;
+}
+@media (max-width: 560px) {
+  .live-booking-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .booking-actions .button {
+    flex: 1 1 150px;
+  }
+  .logistics-boundary {
+    padding: 14px;
+  }
+  .reschedule-modal .slots {
+    grid-template-columns: 1fr;
+  }
+}

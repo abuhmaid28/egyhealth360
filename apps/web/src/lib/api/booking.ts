@@ -3,7 +3,7 @@ import type { Appointment, HealthcareAdapter } from "./contracts";
 
 /** Presentation capabilities, not a future backend API contract. No HTTP paths here. */
 export interface BookingService {
-  readonly implementation: "demo" | "unavailable";
+  readonly implementation: "demo" | "live";
   create(slotId: string, reason: string): Promise<Appointment>;
   listOwn(): Promise<Appointment[]>;
   detail(id: string): Promise<Appointment | undefined>;
@@ -11,8 +11,8 @@ export interface BookingService {
 }
 
 /** The existing adapter remains responsible for current workspace scope.
- * Live booking is deliberately unavailable even when live availability exists.
- * Replace this factory after a separately reviewed integration with merged contracts.
+ * Clinical-shaped demo appointments are never projected from live booking logistics.
+ * Live screens consume HealthcareAdapter.liveBookings instead.
  */
 export function createBookingService(api: HealthcareAdapter): BookingService {
   const unavailable = async (): Promise<never> => {
@@ -22,7 +22,7 @@ export function createBookingService(api: HealthcareAdapter): BookingService {
   };
   if (api.mode === "live")
     return {
-      implementation: "unavailable",
+      implementation: "live",
       create: unavailable,
       listOwn: unavailable,
       detail: unavailable,

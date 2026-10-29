@@ -1,5 +1,8 @@
 # UI Phase 3 — presentation polish and booking boundary
 
+> Current PR #55 continuation: [Real Booking integration](V3_UI_REAL_BOOKING.md) now provides Live create/history/detail/cancel/reschedule/schedule/attendance/correction from merged Slice 3. The availability-only/Booking-unavailable boundaries below describe the earlier phase baseline. General clinical workflows remain Demo-only; Booking grants no clinical authority.
+
+
 Branch `feat/v3-ui-phase3-polish`, starting main `ac590fbae0e1cf4244928dee33ad2e5328d7ece8` (merged Arabic/RTL PR #54). Product Owner session authorization is limited to this frontend track. Backend Slice 3 / PR #53 is separate and untouched. No backend completion, clinical authority or merge is claimed.
 
 ## Delivered experience

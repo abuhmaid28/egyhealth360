@@ -358,6 +358,7 @@ export function Resource<T>({
               "Demo error preview. Choose “Populated” to restore the view.",
           )}
         </p>
+        <SessionRecovery message={resource.error} />
         <button className="button secondary" onClick={resource.retry}>
           {t("Try again")}
         </button>
@@ -373,6 +374,24 @@ export function Resource<T>({
       />
     );
   return resource.data !== undefined ? children(resource.data) : null;
+}
+export function SessionRecovery({ message }: { message?: string }) {
+  const { t } = useLocale();
+  if (
+    message !== "Your session has ended. Please sign in again." &&
+    message !==
+      "Request verification failed. Refresh your session before retrying."
+  )
+    return null;
+  return (
+    <button
+      type="button"
+      className="button secondary"
+      onClick={() => window.location.reload()}
+    >
+      {t("Refresh session")}
+    </button>
+  );
 }
 export function Detail({
   icon,
