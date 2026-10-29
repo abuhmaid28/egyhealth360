@@ -80,13 +80,7 @@ export function createLiveAdapter(): HealthcareAdapter {
     );
   };
   const liveBookings = createLiveBookingApi(request, () => csrf);
-  // Stage A: disabled in normal builds. The explicit test-build flag permits
-  // controlled HTTP fixtures only; it is NOT a claim of merged backend support.
-  const consultationOpening = createConsultationOpeningApi(
-    request,
-    () => csrf,
-    process.env.NEXT_PUBLIC_EH_OPENING_FIXTURE === "stage-a-controlled-fixture",
-  );
+  const consultationOpening = createConsultationOpeningApi(request, () => csrf);
   return {
     mode: "live",
     consultationOpening,

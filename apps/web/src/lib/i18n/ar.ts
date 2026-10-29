@@ -812,8 +812,6 @@ export const ar: Record<string, string> = {
   "Opening may be eligible": "قد يكون فتح الاستشارة متاحاً",
   "Upcoming visit": "زيارة قادمة",
   "Consultation opening": "فتح الاستشارة",
-  "Consultation opening is awaiting backend integration. Your real booking remains unchanged.":
-    "فتح الاستشارة بانتظار ربط الخدمة الخلفية. يبقى حجزك الفعلي دون تغيير.",
   "Consultation can be opened when the scheduled visit begins. The server checks the actual time and current authority.":
     "يمكن فتح الاستشارة عند بدء الموعد المحدد. يتحقق الخادم من الوقت الفعلي والصلاحيات الحالية.",
   "This operational state does not allow consultation opening. Cancelled, rescheduled and no-show visits cannot be opened.":
@@ -860,4 +858,8 @@ export const ar: Record<string, string> = {
     "تغير الحجز أو طلب فتح الاستشارة. حدّث الحجز لعرض حالته الحالية قبل إعادة المحاولة.",
   "The opening service is unavailable. The outcome is uncertain. Retry the unchanged opening command to check its outcome; do not start another visit.":
     "خدمة فتح الاستشارة غير متاحة والنتيجة غير مؤكدة. أعد المحاولة بنفس طلب الفتح للتحقق من نتيجته؛ لا تبدأ زيارة أخرى.",
+  "Consultation opening is unavailable. Refresh the booking before trying again.":
+    "فتح الاستشارة غير متاح. حدّث الحجز قبل إعادة المحاولة.",
+  "Booking is logistics only. It grants no access to medical records. Consultation opening requires a separate current clinical relationship. Clinical documentation, prescriptions, tests and clinical follow-up remain Demo-only.":
+    "الحجز إجراء تنظيمي فقط ولا يمنح صلاحية الاطلاع على السجل الطبي. يتطلب فتح الاستشارة علاقة رعاية حالية مستقلة. يبقى التوثيق السريري والوصفات والفحوصات والمتابعة السريرية في الوضع التجريبي فقط.",
 };

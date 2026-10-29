@@ -75,7 +75,7 @@ export function ConsultationOpeningCard({
   const opened = booking.state === "IN_CONSULTATION" || !!receipt;
   const [confirm, setConfirm] = useState(false);
   const explanation = !service?.available
-    ? "Consultation opening is awaiting backend integration. Your real booking remains unchanged."
+    ? "Consultation opening is unavailable. Refresh the booking before trying again."
     : eligibility === "too-early"
       ? "Consultation can be opened when the scheduled visit begins. The server checks the actual time and current authority."
       : eligibility === "unavailable"

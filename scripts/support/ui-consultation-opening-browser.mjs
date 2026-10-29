@@ -1,4 +1,4 @@
-/** Stage A HTTP-controlled fixtures. These are NOT real backend opening proof. */
+/** Controlled merged-contract UI tests. Real persistence proof is separate. */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
@@ -12,12 +12,7 @@ new Function(
   }).outputText,
 )(dictionary);
 const id = (n) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
-export async function testConsultationOpening(
-  browser,
-  origin,
-  shots,
-  requireControlled = false,
-) {
+export async function testConsultationOpening(browser, origin, shots) {
   for (const locale of ["en", "ar"]) {
     const page = await browser.newPage({
       viewport: { width: 1440, height: 1000 },
@@ -111,6 +106,8 @@ export async function testConsultationOpening(
           json: {
             data: {
               id: id(8),
+              encounterId: id(9),
+              bookingState: "IN_CONSULTATION",
               bookingId: id(1),
               providerId: id(3),
               clinicId: id(4),
@@ -199,29 +196,8 @@ export async function testConsultationOpening(
     await responsive("booking detail / eligibility");
     await page.setViewportSize({ width: 1440, height: 1000 });
     if (locale === "en") await snap("40-en-opening-booking-detail");
-    // The default Stage A build has no active backend opening transport.
-    if (await button("Start consultation").isDisabled()) {
-      assert.equal(
-        requireControlled,
-        false,
-        "controlled build must exercise actual opening UI states",
-      );
-      await page
-        .getByText(
-          t(
-            "Consultation opening is awaiting backend integration. Your real booking remains unchanged.",
-          ),
-          { exact: true },
-        )
-        .waitFor();
-      assert.equal(attempts, 0);
-      assert.ok(!calls.some((c) => c.path.endsWith("/consultation")));
-      await bodySafe();
-      assert.deepEqual(errors, []);
-      await page.close();
-      continue;
-    }
-    // Controlled test-build only. No clinical read or relationship mutation is stubbed.
+    assert.equal(await button("Start consultation").isEnabled(), true);
+    // No clinical read or relationship mutation is mocked by these UI tests.
     current = { ...booking, state: "IN_CONSULTATION", attendance: "ATTENDED" };
     await page.reload();
     await page
@@ -381,6 +357,6 @@ export async function testConsultationOpening(
     await page.close();
   }
   console.log(
-    "PASS Consultation Opening Stage A EN/AR/RTL 1440/834/390: normal-build integration gate; explicit controlled fixture builds additionally prove eligibility, scoped access errors, pending/retry, metadata-only shell, focus restoration and privacy. NOT real backend proof.",
+    "PASS Consultation Opening controlled EN/AR/RTL 1440/834/390: eligible/early/terminal/opened states, scoped access errors, pending/retry, metadata shell, focus restoration and privacy. Real persistence proof is separate.",
   );
 }

@@ -1,8 +1,7 @@
 import { UiError } from "./errors";
 import type { Availability, Page } from "./contracts";
 
-/** Slice 3 logistics projection; anticipated IN_CONSULTATION is from the frozen
- * I2 opening lifecycle and must be reconciled against merged Slice 4 in Stage B. Never a clinical/patient-record contract. */
+/** Exact merged Slice 3 + Slice 4 logistics projection. No clinical record authority. */
 export type BookingState =
   | "BOOKED"
   | "CANCELLED"

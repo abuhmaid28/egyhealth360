@@ -1,10 +1,11 @@
 import { UiError } from "./errors";
 import type { LiveBooking } from "./live-booking";
 
-/** Stage A presentation receipt, NOT a frozen backend DTO. Stage B must reconcile
- * this allowlist against merged OpenAPI before enabling the normal Live adapter. */
+/** Exact merged Slice 4 opening projection. No clinical documentation or authority ticket. */
 export interface OpeningReceipt {
   id: string;
+  encounterId: string;
+  bookingState: "IN_CONSULTATION";
   bookingId: string;
   providerId: string;
   clinicId: string;
@@ -52,12 +53,15 @@ export function projectOpening(
   if (
     r.bookingId !== bookingId ||
     r.state !== "OPEN" ||
+    r.bookingState !== "IN_CONSULTATION" ||
     typeof r.openedAt !== "string" ||
     !Number.isFinite(Date.parse(r.openedAt))
   )
     throw new OpeningUiError(503);
   return {
     id: uuid(r.id),
+    encounterId: uuid(r.encounterId),
+    bookingState: "IN_CONSULTATION",
     bookingId: uuid(r.bookingId),
     providerId: uuid(r.providerId),
     clinicId: uuid(r.clinicId),
@@ -71,19 +75,14 @@ type Request = <T>(path: string, init?: RequestInit) => Promise<T>;
 export function createConsultationOpeningApi(
   request: Request,
   csrf: () => string,
-  available = false,
   newKey = () => crypto.randomUUID(),
 ): ConsultationOpeningApi {
   const pending = new Map<string, string>();
   const receipts = new Map<string, OpeningReceipt>();
   return {
-    available,
+    available: true,
     receipt: (id) => receipts.get(id),
     async open(id) {
-      if (!available)
-        throw new UiError(
-          "Consultation opening is awaiting backend integration. Your real booking remains unchanged.",
-        );
       uuid(id);
       let key = pending.get(id);
       if (!key) {

@@ -4,6 +4,13 @@ import { spawn } from "node:child_process";
 import { createServer, request } from "node:http";
 import { chromium } from "playwright";
 import { isolatedBookings } from "../tests/support/bookings.mjs";
+import {
+  createDatabase,
+  createRelationshipPersistence,
+} from "../packages/db/dist/index.js";
+import { createApp } from "../apps/api/dist/app.js";
+import { createPasswordVerifier } from "../apps/api/dist/password.js";
+import { testRealConsultation } from "./support/ui-consultation-opening-real.mjs";
 import { testRealBooking } from "./support/ui-booking-real.mjs";
 assert.ok(
   process.env.DATABASE_URL,
@@ -18,12 +25,48 @@ try {
       : {}),
   });
   await isolatedBookings(async (f) => {
-    const backend = new URL((await f.request()).response.url).origin;
+    // Current Nest directory/relationship/availability/Booking/opening wiring.
+    // Same isolated database; no HTTP stubs or direct assignment helper.
+    const database = createDatabase(f.url);
+    const relationships = createRelationshipPersistence(f.url);
+    const api = await createApp(
+      database,
+      {
+        config: f.config,
+        store: f.auth,
+        passwords: await createPasswordVerifier(),
+      },
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      f.directory,
+      relationships,
+      f.availability,
+      f.bookings,
+      f.consultations,
+    );
+    await api.listen(0, "127.0.0.1");
+    const backend = await api.getUrl();
+    const networkFault = { dropNextOpeningSuccess: false, dropped: 0 };
     const proxy = createServer((incoming, outgoing) => {
       const upstream = request(
         backend + incoming.url,
         { method: incoming.method, headers: incoming.headers },
         (r) => {
+          // A genuine committed response is lost once, not replaced by a fake
+          // backend outcome. The user must explicitly retry the same command.
+          if (
+            networkFault.dropNextOpeningSuccess &&
+            incoming.url.endsWith("/consultation") &&
+            r.statusCode === 200
+          ) {
+            networkFault.dropNextOpeningSuccess = false;
+            networkFault.dropped++;
+            r.resume();
+            r.once("end", () => outgoing.destroy());
+            return;
+          }
           outgoing.writeHead(r.statusCode, r.headers);
           r.pipe(outgoing);
         },
@@ -141,7 +184,8 @@ try {
       );
       const before = (await f.availability.history(f.actors.clinician, {}))
         .data;
-      await testRealBooking(page, f);
+      const { attended } = await testRealBooking(page, f);
+      await testRealConsultation(page, f, attended, networkFault);
       assert.deepEqual(
         (await f.availability.history(f.actors.clinician, {})).data.filter(
           (s) => before.some((v) => v.id === s.id),
@@ -151,13 +195,16 @@ try {
       assert.deepEqual(errors, []);
       await page.close();
       console.log(
-        "PASS: real Nest/PostgreSQL/browser availability list, finite publish, overlap error, terminal withdrawal, public clinic timezone, real Booking lifecycle; original availability publication history retained, zero clinical assignments.",
+        "PASS: real Nest/PostgreSQL/browser availability list, finite publish, overlap error, terminal withdrawal, public clinic timezone, real Booking lifecycle; original availability publication history retained; separate relationship-gated Consultation Opening proof PASS.",
       );
     } finally {
       web.kill("SIGTERM");
       await webExit;
       proxy.closeAllConnections();
       await new Promise((resolve) => proxy.close(resolve));
+      await api.close();
+      await relationships.close();
+      await database.close();
     }
   });
 } finally {

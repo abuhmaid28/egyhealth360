@@ -218,4 +218,5 @@ export async function testRealBooking(page, f) {
   console.log(
     "PASS real browser/API Booking: real create and occupied-slot hiding, patient history/detail, atomic same-clinician/clinic reschedule, cancellation after provider unpublication, exact clinician schedule, explicit attendance/no-show, reasoned correction with retained terminal history, logistics privacy, zero clinical queries/assignments/authority.",
   );
+  return { attended };
 }

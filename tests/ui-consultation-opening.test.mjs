@@ -32,9 +32,11 @@ const {
 } = require(join(output, "consultation-opening.js"));
 const { createLiveAdapter } = require(join(output, "live.js"));
 const id = (n) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
-// Provisional Stage A view receipt. No merged backend capability is claimed.
+// Exact merged Slice 4 response contract.
 const receipt = {
   id: id(1),
+  encounterId: id(6),
+  bookingState: "IN_CONSULTATION",
   bookingId: id(2),
   providerId: id(3),
   clinicId: id(4),
@@ -43,19 +45,6 @@ const receipt = {
 };
 const keyPattern =
   /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
-test("Stage A normal adapter blocks opening before HTTP; no manufactured success or Demo fallback", async () => {
-  let calls = 0;
-  const api = createConsultationOpeningApi(
-    async () => {
-      calls++;
-    },
-    () => "csrf",
-  );
-  assert.equal(api.available, false);
-  await assert.rejects(api.open(id(2)), /awaiting backend integration/);
-  assert.equal(calls, 0);
-  assert.equal(api.receipt(id(2)), undefined);
-});
 test("opening sends exact operationKey body, POST and CSRF only; no patient identity or clinical data", async () => {
   const calls = [];
   const api = createConsultationOpeningApi(
@@ -64,7 +53,6 @@ test("opening sends exact operationKey body, POST and CSRF only; no patient iden
       return { data: receipt };
     },
     () => "test-csrf",
-    true,
   );
   assert.deepEqual(await api.open(id(2)), receipt);
   const [path, init] = calls[0];
@@ -84,7 +72,6 @@ test("uncertain failure and explicit duplicate success replay retain exact key; 
       return { data: { ...receipt, bookingId: path.split("/")[3] } };
     },
     () => "csrf",
-    true,
   );
   await assert.rejects(
     api.open(id(2)),
@@ -112,7 +99,6 @@ test("concurrent unchanged opening commands share a key while response is delaye
       return { data: receipt };
     },
     () => "csrf",
-    true,
   );
   const first = api.open(id(2)),
     second = api.open(id(2));
@@ -129,7 +115,6 @@ test("logout/session clearing removes receipts and operation keys", async () => 
       return { data: receipt };
     },
     () => "csrf",
-    true,
   );
   await api.open(id(2));
   assert.deepEqual(api.receipt(id(2)), receipt);
@@ -157,7 +142,7 @@ test("opening receipt is an explicit allowlist; internal IDs, clinical fields an
     receipt,
   );
 });
-test("malformed/mismatched provisional receipts fail closed without retaining a success", async () => {
+test("malformed/mismatched merged receipts fail closed without retaining a success", async () => {
   for (const bad of [
     null,
     {},
@@ -169,7 +154,6 @@ test("malformed/mismatched provisional receipts fail closed without retaining a 
     const api = createConsultationOpeningApi(
       async () => ({ data: bad }),
       () => "csrf",
-      true,
     );
     await assert.rejects(api.open(id(2)), (e) => e.status === 503);
     assert.equal(api.receipt(id(2)), undefined);
@@ -199,7 +183,6 @@ for (const status of [400, 401, 403, 404, 409, 503])
         throw new OpeningUiError(status);
       },
       () => "csrf",
-      true,
     );
     await assert.rejects(
       api.open(id(2)),
@@ -217,8 +200,6 @@ test("existing Live adapter keeps consultation documentation unavailable and sep
 });
 test("persistent Live capability clears receipts and keys on identity change, expired resolution and logout", async () => {
   const originalFetch = globalThis.fetch;
-  const originalFlag = process.env.NEXT_PUBLIC_EH_OPENING_FIXTURE;
-  process.env.NEXT_PUBLIC_EH_OPENING_FIXTURE = "stage-a-controlled-fixture";
   const bodies = [];
   let identity = "clinician-one@example.invalid",
     expired = false;
@@ -257,8 +238,52 @@ test("persistent Live capability clears receipts and keys on identity change, ex
     assert.equal(api.consultationOpening.receipt(id(2)), undefined);
   } finally {
     globalThis.fetch = originalFetch;
-    if (originalFlag === undefined)
-      delete process.env.NEXT_PUBLIC_EH_OPENING_FIXTURE;
-    else process.env.NEXT_PUBLIC_EH_OPENING_FIXTURE = originalFlag;
   }
+});
+
+test("normal Live transport is enabled with merged schema, session CSRF/no-store and no authority fields", async () => {
+  const previous = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (path, init) => {
+    calls.push({ path, init });
+    if (path.endsWith("/auth/me"))
+      return globalThis.Response.json({
+        data: {
+          user: { role: "CLINICIAN", email: "synthetic@example.invalid" },
+          csrfToken: "csrf-current",
+        },
+      });
+    return globalThis.Response.json({ data: receipt });
+  };
+  try {
+    const api = createLiveAdapter();
+    await api.session();
+    assert.equal(api.consultationOpening.available, true);
+    assert.deepEqual(await api.consultationOpening.open(id(2)), receipt);
+    const { path, init } = calls.at(-1);
+    assert.equal(path, `/api/v1/me/bookings/${id(2)}/consultation`);
+    assert.equal(init.cache, "no-store");
+    assert.equal(init.credentials, "same-origin");
+    assert.equal(init.headers["X-CSRF-Token"], "csrf-current");
+    assert.deepEqual(Object.keys(JSON.parse(init.body)), ["operationKey"]);
+  } finally {
+    globalThis.fetch = previous;
+  }
+});
+test("opening projection and command match the actual merged OpenAPI allowlist", () => {
+  const schema = require(resolve("docs/openapi.json")).components.schemas;
+  assert.deepEqual(
+    Object.keys(projectOpening(receipt, id(2))).sort(),
+    schema.ConsultationOpening.required.toSorted(),
+  );
+  assert.deepEqual(schema.ConsultationOpen.required, ["operationKey"]);
+  for (const bad of [
+    { ...receipt, encounterId: "internal" },
+    { ...receipt, bookingState: "BOOKED" },
+    { ...receipt, encounterId: undefined },
+  ])
+    assert.throws(
+      () => projectOpening(bad, id(2)),
+      (e) => e.status === 503,
+    );
 });
