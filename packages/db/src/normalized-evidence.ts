@@ -394,7 +394,7 @@ export async function internalExecuteEvidenceSnapshot(
           recorded_by_user_id AS "recordedByUserId",
           created_at AS "createdAt"
         FROM public.clinical_encounters
-        WHERE patient_id = ${patientId}::uuid
+        WHERE purpose = 'HTN_BP_FOLLOWUP' AND patient_id = ${patientId}::uuid
           AND occurred_at >= ${queryStart.toISOString()}::timestamptz(6)
           AND occurred_at < ${queryEnd.toISOString()}::timestamptz(6)
         ORDER BY occurred_at ASC, id ASC
@@ -415,7 +415,7 @@ export async function internalExecuteEvidenceSnapshot(
           ON a.encounter_id = e.id AND a.patient_id = e.patient_id
         JOIN public.blood_pressure_measurements b
           ON b.id = a.blood_pressure_measurement_id AND b.patient_id = a.patient_id
-        WHERE e.patient_id = ${patientId}::uuid
+        WHERE e.purpose = 'HTN_BP_FOLLOWUP' AND e.patient_id = ${patientId}::uuid
           AND public.bp31_effective(b.id)
           AND e.occurred_at >= ${queryStart.toISOString()}::timestamptz(6)
           AND e.occurred_at < ${queryEnd.toISOString()}::timestamptz(6)

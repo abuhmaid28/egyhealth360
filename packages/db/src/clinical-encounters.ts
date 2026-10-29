@@ -8,7 +8,7 @@ export type ClinicalEncounterSnapshot = Readonly<{ id: string; patientId: string
 export type EncounterBloodPressureAssociationSnapshot = Readonly<{ id: string; patientId: string; encounterId: string; bloodPressureMeasurementId: string; recordedByUserId: string; createdAt: Date }>;
 async function lockEncounter(tx: EvidenceTx, patientId: string, encounterId: string) {
   if (!evidenceUuid(encounterId)) evidenceFail('EVIDENCE_NOT_FOUND');
-  const rows = await tx.$queryRaw<{ id: string }[]>`SELECT id FROM public.clinical_encounters WHERE id=${encounterId}::uuid AND patient_id=${patientId}::uuid FOR SHARE`;
+  const rows = await tx.$queryRaw<{ id: string }[]>`SELECT id FROM public.clinical_encounters WHERE id=${encounterId}::uuid AND patient_id=${patientId}::uuid AND purpose='HTN_BP_FOLLOWUP' FOR SHARE`;
   if (rows.length !== 1) evidenceFail('EVIDENCE_NOT_FOUND');
 }
 export function createClinicalEncounterPersistence(connectionString: string | undefined) {
@@ -28,10 +28,10 @@ export function createClinicalEncounterPersistence(connectionString: string | un
       evidenceKeys(input, ['patientId', 'page', 'pageSize']); const patientId = input.patientId, page = evidencePage(input);
       return store.run(principal, patientId, false, async tx => {
         const [result] = await tx.$queryRaw<{ total: number; rows: ClinicalEncounterSnapshot[] }[]>`
-          SELECT (SELECT count(*)::integer FROM public.clinical_encounters WHERE patient_id=${patientId}::uuid) total,
+          SELECT (SELECT count(*)::integer FROM public.clinical_encounters WHERE patient_id=${patientId}::uuid AND purpose='HTN_BP_FOLLOWUP') total,
           COALESCE((SELECT jsonb_agg(to_jsonb(p) ORDER BY p."occurredAt" DESC,p.id DESC) FROM (
             SELECT id,patient_id AS "patientId",occurred_at AS "occurredAt",purpose,recorded_by_user_id AS "recordedByUserId",created_at AS "createdAt"
-            FROM public.clinical_encounters WHERE patient_id=${patientId}::uuid ORDER BY occurred_at DESC,id DESC LIMIT ${page.pageSize} OFFSET ${(page.page - 1) * page.pageSize}
+            FROM public.clinical_encounters WHERE patient_id=${patientId}::uuid AND purpose='HTN_BP_FOLLOWUP' ORDER BY occurred_at DESC,id DESC LIMIT ${page.pageSize} OFFSET ${(page.page - 1) * page.pageSize}
           ) p),'[]'::jsonb) rows`;
         return { data: result.rows.map(r => ({ ...r, occurredAt: new Date(r.occurredAt), createdAt: new Date(r.createdAt) })), meta: { ...page, total: result.total } };
       });
