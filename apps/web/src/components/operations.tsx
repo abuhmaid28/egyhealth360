@@ -1,9 +1,11 @@
 "use client";
+import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { useState } from "react";
 import type { Fulfillment } from "../lib/api/contracts";
 import { useApp } from "./context";
+import { DemoContinuation } from "./journey";
 import { Stat } from "./patient";
 import {
   Avatar,
@@ -143,6 +145,9 @@ function FulfillmentInbox({ lab }: { lab: boolean }) {
                   </Card>
                 )}
               </div>
+              <DemoContinuation
+                next={lab ? ["patient"] : ["laboratory", "patient"]}
+              />
             </>
           );
         }}
@@ -183,7 +188,7 @@ function ArtifactDetail({
           : "Prescription status updated in the demo.",
       );
     } catch (e) {
-      setError((e as Error).message);
+      setError(safeErrorMessage(e));
     } finally {
       setBusy(false);
     }
@@ -253,6 +258,7 @@ function ArtifactDetail({
                       )}
                     >
                       <textarea
+                        dir="auto"
                         rows={4}
                         required
                         maxLength={2000}

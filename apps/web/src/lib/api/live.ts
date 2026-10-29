@@ -1,3 +1,5 @@
+import { BookingUiError, createLiveBookingApi } from "./live-booking";
+import { UiError } from "./errors";
 import { availabilityPage, ownSlot, publicSlot } from "./availability";
 import type {
   HealthcareAdapter,
@@ -23,6 +25,11 @@ export function createLiveAdapter(): HealthcareAdapter {
         ...init?.headers,
       },
     });
+    if (
+      !response.ok &&
+      (path.startsWith("/me/bookings") || path.startsWith("/me/schedule"))
+    )
+      throw new BookingUiError(response.status);
     if (!response.ok && path.includes("availability")) {
       const messages: Record<number, string> = {
         400: "Check the clinic and explicit timestamp offsets, interval duration, lead time and horizon against clinic settings.",
@@ -33,13 +40,13 @@ export function createLiveAdapter(): HealthcareAdapter {
         413: "The availability request is too large.",
         415: "The availability request must use JSON.",
       };
-      throw new Error(
+      throw new UiError(
         messages[response.status] ??
           "The availability service is unavailable. Please try again.",
       );
     }
     if (!response.ok)
-      throw new Error(
+      throw new UiError(
         response.status === 401
           ? "Your session has ended. Please sign in again."
           : response.status === 404
@@ -55,12 +62,14 @@ export function createLiveAdapter(): HealthcareAdapter {
     return { role: a.user.role, name: a.user.email, mode: "live" };
   };
   const unavailable = async (): Promise<never> => {
-    throw new Error(
+    throw new UiError(
       "This capability is not integrated on main yet. Use the graduation demo to explore this journey.",
     );
   };
+  const liveBookings = createLiveBookingApi(request, () => csrf);
   return {
     mode: "live",
+    liveBookings,
     async session() {
       try {
         return session((await request<{ data: Auth }>("/auth/me")).data);
@@ -86,6 +95,7 @@ export function createLiveAdapter(): HealthcareAdapter {
         headers: { "X-CSRF-Token": csrf },
       });
       csrf = "";
+      liveBookings.clearCommands();
     },
     async providers() {
       return (
@@ -153,7 +163,7 @@ export function createLiveAdapter(): HealthcareAdapter {
     },
     async availability(providerId, query) {
       if (!providerId)
-        throw new Error("Choose a provider to view public availability.");
+        throw new UiError("Choose a provider to view public availability.");
       return (await this.availabilityPage(providerId, query)).data;
     },
     async availabilityPage(providerId, query = {}) {

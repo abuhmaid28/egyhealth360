@@ -75,6 +75,28 @@ export async function testLiveAvailability(browser, origin, shots) {
             }
           : { status: 401, json: { error: { code: "AUTH_UNAUTHENTICATED" } } },
       );
+    const liveBooking = {
+      id: "44444444-4444-4444-8444-444444444444",
+      slotId: slot.id,
+      providerId: provider,
+      clinicId: clinic,
+      patientDisplayName: "Synthetic Patient",
+      startAt: slot.startAt,
+      endAt: slot.endAt,
+      timeZone: slot.timeZone,
+      state: "BOOKED",
+      version: 1,
+      createdAt: "2026-10-28T10:00:00Z",
+      predecessorId: null,
+      successorId: null,
+      attendance: "UNKNOWN",
+      transitions: [],
+      attendanceHistory: [],
+    };
+    if (path === "/api/v1/me/bookings" && r.method() === "POST")
+      return route.fulfill({ json: { data: liveBooking } });
+    if (path === "/api/v1/me/bookings/" + liveBooking.id)
+      return route.fulfill({ json: { data: liveBooking } });
     if (path.endsWith("/directory/clinics"))
       return route.fulfill({ json: { data: publicProvider.clinics } });
     if (path.endsWith("/directory/providers"))
@@ -240,43 +262,34 @@ export async function testLiveAvailability(browser, origin, shots) {
   await navigation;
   await page.locator(".live-slots button").first().waitFor();
   await page.locator(".live-slots button").first().click();
-  await page.getByRole("button", { name: "Review demo booking" }).click();
+  await page.getByRole("button", { name: "Review live booking" }).click();
   await page
     .getByRole("dialog")
-    .getByText("Live availability → Demo booking", { exact: true })
+    .getByText("Confirm your booking", { exact: true })
     .waitFor();
-  await page.getByRole("button", { name: "Confirm demo booking" }).click();
   await page
-    .getByText("Demo appointment saved — live slot not reserved", {
-      exact: true,
-    })
+    .getByRole("button", { name: "Confirm live booking", exact: true })
+    .click();
+  await page
+    .getByRole("heading", { name: "Booking details", exact: true })
     .waitFor();
-  assert.equal(await page.getByLabel("Demo workspace").inputValue(), "PATIENT");
-  await page.getByLabel("Demo workspace").selectOption("CLINICIAN");
-  await page.getByRole("link", { name: "Open patient" }).click();
-  await page
-    .getByText("Live-slot preview · synthetic clinical continuation", {
-      exact: true,
-    })
-    .waitFor();
-  await page.getByRole("link", { name: "Open consultation workspace" }).click();
-  await page
-    .getByLabel("Presenting complaint / problems")
-    .fill("Synthetic continuation");
-  await page
-    .getByLabel("Clinician-entered diagnosis / assessment")
-    .fill("Synthetic review");
-  await page
-    .getByLabel("Released patient instructions / summary")
-    .fill("Synthetic continuity after public availability preview.");
-  await page.getByRole("button", { name: "Review & release summary" }).click();
-  await page.getByRole("button", { name: "Release demo summary" }).click();
-  await page
-    .getByText("Summary released to the demo patient", { exact: true })
-    .waitFor();
+  assert.equal(await page.getByLabel("Demo workspace").count(), 0);
+  assert.equal(
+    await page
+      .getByRole("link", { name: "Open consultation workspace" })
+      .count(),
+    0,
+  );
+  const create = calls.find(
+    (c) => c.path === "/api/v1/me/bookings" && c.method === "POST",
+  );
+  assert.deepEqual(Object.keys(JSON.parse(create.body)).sort(), [
+    "operationKey",
+    "slotId",
+  ]);
   assert.ok(
     !calls.some((c) =>
-      /booking|consultation|prescription|laboratory/.test(c.path),
+      /consultation|prescription|laboratory|assignment/.test(c.path),
     ),
   );
   // A separate live clinician session never inherits the demo role switch or synthetic clinical identity.
@@ -331,6 +344,6 @@ export async function testLiveAvailability(browser, origin, shots) {
   assert.deepEqual(errors, []);
   await page.close();
   console.log(
-    "PASS: live availability browser contracts (success/empty/error/loading/non-bookable, pagination, clinic timezone under Tokyo browser, responsive long names), explicit demo handoff and consultation continuity, clinician publish/withdraw and stable retry keys.",
+    "PASS: live availability browser contracts (success/empty/error/loading/non-bookable, pagination, clinic timezone under Tokyo browser, responsive long names), real Booking review boundary with no clinical continuation, clinician publish/withdraw and stable retry keys.",
   );
 }

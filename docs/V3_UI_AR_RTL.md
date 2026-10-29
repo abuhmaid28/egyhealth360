@@ -1,5 +1,8 @@
 # UI Phase 2 — Arabic / RTL
 
+> Current PR #55 continuation: [Real Booking integration](V3_UI_REAL_BOOKING.md) now provides Live create/history/detail/cancel/reschedule/schedule/attendance/correction from merged Slice 3. The availability-only/Booking-unavailable boundaries below describe the earlier phase baseline. General clinical workflows remain Demo-only; Booking grants no clinical authority.
+
+
 Branch `feat/v3-ui-ar-rtl-polish`, based on main `652d6fd0661a030b1eacfd9ac650a5a97c9e17a9` (merged PR #52). Authorization: [Issue #51 comment 6458941165](https://github.com/abuhmaid28/egyhealth360/issues/51#issuecomment-6458941165), within [Fast-Track delegation](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6458907853). PR #53 and backend semantics are outside this phase. No merge is performed by this task.
 
 ## Localization

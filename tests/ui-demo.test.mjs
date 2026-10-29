@@ -22,11 +22,16 @@ execFileSync(process.execPath, [
   "--skipLibCheck",
   "apps/web/src/lib/mock/adapter.ts",
   "apps/web/src/lib/api/live.ts",
+  "apps/web/src/lib/api/booking.ts",
+  "apps/web/src/lib/mock/booking.ts",
 ]);
 after(() => rmSync(output, { recursive: true, force: true }));
 const require = createRequire(import.meta.url);
 const { createDemoAdapter } = require(join(output, "mock/adapter.js"));
 const { createLiveAdapter } = require(join(output, "api/live.js"));
+const { createBookingService } = require(join(output, "api/booking.js"));
+const { previewDemoBooking } = require(join(output, "mock/booking.js"));
+const { UiError, safeErrorMessage } = require(join(output, "api/errors.js"));
 const storage = () => {
   const values = new Map();
   return {
@@ -40,6 +45,77 @@ async function booked(api) {
   const [slot] = await api.availability("mariam-hassan");
   return api.book(slot.id, "Synthetic visit");
 }
+test("booking presentation service is demo-only and uses existing scoped adapter state", async () => {
+  const api = createDemoAdapter(storage());
+  await api.enter("PATIENT");
+  const service = createBookingService(api);
+  assert.equal(service.implementation, "demo");
+  const [slot] = await api.availability("mariam-hassan");
+  const appointment = await service.create(slot.id, "ألم $& unchanged");
+  assert.deepEqual(await service.detail(appointment.id), appointment);
+  assert.deepEqual(await service.listOwn(), [appointment]);
+  assert.equal(await service.detail("missing"), undefined);
+  await api.enter("CLINICIAN");
+  assert.deepEqual(await service.clinicianSchedule(), [appointment]);
+  await api.enter("ADMIN");
+  await assert.rejects(service.clinicianSchedule(), /cannot access/);
+  await assert.rejects(service.detail(appointment.id), /cannot access/);
+});
+test("live logistics cannot be coerced into clinical-shaped demo appointment methods", async () => {
+  const service = createBookingService(
+    new Proxy(
+      { mode: "live" },
+      {
+        get(target, key) {
+          if (key === "mode") return target.mode;
+          throw new Error(`Unexpected live call: ${String(key)}`);
+        },
+      },
+    ),
+  );
+  assert.equal(service.implementation, "live");
+  for (const action of [
+    () => service.create("slot", "reason"),
+    () => service.listOwn(),
+    () => service.detail("id"),
+    () => service.clinicianSchedule(),
+  ])
+    await assert.rejects(action(), /not integrated on main/);
+});
+test("explicit preview service copies public availability into synthetic state only", async () => {
+  const demo = createDemoAdapter(storage());
+  const provider = await demo.provider("mariam-hassan");
+  const [slot] = await demo.availability(provider.id);
+  const original = globalThis.structuredClone(slot);
+  const result = await previewDemoBooking(
+    demo,
+    provider,
+    slot,
+    "أحمد unchanged",
+  );
+  assert.equal(result.session.mode, "demo");
+  assert.equal(result.session.role, "PATIENT");
+  assert.equal(result.appointment.availabilitySource, "live");
+  assert.equal(result.appointment.reason, "أحمد unchanged");
+  assert.deepEqual(slot, original);
+  assert.equal((await demo.availability(provider.id))[0].bookable, true);
+});
+test("UI errors keep authored guidance but suppress transport, parser and arbitrary payload text", () => {
+  assert.equal(
+    safeErrorMessage(new UiError("Availability changed. Please refresh.")),
+    "Availability changed. Please refresh.",
+  );
+  for (const error of [
+    new Error('{"patient":"raw-private-value"}'),
+    new SyntaxError("Unexpected JSON token"),
+    "raw response",
+    null,
+  ])
+    assert.equal(
+      safeErrorMessage(error),
+      "The service could not complete this request. Please try again.",
+    );
+});
 const visit = (id) => ({
   appointmentId: id,
   complaint: "Synthetic concern",
@@ -256,7 +332,7 @@ test("live requests use existing OpenAPI routes, session CSRF, own-only profile 
     globalThis.fetch = original;
   }
 });
-test("live future capabilities fail explicitly without network calls or demo fallback", async () => {
+test("legacy clinical-shaped demo methods remain unavailable without network calls or synthetic fallback", async () => {
   const original = globalThis.fetch;
   let count = 0;
   globalThis.fetch = async () => {

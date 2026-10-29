@@ -1,4 +1,5 @@
 "use client";
+import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import { useRef, useState } from "react";
 import type {
@@ -141,7 +142,9 @@ export function PublicAvailability({
                           {t("–")}
                           {time(s.endAt, s.timeZone)}
                         </strong>
-                        <small>{s.timeZone}</small>
+                        <small>
+                          <bdi>{s.timeZone}</bdi>
+                        </small>
                         {date(s.startAt, s.timeZone) !==
                           date(s.endAt, s.timeZone) && (
                           <small>
@@ -169,35 +172,38 @@ export function PublicAvailability({
               <Pagination meta={result.meta} change={choosePage} />
               {result.data.length > 0 && (
                 <>
-                  <Field label={t("What brings you in?")}>
-                    <textarea
-                      rows={3}
-                      maxLength={500}
-                      value={reason}
-                      onChange={(e) => setReason(e.target.value)}
-                    />
-                  </Field>
+                  {api.mode === "demo" && (
+                    <Field label={t("What brings you in?")}>
+                      <textarea
+                        dir="auto"
+                        rows={3}
+                        maxLength={500}
+                        value={reason}
+                        onChange={(e) => setReason(e.target.value)}
+                      />
+                    </Field>
+                  )}
                   {api.mode === "live" && (
                     <div className="boundary-notice">
                       <Badge tone="amber">
-                        {t("Live availability → Demo booking")}
+                        {t("Live availability → Real booking")}
                       </Badge>
                       <p>
                         {t(
-                          "The slot is published by the backend. Booking is a synthetic preview only; it will not reserve the live slot or create a care relationship.",
+                          "Confirming creates a real logistics booking. No clinical reason is collected and no medical-record access is granted.",
                         )}
                       </p>
                     </div>
                   )}
                   <button
                     className="button primary full"
-                    disabled={!valid || !reason.trim()}
+                    disabled={!valid || (api.mode === "demo" && !reason.trim())}
                     onClick={() => {
                       if (valid) onReview(valid);
                     }}
                   >
                     {api.mode === "live"
-                      ? t("Review demo booking")
+                      ? t("Review live booking")
                       : t("Review appointment")}
                     <Icon name="arrow" size={17} />
                   </button>
@@ -295,7 +301,7 @@ export function DoctorAvailability() {
                                   changed();
                                   notify("Availability withdrawn.");
                                 } catch (e) {
-                                  setError((e as Error).message);
+                                  setError(safeErrorMessage(e));
                                 } finally {
                                   setWithdrawing("");
                                 }
@@ -355,7 +361,7 @@ export function DoctorAvailability() {
                       changed();
                       notify("Availability published.");
                     } catch (e) {
-                      setError((e as Error).message);
+                      setError(safeErrorMessage(e));
                     } finally {
                       setBusy(false);
                     }

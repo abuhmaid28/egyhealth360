@@ -209,7 +209,6 @@ export const ar: Record<string, string> = {
   "Make it yours": "بياناتك وتفضيلاتك",
   "Make room for care": "أتح وقتًا للرعاية",
   "Make time for your health": "خصص وقتًا لصحتك",
-  "Manage availability": "إدارة الأوقات المتاحة",
   "Manage your profile": "إدارة ملفك الشخصي",
   "Medication name (optional)": "اسم الدواء (اختياري)",
   "Meet your next care partner": "تعرّف على شريك رعايتك القادم",
@@ -658,4 +657,153 @@ export const ar: Record<string, string> = {
   "Lab staff": "فريق المختبر",
   "Pharmacy staff": "فريق الصيدلية",
   "English and Arabic interfaces available": "العربية والإنجليزية متاحتان",
+  "Doctor profile": "ملف الطبيب",
+  "Live booking is not connected": "الحجز الفعلي غير متصل بعد",
+  "Published availability is live. Booking and visit workflows are available in the graduation demo only.":
+    "الأوقات المنشورة فعلية. تتوفر خطوات الحجز والزيارة في العرض التجريبي لمشروع التخرج فقط.",
+  "Manage availability": "إدارة الأوقات المتاحة",
+  "Demo journey": "رحلة تجريبية",
+  "Continue the care story": "واصل رحلة الرعاية",
+  "Switch synthetic workspaces to follow this browser-only journey.":
+    "انتقل بين مساحات العمل ببيانات اصطناعية لمتابعة الرحلة المحفوظة في هذا المتصفح فقط.",
+  "Continue as doctor": "تابع بدور الطبيب",
+  "Continue to pharmacy": "تابع إلى الصيدلية",
+  "Continue to laboratory": "تابع إلى المختبر",
+  "See the patient record": "اعرض سجل المريض",
+  "Clear search & filters": "مسح البحث والفلاتر",
+  "Booking progress": "خطوات الحجز",
+  "Choose a time": "اختيار الموعد",
+  "Review details": "مراجعة التفاصيل",
+  "Demo confirmation": "تأكيد تجريبي",
+  "Demo booking only. No live slot is reserved and no clinical access is granted.":
+    "حجز تجريبي فقط. لا يُحجز موعد فعلي ولا تُمنح صلاحية للاطلاع على السجل الطبي.",
+  "Consultation sections": "أقسام الاستشارة",
+  "Assessment & allergies": "التقييم والحساسية",
+  "Prescription & tests": "الوصفة والفحوصات",
+  "Instructions & follow-up": "الإرشادات والمتابعة",
+  "Released summary · read-only. Private notes remain excluded from the patient record.":
+    "ملخص منشور للقراءة فقط. تظل الملاحظات الخاصة مستبعدة من سجل المريض.",
+  "Patient instructions": "إرشادات المريض",
+  "Refresh session": "تحديث جلسة الدخول",
+  "Your booking was cancelled.": "تم إلغاء حجزك.",
+  "Your booking was rescheduled.": "تمت إعادة جدولة حجزك.",
+  "Attendance observation saved.": "تم حفظ ملاحظة الحضور.",
+  "Attendance correction appended.": "تمت إضافة تصحيح الحضور.",
+  "Live booking": "الحجز الفعلي",
+  "Live availability → Real booking": "أوقات فعلية ← حجز فعلي",
+  "Confirming creates a real logistics booking. No clinical reason is collected and no medical-record access is granted.":
+    "يُنشئ التأكيد حجزًا فعليًا لتنظيم الزيارة فقط. لا يُطلب سبب طبي ولا تُمنح صلاحية للاطلاع على السجل الطبي.",
+  "Booking is logistics only. It grants no access to medical records. Consultation, prescriptions, tests and clinical follow-up remain Demo-only.":
+    "الحجز لتنظيم الزيارة فقط ولا يمنح صلاحية الاطلاع على السجلات الطبية. تظل الاستشارة والوصفات والفحوصات والمتابعة الطبية ضمن العرض التجريبي فقط.",
+  Booked: "محجوز",
+  Cancelled: "ملغى",
+  Rescheduled: "أُعيدت جدولته",
+  "No-show": "لم يحضر",
+  Attended: "حضر",
+  "Booking created": "تم إنشاء الحجز",
+  "Booking cancelled": "تم إلغاء الحجز",
+  "Booking rescheduled": "تمت إعادة جدولة الحجز",
+  "Attendance recorded": "تم تسجيل الحضور",
+  "Attendance corrected": "تم تصحيح الحضور",
+  "Provider unavailable": "بيانات الطبيب غير متاحة",
+  "Only your booked operational schedule. Booking does not grant clinical access.":
+    "جدول الحجوزات الخاص بحسابك فقط. لا يمنح الحجز صلاحية الاطلاع على البيانات الطبية.",
+  "My bookings": "حجوزاتي",
+  "Your real bookings, retained history and next visits.":
+    "حجوزاتك الفعلية وسجل التغييرات المحفوظ وزياراتك القادمة.",
+  "Booked schedule": "جدول الحجوزات",
+  "View booking": "عرض الحجز",
+  "No bookings on this schedule": "لا توجد حجوزات في هذا الجدول",
+  "No bookings yet": "لا توجد حجوزات بعد",
+  "Bookings for your exact clinician account appear here. No patient search or clinical history is provided.":
+    "تظهر هنا حجوزات حسابك الطبي المحدد فقط. لا تتوفر إمكانية البحث عن المرضى أو الاطلاع على سجلهم الطبي.",
+  "Choose a published time to book your next visit.":
+    "اختر وقتًا منشورًا لحجز زيارتك القادمة.",
+  "Page {page} · {total} bookings": "صفحة {page} · {total} حجز",
+  "Confirm your booking": "تأكيد حجزك",
+  "Confirm this published time with your live account. Only slot and operation identifiers are submitted.":
+    "أكد هذا الوقت المنشور باستخدام حسابك الفعلي. تُرسل معرّفات الفترة والعملية فقط.",
+  "Booking confirmation": "تأكيد الحجز",
+  "Your live booking is confirmed.": "تم تأكيد حجزك الفعلي.",
+  "Retry unchanged booking": "إعادة محاولة الحجز نفسه",
+  "Confirm live booking": "تأكيد الحجز الفعلي",
+  "Review live booking": "مراجعة الحجز الفعلي",
+  "Back to schedule": "العودة إلى الجدول",
+  "Back to my bookings": "العودة إلى حجوزاتي",
+  "Booking details": "تفاصيل الحجز",
+  "Operational booking details and retained history. No medical record is included.":
+    "تفاصيل تنظيم الزيارة وسجل التغييرات المحفوظ. لا تتضمن أي سجل طبي.",
+  "Booking summary": "ملخص الحجز",
+  "Reschedule booking": "إعادة جدولة الحجز",
+  "Cancel booking": "إلغاء الحجز",
+  "Record attendance": "تسجيل الحضور",
+  "Correct attendance": "تصحيح الحضور",
+  "Attendance is recorded explicitly. Attended is eligible from the start; no-show from the end. The server rechecks current timing, state and authority.":
+    "يُسجل الحضور يدويًا: الحضور من بداية الموعد، وعدم الحضور من نهايته. يتحقق الخادم مجددًا من الوقت والحالة والصلاحية الحالية.",
+  "Cancellation does not depend on directory availability. Rescheduling keeps the same clinician and clinic.":
+    "لا يعتمد الإلغاء على إتاحة بيانات الدليل. تحتفظ إعادة الجدولة بالطبيب والعيادة نفسيهما.",
+  "This booking can no longer be cancelled or rescheduled. Only booked visits before their start can be changed.":
+    "لم يعد هذا الحجز قابلًا للإلغاء أو إعادة الجدولة. يمكن تغيير الحجوزات النشطة قبل بدايتها فقط.",
+  "Refresh booking": "تحديث الحجز",
+  "Previous booking": "الحجز السابق",
+  "Replacement booking": "الحجز البديل",
+  "Retained booking history": "سجل تغييرات الحجز المحفوظ",
+  "Attendance observations": "سجل ملاحظات الحضور",
+  "Correction appended": "تصحيح مضاف",
+  "Original observation": "الملاحظة الأصلية",
+  "No attendance observation has been recorded. Attendance and no-show are never automatic.":
+    "لم تُسجل ملاحظة حضور بعد. لا يُسجل الحضور أو عدم الحضور تلقائيًا.",
+  "Corrections preserve previous observations and never reopen booking capacity.":
+    "تحفظ التصحيحات الملاحظات السابقة ولا تعيد إتاحة سعة الحجز.",
+  "Cancel this booking?": "هل تريد إلغاء هذا الحجز؟",
+  "Append an attendance correction": "إضافة تصحيح للحضور",
+  "Close booking action": "إغلاق إجراء الحجز",
+  "Cancellation is final for this booking. The server verifies eligibility before applying it.":
+    "الإلغاء نهائي لهذا الحجز. يتحقق الخادم من أهلية الإجراء قبل تطبيقه.",
+  "Append a new observation with a reason. Previous observations remain in history; capacity is not reopened.":
+    "أضف ملاحظة جديدة مع سبب التصحيح. تبقى الملاحظات السابقة في السجل ولا تُفتح سعة الحجز مجددًا.",
+  "Confirm the observation explicitly. This does not open a consultation or grant medical-record access.":
+    "أكد الملاحظة يدويًا. لا يفتح هذا الإجراء استشارة ولا يمنح صلاحية الاطلاع على السجل الطبي.",
+  "Previous observation": "ملاحظة الحضور السابقة",
+  "Attendance observation": "ملاحظة الحضور",
+  "Correction reason": "سبب التصحيح",
+  "Required: 1–1000 characters, no control characters. Enter operational context only.":
+    "مطلوب: من حرف واحد إلى 1000 حرف، دون محارف تحكم. اذكر سياق تنظيم الزيارة فقط.",
+  "Enter a valid bounded correction reason.":
+    "أدخل سبب تصحيح صالحًا ضمن الحد المسموح.",
+  "This observation or action is not yet eligible for the selected time and state.":
+    "هذه الملاحظة أو العملية غير متاحة بعد وفق الوقت والحالة المحددين.",
+  "Cancelling…": "جارٍ الإلغاء…",
+  "Saving observation…": "جارٍ حفظ الملاحظة…",
+  "Confirm cancellation": "تأكيد الإلغاء",
+  "Append correction": "إضافة التصحيح",
+  "Confirm observation": "تأكيد الملاحظة",
+  "Close reschedule": "إغلاق إعادة الجدولة",
+  "Review reschedule": "مراجعة إعادة الجدولة",
+  "Choose a replacement time": "اختيار وقت بديل",
+  "Same clinician and same clinic only. To change provider, cancel and make a separate new booking.":
+    "مع الطبيب والعيادة نفسيهما فقط. لتغيير الطبيب، ألغِ الحجز وأنشئ حجزًا جديدًا منفصلًا.",
+  "Current booking": "الحجز الحالي",
+  "Replacement time": "الوقت البديل",
+  "The server replaces the booking atomically. A failed replacement leaves the original booking unchanged.":
+    "يستبدل الخادم الحجز في عملية واحدة. إذا فشل الاستبدال يبقى الحجز الأصلي دون تغيير.",
+  "No eligible replacement times": "لا توجد أوقات بديلة متاحة",
+  "Try another page or return later. Your original booking remains unchanged.":
+    "جرّب صفحة أخرى أو عُد لاحقًا. يظل حجزك الأصلي دون تغيير.",
+  "Page {page}": "صفحة {page}",
+  "Rescheduling…": "جارٍ إعادة الجدولة…",
+  "Confirm reschedule": "تأكيد إعادة الجدولة",
+  "Clinical consultation is not integrated in Live mode.":
+    "الاستشارة الطبية غير متصلة بعد في الوضع الفعلي.",
+  "Check the booking command and try again. No medical information belongs in a booking.":
+    "تحقق من بيانات إجراء الحجز وحاول مجددًا. لا يتضمن الحجز أي معلومات طبية.",
+  "This booking or slot is unavailable for your current access.":
+    "هذا الحجز أو الوقت غير متاح ضمن صلاحيتك الحالية.",
+  "The booking changed or this action is no longer eligible. Refresh the booking and available times before trying a new command.":
+    "تغير الحجز أو لم يعد الإجراء متاحًا. حدّث الحجز والأوقات المتاحة قبل محاولة إجراء جديد.",
+  "The booking request is too large.": "طلب الحجز أكبر من الحد المسموح.",
+  "The booking request could not be accepted. Refresh and try again.":
+    "تعذر قبول طلب الحجز. حدّث الصفحة وحاول مجددًا.",
+  "The booking service is unavailable. Your request may not have completed. Retry the unchanged command to check its outcome.":
+    "خدمة الحجز غير متاحة. ربما لم يكتمل طلبك. أعد محاولة الإجراء نفسه دون تغيير للتحقق من نتيجته.",
 };

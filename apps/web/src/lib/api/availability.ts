@@ -1,6 +1,7 @@
+import { UiError } from "./errors";
 import type { Availability, OwnAvailability, Page } from "./contracts";
 const invalid = () =>
-  new Error(
+  new UiError(
     "The availability service returned an invalid response. Please refresh.",
   );
 const object = (value: unknown): Record<string, unknown> => {

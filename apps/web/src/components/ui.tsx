@@ -1,7 +1,37 @@
 "use client";
+import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
+import {
+  cloneElement,
+  isValidElement,
+  useId,
+  useRef,
+  useEffect,
+  useState,
+  type ReactNode,
+  type ComponentProps,
+} from "react";
+
+/** Native focus containment with explicit restoration after conditional React unmount. */
+export function Modal({ children, ...props }: ComponentProps<"dialog">) {
+  const ref = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const previous = document.activeElement;
+    const dialog = ref.current;
+    if (dialog && !dialog.open) dialog.showModal();
+    return () => {
+      dialog?.close();
+      if (previous instanceof HTMLElement && previous.isConnected)
+        previous.focus();
+    };
+  }, []);
+  return (
+    <dialog {...props} ref={ref}>
+      {children}
+    </dialog>
+  );
+}
 export type IconName =
   | "grid"
   | "search"
@@ -218,7 +248,7 @@ export function Heading({
   children,
 }: {
   eyebrow?: string;
-  title: string;
+  title: ReactNode;
   description: string;
   children?: ReactNode;
 }) {
@@ -227,7 +257,7 @@ export function Heading({
     <div className="page-heading">
       <div>
         {eyebrow && <p className="eyebrow">{t(eyebrow ?? "")}</p>}
-        <h1>{t(title)}</h1>
+        <h1>{typeof title === "string" ? t(title) : title}</h1>
         <p className="muted">{t(description)}</p>
       </div>
       {children}
@@ -295,7 +325,7 @@ export function useResource<T>(
       .catch((e) => {
         if (active)
           setState({
-            error: e instanceof Error ? e.message : "Please try again.",
+            error: safeErrorMessage(e),
             pending: false,
           });
       });
@@ -328,6 +358,7 @@ export function Resource<T>({
               "Demo error preview. Choose “Populated” to restore the view.",
           )}
         </p>
+        <SessionRecovery message={resource.error} />
         <button className="button secondary" onClick={resource.retry}>
           {t("Try again")}
         </button>
@@ -344,13 +375,31 @@ export function Resource<T>({
     );
   return resource.data !== undefined ? children(resource.data) : null;
 }
+export function SessionRecovery({ message }: { message?: string }) {
+  const { t } = useLocale();
+  if (
+    message !== "Your session has ended. Please sign in again." &&
+    message !==
+      "Request verification failed. Refresh your session before retrying."
+  )
+    return null;
+  return (
+    <button
+      type="button"
+      className="button secondary"
+      onClick={() => window.location.reload()}
+    >
+      {t("Refresh session")}
+    </button>
+  );
+}
 export function Detail({
   icon,
   title,
   children,
 }: {
   icon: IconName;
-  title: string;
+  title: ReactNode;
   children: ReactNode;
 }) {
   const { t } = useLocale();
@@ -360,7 +409,9 @@ export function Detail({
         <Icon name={icon} />
       </span>
       <div>
-        <small className="muted">{t(title)}</small>
+        <small className="muted">
+          {typeof title === "string" ? t(title) : title}
+        </small>
         <div>{children}</div>
       </div>
     </div>
@@ -376,12 +427,29 @@ export function Field({
   hint?: string;
 }) {
   const { t } = useLocale();
+  const generatedId = useId();
+  const control = isValidElement<{ id?: string; "aria-describedby"?: string }>(
+    children,
+  )
+    ? children
+    : null;
+  const id = control?.props.id ?? generatedId;
+  const description =
+    [control?.props["aria-describedby"], hint ? `${id}-hint` : undefined]
+      .filter(Boolean)
+      .join(" ") || undefined;
   return (
-    <label className="field">
-      <span>{t(label)}</span>
-      {children}
-      {hint && <small className="muted">{t(hint ?? "")}</small>}
-    </label>
+    <div className="field">
+      <label htmlFor={id}>{t(label)}</label>
+      {control
+        ? cloneElement(control, { id, "aria-describedby": description })
+        : children}
+      {hint && (
+        <small id={`${id}-hint`} className="muted">
+          {t(hint ?? "")}
+        </small>
+      )}
+    </div>
   );
 }
 export const date = (value: string, timeZone = "Africa/Cairo") =>

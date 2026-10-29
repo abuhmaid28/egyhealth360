@@ -1,25 +1,18 @@
 "use client";
 import { createContext, useContext } from "react";
-import type {
-  HealthcareAdapter,
-  Session,
-  Provider,
-  Availability,
-  Appointment,
-} from "../lib/api/contracts";
+import type { HealthcareAdapter, Session } from "../lib/api/contracts";
 import type { Preview } from "./ui";
+import type { BookingService } from "../lib/api/booking";
+import type { Role } from "../lib/api/contracts";
 export interface AppContext {
   api: HealthcareAdapter;
+  booking: BookingService;
   session: Session;
   preview: Preview;
   refresh: number;
   notify: (message: string) => void;
   changed: () => void;
-  startDemoBooking: (
-    provider: Provider,
-    slot: Availability,
-    reason: string,
-  ) => Promise<Appointment>;
+  openDemoWorkspace: (role: Role, path?: string) => Promise<void>;
 }
 export const Context = createContext<AppContext | null>(null);
 export function useApp() {

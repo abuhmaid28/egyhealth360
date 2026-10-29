@@ -2931,3 +2931,285 @@ html[dir="rtl"] .slots button strong {
 textarea {
   unicode-bidi: plaintext;
 }
+
+/* Phase 3: shared journey, consultation and responsive presentation details. */
+.journey-continuation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-block: 24px;
+  background: var(--teal-soft);
+}
+.journey-continuation h3 {
+  margin-block: 12px 6px;
+}
+.journey-continuation p {
+  margin: 0;
+  max-width: 50ch;
+  font-size: 13px;
+}
+.journey-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.journey-actions .button {
+  font-size: 12px;
+}
+.workflow-steps {
+  display: flex;
+  gap: 12px;
+  list-style-position: inside;
+  padding: 0;
+  margin-block: 24px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.workflow-steps li {
+  flex: 1;
+  padding-block: 9px;
+  border-block-end: 3px solid var(--line);
+}
+.workflow-steps [aria-current] {
+  color: var(--teal);
+  border-color: var(--teal);
+  font-weight: 700;
+}
+.booking-disclosure,
+.released-note {
+  background: var(--teal-soft);
+  color: #215b51;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.consultation-outline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-block-end: 20px;
+}
+.consultation-outline a {
+  padding: 10px 14px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  font-size: 12px;
+  color: var(--teal);
+}
+.section-anchor {
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  scroll-margin-block-start: 110px;
+}
+.appointment-zone {
+  color: var(--muted);
+  direction: ltr;
+  text-align: start;
+}
+.search-empty {
+  text-align: center;
+  padding-block-end: 30px;
+}
+.filter-reset {
+  margin-block: 12px;
+}
+.hero.hero-compact {
+  min-height: 0;
+}
+.hero-compact .hero-copy {
+  padding-block: 24px;
+}
+.hero-compact h2 {
+  font-size: 26px;
+}
+.hero-compact .health-illustration {
+  transform: scale(0.8);
+}
+.drawer-close {
+  align-self: flex-end;
+  flex-shrink: 0;
+  margin-block-end: 14px;
+}
+.modal {
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.modal .confirmation-details {
+  overflow-wrap: anywhere;
+}
+.confirmation-details bdi {
+  white-space: pre-wrap;
+}
+.confirmation-details small {
+  display: block;
+}
+.appointment-main,
+.journey-continuation > div {
+  min-width: 0;
+}
+.appointment-main h3,
+.inbox-list small {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1100px) {
+  .journey-continuation {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+@media (max-width: 760px) {
+  .sidebar:not(.open) {
+    visibility: hidden;
+  }
+  .sidebar.open {
+    visibility: visible;
+  }
+  .journey-actions {
+    width: 100%;
+  }
+  .journey-actions .button {
+    flex: 1 1 180px;
+  }
+}
+@media (max-width: 560px) {
+  .consultation-outline a {
+    flex: 1 1 130px;
+    text-align: center;
+  }
+  .workflow-steps {
+    gap: 8px;
+  }
+  .form-footer {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .form-footer .button {
+    width: 100%;
+  }
+  .pagination {
+    flex-wrap: wrap;
+  }
+  .pagination > span {
+    flex-basis: 100%;
+    order: -1;
+    text-align: center;
+  }
+  .journey-continuation {
+    padding: 20px;
+  }
+}
+
+/* Real Booking uses logistics cards, separate from clinical demo appointments. */
+.logistics-boundary {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 18px;
+  margin-block: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--teal-soft);
+  color: #215b51;
+}
+.logistics-boundary p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.logistics-boundary > svg {
+  flex-shrink: 0;
+  margin-block-start: 3px;
+}
+.live-booking-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 22px;
+  border-block-end: 1px solid var(--line);
+}
+.live-booking-row:last-child {
+  border: 0;
+}
+.live-booking-row > div {
+  min-width: 0;
+}
+.booking-identity h3 {
+  margin-block: 12px 8px;
+  overflow-wrap: anywhere;
+}
+.booking-identity p {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 13px;
+}
+.booking-identity p svg {
+  flex-shrink: 0;
+}
+.booking-status,
+.booking-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.booking-actions {
+  margin-block: 22px 14px;
+}
+.booking-time {
+  font-size: 13px;
+  line-height: 1.8;
+  margin-block: 12px;
+  overflow-wrap: anywhere;
+}
+.booking-time small {
+  display: block;
+  color: var(--muted);
+}
+.observation-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-block: 18px;
+  border-block-end: 1px solid var(--line);
+  font-size: 13px;
+}
+.observation-row p {
+  flex-basis: 100%;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.reschedule-modal .slots {
+  max-height: 38dvh;
+  overflow-y: auto;
+}
+.reschedule-modal .slots button {
+  padding: 12px;
+}
+.reschedule-modal .booking-time {
+  margin: 0;
+}
+.booking-status .badge {
+  white-space: normal;
+}
+@media (max-width: 560px) {
+  .live-booking-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .booking-actions .button {
+    flex: 1 1 150px;
+  }
+  .logistics-boundary {
+    padding: 14px;
+  }
+  .reschedule-modal .slots {
+    grid-template-columns: 1fr;
+  }
+}
