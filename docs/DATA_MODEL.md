@@ -1,5 +1,9 @@
 # EgyHealth 360 — Data Model Status and V3 Concepts
 
+## Current Slice 4 consultation-opening boundary
+
+Migration 17 adds only Consultation, bringing the current model/domain-table total to 39. Unique booking/encounter, composite same-patient identity, immutable opening provenance and deferred atomic-link guards. General encounters are new rows only; historical tables/rows are not backfilled. See [schema and guarantees](V3_I2_SLICE4.md). Historical status/validation statements below retain their original point-in-time meaning.
+
 Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
 
 [Slice 2](V3_I1_SLICE2.md) Organization/OrganizationMembership and fixed staff roles are COMPLETE. [Slice 3](V3_I1_SLICE3.md) reuses User/PatientProfile/Session/AuditLog with no schema or migration change. I1 COMPLETE; Slice 3 COMPLETE; Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. Specialty/public directory are COMPLETE in Slice 4. RelationshipRequest and AssignmentEndProvenance are COMPLETE in Slice 5. Historical schema/migration/clinical behavior is preserved.

@@ -1,6 +1,6 @@
 import {randomUUID} from 'node:crypto';
 import {isolatedOrganizations} from './organizations.mjs';
-import {createBookingPersistence,createAvailabilityPersistence,createPatientEntryPersistence,createRelationshipPersistence,createDirectoryPersistence,createDatabase,createAuthorizationPersistence,createBloodPressureMeasurementPersistence} from '../../packages/db/dist/index.js';
+import {createConsultationPersistence,createBookingPersistence,createAvailabilityPersistence,createPatientEntryPersistence,createRelationshipPersistence,createDirectoryPersistence,createDatabase,createAuthorizationPersistence,createBloodPressureMeasurementPersistence} from '../../packages/db/dist/index.js';
 import {createApp} from '../../apps/api/dist/app.js';
 import {patientEntryRuntime} from '../../apps/api/dist/patient-entry.js';
 import {createPasswordVerifier} from '../../apps/api/dist/password.js';
@@ -9,11 +9,12 @@ export const directoryAudits=async pool=>(await pool.query("SELECT action_type,e
 export async function isolatedDirectory(run,{relationships=false,patientEntry=false,availability=false,bookings=false,realRunner=false}={}){return isolatedOrganizations(async f=>{
  const directory=createDirectoryPersistence(f.url),database=createDatabase(f.url),authorization=createAuthorizationPersistence(f.url),bp=createBloodPressureMeasurementPersistence(f.url);
  const config=authConfiguration({NODE_ENV:'test',AUTH_BROWSER_ORIGIN:'http://localhost:3000'});
+ const consultations=bookings?createConsultationPersistence(f.url):undefined;
  const bookingStore=bookings?createBookingPersistence(f.url):undefined;
  const availabilityStore=availability?createAvailabilityPersistence(f.url):undefined;
  const relationshipStore=relationships?createRelationshipPersistence(f.url):undefined;
  const entry=patientEntry?createPatientEntryPersistence(f.url):undefined;
- const app=await createApp(database,{config,store:f.auth,passwords:await createPasswordVerifier()},authorization,bp,undefined,entry?patientEntryRuntime(entry):undefined,directory,relationshipStore,availabilityStore,bookingStore);
+ const app=await createApp(database,{config,store:f.auth,passwords:await createPasswordVerifier()},authorization,bp,undefined,entry?patientEntryRuntime(entry):undefined,directory,relationshipStore,availabilityStore,bookingStore,consultations);
  try{
   const admin=f.actors.admin;
   let specialty=(await directory.createSpecialty(admin,{key:'synthetic-general',displayName:'Synthetic General',operationKey:randomUUID()})).specialty;
@@ -29,6 +30,6 @@ export async function isolatedDirectory(run,{relationships=false,patientEntry=fa
   await app.listen(0,'127.0.0.1');const base=await app.getUrl();
   const request=async(path='/directory/providers',options={})=>{const response=await fetch(base+'/api/v1'+path,{...options,signal:globalThis.AbortSignal.timeout(8000)});const raw=await response.text();return{response,raw,json:raw?JSON.parse(raw):null};};
   const login=async(key)=>{const r=await request('/auth/login',{method:'POST',headers:{Origin:config.origin,'Content-Type':'application/json','X-EH-Login':'1'},body:JSON.stringify({email:f.users[key].email,password:f.password})});if(r.response.status!==200)throw new Error('Synthetic login failed');return{Cookie:r.response.headers.get('set-cookie').split(';')[0],'X-CSRF-Token':r.json.data.csrfToken};};
-  await run({...f,bookings:bookingStore,availability:availabilityStore,relationships:relationshipStore,directory,request,login,config,specialty,clinic,clinicOrg,membership,provider,publication,setClinic,setProvider});
- }finally{await app.close();if(bookingStore)await bookingStore.close();if(availabilityStore)await availabilityStore.close();if(entry)await entry.close();if(relationshipStore)await relationshipStore.close();await directory.close();await authorization.close();await bp.close();await database.close();}
+  await run({...f,consultations,bookings:bookingStore,availability:availabilityStore,relationships:relationshipStore,directory,request,login,config,specialty,clinic,clinicOrg,membership,provider,publication,setClinic,setProvider});
+ }finally{await app.close();if(bookingStore)await bookingStore.close();if(consultations)await consultations.close();if(availabilityStore)await availabilityStore.close();if(entry)await entry.close();if(relationshipStore)await relationshipStore.close();await directory.close();await authorization.close();await bp.close();await database.close();}
 },{realRunner});}
