@@ -12,8 +12,67 @@
   --radius: 16px;
   --shadow: 0 3px 16px #183e4c04;
   color-scheme: light;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter, "Noto Sans Arabic", Arial, Helvetica, sans-serif;
   font-synthesis: none;
+}
+
+/* Journey links stay available even when an independent record read fails. */
+.patient-journey {
+  display: grid;
+  grid-template-columns: minmax(130px, .8fr) repeat(3, minmax(0, 1fr));
+  align-items: center;
+  gap: 12px;
+  margin-block-end: 24px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+.patient-journey > div small { display: block; color: var(--muted); font-size: 12px; }
+.patient-journey > a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-block-size: 48px;
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--canvas);
+  font-size: 13px;
+  font-weight: 600;
+}
+.patient-journey > a:hover { background: var(--teal-soft); }
+.patient-journey > a > svg { margin-inline-start: auto; color: var(--teal-dark); }
+.journey-number {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  inline-size: 26px;
+  block-size: 26px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--teal-dark);
+}
+.live-summary-entry { padding-block: 12px; }
+.live-summary-entry > .icon-tile { margin-block-end: 16px; }
+.live-summary-entry .button { white-space: normal; }
+.entry-mode-note {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  margin-block: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--canvas);
+}
+.entry-mode-note p { font-size: 12px; line-height: 1.8; margin: 0; }
+.entry-mode-note svg { color: var(--teal-dark); margin-block-start: 3px; }
+@media (max-width: 1100px) {
+  .patient-journey { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .patient-journey > div { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .patient-journey { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 12px; }
 }
 * {
   box-sizing: border-box;
@@ -2792,7 +2851,7 @@ tr:last-child td {
   flex-wrap: wrap;
 }
 html[lang="ar"] {
-  font-family: Tahoma, Arial, sans-serif;
+  font-family: "Noto Sans Arabic", Tahoma, Arial, sans-serif;
   letter-spacing: 0;
 }
 html[dir="rtl"] .sidebar {

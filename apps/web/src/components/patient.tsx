@@ -18,7 +18,7 @@ import {
   LiveBookingDetail,
   LiveCreateReview,
 } from "./live-booking";
-import { DemoContinuation } from "./journey";
+import { DemoContinuation, PatientJourney, LiveSummaryEntry } from "./journey";
 import { PublicAvailability } from "./availability";
 import {
   Avatar,
@@ -102,7 +102,11 @@ function Dashboard() {
     <>
       <Heading
         eyebrow={t("Your health, all together")}
-        title={t("Good morning, {name}.", { name: session.name.split(" ")[0] })}
+        title={
+          api.mode === "live"
+            ? t("Welcome back, {name}.", { name: session.name })
+            : t("Good morning, {name}.", { name: session.name.split(" ")[0] })
+        }
         description={t("A little clarity. A lot more confidence in your care.")}
       >
         <Link className="button primary" href="/patient/discover">
@@ -110,6 +114,7 @@ function Dashboard() {
           {t("Book an appointment")}
         </Link>
       </Heading>
+      <PatientJourney />
       <Resource resource={overview} preview={preview}>
         {([profile, record, providers]) => (
           <>
@@ -176,8 +181,16 @@ function Dashboard() {
               <Stat
                 icon="record"
                 label={t("Visit summaries")}
-                value={String(record.consultations.length).padStart(2, "0")}
-                note="Your story, in one place"
+                value={
+                  api.mode === "live"
+                    ? "—"
+                    : String(record.consultations.length).padStart(2, "0")
+                }
+                note={
+                  api.mode === "live"
+                    ? "Open released summaries to view shared care"
+                    : "Your story, in one place"
+                }
               />
               <Stat
                 icon="activity"
@@ -228,55 +241,86 @@ function Dashboard() {
                     href="/patient/record"
                     action={t("Open record")}
                   />
-                  <div className="timeline">
-                    {record.consultations
-                      .slice()
-                      .reverse()
-                      .map((c) => (
-                        <div className="timeline-item" key={c.appointmentId}>
-                          <span className="timeline-node">
-                            <Icon name="check" size={14} />
-                          </span>
-                          <div>
-                            <Badge tone="soft">{t("Visit summary")}</Badge>
-                            <h3>{c.diagnosis || t("Consultation summary")}</h3>
-                            <p>{c.instructions}</p>
-                            <Link className="text-link" href="/patient/history">
-                              {t("View consultation")}
-                              <Icon name="arrow" size={15} />
-                            </Link>
+                  {api.mode === "live" ? (
+                    <LiveSummaryEntry />
+                  ) : (
+                    <div className="timeline">
+                      {record.consultations
+                        .slice()
+                        .reverse()
+                        .map((c) => (
+                          <div className="timeline-item" key={c.appointmentId}>
+                            <span className="timeline-node">
+                              <Icon name="check" size={14} />
+                            </span>
+                            <div>
+                              <Badge tone="soft">{t("Visit summary")}</Badge>
+                              <h3>
+                                {c.diagnosis || t("Consultation summary")}
+                              </h3>
+                              <p>{c.instructions}</p>
+                              <Link
+                                className="text-link"
+                                href="/patient/history"
+                              >
+                                {t("View consultation")}
+                                <Icon name="arrow" size={15} />
+                              </Link>
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    {record.consultations.length === 0 && (
-                      <Empty title={t("Your health story starts here")} />
-                    )}
-                  </div>
+                        ))}
+                      {record.consultations.length === 0 && (
+                        <Empty title={t("Your health story starts here")} />
+                      )}
+                    </div>
+                  )}
                 </Card>
               </div>
               <div className="stack">
                 <Card className="quick-actions">
                   <CardTitle title={t("What would you like to do?")} />
-                  {[
-                    [
-                      "search",
-                      "Find a specialist",
-                      "Care that fits your needs",
-                      "/patient/discover",
-                    ],
-                    [
-                      "pill",
-                      "View medications",
-                      "Your prescriptions, together",
-                      "/patient/medications",
-                    ],
-                    [
-                      "lab",
-                      "Check lab results",
-                      "Keep track of your tests",
-                      "/patient/laboratory",
-                    ],
-                  ].map(([icon, title, sub, href]) => (
+                  {(api.mode === "live"
+                    ? [
+                        [
+                          "search",
+                          "Find a specialist",
+                          "Care that fits your needs",
+                          "/patient/discover",
+                        ],
+                        [
+                          "record",
+                          "Released visit summaries",
+                          "Only signed and shared care",
+                          "/patient/summaries",
+                        ],
+                        [
+                          "calendar",
+                          "Appointments",
+                          "Your next steps in care",
+                          "/patient/appointments",
+                        ],
+                      ]
+                    : [
+                        [
+                          "search",
+                          "Find a specialist",
+                          "Care that fits your needs",
+                          "/patient/discover",
+                        ],
+                        [
+                          "pill",
+                          "View medications",
+                          "Your prescriptions, together",
+                          "/patient/medications",
+                        ],
+                        [
+                          "lab",
+                          "Check lab results",
+                          "Keep track of your tests",
+                          "/patient/laboratory",
+                        ],
+                      ]
+                  ).map(([icon, title, sub, href]) => (
                     <Link href={href} key={href}>
                       <span className="icon-tile">
                         <Icon name={icon as "search"} />
@@ -1112,6 +1156,7 @@ function RecordScreen({ section }: { section: string }) {
           "Your released visit summaries and next steps, together in one place.",
         )}
       />
+      {api.mode === "live" && <PatientJourney />}
       <div className="tabs record-tabs">
         {[
           ["record", "Overview"],
@@ -1119,16 +1164,21 @@ function RecordScreen({ section }: { section: string }) {
           ["medications", "Medications"],
           ["laboratory", "Laboratory"],
           ["follow-up", "Follow-up"],
-        ].map(([s, label]) => (
-          <Link
-            key={s}
-            href={`/patient/${s}`}
-            className={section === s ? "active" : ""}
-            aria-current={section === s ? "page" : undefined}
-          >
-            {t(label)}
-          </Link>
-        ))}
+        ]
+          .filter(
+            ([s]) =>
+              api.mode === "demo" || !["medications", "laboratory"].includes(s),
+          )
+          .map(([s, label]) => (
+            <Link
+              key={s}
+              href={`/patient/${s}`}
+              className={section === s ? "active" : ""}
+              aria-current={section === s ? "page" : undefined}
+            >
+              {t(label)}
+            </Link>
+          ))}
       </div>
       <Resource resource={record} preview={preview}>
         {(r) => {
@@ -1140,7 +1190,7 @@ function RecordScreen({ section }: { section: string }) {
                   <Icon name="shield" />
                   <p>
                     {t(
-                      "Live record scope: blood pressure, HTN encounters and HTN follow-ups. General consultation, prescription, laboratory and follow-up intention capabilities are not integrated yet.",
+                      "Measurements and HTN records appear below. Signed consultation summaries are available in Released visit summaries. Prescriptions, laboratory fulfillment and general follow-up intentions remain Demo-only.",
                     )}
                   </p>
                 </Card>
@@ -1184,7 +1234,9 @@ function RecordScreen({ section }: { section: string }) {
                 <div className="two-column">
                   <Card>
                     <CardTitle title={t("Recent care")} />
-                    {visits.length ? (
+                    {api.mode === "live" ? (
+                      <LiveSummaryEntry />
+                    ) : visits.length ? (
                       visits.map((c) => (
                         <VisitSummary c={c} key={c.appointmentId} compact />
                       ))
@@ -1222,7 +1274,13 @@ function RecordScreen({ section }: { section: string }) {
                   </Card>
                 </div>
               )}
+              {section === "history" && api.mode === "live" && (
+                <Card>
+                  <LiveSummaryEntry />
+                </Card>
+              )}
               {section === "history" &&
+                api.mode === "demo" &&
                 (visits.length ? (
                   visits.map((c) => (
                     <Card key={c.appointmentId}>
