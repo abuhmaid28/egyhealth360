@@ -38,8 +38,14 @@ export function beforeI2Slice3(text) {
 /** Exactly remove Slice 4 additions and its two additive booking enum extensions.
  * All earlier contract byte hashes remain asserted; no legacy API is widened. */
 export function beforeI2Slice4(text) {
- return text.replace(/,\n {4}"\/api\/v1\/me\/bookings\/\{bookingId\}\/consultation": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
+ return beforeI2Slice5(text).replace(/,\n {4}"\/api\/v1\/me\/bookings\/\{bookingId\}\/consultation": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
  .replace(/,\n {6}"ConsultationOpen": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'')
  .replace(/"CORRECT",\n {14}"OPEN"/g,'"CORRECT"')
  .replace(/"NO_SHOW",\n {14}"IN_CONSULTATION"/g,'"NO_SHOW"');
+}
+
+/** Exactly strip Slice 5 additions; all historical byte hashes remain pinned. */
+export function beforeI2Slice5(text) {
+ return text.replace(/,\n {4}"\/api\/v1\/consultations\/\{consultationId\}\/documents": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
+ .replace(/,\n {6}"DocumentationAllergyReview": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
 }
