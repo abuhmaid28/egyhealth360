@@ -1,6 +1,6 @@
 # EgyHealth 360 — AI Agent Instructions
 
-Current backend delivery: V3-I2 Slices 1–5 COMPLETE. [Flow Accelerator authorization 6524790227](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6524790227) follows exact-main `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`, Bootstrap 41008236990 / validate 123907937943 SUCCESS and authorizes Slice 6 Core. [Slice 6](docs/V3_I2_SLICE6.md) production implementation is present; verification/CI integration remain pending. V3-I2 INCOMPLETE. Slice 7 and I3 NOT AUTHORIZED. EACCE NOT STARTED. No frontend or deployment work in Slice 6. No merge authorized.
+Current backend delivery: V3-I2 Slices 1–5 COMPLETE. [Flow Accelerator authorization 6524790227](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6524790227) follows exact-main `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`, Bootstrap 41008236990 / validate 123907937943 SUCCESS and authorizes Slice 6 Core. [Slice 6](docs/V3_I2_SLICE6.md) production implementation and local verification are IMPLEMENTED; Lane A CI integration, exact-head Bootstrap and PR opening remain gated. V3-I2 INCOMPLETE. Slice 7 and I3 NOT AUTHORIZED. EACCE NOT STARTED. No frontend or deployment work in Slice 6. No merge authorized.
 
 These instructions apply to every coding/research agent working on this repository.
 

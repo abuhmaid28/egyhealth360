@@ -7,6 +7,10 @@ import {migrationRunner} from '../support/migration-runner.mjs';
 import {createDocumentationPersistence,createOrganizationPersistence,createDirectoryPersistence,createRelationshipPersistence,createAvailabilityPersistence,createBookingPersistence,createConsultationPersistence} from '../../packages/db/dist/index.js';
 test('I2S6 populated authorized-main 18 to 19 preserves 43 historical tables, documents/EH-012/Booking/CareAction and ledger; ZERO_WRITE',()=>isolatedCareActions(async f=>{
  await f.actions.generateInitialAction(f.actor,await f.command());migrationRunner(f.url,'deploy',18);
+ // Populate legacy HTN history, including both appointment lifecycle states and
+ // an exact BP association, before snapshotting the eighteen-migration baseline.
+ await f.appointment();const historicalAppointment=await f.appointment();await f.appointments.cancelFollowUpAppointment(f.actor,{patientId:f.patientId,appointmentId:historicalAppointment.id});
+ const historicalEncounter=await f.encounter();await f.encounters.associateBloodPressureMeasurement(f.actor,{patientId:f.patientId,encounterId:historicalEncounter.id,measurementId:f.bp.id});
  const orgs=createOrganizationPersistence(f.url),directory=createDirectoryPersistence(f.url),relationships=createRelationshipPersistence(f.url);
  try{
  const admin=f.principals.admin,org=(await orgs.createOrganization(admin,{kind:'CLINIC',name:'Retained synthetic clinic',operationKey:randomUUID()})).organization;
