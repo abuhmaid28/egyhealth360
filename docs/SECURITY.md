@@ -1,5 +1,9 @@
 # Security & Medical Safety — V3 Policy, M0–M2 Enforcement
 
+## Current V3-I2 Slice 5 boundary
+
+[Slice 5](V3_I2_SLICE5.md) preserves sole current ACTIVE assignment authority and Booking ZERO clinical authority. Private/draft payload and existence are exact-author/current-authority only. Patient/current-related released views exclude every private/draft reference. Explicit summary release, immutable signed corrections/addenda and independent privacy targets; unsafe exact document lineage is withheld from ordinary pages/counts/replays. Bounded canonical locks, after-wait/final checks and atomic {} audit; no staff/ADMIN shortcut or forensic view.
+
 ## Current Slice 4 consultation-opening boundary
 
 Booking remains ZERO clinical authority. Consultation opening requires exact booked current clinician, valid session, ACTIVE assignment and exact current clinic scope with final after-wait checks. No consent/assignment writer or ADMIN shortcut. Strict request/projection, atomic empty-metadata audit, canonical locks and safe replay are in [Slice 4](V3_I2_SLICE4.md). EH-012 remains HTN-only. Historical status/validation statements below retain their original point-in-time meaning.

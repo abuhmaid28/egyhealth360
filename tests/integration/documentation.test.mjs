@@ -1,0 +1,48 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
+import {isolatedDocumentation,draftBody,rejection,documentCounts,documentTables} from '../support/documentation.mjs';
+test('I2S5 explicit release separate private identities, human review and immutable signed lineage',()=>isolatedDocumentation(async f=>{
+ const c=await f.readyDocument(),privateDoc=await f.draft(c,draftBody('PRIVATE_NOTE')),body=draftBody('PATIENT_SUMMARY',{allergyReview:{state:'REVIEWED_POSITIVE',items:[{kind:'ALLERGY',text:'Human item',reaction:'Human reaction'}]}}),d=await f.draft(c,body);
+ assert.notEqual(privateDoc.data.id,d.data.id);assert.equal((await f.documentation.releasedRead(f.actors.patient,null,null)).meta.total,0);
+ await rejection(f.command(c,privateDoc,'RELEASE',{expectedVersion:1}),'DOCUMENT_CONFLICT');await f.command(c,privateDoc,'SIGN',{expectedVersion:1});assert.equal((await f.documentation.releasedRead(f.actors.patient,null,null)).meta.total,0);
+ const out=await f.command(c,d,'RELEASE',{expectedVersion:1});assert.equal(out.data.versions.at(-1).state,'SIGNED_RELEASED');assert.equal(out.data.versions.at(-1).allergyReview.reviewerId,f.provider.publicId);assert.ok(out.data.versions.at(-1).allergyReview.reviewedAt);
+ const patient=await f.documentation.releasedRead(f.actors.patient,null,d.data.id);assert.equal(patient.data.versions.length,1);assert.equal(patient.data.versions[0].predecessorId,null);assert.ok(!JSON.stringify(patient).includes(privateDoc.data.id));assert.ok(!JSON.stringify(patient).includes(d.data.versions[0].id));
+ const v=out.data.versions.at(-1),add=await f.command(c,d,'ADDENDUM',{...draftBody(),kind:undefined,expectedVersion:2,predecessorId:v.id,reason:'Human addendum'}).catch(e=>e);assert.equal(add.code,'DOCUMENT_INVALID');
+ const content={...draftBody()};delete content.kind;delete content.operationKey;
+ const amended=await f.command(c,d,'ADDENDUM',{...content,expectedVersion:2,predecessorId:v.id,reason:'Human addendum'});const corrected=await f.command(c,d,'CORRECT',{...content,content:'Human corrected summary',expectedVersion:3,predecessorId:amended.data.versions.at(-1).id,reason:'Human correction'});
+ assert.equal(corrected.data.versions.length,4);assert.equal(corrected.data.versions[1].releasedAt,v.releasedAt);assert.equal(corrected.data.versions[1].effective,false);assert.equal(corrected.data.versions.at(-1).effective,true);
+ for(const table of documentTables)for(const verb of ['UPDATE','DELETE','TRUNCATE']){const sql=verb==='UPDATE'?`UPDATE ${table} SET id=id`:verb==='DELETE'?`DELETE FROM ${table}`:`TRUNCATE ${table}`;await assert.rejects(f.pool.query(sql));}
+}));
+test('I2S5 deterministic operation replay, changed payload conflict, restricted replay/projections no IDs/counts',()=>isolatedDocumentation(async f=>{
+ const c=await f.readyDocument(),body=draftBody(),d=await f.draft(c,body),before=await documentCounts(f);assert.deepEqual(await f.draft(c,body),d);assert.deepEqual(await documentCounts(f),before);await rejection(f.draft(c,{...body,content:'changed'}),'DOCUMENT_CONFLICT');
+ const release={consultationId:c.id,documentId:d.data.id,operationKey:randomUUID(),expectedVersion:1},signed=await f.documentation.execute('RELEASE',f.actors.clinician,release);assert.deepEqual(await f.draft(c,body),d);
+ const restriction={consultationId:c.id,documentId:d.data.id,operationKey:randomUUID(),versionIds:[signed.data.versions.at(-1).id],reason:'Human wrong-patient restriction'};
+ assert.deepEqual(await f.documentation.execute('PRIVACY',f.actors.clinician,restriction),{data:{restricted:true}});const snapshot=await documentCounts(f);assert.deepEqual(await f.documentation.execute('PRIVACY',f.actors.clinician,restriction),{data:{restricted:true}});assert.deepEqual(await documentCounts(f),snapshot);
+ for(const query of [()=>f.draft(c,body),()=>f.documentation.execute('RELEASE',f.actors.clinician,release),()=>f.documentation.authorRead(f.actors.clinician,c.id,d.data.id),()=>f.documentation.releasedRead(f.actors.patient,null,d.data.id)])await rejection(query());
+ assert.equal((await f.documentation.releasedRead(f.actors.patient,null,null)).meta.total,0);assert.equal((await f.documentation.authorRead(f.actors.clinician,c.id,null)).meta.total,0);assert.equal((await f.pool.query('SELECT count(*)::int n FROM consultation_document_versions')).rows[0].n,2);
+}));
+test('I2S5 role/IDOR/current related clinician private denial, patient released own only, ended author denial',()=>isolatedDocumentation(async f=>{
+ const c=await f.readyDocument(),priv=await f.draft(c,draftBody('PRIVATE_NOTE')),d=await f.draft(c);await f.command(c,d,'RELEASE',{expectedVersion:1});
+ for(const who of ['patient','other','admin','lab','pharmacy']){await rejection(f.documentation.authorRead(f.actors[who],c.id,priv.data.id));await rejection(f.draft(c,draftBody(),f.actors[who]));}
+ const other=await f.otherClinician();await rejection(f.documentation.releasedRead(other.actor,f.users.patient.profileId,d.data.id));await f.identities.assignPatient({clinicianId:other.user.profileId,patientId:f.users.patient.profileId});
+ assert.equal((await f.documentation.releasedRead(other.actor,f.users.patient.profileId,d.data.id)).data.id,d.data.id);await rejection(f.documentation.authorRead(other.actor,c.id,priv.data.id));await rejection(f.documentation.releasedRead(other.actor,f.users.patient.profileId,priv.data.id));await rejection(f.documentation.releasedRead(f.actors.other,null,d.data.id));
+ await f.pool.query("UPDATE clinician_patient_assignments SET status='ENDED',ended_at=clock_timestamp() WHERE clinician_id=$1",[f.users.clinician.profileId]);await rejection(f.documentation.authorRead(f.actors.clinician,c.id,priv.data.id));await rejection(f.draft(c));assert.equal((await f.documentation.releasedRead(f.actors.patient,null,d.data.id)).data.id,d.data.id);
+}));
+test('I2S5 booking existence and pending relationship grant zero documentation authority',()=>isolatedDocumentation(async f=>{const b=await f.ready({assignment:false});await rejection(f.draft({id:b.id}));assert.equal((await documentCounts(f)).consultation_documents,0);}));
+test('I2S5 source clinic suspension denies writes; released content independent of source publication/suspension',()=>isolatedDocumentation(async f=>{const c=await f.readyDocument(),d=await f.draft(c);await f.command(c,d,'RELEASE',{expectedVersion:1});await f.setProvider({isPublished:false});await f.setClinic({isPublished:false});await f.draft(c);await f.store.setOrganizationStatus(f.actors.admin,{organizationId:f.clinicOrg.id,status:'SUSPENDED',expectedVersion:0});await rejection(f.draft(c));assert.equal((await f.documentation.releasedRead(f.actors.patient,null,d.data.id)).data.id,d.data.id);}));
+test('I2S5 direct SQL cannot alter provenance/root/predecessor/state or signed payload',()=>isolatedDocumentation(async f=>{const c=await f.readyDocument(),d=await f.draft(c),row=(await f.pool.query('SELECT * FROM consultation_document_versions')).rows[0];for(const patch of [{patient_id:f.users.other.profileId},{document_kind:'PRIVATE_NOTE'},{version:2,predecessor_id:row.id,kind:'RELEASE',state:'SIGNED_RELEASED',content:'changed'}]){await assert.rejects(f.pool.query('INSERT INTO consultation_document_versions SELECT (jsonb_populate_record(NULL::consultation_document_versions,to_jsonb(v)||$1::jsonb)).* FROM consultation_document_versions v WHERE id=$2',[JSON.stringify({...patch,id:randomUUID(),operation_id:randomUUID()}),row.id]));}assert.equal((await documentCounts(f)).consultation_document_versions,1);assert.equal(d.data.versions[0].state,'DRAFT');}));
+test('I2S5 bounded version history pagination and current effectivity on retained release replay',()=>isolatedDocumentation(async f=>{
+ const c=await f.readyDocument(),d=await f.draft(c),release={consultationId:c.id,documentId:d.data.id,operationKey:randomUUID(),expectedVersion:1};let out=await f.documentation.execute('RELEASE',f.actors.clinician,release);const body=draftBody();delete body.kind;delete body.operationKey;
+ for(let i=0;i<21;i++)out=await f.command(c,d,'CORRECT',{...body,expectedVersion:i+2,predecessorId:out.data.versions.at(-1).id,reason:'Explicit human correction'});
+ assert.equal(out.data.versions.length,20);assert.equal(out.data.history.total,23);assert.equal(out.data.versions.at(-1).version,23);
+ const older=await f.documentation.authorRead(f.actors.clinician,c.id,d.data.id,{page:2,pageSize:20});assert.deepEqual(older.data.versions.map(v=>v.version),[1,2,3]);
+ const list=await f.documentation.releasedRead(f.actors.patient,null,null);assert.equal(list.data[0].versions.length,1);assert.equal(list.data[0].history.total,22);
+ const retry=await f.documentation.execute('RELEASE',f.actors.clinician,release);assert.equal(retry.data.versions.at(-1).effective,false);assert.equal(retry.data.versions.at(-1).version,2);
+}));
+test('I2S5 database privacy operation cannot target another document and review kind is explicit',()=>isolatedDocumentation(async f=>{
+ const c=await f.readyDocument(),a=await f.draft(c),b=await f.draft(c);await f.command(c,a,'PRIVACY',{versionIds:[a.data.versions[0].id],reason:'Human privacy'});
+ const op=(await f.pool.query('SELECT operation_id FROM consultation_privacy_restrictions')).rows[0].operation_id;
+ await assert.rejects(f.pool.query('INSERT INTO consultation_privacy_restrictions(document_id,version_id,actor_user_id,operation_id,reason) VALUES($1,$2,$3,$4,$5)',[b.data.id,b.data.versions[0].id,f.users.clinician.id,op,'Wrong operation target']),e=>e.code==='23503');
+ assert.equal((await f.pool.query(`SELECT public.i2_allergy_items('[{"kind":null,"text":"human","reaction":null}]'::jsonb) ok`)).rows[0].ok,false);
+}));

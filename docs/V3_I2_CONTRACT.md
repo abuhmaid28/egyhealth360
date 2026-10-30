@@ -2,7 +2,7 @@
 
 ## 1. Status and authority
 
-Current backend delivery: V3-I2 Slices 1–3 COMPLETE. [Slice 3 completion and Slice 4 authorization 6485213892](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6485213892) authorizes consultation opening only. [Slice 4](V3_I2_SLICE4.md) is IMPLEMENTED / IN REVIEW, not COMPLETE. V3-I2 INCOMPLETE. Slice 5 NOT IMPLEMENTED; Slices 5–7 excluded from this authorization. I3 NOT AUTHORIZED. EACCE NOT STARTED. The completed separate English/Arabic/RTL UI track is unchanged. No merge authorized.
+Current backend delivery: V3-I2 Slices 1–4 COMPLETE. [Activation 6514224261](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6514224261) records exact-main `1439016d9271a1deff5ddd98b8f2b2d58aa8baa4`, Bootstrap 40995148133 / validate 123866429499 SUCCESS and authorizes Slice 5 Clinical Consultation Documentation only. [Slice 5](V3_I2_SLICE5.md) is IMPLEMENTED / IN REVIEW, not COMPLETE. V3-I2 INCOMPLETE. Slice 6 NOT IMPLEMENTED; Slices 6–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Existing English/Arabic/RTL frontend unchanged. No merge authorized.
 
 Slice 2 starting main is the exact merged Slice 1 commit above, with ordered parents `d1b0a017896bdbef0062951264d2e0176732e6b9` and `9ae2e1f39e0ee3a2d280818adb5ebc85bb454dc3`. Issue #48 remains OPEN. Prior authorization and completion comments are retained. [Slice 1 execution record](V3_I2_SLICE1.md) preserves the pre-merge evidence and original baseline; [Slice 2](V3_I2_SLICE2.md) and [validation](V3_I2_SLICE2_VALIDATION.md) describe only this authorized implementation. Normative sections below retain their frozen future-slice semantics; Booking and later objects/routes are proposals, not live Slice 2 capabilities.
 
@@ -327,8 +327,8 @@ Slice 1 checks: frozen install, lint, generate/Prisma validation/build/typecheck
 | 1 | Contract/readiness/current-status reconciliation | COMPLETE — PR #49 merged; exact-main success |
 | 2 | Finite availability + clinician schedule publication foundation | COMPLETE — PR #50 merged; exact-main success |
 | 3 | Booking/cancel/reschedule/patient history/clinician schedule/attendance/no-show/concurrency | COMPLETE — PR #53 merged, exact-main Bootstrap 40787996614 SUCCESS |
-| 4 | Consultation opening + booking/encounter/actual-treating provenance + current relationship gate | AUTHORIZED — comment 6485213892; IMPLEMENTED / IN REVIEW |
-| 5 | Complaint/problems/diagnoses/allergy review/private notes/released summary/instructions/signed addenda/corrections | NOT AUTHORIZED |
+| 4 | Consultation opening + booking/encounter/actual-treating provenance + current relationship gate | COMPLETE — exact-main 40995148133 SUCCESS, activation 6514224261 |
+| 5 | Complaint/problems/diagnoses/allergy review/private notes/released summary/instructions/signed addenda/corrections | AUTHORIZED — activation 6514224261; IMPLEMENTED / IN REVIEW |
 | 6 | Follow-up intent + new-booking integration + EH-012 compatibility | NOT AUTHORIZED |
 | 7 | Combined I2 exit proof + independent security review | NOT AUTHORIZED |
 
@@ -338,4 +338,4 @@ No concrete repository reason required changing the Product Owner's proposed dep
 
 I2 remains **INCOMPLETE** until every approved slice is merged after independent review of each exact PR head, successful exact-head CI, separate explicit merge authorization and successful exact-main post-merge CI. Preserve migration history and M0–M2/I1 regressions/invariants. Require real PostgreSQL booking/concurrency/revocation/expiry proof, IDOR/privacy/private-note boundary, released summary/signed correction/history proof, EH-012 compatibility, bounded Journey A I2 proof and combined independent I2 security exit review. Record actual evidence and unresolved limitations, never a predetermined test total or fabricated PASS.
 
-Current handoff: **V3-I2 Slices 1–3 COMPLETE; Slice 4 IMPLEMENTED / IN REVIEW.** Issue #48 OPEN; V3-I2 INCOMPLETE; Slices 5–7 excluded; I3 NOT AUTHORIZED; EACCE NOT STARTED. Independent exact-head review required. No merge authorized. Historical execution evidence is unchanged. See [Slice 4 implementation](V3_I2_SLICE4.md) and [validation](V3_I2_SLICE4_VALIDATION.md).
+Current handoff: **V3-I2 Slices 1–4 COMPLETE; Slice 5 IMPLEMENTED / IN REVIEW.** Issue #48 OPEN; V3-I2 INCOMPLETE; Slices 6–7 excluded; I3 NOT AUTHORIZED; EACCE NOT STARTED. Independent exact-head review required. No merge authorized. Historical execution evidence is unchanged. See [Slice 4 implementation](V3_I2_SLICE4.md) and [validation](V3_I2_SLICE4_VALIDATION.md).
