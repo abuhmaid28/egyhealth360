@@ -46,6 +46,12 @@ export function beforeI2Slice4(text) {
 
 /** Exactly strip Slice 5 additions; all historical byte hashes remain pinned. */
 export function beforeI2Slice5(text) {
- return text.replace(/,\n {4}"\/api\/v1\/consultations\/\{consultationId\}\/documents": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
+ return beforeI2Slice6(text).replace(/,\n {4}"\/api\/v1\/consultations\/\{consultationId\}\/documents": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
  .replace(/,\n {6}"DocumentationAllergyReview": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
+}
+
+/** Exactly strip Slice 6 additions, preserving all older bytes. */
+export function beforeI2Slice6(text) {
+ return text.replace(/,\n {4}"\/api\/v1\/consultations\/\{consultationId\}\/follow-up-intents": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
+ .replace(/,\n {6}"FollowUpIntentWindow": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
 }

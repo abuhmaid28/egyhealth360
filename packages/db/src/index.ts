@@ -98,3 +98,6 @@ export {createDocumentationPersistence} from './documentation.js';
 export type {DocumentationPersistence} from './documentation.js';
 export {DocumentationError,documentationInput,documentationJson,documentContent,documentText} from './documentation-values.js';
 export type {DocumentCommand} from './documentation-values.js';
+
+export {createFollowUpIntentPersistence,type FollowUpIntentPersistence} from './follow-up-intents.js';
+export {FollowUpIntentError,intentInput,intentJson,intentWindow,intentPage,type IntentCommand} from './follow-up-intent-values.js';
