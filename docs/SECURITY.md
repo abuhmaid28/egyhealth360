@@ -215,3 +215,7 @@ See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLIC
 ## V3-I2 Slice 2 operational scheduling enforcement
 
 [Exact boundary and lock graph](V3_I2_SLICE2.md#authority-clocks-and-locking): internal current ADMIN configuration only; current owner clinician/session/profile and exact active clinic/member/published directory affiliation for publication/withdrawal. Availability never checks or grants clinical assignment authority. Immutable timezone/configuration snapshots; current settings for public eligibility. Safe actor/command/key replay always rechecks authority, including original membership/affiliation. Atomic empty-metadata audit, real PostgreSQL exclusion/races/revocation/expiry/rollback and strict HTTP/no-store/HEAD/public canary proof. No Booking or ADMIN patient/clinical shortcut.
+
+## Slice 6 current authority and privacy
+
+Follow-up Intent commands require exact treating author plus current ACTIVE/null-ended assignment and exact current source clinic/member/provider/affiliation. Author reads require current assignment; patient own and current-related clinician reads are released-only. Any targeted version suppresses its entire root, link identities and counts, including replay. Sorted multi-provider locking extends existing order without legacy changes; no ADMIN shortcut. See [Slice 6](V3_I2_SLICE6.md) for exact lock/HTTP/replay bounds; the runtime verifier is wired into accelerated CI after consultation-documentation and before smoke/cleanup.

@@ -1071,3 +1071,82 @@ model ConsultationPrivacyRestriction {
  recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
  @@map("consultation_privacy_restrictions")
 }
+
+// Slice 6: SQL owns exact composite RESTRICT FKs, deferred completeness and guards.
+model FollowUpIntent {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ consultationId String @map("consultation_id") @db.Uuid
+ encounterId String @map("encounter_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ authorClinicianId String @map("author_clinician_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ @@map("follow_up_intents")
+}
+model FollowUpIntentVersion {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ consultationId String @map("consultation_id") @db.Uuid
+ encounterId String @map("encounter_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ authorClinicianId String @map("author_clinician_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ version Int
+ command String
+ state String
+ instruction String
+ desiredStartAt DateTime? @map("desired_start_at") @db.Timestamptz(6)
+ desiredEndAt DateTime? @map("desired_end_at") @db.Timestamptz(6)
+ timeZone String? @map("time_zone") @db.VarChar(100)
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ reason String?
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ signedAt DateTime? @map("signed_at") @db.Timestamptz(3)
+ releasedAt DateTime? @map("released_at") @db.Timestamptz(3)
+ operationId String @map("operation_id") @db.Uuid
+ @@unique([rootId,version])
+ @@map("follow_up_intent_versions")
+}
+model FollowUpIntentBookingLink {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ bookingId String @map("booking_id") @db.Uuid
+ sequence Int
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String
+ operationId String @map("operation_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@unique([rootId,sequence])
+ @@map("follow_up_intent_booking_links")
+}
+model FollowUpIntentOperation {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ command String
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ resultVersionId String? @map("result_version_id") @db.Uuid
+ resultLinkId String? @map("result_link_id") @db.Uuid
+ auditId String @map("audit_id") @db.Uuid
+ versionLimit Int @map("version_limit")
+ linkLimit Int @map("link_limit")
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@unique([actorUserId,command,operationKey])
+ @@map("follow_up_intent_operations")
+}
+model FollowUpIntentPrivacyRestriction {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ versionId String @map("version_id") @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ operationId String @map("operation_id") @db.Uuid
+ command String
+ reason String
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("follow_up_intent_privacy_restrictions")
+}
