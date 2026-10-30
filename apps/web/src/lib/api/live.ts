@@ -1,3 +1,4 @@
+import { createUnavailableDocumentation } from "../clinical/documentation";
 import {
   createConsultationOpeningApi,
   OpeningUiError,
@@ -83,6 +84,7 @@ export function createLiveAdapter(): HealthcareAdapter {
   const consultationOpening = createConsultationOpeningApi(request, () => csrf);
   return {
     mode: "live",
+    documentation: createUnavailableDocumentation(),
     consultationOpening,
     liveBookings,
     async session() {

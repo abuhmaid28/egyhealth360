@@ -48,12 +48,17 @@ test("authored UI translation calls have Arabic catalog entries with matching pl
     "2026-11-02T09:30:00+02:00",
     "’s",
   ]);
-  for (const file of readdirSync("apps/web/src/components").filter((f) =>
-    f.endsWith(".tsx"),
+  for (const file of [
+    "apps/web/src/components",
+    "apps/web/src/previews",
+  ].flatMap((folder) =>
+    readdirSync(folder)
+      .filter((name) => name.endsWith(".tsx"))
+      .map((name) => folder + "/" + name),
   )) {
     const ast = ts.createSourceFile(
       file,
-      readFileSync("apps/web/src/components/" + file, "utf8"),
+      readFileSync(file, "utf8"),
       ts.ScriptTarget.Latest,
       true,
       ts.ScriptKind.TSX,

@@ -1,4 +1,6 @@
 "use client";
+import { DocumentationWorkspaceScreen } from "./documentation";
+import { createUnavailableDocumentation } from "../lib/clinical/documentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
@@ -37,6 +39,30 @@ export function DoctorScreen({ path }: { path: string }) {
     return <LiveBookingList clinician />;
   if (api.mode === "live" && path.startsWith("/doctor/appointments/"))
     return <LiveBookingDetail clinician id={path.split("/")[3]} />;
+  if (
+    api.mode === "live" &&
+    path.startsWith("/doctor/consultation/") &&
+    path.endsWith("/documentation")
+  )
+    return (
+      <>
+        <Link
+          className="back-link"
+          href={`/doctor/consultation/${path.split("/")[3]}`}
+        >
+          {t("Back to consultation")}
+        </Link>
+        <Heading
+          title={t("Consultation documentation")}
+          description={t(
+            "Clinical documentation remains unavailable in normal Live mode during this integration stage.",
+          )}
+        />
+        <DocumentationWorkspaceScreen
+          service={api.documentation ?? createUnavailableDocumentation()}
+        />
+      </>
+    );
   if (api.mode === "live" && path.startsWith("/doctor/consultation/"))
     return <LiveConsultationShell bookingId={path.split("/")[3]} />;
   if (path === "/doctor" || path === "/doctor/schedule")

@@ -862,4 +862,198 @@ export const ar: Record<string, string> = {
     "فتح الاستشارة غير متاح. حدّث الحجز قبل إعادة المحاولة.",
   "Booking is logistics only. It grants no access to medical records. Consultation opening requires a separate current clinical relationship. Clinical documentation, prescriptions, tests and clinical follow-up remain Demo-only.":
     "الحجز إجراء تنظيمي فقط ولا يمنح صلاحية الاطلاع على السجل الطبي. يتطلب فتح الاستشارة علاقة رعاية حالية مستقلة. يبقى التوثيق السريري والوصفات والفحوصات والمتابعة السريرية في الوضع التجريبي فقط.",
+  "Released summaries are not connected yet":
+    "ملخصات الزيارات المنشورة غير متصلة بالخدمة بعد",
+  "Clinical documentation is not connected yet":
+    "التوثيق السريري غير متصل بالخدمة بعد",
+  "Clinical documentation is awaiting backend integration. No clinical information has been sent or saved in Live mode.":
+    "التوثيق السريري بانتظار الربط بالخدمة الخلفية. لم تُرسل أو تُحفظ أي معلومات سريرية في الوضع المتصل.",
+  "Booking and consultation opening do not grant ongoing clinical access. Your existing Live booking and opening capabilities remain available.":
+    "الحجز وفتح الاستشارة لا يمنحان صلاحية سريرية مستمرة. تبقى خدمات الحجز وفتح الاستشارة المتصلة الحالية متاحة.",
+  "View released summaries": "عرض ملخصات الزيارات المنشورة",
+  "Save clinical documentation": "حفظ التوثيق السريري",
+  "Normal Live documentation stays unavailable until the independently reviewed backend integration.":
+    "يبقى التوثيق في الوضع المتصل غير متاح حتى اكتمال الربط بالخدمة الخلفية ومراجعته المستقلة.",
+  "Clinical consultation": "الاستشارة السريرية",
+  "Consultation documentation": "توثيق الاستشارة",
+  "Human-entered documentation for this opened consultation. Current clinical authority is always required.":
+    "توثيق يدخله الطبيب لهذه الاستشارة المفتوحة. يلزم دائماً توافر الصلاحية السريرية الحالية.",
+  "{count} / {limit} characters": "{count} / {limit} حرف",
+  "Check the length and text format. Nothing is automatically shortened.":
+    "تحقق من طول النص وصيغته. لا يتم اختصار أي نص تلقائياً.",
+  "Human entry only. No suggestions or inferred findings.":
+    "إدخال بشري فقط، دون اقتراحات أو نتائج مستنتجة.",
+  "Remove problem {number}": "حذف المشكلة {number}",
+  "Remove diagnosis {number}": "حذف التشخيص {number}",
+  Remove: "حذف",
+  "Add problem": "إضافة مشكلة",
+  "Add diagnosis": "إضافة تشخيص",
+  "{count} / {limit} items": "{count} / {limit} بند",
+  "Refresh visible documentation": "تحديث التوثيق المتاح للعرض",
+  "Opened consultation context": "سياق الاستشارة المفتوحة",
+  "Booking grants no clinical authority": "الحجز لا يمنح أي صلاحية سريرية",
+  "Documentation sections": "أقسام التوثيق",
+  "Complaint and findings": "الشكوى والنتائج المدخلة",
+  "Private note": "ملاحظة خاصة",
+  "Patient summary and instructions": "ملخص المريض والتعليمات",
+  "Signed history": "السجل الموقّع",
+  "The fields are held unchanged for explicit retry. No automatic retry takes place.":
+    "تبقى الحقول دون تغيير لإعادة المحاولة صراحةً. لا تتم إعادة المحاولة تلقائياً.",
+  "Recheck visible documentation": "إعادة التحقق من التوثيق المتاح",
+  "01 · Complaint and findings": "٠١ · الشكوى والنتائج المدخلة",
+  "These author-only entries are not automatically copied into the patient summary.":
+    "هذه المدخلات متاحة لمؤلفها فقط ولا تُنسخ تلقائياً إلى ملخص المريض.",
+  "Review state": "حالة المراجعة",
+  "Unknown and not reviewed never mean no known allergies.":
+    "حالتا «غير معروف» و«لم تتم المراجعة» لا تعنيان عدم وجود حساسية معروفة.",
+  "Not reviewed — review has not taken place":
+    "لم تتم المراجعة — لم يُراجع هذا البند",
+  "Unknown — information is not available": "غير معروف — المعلومات غير متاحة",
+  "Reviewed — no known allergy or intolerance":
+    "تمت المراجعة — لا توجد حساسية أو حالة عدم تحمّل معروفة",
+  "Reviewed — positive human-entered findings":
+    "تمت المراجعة — توجد نتائج إيجابية مدخلة بشرياً",
+  "Allergy / intolerance item {number}": "بند الحساسية / عدم التحمل {number}",
+  "Item kind": "نوع البند",
+  Allergy: "حساسية",
+  Intolerance: "عدم تحمّل",
+  "Remove allergy item": "حذف بند الحساسية",
+  "Add allergy / intolerance item": "إضافة بند حساسية / عدم تحمّل",
+  "Retry unchanged findings": "إعادة محاولة حفظ النتائج بنفس الطلب",
+  "Save findings draft": "حفظ مسودة النتائج",
+  "02 · Private note": "٠٢ · ملاحظة خاصة",
+  "Private — visible only to you while you retain current clinical authority":
+    "خاص — متاح لك وحدك ما دامت صلاحيتك السريرية الحالية قائمة",
+  "Signed content is immutable. Use a separate addendum or correction.":
+    "المحتوى الموقّع غير قابل للتعديل. استخدم إضافة أو تصحيحاً منفصلاً.",
+  "Retry unchanged private note": "إعادة محاولة حفظ الملاحظة الخاصة بنفس الطلب",
+  "Save private note draft": "حفظ مسودة الملاحظة الخاصة",
+  "Sign private note": "توقيع الملاحظة الخاصة",
+  "03 · Patient summary and instructions": "٠٣ · ملخص المريض والتعليمات",
+  "Signed and released": "موقّع ومنشور للمريض",
+  "Draft — not visible to patient yet": "مسودة — غير ظاهرة للمريض بعد",
+  "Retry unchanged summary": "إعادة محاولة حفظ الملخص بنفس الطلب",
+  "Save summary draft": "حفظ مسودة الملخص",
+  "Review sign and release": "مراجعة التوقيع والنشر",
+  "Saving, opening a consultation and leaving this page never release content. A private note can never use sign and release.":
+    "الحفظ أو فتح الاستشارة أو مغادرة الصفحة لا ينشر المحتوى. لا يمكن استخدام التوقيع والنشر للملاحظات الخاصة مطلقاً.",
+  "04 · Signed history": "٠٤ · السجل الموقّع",
+  "Current effective version": "النسخة الحالية السارية",
+  "Earlier signed version — preserved": "نسخة موقّعة سابقة — محفوظة",
+  "Add signed addendum": "إضافة ملحق موقّع",
+  "Create signed correction": "إنشاء تصحيح موقّع",
+  "No visible signed versions": "لا توجد نسخ موقّعة متاحة للعرض",
+  "Only permitted signed history appears here. Drafts are not patient-visible.":
+    "يظهر هنا السجل الموقّع المسموح بعرضه فقط. المسودات غير ظاهرة للمريض.",
+  "Restrict wrong-patient document": "تقييد مستند مسجل للمريض الخطأ",
+  "Sign and release this summary?": "توقيع هذا الملخص ونشره للمريض؟",
+  "Sign this private note?": "توقيع هذه الملاحظة الخاصة؟",
+  "Only the saved patient summary and instructions below become patient-visible. Private note and author-only findings are excluded.":
+    "لن يظهر للمريض إلا الملخص والتعليمات المحفوظان أدناه. تُستبعد الملاحظة الخاصة والنتائج المتاحة للمؤلف فقط.",
+  "Signing keeps this note private. It does not release anything to the patient or ADMIN.":
+    "تبقى هذه الملاحظة خاصة بعد التوقيع. لا يُنشر أي محتوى للمريض أو للمسؤول الإداري.",
+  "Signing…": "جارٍ التوقيع…",
+  "Retry unchanged signing": "إعادة محاولة التوقيع بنفس الطلب",
+  "Confirm sign and release": "تأكيد التوقيع والنشر",
+  "Confirm private signing": "تأكيد التوقيع الخاص",
+  "Append a signed addendum": "إلحاق إضافة موقّعة",
+  "Create a signed correction": "إنشاء تصحيح موقّع",
+  "The original signed version remains preserved. This creates a separate signed version with your reason.":
+    "تبقى النسخة الموقّعة الأصلية محفوظة. ينشئ هذا الإجراء نسخة موقّعة منفصلة مع السبب الذي تدخله.",
+  "Private — never released": "خاص — لا يُنشر للمريض مطلقاً",
+  "Patient-visible after this explicit signing":
+    "يظهر للمريض بعد هذا التوقيع الصريح",
+  "Retry unchanged amendment": "إعادة محاولة التعديل بنفس الطلب",
+  "Confirm signed version": "تأكيد النسخة الموقّعة",
+  "Restrict an exact wrong-patient document":
+    "تقييد مستند محدد مسجل للمريض الخطأ",
+  "This safety action hides the selected document and affected lineage from ordinary views. It never moves a record to another patient. Original signed sources remain preserved.":
+    "يخفي إجراء السلامة هذا المستند المحدد وتسلسله المتأثر من طرق العرض العادية. ولا ينقل السجل إلى مريض آخر مطلقاً. تبقى المصادر الموقّعة الأصلية محفوظة.",
+  "Exact affected item / version": "البند / النسخة المحددة المتأثرة",
+  "Choose an exact visible version": "اختر نسخة محددة متاحة للعرض",
+  "I checked the exact item and understand that this restricts visibility without moving the record.":
+    "تحققت من البند المحدد وأفهم أن هذا يقيّد ظهوره دون نقل السجل.",
+  "Restricting…": "جارٍ التقييد…",
+  "Confirm wrong-patient restriction":
+    "تأكيد تقييد المستند المسجل للمريض الخطأ",
+  "My record": "سجلي الطبي",
+  "Released visit summaries": "ملخصات الزيارات المنشورة",
+  "Only your permitted signed and released summaries appear here. Drafts and private notes are never included.":
+    "لا تظهر هنا إلا ملخصاتك الموقّعة والمنشورة المسموح بعرضها. لا تتضمن المسودات أو الملاحظات الخاصة مطلقاً.",
+  "Linked to a permitted earlier released version.":
+    "مرتبطة بنسخة منشورة سابقة مسموح بعرضها.",
+  "No visible released summaries": "لا توجد ملخصات منشورة متاحة للعرض",
+  "Only permitted released content is shown. No draft, private or restricted metadata is included.":
+    "يظهر المحتوى المنشور المسموح به فقط، دون بيانات وصفية لمسودات أو محتوى خاص أو مقيّد.",
+  "Controlled clinical preview — synthetic, not Live":
+    "معاينة سريرية مضبوطة — بيانات مصطنعة وليست متصلة",
+  "Controlled preview controls": "خيارات المعاينة المضبوطة",
+  "Preview role": "دور المعاينة",
+  "Treating author": "الطبيب المعالج المؤلف",
+  "Own patient released view": "عرض المحتوى المنشور للمريض نفسه",
+  "Other patient": "مريض آخر",
+  "Another clinician": "طبيب آخر",
+  "Administrator — no clinical access": "مسؤول إداري — دون صلاحية سريرية",
+  "Next explicit action scenario": "سيناريو الإجراء الصريح التالي",
+  "This affects only the next explicit action in this synthetic preview.":
+    "يؤثر هذا الخيار في الإجراء الصريح التالي فقط داخل هذه المعاينة المصطنعة.",
+  Ready: "جاهز",
+  "Uncertain result before commit": "نتيجة غير مؤكدة قبل الحفظ المضبوط",
+  "Uncertain result after controlled commit":
+    "نتيجة غير مؤكدة بعد الحفظ المضبوط",
+  "Conflict / stale version": "تعارض / نسخة غير محدثة",
+  "Current clinical authority in fixture":
+    "صلاحية سريرية حالية في بيانات المعاينة",
+  "Opened consultation context in fixture":
+    "سياق استشارة مفتوحة في بيانات المعاينة",
+  "Expired session in fixture": "جلسة منتهية في بيانات المعاينة",
+  "Hold preview response": "تعليق استجابة المعاينة",
+  "Continue preview response": "متابعة استجابة المعاينة",
+  "Refresh preview view": "تحديث عرض المعاينة",
+  Draft: "مسودة",
+  "Signed · private": "موقّع · خاص",
+  Original: "الأصلية",
+  Correction: "تصحيح",
+  Addendum: "إضافة",
+  Problems: "المشكلات",
+  Diagnoses: "التشخيصات",
+  Complaint: "الشكوى",
+  "Private note content": "محتوى الملاحظة الخاصة",
+  "Patient summary content": "محتوى ملخص المريض",
+  "New signed content": "المحتوى الموقّع الجديد",
+  "Reason for addendum or correction": "سبب الإضافة أو التصحيح",
+  "Restriction reason": "سبب التقييد",
+  "Substance or finding": "المادة أو النتيجة المدخلة",
+  "Reaction (optional)": "التفاعل (اختياري)",
+  Problem: "مشكلة",
+  Diagnosis: "تشخيص",
+  "Optional human-entered narrative.": "نص اختياري يدخله الطبيب.",
+  "Never included in patient summary or release.":
+    "لا يُدرج في ملخص المريض أو المحتوى المنشور مطلقاً.",
+  "Enter only what you intend to share with the patient.":
+    "أدخل فقط ما تنوي مشاركته مع المريض.",
+  "Saved in the controlled preview. No Live backend write occurred.":
+    "تم الحفظ في المعاينة المضبوطة. لم تُكتب أي بيانات إلى الخدمة الخلفية المتصلة.",
+  "Clinical documentation remains unavailable in normal Live mode during this integration stage.":
+    "يبقى التوثيق السريري غير متاح في الوضع المتصل العادي خلال مرحلة الربط هذه.",
+  "Back to consultation": "العودة إلى الاستشارة",
+  "Documentation integration status": "حالة ربط التوثيق",
+  "Only signed and explicitly released patient content belongs in this view.":
+    "يقتصر هذا العرض على محتوى المريض الموقّع والمنشور بإجراء صريح.",
+  "The result is uncertain. Retry the unchanged command explicitly before editing it.":
+    "النتيجة غير مؤكدة. أعد المحاولة صراحةً بنفس الطلب قبل تعديله.",
+  "Clinical documentation is unavailable for your current access. A current clinical relationship and clinician authority are required.":
+    "التوثيق السريري غير متاح بصلاحياتك الحالية. يلزم وجود علاقة رعاية وصلاحية سريرية حاليتين.",
+  "This document changed. Refresh the visible record before making a new command.":
+    "تغير هذا المستند. حدّث السجل المتاح للعرض قبل تنفيذ طلب جديد.",
+  "This document is no longer available in ordinary views. Refresh the visible record. Retrying cannot restore restricted content.":
+    "لم يعد هذا المستند متاحاً في طرق العرض العادية. حدّث السجل المتاح. لا يمكن لإعادة المحاولة استعادة المحتوى المقيّد.",
+  "Check the highlighted limits and required fields. Nothing has been shortened or saved.":
+    "تحقق من الحدود والحقول المطلوبة الموضحة. لم يُختصر أو يُحفظ أي نص.",
+  "Visible version {number}": "النسخة الظاهرة {number}",
+  "Current signed entry": "المدخل الموقّع الحالي",
+  "Pending response in controlled preview":
+    "استجابة معلّقة في المعاينة المضبوطة",
+  "The combined draft exceeds the save limit. Shorten it before saving; nothing has been saved or automatically shortened.":
+    "تتجاوز المسودة المجمعة حد الحفظ. قلّل محتواها قبل الحفظ؛ لم يُحفظ أو يُختصر أي نص تلقائياً.",
 };

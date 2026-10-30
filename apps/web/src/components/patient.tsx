@@ -1,4 +1,6 @@
 "use client";
+import { ReleasedSummariesScreen } from "./documentation";
+import { createUnavailableDocumentation } from "../lib/clinical/documentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
@@ -47,6 +49,20 @@ export function PatientScreen({ path }: { path: string }) {
       <LiveBookingDetail id={path.split("/")[3]} />
     ) : (
       <LiveBookingList />
+    );
+  if (api.mode === "live" && path === "/patient/summaries")
+    return (
+      <>
+        <Heading
+          title={t("Released visit summaries")}
+          description={t(
+            "Only signed and explicitly released patient content belongs in this view.",
+          )}
+        />
+        <ReleasedSummariesScreen
+          service={api.documentation ?? createUnavailableDocumentation()}
+        />
+      </>
     );
   if (path === "/patient") return <Dashboard />;
   if (path === "/patient/discover") return <Discovery />;

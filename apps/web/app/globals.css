@@ -3220,3 +3220,49 @@ textarea {
 .opening-card > .button { max-inline-size: 100%; white-space: normal; }
 .opening-success { display: flex; align-items: center; gap: .6rem; font-weight: 700; }
 .opening-timestamp { font-size: clamp(1.05rem, 2vw, 1.5rem); font-weight: 700; overflow-wrap: anywhere; }
+
+/* Bounded consultation documentation, shared by Live pending and isolated preview. */
+.documentation-pending .icon-tile { margin-block-end: 1rem; }
+.documentation-context { display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-block-end:1.25rem; }
+.documentation-grid { display:grid; grid-template-columns: minmax(160px,210px) minmax(0,1fr); gap:1.25rem; align-items:start; }
+.documentation-outline { position:sticky; inset-block-start:1rem; display:grid; gap:.35rem; }
+.documentation-outline a { padding:.75rem; border-radius:.65rem; color:var(--ink); text-decoration:none; background:white; }
+.documentation-content, .documentation-released-list { display:grid; gap:1.25rem; min-inline-size:0; }
+.documentation-content > [id], .documentation-review { scroll-margin-block-start:1rem; }
+.documentation-field { margin-block:1rem; min-inline-size:0; }
+.documentation-counter { font-size:.75rem; color:var(--muted); text-align:end; margin-block-start:.3rem; }
+.documentation-action-row { display:flex; flex-wrap:wrap; gap:.65rem; align-items:center; }
+.documentation-action-row .button { white-space:normal; max-inline-size:100%; }
+/* Keep safety actions stable under the pointer, including wrapped RTL labels. */
+.documentation-action-row .button:hover { transform:none; }
+.documentation-list, .documentation-allergy-item { border:1px solid var(--line); border-radius:.8rem; margin-block:1.25rem; padding:1rem; min-inline-size:0; }
+.documentation-list legend, .documentation-allergy-item legend { font-weight:700; padding-inline:.25rem; }
+.documentation-list-item { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:.5rem; }
+.documentation-private { border-inline-start:4px solid #63748b; }
+.documentation-review { padding-block:1rem; }
+.documentation-version { padding-block:1rem; border-block-end:1px solid var(--line); overflow-wrap:anywhere; }
+.documentation-narrative { white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.8; }
+.documentation-release-preview { background:#f1f8f7; padding:1rem; margin-block:1rem; border-radius:.8rem; }
+.documentation-warning { background:#fff4de; padding:1rem; border-radius:.8rem; color:#64461d; }
+.documentation-ack { display:flex; align-items:flex-start; gap:.75rem; margin-block:1rem; line-height:1.7; }
+.documentation-ack input { inline-size:1.2rem; block-size:1.2rem; flex-shrink:0; margin-block-start:.2rem; }
+.documentation-danger { color:#8d4141; }
+.documentation-feedback:empty { display:none; }
+@media (max-width: 900px) {
+  .documentation-grid { grid-template-columns:minmax(0,1fr); }
+  .documentation-outline { position:static; display:flex; flex-wrap:wrap; }
+  .documentation-context { align-items:flex-start; flex-direction:column; }
+}
+@media (max-width: 480px) {
+  .documentation-list-item { grid-template-columns:minmax(0,1fr); }
+  .documentation-action-row > .button { flex:1 1 150px; }
+  .documentation-outline a { font-size:.8rem; padding:.6rem; }
+}
+.documentation-private .badge, .documentation-action-row .badge { white-space:normal; max-inline-size:100%; }
+.documentation-preview-host { min-block-size:100vh; }
+.documentation-preview-header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1rem; background:white; border-block-end:1px solid var(--line); padding:1rem clamp(1rem,4vw,3rem); }
+.documentation-preview-main { max-inline-size:1320px; margin-inline:auto; padding:clamp(1rem,3vw,2.5rem); }
+.documentation-preview-controls { background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:1rem; margin-block-end:1.5rem; }
+.documentation-preview-controls summary { font-weight:700; cursor:pointer; }
+.documentation-preview-control-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; padding-block:1rem; }
+@media(max-width:600px) { .documentation-preview-control-grid { grid-template-columns:minmax(0,1fr); } }

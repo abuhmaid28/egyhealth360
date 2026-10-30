@@ -295,6 +295,12 @@ function OpeningMetadata({
             "The graduation Demo workspace remains a separate synthetic experience. Opening a real visit never copies Demo clinical content into it.",
           )}
         </p>
+        <Link
+          className="button secondary"
+          href={`/doctor/consultation/${booking.id}/documentation`}
+        >
+          {t("Documentation integration status")}
+        </Link>
         <Link className="button secondary" href="/doctor/schedule">
           {t("Back to schedule")}
         </Link>

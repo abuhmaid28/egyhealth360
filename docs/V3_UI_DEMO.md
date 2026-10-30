@@ -1,5 +1,7 @@
 # V3 graduation UI candidate
 
+Current bounded follow-on: [UI Phase 5 Stage A clinical documentation](V3_UI_PHASE5_DOCUMENTATION.md) adds an isolated controlled presentation workspace. Normal Live documentation remains disabled; existing Live Booking/Opening and the graduation Demo are preserved. No real Slice 5 persistence is claimed.
+
 Branch: `feat/v3-ui-demo-shell`. Scope: [Issue #51](https://github.com/abuhmaid28/egyhealth360/issues/51), Product Owner's explicit 27 October 2026 session authorization. Starts from verified main `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`, [push/main Bootstrap SUCCESS](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675). This unfreezes only the graduation frontend. PR #50, backend implementation, OpenAPI, schemas, migrations, seeds, clinical rules and backend governance are unchanged. This candidate is for review, not automatic merge or real-patient deployment.
 
 ## Current integration — PR #57
