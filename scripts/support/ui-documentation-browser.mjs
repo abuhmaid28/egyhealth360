@@ -400,7 +400,7 @@ export async function testDocumentation(browser, liveOrigin, shots) {
       await page.setViewportSize({ width: 1440, height: 1000 });
       if (locale === "en")
         await snap("49-en-documentation-signed-history", "#doc-history");
-      await scenario("uncertain-after");
+      await scenario("uncertain-before");
       await button("Restrict wrong-patient document").click();
       await page.getByRole("dialog").waitFor();
       assert.equal(
@@ -433,6 +433,37 @@ export async function testDocumentation(browser, liveOrigin, shots) {
       await button("Confirm wrong-patient restriction").click();
       await page.getByRole("dialog").waitFor({ state: "hidden" });
       await ready();
+      const restrictionWarning =
+        "The restriction result is uncertain. Visible documentation has been refreshed. Review the exact item before explicitly retrying; no restriction success is assumed.";
+      await page
+        .getByRole("status")
+        .filter({ hasText: t(restrictionWarning) })
+        .waitFor();
+      assert.ok(
+        (await page.locator("#doc-history").innerText()).includes(publicText),
+        "uncertain-before restriction does not claim success",
+      );
+      await scenario("uncertain-after");
+      await button("Restrict wrong-patient document").click();
+      await picker.selectOption({ index: targetIndex });
+      await field("Restriction reason").fill(
+        "Explicit synthetic wrong-patient concern · قلق محدد",
+      );
+      await page
+        .getByRole("checkbox", {
+          name: t(
+            "I checked the exact item and understand that this restricts visibility without moving the record.",
+          ),
+          exact: true,
+        })
+        .check();
+      await button("Confirm wrong-patient restriction").click();
+      await page.getByRole("dialog").waitFor({ state: "hidden" });
+      await ready();
+      await page
+        .getByRole("status")
+        .filter({ hasText: t(restrictionWarning) })
+        .waitFor();
       assert.ok(
         !(await page.locator("#doc-history").innerText()).includes(publicText),
       );

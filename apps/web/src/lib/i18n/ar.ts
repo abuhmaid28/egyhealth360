@@ -1051,6 +1051,8 @@ export const ar: Record<string, string> = {
   "Check the highlighted limits and required fields. Nothing has been shortened or saved.":
     "تحقق من الحدود والحقول المطلوبة الموضحة. لم يُختصر أو يُحفظ أي نص.",
   "Visible version {number}": "النسخة الظاهرة {number}",
+  "The restriction result is uncertain. Visible documentation has been refreshed. Review the exact item before explicitly retrying; no restriction success is assumed.":
+    "نتيجة التقييد غير مؤكدة. حُدّث التوثيق المتاح للعرض. راجع العنصر المحدد قبل إعادة المحاولة صراحةً؛ لا يُفترض نجاح التقييد.",
   "Current signed entry": "المدخل الموقّع الحالي",
   "Pending response in controlled preview":
     "استجابة معلّقة في المعاينة المضبوطة",

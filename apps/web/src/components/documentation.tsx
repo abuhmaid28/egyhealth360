@@ -97,6 +97,7 @@ export function DocumentationWorkspaceScreen({
 function WorkspaceScope({ service }: { service: DocumentationApi }) {
   const { t } = useLocale();
   const [revision, setRevision] = useState(0);
+  const [notice, setNotice] = useState("");
   const resource = useResource(
     async () => ({ revision, view: await service.workspace() }),
     [service, revision],
@@ -111,6 +112,11 @@ function WorkspaceScope({ service }: { service: DocumentationApi }) {
           "Human-entered documentation for this opened consultation. Current clinical authority is always required.",
         )}
       />
+      {notice && (
+        <p className="documentation-warning" role="status">
+          {t(notice)}
+        </p>
+      )}
       <Resource resource={resource}>
         {(result) =>
           result.revision === revision &&
@@ -119,7 +125,10 @@ function WorkspaceScope({ service }: { service: DocumentationApi }) {
               key={`${result.view.scopeStamp}:${revision}`}
               service={service}
               view={result.view}
-              reload={() => setRevision((value) => value + 1)}
+              reload={(message) => {
+                setNotice(message ?? "");
+                setRevision((value) => value + 1);
+              }}
             />
           ) : (
             <Loading />
@@ -258,7 +267,7 @@ function DocumentationEditor({
 }: {
   service: DocumentationApi;
   view: DocumentationWorkspace;
-  reload: () => void;
+  reload: (message?: string) => void;
 }) {
   const { t } = useLocale();
   const [view, setView] = useState(initialView);
@@ -340,7 +349,7 @@ function DocumentationEditor({
     return (
       <Card>
         <p role="alert">{t(error)}</p>
-        <button className="button secondary" onClick={reload}>
+        <button className="button secondary" onClick={() => reload()}>
           {t("Refresh visible documentation")}
         </button>
       </Card>
@@ -408,7 +417,7 @@ function DocumentationEditor({
             </div>
           )}
           {error && (
-            <button className="button secondary" onClick={reload}>
+            <button className="button secondary" onClick={() => reload()}>
               {t("Recheck visible documentation")}
             </button>
           )}
@@ -920,6 +929,7 @@ function DocumentationEditor({
           change={amend.change}
           service={service}
           close={() => setAmend(undefined)}
+          refresh={reload}
           done={async () => {
             const next = await service.workspace();
             setView(next);
@@ -939,12 +949,12 @@ function DocumentationEditor({
           versions={view.history}
           service={service}
           close={() => setRestrict(false)}
-          done={() => {
+          done={(message) => {
             setRedacted(true);
             setNote("");
             setSummary("");
             setInstructions("");
-            reload();
+            reload(message);
           }}
         />
       )}
@@ -957,12 +967,14 @@ function AmendmentDialog({
   service,
   close,
   done,
+  refresh,
 }: {
   version: DocumentationVersion;
   change: "ADDENDUM" | "CORRECTION";
   service: DocumentationApi;
   close: () => void;
   done: () => Promise<void>;
+  refresh: (message?: string) => void;
 }) {
   const { t } = useLocale();
   const [text, setText] = useState(""),
@@ -1066,6 +1078,11 @@ function AmendmentDialog({
               setUncertain(
                 e instanceof DocumentationError && e.code === "uncertain",
               );
+              if (
+                e instanceof DocumentationError &&
+                ["restricted", "access", "expired"].includes(e.code)
+              )
+                refresh(safeErrorMessage(e));
             } finally {
               setBusy(false);
             }
@@ -1082,6 +1099,15 @@ function AmendmentDialog({
         <button className="button secondary" disabled={busy} onClick={close}>
           {t("Go back")}
         </button>
+        {error && (
+          <button
+            className="button secondary"
+            disabled={busy}
+            onClick={() => refresh(error)}
+          >
+            {t("Recheck visible documentation")}
+          </button>
+        )}
       </div>
     </Modal>
   );
@@ -1095,7 +1121,7 @@ function RestrictionDialog({
   versions: DocumentationVersion[];
   service: DocumentationApi;
   close: () => void;
-  done: () => void;
+  done: (message?: string) => void;
 }) {
   const { t } = useLocale();
   const [selected, setSelected] = useState(""),
@@ -1199,7 +1225,11 @@ function RestrictionDialog({
                   e.code,
                 )
               )
-                done();
+                done(
+                  e.code === "uncertain"
+                    ? "The restriction result is uncertain. Visible documentation has been refreshed. Review the exact item before explicitly retrying; no restriction success is assumed."
+                    : safeErrorMessage(e),
+                );
             } finally {
               setBusy(false);
             }
@@ -1207,6 +1237,15 @@ function RestrictionDialog({
         >
           {t(busy ? "Restricting…" : "Confirm wrong-patient restriction")}
         </button>
+        {error && (
+          <button
+            className="button secondary"
+            disabled={busy}
+            onClick={() => done(error)}
+          >
+            {t("Recheck visible documentation")}
+          </button>
+        )}
         <button className="button secondary" disabled={busy} onClick={close}>
           {t("Go back")}
         </button>
