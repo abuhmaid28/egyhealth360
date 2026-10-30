@@ -149,3 +149,5 @@ accelerated architecture, then full exact-head Bootstrap. No duplicate CI rewrit
 Follow-up Intent ≠ Booking ≠ historical FollowUpAppointment. Intent is not CareAction
 completion or EACCE. Booking clinical authority ZERO. No frontend, I3, EACCE,
 notifications, automatic scheduling, inference, destructive migration or deployment.
+
+[Executed validation and remaining gates](V3_I2_SLICE6_VALIDATION.md).
