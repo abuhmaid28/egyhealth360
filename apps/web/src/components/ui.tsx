@@ -213,11 +213,13 @@ export function Avatar({
 export function Card({
   children,
   className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return <section className={`card ${className}`}>{children}</section>;
+  ...props
+}: ComponentProps<"section">) {
+  return (
+    <section {...props} className={`card ${className}`}>
+      {children}
+    </section>
+  );
 }
 export function CardTitle({
   title,

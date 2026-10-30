@@ -7,10 +7,12 @@ import { isolatedBookings } from "../tests/support/bookings.mjs";
 import {
   createDatabase,
   createRelationshipPersistence,
+  createDocumentationPersistence,
 } from "../packages/db/dist/index.js";
 import { createApp } from "../apps/api/dist/app.js";
 import { createPasswordVerifier } from "../apps/api/dist/password.js";
 import { testRealConsultation } from "./support/ui-consultation-opening-real.mjs";
+import { testRealDocumentation } from "./support/ui-documentation-real.mjs";
 import { testRealBooking } from "./support/ui-booking-real.mjs";
 assert.ok(
   process.env.DATABASE_URL,
@@ -29,6 +31,7 @@ try {
     // Same isolated database; no HTTP stubs or direct assignment helper.
     const database = createDatabase(f.url);
     const relationships = createRelationshipPersistence(f.url);
+    const documentation = createDocumentationPersistence(f.url);
     const api = await createApp(
       database,
       {
@@ -45,10 +48,16 @@ try {
       f.availability,
       f.bookings,
       f.consultations,
+      documentation,
     );
     await api.listen(0, "127.0.0.1");
     const backend = await api.getUrl();
-    const networkFault = { dropNextOpeningSuccess: false, dropped: 0 };
+    const networkFault = {
+      dropNextOpeningSuccess: false,
+      dropped: 0,
+      dropDocumentSuffix: "",
+      documentsDropped: 0,
+    };
     const proxy = createServer((incoming, outgoing) => {
       const upstream = request(
         backend + incoming.url,
@@ -63,6 +72,18 @@ try {
           ) {
             networkFault.dropNextOpeningSuccess = false;
             networkFault.dropped++;
+            r.resume();
+            r.once("end", () => outgoing.destroy());
+            return;
+          }
+          if (
+            networkFault.dropDocumentSuffix &&
+            incoming.method === "POST" &&
+            incoming.url.endsWith(networkFault.dropDocumentSuffix) &&
+            r.statusCode === 200
+          ) {
+            networkFault.dropDocumentSuffix = "";
+            networkFault.documentsDropped++;
             r.resume();
             r.once("end", () => outgoing.destroy());
             return;
@@ -186,6 +207,7 @@ try {
         .data;
       const { attended } = await testRealBooking(page, f);
       await testRealConsultation(page, f, attended, networkFault);
+      await testRealDocumentation(browser, page, f, networkFault);
       assert.deepEqual(
         (await f.availability.history(f.actors.clinician, {})).data.filter(
           (s) => before.some((v) => v.id === s.id),
@@ -203,6 +225,7 @@ try {
       proxy.closeAllConnections();
       await new Promise((resolve) => proxy.close(resolve));
       await api.close();
+      await documentation.close();
       await relationships.close();
       await database.close();
     }

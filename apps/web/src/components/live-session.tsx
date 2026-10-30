@@ -19,6 +19,7 @@ export function LiveSessionProvider({ children }: { children: ReactNode }) {
     () => ({
       adapter: () => (current.current ??= createLiveAdapter()),
       clear: () => {
+        current.current?.documentation?.clear?.();
         current.current?.liveBookings?.clearCommands();
         current.current?.consultationOpening?.clear();
         current.current = undefined;

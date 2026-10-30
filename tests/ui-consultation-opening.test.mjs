@@ -10,6 +10,8 @@ execFileSync(process.execPath, [
   resolve("node_modules/typescript/bin/tsc"),
   "--outDir",
   output,
+  "--rootDir",
+  "apps/web/src/lib",
   "--module",
   "commonjs",
   "--moduleResolution",
@@ -29,8 +31,8 @@ const {
   projectOpening,
   openingEligibility,
   OpeningUiError,
-} = require(join(output, "consultation-opening.js"));
-const { createLiveAdapter } = require(join(output, "live.js"));
+} = require(join(output, "api/consultation-opening.js"));
+const { createLiveAdapter } = require(join(output, "api/live.js"));
 const id = (n) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 // Exact merged Slice 4 response contract.
 const receipt = {

@@ -10,6 +10,8 @@ execFileSync(process.execPath, [
   resolve("node_modules/typescript/bin/tsc"),
   "--outDir",
   output,
+  "--rootDir",
+  "apps/web/src/lib",
   "--module",
   "commonjs",
   "--moduleResolution",
@@ -24,9 +26,9 @@ execFileSync(process.execPath, [
 ]);
 after(() => rmSync(output, { recursive: true, force: true }));
 const require = createRequire(import.meta.url);
-const { createLiveAdapter } = require(join(output, "live.js"));
+const { createLiveAdapter } = require(join(output, "api/live.js"));
 const { projectBooking, bookingEligibility, correctionReasonValid } = require(
-  join(output, "live-booking.js"),
+  join(output, "api/live-booking.js"),
 );
 const id = (n) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const booking = (extra = {}) => ({

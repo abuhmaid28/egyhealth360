@@ -1,10 +1,12 @@
 # V3 graduation UI candidate
 
+Current bounded follow-on: [UI Phase 5 Stage B clinical documentation](V3_UI_PHASE5_DOCUMENTATION.md) integrates the merged real Slice 5 document/private-signing/explicit-summary-release/amendment/restriction and released-reader routes. Actual Browser → Next → Nest → PostgreSQL proof supplements the separate controlled presentation workspace. Existing Live Booking/Opening and Graduation Demo remain separate. PR #59 is OPEN / UNMERGED; DO NOT MERGE.
+
 Branch: `feat/v3-ui-demo-shell`. Scope: [Issue #51](https://github.com/abuhmaid28/egyhealth360/issues/51), Product Owner's explicit 27 October 2026 session authorization. Starts from verified main `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`, [push/main Bootstrap SUCCESS](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675). This unfreezes only the graduation frontend. PR #50, backend implementation, OpenAPI, schemas, migrations, seeds, clinical rules and backend governance are unchanged. This candidate is for review, not automatic merge or real-patient deployment.
 
 ## Current integration — PR #57
 
-[UI Phase 4](V3_UI_PHASE4_CONSULTATION_OPENING.md) integrates independently merged Slice 4 **Consultation Opening only** under an existing current clinical relationship. Normal Live mode sends the merged opening command and shows safe metadata. Clinical documentation and later workflows remain Demo-only; Booking grants zero clinical authority. Review readiness remains gated on required successful CI.
+[UI Phase 4](V3_UI_PHASE4_CONSULTATION_OPENING.md) integrates independently merged Slice 4 **Consultation Opening only** under an existing current clinical relationship. Normal Live mode sends the merged opening command and shows safe metadata. Phase 5 now integrates real clinical documentation separately; later workflows remain Demo-only. Booking grants zero clinical authority. Review readiness remains gated on required successful CI.
 
 ## Real Booking integration — PR #55
 
