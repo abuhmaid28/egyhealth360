@@ -273,18 +273,40 @@ export function Application() {
           })}
         </div>
         <nav aria-label={t("Main navigation")}>
-          {navigation[session.role].map(([href, label, icon]) => (
-            <Link
-              key={href}
-              href={href}
-              aria-current={pathname === href ? "page" : undefined}
-              className={pathname === href ? "active" : ""}
-            >
-              <Icon name={icon} />
-              <span>{t(label)}</span>
-              {pathname === href && <span className="nav-dot" />}
-            </Link>
-          ))}
+          {navigation[session.role]
+            .concat(
+              api.mode === "live"
+                ? session.role === "CLINICIAN"
+                  ? [
+                      [
+                        "/doctor/summaries",
+                        "Released visit summaries",
+                        "record",
+                      ],
+                    ]
+                  : session.role === "PATIENT"
+                    ? [
+                        [
+                          "/patient/summaries",
+                          "Released visit summaries",
+                          "record",
+                        ],
+                      ]
+                    : []
+                : [],
+            )
+            .map(([href, label, icon]) => (
+              <Link
+                key={href}
+                href={href}
+                aria-current={pathname === href ? "page" : undefined}
+                className={pathname === href ? "active" : ""}
+              >
+                <Icon name={icon} />
+                <span>{t(label)}</span>
+                {pathname === href && <span className="nav-dot" />}
+              </Link>
+            ))}
         </nav>
         <div className="sidebar-bottom">
           <div className="care-note">

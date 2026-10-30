@@ -1,3 +1,74 @@
+# UI Phase 5 — Live clinical documentation (Stage B)
+
+**UI Phase 5 Stage B — IMPLEMENTED / IN REVIEW. Clinical Documentation — REAL LIVE INTEGRATION. PR #59 remains OPEN / UNMERGED; DO NOT MERGE.**
+
+Stage B follows [Issue #48 gate authorization 6524790227](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6524790227), backend main `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`, and its successful exact-main Bootstrap 41008236990 / validate 123907937943. The existing Stage A branch was continued, without rebase or force-push. Normal merge-from-main commit: `cbcaeab` (ordered parents: Stage A `41af71992862b4f75423c977a1f1036d7403ee13`, backend main above). Final head and exact-head Bootstrap run/job are recorded in [PR #59](https://github.com/abuhmaid28/egyhealth360/pull/59).
+
+## Reconciliation with the actual merged backend
+
+The source of truth is [OpenAPI](openapi.json), [Slice 5 contract/runtime](V3_I2_SLICE5.md), `apps/api/src/documentation.ts` and `packages/db/src/documentation.ts`. Stage A's controlled view models are not transport DTOs.
+
+- Findings are explicit fields of each document. Live has separate private-note and patient-summary findings, with an explicit document selector. There is no standalone findings-save endpoint. Saving either draft includes only that document's entered complaint, problems, diagnoses and allergy review; there is no private-to-summary copying. Summary findings are included in its explicit release preview and released view.
+- Draft saves create independent immutable roots. There is no draft-update command. The UI explains each save and offers a blank separate draft without copying signed content. Signed changes use the backend's reasoned correction/addendum commands.
+- Document `kind` is `PRIVATE_NOTE`/`PATIENT_SUMMARY`; version `kind` is `DRAFT`/`SIGN`/`RELEASE`/`ADDENDUM`/`CORRECT`. They are mapped separately. Exact root/version/sequence targets remain transient author command state. Patient views omit author-only sequence, draft predecessors, consultation/root IDs and raw DTOs.
+- `effective` is server-owned; an addendum supplements signed content. Only the newest head of each root has amendment commands. A fresher detail response supersedes an older list head.
+- Restricting an exact version suppresses that entire document lineage in ordinary backend projections. UI invalidation clears every registered session service, pending narrative/replay state, IDs and page metadata before re-reading. Disposed scopes and delayed responses cannot repopulate newer views. No forensic history is exposed.
+- Released DTOs do not supply author/clinic/patient display names. The released view does not fabricate them. The author's opening context uses permitted booking and public-directory metadata only.
+
+## Exact Live routes integrated
+
+All paths below are prefixed with `/api/v1`. Browser reads use GET; backend HEAD/no-store parity remains covered by the inherited Slice 5 integration suite.
+
+| Purpose | Actual merged route |
+| --- | --- |
+| Independent immutable draft; current-author document list | POST / GET `/consultations/{consultationId}/documents` |
+| Current-author bounded version detail | GET `/consultations/{consultationId}/documents/{documentId}` |
+| Sign private note only | POST `/consultations/{consultationId}/documents/{documentId}/sign` |
+| Deliberate patient-summary release only | POST `/consultations/{consultationId}/documents/{documentId}/sign-release` |
+| Append signed addendum / correction | POST `/consultations/{consultationId}/documents/{documentId}/addenda` / `/corrections` |
+| Exact wrong-patient restriction | POST `/consultations/{consultationId}/documents/{documentId}/privacy-restrictions` |
+| Own released list / permitted history | GET `/me/summaries` / `/me/summaries/{summaryId}` |
+| Current-related clinician released list / history | GET `/patients/{patientId}/summaries` / `/patients/{patientId}/summaries/{summaryId}` |
+
+Author entry: existing Live opening → opening details → **Open clinical documentation**. Own released entry: `/patient/summaries`. Related-clinician entry: `/doctor/summaries`, requiring the exact patient locator and that clinician's own current ACTIVE relationship. This does not create a relationship or grant access. Lists and histories have explicit bounded twenty-entry pagination; no unbounded background collection is performed.
+
+## Transport, privacy and recovery
+
+`src/lib/api/documentation.ts` uses the existing credentialed, same-origin Live adapter and Next rewrite. HttpOnly sessions remain browser-managed; CSRF, operation keys, entered content and projection state remain in memory. No clinical payload enters URLs, browser storage, logs or analytics. No `Idempotency-Key` header, automatic mutation retry or Live → Demo fallback exists.
+
+Actual outgoing JSON must fit the 16 KiB budget without truncation. Canonical UUIDv4 keys are retained for explicit unchanged retries. Changed commands use a fresh key, including concurrent changed payloads. Pending fingerprints are SHA-256 values rather than retained narrative copies. Invalid/malformed/lost mutation responses are uncertain; the UI never invents success. Ordinary reads reauthorize after writes instead of treating replay bodies as current authority.
+
+Safe authored states cover validation, 401 expiry, 403 CSRF failure, scoped 404, 409 conflict, 413, 415 and unavailable/uncertain responses. Logout, session expiry and identity/role changes invalidate the entire clinical capability scope. Scope subscriptions synchronously remove editors, history and dialogs. Generation/read-serial checks discard delayed results, and React development effect replay preserves the current service while real unmount disposes it. A restriction clears other retained service instances as well as the initiating one. Other tabs refresh through the server; already delivered responses cannot be recalled.
+
+**PRIVATE_NOTE boundary — PRESERVED. Patient Release — EXPLICIT ONLY. Wrong-patient masking — PRESERVED. Booking clinical authority — ZERO.** UNKNOWN and NOT_REVIEWED always retain their distinct uncertainty labels. ADMIN and unrelated clinicians receive no private access.
+
+## Validation and presentation
+
+The real `test:ui:real` runner retains Availability, Booking, schedule/attendance/correction and Consultation Opening, then runs `scripts/support/ui-documentation-real.mjs` through **Browser → Next → Nest → PostgreSQL**. Genuine bilateral patient authorization and clinician acceptance establish each clinician's relationship. Documentation proof covers all four allergy states, immutable drafts/private signing, explicit release with a deliberately lost committed response and exact unchanged UI retry, no duplicate versions, own/current-related released list/detail, private boundary, correction/addendum preservation, deliberate restriction with a lost response, ordinary masking/replay denial, relationship ending/session revocation and memory-only responsive UI. No documentation HTTP route is mocked.
+
+Thirty-three focused Live adapter tests supplement the twenty-two retained controlled capability tests. They include strict DTO projection, actual request bytes, every safe error category, concurrent command keys, scoped disposal, cross-service invalidation, delayed-read isolation, authenticated identity renewal, fresher detail heads and pagination. The complete controlled EN/AR/RTL browser matrix remains separate from persistence proof. Final full unit/integration counts, exact head and Bootstrap job are maintained in the PR after actual execution. Both dependency audits retain 0 HIGH / 0 CRITICAL (2 LOW / 3 MODERATE inherited findings).
+
+| Real capture | Surface |
+| --- | --- |
+| [55](ui-screenshots/55-en-live-documentation-release.png) | English explicit Live release, including saved structured findings |
+| [56](ui-screenshots/56-en-mobile-live-released-summary.png) | English mobile patient released projection |
+| [57](ui-screenshots/57-ar-mobile-live-documentation.png) | Arabic/RTL mobile author workspace |
+| [58](ui-screenshots/58-ar-mobile-live-released-summary.png) | Arabic/RTL mobile patient released projection |
+
+These use synthetic data persisted by the real API/database; previous controlled captures 46–54 retain their historical meaning. Responsive checks cover 1440/834/390, English/Arabic and RTL; existing native dialogs retain keyboard/focus behavior. Language changes preserve unsaved Live fields and command state.
+
+## Retained limitations and scope
+
+The merged backend has no consultation-read/recovery endpoint. Author entry therefore requires the genuine opening receipt in the current client session. After a full browser reload/logout the UI explains that context is unavailable; it does not guess a consultation/booking binding, issue an automatic mutation, persist clinical context or invent a route. Patient and related-clinician released views remain available after fresh authentication. Independent draft identities and append-only signed amendments follow the actual backend contract; there is no in-place draft editor. The related-clinician screen requires an exact patient locator because no approved clinical-patient directory is implemented here.
+
+No backend implementation, schema, migration, clinical policy or `.github/workflows/ci.yml` changes were authored. No Slice 6, prescriptions/labs/pharmacy backend work, I3 or EACCE is included. Graduation Demo remains separate and deterministic. Final independent review and exact-head Bootstrap are required before any later merge decision; this task does not authorize merge.
+
+---
+
+## Historical Stage A record
+
+The following is the original Stage A record. Its "not Live" and "Stage B pending" statements describe that earlier delivered stage and are superseded by the Stage B implementation above.
+
 # UI Phase 5 — Stage A clinical documentation
 
 **CONTROLLED / NOT LIVE.** Branch `feat/v3-ui-phase5-consultation-documentation`. This bounded frontend track follows [Issue #48 Fast-Track authorization 6513918540](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6513918540) and the frozen [I2 documentation/privacy contract, §11](V3_I2_CONTRACT.md#11-documentation-and-privacy-model). Backend Slice 5 is not integrated by Stage A. Keep this PR **DRAFT / OPEN / UNMERGED**; no merge is authorized.

@@ -1,7 +1,6 @@
 import { UiError } from "../api/errors";
 
-/** Frontend view/capability models for Stage A. NOT proposed backend DTOs/routes.
- * Clinical transport remains unavailable until separately merged Slice 5 truth. */
+/** Frontend view models. The Live adapter projects the merged Slice 5 contract. */
 export const documentationLimits = {
   complaint: 2000,
   items: 20,
@@ -36,6 +35,8 @@ export const emptyFacts = (): FactsDraft => ({
 });
 export type AmendmentKind = "ADDENDUM" | "CORRECTION";
 interface VersionMetadata {
+  facts?: FactsDraft;
+  head?: boolean;
   key: string;
   recordedAt: string;
   signedAt?: string;
@@ -59,6 +60,7 @@ export interface SummaryVersion extends VersionMetadata {
 export type DocumentationVersion = PrivateVersion | SummaryVersion;
 /** Patient projection has no private-note/facts/authority fields or hidden counts. */
 export interface ReleasedSummary {
+  facts?: FactsDraft;
   key: string;
   kind: "PATIENT_SUMMARY";
   state: "SIGNED_RELEASED";
@@ -86,6 +88,10 @@ export interface DocumentationWorkspace {
   history: DocumentationVersion[];
 }
 export type DocumentationErrorCode =
+  | "csrf"
+  | "media"
+  | "read"
+  | "context"
   | "budget"
   | "uncertain"
   | "unavailable"
@@ -95,6 +101,11 @@ export type DocumentationErrorCode =
   | "restricted"
   | "validation";
 const messages: Record<DocumentationErrorCode, string> = {
+  csrf: "Request verification failed. Refresh your session before retrying.",
+  media: "The documentation request must use JSON.",
+  read: "Clinical documentation could not be refreshed. Recheck your current access before continuing.",
+  context:
+    "Open this consultation in the current session before documenting. Opening context is not retained after a full reload.",
   budget:
     "The combined draft exceeds the save limit. Shorten it before saving; nothing has been saved or automatically shortened.",
   uncertain:
@@ -117,17 +128,29 @@ export class DocumentationError extends UiError {
   }
 }
 export interface DocumentationApi {
-  readonly mode: "unavailable" | "controlled";
+  readonly mode: "unavailable" | "controlled" | "live";
+  clear?(reason?: "access" | "expired"): void;
+  dispose?(): void;
+  paging?(): { documents: number; history: number };
+  subscribe?(listener: () => void): () => void;
   scopeStamp(): string;
-  workspace(): Promise<DocumentationWorkspace>;
-  released(): Promise<ReleasedSummary[]>;
+  workspace(
+    page?: number,
+    historyPage?: number,
+  ): Promise<DocumentationWorkspace>;
+  released(page?: number, historyPage?: number): Promise<ReleasedSummary[]>;
   saveFacts(value: FactsDraft): Promise<void>;
-  savePrivateNote(text: string): Promise<void>;
-  saveSummary(value: { text: string; instructions: string }): Promise<void>;
+  savePrivateNote(text: string, facts?: FactsDraft): Promise<void>;
+  saveSummary(value: {
+    text: string;
+    instructions: string;
+    facts?: FactsDraft;
+  }): Promise<void>;
   signPrivateNote(targetKey: string): Promise<void>;
   releaseSummary(targetKey: string): Promise<void>;
   amend(value: {
     targetKey: string;
+    facts?: FactsDraft;
     change: AmendmentKind;
     text: string;
     instructions: string;

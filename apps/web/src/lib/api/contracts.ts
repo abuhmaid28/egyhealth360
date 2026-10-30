@@ -1,3 +1,4 @@
+import type { LiveDocumentationApi } from "./documentation";
 import type { DocumentationApi } from "../clinical/documentation";
 import type { ConsultationOpeningApi } from "./consultation-opening";
 import type { LiveBookingApi } from "./live-booking";
@@ -126,6 +127,7 @@ export interface HealthcareAdapter {
   readonly liveBookings?: LiveBookingApi;
   readonly consultationOpening?: ConsultationOpeningApi;
   readonly documentation?: DocumentationApi;
+  readonly liveDocumentation?: LiveDocumentationApi;
   session(): Promise<Session | null>;
   login(email: string, password: string): Promise<Session>;
   logout(): Promise<void>;

@@ -1058,4 +1058,46 @@ export const ar: Record<string, string> = {
     "استجابة معلّقة في المعاينة المضبوطة",
   "The combined draft exceeds the save limit. Shorten it before saving; nothing has been saved or automatically shortened.":
     "تتجاوز المسودة المجمعة حد الحفظ. قلّل محتواها قبل الحفظ؛ لم يُحفظ أو يُختصر أي نص تلقائياً.",
+  "Booking is not consent or a clinical relationship. Opening requires an existing active patient relationship and current clinician and clinic authority. Booking grants zero clinical authority.":
+    "الحجز ليس موافقة أو علاقة سريرية. يتطلب فتح الاستشارة علاقة نشطة قائمة مع المريض وصلاحية حالية للطبيب والعيادة. الحجز لا يمنح أي صلاحية سريرية.",
+  "The opening was confirmed by the server. Documentation requires your current clinical authority.":
+    "أكد الخادم فتح الاستشارة. يتطلب التوثيق صلاحيتك السريرية الحالية.",
+  "Private notes and explicitly released patient summaries are available with current clinical authority.":
+    "تتوفر الملاحظات الخاصة وملخصات المريض المنشورة صراحةً عند وجود صلاحية سريرية حالية.",
+  "Open clinical documentation": "فتح التوثيق السريري",
+  "Opening details and documentation for this scheduled consultation.":
+    "تفاصيل الفتح والتوثيق لهذه الاستشارة المجدولة.",
+  "Booking is logistics only. It grants no access to medical records. Consultation opening requires a separate current clinical relationship. Documentation requires current clinical authority. Prescriptions, tests and clinical follow-up remain Demo-only.":
+    "الحجز إجراء تنظيمي فقط ولا يمنح الوصول إلى السجلات الطبية. يتطلب فتح الاستشارة علاقة سريرية حالية مستقلة، ويتطلب التوثيق صلاحية سريرية حالية. تظل الوصفات والفحوصات والمتابعة السريرية ضمن العرض التجريبي فقط.",
+  "Findings document": "مستند النتائج السريرية",
+  "Findings belong only to the selected document. They are saved with its draft. Private findings are never copied into a summary.":
+    "تخص النتائج المستند المحدد فقط وتُحفظ مع مسودته. لا تُنسخ النتائج الخاصة إلى الملخص.",
+  "Saved by the Live service. Visibility follows the explicit document command.":
+    "حفظت الخدمة الفعلية المستند. تحدد عملية المستند الصريحة إمكانية عرضه.",
+  "Each save creates a separate immutable draft. Signing applies only to the displayed saved draft.":
+    "ينشئ كل حفظ مسودة مستقلة غير قابلة للتعديل. ينطبق التوقيع على المسودة المحفوظة المعروضة فقط.",
+  "Each save creates a separate immutable draft. Release includes only the displayed saved summary and its findings.":
+    "ينشئ كل حفظ مسودة مستقلة غير قابلة للتعديل. يشمل النشر الملخص المحفوظ المعروض ونتائجه فقط.",
+  "Start a separate private draft": "بدء مسودة خاصة مستقلة",
+  "Start a separate summary draft": "بدء مسودة ملخص مستقلة",
+  "The saved summary, instructions and summary findings below become patient-visible. Private-note findings are excluded.":
+    "يصبح الملخص المحفوظ والتعليمات ونتائج الملخص أدناه مرئية للمريض. لا تُضمّن نتائج الملاحظة الخاصة.",
+  "Review all findings for this signed version. Summary findings become patient-visible on confirmation.":
+    "راجع جميع النتائج لهذه النسخة الموقعة. تصبح نتائج الملخص مرئية للمريض عند التأكيد.",
+  "Current-related patient released summaries":
+    "ملخصات منشورة لمريض بعلاقة حالية",
+  "Your own current active patient relationship is required. Private notes and drafts are never included.":
+    "يلزم وجود علاقة نشطة حالية خاصة بك مع المريض. لا تُضمّن الملاحظات الخاصة أو المسودات مطلقًا.",
+  "Patient record locator": "معرّف سجل المريض",
+  "Documentation pages": "صفحات التوثيق",
+  "Previous documents": "المستندات السابقة",
+  "Next documents": "المستندات التالية",
+  "Newer signed history": "سجل موقع أحدث",
+  "Older signed history": "سجل موقع أقدم",
+  "The documentation request must use JSON.":
+    "يجب إرسال طلب التوثيق بصيغة JSON.",
+  "Clinical documentation could not be refreshed. Recheck your current access before continuing.":
+    "تعذر تحديث التوثيق السريري. تحقق من صلاحية وصولك الحالية قبل المتابعة.",
+  "Open this consultation in the current session before documenting. Opening context is not retained after a full reload.":
+    "افتح هذه الاستشارة في الجلسة الحالية قبل التوثيق. لا يُحتفظ بسياق الفتح بعد إعادة تحميل الصفحة بالكامل.",
 };

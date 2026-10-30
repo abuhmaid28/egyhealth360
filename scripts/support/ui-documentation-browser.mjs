@@ -20,7 +20,7 @@ export async function testDocumentation(browser, liveOrigin, shots) {
   // Ordinary production build remains unavailable, including attempted flag injection.
   const live = await browser.newPage();
   const liveCalls = [];
-  let role = "CLINICIAN";
+  const role = "CLINICIAN";
   await live.addInitScript(() => {
     globalThis.localStorage.setItem("eh360-ui-mode", "live");
     globalThis.localStorage.setItem("eh360-documentation-controlled", "true");
@@ -43,34 +43,9 @@ export async function testDocumentation(browser, liveOrigin, shots) {
     liveOrigin +
       "/doctor/consultation/00000000-0000-4000-8000-000000000001/documentation?fixture=controlled",
   );
-  await live
-    .getByRole("heading", {
-      name: "Clinical documentation is not connected yet",
-      exact: true,
-    })
-    .waitFor();
-  assert.equal(
-    await live
-      .getByRole("button", { name: "Save clinical documentation", exact: true })
-      .isDisabled(),
-    true,
-  );
+  await live.getByText("Open this consultation in the current session before documenting. Opening context is not retained after a full reload.", { exact: true }).waitFor();
   assert.equal(await live.getByRole("textbox").count(), 0);
-  role = "PATIENT";
-  await live.goto(liveOrigin + "/patient/summaries");
-  await live
-    .getByRole("heading", {
-      name: "Released summaries are not connected yet",
-      exact: true,
-    })
-    .waitFor();
-  assert.equal(await live.getByRole("textbox").count(), 0);
-  assert.ok(
-    liveCalls.every(
-      (call) => call.path === "/api/v1/auth/me" && call.method === "GET",
-    ),
-    "no provisional documentation routes or writes",
-  );
+  assert.ok(liveCalls.every(call => call.path === "/api/v1/auth/me" && call.method === "GET"), "flag injection cannot create opening context or activate fixtures");
   assert.equal(
     await live.evaluate(() =>
       globalThis.localStorage.getItem("eh360-ui-demo-v1"),
@@ -525,6 +500,6 @@ export async function testDocumentation(browser, liveOrigin, shots) {
   }
   await assertNoDocumentationFixturesInLiveBuild();
   console.log(
-    "PASS Phase 5 Stage A EN/AR/RTL controlled documentation: normal Live disabled/no writes or activation flags; findings/allergy uncertainty, private boundaries, saved drafts, explicit release/uncertain retry, patient/other-clinician/ADMIN privacy, immutable amendments, wrong-patient masking, session/access denial, memory-only state, keyboard focus and 1440/834/390. NOT backend persistence proof.",
+    "PASS Phase 5 Stage A EN/AR/RTL controlled documentation: normal build rejects forged opening context/fixture flags; findings/allergy uncertainty, private boundaries, saved drafts, explicit release/uncertain retry, patient/other-clinician/ADMIN privacy, immutable amendments, wrong-patient masking, session/access denial, memory-only state, keyboard focus and 1440/834/390. NOT backend persistence proof.",
   );
 }

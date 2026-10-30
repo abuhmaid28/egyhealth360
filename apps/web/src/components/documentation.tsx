@@ -1,9 +1,17 @@
 "use client";
-import { useId, useState } from "react";
+import {
+  useId,
+  useState,
+  useSyncExternalStore,
+  useEffect,
+  useRef,
+} from "react";
 import { useLocale } from "../lib/i18n/context";
 import { safeErrorMessage } from "../lib/api/errors";
 import {
   DocumentationError,
+  emptyFacts,
+  documentationFingerprint,
   documentationLimits as limits,
   scalarLength,
   validFacts,
@@ -92,15 +100,28 @@ export function DocumentationWorkspaceScreen({
 }) {
   // Remount all transient editor state synchronously when viewer/scope changes.
   // No stale author response can flash into a patient/admin presentation.
-  return <WorkspaceScope key={service.scopeStamp()} service={service} />;
+  useServiceDisposal(service);
+  const stamp = useSyncExternalStore(
+    service.subscribe ?? (() => () => {}),
+    service.scopeStamp,
+    service.scopeStamp,
+  );
+  return <WorkspaceScope key={stamp} service={service} />;
 }
 function WorkspaceScope({ service }: { service: DocumentationApi }) {
   const { t } = useLocale();
   const [revision, setRevision] = useState(0);
+  const [page, setPage] = useState(1),
+    [historyPage, setHistoryPage] = useState(1);
   const [notice, setNotice] = useState("");
   const resource = useResource(
-    async () => ({ revision, view: await service.workspace() }),
-    [service, revision],
+    async () => ({
+      revision,
+      page,
+      historyPage,
+      view: await service.workspace(page, historyPage),
+    }),
+    [service, revision, page, historyPage],
   );
   if (service.mode === "unavailable") return <DocumentationUnavailable />;
   return (
@@ -120,9 +141,11 @@ function WorkspaceScope({ service }: { service: DocumentationApi }) {
       <Resource resource={resource}>
         {(result) =>
           result.revision === revision &&
+          result.page === page &&
+          result.historyPage === historyPage &&
           result.view.scopeStamp === service.scopeStamp() ? (
             <DocumentationEditor
-              key={`${result.view.scopeStamp}:${revision}`}
+              key={`${result.view.scopeStamp}:${revision}:${page}:${historyPage}`}
               service={service}
               view={result.view}
               reload={(message) => {
@@ -135,6 +158,15 @@ function WorkspaceScope({ service }: { service: DocumentationApi }) {
           )
         }
       </Resource>
+      {service.mode === "live" && (
+        <DocumentationPager
+          service={service}
+          page={page}
+          historyPage={historyPage}
+          setPage={setPage}
+          setHistoryPage={setHistoryPage}
+        />
+      )}
     </>
   );
 }
@@ -271,8 +303,30 @@ function DocumentationEditor({
 }) {
   const { t } = useLocale();
   const [view, setView] = useState(initialView);
-  const [facts, setFacts] = useState<FactsDraft>(view.facts),
-    [note, setNote] = useState(view.note?.text ?? ""),
+  const live = service.mode === "live";
+  const [factTarget, setFactTarget] = useState<
+    "PRIVATE_NOTE" | "PATIENT_SUMMARY"
+  >("PRIVATE_NOTE");
+  const [privateFacts, setPrivateFacts] = useState(
+    view.note?.facts ?? emptyFacts(),
+  );
+  const [summaryFacts, setSummaryFacts] = useState(
+    view.summary?.facts ?? emptyFacts(),
+  );
+  const [controlledFacts, setControlledFacts] = useState<FactsDraft>(
+    view.facts,
+  );
+  const facts = live
+    ? factTarget === "PRIVATE_NOTE"
+      ? privateFacts
+      : summaryFacts
+    : controlledFacts;
+  const setFacts = live
+    ? factTarget === "PRIVATE_NOTE"
+      ? setPrivateFacts
+      : setSummaryFacts
+    : setControlledFacts;
+  const [note, setNote] = useState(view.note?.text ?? ""),
     [summary, setSummary] = useState(view.summary?.text ?? ""),
     [instructions, setInstructions] = useState(
       view.summary?.instructions ?? "",
@@ -308,7 +362,9 @@ function DocumentationEditor({
       setUncertain(false);
       setUncertainAction("");
       setMessage(
-        "Saved in the controlled preview. No Live backend write occurred.",
+        live
+          ? "Saved by the Live service. Visibility follows the explicit document command."
+          : "Saved in the controlled preview. No Live backend write occurred.",
       );
       if (refresh) {
         const next = await service.workspace();
@@ -355,11 +411,21 @@ function DocumentationEditor({
       </Card>
     );
   const saveFacts = () => run("facts", () => service.saveFacts(facts));
-  const saveNote = () => run("note", () => service.savePrivateNote(note), true);
+  const saveNote = () =>
+    run(
+      "note",
+      () => service.savePrivateNote(note, live ? privateFacts : undefined),
+      true,
+    );
   const saveSummary = () =>
     run(
       "summary",
-      () => service.saveSummary({ text: summary, instructions }),
+      () =>
+        service.saveSummary({
+          text: summary,
+          instructions,
+          ...(live ? { facts: summaryFacts } : {}),
+        }),
       true,
     );
   return (
@@ -370,11 +436,7 @@ function DocumentationEditor({
           <h2>
             <bdi>{view.patientName}</bdi>
           </h2>
-          <p>
-            <bdi>
-              {view.providerName} · {view.clinicName}
-            </bdi>
-          </p>
+          {(view.providerName || view.clinicName) && <p><bdi>{[view.providerName, view.clinicName].filter(Boolean).join(" · ")}</bdi></p>}
           <small>
             <bdi>
               {date(view.openedAt, view.timeZone)} ·{" "}
@@ -425,208 +487,57 @@ function DocumentationEditor({
             <CardTitle title={t("01 · Complaint and findings")} />
             <p className="muted">
               {t(
-                "These author-only entries are not automatically copied into the patient summary.",
+                live
+                  ? "Findings belong only to the selected document. They are saved with its draft. Private findings are never copied into a summary."
+                  : "These author-only entries are not automatically copied into the patient summary.",
               )}
             </p>
-            <TextArea
-              label="Complaint"
-              value={facts.complaint}
-              onChange={(complaint) => setFacts({ ...facts, complaint })}
-              limit={limits.complaint}
-              disabled={locked}
-              hint="Optional human-entered narrative."
-            />
-            <ItemList
-              label="Problems"
-              items={facts.problems}
-              change={(problems) => setFacts({ ...facts, problems })}
-              disabled={locked}
-            />
-            <ItemList
-              label="Diagnoses"
-              items={facts.diagnoses}
-              change={(diagnoses) => setFacts({ ...facts, diagnoses })}
-              disabled={locked}
-            />
-            <div id="doc-allergy" className="documentation-review">
-              <h3>{t("Allergy / intolerance review")}</h3>
-              <Field
-                label={t("Review state")}
-                hint={t(
-                  "Unknown and not reviewed never mean no known allergies.",
-                )}
-              >
+            {live && (
+              <Field label={t("Findings document")}>
                 <select
-                  value={facts.allergy.state}
+                  value={factTarget}
                   disabled={locked}
                   onChange={(e) =>
-                    setFacts({
-                      ...facts,
-                      allergy: {
-                        state: e.target.value as FactsDraft["allergy"]["state"],
-                        items: [],
-                      },
-                    })
+                    setFactTarget(e.target.value as typeof factTarget)
                   }
                 >
-                  <option value="NOT_REVIEWED">
-                    {t("Not reviewed — review has not taken place")}
-                  </option>
-                  <option value="UNKNOWN">
-                    {t("Unknown — information is not available")}
-                  </option>
-                  <option value="REVIEWED_NO_KNOWN">
-                    {t("Reviewed — no known allergy or intolerance")}
-                  </option>
-                  <option value="REVIEWED_POSITIVE">
-                    {t("Reviewed — positive human-entered findings")}
+                  <option value="PRIVATE_NOTE">{t("Private note")}</option>
+                  <option value="PATIENT_SUMMARY">
+                    {t("Patient summary")}
                   </option>
                 </select>
               </Field>
-              <p className="small muted" role="status">
-                {t(
-                  facts.allergy.state === "UNKNOWN"
-                    ? "Unknown — information is not available"
-                    : facts.allergy.state === "NOT_REVIEWED"
-                      ? "Not reviewed — review has not taken place"
-                      : facts.allergy.state === "REVIEWED_NO_KNOWN"
-                        ? "Reviewed — no known allergy or intolerance"
-                        : "Reviewed — positive human-entered findings",
-                )}
-              </p>
-              {facts.allergy.state === "REVIEWED_POSITIVE" && (
-                <>
-                  {facts.allergy.items.map((item, index) => (
-                    <fieldset
-                      className="documentation-allergy-item"
-                      key={index}
-                    >
-                      <legend>
-                        {t("Allergy / intolerance item {number}", {
-                          number: String(index + 1),
-                        })}
-                      </legend>
-                      <Field label={t("Item kind")}>
-                        <select
-                          value={item.kind}
-                          disabled={locked}
-                          onChange={(e) =>
-                            setFacts({
-                              ...facts,
-                              allergy: {
-                                ...facts.allergy,
-                                items: facts.allergy.items.map((entry, i) =>
-                                  i === index
-                                    ? {
-                                        ...entry,
-                                        kind: e.target.value as
-                                          | "ALLERGY"
-                                          | "INTOLERANCE",
-                                      }
-                                    : entry,
-                                ),
-                              },
-                            })
-                          }
-                        >
-                          <option value="ALLERGY">{t("Allergy")}</option>
-                          <option value="INTOLERANCE">
-                            {t("Intolerance")}
-                          </option>
-                        </select>
-                      </Field>
-                      <TextArea
-                        label="Substance or finding"
-                        value={item.substance}
-                        limit={limits.item}
-                        required
-                        disabled={locked}
-                        onChange={(substance) =>
-                          setFacts({
-                            ...facts,
-                            allergy: {
-                              ...facts.allergy,
-                              items: facts.allergy.items.map((entry, i) =>
-                                i === index ? { ...entry, substance } : entry,
-                              ),
-                            },
-                          })
-                        }
-                      />
-                      <TextArea
-                        label="Reaction (optional)"
-                        value={item.reaction}
-                        limit={limits.item}
-                        disabled={locked}
-                        onChange={(reaction) =>
-                          setFacts({
-                            ...facts,
-                            allergy: {
-                              ...facts.allergy,
-                              items: facts.allergy.items.map((entry, i) =>
-                                i === index ? { ...entry, reaction } : entry,
-                              ),
-                            },
-                          })
-                        }
-                      />
-                      <button
-                        className="button subtle"
-                        disabled={locked}
-                        onClick={() =>
-                          setFacts({
-                            ...facts,
-                            allergy: {
-                              ...facts.allergy,
-                              items: facts.allergy.items.filter(
-                                (_, i) => i !== index,
-                              ),
-                            },
-                          })
-                        }
-                      >
-                        {t("Remove allergy item")}
-                      </button>
-                    </fieldset>
-                  ))}
-                  <button
-                    className="button secondary"
-                    disabled={
-                      locked || facts.allergy.items.length >= limits.items
-                    }
-                    onClick={() =>
-                      setFacts({
-                        ...facts,
-                        allergy: {
-                          ...facts.allergy,
-                          items: [
-                            ...facts.allergy.items,
-                            { kind: "ALLERGY", substance: "", reaction: "" },
-                          ],
-                        },
-                      })
-                    }
-                  >
-                    {t("Add allergy / intolerance item")}
-                  </button>
-                </>
-              )}
+            )}
+            <div id="doc-allergy">
+              <FactsFields
+                facts={facts}
+                setFacts={setFacts}
+                locked={
+                  locked ||
+                  (live &&
+                    (factTarget === "PRIVATE_NOTE"
+                      ? noteSigned
+                      : summarySigned))
+                }
+              />
             </div>
-            <button
-              className="button primary"
-              disabled={
-                !!busy ||
-                (uncertain && uncertainAction !== "facts") ||
-                !validFacts(facts)
-              }
-              onClick={saveFacts}
-            >
-              {t(
-                uncertain && uncertainAction === "facts"
-                  ? "Retry unchanged findings"
-                  : "Save findings draft",
-              )}
-            </button>
+            {!live && (
+              <button
+                className="button primary"
+                disabled={
+                  !!busy ||
+                  (uncertain && uncertainAction !== "facts") ||
+                  !validFacts(facts)
+                }
+                onClick={saveFacts}
+              >
+                {t(
+                  uncertain && uncertainAction === "facts"
+                    ? "Retry unchanged findings"
+                    : "Save findings draft",
+                )}
+              </button>
+            )}
           </Card>
           <Card
             id="doc-private"
@@ -634,6 +545,13 @@ function DocumentationEditor({
             className="documentation-private"
           >
             <CardTitle title={t("02 · Private note")} />
+            {live && (
+              <p>
+                {t(
+                  "Each save creates a separate immutable draft. Signing applies only to the displayed saved draft.",
+                )}
+              </p>
+            )}
             <Badge tone="soft">
               {t(
                 "Private — visible only to you while you retain current clinical authority",
@@ -661,7 +579,8 @@ function DocumentationEditor({
                   disabled={
                     !!busy ||
                     (uncertain && uncertainAction !== "note") ||
-                    !validNarrative(note, limits.narrative, true)
+                    !validNarrative(note, limits.narrative, true) ||
+                    (live && !validFacts(privateFacts))
                   }
                   onClick={saveNote}
                 >
@@ -674,7 +593,13 @@ function DocumentationEditor({
                 {view.note && (
                   <button
                     className="button secondary"
-                    disabled={locked || note !== view.note?.text}
+                    disabled={
+                      locked ||
+                      note !== view.note?.text ||
+                      (live &&
+                        documentationFingerprint(privateFacts) !==
+                          documentationFingerprint(view.note?.facts))
+                    }
                     onClick={() => setConfirmation("sign")}
                   >
                     {t("Sign private note")}
@@ -682,9 +607,29 @@ function DocumentationEditor({
                 )}
               </div>
             )}
+            {live && view.note && (
+              <button
+                className="button secondary"
+                disabled={locked}
+                onClick={() => {
+                  setView({ ...view, note: null });
+                  setNote("");
+                  setPrivateFacts(emptyFacts());
+                }}
+              >
+                {t("Start a separate private draft")}
+              </button>
+            )}
           </Card>
           <Card id="doc-summary" tabIndex={-1}>
             <CardTitle title={t("03 · Patient summary and instructions")} />
+            {live && (
+              <p>
+                {t(
+                  "Each save creates a separate immutable draft. Release includes only the displayed saved summary and its findings.",
+                )}
+              </p>
+            )}
             <Badge tone={summarySigned ? "green" : "amber"}>
               {t(
                 summarySigned
@@ -722,6 +667,7 @@ function DocumentationEditor({
                     !!busy ||
                     (uncertain && uncertainAction !== "summary") ||
                     !validNarrative(summary, limits.narrative, true) ||
+                    (live && !validFacts(summaryFacts)) ||
                     !validNarrative(instructions, limits.narrative)
                   }
                   onClick={saveSummary}
@@ -738,7 +684,10 @@ function DocumentationEditor({
                     locked ||
                     !view.summary ||
                     summary !== view.summary.text ||
-                    instructions !== view.summary.instructions
+                    instructions !== view.summary.instructions ||
+                    (live &&
+                      documentationFingerprint(summaryFacts) !==
+                        documentationFingerprint(view.summary.facts))
                   }
                   onClick={() => setConfirmation("release")}
                 >
@@ -752,6 +701,20 @@ function DocumentationEditor({
               )}
             </p>
           </Card>
+          {live && view.summary && (
+            <button
+              className="button secondary"
+              disabled={locked}
+              onClick={() => {
+                setView({ ...view, summary: null });
+                setSummary("");
+                setInstructions("");
+                setSummaryFacts(emptyFacts());
+              }}
+            >
+              {t("Start a separate summary draft")}
+            </button>
+          )}
           <Card id="doc-history" tabIndex={-1}>
             <CardTitle title={t("04 · Signed history")} />
             {signed.length ? (
@@ -789,8 +752,9 @@ function DocumentationEditor({
                       {version.instructions}
                     </p>
                   )}
+                  {version.facts && <FactsRead facts={version.facts} />}
                   {version.reason && <p dir="auto">{version.reason}</p>}
-                  {version.current && (
+                  {(live ? version.head : version.current) && (
                     <div className="documentation-action-row">
                       <button
                         className="button secondary"
@@ -865,11 +829,19 @@ function DocumentationEditor({
           <p>
             {t(
               confirmation === "release"
-                ? "Only the saved patient summary and instructions below become patient-visible. Private note and author-only findings are excluded."
+                ? live
+                  ? "The saved summary, instructions and summary findings below become patient-visible. Private-note findings are excluded."
+                  : "Only the saved patient summary and instructions below become patient-visible. Private note and author-only findings are excluded."
                 : "Signing keeps this note private. It does not release anything to the patient or ADMIN.",
             )}
           </p>
           <div className="documentation-release-preview">
+            {confirmation === "release" && view.summary?.facts && (
+              <FactsRead facts={view.summary.facts} />
+            )}
+            {confirmation === "sign" && view.note?.facts && (
+              <FactsRead facts={view.note.facts} />
+            )}
             <p className="documentation-narrative" dir="auto">
               {confirmation === "release"
                 ? view.summary?.text
@@ -977,6 +949,7 @@ function AmendmentDialog({
   refresh: (message?: string) => void;
 }) {
   const { t } = useLocale();
+  const [facts, setFacts] = useState(version.facts ?? emptyFacts());
   const [text, setText] = useState(""),
     [instructions, setInstructions] = useState(""),
     [reason, setReason] = useState(""),
@@ -1022,6 +995,20 @@ function AmendmentDialog({
             : "Patient-visible after this explicit signing",
         )}
       </Badge>
+      {service.mode === "live" && (
+        <>
+          <p>
+            {t(
+              "Review all findings for this signed version. Summary findings become patient-visible on confirmation.",
+            )}
+          </p>
+          <FactsFields
+            facts={facts}
+            setFacts={setFacts}
+            locked={busy || uncertain}
+          />
+        </>
+      )}
       <TextArea
         label="New signed content"
         value={text}
@@ -1057,6 +1044,7 @@ function AmendmentDialog({
           className="button primary"
           disabled={
             busy ||
+            (service.mode === "live" && !validFacts(facts)) ||
             !validNarrative(text, limits.narrative, true) ||
             !validNarrative(reason, limits.reason, true) ||
             !validNarrative(instructions, limits.narrative)
@@ -1067,6 +1055,7 @@ function AmendmentDialog({
             try {
               await service.amend({
                 targetKey: version.key,
+                ...(service.mode === "live" ? { facts } : {}),
                 change,
                 text,
                 instructions,
@@ -1258,11 +1247,28 @@ export function ReleasedSummariesScreen({
 }: {
   service: DocumentationApi;
 }) {
-  return <ReleasedScope key={service.scopeStamp()} service={service} />;
+  useServiceDisposal(service);
+  const stamp = useSyncExternalStore(
+    service.subscribe ?? (() => () => {}),
+    service.scopeStamp,
+    service.scopeStamp,
+  );
+  return <ReleasedScope key={stamp} service={service} />;
 }
 function ReleasedScope({ service }: { service: DocumentationApi }) {
   const { t } = useLocale();
-  const resource = useResource(() => service.released(), [service]);
+  const [page, setPage] = useState(1),
+    [historyPage, setHistoryPage] = useState(1);
+  const [revision, setRevision] = useState(0);
+  const resource = useResource(
+    async () => ({
+      page,
+      historyPage,
+      revision,
+      summaries: await service.released(page, historyPage),
+    }),
+    [service, page, historyPage, revision],
+  );
   if (service.mode === "unavailable")
     return <DocumentationUnavailable patient />;
   return (
@@ -1275,59 +1281,412 @@ function ReleasedScope({ service }: { service: DocumentationApi }) {
         )}
       />
       <Resource resource={resource}>
-        {(summaries) => (
-          <div className="documentation-released-list">
-            {summaries.length ? (
-              summaries.map((v) => (
-                <Card key={v.key}>
-                  <div className="documentation-action-row">
-                    <h2>{t("Visit summary")}</h2>
-                    <Badge tone="green">{t("Signed and released")}</Badge>
-                    <Badge tone="soft">{t(labels[v.change])}</Badge>
-                    <Badge tone="soft">
-                      {t(
-                        v.current
-                          ? "Current signed entry"
-                          : "Earlier signed version — preserved",
-                      )}
-                    </Badge>
-                  </div>
-                  <p>
-                    <bdi>
-                      {v.authorName} · {v.clinicName}
-                    </bdi>
-                  </p>
-                  <p className="small muted">
-                    <bdi>
-                      {date(v.releasedAt)} · {time(v.releasedAt)}
-                    </bdi>
-                  </p>
-                  <h3>{t("Patient summary")}</h3>
-                  <p className="documentation-narrative" dir="auto">
-                    {v.text}
-                  </p>
-                  <h3>{t("Patient instructions")}</h3>
-                  <p className="documentation-narrative" dir="auto">
-                    {v.instructions}
-                  </p>
-                  {v.predecessorKey && (
+        {(result) =>
+          result.page === page &&
+          result.historyPage === historyPage &&
+          result.revision === revision ? (
+            <div className="documentation-released-list">
+              {result.summaries.length ? (
+                result.summaries.map((v) => (
+                  <Card key={v.key}>
+                    <div className="documentation-action-row">
+                      <h2>{t("Visit summary")}</h2>
+                      <Badge tone="green">{t("Signed and released")}</Badge>
+                      <Badge tone="soft">{t(labels[v.change])}</Badge>
+                      <Badge tone="soft">
+                        {t(
+                          v.current
+                            ? "Current signed entry"
+                            : "Earlier signed version — preserved",
+                        )}
+                      </Badge>
+                    </div>
+                    {(v.authorName || v.clinicName) && (
+                      <p>
+                        <bdi>
+                          {v.authorName} · {v.clinicName}
+                        </bdi>
+                      </p>
+                    )}
                     <p className="small muted">
-                      {t("Linked to a permitted earlier released version.")}
+                      <bdi>
+                        {date(v.releasedAt)} · {time(v.releasedAt)}
+                      </bdi>
                     </p>
+                    {v.facts && <FactsRead facts={v.facts} />}
+                    <h3>{t("Patient summary")}</h3>
+                    <p className="documentation-narrative" dir="auto">
+                      {v.text}
+                    </p>
+                    <h3>{t("Patient instructions")}</h3>
+                    <p className="documentation-narrative" dir="auto">
+                      {v.instructions}
+                    </p>
+                    {v.predecessorKey && (
+                      <p className="small muted">
+                        {t("Linked to a permitted earlier released version.")}
+                      </p>
+                    )}
+                  </Card>
+                ))
+              ) : (
+                <Empty
+                  title={t("No visible released summaries")}
+                  description={t(
+                    "Only permitted released content is shown. No draft, private or restricted metadata is included.",
                   )}
-                </Card>
-              ))
-            ) : (
-              <Empty
-                title={t("No visible released summaries")}
-                description={t(
-                  "Only permitted released content is shown. No draft, private or restricted metadata is included.",
-                )}
-              />
-            )}
-          </div>
-        )}
+                />
+              )}
+            </div>
+          ) : (
+            <Loading />
+          )
+        }
       </Resource>
+      {service.mode === "live" && (
+        <>
+          <button
+            className="button secondary"
+            onClick={() => setRevision((n) => n + 1)}
+          >
+            {t("Refresh visible documentation")}
+          </button>
+          <DocumentationPager
+            service={service}
+            page={page}
+            historyPage={historyPage}
+            setPage={setPage}
+            setHistoryPage={setHistoryPage}
+          />
+        </>
+      )}
     </>
   );
+}
+
+function FactsFields({
+  facts,
+  setFacts,
+  locked,
+}: {
+  facts: FactsDraft;
+  setFacts: (value: FactsDraft) => void;
+  locked: boolean;
+}) {
+  const { t } = useLocale();
+  return (
+    <>
+      {" "}
+      <TextArea
+        label="Complaint"
+        value={facts.complaint}
+        onChange={(complaint) => setFacts({ ...facts, complaint })}
+        limit={limits.complaint}
+        disabled={locked}
+        hint="Optional human-entered narrative."
+      />
+      <ItemList
+        label="Problems"
+        items={facts.problems}
+        change={(problems) => setFacts({ ...facts, problems })}
+        disabled={locked}
+      />
+      <ItemList
+        label="Diagnoses"
+        items={facts.diagnoses}
+        change={(diagnoses) => setFacts({ ...facts, diagnoses })}
+        disabled={locked}
+      />
+      <div className="documentation-review">
+        <h3>{t("Allergy / intolerance review")}</h3>
+        <Field
+          label={t("Review state")}
+          hint={t("Unknown and not reviewed never mean no known allergies.")}
+        >
+          <select
+            value={facts.allergy.state}
+            disabled={locked}
+            onChange={(e) =>
+              setFacts({
+                ...facts,
+                allergy: {
+                  state: e.target.value as FactsDraft["allergy"]["state"],
+                  items: [],
+                },
+              })
+            }
+          >
+            <option value="NOT_REVIEWED">
+              {t("Not reviewed — review has not taken place")}
+            </option>
+            <option value="UNKNOWN">
+              {t("Unknown — information is not available")}
+            </option>
+            <option value="REVIEWED_NO_KNOWN">
+              {t("Reviewed — no known allergy or intolerance")}
+            </option>
+            <option value="REVIEWED_POSITIVE">
+              {t("Reviewed — positive human-entered findings")}
+            </option>
+          </select>
+        </Field>
+        <p className="small muted" role="status">
+          {t(
+            facts.allergy.state === "UNKNOWN"
+              ? "Unknown — information is not available"
+              : facts.allergy.state === "NOT_REVIEWED"
+                ? "Not reviewed — review has not taken place"
+                : facts.allergy.state === "REVIEWED_NO_KNOWN"
+                  ? "Reviewed — no known allergy or intolerance"
+                  : "Reviewed — positive human-entered findings",
+          )}
+        </p>
+        {facts.allergy.state === "REVIEWED_POSITIVE" && (
+          <>
+            {facts.allergy.items.map((item, index) => (
+              <fieldset className="documentation-allergy-item" key={index}>
+                <legend>
+                  {t("Allergy / intolerance item {number}", {
+                    number: String(index + 1),
+                  })}
+                </legend>
+                <Field label={t("Item kind")}>
+                  <select
+                    value={item.kind}
+                    disabled={locked}
+                    onChange={(e) =>
+                      setFacts({
+                        ...facts,
+                        allergy: {
+                          ...facts.allergy,
+                          items: facts.allergy.items.map((entry, i) =>
+                            i === index
+                              ? {
+                                  ...entry,
+                                  kind: e.target.value as
+                                    | "ALLERGY"
+                                    | "INTOLERANCE",
+                                }
+                              : entry,
+                          ),
+                        },
+                      })
+                    }
+                  >
+                    <option value="ALLERGY">{t("Allergy")}</option>
+                    <option value="INTOLERANCE">{t("Intolerance")}</option>
+                  </select>
+                </Field>
+                <TextArea
+                  label="Substance or finding"
+                  value={item.substance}
+                  limit={limits.item}
+                  required
+                  disabled={locked}
+                  onChange={(substance) =>
+                    setFacts({
+                      ...facts,
+                      allergy: {
+                        ...facts.allergy,
+                        items: facts.allergy.items.map((entry, i) =>
+                          i === index ? { ...entry, substance } : entry,
+                        ),
+                      },
+                    })
+                  }
+                />
+                <TextArea
+                  label="Reaction (optional)"
+                  value={item.reaction}
+                  limit={limits.item}
+                  disabled={locked}
+                  onChange={(reaction) =>
+                    setFacts({
+                      ...facts,
+                      allergy: {
+                        ...facts.allergy,
+                        items: facts.allergy.items.map((entry, i) =>
+                          i === index ? { ...entry, reaction } : entry,
+                        ),
+                      },
+                    })
+                  }
+                />
+                <button
+                  className="button subtle"
+                  disabled={locked}
+                  onClick={() =>
+                    setFacts({
+                      ...facts,
+                      allergy: {
+                        ...facts.allergy,
+                        items: facts.allergy.items.filter(
+                          (_, i) => i !== index,
+                        ),
+                      },
+                    })
+                  }
+                >
+                  {t("Remove allergy item")}
+                </button>
+              </fieldset>
+            ))}
+            <button
+              className="button secondary"
+              disabled={locked || facts.allergy.items.length >= limits.items}
+              onClick={() =>
+                setFacts({
+                  ...facts,
+                  allergy: {
+                    ...facts.allergy,
+                    items: [
+                      ...facts.allergy.items,
+                      { kind: "ALLERGY", substance: "", reaction: "" },
+                    ],
+                  },
+                })
+              }
+            >
+              {t("Add allergy / intolerance item")}
+            </button>
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+function FactsRead({ facts }: { facts: FactsDraft }) {
+  const { t } = useLocale();
+  const states = {
+    NOT_REVIEWED: "Not reviewed — review has not taken place",
+    UNKNOWN: "Unknown — information is not available",
+    REVIEWED_NO_KNOWN: "Reviewed — no known allergy or intolerance",
+    REVIEWED_POSITIVE: "Reviewed — positive human-entered findings",
+  } as const;
+  return (
+    <div className="documentation-facts-read">
+      {facts.complaint && (
+        <>
+          <h3>{t("Complaint")}</h3>
+          <p dir="auto">{facts.complaint}</p>
+        </>
+      )}
+      {(["problems", "diagnoses"] as const).map(
+        (key) =>
+          facts[key].length > 0 && (
+            <div key={key}>
+              <h3>{t(key === "problems" ? "Problems" : "Diagnoses")}</h3>
+              <ul>
+                {facts[key].map((value, i) => (
+                  <li key={i} dir="auto">
+                    {value}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ),
+      )}
+      <h3>{t("Allergy / intolerance review")}</h3>
+      <p>{t(states[facts.allergy.state])}</p>
+      {facts.allergy.items.length > 0 && (
+        <ul>
+          {facts.allergy.items.map((item, i) => (
+            <li key={i}>
+              <span>
+                {t(item.kind === "ALLERGY" ? "Allergy" : "Intolerance")}:{" "}
+              </span>
+              <bdi>
+                {item.substance}
+                {item.reaction ? ` · ${item.reaction}` : ""}
+              </bdi>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function DocumentationPager({
+  service,
+  page,
+  historyPage,
+  setPage,
+  setHistoryPage,
+}: {
+  service: DocumentationApi;
+  page: number;
+  historyPage: number;
+  setPage: (n: number) => void;
+  setHistoryPage: (n: number) => void;
+}) {
+  const { t } = useLocale();
+  const pages = service.paging?.() ?? { documents: 1, history: 1 };
+  return (
+    <nav
+      className="documentation-action-row"
+      aria-label={t("Documentation pages")}
+    >
+      <button
+        className="button secondary"
+        disabled={page <= 1}
+        onClick={() => {
+          setPage(page - 1);
+          setHistoryPage(1);
+        }}
+      >
+        {t("Previous documents")}
+      </button>
+      <button
+        className="button secondary"
+        disabled={page >= pages.documents}
+        onClick={() => {
+          setPage(page + 1);
+          setHistoryPage(1);
+        }}
+      >
+        {t("Next documents")}
+      </button>
+      <button
+        className="button secondary"
+        disabled={historyPage <= 1}
+        onClick={() => setHistoryPage(historyPage - 1)}
+      >
+        {t("Newer signed history")}
+      </button>
+      <button
+        className="button secondary"
+        disabled={historyPage >= pages.history}
+        onClick={() => setHistoryPage(historyPage + 1)}
+      >
+        {t("Older signed history")}
+      </button>
+    </nav>
+  );
+}
+
+/** Deferred disposal survives React development effect replay. Restriction/session
+ * invalidation still purges all registered services synchronously. */
+function useServiceDisposal(service: DocumentationApi) {
+  const pending = useRef(
+    new Map<DocumentationApi, ReturnType<typeof setTimeout>>(),
+  );
+  useEffect(() => {
+    const timers = pending.current;
+    const previous = timers.get(service);
+    if (previous !== undefined) {
+      clearTimeout(previous);
+      timers.delete(service);
+    }
+    return () => {
+      timers.set(
+        service,
+        setTimeout(() => {
+          service.dispose?.();
+          timers.delete(service);
+        }, 0),
+      );
+    };
+  }, [service]);
 }

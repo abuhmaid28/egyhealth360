@@ -52,8 +52,9 @@ async function releasedFixture() {
   await f.api.releaseSummary(d.key);
   return f;
 }
-test("normal Live documentation fails closed before any fetch, no fixture or successful outcome", async () => {
+test("unavailable capability fails closed before any fetch; Live has its separate merged transport", async () => {
   const previous = globalThis.fetch;
+  assert.equal(createLiveAdapter().documentation.mode, "live");
   let calls = 0;
   globalThis.fetch = async () => {
     calls++;
@@ -62,7 +63,6 @@ test("normal Live documentation fails closed before any fetch, no fixture or suc
   try {
     for (const api of [
       createUnavailableDocumentation(),
-      createLiveAdapter().documentation,
     ]) {
       assert.equal(api.mode, "unavailable");
       for (const run of [
