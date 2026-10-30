@@ -182,3 +182,7 @@ See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLIC
 ## V3-I2 Slice 2 current additive inventory
 
 The current schema has **34 models / 15 migrations**. [Availability implementation](V3_I2_SLICE2.md#database-and-configuration) adds immutable ClinicSchedulingSettings versions, AvailabilitySlot and immutable AvailabilityOperation. No Booking/Consultation/FollowUpIntent models. All 31 previous domain tables and fourteen historical migration bytes remain preserved. There is no scheduling backfill. Existing slice-specific counts above describe those historical stages, not the current complete schema.
+
+## Slice 6 additive persistence
+
+Migration 19 adds FollowUpIntent, FollowUpIntentVersion, FollowUpIntentBookingLink, FollowUpIntentOperation and FollowUpIntentPrivacyRestriction: 48 domain models/tables. [Reconciled contract](V3_I2_SLICE6.md) describes exact composite provenance, immutable version/link chains, operation identity, privacy and deferred atomic-audit guards. Eighteen historical migration hashes/rows are preserved; no backfill or legacy appointment adapter.

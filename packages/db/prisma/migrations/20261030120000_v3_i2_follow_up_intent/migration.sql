@@ -15,7 +15,7 @@ CREATE TABLE public.follow_up_intent_operations (
  operation_key uuid NOT NULL CHECK(operation_key::text ~ '^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'),
  fingerprint varchar(64) NOT NULL CHECK(fingerprint ~ '^[0-9a-f]{64}$'),
  version_limit integer NOT NULL CHECK(version_limit>=0), link_limit integer NOT NULL CHECK(link_limit>=0),
- result_version_id uuid, result_link_id uuid, audit_id uuid NOT NULL UNIQUE REFERENCES public.audit_logs(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY DEFERRED,
+ result_version_id uuid, result_link_id uuid, audit_id uuid NOT NULL UNIQUE,
  recorded_at timestamptz(3) NOT NULL DEFAULT clock_timestamp(),
  UNIQUE(actor_user_id,command,operation_key), UNIQUE(id,root_id,patient_id,actor_user_id,command),
  FOREIGN KEY(root_id,patient_id) REFERENCES public.follow_up_intents(id,patient_id) ON UPDATE RESTRICT ON DELETE RESTRICT,

@@ -8,7 +8,7 @@ Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-
 
 The delivery paragraph above is the historical Slice 2 PR snapshot inherited through the separate UI merge. This current record supersedes its older authorization/completion statements.
 
-Current backend delivery: V3-I2 Slices 1–4 COMPLETE. [Activation 6514224261](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6514224261) records exact-main `1439016d9271a1deff5ddd98b8f2b2d58aa8baa4`, Bootstrap 40995148133 / validate 123866429499 SUCCESS and authorizes Slice 5 Clinical Consultation Documentation only. [Slice 5](V3_I2_SLICE5.md) is IMPLEMENTED / IN REVIEW, not COMPLETE. V3-I2 INCOMPLETE. Slice 6 NOT IMPLEMENTED; Slices 6–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Existing English/Arabic/RTL frontend unchanged. No merge authorized.
+Current backend delivery: V3-I2 Slices 1–5 COMPLETE. [Flow Accelerator authorization 6524790227](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6524790227) follows exact-main `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`, Bootstrap 41008236990 / validate 123907937943 SUCCESS and authorizes Slice 6 Core. [Slice 6](V3_I2_SLICE6.md) production implementation is present; verification/CI integration remain pending. V3-I2 INCOMPLETE. Slice 7 and I3 NOT AUTHORIZED. EACCE NOT STARTED. No frontend or deployment work in Slice 6. No merge authorized.
 
 ## Authoritative status
 
@@ -18,7 +18,7 @@ Current backend delivery: V3-I2 Slices 1–4 COMPLETE. [Activation 6514224261](h
 | V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
 | M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
 | V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) COMPLETE; I1 overall **COMPLETE**, Slice 3 **COMPLETE**; Slice 4 **COMPLETE**; Slice 5 **COMPLETE**; Slice 6 **COMPLETE** |
-| V3-I2 | Slices 1–4 COMPLETE; Slice 5 documentation IMPLEMENTED / IN REVIEW; overall INCOMPLETE; Slices 6–7 excluded |
+| V3-I2 | Slices 1–5 COMPLETE; Slice 6 production implementation present, verification/CI pending; overall INCOMPLETE; Slice 7 not authorized |
 | EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
 | Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
 

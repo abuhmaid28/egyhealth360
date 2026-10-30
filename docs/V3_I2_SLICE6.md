@@ -1,6 +1,7 @@
 # V3-I2 Slice 6 — Follow-up Intent
 
-Status: authorized, reconciliation complete; implementation and verification pending.
+Status: production implementation present; verification/CI integration pending.
+Checkpoint 1 `4e868c7` and checkpoint 2 `fb67fa5` published; no merge authorized.
 Baseline `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`. Exact-main Bootstrap
 41008236990 / validate 123907937943 COMPLETED / SUCCESS verified through GitHub.
 [Preload](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6515751851)
@@ -74,7 +75,11 @@ change is required. The following technical deltas clarify the proposed contract
    DB times and atomic minimized audit completeness using deferred guards. Session
    authentication remains application-owned, as in existing migrations. No claim of
    protection against schema owners/superusers.
-9. No close endpoint is added; current consultations are immutable OPEN sidecars.
+9. Audit completeness uses a unique operation audit locator and a deferred exact
+   actor/action/root/empty-metadata/current-transaction existence check. No audit FK
+   is needed: one would change legacy audit TRUNCATE rejection precedence before
+   its existing append-only guard. Historical audit behavior is preserved.
+10. No close endpoint is added; current consultations are immutable OPEN sidecars.
    Intent creation/release/correction does not change consultation or documentation.
 
 ## Stable implementation contract

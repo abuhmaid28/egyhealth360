@@ -134,3 +134,7 @@ See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLIC
 ## V3-I2 Slice 2 availability — live in this PR
 
 [Exact scheduling API and security contract](V3_I2_SLICE2.md#http-and-projection): GET/HEAD `/directory/providers/{publicId}/availability`, GET/HEAD/POST `/me/availability`, PUT `/me/availability/{slotId}/withdraw`, all under `/api/v1`. Public allowlist is id/providerId/clinicId/startAt/endAt/timeZone/bookable=true; no role widens it. Own history is operational, with current clinician/session/profile. Publication/withdrawal additionally require exact current clinic/member/directory authority and strict Origin/CSRF/input checks. ADMIN configuration stays internal. OpenAPI now has 28 paths / 26 schemas. Booking and all later I2 APIs remain unimplemented and unauthorized; older slice-specific API inventories above retain their historical scope.
+
+## Slice 6 Follow-up Intent
+
+The exact new bounded routes, strict inputs, author/released projections, status and replay semantics are in [Slice 6](V3_I2_SLICE6.md) and [OpenAPI](openapi.json). Existing EH-012 routes remain unchanged. Clinical authority comes solely from current ClinicianPatientAssignment; Booking linkage grants none. CI integration remains pending.

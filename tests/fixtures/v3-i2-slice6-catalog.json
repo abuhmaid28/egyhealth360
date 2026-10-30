@@ -1,0 +1,134 @@
+{
+  "tables": [
+    "follow_up_intents",
+    "follow_up_intent_versions",
+    "follow_up_intent_booking_links",
+    "follow_up_intent_operations",
+    "follow_up_intent_privacy_restrictions"
+  ],
+  "checks": [
+    "follow_up_intent_booking_links_check",
+    "follow_up_intent_booking_links_command_check",
+    "follow_up_intent_booking_links_sequence_check",
+    "follow_up_intent_operations_check",
+    "follow_up_intent_operations_command_check",
+    "follow_up_intent_operations_fingerprint_check",
+    "follow_up_intent_operations_link_limit_check",
+    "follow_up_intent_operations_operation_key_check",
+    "follow_up_intent_operations_version_limit_check",
+    "follow_up_intent_privacy_restrictions_command_check",
+    "follow_up_intent_privacy_restrictions_reason_check",
+    "follow_up_intent_versions_check",
+    "follow_up_intent_versions_check1",
+    "follow_up_intent_versions_command_check",
+    "follow_up_intent_versions_instruction_check",
+    "follow_up_intent_versions_reason_check",
+    "follow_up_intent_versions_state_check",
+    "follow_up_intent_versions_version_check"
+  ],
+  "fk": [
+    "follow_up_intent_booking_link_operation_id_root_id_patient_fkey",
+    "follow_up_intent_booking_link_predecessor_id_root_id_patie_fkey",
+    "follow_up_intent_booking_links_booking_id_patient_id_fkey",
+    "follow_up_intent_booking_links_root_id_patient_id_fkey",
+    "follow_up_intent_operations_actor_user_id_fkey",
+    "follow_up_intent_operations_result_link_id_root_id_patient_fkey",
+    "follow_up_intent_operations_result_version_id_root_id_pati_fkey",
+    "follow_up_intent_operations_root_id_patient_id_fkey",
+    "follow_up_intent_privacy_rest_operation_id_root_id_patient_fkey",
+    "follow_up_intent_privacy_rest_version_id_root_id_patient_i_fkey",
+    "follow_up_intent_versions_operation_id_root_id_patient_id__fkey",
+    "follow_up_intent_versions_predecessor_id_root_id_patient_i_fkey",
+    "follow_up_intent_versions_root_id_consultation_id_encounte_fkey",
+    "follow_up_intents_consultation_id_encounter_id_patient_id__fkey"
+  ],
+  "triggers": [
+    {
+      "tgname": "intent_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i2_intent_complete"
+    },
+    {
+      "tgname": "intent_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "intent_link_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "intent_link_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i2_intent_link_insert"
+    },
+    {
+      "tgname": "intent_operation_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i2_intent_complete"
+    },
+    {
+      "tgname": "intent_operation_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "intent_operation_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i2_intent_operation_insert"
+    },
+    {
+      "tgname": "intent_privacy_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i2_intent_privacy_complete"
+    },
+    {
+      "tgname": "intent_privacy_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "intent_privacy_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i2_intent_privacy_insert"
+    },
+    {
+      "tgname": "intent_root_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i2_intent_root_insert"
+    },
+    {
+      "tgname": "intent_version_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "intent_version_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i2_intent_version_insert"
+    }
+  ],
+  "functions": [
+    "i2_intent_complete",
+    "i2_intent_link_insert",
+    "i2_intent_operation_insert",
+    "i2_intent_privacy_complete",
+    "i2_intent_privacy_insert",
+    "i2_intent_root_insert",
+    "i2_intent_version_insert"
+  ]
+}

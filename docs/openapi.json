@@ -15548,6 +15548,24 @@
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
             }
+          },
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Must exactly match configured browser origin."
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
           }
         ],
         "responses": {
@@ -16159,18 +16177,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_INVALID",
-                      "message": "Invalid request."
-                    }
-                  }
-                }
-              }
             }
           },
           "401": {
@@ -16179,18 +16185,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_UNAUTHENTICATED",
-                      "message": "Authentication required."
-                    }
-                  }
                 }
               }
             }
@@ -16203,18 +16197,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_CSRF_INVALID",
-                      "message": "Request verification failed."
-                    }
-                  }
-                }
-              }
             }
           },
           "404": {
@@ -16223,18 +16205,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
-                      "message": "Not found."
-                    }
-                  }
                 }
               }
             }
@@ -16247,18 +16217,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_CONFLICT",
-                      "message": "Conflicting follow-up intent operation."
-                    }
-                  }
-                }
-              }
             }
           },
           "405": {
@@ -16267,18 +16225,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "METHOD_NOT_ALLOWED",
-                      "message": "Method not allowed."
-                    }
-                  }
                 }
               }
             }
@@ -16291,18 +16237,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_TOO_LARGE",
-                      "message": "Request too large."
-                    }
-                  }
-                }
-              }
             }
           },
           "415": {
@@ -16313,18 +16247,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_CONTENT_TYPE_INVALID",
-                      "message": "Unsupported content type."
-                    }
-                  }
-                }
-              }
             }
           },
           "503": {
@@ -16333,18 +16255,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
-                      "message": "Service unavailable."
-                    }
-                  }
                 }
               }
             }
@@ -16739,18 +16649,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_INVALID",
-                      "message": "Invalid request."
-                    }
-                  }
-                }
-              }
             }
           },
           "401": {
@@ -16759,18 +16657,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_UNAUTHENTICATED",
-                      "message": "Authentication required."
-                    }
-                  }
                 }
               }
             }
@@ -16783,18 +16669,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_CSRF_INVALID",
-                      "message": "Request verification failed."
-                    }
-                  }
-                }
-              }
             }
           },
           "404": {
@@ -16803,18 +16677,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
-                      "message": "Not found."
-                    }
-                  }
                 }
               }
             }
@@ -16827,18 +16689,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_CONFLICT",
-                      "message": "Conflicting follow-up intent operation."
-                    }
-                  }
-                }
-              }
             }
           },
           "405": {
@@ -16847,18 +16697,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "METHOD_NOT_ALLOWED",
-                      "message": "Method not allowed."
-                    }
-                  }
                 }
               }
             }
@@ -16871,18 +16709,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_TOO_LARGE",
-                      "message": "Request too large."
-                    }
-                  }
-                }
-              }
             }
           },
           "415": {
@@ -16893,18 +16719,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_CONTENT_TYPE_INVALID",
-                      "message": "Unsupported content type."
-                    }
-                  }
-                }
-              }
             }
           },
           "503": {
@@ -16913,18 +16727,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
-                      "message": "Service unavailable."
-                    }
-                  }
                 }
               }
             }
@@ -16970,6 +16772,24 @@
               "type": "string",
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Must exactly match configured browser origin."
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
             }
           }
         ],
@@ -17239,6 +17059,24 @@
               "type": "string",
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Must exactly match configured browser origin."
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
             }
           }
         ],
@@ -17535,6 +17373,24 @@
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
             }
+          },
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Must exactly match configured browser origin."
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
           }
         ],
         "responses": {
@@ -17830,6 +17686,24 @@
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
             }
+          },
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Must exactly match configured browser origin."
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
+            }
           }
         ],
         "responses": {
@@ -18124,6 +17998,24 @@
               "type": "string",
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Must exactly match configured browser origin."
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{43}$"
             }
           }
         ],
@@ -18701,18 +18593,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_INVALID",
-                      "message": "Invalid request."
-                    }
-                  }
-                }
-              }
             }
           },
           "401": {
@@ -18721,18 +18601,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_UNAUTHENTICATED",
-                      "message": "Authentication required."
-                    }
-                  }
                 }
               }
             }
@@ -18745,18 +18613,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_CSRF_INVALID",
-                      "message": "Request verification failed."
-                    }
-                  }
-                }
-              }
             }
           },
           "404": {
@@ -18765,18 +18621,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
-                      "message": "Not found."
-                    }
-                  }
                 }
               }
             }
@@ -18789,18 +18633,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_CONFLICT",
-                      "message": "Conflicting follow-up intent operation."
-                    }
-                  }
-                }
-              }
             }
           },
           "405": {
@@ -18809,18 +18641,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "METHOD_NOT_ALLOWED",
-                      "message": "Method not allowed."
-                    }
-                  }
                 }
               }
             }
@@ -18833,18 +18653,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_TOO_LARGE",
-                      "message": "Request too large."
-                    }
-                  }
-                }
-              }
             }
           },
           "415": {
@@ -18855,18 +18663,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_CONTENT_TYPE_INVALID",
-                      "message": "Unsupported content type."
-                    }
-                  }
-                }
-              }
             }
           },
           "503": {
@@ -18875,18 +18671,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
-                      "message": "Service unavailable."
-                    }
-                  }
                 }
               }
             }
@@ -19261,18 +19045,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_INVALID",
-                      "message": "Invalid request."
-                    }
-                  }
-                }
-              }
             }
           },
           "401": {
@@ -19281,18 +19053,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_UNAUTHENTICATED",
-                      "message": "Authentication required."
-                    }
-                  }
                 }
               }
             }
@@ -19305,18 +19065,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_CSRF_INVALID",
-                      "message": "Request verification failed."
-                    }
-                  }
-                }
-              }
             }
           },
           "404": {
@@ -19325,18 +19073,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
-                      "message": "Not found."
-                    }
-                  }
                 }
               }
             }
@@ -19349,18 +19085,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_CONFLICT",
-                      "message": "Conflicting follow-up intent operation."
-                    }
-                  }
-                }
-              }
             }
           },
           "405": {
@@ -19369,18 +19093,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "METHOD_NOT_ALLOWED",
-                      "message": "Method not allowed."
-                    }
-                  }
                 }
               }
             }
@@ -19393,18 +19105,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_TOO_LARGE",
-                      "message": "Request too large."
-                    }
-                  }
-                }
-              }
             }
           },
           "415": {
@@ -19415,18 +19115,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_CONTENT_TYPE_INVALID",
-                      "message": "Unsupported content type."
-                    }
-                  }
-                }
-              }
             }
           },
           "503": {
@@ -19435,18 +19123,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
-                      "message": "Service unavailable."
-                    }
-                  }
                 }
               }
             }
@@ -19811,18 +19487,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_INVALID",
-                      "message": "Invalid request."
-                    }
-                  }
-                }
-              }
             }
           },
           "401": {
@@ -19831,18 +19495,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_UNAUTHENTICATED",
-                      "message": "Authentication required."
-                    }
-                  }
                 }
               }
             }
@@ -19855,18 +19507,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_CSRF_INVALID",
-                      "message": "Request verification failed."
-                    }
-                  }
-                }
-              }
             }
           },
           "404": {
@@ -19875,18 +19515,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
-                      "message": "Not found."
-                    }
-                  }
                 }
               }
             }
@@ -19899,18 +19527,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_CONFLICT",
-                      "message": "Conflicting follow-up intent operation."
-                    }
-                  }
-                }
-              }
             }
           },
           "405": {
@@ -19919,18 +19535,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "METHOD_NOT_ALLOWED",
-                      "message": "Method not allowed."
-                    }
-                  }
                 }
               }
             }
@@ -19943,18 +19547,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_TOO_LARGE",
-                      "message": "Request too large."
-                    }
-                  }
-                }
-              }
             }
           },
           "415": {
@@ -19965,18 +19557,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_CONTENT_TYPE_INVALID",
-                      "message": "Unsupported content type."
-                    }
-                  }
-                }
-              }
             }
           },
           "503": {
@@ -19985,18 +19565,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
-                      "message": "Service unavailable."
-                    }
-                  }
                 }
               }
             }
@@ -20391,18 +19959,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_INVALID",
-                      "message": "Invalid request."
-                    }
-                  }
-                }
-              }
             }
           },
           "401": {
@@ -20411,18 +19967,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_UNAUTHENTICATED",
-                      "message": "Authentication required."
-                    }
-                  }
                 }
               }
             }
@@ -20435,18 +19979,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "AUTH_CSRF_INVALID",
-                      "message": "Request verification failed."
-                    }
-                  }
-                }
-              }
             }
           },
           "404": {
@@ -20455,18 +19987,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
-                      "message": "Not found."
-                    }
-                  }
                 }
               }
             }
@@ -20479,18 +19999,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_CONFLICT",
-                      "message": "Conflicting follow-up intent operation."
-                    }
-                  }
-                }
-              }
             }
           },
           "405": {
@@ -20499,18 +20007,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "METHOD_NOT_ALLOWED",
-                      "message": "Method not allowed."
-                    }
-                  }
                 }
               }
             }
@@ -20523,18 +20019,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_TOO_LARGE",
-                      "message": "Request too large."
-                    }
-                  }
-                }
-              }
             }
           },
           "415": {
@@ -20545,18 +20029,6 @@
                   "const": "no-store"
                 }
               }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "REQUEST_CONTENT_TYPE_INVALID",
-                      "message": "Unsupported content type."
-                    }
-                  }
-                }
-              }
             }
           },
           "503": {
@@ -20565,18 +20037,6 @@
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "const": {
-                    "error": {
-                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
-                      "message": "Service unavailable."
-                    }
-                  }
                 }
               }
             }
