@@ -15528,6 +15528,5071 @@
         },
         "description": "Slice 5 only. Booking grants ZERO clinical authority. Current assignment is sole clinical grant. Author drafts/private are exact author + current authority; clinician writes require current source clinic/member/provider/affiliation scope. Patient reads own released only; other clinician uses own current relationship, independent of source clinic suspension. PRIVATE_NOTE never releases. Explicit summary sign-and-release only. Immutable source/version lineage; exact append-only privacy targets suppress unsafe document ordinary projections/counts/replays, no forensic route. Fixed page/pageSize pagination; lists include latest visible version per document, exact detail paginates signed/author history newest pages (ascending within each page). No other queries. Canonical UUIDv4; strict nested JSON/duplicate decoded keys/fatal UTF-8/body16KiB/headers8192/URL2048; Origin/Fetch Metadata/session CSRF; no mutation query or Idempotency-Key. No-store/no ETag/Last-Modified/304. Uniform 404 before authorized conflicts; errors contain no clinical values. No frontend or Slice 6."
       }
+    },
+    "/api/v1/consultations/{consultationId}/follow-up-intents": {
+      "post": {
+        "summary": "Explicit FollowUpIntentDraft",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "New immutable result; replay returns 200.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowUpIntentDraft"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List author follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "pageSize": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "total": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 2147483647
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "summary": "List author follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/follow-up-intents/{intentId}": {
+      "get": {
+        "summary": "Read author follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "linkPage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "linkPageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "summary": "Read author follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "linkPage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "linkPageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/follow-up-intents/{intentId}/sign-release": {
+      "post": {
+        "summary": "Explicit FollowUpIntentRelease",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowUpIntentRelease"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/follow-up-intents/{intentId}/corrections": {
+      "post": {
+        "summary": "Explicit FollowUpIntentCorrection",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "New immutable result; replay returns 200.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowUpIntentCorrection"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/follow-up-intents/{intentId}/booking-links": {
+      "post": {
+        "summary": "Explicit FollowUpIntentLink",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "New immutable result; replay returns 200.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowUpIntentLink"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/follow-up-intents/{intentId}/booking-links/replacements": {
+      "post": {
+        "summary": "Explicit FollowUpIntentReplacement",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "New immutable result; replay returns 200.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentAuthor"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowUpIntentReplacement"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/follow-up-intents/{intentId}/privacy-restrictions": {
+      "post": {
+        "summary": "Explicit FollowUpIntentPrivacy",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "restricted"
+                      ],
+                      "properties": {
+                        "restricted": {
+                          "const": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowUpIntentPrivacy"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/me/follow-up-intents": {
+      "get": {
+        "summary": "List released follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FollowUpIntentReleased"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "pageSize": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "total": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 2147483647
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "summary": "List released follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/me/follow-up-intents/{intentId}": {
+      "get": {
+        "summary": "Read released follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "linkPage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "linkPageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentReleased"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "summary": "Read released follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "linkPage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "linkPageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/patients/{patientId}/follow-up-intents": {
+      "get": {
+        "summary": "List released follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FollowUpIntentReleased"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10000
+                        },
+                        "pageSize": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "total": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 2147483647
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "summary": "List released follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/patients/{patientId}/follow-up-intents/{intentId}": {
+      "get": {
+        "summary": "Read released follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "linkPage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "linkPageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/FollowUpIntentReleased"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "summary": "Read released follow-up intents",
+        "description": "Slice 6 explicit human Follow-up Intent is neither Booking, historical EH-012 FollowUpAppointment, CareAction completion nor EACCE. No automatic booking/reservation. ClinicianPatientAssignment sole clinical authority; Booking grants ZERO authority; ADMIN/staff denied. Exact current author + assignment + source clinic/member/provider/affiliation for writes. Author reads require current assignment, without source-clinic state; patient own/current related clinician released reads use their own authority. Any restricted version suppresses entire root, IDs/counts/links/replay; no forensic route. Strict JSON/duplicate decoded-key rejection/fatal UTF-8/scalar bounds, 16KiB body, raw headers8192/URL2048; exact Origin/Fetch Metadata/media/encoding/session CSRF for writes. No mutation query or Idempotency-Key. Same actor/command/operationKey/canonical payload reprojects retained result after current authority/privacy/state checks; changed payload conflict after scope, rollback key reusable; no automatic retry. New links require existing same-patient BOOKED booking. Replacement requires current prior CANCELLED/RESCHEDULED and different same-patient BOOKED target. History immutable; booking state dynamic. No-store/no ETag/Last-Modified/304. HEAD same status/headers as GET, empty body on every status. Canonical lowercase UUIDv4 only. Uniform scoped 404 before state conflict; errors contain no source values.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "linkPage",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "linkPageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "REQUEST_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "AUTH_UNAUTHENTICATED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AUTH_CSRF_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "FOLLOW_UP_INTENT_NOT_FOUND",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "FOLLOW_UP_INTENT_CONFLICT",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_CONFLICT",
+                      "message": "Conflicting follow-up intent operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "METHOD_NOT_ALLOWED",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "REQUEST_TOO_LARGE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "REQUEST_CONTENT_TYPE_INVALID",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "FOLLOW_UP_INTENT_UNAVAILABLE",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "FOLLOW_UP_INTENT_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Retained replay or authorized current projection. No implicit clinical completion. History pages newest-first, ascending sequence within each page. Default unlinked history is empty. Exhausted detail history returns 404. Lists include latest visible version/link per root, filtered counts and rows in one SQL snapshot.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -17888,6 +22953,619 @@
         "required": [
           "data"
         ]
+      },
+      "FollowUpIntentWindow": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "startAt",
+              "endAt",
+              "timeZone"
+            ],
+            "properties": {
+              "startAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "endAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "timeZone": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            }
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "description": "Explicit-offset strict EH-012 real-calendar timestamps, at most milliseconds, start < end; each offset must match IANA zone at that instant. Preserve zone and normalize instants UTC millisecond ISO. No future-only rule."
+      },
+      "FollowUpIntentDraft": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "instruction",
+          "desiredWindow",
+          "operationKey"
+        ],
+        "properties": {
+          "instruction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "description": "Unicode scalar count; C0/C1 controls rejected except LF. No trim, inference or HTML interpretation."
+          },
+          "desiredWindow": {
+            "$ref": "#/components/schemas/FollowUpIntentWindow"
+          },
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          }
+        }
+      },
+      "FollowUpIntentRelease": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "expectedVersion",
+          "operationKey"
+        ],
+        "properties": {
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          }
+        }
+      },
+      "FollowUpIntentCorrection": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "instruction",
+          "desiredWindow",
+          "expectedVersion",
+          "predecessorId",
+          "reason",
+          "operationKey"
+        ],
+        "properties": {
+          "instruction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "description": "Unicode scalar count; C0/C1 controls rejected except LF. No trim, inference or HTML interpretation."
+          },
+          "desiredWindow": {
+            "$ref": "#/components/schemas/FollowUpIntentWindow"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "predecessorId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "description": "Unicode scalar count; C0/C1 controls rejected except LF. No trim, inference or HTML interpretation."
+          },
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          }
+        }
+      },
+      "FollowUpIntentLink": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "bookingId",
+          "expectedLinkVersion",
+          "operationKey"
+        ],
+        "properties": {
+          "bookingId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedLinkVersion": {
+            "const": 0
+          },
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          }
+        }
+      },
+      "FollowUpIntentReplacement": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "bookingId",
+          "previousLinkId",
+          "expectedLinkVersion",
+          "operationKey"
+        ],
+        "properties": {
+          "bookingId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "previousLinkId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedLinkVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          }
+        }
+      },
+      "FollowUpIntentPrivacy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "versionIds",
+          "reason",
+          "operationKey"
+        ],
+        "properties": {
+          "versionIds": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 100,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "description": "Unicode scalar count; C0/C1 controls rejected except LF. No trim, inference or HTML interpretation."
+          },
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          }
+        }
+      },
+      "FollowUpIntentAuthorVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "version",
+          "id",
+          "state",
+          "instruction",
+          "desiredWindow",
+          "createdAt",
+          "signedAt",
+          "releasedAt",
+          "reason",
+          "predecessorId",
+          "effective"
+        ],
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "state": {
+            "enum": [
+              "DRAFT",
+              "SIGNED_RELEASED"
+            ]
+          },
+          "instruction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "description": "Unicode scalar count; C0/C1 controls rejected except LF. No trim, inference or HTML interpretation."
+          },
+          "desiredWindow": {
+            "$ref": "#/components/schemas/FollowUpIntentWindow"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "signedAt": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "releasedAt": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000,
+                "description": "Unicode scalar count; C0/C1 controls rejected except LF. No trim, inference or HTML interpretation."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "predecessorId": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "effective": {
+            "type": "boolean"
+          }
+        }
+      },
+      "FollowUpIntentReleasedVersion": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "state",
+          "instruction",
+          "desiredWindow",
+          "createdAt",
+          "signedAt",
+          "releasedAt",
+          "reason",
+          "predecessorId",
+          "effective"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "state": {
+            "const": "SIGNED_RELEASED"
+          },
+          "instruction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000,
+            "description": "Unicode scalar count; C0/C1 controls rejected except LF. No trim, inference or HTML interpretation."
+          },
+          "desiredWindow": {
+            "$ref": "#/components/schemas/FollowUpIntentWindow"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "signedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "releasedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reason": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000,
+                "description": "Unicode scalar count; C0/C1 controls rejected except LF. No trim, inference or HTML interpretation."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "predecessorId": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "effective": {
+            "type": "boolean"
+          }
+        }
+      },
+      "FollowUpIntentBookingLink": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "bookingId",
+          "previousLinkId",
+          "linkedAt",
+          "bookingState"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "bookingId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "previousLinkId": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "linkedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "bookingState": {
+            "enum": [
+              "BOOKED",
+              "CANCELLED",
+              "RESCHEDULED",
+              "IN_CONSULTATION",
+              "NO_SHOW"
+            ]
+          }
+        }
+      },
+      "FollowUpIntentAuthor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "consultationId",
+          "versions",
+          "links",
+          "history",
+          "linkHistory"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "consultationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "versions": {
+            "type": "array",
+            "maxItems": 100,
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/FollowUpIntentAuthorVersion"
+            }
+          },
+          "links": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "$ref": "#/components/schemas/FollowUpIntentBookingLink"
+            }
+          },
+          "history": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "page",
+              "pageSize",
+              "total"
+            ],
+            "properties": {
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2147483647
+              }
+            }
+          },
+          "linkHistory": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "page",
+              "pageSize",
+              "total"
+            ],
+            "properties": {
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2147483647
+              }
+            }
+          }
+        }
+      },
+      "FollowUpIntentReleased": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "consultationId",
+          "versions",
+          "links",
+          "history",
+          "linkHistory"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "consultationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "versions": {
+            "type": "array",
+            "maxItems": 100,
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/FollowUpIntentReleasedVersion"
+            }
+          },
+          "links": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "$ref": "#/components/schemas/FollowUpIntentBookingLink"
+            }
+          },
+          "history": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "page",
+              "pageSize",
+              "total"
+            ],
+            "properties": {
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2147483647
+              }
+            }
+          },
+          "linkHistory": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "page",
+              "pageSize",
+              "total"
+            ],
+            "properties": {
+              "page": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10000
+              },
+              "pageSize": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "total": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2147483647
+              }
+            }
+          }
+        }
       }
     }
   }

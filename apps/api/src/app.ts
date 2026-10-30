@@ -1,3 +1,5 @@
+import {followUpIntentController,followUpIntentRequestBoundary} from './follow-up-intents.js';
+import type {FollowUpIntentPersistence} from '@egyhealth/db';
 import {documentationController,documentationRequestBoundary} from './documentation.js';
 import type {DocumentationPersistence} from '@egyhealth/db';
 import {bookingController,bookingRequestBoundary} from './bookings.js';
@@ -43,7 +45,7 @@ function applicationErrorEnvelope(body: unknown): boolean {
     && typeof field.field === 'string' && typeof field.reason === 'string'));
 }
 
-export async function createApp(database: Database, auth?: AuthRuntime, authorization?: AuthorizationPersistence, bloodPressure?: BloodPressureMeasurementPersistence, followup?: { appointments: FollowUpAppointmentPersistence; encounters: ClinicalEncounterPersistence }, patientEntry?: PatientEntryRuntime, directory?: PublicDirectory, relationships?: RelationshipPersistence, availability?: AvailabilityPersistence, bookings?: BookingPersistence, consultations?: ConsultationPersistence, documentation?: DocumentationPersistence) {
+export async function createApp(database: Database, auth?: AuthRuntime, authorization?: AuthorizationPersistence, bloodPressure?: BloodPressureMeasurementPersistence, followup?: { appointments: FollowUpAppointmentPersistence; encounters: ClinicalEncounterPersistence }, patientEntry?: PatientEntryRuntime, directory?: PublicDirectory, relationships?: RelationshipPersistence, availability?: AvailabilityPersistence, bookings?: BookingPersistence, consultations?: ConsultationPersistence, documentation?: DocumentationPersistence, followUpIntents?: FollowUpIntentPersistence) {
   @Controller('health')
   class HealthController {
     @Get()
@@ -53,12 +55,13 @@ export async function createApp(database: Database, auth?: AuthRuntime, authoriz
       return { data: { status: bootstrapSmoke('ok') } };
     }
   }
-  @Module({ controllers: auth ? [authController(auth), ...(documentation ? [documentationController(auth,documentation)] : []), ...(bookings ? [bookingController(auth,bookings,consultations)] : []), ...(availability ? [availabilityController(auth,availability)] : []), ...(relationships ? [relationshipController(auth,relationships)] : []), ...(patientEntry ? [patientEntryController(auth, patientEntry)] : []), ...(authorization ? [patientController(auth, authorization)] : []), ...(bloodPressure ? [bloodPressureController(auth, bloodPressure)] : []), ...(followup ? [followupController(auth, followup.appointments, followup.encounters)] : [])] : [] })
+  @Module({ controllers: auth ? [authController(auth), ...(followUpIntents ? [followUpIntentController(auth,followUpIntents)] : []), ...(documentation ? [documentationController(auth,documentation)] : []), ...(bookings ? [bookingController(auth,bookings,consultations)] : []), ...(availability ? [availabilityController(auth,availability)] : []), ...(relationships ? [relationshipController(auth,relationships)] : []), ...(patientEntry ? [patientEntryController(auth, patientEntry)] : []), ...(authorization ? [patientController(auth, authorization)] : []), ...(bloodPressure ? [bloodPressureController(auth, bloodPressure)] : []), ...(followup ? [followupController(auth, followup.appointments, followup.encounters)] : [])] : [] })
   class AuthModule {}
   @Module({ controllers: [HealthController, ...(directory ? [directoryController(directory)] : [])], imports: [AuthModule] })
   class AppModule {}
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { logger: false, bodyParser: false });
   app.setGlobalPrefix('api/v1');
+  if (auth && followUpIntents) app.use(followUpIntentRequestBoundary(auth));
   if (auth && documentation) app.use(documentationRequestBoundary(auth));
   if (auth && bookings) app.use(bookingRequestBoundary(auth));
   if (auth && availability) app.use(availabilityRequestBoundary(auth));
