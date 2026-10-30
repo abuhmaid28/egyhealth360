@@ -20,8 +20,7 @@ and [audit compatibility delta](https://github.com/abuhmaid28/egyhealth360/issue
 ## Executed focused evidence
 
 - Prisma validate, full build, typecheck and lint PASS; frozen Docker install/build PASS.
-- Full unit run 197/197 PASS before the final additive OpenAPI assertion; final intent
-  unit suite 13/13 PASS. Final full unit count will be recorded after completion.
+- Final full unit run 198/198 PASS; intent unit suite 13/13 PASS.
 - New service/strict HTTP/direct SQL/rollback tests PASS. Scopes include all roles,
   author/current assignment, unrelated/wrong patient, draft privacy, released-only
   reads, source suspension independence, canonical UUID/query handling, JSON decoded
@@ -66,7 +65,10 @@ past slots overlapped; deferred events had to be flushed before re-enabling fixt
 guards; additional role logins added authentication audits before replay comparisons;
 a 5-minute runtime publication configuration needed explicit restoration to 30 minutes
 before later test publications. Origin failure correctly follows existing 403 CSRF
-semantics. No product semantics were weakened to make tests pass.
+semantics. A second-pass Intl/PostgreSQL timezone catalog mismatch now returns authorized
+400 before any insert, preserving exact declared zone without alias coercion; its
+focused HTTP/rollback suite is 4/4 PASS. No product semantics were weakened to make
+tests pass.
 
 ## Remaining full gates and Lane A boundary
 

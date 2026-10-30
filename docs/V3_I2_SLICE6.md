@@ -79,7 +79,10 @@ change is required. The following technical deltas clarify the proposed contract
    actor/action/root/empty-metadata/current-transaction existence check. No audit FK
    is needed: one would change legacy audit TRUNCATE rejection precedence before
    its existing append-only guard. Historical audit behavior is preserved.
-10. No close endpoint is added; current consultations are immutable OPEN sidecars.
+10. Intl validation and the exact PostgreSQL timezone catalog must both accept a
+    new desired window. Authorized pre-insert validation returns 400 for catalog
+    case/alias mismatches; preserve the exact declared zone, without alias coercion.
+11. No close endpoint is added; current consultations are immutable OPEN sidecars.
    Intent creation/release/correction does not change consultation or documentation.
 
 ## Stable implementation contract

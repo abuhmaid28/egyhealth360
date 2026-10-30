@@ -147,6 +147,7 @@ export function createFollowUpIntentPersistence(connectionString: string | undef
           if(command==='REPLACE') { const old=(await tx.query('SELECT state FROM public.bookings WHERE id=$1',[link.booking_id])).rows[0]; if(!old||!['CANCELLED','RESCHEDULED'].includes(old.state)) intentFail('FOLLOW_UP_INTENT_CONFLICT'); }
         }
         await final();
+        if(input.desiredWindow && !(await tx.query('SELECT name FROM pg_catalog.pg_timezone_names WHERE name=$1',[input.desiredWindow.timeZone])).rowCount) intentFail('FOLLOW_UP_INTENT_INVALID');
         const id=root?.id??randomUUID(), op=randomUUID(), audit=randomUUID(); let versionId:string|null=null, linkId:string|null=null;
         if(command==='DRAFT') await tx.query('INSERT INTO public.follow_up_intents(id,consultation_id,encounter_id,patient_id,author_clinician_id,author_user_id) VALUES($1,$2,$3,$4,$5,$6)',[id,s.id,s.encounter_id,s.patient_id,clinicianId,a.userId]);
         if(['DRAFT','RELEASE','CORRECT'].includes(command)) {

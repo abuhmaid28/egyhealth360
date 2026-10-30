@@ -17,3 +17,6 @@ for(const command of ['DRAFT','RELEASE'])for(const privacyFirst of [true,false])
  const replay=()=>command==='DRAFT'?f.draft(c,body):f.command(c,d,'RELEASE',sign),privacy=()=>f.command(c,d,'PRIVACY',{versionIds:[d.data.versions[0].id],reason:'Wrong patient'});
  await intentRace(f,privacyFirst?privacy:replay,privacyFirst?replay:privacy,{name:'retained-'+command+'/privacy',pattern:privacyFirst?/INSERT INTO public\.follow_up_intent_privacy_restrictions/:/WITH visible AS MATERIALIZED/,expected:privacyFirst?['COMMIT','FOLLOW_UP_INTENT_NOT_FOUND']:['COMMIT','COMMIT']});
 }));
+for(const rollback of [false,true])test('I2S6 concurrent same operation key changed canonical payload rollback='+rollback,()=>isolatedIntents(async f=>{
+ const c=await f.readyIntent(),body=intentBody();await intentRace(f,()=>f.draft(c,body),()=>f.draft(c,{...body,instruction:'Explicit changed canonical payload'}),{name:'same-key/changed-payload',rollback,expected:rollback?['FOLLOW_UP_INTENT_UNAVAILABLE','COMMIT']:['COMMIT','FOLLOW_UP_INTENT_CONFLICT']});const rows=(await f.pool.query('SELECT instruction FROM public.follow_up_intent_versions')).rows;assert.equal(rows.length,1);assert.equal(rows[0].instruction,rollback?'Explicit changed canonical payload':body.instruction);
+}));
