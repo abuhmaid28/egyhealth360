@@ -299,7 +299,13 @@ export async function testConsultationOpening(browser, origin, shots) {
       .waitFor();
     const posts = calls.filter((c) => c.path.endsWith("/consultation"));
     assert.equal(posts.length, 5);
-    assert.equal(new Set(posts.map((c) => c.body)).size, 1);
+    assert.equal(new Set(posts.slice(0, 3).map((c) => c.body)).size, 1);
+    assert.equal(new Set(posts.slice(3).map((c) => c.body)).size, 1);
+    assert.notEqual(
+      posts[2].body,
+      posts[3].body,
+      "session expiry discards old command identity",
+    );
     assert.deepEqual(Object.keys(JSON.parse(posts[0].body)), ["operationKey"]);
     assert.equal(posts[0].headers["x-csrf-token"], "opening-browser-csrf");
     assert.equal(posts[0].headers["idempotency-key"], undefined);

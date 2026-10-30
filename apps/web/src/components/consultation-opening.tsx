@@ -36,7 +36,7 @@ export function ClinicalOpeningBoundary() {
       <Icon name="shield" size={18} />
       <p>
         {t(
-          "Booking is not consent or a clinical relationship. Opening requires an existing active patient relationship and current clinician and clinic authority. Clinical documentation remains separate in Demo Mode.",
+          "Booking is not consent or a clinical relationship. Opening requires an existing active patient relationship and current clinician and clinic authority. Booking grants zero clinical authority.",
         )}
       </p>
     </div>
@@ -93,7 +93,7 @@ export function ConsultationOpeningCard({
           </p>
           <p>
             {t(
-              "The opening was confirmed by the server. Clinical documentation is not available in Live mode.",
+              "The opening was confirmed by the server. Documentation requires your current clinical authority.",
             )}
           </p>
           <Link
@@ -287,7 +287,7 @@ function OpeningMetadata({
         <CardTitle title={t("Clinical documentation is separate")} />
         <p>
           {t(
-            "Complaint, assessment, allergies, private notes, patient instructions, prescriptions, tests and clinical follow-up are not enabled for this Live consultation.",
+            "Private notes and explicitly released patient summaries are available with current clinical authority.",
           )}
         </p>
         <p className="muted">
@@ -295,6 +295,12 @@ function OpeningMetadata({
             "The graduation Demo workspace remains a separate synthetic experience. Opening a real visit never copies Demo clinical content into it.",
           )}
         </p>
+        <Link
+          className="button secondary"
+          href={`/doctor/consultation/${booking.id}/documentation`}
+        >
+          {t("Open clinical documentation")}
+        </Link>
         <Link className="button secondary" href="/doctor/schedule">
           {t("Back to schedule")}
         </Link>
@@ -320,7 +326,7 @@ export function LiveConsultationShell({ bookingId }: { bookingId: string }) {
         eyebrow={t("Live consultation opening")}
         title={t("Scheduled consultation")}
         description={t(
-          "Opening metadata only. Clinical documentation is not available in Live mode.",
+          "Opening details and documentation for this scheduled consultation.",
         )}
       />
       <ClinicalOpeningBoundary />

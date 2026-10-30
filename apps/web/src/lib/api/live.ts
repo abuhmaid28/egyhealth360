@@ -1,4 +1,8 @@
 import {
+  createLiveDocumentationApi,
+  documentationHttpError,
+} from "./documentation";
+import {
   createConsultationOpeningApi,
   OpeningUiError,
 } from "./consultation-opening";
@@ -30,6 +34,18 @@ export function createLiveAdapter(): HealthcareAdapter {
         ...init?.headers,
       },
     });
+    if (response.status === 401) {
+      csrf = "";
+      sessionIdentity = "";
+      liveBookings.clearCommands();
+      consultationOpening.clear();
+      documentation.clear?.("expired");
+    }
+    if (
+      !response.ok &&
+      (/^\/consultations\//.test(path) || /\/summaries(?:\/|\?|$)/.test(path))
+    )
+      throw documentationHttpError(response.status, init?.method === "POST");
     if (!response.ok && path.endsWith("/consultation"))
       throw new OpeningUiError(response.status);
     if (
@@ -69,7 +85,9 @@ export function createLiveAdapter(): HealthcareAdapter {
     if (sessionIdentity && sessionIdentity !== identity) {
       liveBookings.clearCommands();
       consultationOpening.clear();
+      documentation.clear?.();
     }
+    documentation.activate();
     sessionIdentity = identity;
     csrf = a.csrfToken;
     return { role: a.user.role, name: a.user.email, mode: "live" };
@@ -81,8 +99,11 @@ export function createLiveAdapter(): HealthcareAdapter {
   };
   const liveBookings = createLiveBookingApi(request, () => csrf);
   const consultationOpening = createConsultationOpeningApi(request, () => csrf);
+  const documentation = createLiveDocumentationApi(request, () => csrf);
   return {
     mode: "live",
+    documentation,
+    liveDocumentation: documentation,
     consultationOpening,
     liveBookings,
     async session() {
@@ -93,6 +114,7 @@ export function createLiveAdapter(): HealthcareAdapter {
         sessionIdentity = "";
         liveBookings.clearCommands();
         consultationOpening.clear();
+        documentation.clear?.("expired");
         return null;
       }
     },
@@ -108,6 +130,7 @@ export function createLiveAdapter(): HealthcareAdapter {
       );
     },
     async logout() {
+      documentation.clear?.();
       await request("/auth/logout", {
         method: "POST",
         body: JSON.stringify({}),

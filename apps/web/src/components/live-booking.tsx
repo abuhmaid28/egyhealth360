@@ -69,7 +69,7 @@ export function BookingBoundary() {
       <Icon name="shield" size={18} />
       <p>
         {t(
-          "Booking is logistics only. It grants no access to medical records. Consultation opening requires a separate current clinical relationship. Clinical documentation, prescriptions, tests and clinical follow-up remain Demo-only.",
+          "Booking is logistics only. It grants no access to medical records. Consultation opening requires a separate current clinical relationship. Documentation requires current clinical authority. Prescriptions, tests and clinical follow-up remain Demo-only.",
         )}
       </p>
     </div>

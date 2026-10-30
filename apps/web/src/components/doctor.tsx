@@ -1,4 +1,5 @@
 "use client";
+import { LiveDocumentationWorkspace, RelatedSummaries } from "./live-documentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
@@ -37,6 +38,13 @@ export function DoctorScreen({ path }: { path: string }) {
     return <LiveBookingList clinician />;
   if (api.mode === "live" && path.startsWith("/doctor/appointments/"))
     return <LiveBookingDetail clinician id={path.split("/")[3]} />;
+  if (
+    api.mode === "live" &&
+    path.startsWith("/doctor/consultation/") &&
+    path.endsWith("/documentation")
+  )
+    return <LiveDocumentationWorkspace bookingId={path.split("/")[3]} />;
+  if (api.mode === "live" && path === "/doctor/summaries") return <RelatedSummaries />;
   if (api.mode === "live" && path.startsWith("/doctor/consultation/"))
     return <LiveConsultationShell bookingId={path.split("/")[3]} />;
   if (path === "/doctor" || path === "/doctor/schedule")
