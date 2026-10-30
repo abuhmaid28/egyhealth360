@@ -1,5 +1,9 @@
 # EgyHealth 360 — Data Model Status and V3 Concepts
 
+## Current V3-I2 Slice 5 boundary
+
+[Slice 5](V3_I2_SLICE5.md) adds ConsultationDocument, ConsultationDocumentVersion, ConsultationDocumentOperation and ConsultationPrivacyRestriction: migration 18, 43 domain models/tables, 17 historical SQL files unchanged. Immutable roots/versions/operations/privacy targets, composite RESTRICT provenance/lineage and legal sign/release guards; no backfill. Earlier inventories below are historical slice snapshots.
+
 ## Current Slice 4 consultation-opening boundary
 
 Migration 17 adds only Consultation, bringing the current model/domain-table total to 39. Unique booking/encounter, composite same-patient identity, immutable opening provenance and deferred atomic-link guards. General encounters are new rows only; historical tables/rows are not backfilled. See [schema and guarantees](V3_I2_SLICE4.md). Historical status/validation statements below retain their original point-in-time meaning.

@@ -1,0 +1,112 @@
+{
+  "tables": [
+    "consultation_documents",
+    "consultation_document_versions",
+    "consultation_document_operations",
+    "consultation_privacy_restrictions"
+  ],
+  "checks": [
+    "consultation_document_operations_check",
+    "consultation_document_operations_command_check",
+    "consultation_document_operations_fingerprint_check",
+    "consultation_document_operations_operation_key_check",
+    "consultation_document_versions_allergy_items_check",
+    "consultation_document_versions_allergy_state_check",
+    "consultation_document_versions_check",
+    "consultation_document_versions_check1",
+    "consultation_document_versions_check2",
+    "consultation_document_versions_check3",
+    "consultation_document_versions_check4",
+    "consultation_document_versions_complaint_check",
+    "consultation_document_versions_content_check",
+    "consultation_document_versions_diagnoses_check",
+    "consultation_document_versions_kind_check",
+    "consultation_document_versions_patient_instructions_check",
+    "consultation_document_versions_problems_check",
+    "consultation_document_versions_reason_check",
+    "consultation_document_versions_state_check",
+    "consultation_document_versions_version_check",
+    "consultation_documents_kind_check",
+    "consultation_privacy_restrictions_command_check",
+    "consultation_privacy_restrictions_reason_check"
+  ],
+  "fk": [
+    "consultation_document_operati_result_version_id_document_i_fkey",
+    "consultation_document_operations_actor_user_id_fkey",
+    "consultation_document_operations_document_id_fkey",
+    "consultation_document_version_document_id_consultation_id__fkey",
+    "consultation_document_version_operation_id_author_user_id__fkey",
+    "consultation_document_versions_predecessor_id_document_id_fkey",
+    "consultation_document_versions_reviewer_user_id_fkey",
+    "consultation_documents_author_clinician_id_author_user_id_fkey",
+    "consultation_documents_consultation_id_fkey",
+    "consultation_documents_encounter_id_patient_id_fkey",
+    "consultation_privacy_restrictions_version_id_document_id_fkey",
+    "document_privacy_operation_scope"
+  ],
+  "triggers": [
+    {
+      "tgname": "document_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i2_document_complete"
+    },
+    {
+      "tgname": "document_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "document_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i2_document_insert"
+    },
+    {
+      "tgname": "document_operation_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i2_document_complete"
+    },
+    {
+      "tgname": "document_operation_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "document_privacy_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "document_privacy_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i2_document_privacy_insert"
+    },
+    {
+      "tgname": "document_version_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "document_version_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i2_document_version_insert"
+    }
+  ],
+  "functions": [
+    "i2_allergy_items",
+    "i2_document_complete",
+    "i2_document_insert",
+    "i2_document_items",
+    "i2_document_privacy_insert",
+    "i2_document_text",
+    "i2_document_version_insert"
+  ]
+}

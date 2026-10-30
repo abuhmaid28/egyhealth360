@@ -1,6 +1,6 @@
 # EgyHealth 360 — AI Agent Instructions
 
-Current backend delivery: V3-I2 Slices 1–3 COMPLETE. [Slice 3 completion and Slice 4 authorization 6485213892](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6485213892) authorizes consultation opening only. [Slice 4](docs/V3_I2_SLICE4.md) is IMPLEMENTED / IN REVIEW, not COMPLETE. V3-I2 INCOMPLETE. Slice 5 NOT IMPLEMENTED; Slices 5–7 excluded from this authorization. I3 NOT AUTHORIZED. EACCE NOT STARTED. The completed separate English/Arabic/RTL UI track is unchanged. No merge authorized.
+Current backend delivery: V3-I2 Slices 1–4 COMPLETE. [Activation 6514224261](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6514224261) records exact-main `1439016d9271a1deff5ddd98b8f2b2d58aa8baa4`, Bootstrap 40995148133 / validate 123866429499 SUCCESS and authorizes Slice 5 Clinical Consultation Documentation only. [Slice 5](docs/V3_I2_SLICE5.md) is IMPLEMENTED / IN REVIEW, not COMPLETE. V3-I2 INCOMPLETE. Slice 6 NOT IMPLEMENTED; Slices 6–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Existing English/Arabic/RTL frontend unchanged. No merge authorized.
 
 These instructions apply to every coding/research agent working on this repository.
 

@@ -1004,3 +1004,70 @@ model Consultation {
  command String @default("OPEN") @db.VarChar(16)
  @@map("consultations")
 }
+
+// Slice 5 purpose-built immutable roots/versions/privacy/operation identities.
+// Composite RESTRICT FKs, immutable guards and transitions are SQL-enforced.
+model ConsultationDocument {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ consultationId String @map("consultation_id") @db.Uuid
+ encounterId String @map("encounter_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ authorClinicianId String @map("author_clinician_id") @db.Uuid
+ kind String @db.VarChar(24)
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ @@map("consultation_documents")
+}
+model ConsultationDocumentVersion {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ documentId String @map("document_id") @db.Uuid
+ consultationId String @map("consultation_id") @db.Uuid
+ encounterId String @map("encounter_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ authorClinicianId String @map("author_clinician_id") @db.Uuid
+ documentKind String @map("document_kind") @db.VarChar(24)
+ version Int
+ kind String @db.VarChar(24)
+ state String @db.VarChar(24)
+ predecessorId String? @unique @map("predecessor_id") @db.Uuid
+ content String
+ patientInstructions String @map("patient_instructions")
+ complaint String?
+ problems String[]
+ diagnoses String[]
+ allergyState String @map("allergy_state") @db.VarChar(24)
+ allergyItems Json @map("allergy_items")
+ reviewerUserId String? @map("reviewer_user_id") @db.Uuid
+ reviewedAt DateTime? @map("reviewed_at") @db.Timestamptz(3)
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ signedAt DateTime? @map("signed_at") @db.Timestamptz(3)
+ releasedAt DateTime? @map("released_at") @db.Timestamptz(3)
+ reason String?
+ operationId String @unique @map("operation_id") @db.Uuid
+ @@unique([documentId,version])
+ @@map("consultation_document_versions")
+}
+model ConsultationDocumentOperation {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String @db.VarChar(24)
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ documentId String @map("document_id") @db.Uuid
+ resultVersionId String? @map("result_version_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@unique([actorUserId,command,operationKey])
+ @@map("consultation_document_operations")
+}
+model ConsultationPrivacyRestriction {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ documentId String @map("document_id") @db.Uuid
+ versionId String @unique @map("version_id") @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String @default("PRIVACY") @db.VarChar(24)
+ operationId String @map("operation_id") @db.Uuid
+ reason String
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("consultation_privacy_restrictions")
+}

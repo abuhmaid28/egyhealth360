@@ -1,3 +1,4 @@
+import {createDocumentationPersistence} from '@egyhealth/db';
 import {createConsultationPersistence} from '@egyhealth/db';
 import { createBookingPersistence, createAvailabilityPersistence, createRelationshipPersistence, createDirectoryPersistence, createPatientEntryPersistence, createFollowUpAppointmentPersistence, createClinicalEncounterPersistence, createBloodPressureMeasurementPersistence, createAuthPersistence, createAuthorizationPersistence, createDatabase } from '@egyhealth/db';
 import { authConfiguration, positiveInteger } from '@egyhealth/config';
@@ -8,6 +9,7 @@ import { createPasswordVerifier } from './password.js';
 async function main() {
   const config = authConfiguration(process.env);
   const passwords = await createPasswordVerifier();
+  const documentation = createDocumentationPersistence(process.env.DATABASE_URL);
   const consultations = createConsultationPersistence(process.env.DATABASE_URL);
   const bookings = createBookingPersistence(process.env.DATABASE_URL);
   const availability = createAvailabilityPersistence(process.env.DATABASE_URL);
@@ -20,7 +22,7 @@ async function main() {
   const bloodPressure = createBloodPressureMeasurementPersistence(process.env.DATABASE_URL);
   const appointments = createFollowUpAppointmentPersistence(process.env.DATABASE_URL);
   const encounters = createClinicalEncounterPersistence(process.env.DATABASE_URL);
-  const app = await createApp(database, { config, passwords, store }, authorization, bloodPressure, { appointments, encounters }, patientEntryRuntime(patientEntry), directory, relationships, availability, bookings, consultations);
+  const app = await createApp(database, { config, passwords, store }, authorization, bloodPressure, { appointments, encounters }, patientEntryRuntime(patientEntry), directory, relationships, availability, bookings, consultations, documentation);
   let closing = false;
   const close = async () => {
     if (closing) return;
@@ -31,6 +33,7 @@ async function main() {
     await availability.close();
     await bookings.close();
     await consultations.close();
+    await documentation.close();
     await directory.close();
     await patientEntry.close();
     await store.close();

@@ -1,5 +1,9 @@
 # EgyHealth 360 — API Status and V3 Resource Boundaries
 
+## Current V3-I2 Slice 5 boundary
+
+Live [Slice 5 documentation](V3_I2_SLICE5.md) adds exact consultation document draft/history/sign/release/addendum/correction/privacy commands and own/current-related released summaries. PRIVATE_NOTE author-only plus current authority; explicit summary sign-and-release only; independent append-only privacy with current retry masking. Exact schemas, bounded pagination, HEAD and safe errors are in OpenAPI. No consultation close or Slice 6 API. Historical Slice 4 statements below retain their original scope.
+
 ## Current Slice 4 consultation-opening boundary
 
 Live Slice 4 adds only POST `/api/v1/me/bookings/{bookingId}/consultation`, exact `{operationKey}`. Current booked clinician + ACTIVE assignment + exact clinic scope; no booking clinical authority. Strict eight-field opening result, no clinical payload. See [exact route/security](V3_I2_SLICE4.md). No close/document APIs. Historical status/validation statements below retain their original point-in-time meaning.

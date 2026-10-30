@@ -297,14 +297,17 @@ export async function testRealConsultation(page, f, booked, networkFault) {
   assert.equal((await dbCounts()).clinical_encounters, 1);
   const documentTables = (
     await f.pool.query(
-      "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public' AND (tablename LIKE '%consultation%document%' OR tablename LIKE '%prescription%' OR tablename LIKE '%lab_order%')",
+      "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public' AND (tablename LIKE '%consultation%document%' OR tablename LIKE '%prescription%' OR tablename LIKE '%lab_order%') ORDER BY tablename",
     )
   ).rows;
   assert.deepEqual(
     documentTables,
-    [],
-    "Slice 4 has no clinical document/prescription/lab source",
+    ["consultation_document_operations","consultation_document_versions","consultation_documents"].map(tablename=>({tablename})),
+    "Only separately authorized Slice 5 documentation tables; no prescribing/lab source",
   );
+  for (const table of ["consultation_documents","consultation_document_versions","consultation_document_operations","consultation_privacy_restrictions"]) {
+    assert.equal((await f.pool.query(`SELECT count(*)::int n FROM public.${table}`)).rows[0].n,0,"Opening UI never creates documentation: "+table);
+  }
   // Patient self-service retains existing own BP/HTN/profile APIs. The clinician
   // opening flow must not browse clinical records or future artifact APIs.
   assert.deepEqual(

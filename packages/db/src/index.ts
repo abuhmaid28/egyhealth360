@@ -93,3 +93,8 @@ export type {BookingPersistence} from './bookings.js';
 
 export {createConsultationPersistence,consultationInput} from './consultations.js';
 export type {ConsultationPersistence} from './consultations.js';
+
+export {createDocumentationPersistence} from './documentation.js';
+export type {DocumentationPersistence} from './documentation.js';
+export {DocumentationError,documentationInput,documentationJson,documentContent,documentText} from './documentation-values.js';
+export type {DocumentCommand} from './documentation-values.js';
