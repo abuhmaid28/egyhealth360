@@ -3,6 +3,7 @@ import { testDocumentation } from "./support/ui-documentation-browser.mjs";
 import { testConsultationOpening } from "./support/ui-consultation-opening-browser.mjs";
 import { testLiveBooking } from "./support/ui-booking-browser.mjs";
 import { testPolish } from "./support/ui-polish-browser.mjs";
+import { testLiveJourney } from "./support/ui-live-journey-browser.mjs";
 import assert from "node:assert/strict";
 import { testArabic } from "./support/ui-rtl-browser.mjs";
 import { testLiveAvailability } from "./support/ui-availability-browser.mjs";
@@ -401,6 +402,7 @@ try {
   await testLiveAvailability(browser, origin, shots);
   await testArabic(browser, origin, shots);
   await testPolish(browser, origin, shots);
+  await testLiveJourney(browser, origin, shots);
   await testLiveBooking(browser, origin, shots);
   await testConsultationOpening(browser, origin, shots);
   await testDocumentation(browser, origin, shots);

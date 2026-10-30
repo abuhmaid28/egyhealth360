@@ -1,5 +1,7 @@
 # UI Phase 5 — Live clinical documentation (Stage B)
 
+Current-main note: PR #59 merged at `b97bd990644aef1e0de77098b139597adb2fbf0f` and is inherited by verified main `4cb20b39370e5317eba14c4916517b6ae88c12e5`. OPEN/IN REVIEW statements below are historical review snapshots. [UI / Live delivery accelerator](V3_UI_LIVE_ACCELERATOR.md) documents the bounded frontend follow-on and deployment settings.
+
 **UI Phase 5 Stage B — IMPLEMENTED / IN REVIEW. Clinical Documentation — REAL LIVE INTEGRATION. PR #59 remains OPEN / UNMERGED; DO NOT MERGE.**
 
 Stage B follows [Issue #48 gate authorization 6524790227](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6524790227), backend main `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`, and its successful exact-main Bootstrap 41008236990 / validate 123907937943. The existing Stage A branch was continued, without rebase or force-push. Normal merge-from-main commit: `cbcaeab` (ordered parents: Stage A `41af71992862b4f75423c977a1f1036d7403ee13`, backend main above). Final head and exact-head Bootstrap run/job are recorded in [PR #59](https://github.com/abuhmaid28/egyhealth360/pull/59).

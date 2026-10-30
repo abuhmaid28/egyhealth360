@@ -1,4 +1,23 @@
 export const ar: Record<string, string> = {
+  "Connected live care": "رعاية متصلة بالخادم المباشر",
+  "Browser-only demo care": "رعاية تجريبية داخل المتصفح فقط",
+  "Live uses the connected backend. Demo is a separate synthetic journey in this browser.":
+    "يستخدم الوضع المباشر الخادم المتصل. العرض التجريبي رحلة منفصلة ببيانات اصطناعية داخل هذا المتصفح.",
+  "This preview offers the browser-only demo. Live sign-in is unavailable until a backend is connected.":
+    "تتيح هذه المعاينة العرض التجريبي داخل المتصفح فقط. تسجيل الدخول المباشر غير متاح حتى يتم توصيل الخادم.",
+  "Your care journey": "رحلة رعايتك",
+  "Discover care": "ابحث عن الرعاية",
+  "Plan your visit": "خطط لزيارتك",
+  "Read released care": "اقرأ الرعاية المنشورة",
+  "Your released care, ready to read": "رعايتك المنشورة جاهزة للقراءة",
+  "Read signed summaries and instructions shared by your clinician. Private notes and unreleased drafts stay private.":
+    "اقرأ الملخصات الموقعة والتعليمات التي شاركها طبيبك معك. تبقى الملاحظات الخاصة والمسودات غير المنشورة خاصة.",
+  "Open released summaries": "افتح الملخصات المنشورة",
+  "Open released summaries to view shared care":
+    "افتح الملخصات المنشورة لعرض الرعاية المشتركة",
+  "Only signed and shared care": "الرعاية الموقعة والمشتركة فقط",
+  "Measurements and HTN records appear below. Signed consultation summaries are available in Released visit summaries. Prescriptions, laboratory fulfillment and general follow-up intentions remain Demo-only.":
+    "تظهر القياسات وسجلات متابعة ارتفاع ضغط الدم أدناه. تتوفر ملخصات الاستشارات الموقعة في ملخصات الزيارات المنشورة. تظل الوصفات وتنفيذ طلبات المختبر ونوايا المتابعة العامة متاحة في العرض التجريبي فقط.",
   Close: "إغلاق",
   "A clear view of your day": "نظرة واضحة على يومك",
   "A clearer picture of their care.": "وصورة أوضح لرعايتهم.",

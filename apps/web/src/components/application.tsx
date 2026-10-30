@@ -65,7 +65,11 @@ const navigation: Record<Role, [string, string, IconName][]> = {
     ["/admin/scheduling", "Scheduling settings", "settings"],
   ],
 };
-export function Application() {
+export function Application({
+  liveConfigured = true,
+}: {
+  liveConfigured?: boolean;
+}) {
   const liveSession = useLiveSession();
   const { t } = useLocale();
 
@@ -133,11 +137,13 @@ export function Application() {
       /* Default to demo without storage. */
     }
     const adapter =
-      mode === "live"
-        ? liveSession.adapter()
-        : createDemoAdapter(window.localStorage);
+      mode === "live" ? liveSession.adapter() : liveSession.demo();
     setApi(adapter);
-    adapter.session().then((s) => {
+    const restored =
+      mode === "live" && !liveConfigured
+        ? Promise.resolve(null)
+        : adapter.session();
+    restored.then((s) => {
       if (active) {
         setSession(s);
         setReady(true);
@@ -146,7 +152,7 @@ export function Application() {
     return () => {
       active = false;
     };
-  }, [liveSession]);
+  }, [liveSession, liveConfigured]);
   useEffect(() => {
     if (!toast) return;
     const timer = setTimeout(() => setToast(""), 4500);
@@ -164,9 +170,7 @@ export function Application() {
       /* In-memory mode still works. */
     }
     const adapter =
-      mode === "live"
-        ? liveSession.adapter()
-        : createDemoAdapter(window.localStorage);
+      mode === "live" ? liveSession.adapter() : liveSession.demo();
     setApi(adapter);
     return adapter;
   };
@@ -196,6 +200,7 @@ export function Application() {
   if (!session)
     return (
       <Login
+        liveConfigured={liveConfigured}
         enter={enter}
         onLive={async (email, password) => {
           const live = chooseMode("live");
@@ -208,21 +213,23 @@ export function Application() {
   const allowed =
     pathname === homes[session.role] ||
     pathname.startsWith(`${homes[session.role]}/`);
-  const detailTitle = pathname.startsWith("/patient/doctors/")
-    ? "Doctor profile"
-    : pathname.startsWith("/patient/clinics/")
-      ? "Clinic & location"
-      : pathname.startsWith("/patient/appointments/")
-        ? "Your appointment"
-        : pathname.startsWith("/doctor/appointments/")
-          ? "Patient appointment"
-          : pathname.startsWith("/doctor/consultation/")
-            ? "Consultation workspace"
-            : pathname.endsWith("/settings")
-              ? "Profile & settings"
-              : pathname === "/patient/history"
-                ? "Consultations & history"
-                : "Care workspace";
+  const detailTitle = pathname.endsWith("/summaries")
+    ? "Released visit summaries"
+    : pathname.startsWith("/patient/doctors/")
+      ? "Doctor profile"
+      : pathname.startsWith("/patient/clinics/")
+        ? "Clinic & location"
+        : pathname.startsWith("/patient/appointments/")
+          ? "Your appointment"
+          : pathname.startsWith("/doctor/appointments/")
+            ? "Patient appointment"
+            : pathname.startsWith("/doctor/consultation/")
+              ? "Consultation workspace"
+              : pathname.endsWith("/settings")
+                ? "Profile & settings"
+                : pathname === "/patient/history"
+                  ? "Consultations & history"
+                  : "Care workspace";
   const page =
     navigation[session.role].find((n) => n[0] === pathname)?.[1] ?? detailTitle;
   return (
@@ -252,6 +259,9 @@ export function Application() {
       <aside
         id="workspace-navigation"
         ref={sidebar}
+        role={compact && mobile ? "dialog" : undefined}
+        aria-modal={compact && mobile ? true : undefined}
+        aria-label={compact && mobile ? t("Main navigation") : undefined}
         inert={compact && !mobile}
         className={`sidebar ${mobile ? "open" : ""}`}
       >
@@ -274,6 +284,13 @@ export function Application() {
         </div>
         <nav aria-label={t("Main navigation")}>
           {navigation[session.role]
+            .filter(
+              ([href]) =>
+                !(
+                  api.mode === "live" &&
+                  ["/patient/medications", "/patient/laboratory"].includes(href)
+                ),
+            )
             .concat(
               api.mode === "live"
                 ? session.role === "CLINICIAN"
@@ -295,18 +312,30 @@ export function Application() {
                     : []
                 : [],
             )
-            .map(([href, label, icon]) => (
-              <Link
-                key={href}
-                href={href}
-                aria-current={pathname === href ? "page" : undefined}
-                className={pathname === href ? "active" : ""}
-              >
-                <Icon name={icon} />
-                <span>{t(label)}</span>
-                {pathname === href && <span className="nav-dot" />}
-              </Link>
-            ))}
+            .map(([href, label, icon]) => {
+              const active =
+                pathname === href ||
+                (href !== homes[session.role] &&
+                  pathname.startsWith(`${href}/`)) ||
+                (href === "/patient/discover" &&
+                  /^\/patient\/(doctors|clinics)\//.test(pathname)) ||
+                (href === "/patient/record" &&
+                  pathname === "/patient/history") ||
+                (href === "/doctor/schedule" &&
+                  /^\/doctor\/(appointments|consultation)\//.test(pathname));
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={active ? "active" : ""}
+                >
+                  <Icon name={icon} />
+                  <span>{t(label)}</span>
+                  {active && <span className="nav-dot" />}
+                </Link>
+              );
+            })}
         </nav>
         <div className="sidebar-bottom">
           <div className="care-note">
@@ -475,9 +504,11 @@ export function Application() {
 function Login({
   enter,
   onLive,
+  liveConfigured,
 }: {
   enter: (role: Role) => Promise<void>;
   onLive: (email: string, password: string) => Promise<void>;
+  liveConfigured: boolean;
 }) {
   const { t } = useLocale();
 
@@ -541,56 +572,72 @@ function Login({
           <p className="muted">
             {t("Sign in to continue your healthcare journey.")}
           </p>
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              setPending(true);
-              setError("");
-              try {
-                await onLive(email, password);
-              } catch (e) {
-                setError(safeErrorMessage(e));
-              } finally {
-                setPending(false);
-              }
-            }}
-          >
-            <Field label={t("Email address")}>
-              <input
-                type="email"
-                autoComplete="username"
-                required
-                placeholder={t("you@example.com")}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Field>
-            <Field label={t("Password")}>
-              <input
-                type="password"
-                autoComplete="current-password"
-                required
-                minLength={1}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder={t("Enter your password")}
-              />
-            </Field>
-            {error && (
-              <p className="form-error" role="alert">
-                {t(error)}
-              </p>
-            )}
-            <button className="button primary full" disabled={pending}>
-              {pending ? t("Signing in…") : t("Sign in with live account")}
-              <Icon name="arrow" size={18} />
-            </button>
-          </form>
+          <div className="entry-mode-note">
+            <Icon name="shield" size={18} />
+            <p>
+              {t(
+                liveConfigured
+                  ? "Live uses the connected backend. Demo is a separate synthetic journey in this browser."
+                  : "This preview offers the browser-only demo. Live sign-in is unavailable until a backend is connected.",
+              )}
+            </p>
+          </div>
+          {liveConfigured && (
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                setPending(true);
+                setError("");
+                try {
+                  await onLive(email, password);
+                } catch (e) {
+                  setError(safeErrorMessage(e));
+                } finally {
+                  setPending(false);
+                }
+              }}
+            >
+              <Field label={t("Email address")}>
+                <input
+                  type="email"
+                  autoComplete="username"
+                  dir="ltr"
+                  autoCapitalize="none"
+                  spellCheck={false}
+                  required
+                  placeholder={t("you@example.com")}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Field>
+              <Field label={t("Password")}>
+                <input
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  minLength={1}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder={t("Enter your password")}
+                />
+              </Field>
+              {error && (
+                <p className="form-error" role="alert">
+                  {t(error)}
+                </p>
+              )}
+              <button className="button primary full" disabled={pending}>
+                {pending ? t("Signing in…") : t("Sign in with live account")}
+                <Icon name="arrow" size={18} />
+              </button>
+            </form>
+          )}
           <div className="divider">
             <span>{t("Here for the presentation?")}</span>
           </div>
           <button
             className="button demo-button full"
+            disabled={pending}
             onClick={() => {
               void enter("PATIENT");
             }}
@@ -602,6 +649,7 @@ function Login({
             {roles.slice(1).map((r) => (
               <button
                 key={r.role}
+                disabled={pending}
                 onClick={() => {
                   void enter(r.role);
                 }}
