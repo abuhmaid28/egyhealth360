@@ -490,9 +490,11 @@ test("late pre-restriction read cannot deny or clear mappings from a fresh read"
 });
 test("author document and history pagination use only bounded actual query fields", async () => {
   const paths = [];
+  let unavailable = false;
   const api = createLiveDocumentationApi(
     async (path) => {
       paths.push(path);
+      if (unavailable) throw documentationHttpError(503);
       return path.includes(root)
         ? { data: doc() }
         : {
@@ -509,4 +511,8 @@ test("author document and history pagination use only bounded actual query field
     `/consultations/${consultation}/documents/${root}?page=3&pageSize=20`,
   ]);
   assert.deepEqual(service.paging(), { documents: 2, history: 3 });
+  unavailable = true;
+  const related = api.forPatient(id());
+  await assert.rejects(related.released(), (e) => e.code === "read");
+  assert.deepEqual(related.paging(), { documents: 1, history: 1 });
 });

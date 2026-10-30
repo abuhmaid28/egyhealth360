@@ -509,6 +509,8 @@ export function createLiveDocumentationApi(
         }
       },
       async released(page = 1, historyPage = 1): Promise<ReleasedSummary[]> {
+        // A failed refresh must not retain earlier permitted-page metadata.
+        pages = { documents: 1, history: 1 };
         const g = generation,
           serial = ++readSerial;
         const result = await collection(
