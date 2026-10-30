@@ -5,11 +5,8 @@ import Link from "next/link";
 import { useState } from "react";
 import type { Consultation } from "../lib/api/contracts";
 import { useApp } from "./context";
-import {
-  LiveBookingList,
-  LiveBookingDetail,
-  BookingBoundary,
-} from "./live-booking";
+import { LiveBookingList, LiveBookingDetail } from "./live-booking";
+import { LiveConsultationShell } from "./consultation-opening";
 import { DemoContinuation } from "./journey";
 import { DoctorAvailability } from "./availability";
 import { AppointmentRow, Stat } from "./patient";
@@ -41,17 +38,7 @@ export function DoctorScreen({ path }: { path: string }) {
   if (api.mode === "live" && path.startsWith("/doctor/appointments/"))
     return <LiveBookingDetail clinician id={path.split("/")[3]} />;
   if (api.mode === "live" && path.startsWith("/doctor/consultation/"))
-    return (
-      <>
-        <Heading
-          title={t("Consultation workspace")}
-          description={t(
-            "Clinical consultation is not integrated in Live mode.",
-          )}
-        />
-        <BookingBoundary />
-      </>
-    );
+    return <LiveConsultationShell bookingId={path.split("/")[3]} />;
   if (path === "/doctor" || path === "/doctor/schedule")
     return <Schedule dashboard={path === "/doctor"} />;
   if (path === "/doctor/availability") return <DoctorAvailability />;

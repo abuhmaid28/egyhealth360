@@ -1,4 +1,5 @@
 export const ar: Record<string, string> = {
+  Close: "إغلاق",
   "A clear view of your day": "نظرة واضحة على يومك",
   "A clearer picture of their care.": "وصورة أوضح لرعايتهم.",
   "A connected care experience": "تجربة رعاية مترابطة",
@@ -806,4 +807,59 @@ export const ar: Record<string, string> = {
     "تعذر قبول طلب الحجز. حدّث الصفحة وحاول مجددًا.",
   "The booking service is unavailable. Your request may not have completed. Retry the unchanged command to check its outcome.":
     "خدمة الحجز غير متاحة. ربما لم يكتمل طلبك. أعد محاولة الإجراء نفسه دون تغيير للتحقق من نتيجته.",
+  "Booking is not consent or a clinical relationship. Opening requires an existing active patient relationship and current clinician and clinic authority. Clinical documentation remains separate in Demo Mode.":
+    "الحجز ليس موافقة أو علاقة رعاية. يتطلب فتح الاستشارة علاقة رعاية نشطة قائمة وصلاحيات حالية للطبيب والعيادة. يبقى التوثيق السريري منفصلاً في الوضع التجريبي.",
+  "Opening may be eligible": "قد يكون فتح الاستشارة متاحاً",
+  "Upcoming visit": "زيارة قادمة",
+  "Consultation opening": "فتح الاستشارة",
+  "Consultation can be opened when the scheduled visit begins. The server checks the actual time and current authority.":
+    "يمكن فتح الاستشارة عند بدء الموعد المحدد. يتحقق الخادم من الوقت الفعلي والصلاحيات الحالية.",
+  "This operational state does not allow consultation opening. Cancelled, rescheduled and no-show visits cannot be opened.":
+    "لا تسمح حالة الحجز الحالية بفتح الاستشارة. لا يمكن فتح الزيارات الملغاة أو المعاد جدولتها أو المسجلة كعدم حضور.",
+  "The scheduled time has arrived. An active patient relationship and current clinician and clinic authority must still be verified by the server.":
+    "حان وقت الموعد. يجب أن يتحقق الخادم أيضاً من علاقة رعاية نشطة وصلاحيات الطبيب والعيادة الحالية.",
+  "Consultation opened": "تم فتح الاستشارة",
+  "The opening was confirmed by the server. Clinical documentation is not available in Live mode.":
+    "أكد الخادم فتح الاستشارة. التوثيق السريري غير متاح في الوضع المتصل.",
+  "View opening details": "عرض تفاصيل فتح الاستشارة",
+  "Start consultation": "بدء الاستشارة",
+  "Live consultation opening": "فتح الاستشارة المتصلة",
+  "Open this scheduled visit?": "فتح هذه الزيارة المجدولة؟",
+  "This explicit action asks the server to open this exact booking. It does not create a patient relationship or save clinical documentation.":
+    "يطلب هذا الإجراء الصريح من الخادم فتح هذا الحجز تحديداً. ولا ينشئ علاقة رعاية أو يحفظ توثيقاً سريرياً.",
+  "Opening the consultation… Keep this visit open while the server confirms the outcome.":
+    "جارٍ فتح الاستشارة… أبقِ هذه الزيارة مفتوحة حتى يؤكد الخادم النتيجة.",
+  "Access may be unavailable because a current relationship or clinician or clinic eligibility is missing. No relationship is created by retrying.":
+    "قد يتعذر الوصول لعدم وجود علاقة رعاية حالية أو أهلية الطبيب أو العيادة. إعادة المحاولة لا تنشئ علاقة رعاية.",
+  "Opening…": "جارٍ الفتح…",
+  "Retry unchanged opening": "إعادة محاولة فتح الاستشارة بنفس الطلب",
+  "Confirm opening": "تأكيد فتح الاستشارة",
+  "Opening status": "حالة فتح الاستشارة",
+  "Opening confirmed": "تم تأكيد فتح الاستشارة",
+  "Actual opening time, confirmed by the server":
+    "وقت الفتح الفعلي المؤكد من الخادم",
+  "Opening metadata is not retained after a page reload. Return to the booking to check its current server state. No clinical data is loaded here.":
+    "لا تُحتفظ ببيانات فتح الاستشارة بعد إعادة تحميل الصفحة. ارجع إلى الحجز للتحقق من حالته الحالية لدى الخادم. لا يتم تحميل بيانات سريرية هنا.",
+  "Scheduled visit": "الزيارة المجدولة",
+  "Return to booking": "العودة إلى الحجز",
+  "Clinical documentation is separate": "التوثيق السريري منفصل",
+  "Complaint, assessment, allergies, private notes, patient instructions, prescriptions, tests and clinical follow-up are not enabled for this Live consultation.":
+    "الشكوى والتقييم والحساسية والملاحظات الخاصة وتعليمات المريض والوصفات والفحوصات والمتابعة السريرية غير مفعلة لهذه الاستشارة المتصلة.",
+  "The graduation Demo workspace remains a separate synthetic experience. Opening a real visit never copies Demo clinical content into it.":
+    "تبقى مساحة عرض التخرج التجريبية تجربة منفصلة ببيانات مصطنعة. لا يؤدي فتح زيارة فعلية إلى نسخ محتوى سريري تجريبي إليها.",
+  "Scheduled consultation": "الاستشارة المجدولة",
+  "Opening metadata only. Clinical documentation is not available in Live mode.":
+    "بيانات فتح الاستشارة فقط. التوثيق السريري غير متاح في الوضع المتصل.",
+  "The opening request could not be accepted. Refresh the booking before trying again.":
+    "تعذر قبول طلب فتح الاستشارة. حدّث الحجز قبل إعادة المحاولة.",
+  "Consultation opening is unavailable for your current access. An active patient relationship and current clinician and clinic authority are required. Booking alone grants none of these permissions.":
+    "فتح الاستشارة غير متاح بصلاحياتك الحالية. يلزم وجود علاقة رعاية نشطة وصلاحيات حالية للطبيب والعيادة. الحجز وحده لا يمنح أياً من هذه الصلاحيات.",
+  "The booking or opening command changed. Refresh the booking to see its current state before trying again.":
+    "تغير الحجز أو طلب فتح الاستشارة. حدّث الحجز لعرض حالته الحالية قبل إعادة المحاولة.",
+  "The opening service is unavailable. The outcome is uncertain. Retry the unchanged opening command to check its outcome; do not start another visit.":
+    "خدمة فتح الاستشارة غير متاحة والنتيجة غير مؤكدة. أعد المحاولة بنفس طلب الفتح للتحقق من نتيجته؛ لا تبدأ زيارة أخرى.",
+  "Consultation opening is unavailable. Refresh the booking before trying again.":
+    "فتح الاستشارة غير متاح. حدّث الحجز قبل إعادة المحاولة.",
+  "Booking is logistics only. It grants no access to medical records. Consultation opening requires a separate current clinical relationship. Clinical documentation, prescriptions, tests and clinical follow-up remain Demo-only.":
+    "الحجز إجراء تنظيمي فقط ولا يمنح صلاحية الاطلاع على السجل الطبي. يتطلب فتح الاستشارة علاقة رعاية حالية مستقلة. يبقى التوثيق السريري والوصفات والفحوصات والمتابعة السريرية في الوضع التجريبي فقط.",
 };

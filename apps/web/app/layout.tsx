@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import "./globals.css";
+import { LiveSessionProvider } from "../src/components/live-session";
 import { LocaleProvider } from "../src/lib/i18n/context";
 export const metadata = {
   title: "EgyHealth 360 · Your care, connected",
@@ -10,7 +11,9 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <LocaleProvider>{children}</LocaleProvider>
+        <LocaleProvider>
+          <LiveSessionProvider>{children}</LiveSessionProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

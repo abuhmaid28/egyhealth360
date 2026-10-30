@@ -2,7 +2,11 @@
 
 Branch: `feat/v3-ui-demo-shell`. Scope: [Issue #51](https://github.com/abuhmaid28/egyhealth360/issues/51), Product Owner's explicit 27 October 2026 session authorization. Starts from verified main `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`, [push/main Bootstrap SUCCESS](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675). This unfreezes only the graduation frontend. PR #50, backend implementation, OpenAPI, schemas, migrations, seeds, clinical rules and backend governance are unchanged. This candidate is for review, not automatic merge or real-patient deployment.
 
-## Current integration — PR #55
+## Current integration — PR #57
+
+[UI Phase 4](V3_UI_PHASE4_CONSULTATION_OPENING.md) integrates independently merged Slice 4 **Consultation Opening only** under an existing current clinical relationship. Normal Live mode sends the merged opening command and shows safe metadata. Clinical documentation and later workflows remain Demo-only; Booking grants zero clinical authority. Review readiness remains gated on required successful CI.
+
+## Real Booking integration — PR #55
 
 [UI Phase 3 + Real Booking](V3_UI_REAL_BOOKING.md) integrates the independently merged Slice 3 APIs after a normal main merge. Live availability now leads to **Real Booking** with own history/detail/cancel/reschedule and exact clinician schedule/attendance/correction. The complete clinical Golden Demo remains separate and browser-only. Booking grants zero clinical authority. Older PR #52 evidence below records the earlier availability-only integration.
 

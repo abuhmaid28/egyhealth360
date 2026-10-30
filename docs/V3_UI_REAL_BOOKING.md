@@ -2,7 +2,11 @@
 
 Continuation authorization: [PR #55 comment 6483476451](https://github.com/abuhmaid28/egyhealth360/pull/55#issuecomment-6483476451). Existing branch `feat/v3-ui-phase3-polish`; old reviewed UI head `27e67efe55ca37d1d46ef79d894dcb7f83ad70e0`. Normally merged main `46b3db47ad52ec9d4e703b9e7be66a1826475cdf` (independently merged backend PR #53) in merge commit `d2e4359563e9af8ffc0055dba2f5789e26f63fd7`. No conflicts, rebase, force-push, new PR or merge to main. Backend/OpenAPI/schema/migration/security-policy changes are inherited unchanged from main.
 
-## Architecture and current boundary
+## Phase 4 continuation
+
+[PR #57 / UI Phase 4](V3_UI_PHASE4_CONSULTATION_OPENING.md) now integrates merged Slice 4 Consultation Opening through a separate current-relationship-gated Live capability. Booking grants zero clinical authority; clinical documentation remains Demo-only. The availability-only consultation boundary below records the PR #55 baseline, not the current Phase 4 capability. Required CI gates still control review readiness.
+
+## Architecture and PR #55 boundary
 
 `src/lib/api/live-booking.ts` defines the exact merged `Booking` logistics projection, safe error mapping, recursive response allowlists, command eligibility helpers and the Live Booking transport. `createLiveAdapter()` exposes this typed subtree as `liveBookings`, sharing the existing same-origin/no-store session and CSRF request function. `src/components/live-booking.tsx` renders reusable Live list/detail/review/action/reschedule screens. Demo appointment/consultation models remain separate: legacy demo-service methods are denied in Live mode rather than converting real bookings into clinical-shaped synthetic appointments.
 
