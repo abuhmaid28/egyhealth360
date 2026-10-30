@@ -137,4 +137,4 @@ See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLIC
 
 ## Slice 6 Follow-up Intent
 
-The exact new bounded routes, strict inputs, author/released projections, status and replay semantics are in [Slice 6](V3_I2_SLICE6.md) and [OpenAPI](openapi.json). Existing EH-012 routes remain unchanged. Clinical authority comes solely from current ClinicianPatientAssignment; Booking linkage grants none. CI integration remains pending.
+The exact new bounded routes, strict inputs, author/released projections, status and replay semantics are in [Slice 6](V3_I2_SLICE6.md) and [OpenAPI](openapi.json). Existing EH-012 routes remain unchanged. Clinical authority comes solely from current ClinicianPatientAssignment; Booking linkage grants none. The Slice 6 runtime verifier is wired into accelerated CI before smoke and cleanup.

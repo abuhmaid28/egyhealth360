@@ -1,5 +1,46 @@
 # V3-I2 Slice 6 — validation record
 
+## Finalization from the published checkpoint
+
+[Gate-open routing](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6532727912)
+confirms exact-main `4cb20b39370e5317eba14c4916517b6ae88c12e5` and Bootstrap
+41118583027 SUCCESS (static-browser 124279122840, postgres 124279122928,
+docker-runtime 124279123200, aggregate validate 124286464674).
+Fetched origin and resumed the existing branch at
+`6d355660cd80f5ddb3042ea2250a5d61ad4a8a70`; normal merge
+`1786cb43b0dc9d3740628f6eb3d9793c6ac2875c` has ordered parents checkpoint,
+then exact-main above. No conflicts; no production compatibility changes.
+
+The sole new runtime/CI change is the required intent verifier immediately after
+consultation-documentation and before smoke/cleanup in `docker-runtime`. Removing
+that line restores the exact main workflow bytes, including all existing gates
+and the fail-closed aggregate. All eighteen historical SQL files and migration
+lockfile are byte-identical; exact stripping restores the main OpenAPI bytes.
+Frontend, dependencies, Dockerfile and Compose files match main exactly.
+
+Newly executed on the reconciled tree with Node 24.21.0 / pnpm 10.34.6:
+frozen install, generate, lint, Prisma validation, build, typecheck and **253/253
+unit tests PASS**, zero failures/skips/cancellations; both HIGH audits PASS with
+0 HIGH/CRITICAL (retained 2 LOW / 3 MODERATE). The increased unit count includes
+the inherited main UI documentation regressions. Local intent runtime **23/23
+PASS** with real HTTP/database clock and no authority or time bypass.
+
+The executor has an 8 GB filesystem and Docker uses vfs. A local Docker image
+build exhausted disk space and interrupted the first migration/browser attempts;
+those attempts are failures, not passes. Task-created build cache was removed and
+only this task's disposable PostgreSQL volume was recreated before rerunning.
+Full local migration/integration and controlled/real browser reruns continue;
+Docker runtime, smoke and unconditional cleanup require exact-head Bootstrap.
+The PR body records the final executed results and exact run/job identities, and
+is authoritative for that later evidence. No historical result below is claimed
+as a new CI run. No CI gate is weakened or bypassed for the executor limitation.
+
+**DO NOT MERGE.** Leave the single Slice 6 PR OPEN / UNMERGED, auto-merge disabled.
+Independent exact-head review remains required; I2 overall is INCOMPLETE, Slice 7
+and I3 NOT AUTHORIZED, EACCE NOT STARTED. No merge/deployment authorization.
+
+## Original checkpoint evidence (retained historical record)
+
 Baseline: `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`.
 Exact authorized main Bootstrap 41008236990 / validate 123907937943 was verified
 COMPLETED / SUCCESS before source changes. That is baseline evidence, not Slice 6 CI.
@@ -71,7 +112,7 @@ semantics. A second-pass Intl/PostgreSQL timezone catalog mismatch now returns a
 focused HTTP/rollback suite is 4/4 PASS. No product semantics were weakened to make
 tests pass.
 
-## Final local gates and Lane A boundary
+## Original local gates and then-applicable Lane A boundary
 
 The first full integration invocation was intentionally interrupted to run the
 complete current file set with local `--test-concurrency=4` on the two-core executor.
@@ -113,9 +154,10 @@ check-time guarantee, not recall of responses. Empty first link history is valid
 unlinked intent; exhausted detail pages return scoped 404. Historical replay retains
 result ceilings while reflecting current booking state/effectivity and privacy.
 
-## Changed files
+## Original checkpoint changed files
 
-39 files; no frontend, dependency, workflow or historical SQL edits.
+The checkpoint contained 39 files; finalization adds `.github/workflows/ci.yml`
+for 40 total. No frontend, dependency or historical SQL edits.
 
 - `AGENTS.md`
 - `apps/api/src/app.ts`

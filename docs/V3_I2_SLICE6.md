@@ -1,9 +1,14 @@
 # V3-I2 Slice 6 — Follow-up Intent
 
-Status: production implementation and local verification IMPLEMENTED; PAUSED at the
-explicit Lane A CI integration gate. No Slice 6 exact-head Bootstrap or PR claim.
-Checkpoints 1–4 published (`4e868c7`, `fb67fa5`, `2d3dd61`, `6b0becb`);
-compatibility refinement `3d3ca44`. No merge authorized.
+Status: IMPLEMENTED / IN REVIEW. The prior Lane A stop condition is resolved by
+[Control Center confirmation](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6532727912):
+exact-main `4cb20b39370e5317eba14c4916517b6ae88c12e5`, Bootstrap 41118583027,
+all four jobs COMPLETED / SUCCESS. Existing published checkpoint
+`6d355660cd80f5ddb3042ea2250a5d61ad4a8a70` was resumed, then main normally merged
+at `1786cb43b0dc9d3740628f6eb3d9793c6ac2875c` with both ordered parents retained.
+No conflicts or production compatibility edits were needed. Independent review and
+exact-head Bootstrap remain release gates. DO NOT MERGE; no auto-merge authorized.
+Original implementation baseline and checkpoint evidence follow.
 Baseline `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`. Exact-main Bootstrap
 41008236990 / validate 123907937943 COMPLETED / SUCCESS verified through GitHub.
 [Preload](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6515751851)
@@ -146,10 +151,12 @@ rollback key reuse and no retry. EH-012 cross-table/API regression and no CareAc
 EACCE bridge. Fresh deploy/status/redeploy and populated 18→19 preservation of all
 43 tables and old ledger; ordinary SQL bypass/immutability tests.
 
-CI `.github/workflows/ci.yml` belongs to Lane A and is untouched. Planned command:
-`docker compose exec -T api node scripts/verify-follow-up-intent-runtime.mjs`.
-After Control Center confirms Lane A merge, normally merge main and wire into its
-accelerated architecture, then full exact-head Bootstrap. No duplicate CI rewrite.
+The inherited accelerated `.github/workflows/ci.yml` now runs
+`docker compose exec -T api node scripts/verify-follow-up-intent-runtime.mjs`
+in `docker-runtime` immediately after consultation-documentation verification,
+before web/API smoke and unconditional cleanup. All prior workflow bytes remain
+unchanged after removing that single added command; all three lane results remain
+required by the aggregate `validate` gate. No CI rewrite or bypass.
 
 Follow-up Intent ≠ Booking ≠ historical FollowUpAppointment. Intent is not CareAction
 completion or EACCE. Booking clinical authority ZERO. No frontend, I3, EACCE,
