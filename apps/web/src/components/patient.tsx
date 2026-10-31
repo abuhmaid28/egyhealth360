@@ -1,4 +1,5 @@
 "use client";
+import { PatientFollowUps } from "./follow-up-intents";
 import { ReleasedSummariesScreen } from "./documentation";
 import { createUnavailableDocumentation } from "../lib/clinical/documentation";
 import { safeErrorMessage } from "../lib/api/errors";
@@ -56,6 +57,8 @@ export function PatientScreen({ path }: { path: string }) {
         service={api.documentation ?? createUnavailableDocumentation()}
       />
     );
+  if (api.mode === "live" && path === "/patient/follow-up")
+    return <PatientFollowUps />;
   if (path === "/patient") return <Dashboard />;
   if (path === "/patient/discover") return <Discovery />;
   if (path.startsWith("/patient/doctors/"))
@@ -1180,6 +1183,11 @@ function RecordScreen({ section }: { section: string }) {
             </Link>
           ))}
       </div>
+      {api.mode === "live" && (
+        <Link className="button secondary" href="/patient/follow-up">
+          {t("Read released follow-up instructions")}
+        </Link>
+      )}
       <Resource resource={record} preview={preview}>
         {(r) => {
           const visits = r.consultations.slice().reverse();
@@ -1190,7 +1198,7 @@ function RecordScreen({ section }: { section: string }) {
                   <Icon name="shield" />
                   <p>
                     {t(
-                      "Measurements and HTN records appear below. Signed consultation summaries are available in Released visit summaries. Prescriptions, laboratory fulfillment and general follow-up intentions remain Demo-only.",
+                      "Measurements and HTN records appear below. Signed consultation summaries are available in Released visit summaries. Released follow-up instructions are available in Follow-up. Prescriptions and laboratory fulfillment remain Demo-only.",
                     )}
                   </p>
                 </Card>

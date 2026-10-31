@@ -1,5 +1,7 @@
 # Graduation UI / live delivery accelerator
 
+Current frontend continuation: [Live Follow-up Intent integration](V3_UI_FOLLOW_UP_INTENT_LIVE.md) adds merged Slice 6 draft/review/release/correction and patient released reading under authorization 6536467435. Its bounded scope supersedes older follow-up Demo-only statements below; historical evidence retains its meaning.
+
 Bounded frontend work for [Issue #51](https://github.com/abuhmaid28/egyhealth360/issues/51). Exact base: `4cb20b39370e5317eba14c4916517b6ae88c12e5`; branch: `feat/v3-ui-live-accelerator`. Base [Bootstrap 41118583027](https://github.com/abuhmaid28/egyhealth360/actions/runs/41118583027) was verified completed/success, push/main, at that exact SHA. Leave the resulting PR OPEN / UNMERGED with no auto-merge.
 
 ## Assessment and changes

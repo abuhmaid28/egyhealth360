@@ -1,3 +1,4 @@
+import { testRealFollowUps } from "./ui-follow-up-intents-real.mjs";
 /** Synthetic actual Browser → Next → Nest → PostgreSQL proof. No route mocks.
  * Reuses the approved past-booking fixture with every DB guard restored. */
 import assert from "node:assert/strict";
@@ -441,6 +442,7 @@ export async function testRealDocumentation(browser, page, f, fault) {
     ).status,
     200,
   );
+  await testRealFollowUps(browser, page, f, fault, c.id, login);
   await page
     .getByRole("button", {
       name: "Restrict wrong-patient document",
@@ -507,6 +509,27 @@ export async function testRealDocumentation(browser, page, f, fault) {
   await page
     .getByText(
       "Clinical documentation is unavailable for your current access. A current clinical relationship and clinician authority are required.",
+      { exact: true },
+    )
+    .waitFor();
+  assert.equal(
+    await page.locator("#live-documentation").getByRole("textbox").count(),
+    0,
+  );
+  // The independent follow-up scope also reauthorizes on its next command.
+  const followUp = page.getByRole("region", {
+    name: "Follow-up instructions",
+    exact: true,
+  });
+  await followUp
+    .getByLabel("Clinician instruction", { exact: true })
+    .fill("Transient follow-up must clear on denial");
+  await followUp
+    .getByRole("button", { name: "Save follow-up draft", exact: true })
+    .click();
+  await followUp
+    .getByText(
+      "Follow-up instructions are unavailable for your current access. Refresh your session before continuing.",
       { exact: true },
     )
     .waitFor();

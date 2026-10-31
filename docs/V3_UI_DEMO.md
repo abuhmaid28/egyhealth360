@@ -1,5 +1,7 @@
 # V3 graduation UI candidate
 
+Current frontend continuation: [Live Follow-up Intent integration](V3_UI_FOLLOW_UP_INTENT_LIVE.md) adds merged Slice 6 draft/review/release/correction and patient released reading under authorization 6536467435. Its bounded scope supersedes older follow-up Demo-only statements below; historical evidence retains its meaning.
+
 Current frontend follow-on: [UI / Live delivery accelerator](V3_UI_LIVE_ACCELERATOR.md), based on verified main `4cb20b39370e5317eba14c4916517b6ae88c12e5`. PR #59 merged at `b97bd990644aef1e0de77098b139597adb2fbf0f`; older OPEN/UNMERGED statements below are historical review snapshots. Backend scope is unchanged.
 
 Current bounded follow-on: [UI Phase 5 Stage B clinical documentation](V3_UI_PHASE5_DOCUMENTATION.md) integrates the merged real Slice 5 document/private-signing/explicit-summary-release/amendment/restriction and released-reader routes. Actual Browser → Next → Nest → PostgreSQL proof supplements the separate controlled presentation workspace. Existing Live Booking/Opening and Graduation Demo remain separate. PR #59 is OPEN / UNMERGED; DO NOT MERGE.
