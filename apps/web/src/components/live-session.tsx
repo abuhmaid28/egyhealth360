@@ -43,6 +43,7 @@ export function LiveSessionProvider({ children }: { children: ReactNode }) {
         current.current?.followUpIntents?.clear();
         current.current?.liveBookings?.clearCommands();
         current.current?.consultationOpening?.clear();
+        current.current?.consultationClose?.clear();
         current.current = undefined;
       },
     }),

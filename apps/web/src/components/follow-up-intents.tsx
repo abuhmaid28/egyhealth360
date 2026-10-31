@@ -309,6 +309,7 @@ function IntentCard({
                 RESCHEDULED: "Rescheduled",
                 NO_SHOW: "No-show",
                 IN_CONSULTATION: "In consultation",
+                CONSULTED: "Consulted",
               }[intent.booking.state],
             )}
           </Badge>

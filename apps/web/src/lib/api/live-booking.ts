@@ -7,7 +7,8 @@ export type BookingState =
   | "CANCELLED"
   | "RESCHEDULED"
   | "NO_SHOW"
-  | "IN_CONSULTATION";
+  | "IN_CONSULTATION"
+  | "CONSULTED";
 export type Observation = "ATTENDED" | "NO_SHOW";
 export interface LiveBooking {
   id: string;
@@ -26,8 +27,8 @@ export interface LiveBooking {
   attendance: "UNKNOWN" | Observation;
   transitions: {
     id: string;
-    command: "CREATE" | "CANCEL" | "RESCHEDULE" | "ATTEND" | "CORRECT" | "OPEN";
-    fromState: "BOOKED" | "NO_SHOW" | null;
+    command: "CREATE" | "CANCEL" | "RESCHEDULE" | "ATTEND" | "CORRECT" | "OPEN" | "CLOSE";
+    fromState: "BOOKED" | "NO_SHOW" | "IN_CONSULTATION" | null;
     toState: BookingState;
     recordedAt: string;
   }[];
@@ -102,6 +103,7 @@ const state = (value: unknown) =>
     "RESCHEDULED",
     "NO_SHOW",
     "IN_CONSULTATION",
+    "CONSULTED",
   ] as const);
 const observation = (value: unknown) =>
   oneOf(value, ["ATTENDED", "NO_SHOW"] as const);
@@ -154,11 +156,12 @@ export function projectBooking(value: unknown): LiveBooking {
           "ATTEND",
           "CORRECT",
           "OPEN",
+          "CLOSE",
         ] as const),
         fromState:
           e.fromState === null
             ? null
-            : oneOf(e.fromState, ["BOOKED", "NO_SHOW"] as const),
+            : oneOf(e.fromState, ["BOOKED", "NO_SHOW", "IN_CONSULTATION"] as const),
         toState: state(e.toState),
         recordedAt: timestamp(e.recordedAt),
       };

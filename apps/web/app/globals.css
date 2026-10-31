@@ -3337,3 +3337,15 @@ textarea {
 .follow-up-dialog { width: 680px; }
 .follow-up-workspace .checkbox-label, .follow-up-dialog .checkbox-label { display: flex; align-items: center; gap: 10px; min-height: 44px; }
 .follow-up-workspace .checkbox-label input, .follow-up-dialog .checkbox-label input { width: 18px; height: 18px; flex-shrink: 0; }
+
+/* Final consultation review keeps the clinical workspace's calm visual hierarchy. */
+.consultation-close-card { border-inline-start: 4px solid var(--teal); }
+.close-result:focus { outline: 2px solid var(--teal); outline-offset: 6px; }
+.close-boundaries { padding-inline-start: 1.3rem; color: var(--muted); line-height: 1.7; }
+.close-review-facts { display: grid; gap: .75rem; margin-block: 1rem; }
+.close-review-facts > div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; padding-block-end: .75rem; border-block-end: 1px solid var(--line); }
+.close-review-facts dt { font-weight: 600; }
+.close-review-facts dd { margin: 0; color: var(--muted); }
+.close-ack { display: flex; align-items: flex-start; gap: .75rem; margin-block: 1.2rem; line-height: 1.6; cursor: pointer; }
+.close-ack input { flex: 0 0 auto; width: 1.1rem; height: 1.1rem; margin-block-start: .25rem; }
+.close-review-modal { width: 640px; max-width: calc(100vw - 32px); overflow-wrap: anywhere; }

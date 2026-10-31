@@ -43,9 +43,9 @@ export async function testDocumentation(browser, liveOrigin, shots) {
     liveOrigin +
       "/doctor/consultation/00000000-0000-4000-8000-000000000001/documentation?fixture=controlled",
   );
-  await live.getByText("Open this consultation in the current session before documenting. Opening context is not retained after a full reload.", { exact: true }).waitFor();
+  await live.getByText("Consultation context could not be refreshed. Check your current access and try again.", { exact: true }).waitFor();
   assert.equal(await live.getByRole("textbox").count(), 0);
-  assert.ok(liveCalls.every(call => call.path === "/api/v1/auth/me" && call.method === "GET"), "flag injection cannot create opening context or activate fixtures");
+  assert.ok(liveCalls.every(call => (call.path === "/api/v1/auth/me" || call.path.endsWith("/consultation")) && call.method === "GET"), "flag injection cannot create opening context or activate fixtures");
   assert.equal(
     await live.evaluate(() =>
       globalThis.localStorage.getItem("eh360-ui-demo-v1"),

@@ -62,13 +62,13 @@ export function bookingRequestBoundary(auth: AuthRuntime) {
                 throw invalid();
             if (path !== normalized || path.includes('%') || (!collection && !schedule && !detail && !match))
                 throw authError(404, 'BOOKING_NOT_FOUND', 'Not found.');
-            const methods = collection ? ['GET', 'HEAD', 'POST'] : match ? (match[1] === 'consultation' ? ['POST'] : ['PUT']) : ['GET', 'HEAD'];
+            const methods = collection ? ['GET', 'HEAD', 'POST'] : match ? (match[1] === 'consultation' ? ['GET', 'HEAD', 'POST'] : ['PUT']) : ['GET', 'HEAD'];
             if (!methods.includes(q.method ?? '')) {
                 s.setHeader('Allow', methods.join(', '));
                 throw authError(405, 'METHOD_NOT_ALLOWED', 'Method not allowed.');
             }
             if (q.method === 'GET' || q.method === 'HEAD') {
-                if (q.headers['transfer-encoding'] !== undefined || Number(q.headers['content-length'] ?? 0) > 0 || detail && raw.includes('?'))
+                if (q.headers['transfer-encoding'] !== undefined || Number(q.headers['content-length'] ?? 0) > 0 || (detail || match) && raw.includes('?'))
                     throw invalid();
                 parseAvailabilityQuery(raw, false);
                 return next();
@@ -152,6 +152,14 @@ export function bookingController(auth: AuthRuntime, store: BookingPersistence, 
         q: Request,
         @Res()
         s: ServerResponse) { return invoke(q, s, async () => ({ data: await store.create(q.principal!, q.body) })); }
+        @Get('me/bookings/:bookingId/consultation')
+        @UseGuards(session)
+        context(@Req() q: Request, @Res() s: ServerResponse, @Param('bookingId') id: string) {
+            return invoke(q, s, async () => {
+                if (!consultations) throw new BookingError('BOOKING_UNAVAILABLE');
+                return { data: await consultations.context(q.principal!, target(id)) };
+            });
+        }
         @Post('me/bookings/:bookingId/consultation')
         @UseGuards(session, csrf)
         open(@Req() q: Request, @Res() s: ServerResponse, @Param('bookingId') id: string) {

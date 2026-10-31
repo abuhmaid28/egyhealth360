@@ -182,6 +182,58 @@ export function createConsultationPersistence(connectionString: string | undefin
       return fail('BOOKING_UNAVAILABLE');
     } finally { tx?.release(); }
   }
-  return { open, closeConsultation, close: () => pool.end() };
+  /** Minimal booking-scoped context recovery for the treating clinician. No clinical
+   * content, patient identifiers, historical grant or command keys are projected.
+   * Reuses opening's current authority and lock order; performs zero writes. */
+  async function context(principal: AuthPrincipal, value: unknown) {
+    const bookingId = availabilityId(value), a = actor(principal);
+    let tx: pg.PoolClient | undefined;
+    try {
+      // Immutable scope lookup only; no authority retained from this statement.
+      const scope = (await pool.query<Scope>(`SELECT b.*,s.provider_id,s.membership_id,s.affiliation_id,p.specialty_id
+        FROM public.bookings b JOIN public.availability_slots s ON s.id=b.slot_id JOIN public.clinician_directory p ON p.id=s.provider_id WHERE b.id=$1`, [bookingId])).rows[0];
+      tx = await pool.connect();
+      await tx.query('BEGIN');
+      await tx.query("SET LOCAL transaction_timeout='30s'");
+      await tx.query("SET LOCAL lock_timeout='5s'");
+      await tx.query("SET LOCAL statement_timeout='10s'");
+      if (a.role === 'CLINICIAN') await tx.query('LOCK TABLE public.users,public.patient_profiles,public.clinician_profiles,public.clinician_patient_assignments IN ROW EXCLUSIVE MODE');
+      for (const id of [...new Set([a.userId, ...(scope ? [scope.patient_user_id, scope.clinician_user_id] : [])])].sort()) await tx.query('SELECT id FROM public.users WHERE id=$1 FOR NO KEY UPDATE', [id]);
+      await tx.query('SELECT id FROM public.sessions WHERE id=$1 FOR UPDATE', [a.sessionId]);
+      await current(tx, a);
+      if (a.role !== 'CLINICIAN' || !scope || scope.clinician_user_id !== a.userId) fail('BOOKING_NOT_FOUND');
+      const cp = (await tx.query("SELECT id FROM public.clinician_profiles WHERE id=$1 AND user_id=$2 AND user_role='CLINICIAN' FOR SHARE", [scope.clinician_id, a.userId])).rows[0];
+      if (!cp) fail('BOOKING_NOT_FOUND');
+      const grant = (await tx.query("SELECT id FROM public.clinician_patient_assignments WHERE clinician_id=$1 AND patient_id=$2 AND status='ACTIVE' AND ended_at IS NULL FOR SHARE", [cp.id, scope.patient_id])).rows[0];
+      if (!grant) fail('BOOKING_NOT_FOUND');
+      if (!(await tx.query("SELECT id FROM public.patient_profiles WHERE id=$1 AND user_id=$2 AND user_role='PATIENT' FOR SHARE", [scope.patient_id, scope.patient_user_id])).rowCount) fail('BOOKING_NOT_FOUND');
+      const stages = [['specialties', 'id', scope.specialty_id], ['organizations', 'id', scope.organization_id], ['clinic_directory', 'organization_id', scope.organization_id], ['organization_memberships', 'id', scope.membership_id], ['clinician_directory', 'id', scope.provider_id], ['directory_affiliations', 'id', scope.affiliation_id]];
+      for (const [table, column, id] of stages) await tx.query(`SELECT ${column} FROM public.${table} WHERE ${column}=$1 FOR SHARE`, [id]);
+      if (!(await tx.query('SELECT version FROM public.clinic_scheduling_settings WHERE organization_id=$1 ORDER BY version DESC LIMIT 1 FOR SHARE', [scope.organization_id])).rowCount) fail('BOOKING_NOT_FOUND');
+      await authority(tx, a, scope, grant.id);
+      await tx.query('SELECT id FROM public.bookings WHERE id=$1 FOR SHARE', [scope.id]);
+      const c = (await tx.query(`SELECT c.id,c.encounter_id,c.booking_id,c.state,c.version,
+        to_char(c.opened_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') opened_at,
+        to_char(c.closed_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') closed_at,
+        b.state booking_state,p.public_id provider,cd.public_id clinic
+        FROM public.consultations c JOIN public.bookings b ON b.id=c.booking_id
+        JOIN public.clinician_directory p ON p.id=c.provider_id
+        JOIN public.clinic_directory cd ON cd.organization_id=c.organization_id
+        WHERE c.booking_id=$1 AND c.booked_clinician_user_id=$2 AND c.treating_clinician_user_id=$2
+        FOR SHARE OF c`, [scope.id, a.userId])).rows[0];
+      if (!c) fail('BOOKING_NOT_FOUND');
+      await authority(tx, a, scope, grant.id);
+      const result = { id:c.id, encounterId:c.encounter_id, bookingId:c.booking_id,
+        state:c.state, bookingState:c.booking_state, version:c.version, openedAt:c.opened_at,
+        closedAt:c.closed_at, providerId:c.provider, clinicId:c.clinic };
+      await tx.query('COMMIT');
+      return result;
+    } catch (e) {
+      if (tx) await tx.query('ROLLBACK').catch(() => {});
+      if (e instanceof BookingError) throw e;
+      return fail('BOOKING_UNAVAILABLE');
+    } finally { tx?.release(); }
+  }
+  return { open, context, closeConsultation, close: () => pool.end() };
 }
 export type ConsultationPersistence = ReturnType<typeof createConsultationPersistence>;

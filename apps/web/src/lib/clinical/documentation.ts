@@ -105,7 +105,7 @@ const messages: Record<DocumentationErrorCode, string> = {
   media: "The documentation request must use JSON.",
   read: "Clinical documentation could not be refreshed. Recheck your current access before continuing.",
   context:
-    "Open this consultation in the current session before documenting. Opening context is not retained after a full reload.",
+    "Consultation context is unavailable. Return to the booking and refresh your current access.",
   budget:
     "The combined draft exceeds the save limit. Shorten it before saving; nothing has been saved or automatically shortened.",
   uncertain:

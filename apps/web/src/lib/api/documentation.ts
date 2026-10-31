@@ -17,7 +17,7 @@ export type DocumentationRequest = <T>(
   init?: RequestInit,
 ) => Promise<T>;
 export interface DocumentationContext {
-  receipt: OpeningReceipt;
+  receipt: Pick<OpeningReceipt, "id" | "openedAt">;
   patientName: string;
   providerName: string;
   clinicName: string;
