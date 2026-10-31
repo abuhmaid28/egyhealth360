@@ -1,117 +1,292 @@
 # EgyHealth 360 — AI Agent Instructions
 
-## Current Slice 7 exit-review boundary
+These instructions apply to every coding, review, research, and automation agent working on this repository.
 
-[Issue #48 authorization 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435) and [PR #63 continuation review 5723355039](https://github.com/abuhmaid28/egyhealth360/pull/63#pullrequestreview-5723355039) authorize the bounded Consultation Close remediation in this same Slice 7 branch/PR. Explicit OPEN→CLOSED / IN_CONSULTATION→CONSULTED, current exact treating authority, immutable server-owned close provenance and safe replay are implemented through one additive migration 20; all nineteen historical SQL bytes and the restricted-document replay fix remain preserved. [Current exit review](docs/V3_I2_SLICE7_EXIT_REVIEW.md) and exact-head PR evidence govern the verdict; the earlier BLOCKED checkpoint is superseded by this continuation. Final full validation and independent exact-head review remain required. PR OPEN / UNMERGED; auto-merge OFF; I3 NOT AUTHORIZED; EACCE NOT STARTED. No frontend or deployment changes in this track.
+## 0. Authoritative execution mode — supersedes all older agent workflows
 
-Current backend delivery: V3-I2 Slices 1–5 COMPLETE. [Flow Accelerator authorization 6524790227](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6524790227) follows exact-main `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`, Bootstrap 41008236990 / validate 123907937943 SUCCESS and authorizes Slice 6 Core. [Slice 6](docs/V3_I2_SLICE6.md) production implementation is IMPLEMENTED / IN REVIEW. The Lane A gate is open: exact-main `4cb20b39370e5317eba14c4916517b6ae88c12e5` / Bootstrap 41118583027 SUCCESS, [routing 6532727912](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6532727912). Main was normally merged into the existing branch and the runtime verifier is wired into accelerated CI. Final validation and independent exact-head review remain required; DO NOT MERGE. V3-I2 INCOMPLETE. Slice 7 and I3 NOT AUTHORIZED. EACCE NOT STARTED. No frontend or deployment work in Slice 6. No merge authorized.
+This section is the current execution source of truth and **supersedes older workflow/process instructions in historical issues, PR descriptions, validation records, and stale project-status paragraphs**.
 
-These instructions apply to every coding/research agent working on this repository.
+Current delivery state:
 
-## Mandatory context before work
+- M0, M1, M2, V3-G0, and V3-I1 are COMPLETE.
+- V3-I2 backend/core is technically complete through Slice 7 Consultation Close. PR #63 merged to `main` on 31 October 2026.
+- The active Product Owner priority is **I2 Live Demo Closeout**: turn the completed I2 backend into a polished, truthful, doctor-facing Live graduation-demo journey.
+- Graduation-demo frontend/UI work is explicitly authorized. Older statements saying Design/UI is frozen are historical and **do not block the currently authorized Live/UI work**.
+- I3 is NOT authorized unless a newer explicit Product Owner/GitHub authorization says otherwise.
+- EACCE is NOT authorized unless a newer explicit Product Owner/GitHub authorization says otherwise.
 
-Read, in order:
+Repository state and current GitHub authorization supersede chat memory. Do not restart completed work.
+
+## 1. Mandatory reading order
+
+Before substantial work, read in this order:
+
 1. `AGENTS.md`
-2. `docs/PROJECT.md`
-3. the current GitHub Issue
-4. task-relevant docs
-5. existing branch/PR/tests/contracts
+2. the current GitHub Issue / current Product Owner authorization
+3. `docs/PROJECT.md` for product/history context
+4. task-relevant accepted contracts/docs
+5. current `main`, target branch/PR, implementation, tests, and OpenAPI/schema as relevant
 
-Do not rely on prior AI chat memory. Do not restart completed work.
+Historical documents remain evidence, but stale status/process sentences inside them are not current execution instructions when they conflict with this file or newer GitHub authorization.
 
-Before changing anything, summarize the task, current state, dependencies/risks, and implementation plan.
+## 2. Source-of-truth priority
 
-## Source-of-truth priority
+For current execution decisions:
 
-1. Accepted ADRs and current approved repository docs
-2. Current GitHub Issue
-3. Tests, schemas, and API contracts
-4. Existing implementation
-5. Agent assumptions
+1. Current explicit Product Owner authorization recorded in GitHub
+2. This `AGENTS.md` execution policy
+3. Accepted frozen product/security/clinical contracts and ADRs
+4. Current tests, schemas, OpenAPI, and implementation on `main`
+5. Historical project/status documents
+6. Agent assumptions
 
-If an Issue conflicts with an accepted ADR or current approved requirement, stop and report the conflict. Do not silently redesign the project.
+Never silently redesign a frozen clinical/security policy. If a genuine new product/security decision is required, stop and request that decision.
 
-## Core architecture
+## 3. One Active Codex Sprint only
+
+The project uses **one active implementation sprint at a time**.
+
+Do not create parallel Codex implementation tasks, competing feature branches, or overlapping implementation PRs unless the Product Owner explicitly changes this policy.
+
+A sprint should be a **large coherent vertical capability**, not a tiny backend-only or UI-only fragment when the feature can safely be completed end-to-end.
+
+Examples of one sprint scope:
+
+- backend/API/database changes if required
+- frontend/Live integration
+- EN/AR/RTL presentation where applicable
+- focused tests
+- real E2E proof
+- necessary docs
+- final CI
+
+Do not combine unrelated milestones merely to make the task larger.
+
+## 4. Codex owns the sprint through Green PR
+
+Once a sprint is authorized, the implementation agent owns the complete execution loop:
+
+`implement -> focused tests -> diagnose/fix -> continue -> final sync if needed -> final validation -> PR -> CI -> fix CI -> GREEN`
+
+Do **not** stop and hand back intermediate technical blockers that can be solved inside the already authorized/frozen scope.
+
+The agent should autonomously fix and continue for:
+
+- implementation defects inside the sprint scope
+- lint/type/build failures
+- focused-test failures
+- CI failures caused by the sprint
+- missing tests/docs required by the same feature
+- simple merge/sync conflicts inside the authorized scope
+- normal synchronization with `main`
+- bounded technical gaps whose correct behavior is already determined by accepted contracts
+
+Stop only for a genuine Owner Decision, such as:
+
+- a new product behavior not covered by accepted requirements
+- a change to frozen clinical/security/privacy policy
+- a destructive or ambiguous migration/data-loss decision
+- a dangerous scope overlap
+- starting an unauthorized milestone such as I3/EACCE
+- an architectural choice with materially different product/security outcomes and no existing source of truth
+
+## 5. Current-task progress reporting
+
+Progress reporting is for the **current assigned sprint/task only**, never for the whole project.
+
+At the start of the sprint, divide the task into **4–8 concrete checkpoints** with meaningful completion criteria.
+
+Use a lightweight indicator such as:
+
+`Progress: 3/6 — 50%`
+
+`Current: Clinician Review & Close UX`
+
+Rules:
+
+- Percentage must derive from completed checkpoints, not a vague feeling.
+- Update progress when a meaningful checkpoint completes.
+- Prefer updating one existing sprint-status GitHub comment instead of creating repetitive comments.
+- Progress updates are informational only.
+- **Never pause and wait for acknowledgment after a progress update.**
+- Continue autonomously until Green PR or a genuine Owner Decision.
+- 100% means the assigned sprint is implemented and its required validation is complete; if remote CI is required for the sprint, 100% means that final required CI is green.
+
+Do not provide unreliable time-to-completion promises. Report checkpoints/remaining effort instead.
+
+## 6. Branch and PR policy
+
+Use one issue/sprint-scoped branch and one reviewable PR.
+
+Avoid opening a PR early when doing so would trigger expensive GitHub CI for every intermediate push. Work on the branch with focused validation first, then open/update the PR when implementation is substantially complete and ready for final remote validation.
+
+Do not create a second implementation PR while the single active sprint is still in progress.
+
+Keep scope locked:
+
+- no unrelated refactors
+- no opportunistic dependency upgrades
+- no broad cleanup merely because nearby code was touched
+- no unrelated architecture rewrite
+
+One normal sync with latest stable `main` near the final candidate is preferred over repeated merge churn. Sync earlier only when correctness genuinely depends on a new main change.
+
+## 7. CI and testing policy
+
+### During implementation
+
+Run **focused affected validation**, not the entire regression suite after every edit.
+
+Typical development checks:
+
+- affected unit tests
+- affected integration tests
+- lint/typecheck/build when relevant
+- focused browser/E2E proof for changed UI behavior
+- targeted security/authorization tests for changed boundaries
+
+### Final candidate
+
+Run the validation appropriate to the risk of the change.
+
+Risk-based review/testing:
+
+- UI/docs-only: frontend build/typecheck, focused unit/browser/E2E and relevant contract checks
+- normal backend: affected backend/integration/runtime checks
+- auth/privacy/clinical-authority/migration changes: deeper PostgreSQL, concurrency, migration, security and runtime proof
+- milestone/release gate: full regression/security/runtime/browser/migration/audit suite
+
+Do not weaken required security or clinical gates merely to save time.
+
+### CI does not stop all development
+
+CI is primarily a **merge/release gate**, not a stop-the-world development gate.
+
+A pending post-merge/main CI does not automatically block a safely scoped next sprint. If main CI later fails, repairing main becomes the priority before a later merge, but implementation need not have idled while the run was pending.
+
+When a newer commit supersedes an older candidate, cancel superseded CI runs where supported rather than wasting runner time.
+
+Path-aware/risk-aware CI, caching, and cancellation are preferred infrastructure improvements. Until those improvements are implemented, do not pretend skipped gates exist; use the actual repository workflow truthfully.
+
+## 8. Fast handoff and independent review
+
+The implementation agent's final handoff should be concise:
+
+- Progress `X/Y — 100%`
+- PR
+- base SHA
+- head SHA
+- changed files/scope
+- delivered behavior
+- focused/final tests
+- CI result
+- blockers / remaining external-only step
+- verdict
+
+The Control Center performs an **independent risk-based double check**, not a wasteful duplicate execution of every test.
+
+Review should verify, as appropriate:
+
+- reported head/base are real/current
+- scope stayed authorized
+- critical diff/invariants
+- actual GitHub CI on the claimed SHA
+- review threads/mergeability
+- migration/security/clinical authority for high-risk changes
+
+If only a small delta changed after a prior review, review the delta plus critical invariants instead of rereading the entire PR from scratch.
+
+## 9. Current I2 Live Demo Closeout policy
+
+The current sprint is UI/Live-first.
+
+Goal: convert the completed I2 backend into a polished Live graduation-demo journey that can be shown to the supervisor/doctor.
+
+The Live journey should truthfully connect, where already implemented:
+
+`Availability -> Booking -> Consultation Opening -> Clinical Documentation -> explicit Release -> Follow-up Intent -> explicit Consultation Close -> CLOSED / CONSULTED`
+
+Close must not automatically:
+
+- sign private notes
+- release patient summaries
+- release FollowUpIntent
+- complete CareAction
+- invoke EACCE
+- imply clinical completion beyond the exact frozen Close contract
+
+Live failures stay Live. Never silently fall back to Demo.
+
+A **small bounded I2 backend fix** is allowed only when it is genuinely necessary for a trustworthy Live I2 demo and does not expand into I3. Any such fix must preserve frozen authority/privacy contracts and include focused proof.
+
+Do not start prescriptions, laboratory fulfillment, pharmacy fulfillment, notifications, AI inference, I3, or EACCE under this authorization.
+
+## 10. Clinical and security invariants
+
+Preserve these unless a newer explicit approved contract changes them:
+
+- Backend authorization is mandatory.
+- Patient access is own-data only unless an accepted contract explicitly grants another bounded view.
+- Current `ClinicianPatientAssignment` is the clinical authority for the implemented I2 clinical journey.
+- Booking grants **ZERO clinical authority**.
+- Operational membership/directory/publication/authorship alone does not grant clinical authority.
+- ADMIN has no blanket clinical access, authoring, impersonation, assignment creation, or break-glass shortcut.
+- LAB_STAFF / PHARMACY_STAFF do not gain clinician authority.
+- Never trust client-supplied identity/status/time when server/database ownership is required.
+- Preserve immutable provenance/history and minimized audit semantics.
+- Preserve wrong-patient privacy masking/suppression and safe replay boundaries.
+- Never log secrets, session tokens, credentials, or unnecessary full medical payloads.
+- Research ground truth and product-facing data remain logically isolated.
+
+## 11. Clinical-rule safety
+
+Never invent a clinical rule. Every implemented clinical rule requires an authoritative source, version/location, human-readable interpretation, machine representation, and tests. If ambiguous, mark it unresolved rather than guessing.
+
+EACCE remains a separate future bounded system. Missing completion evidence alone must not automatically mean `TRUE_GAP`; `UNCERTAIN` is allowed under insufficient observed evidence. The engine must not diagnose, prescribe, recommend dosage, or fabricate medical facts.
+
+## 12. Architecture constraints
+
+Retain the accepted architecture unless explicitly authorized otherwise:
 
 - Next.js + TypeScript frontend
 - NestJS + TypeScript modular-monolith API
 - PostgreSQL 18
 - Prisma 7
 - REST + OpenAPI
-- pure TypeScript shared EACCE package
-- TypeScript experiment worker
-- FHIR R4 adapter
 - pnpm monorepo
 - Docker Compose
+- GitHub Actions
+- shared TypeScript packages for accepted domain/research capabilities
 
-Core V1 explicitly has no FastAPI/Python runtime, ML service, Redis, Kafka, RabbitMQ, GraphQL, paid auth, paid AI APIs, or microservice architecture.
+No unapproved microservice rewrite, FastAPI/Python runtime service, Redis/Kafka/RabbitMQ/GraphQL introduction, paid auth, paid AI API, or other paid production dependency.
 
-## Product scope
+Prefer local/open-source/self-hostable/free solutions. New dependencies require justification for necessity, maintenance, license, security impact, and why existing dependencies are insufficient.
 
-Product V3 policy is APPROVED: integrated healthcare journey → longitudinal continuity → bounded HTN EACCE. Read `docs/PRODUCT_V3_DECISIONS.md` for D01–D36 and Issue #35 approval lineage; ADR-031 explicitly supersedes the narrower Product V2 positioning/exclusions. Ordinary care does not require a CarePlan/EACCE.
+## 13. Definition of Ready
 
-One application targets five future workspaces: Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin. The Slice 2 implementation adds fixed LAB_STAFF/PHARMACY_STAFF to PATIENT/CLINICIAN/ADMIN and bounded organization memberships for operational scope only. Patient self-registration/own profile are COMPLETE in Slice 3; directory is COMPLETE in Slice 4; bilateral enrollment is COMPLETE in Slice 5; general booking/consultation and fulfillment remain unimplemented future slices. No membership grants patient-record access. Human-entered diagnoses/prescriptions are permitted; diagnostic AI and autonomous treatment/dose recommendation remain prohibited. Laboratory is MUST; imaging SHOULD/optional. Full-item dispensing only; no partial quantities/refills/substitution.
+A sprint is ready when goal, authorized scope, dependencies, acceptance criteria, relevant frozen contracts, and major architecture choices are clear enough to execute autonomously.
 
-M0–M2 remain COMPLETE and historically unchanged. V3-G0 is COMPLETE: PR #36 merged, exact-main CI passed and Issue #35 is CLOSED/completed (see `docs/PROJECT.md`). Product V3 is the repository source of truth. V3-I1 contract is APPROVED in Issue #39; read `docs/V3_I1_CONTRACT.md`. Slice 1 is merged/verified in PR #40 at a03c0b63a0ed44bcf39a32428002af0c92edc7e0 (exact-main CI 39948145751 SUCCESS). Slice 2 is authorized by Issue #39 comment 6366843150; its organization/membership implementation is COMPLETE (PR #41; exact-main CI 40010140478 SUCCESS; docs/V3_I1_SLICE2.md). V3-I1 overall is COMPLETE; Slice 3 is COMPLETE after PR #43 / exact-main CI 40116846242; Slice 4 is COMPLETE via PR #44 / exact-main CI 40195060034; Slice 5 is COMPLETE via PR #45 / exact-main CI 40252309467; Slice 6 is COMPLETE. EACCE remains NOT STARTED. Do not treat policy approval as implementation authorization. Preserve accepted contracts, migration history, deterministic M1 seed and validation evidence; extend only through reviewed milestone-specific work.
+Clinical-rule work additionally requires an approved authoritative source.
 
-Design remains FROZEN: no UI/UX, screens, wireframes, Design System, branding or frontend visual work until separate explicit design-unfreeze approval. Historical visual docs are not active instructions.
+## 14. Definition of Done
 
-No real-patient deployment, paid service dependency, national marketplace economics, ERP/LIS/PACS, video infrastructure, diagnostic AI, generalized IAM/rule editor or broad disease/recurrence engine is authorized. See `docs/PRODUCT.md` for frozen scope tiers and `docs/IMPLEMENTATION_ROADMAP.md` for V3 sequencing.
+A sprint is done when:
 
-## EACCE rules
+- required behavior works end-to-end for its authorized scope
+- acceptance criteria pass
+- authorization/privacy/error paths are handled where relevant
+- focused/final tests appropriate to risk pass
+- required final CI is green
+- documentation/contracts are updated when behavior changed
+- no known P0/P1 blocker remains
+- the final handoff is concise and truthful
 
-- Missing completion evidence alone must not automatically produce `TRUE_GAP` when relevant record coverage is insufficient.
-- `UNCERTAIN` is allowed and represents abstention under insufficient observed evidence.
-- Closure assessments are immutable historical records.
-- New relevant evidence creates/requires a new assessment; do not overwrite history.
-- The engine must not diagnose, prescribe, recommend dosage, or fabricate missing medical data.
-- Ground truth must never be available to Baseline/EACCE inputs during research evaluation.
+Critical auth, authorization, privacy, database-migration, clinical-rule, EACCE, and research-evaluation changes require independent second-pass review where practical.
 
-## Clinical-rule safety
+## 15. Historical evidence
 
-Never invent a clinical rule. Every implemented clinical rule needs an authoritative source, version, location/section, human-readable interpretation, machine representation, and tests. If the source is ambiguous, mark the rule unresolved instead of guessing.
+Historical milestone docs, PR descriptions, validation reports, and old authorization comments remain useful evidence and must not be rewritten merely to erase history.
 
-## Security
+However, **their old execution workflow, stale current-status statements, old Design/UI freeze statements, and old stop-and-wait handoff behavior are superseded by this file and newer explicit GitHub authorization**.
 
-- Backend authorization is mandatory.
-- Patient access is own-data only.
-- Clinician access requires an active patient relationship, not role alone.
-- Admin does not automatically receive unrestricted clinical access.
-- Never trust client-supplied identity/status fields when derivable server-side.
-- Never commit secrets or log passwords/session tokens/secrets/full medical payloads unnecessarily.
-- Preserve audit and clinical source history separately from timeline projections; apply wrong-patient masking.
-- Future relationships require explicit patient authorization and clinician acceptance; booking grants logistics only. Continue until explicitly ended, recheck current access, and grant no permanent author entitlement.
-- Future lab/pharmacy access is routed-artifact scoped with current active user/organization/membership/artifact authority (D36); suspension denies subsequent reads/writes. ADMIN has no clinical fulfillment entitlement. Do not use these future policies to bypass existing ACTIVE-assignment contracts.
-- Preserve audit history.
-- Research ground truth and product-facing data must remain logically isolated.
-
-## Free-first
-
-Prefer local, open-source, self-hostable, or free solutions. New dependencies require justification: why needed, maintained status, license, security impact, and why existing dependencies are insufficient.
-
-## Task workflow
-
-Use one issue-scoped branch and one reviewable PR. Implement only defined scope. Run relevant lint, type checks, tests, builds, and security/authorization tests. Review your diff before handoff.
-
-PR handoff must state:
-- implemented work
-- files/modules changed
-- checks/tests run and results
-- acceptance criteria status
-- known limitations
-- remaining work
-- next recommended step if incomplete
-
-## Definition of Ready
-
-A task is ready only when goal, scope, dependencies, acceptance criteria, relevant requirements, and major architecture decisions are clear. Clinical tasks also require an approved source.
-
-## Definition of Done
-
-A task is done only when required behavior works, acceptance criteria pass, authorization/validation/error paths are handled where relevant, tests pass, CI/build checks pass, documentation is updated when contracts change, and no known P0/P1 blocker remains.
-
-Critical areas—authentication, authorization, EACCE, clinical rules, database migrations, and research evaluation—require independent second-pass review where practical.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](docs/V3_I2_CONTRACT.md) and [Slice 2 implementation](docs/V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
+Do not use historical process text to resurrect the old multi-agent/parallel/ping-pong workflow.
