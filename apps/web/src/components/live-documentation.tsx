@@ -1,4 +1,5 @@
 "use client";
+import { FollowUpScreen } from "./follow-up-intents";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useApp } from "./context";
@@ -65,6 +66,7 @@ function ScopedWorkspace({
   booking: import("../lib/api/live-booking").LiveBooking;
 }) {
   const { api } = useApp();
+  const { t } = useLocale();
   const service = useMemo(
     () =>
       api.liveDocumentation!.forConsultation({
@@ -76,7 +78,29 @@ function ScopedWorkspace({
       }),
     [api, receipt, booking, providerName, clinicName],
   );
-  return <DocumentationWorkspaceScreen service={service} />;
+  const followUp = useMemo(
+    () => api.followUpIntents!.forConsultation(receipt.id),
+    [api, receipt.id],
+  );
+  return (
+    <>
+      <nav
+        className="documentation-action-row"
+        aria-label={t("Consultation steps")}
+      >
+        <a className="button secondary" href="#live-documentation">
+          {t("Clinical documentation")}
+        </a>
+        <a className="button secondary" href="#live-follow-up">
+          {t("Follow-up instructions")}
+        </a>
+      </nav>
+      <div id="live-documentation">
+        <DocumentationWorkspaceScreen service={service} />
+      </div>
+      <FollowUpScreen service={followUp} author />
+    </>
+  );
 }
 /** Exact current-related released projection. No generic clinical/forensic browser. */
 export function RelatedSummaries() {

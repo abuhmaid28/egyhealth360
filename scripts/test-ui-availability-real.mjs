@@ -8,6 +8,7 @@ import {
   createDatabase,
   createRelationshipPersistence,
   createDocumentationPersistence,
+  createFollowUpIntentPersistence,
 } from "../packages/db/dist/index.js";
 import { createApp } from "../apps/api/dist/app.js";
 import { createPasswordVerifier } from "../apps/api/dist/password.js";
@@ -32,6 +33,7 @@ try {
     const database = createDatabase(f.url);
     const relationships = createRelationshipPersistence(f.url);
     const documentation = createDocumentationPersistence(f.url);
+    const intents = createFollowUpIntentPersistence(f.url);
     const api = await createApp(
       database,
       {
@@ -49,6 +51,7 @@ try {
       f.bookings,
       f.consultations,
       documentation,
+      intents,
     );
     await api.listen(0, "127.0.0.1");
     const backend = await api.getUrl();
@@ -57,6 +60,8 @@ try {
       dropped: 0,
       dropDocumentSuffix: "",
       documentsDropped: 0,
+      dropFollowUpSuffix: "",
+      followUpsDropped: 0,
     };
     const proxy = createServer((incoming, outgoing) => {
       const upstream = request(
@@ -72,6 +77,18 @@ try {
           ) {
             networkFault.dropNextOpeningSuccess = false;
             networkFault.dropped++;
+            r.resume();
+            r.once("end", () => outgoing.destroy());
+            return;
+          }
+          if (
+            networkFault.dropFollowUpSuffix &&
+            incoming.method === "POST" &&
+            incoming.url.endsWith(networkFault.dropFollowUpSuffix) &&
+            r.statusCode === 200
+          ) {
+            networkFault.dropFollowUpSuffix = "";
+            networkFault.followUpsDropped++;
             r.resume();
             r.once("end", () => outgoing.destroy());
             return;
@@ -137,6 +154,7 @@ try {
         viewport: { width: 1440, height: 1000 },
         timezoneId: "Asia/Tokyo",
       });
+      page.setDefaultTimeout(15000);
       const errors = [];
       page.on("pageerror", (e) => errors.push(e.message));
       const login = async (key) => {
@@ -207,7 +225,12 @@ try {
         .data;
       const { attended } = await testRealBooking(page, f);
       await testRealConsultation(page, f, attended, networkFault);
-      await testRealDocumentation(browser, page, f, networkFault);
+      await testRealDocumentation(
+        browser,
+        page,
+        { ...f, intents },
+        networkFault,
+      );
       assert.deepEqual(
         (await f.availability.history(f.actors.clinician, {})).data.filter(
           (s) => before.some((v) => v.id === s.id),
@@ -226,6 +249,7 @@ try {
       await new Promise((resolve) => proxy.close(resolve));
       await api.close();
       await documentation.close();
+      await intents.close();
       await relationships.close();
       await database.close();
     }

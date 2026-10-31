@@ -40,6 +40,7 @@ export function LiveSessionProvider({ children }: { children: ReactNode }) {
       },
       clear: () => {
         current.current?.documentation?.clear?.();
+        current.current?.followUpIntents?.clear();
         current.current?.liveBookings?.clearCommands();
         current.current?.consultationOpening?.clear();
         current.current = undefined;
