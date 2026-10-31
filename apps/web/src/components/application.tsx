@@ -1,4 +1,5 @@
 "use client";
+import { accountName } from "../lib/presentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { LanguageSwitch, useLocale } from "../lib/i18n/context";
 import Link from "next/link";
@@ -210,6 +211,7 @@ export function Application({
         }}
       />
     );
+  const userLabel = accountName(session, t);
   const allowed =
     pathname === homes[session.role] ||
     pathname.startsWith(`${homes[session.role]}/`);
@@ -357,9 +359,9 @@ export function Application({
             {t("Sign out")}
           </button>
           <div className="sidebar-user">
-            <Avatar name={session.name} />
+            <Avatar name={userLabel} />
             <div>
-              <strong>{session.name}</strong>
+              <strong>{userLabel}</strong>
               <small>
                 {session.mode === "demo"
                   ? t("Synthetic demo account")
@@ -382,14 +384,14 @@ export function Application({
             >
               <Icon name="menu" />
             </button>
-            <span>{t("My workspace")}</span>
+            <span>{t(roles.find((r) => r.role === session.role)?.name ?? "My workspace")}</span>
             <Icon name="chevron" size={13} />
             <strong>{t(page)}</strong>
           </div>
           <div className="top-actions">
             <LanguageSwitch />
             <span className={`mode-indicator ${api.mode}`}>
-              {api.mode === "demo" ? t("Graduation demo") : t("Live API")}
+              {api.mode === "demo" ? t("Graduation demo") : t("Live care")}
             </span>
             {api.mode === "demo" && (
               <>
@@ -412,7 +414,7 @@ export function Application({
                 </select>
               </>
             )}
-            <Avatar name={session.name} />
+            <Avatar name={userLabel} />
           </div>
         </header>
         {api.mode === "demo" && (
@@ -451,6 +453,9 @@ export function Application({
               </div>
             </details>
           </div>
+        )}
+        {api.mode === "live" && accountName(session) !== session.name && (
+          <div className="live-context-bar"><Icon name="shield" size={16} /><span>{t("Live care · synthetic demonstration data")}</span></div>
         )}
         <main id="main" className="content" tabIndex={-1}>
           {!allowed ? (
@@ -531,7 +536,7 @@ function Login({
           </h1>
           <p>
             {t(
-              "From finding the right doctor to your next follow-up. Feel supported at every step.",
+              "Find a doctor, manage your visit and read the care information your clinician shares.",
             )}
           </p>
           <div className="journey-art">
@@ -577,8 +582,8 @@ function Login({
             <p>
               {t(
                 liveConfigured
-                  ? "Live uses the connected backend. Demo is a separate synthetic journey in this browser."
-                  : "This preview offers the browser-only demo. Live sign-in is unavailable until a backend is connected.",
+                  ? "Sign in to your live care account. The demonstration portals below use separate fictional data."
+                  : "Explore the fictional demonstration below. Live sign-in is not available in this preview.",
               )}
             </p>
           </div>
@@ -645,6 +650,7 @@ function Login({
             {t("Explore the patient demo")}
             <Icon name="arrow" size={18} />
           </button>
+          <p className="demo-portals-note">{t("Preview a portal with fictional data")}</p>
           <div className="demo-role-links">
             {roles.slice(1).map((r) => (
               <button

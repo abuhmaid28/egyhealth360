@@ -1,0 +1,235 @@
+{
+  "results": [
+    {
+      "name": "login-en",
+      "violations": [],
+      "incomplete": [],
+      "passes": 24
+    },
+    {
+      "name": "patient-0-en-1440",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".large"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            }
+          ]
+        }
+      ],
+      "passes": 24
+    },
+    {
+      "name": "patient-keyboard-focus",
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      }
+    },
+    {
+      "name": "patient-0-ar-390",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".large"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            }
+          ]
+        }
+      ],
+      "passes": 23
+    },
+    {
+      "name": "patient-1-en-1440",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".large"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            }
+          ]
+        }
+      ],
+      "passes": 27
+    },
+    {
+      "name": "patient-1-ar-390",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".large"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            }
+          ]
+        }
+      ],
+      "passes": 26
+    },
+    {
+      "name": "provider-final-en",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                ".large"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            },
+            {
+              "target": [
+                ".map-art > span"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient"
+            }
+          ]
+        }
+      ],
+      "passes": 27
+    },
+    {
+      "name": "doctor-0-en-1440",
+      "violations": [],
+      "incomplete": [],
+      "passes": 26
+    },
+    {
+      "name": "doctor-keyboard-focus",
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      }
+    },
+    {
+      "name": "doctor-0-ar-390",
+      "violations": [],
+      "incomplete": [],
+      "passes": 25
+    },
+    {
+      "name": "doctor-1-en-1440",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                "#_r_3_"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "#_r_6_"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "#_r_0_"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ]
+        }
+      ],
+      "passes": 29
+    },
+    {
+      "name": "sticky-context-anchor",
+      "width": 1440,
+      "locale": "en",
+      "unobscured": true
+    },
+    {
+      "name": "sticky-context-anchor",
+      "width": 1200,
+      "locale": "en",
+      "unobscured": true
+    },
+    {
+      "name": "sticky-context-anchor",
+      "width": 1024,
+      "locale": "en",
+      "unobscured": true
+    },
+    {
+      "name": "sticky-context-anchor",
+      "width": 834,
+      "locale": "en",
+      "unobscured": true
+    },
+    {
+      "name": "sticky-context-anchor",
+      "width": 768,
+      "locale": "en",
+      "unobscured": true
+    },
+    {
+      "name": "sticky-context-anchor",
+      "width": 560,
+      "locale": "en",
+      "unobscured": true
+    },
+    {
+      "name": "sticky-context-anchor",
+      "width": 390,
+      "locale": "en",
+      "unobscured": true
+    },
+    {
+      "name": "doctor-1-ar-390",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                "#_r_3_"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "#_r_6_"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            },
+            {
+              "target": [
+                "#_r_0_"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ]
+        }
+      ],
+      "passes": 29
+    }
+  ],
+  "errors": []
+}

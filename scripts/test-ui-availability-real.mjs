@@ -173,7 +173,7 @@ try {
         await page
           .getByRole("button", { name: "Sign in with live account" })
           .click();
-        await page.getByText("Live API", { exact: true }).waitFor();
+        await page.getByText("Live care", { exact: true }).waitFor();
       };
       await login("clinician");
       await page.goto("http://localhost:3000/doctor/availability");

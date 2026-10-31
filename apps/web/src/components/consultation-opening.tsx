@@ -37,7 +37,7 @@ export function ClinicalOpeningBoundary() {
       <Icon name="shield" size={18} />
       <p>
         {t(
-          "Booking is not consent or a clinical relationship. Opening requires an existing active patient relationship and current clinician and clinic authority. Booking grants zero clinical authority.",
+          "Confirm the patient and your current care relationship before opening. An appointment alone does not give access to medical information.",
         )}
       </p>
     </div>

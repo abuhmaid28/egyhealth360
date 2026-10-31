@@ -1,4 +1,6 @@
 "use client";
+import { presentationName } from "../lib/presentation";
+import { LivePatientHome } from './live-home';
 import { PatientFollowUps } from "./follow-up-intents";
 import { ReleasedSummariesScreen } from "./documentation";
 import { createUnavailableDocumentation } from "../lib/clinical/documentation";
@@ -59,6 +61,7 @@ export function PatientScreen({ path }: { path: string }) {
     );
   if (api.mode === "live" && path === "/patient/follow-up")
     return <PatientFollowUps />;
+  if (path === "/patient" && api.mode === "live") return <LivePatientHome />;
   if (path === "/patient") return <Dashboard />;
   if (path === "/patient/discover") return <Discovery />;
   if (path.startsWith("/patient/doctors/"))
@@ -416,22 +419,22 @@ export function ProviderCard({ provider }: { provider: Provider }) {
   return (
     <Card className="provider-card">
       <div className="provider-top">
-        <Avatar name={provider.displayName} large />
+        <Avatar name={presentationName(provider.displayName, t)} large />
         <Badge tone="soft">
-          <bdi>{provider.specialty.displayName}</bdi>
+          <bdi>{presentationName(provider.specialty.displayName, t)}</bdi>
         </Badge>
       </div>
       <h3>
         <Link href={`/patient/doctors/${provider.id}`}>
-          {provider.displayName}
+          {presentationName(provider.displayName, t)}
         </Link>
       </h3>
-      <p className="muted">{provider.specialty.displayName}</p>
+      <p className="muted">{presentationName(provider.specialty.displayName, t)}</p>
       <div className="provider-clinic">
         <Icon name="pin" size={16} />
         <span>
-          {provider.clinics[0]?.displayName} {t("·")}
-          {provider.clinics[0]?.city}
+          {presentationName(provider.clinics[0]?.displayName ?? '', t)} {t("·")}
+          {presentationName(provider.clinics[0]?.city ?? '', t)}
         </span>
       </div>
       <Link
@@ -469,7 +472,7 @@ function Discovery() {
           const filtered = providers.filter(
             (p) =>
               (!query ||
-                p.displayName.toLowerCase().includes(query.toLowerCase())) &&
+                (p.displayName.toLowerCase().includes(query.toLowerCase()) || presentationName(p.displayName, t).toLowerCase().includes(query.toLowerCase()))) &&
               (!specialty || p.specialty.key === specialty) &&
               (!clinic || p.clinics.some((c) => c.id === clinic)),
           );
@@ -493,7 +496,7 @@ function Discovery() {
                   <option value="">{t("All specialties")}</option>
                   {specialties.map((s) => (
                     <option value={s.key} key={s.key}>
-                      {s.displayName}
+                      {presentationName(s.displayName, t)}
                     </option>
                   ))}
                 </select>
@@ -505,7 +508,7 @@ function Discovery() {
                   <option value="">{t("All clinics")}</option>
                   {clinics.map((c) => (
                     <option value={c.id} key={c.id}>
-                      {c.displayName}
+                      {presentationName(c.displayName, t)}
                     </option>
                   ))}
                 </select>
@@ -535,7 +538,7 @@ function Discovery() {
                     className={specialty === s.key ? "selected" : ""}
                     onClick={() => setSpecialty(s.key)}
                   >
-                    {s.displayName}
+                    {presentationName(s.displayName, t)}
                   </button>
                 ))}
               </div>
@@ -608,19 +611,19 @@ function DoctorProfile({ id }: { id: string }) {
         {(p) => (
           <>
             <Card className="doctor-profile">
-              <Avatar name={p.displayName} large />
+              <Avatar name={presentationName(p.displayName, t)} large />
               <div>
                 <Badge tone="soft">
-                  <bdi>{p.specialty.displayName}</bdi>
+                  <bdi>{presentationName(p.specialty.displayName, t)}</bdi>
                 </Badge>
-                <h1>{p.displayName}</h1>
+                <h1>{presentationName(p.displayName, t)}</h1>
                 <p className="muted">
-                  {p.specialty.displayName} {t("·")}{" "}
-                  {p.clinics.map((c) => c.city).join(", ")}
+                  {presentationName(p.specialty.displayName, t)} {t("·")}{" "}
+                  {p.clinics.map((c) => presentationName(c.city, t)).join(", ")}
                 </p>
                 <div className="inline muted">
                   <Icon name="building" size={17} />
-                  {p.clinics[0]?.displayName}
+                  {presentationName(p.clinics[0]?.displayName ?? '', t)}
                 </div>
               </div>
               <div className="profile-seal">
@@ -640,8 +643,8 @@ function DoctorProfile({ id }: { id: string }) {
                     {t(
                       "Explore appointments with {name} in {specialty}. Select a published time for an in-person visit.",
                       {
-                        name: p.displayName,
-                        specialty: p.specialty.displayName,
+                        name: presentationName(p.displayName, t),
+                        specialty: presentationName(p.specialty.displayName, t),
                       },
                     )}
                   </p>
@@ -655,19 +658,19 @@ function DoctorProfile({ id }: { id: string }) {
                   <CardTitle title={t("Clinic & location")} />
                   {p.clinics.map((c) => (
                     <div key={c.id} className="clinic-detail">
-                      <Detail icon="pin" title={<bdi>{c.city}</bdi>}>
+                      <Detail icon="pin" title={<bdi>{presentationName(c.city, t)}</bdi>}>
                         <Link
                           className="text-link"
                           href={`/patient/clinics/${c.id}`}
                         >
-                          {c.displayName}
+                          {presentationName(c.displayName, t)}
                           <Icon name="arrow" size={15} />
                         </Link>
                       </Detail>
-                      <p className="muted">{c.address}</p>
+                      <p className="muted">{presentationName(c.address, t)}</p>
                       <div className="map-art">
                         <Icon name="pin" size={32} />
-                        <span>{c.displayName}</span>
+                        <span>{presentationName(c.displayName, t)}</span>
                       </div>
                     </div>
                   ))}
@@ -815,7 +818,7 @@ function BookingDialog({
       )}
       <div className="confirmation-details">
         <Detail icon="user" title={t("Your doctor")}>
-          {provider.displayName}
+          {presentationName(provider.displayName, t)}
         </Detail>
         <Detail icon="calendar" title={t("Date & time")}>
           {date(slot.startAt, slot.timeZone)} {t("·")}{" "}
@@ -876,12 +879,12 @@ function ClinicScreen({ id }: { id: string }) {
             <>
               <Heading
                 eyebrow={t("Your local care")}
-                title={<bdi>{c.displayName}</bdi>}
-                description={`${c.address} · ${c.city}`}
+                title={<bdi>{presentationName(c.displayName, t)}</bdi>}
+                description={`${presentationName(c.address, t)} · ${presentationName(c.city, t)}`}
               />
               <Card className="map-art large-map">
                 <Icon name="pin" size={40} />
-                <strong>{c.displayName}</strong>
+                <strong>{presentationName(c.displayName, t)}</strong>
                 <span>{t("Address overview · illustrative map")}</span>
               </Card>
               <div className="section-heading">

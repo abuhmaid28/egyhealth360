@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { presentationName, visitPriority } from '../lib/presentation';
 import {
   ConsultationOpeningCard,
   OpeningScheduleStatus,
@@ -71,7 +72,7 @@ export function BookingBoundary() {
       <Icon name="shield" size={18} />
       <p>
         {t(
-          "Booking is logistics only. It grants no access to medical records. Consultation opening requires a separate current clinical relationship. Documentation and follow-up instructions require current clinical authority. Prescriptions and tests remain Demo-only.",
+          "An appointment reserves a time. Medical information is shared only through your current care relationship.",
         )}
       </p>
     </div>
@@ -107,16 +108,16 @@ export function BookingIdentity({
       <h3>
         <bdi>
           {clinician
-            ? b.patientDisplayName
-            : (names?.providers.find((p) => p.id === b.providerId)
-                ?.displayName ?? t("Provider unavailable"))}
+            ? presentationName(b.patientDisplayName, t)
+            : presentationName(names?.providers.find((p) => p.id === b.providerId)
+                ?.displayName ?? t("Provider unavailable"), t)}
         </bdi>
       </h3>
       <p className="muted">
         <Icon name="pin" size={14} />
         <bdi>
-          {names?.clinics.find((c) => c.id === b.clinicId)?.displayName ??
-            t("Clinic unavailable")}
+          {presentationName(names?.clinics.find((c) => c.id === b.clinicId)?.displayName ??
+            t("Clinic unavailable"), t)}
         </bdi>
       </p>
     </div>
@@ -127,14 +128,15 @@ export function BookingTime({
 }: {
   booking: Pick<LiveBooking, "startAt" | "endAt" | "timeZone">;
 }) {
+  const { locale, t } = useLocale();
   return (
     <div className="booking-time">
       <bdi>
-        {date(b.startAt, b.timeZone)} · {time(b.startAt, b.timeZone)} –{" "}
-        {date(b.endAt, b.timeZone)} · {time(b.endAt, b.timeZone)}
+        {date(b.startAt, b.timeZone, locale)} · {time(b.startAt, b.timeZone, locale)} –{" "}
+        {date(b.startAt, b.timeZone) !== date(b.endAt, b.timeZone) && <>{date(b.endAt, b.timeZone, locale)} · </>}{time(b.endAt, b.timeZone, locale)}
       </bdi>
       <small>
-        <bdi>{b.timeZone}</bdi>
+        {t('Clinic time')} · <bdi>{b.timeZone}</bdi>
       </small>
     </div>
   );
@@ -143,7 +145,7 @@ function Status({ booking: b }: { booking: LiveBooking }) {
   const { t } = useLocale();
   return (
     <div className="booking-status">
-      <Badge tone={b.state === "BOOKED" ? "green" : "soft"}>
+      <Badge tone={b.state === "CONSULTED" ? "green" : b.state === "NO_SHOW" ? "amber" : b.state === "BOOKED" || b.state === "IN_CONSULTATION" ? "blue" : "soft"}>
         {t(bookingLabels[b.state])}
       </Badge>
       <Badge tone={b.attendance === "UNKNOWN" ? "amber" : "soft"}>
@@ -155,9 +157,11 @@ function Status({ booking: b }: { booking: LiveBooking }) {
 export function LiveBookingList({
   clinician = false,
   compact = false,
+  dashboard = false,
 }: {
   clinician?: boolean;
   compact?: boolean;
+  dashboard?: boolean;
 }) {
   const { t } = useLocale();
   const live = useLiveBookings();
@@ -173,16 +177,20 @@ export function LiveBookingList({
       {!compact && (
         <>
           <Heading
-            eyebrow={t("Live booking")}
+            eyebrow={t(clinician ? "Doctor portal" : "Your appointments")}
             title={clinician ? t("My schedule") : t("My bookings")}
             description={
               clinician
                 ? t(
-                    "Only your booked operational schedule. Booking does not grant clinical access.",
+                    "Review your visits, confirm the patient context and continue their consultation.",
                   )
-                : t("Your real bookings, retained history and next visits.")
+                : t("Your appointments, visit status and next steps.")
             }
           />
+          {clinician && <Link className="button secondary schedule-publish" href="/doctor/availability"><Icon name="plus" size={18}/>{t('Manage availability')}</Link>}
+          {dashboard && <ol className="clinical-journey" aria-label={t('Your consultation journey')}>
+            {['Choose a scheduled visit', 'Document privately', 'Review what to share', 'Close the consultation'].map((label,index)=><li key={label}><span className="journey-number">{index+1}</span><strong>{t(label)}</strong></li>)}
+          </ol>}
           <BookingBoundary />
         </>
       )}
@@ -201,7 +209,7 @@ export function LiveBookingList({
             />
             {result.data.length ? (
               <div className="live-booking-list">
-                {result.data.slice(0, compact ? 3 : 20).map((b) => (
+                {visitPriority(result.data).slice(0, compact ? 3 : 20).map((b) => (
                   <article className="live-booking-row" key={b.id}>
                     <div>
                       <Status booking={b} />
@@ -233,7 +241,7 @@ export function LiveBookingList({
                 description={
                   clinician
                     ? t(
-                        "Bookings for your exact clinician account appear here. No patient search or clinical history is provided.",
+                        "Patient bookings will appear here. Publish an available time so patients can arrange a visit.",
                       )
                     : t("Choose a published time to book your next visit.")
                 }
@@ -316,7 +324,7 @@ export function LiveCreateReview({
       <h2 id="live-booking-title">{t("Confirm your booking")}</h2>
       <p className="muted" id="live-booking-description">
         {t(
-          "Confirm this published time with your live account. Only slot and operation identifiers are submitted.",
+          "Check your doctor, clinic and appointment time before confirming your booking.",
         )}
       </p>
       <ol className="workflow-steps" aria-label={t("Booking progress")}>
@@ -326,12 +334,12 @@ export function LiveCreateReview({
       </ol>
       <div className="confirmation-details">
         <Detail icon="user" title={t("Your doctor")}>
-          <bdi>{provider.displayName}</bdi>
+          <bdi>{presentationName(provider.displayName, t)}</bdi>
         </Detail>
         <Detail icon="pin" title={t("Clinic")}>
           <bdi>
-            {provider.clinics.find((c) => c.id === slot.clinicId)
-              ?.displayName ?? t("Clinic unavailable")}
+            {presentationName(provider.clinics.find((c) => c.id === slot.clinicId)
+              ?.displayName ?? t("Clinic unavailable"), t)}
           </bdi>
         </Detail>
         <BookingTime booking={slot} />

@@ -20,7 +20,7 @@ export async function testLiveJourney(browser, origin, shots) {
     });
     const calls = [],
       errors = [];
-    let failRecord = false;
+    let failProfile = false;
     page.on("pageerror", (error) => errors.push(error.message));
     await page.addInitScript((locale) => {
       globalThis.localStorage.setItem("eh360-ui-mode", "live");
@@ -38,6 +38,8 @@ export async function testLiveJourney(browser, origin, shots) {
             },
           },
         });
+      if (path.endsWith("/me/profile") && failProfile)
+        return route.fulfill({ status: 503, json: {} });
       if (path.endsWith("/me/profile"))
         return route.fulfill({
           json: {
@@ -49,8 +51,6 @@ export async function testLiveJourney(browser, origin, shots) {
             },
           },
         });
-      if (failRecord && path.includes("blood-pressure"))
-        return route.fulfill({ status: 503, json: {} });
       return route.fulfill({
         json: { data: [], meta: { page: 1, pageSize: 20, total: 0 } },
       });
@@ -62,24 +62,16 @@ export async function testLiveJourney(browser, origin, shots) {
     const summaryStat = page
       .locator(".stat")
       .filter({ hasText: t("Visit summaries") });
-    // A separate reader owns released summaries; never render a false zero from legacy data.
-    assert.equal(
-      await page
-        .getByText(t("Open released summaries to view shared care"), {
-          exact: true,
-        })
-        .count(),
-      1,
-    );
-    assert.equal(await summaryStat.count(), 1);
-    assert.equal(await summaryStat.getByText("—", { exact: true }).count(), 1);
+    // Home offers the existing released readers without fabricated global counts.
+    assert.equal(await summaryStat.count(), 0);
+    await page.getByText(t("Your released care, ready to read"), { exact: true }).waitFor();
     assert.equal(
       await page
         .locator('.quick-actions a[href="/patient/medications"]')
         .count(),
       0,
     );
-    for (const width of [1440, 834, 390]) {
+    for (const width of [1440, 1200, 1024, 834, 768, 560, 390]) {
       await page.setViewportSize({ width, height: 1000 });
       assert.ok(
         await page.evaluate(
@@ -115,10 +107,20 @@ export async function testLiveJourney(browser, origin, shots) {
         .count(),
       0,
     );
-    failRecord = true;
+    calls.length = 0;
+    failProfile = true;
     await page.goto(origin + "/patient");
     await page.getByRole("alert").waitFor();
-    // A legacy-record failure cannot trap the presenter or silently start a demo.
+    await page.getByRole("heading", { name: t("Make room for your next visit"), exact: true }).waitFor();
+    assert.ok(calls.includes("/api/v1/me/bookings"));
+    assert.ok(!calls.some(path => /blood-pressure|clinical-encounters|follow-up-appointments/.test(path)));
+    await page.evaluate(() => globalThis.document.fonts.ready);
+    assert.ok(await page.evaluate(locale => globalThis.document.fonts.check(locale === "ar" ? '16px "Noto Sans Arabic"' : '16px Inter'), locale));
+    for (const control of await page.locator(".language-switch button").all()) {
+      const rect = await control.boundingBox();
+      assert.ok(rect && rect.width >= 44 && rect.height >= 44);
+    }
+    // A profile failure cannot hide the independent appointment read or shared readers.
     await page.locator('.patient-journey a[href="/patient/summaries"]').click();
     await page
       .getByText(t("No visible released summaries"), { exact: true })

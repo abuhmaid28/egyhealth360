@@ -1,4 +1,5 @@
 "use client";
+import { presentationName } from '../lib/presentation';
 import {
   useId,
   useState,
@@ -434,9 +435,9 @@ function DocumentationEditor({
         <div>
           <p className="eyebrow">{t("Opened consultation context")}</p>
           <h2>
-            <bdi>{view.patientName}</bdi>
+            <bdi>{presentationName(view.patientName, t)}</bdi>
           </h2>
-          {(view.providerName || view.clinicName) && <p><bdi>{[view.providerName, view.clinicName].filter(Boolean).join(" · ")}</bdi></p>}
+          {(view.providerName || view.clinicName) && <p><bdi>{[view.providerName, view.clinicName].filter(Boolean).map(name=>presentationName(name!, t)).join(" · ")}</bdi></p>}
           <small>
             <bdi>
               {date(view.openedAt, view.timeZone)} ·{" "}

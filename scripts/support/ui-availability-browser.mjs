@@ -205,7 +205,7 @@ export async function testLiveAvailability(browser, origin, shots) {
     await page
       .getByRole("button", { name: "Sign in with live account" })
       .click();
-    await page.getByText("Live API", { exact: true }).waitFor();
+    await page.getByText("Live care", { exact: true }).waitFor();
   };
   await login();
   await page.goto(`${origin}/patient/doctors/${provider}`);

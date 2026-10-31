@@ -1,4 +1,5 @@
 "use client";
+import { presentationName } from "../lib/presentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import { useRef, useState } from "react";
@@ -90,7 +91,7 @@ export function PublicAvailability({
   return (
     <Card className="booking-card">
       <CardTitle title={t("Choose your appointment")} />
-      <p className="muted">{t("Finite availability · clinic-local times")}</p>
+      <p className="muted">{t("Available appointments · clinic time")}</p>
       <Field label={t("Availability clinic")}>
         <select
           value={clinic}
@@ -102,7 +103,7 @@ export function PublicAvailability({
           <option value="">{t("All provider clinics")}</option>
           {provider.clinics.map((c) => (
             <option key={c.id} value={c.id}>
-              {c.displayName}
+              {presentationName(c.displayName, t)}
             </option>
           ))}
         </select>
@@ -119,7 +120,7 @@ export function PublicAvailability({
                   <div className="date-tile">
                     <Icon name="calendar" />
                     <div>
-                      <strong>{t("Choose a published interval")}</strong>
+                      <strong>{t("Choose an available time")}</strong>
                       <small>
                         {t(
                           "Dates and times use the timezone shown on each slot.",
@@ -153,8 +154,8 @@ export function PublicAvailability({
                           </small>
                         )}
                         <small>
-                          {provider.clinics.find((c) => c.id === s.clinicId)
-                            ?.displayName ?? "Clinic unavailable"}
+                          {presentationName(provider.clinics.find((c) => c.id === s.clinicId)
+                            ?.displayName ?? t("Clinic unavailable"), t)}
                         </small>
                         {!s.bookable && <small>{t("Unavailable")}</small>}
                       </button>
@@ -267,8 +268,8 @@ export function DoctorAvailability() {
                             {s.timeZone}
                           </p>
                           <small className="muted">
-                            {clinics.data?.find((c) => c.id === s.clinicId)
-                              ?.displayName ?? s.clinicId}
+                            {presentationName(clinics.data?.find((c) => c.id === s.clinicId)
+                              ?.displayName ?? t("Clinic unavailable"), t)}
                           </small>
                         </div>
                         <div className="own-slot-actions">
@@ -381,8 +382,8 @@ export function DoctorAvailability() {
                       <option value="">{t("Choose a published clinic")}</option>
                       {options.map((c) => (
                         <option key={c.id} value={c.id}>
-                          {c.displayName} {t("·")}
-                          {c.city}
+                          {presentationName(c.displayName, t)} {t("·")}
+                          {presentationName(c.city, t)}
                         </option>
                       ))}
                     </select>

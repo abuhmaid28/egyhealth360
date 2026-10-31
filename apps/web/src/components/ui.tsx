@@ -454,15 +454,15 @@ export function Field({
     </div>
   );
 }
-export const date = (value: string, timeZone = "Africa/Cairo") =>
-  new Intl.DateTimeFormat("en-GB", {
+export const date = (value: string, timeZone = "Africa/Cairo", locale = 'en') =>
+  new Intl.DateTimeFormat(locale === 'ar' ? 'ar-EG' : 'en-GB', {
     day: "numeric",
     month: "short",
     year: "numeric",
     timeZone,
   }).format(new Date(value));
-export const time = (value: string, timeZone = "Africa/Cairo") =>
-  new Intl.DateTimeFormat("en-GB", {
+export const time = (value: string, timeZone = "Africa/Cairo", locale = 'en') =>
+  new Intl.DateTimeFormat(locale === 'ar' ? 'ar-EG' : 'en-GB', {
     hour: "2-digit",
     minute: "2-digit",
     timeZone,

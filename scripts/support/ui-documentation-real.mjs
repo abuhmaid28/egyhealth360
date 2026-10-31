@@ -27,7 +27,7 @@ export async function testRealDocumentation(browser, page, f, fault) {
     await p
       .getByRole("button", { name: "Sign in with live account", exact: true })
       .click();
-    await p.getByText("Live API", { exact: true }).waitFor();
+    await p.getByText("Live care", { exact: true }).waitFor();
   };
   await login(page, "clinician");
   await page.goto(`${origin}/doctor/appointments/${booked.id}`);
