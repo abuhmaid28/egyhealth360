@@ -1,5 +1,9 @@
 # Security & Medical Safety — V3 Policy, M0–M2 Enforcement
 
+## Current Slice 7 exit-review boundary
+
+[Issue #48 authorization 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435) authorizes combined verification and independent security review from exact main `b8ed01e4546ac94e52f9fcbec2f23e90b6fc6262` (Bootstrap 41146078616 SUCCESS). Slices 1–6 are merged; older in-review/not-authorized paragraphs below are historical snapshots. [Slice 7 exit review](V3_I2_SLICE7_EXIT_REVIEW.md) records the current evidence, bounded documentation privacy fix and unresolved consultation-close contract conflict. Slice 7 is IN REVIEW; I2 exit is **BLOCKED**, not COMPLETE. PR must remain OPEN / UNMERGED with auto-merge OFF. I3 remains NOT AUTHORIZED; EACCE NOT STARTED. No frontend or deployment changes in this track.
+
 ## Current V3-I2 Slice 5 boundary
 
 [Slice 5](V3_I2_SLICE5.md) preserves sole current ACTIVE assignment authority and Booking ZERO clinical authority. Private/draft payload and existence are exact-author/current-authority only. Patient/current-related released views exclude every private/draft reference. Explicit summary release, immutable signed corrections/addenda and independent privacy targets; unsafe exact document lineage is withheld from ordinary pages/counts/replays. Bounded canonical locks, after-wait/final checks and atomic {} audit; no staff/ADMIN shortcut or forensic view.

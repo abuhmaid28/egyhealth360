@@ -1,5 +1,9 @@
 # V3-I2 — Booking & Consultation Contract
 
+## Current Slice 7 exit-review boundary
+
+[Issue #48 authorization 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435) authorizes combined verification and independent security review from exact main `b8ed01e4546ac94e52f9fcbec2f23e90b6fc6262` (Bootstrap 41146078616 SUCCESS). Slices 1–6 are merged; older in-review/not-authorized paragraphs below are historical snapshots. [Slice 7 exit review](V3_I2_SLICE7_EXIT_REVIEW.md) records the current evidence, bounded documentation privacy fix and unresolved consultation-close contract conflict. Slice 7 is IN REVIEW; I2 exit is **BLOCKED**, not COMPLETE. PR must remain OPEN / UNMERGED with auto-merge OFF. I3 remains NOT AUTHORIZED; EACCE NOT STARTED. No frontend or deployment changes in this track.
+
 ## 1. Status and authority
 
 Current backend delivery: V3-I2 Slices 1–5 COMPLETE. [Flow Accelerator authorization 6524790227](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6524790227) follows exact-main `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`, Bootstrap 41008236990 / validate 123907937943 SUCCESS and authorizes Slice 6 Core. [Slice 6](V3_I2_SLICE6.md) production implementation is IMPLEMENTED / IN REVIEW. The Lane A gate is open: exact-main `4cb20b39370e5317eba14c4916517b6ae88c12e5` / Bootstrap 41118583027 SUCCESS, [routing 6532727912](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6532727912). Main was normally merged into the existing branch and the runtime verifier is wired into accelerated CI. Final validation and independent exact-head review remain required; DO NOT MERGE. V3-I2 INCOMPLETE. Slice 7 and I3 NOT AUTHORIZED. EACCE NOT STARTED. No frontend or deployment work in Slice 6. No merge authorized.
