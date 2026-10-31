@@ -27,4 +27,4 @@ test('I2S7 populated latest-schema repeat deploy/status preserves all 48 domain 
   migrationRunner(f.url,'deploy',19);migrationRunner(f.url,'status',19);
   assert.deepEqual(await snapshot(),before);
   console.log('I2S7_POPULATED_REPEAT',JSON.stringify({migrations:19,domainTables:48,retainedRows:Object.entries(before).filter(([t])=>t!=='_prisma_migrations').reduce((n,[,rows])=>n+rows.length,0),allRowsAndLedgerUnchanged:true,result:'ZERO_WRITE'}));
-},{realRunner:true}));
+},{realRunner:true,migrationCount:19}));

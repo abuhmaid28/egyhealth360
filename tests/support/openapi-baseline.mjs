@@ -52,6 +52,15 @@ export function beforeI2Slice5(text) {
 
 /** Exactly strip Slice 6 additions, preserving all older bytes. */
 export function beforeI2Slice6(text) {
- return text.replace(/,\n {4}"\/api\/v1\/consultations\/\{consultationId\}\/follow-up-intents": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
+ return beforeI2Slice7(text).replace(/,\n {4}"\/api\/v1\/consultations\/\{consultationId\}\/follow-up-intents": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
  .replace(/,\n {6}"FollowUpIntentWindow": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
+}
+
+/** Remove only close and its exact additive booking-state/event enum deltas. */
+export function beforeI2Slice7(text) {
+ return text.replace(/,\n {4}"\/api\/v1\/consultations\/\{consultationId\}\/close": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
+  .replace(/,\n {6}"ConsultationClose": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'')
+  .replace(/"OPEN",\n {14}"CLOSE"/g,'"OPEN"')
+  .replace(/"IN_CONSULTATION",\n {14}"CONSULTED"/g,'"IN_CONSULTATION"')
+  .replace(/"BOOKED",\n {14}"NO_SHOW",\n {14}"IN_CONSULTATION"\n {12}\]/g,'"BOOKED",\n              "NO_SHOW"\n            ]');
 }

@@ -1,27 +1,47 @@
-# V3-I2 Slice 7 — Combined exit proof and security review
+# V3-I2 Slice 7 — Combined exit proof and explicit Consultation Close
 
-**I2 exit verdict: BLOCKED.** The merged Slices 1–6 journey can be exercised together, but consultation close remains an unresolved frozen-contract gap. Passing regression or runtime checks do not waive it. Slice 7 is IN REVIEW; no milestone completion, merge or deployment is claimed.
+Consultation Close is implemented under the continuation authorization. Final technical exit verdict, exact head, complete counts and observed Bootstrap results are recorded in PR #63 after validation; pending checks are not described as passed. I2 milestone completion still requires independent review, merge and exact-main verification. Keep PR OPEN / UNMERGED, auto-merge OFF.
 
-## Authority and exact boundary
+## Authority and continuation
 
-- Repository: `abuhmaid28/egyhealth360`.
-- Authoritative base: `b8ed01e4546ac94e52f9fcbec2f23e90b6fc6262`.
-- Base [Bootstrap 41146078616](https://github.com/abuhmaid28/egyhealth360/actions/runs/41146078616): COMPLETED / SUCCESS; postgres 124371388254, static-browser 124371388585, docker-runtime 124371388673, aggregate validate 124377834344.
-- Controlling [Issue #48 comment 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435): verification/security review of merged Slices 1–6, with minimum fixes only for existing frozen invariants.
-- Branch: `feat/v3-i2-slice7-exit-review`; one PR to main, OPEN / UNMERGED, auto-merge OFF. Final exact head, PR and Bootstrap identity/results belong in the PR evidence, after observation.
+[Issue #48 authorization 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435) permits minimum frozen-invariant fixes. [Control Center continuation review 5723355039](https://github.com/abuhmaid28/egyhealth360/pull/63#pullrequestreview-5723355039) explicitly requires this close remediation on the SAME `feat/v3-i2-slice7-exit-review` branch and PR #63. The earlier `ca37f5a2a60904819c70e78f323eeb214ecda880` BLOCKED report was not a completed handoff. Close is an existing frozen I2 §§8/10 invariant, not a new product decision.
 
-The review is a second pass over the merged implementation, contracts, SQL guards, projections, replay and transaction paths, independent of the original slice implementation claims. It does not represent a separate external penetration test or a separate reviewer approval of this PR's fix. Control Center must independently review the final PR head.
+Original base: `b8ed01e4546ac94e52f9fcbec2f23e90b6fc6262`, Bootstrap 41146078616 SUCCESS. Before final full validation, Bootstrap **41211238454** was verified COMPLETED / SUCCESS on exact main `689a9a5c1e8e6d262dfce05a9adc27cc87b01304`, push/main, attempt 1: postgres 124566504438, docker-runtime 124566504590, static-browser 124566504625, aggregate validate 124570081382. Main is normally merged into this same branch; ordered parents/final head belong in PR evidence. No rebase or force push.
 
-## Findings and bounded disposition
+## Findings and minimum fixes
 
-| Finding | Evidence and impact | Disposition |
-|---|---|---|
-| I2-S7-SEC-01, P2: restricted document changed-payload replay disclosed a key conflict | `packages/db/src/documentation.ts` checked the retained operation fingerprint before privacy. After restricting a summary, retrying its DRAFT key with changed content returned 409, while exact replay returned 404. A target-specific RELEASE retry similarly reached conflict before suppression. This distinguished retained restricted operation existence. | Fixed only denial precedence: check the targeted root and retained result's privacy before non-PRIVACY fingerprint conflicts. No schema, route, projection, key scope, history or authority expansion. Authorized unrestricted changed-payload reuse still returns 409; restricted non-PRIVACY retries return uniform 404. PRIVACY's existing safe acknowledgement remains. |
-| I2-S7-EXIT-01: consultation lifecycle cannot reach close | Frozen [I2 §8](V3_I2_CONTRACT.md#8-booking-lifecycle-and-retries) requires IN_CONSULTATION→CONSULTED; [§10](V3_I2_CONTRACT.md#10-consultation-lifecycle-and-encounter-linkage) requires OPEN→CLOSED once with actual close time/actor and no implicit release. Migration 17 constrains state to OPEN and blocks all consultation updates; booking state CHECK/commands omit CONSULTED/CLOSE. `ConsultationPersistence.close()` only shuts down its connection pool. The merged [Slice 6 delta 11](V3_I2_SLICE6.md#repository-wide-reconciliation) explicitly says no close endpoint and immutable OPEN sidecars. | **Unresolved exit blocker / approved-document conflict.** No close implementation or silent contract relaxation in this verification PR. AGENTS.md says “If an Issue conflicts with an accepted ADR or current approved requirement, stop and report the conflict.” The conflicting decision was reported to the owner while independent verification continued. Control Center must resolve the frozen close requirement versus the merged slice exclusion before an I2 PASS; any implementation needs a bounded reviewed migration/API/authority/replay/rollback proof. |
+| Finding | Implementation |
+|---|---|
+| I2-S7-SEC-01, P2: restricted-document changed-payload retry exposed conflict existence | Preserved the privacy-first denial fix. Restricted exact/changed replay denies uniformly; unrestricted changed payload conflicts; existing safe privacy acknowledgement remains. Original red regression reproduced 409 != 404. |
+| I2-S7-EXIT-01: Consultation Close absent | Remediated with the explicit close operation, one additive migration 20, exact current treating authority, immutable server-owned close actor/time/assignment/history and PostgreSQL concurrency/rollback proof. OPEN→CLOSED and IN_CONSULTATION→CONSULTED commit atomically, with no implicit signing, release or clinical completion. |
 
-The privacy fix falls exactly within frozen I2 §§5, 11, 15 and 19: wrong-patient restrictions suppress ordinary existence/references/retries, and scope/privacy denial precedes conflict disclosure. A regression first reproduced **409 != 404** against the unmodified build. The new proof also uses independent PostgreSQL connections and observed `pg_blocking_pids` for privacy COMMIT and ROLLBACK versus changed-payload replay. Privacy commit must yield 404; rollback leaves the original unrestricted key conflict 409; neither retry adds a source/version/operation/audit.
+This is a second pass over merged Slices 1–6 with bounded remediation, not an external penetration-test certification or independent approval of this PR's final fix. Control Center still reviews the final exact head.
 
-No other exploitable defect is claimed from the executed bounded review. Dependency advisories and the actual validation outcomes are recorded separately; tests cannot prove absence of all vulnerabilities.
+## Exact close API and authority
+
+`PUT /api/v1/consultations/{consultationId}/close` accepts exactly `{operationKey,expectedVersion}`; expectedVersion is consultation version (OPEN=1, CLOSED=2). Canonical lowercase UUIDv4; no caller actor, timestamp, patient, status or assignment. Success/exact replay: 200 `{data:{id,encounterId,bookingId,state:"CLOSED",bookingState:"CONSULTED",version:2,closedAt,providerId,clinicId}}`. Internal actor/patient/profile/assignment/membership/affiliation/key/audit values are omitted. No generic consultation read/metadata endpoint. Other methods return 405; HEAD is bodyless.
+
+Only exact booked AND actual treating clinician may close, with valid current session, ACTIVE clinician/current profile, ACTIVE patient/profile, current ACTIVE/null-ended ClinicianPatientAssignment and exact ACTIVE CLINIC, compatible ACTIVE/unended membership, valid provider/specialty/clinic/affiliation without withdrawal. Publication flags are not ongoing clinical authority. A fresh valid assignment can supply current authority after an old opening grant ends; the exact close grant is retained separately. Booking, authorship, role, membership or past success never replaces clinical authority. No patient/ADMIN/LAB/PHARMACY/other-provider shortcut.
+
+Retain strict bounded JSON/decoded duplicate rejection/fatal UTF-8/media/encoding, 16KiB body, 8192-byte headers/2048-byte URL, Origin/Fetch Metadata/session CSRF, no mutation query or Idempotency-Key, no-store/no ETag/Last-Modified/304. Existing safe BOOKING_NOT_FOUND / BOOKING_CONFLICT / BOOKING_UNAVAILABLE error hierarchy. No clinical values/SQL reflected in errors.
+
+## Persistence and locks
+
+One new additive migration `20261031140000_v3_i2_consultation_close` (20 total); all nineteen historical SQL bytes/lockfile unchanged. No new model/table: 48 remain. Add consultation version and nullable close time/actor/assignment/command/key. Existing OPEN rows retain all historical values, gain version 1/NULL close metadata, and receive no fabricated close facts. No destructive data migration/backfill.
+
+The sole legal update is one OPEN→CLOSED transition. Opening/source provenance remains immutable. Append-only CLOSE BookingEvent/BookingOperation retains exact source/result; one genuine `CONSULTATION_CLOSED` audit has DB time and `{}` metadata. Row/deferred guards require both terminal states, correct current close grant, matching operation/result/event and current-transaction audit, and reject an orphan close operation or fabricated OPEN/CLOSE booking chain without a consultation/encounter. SQL cannot inject close time or reopen/retarget history. Ordinary guards are not database-session authentication and do not resist schema owners/superusers.
+
+Canonical prefix: compatible M1 table intents → sorted involved Users NO KEY UPDATE → exact Session UPDATE/current checks → ClinicianProfile SHARE → current Assignment SHARE → PatientProfile SHARE → existing directory/organization/membership/affiliation order → settings SHARE → patient EH2P then clinician EH2C advisory → slot UPDATE → booking UPDATE → consultation UPDATE / encounter SHARE → retained operation/history/audit. Current authority is checked after waits, before mutation and before commit. READ COMMITTED, 5s acquisition/lock, 10s statement, 30s transaction; no automatic retry, late User lock or legacy lock-order change.
+
+Ledger scope `(actorUserId,CLOSE,operationKey)` with canonical consultation/expectedVersion fingerprint. Exact replay rechecks current authority and returns the same retained result with no duplicate history/audit. Changed payload/target conflicts after scope authorization. Rollback consumes no key and leaves no partial state. Released documents and FollowUpIntent remain independent; explicit author commands after close still require their own current authority/privacy. Close never signs/releases drafts, creates/completes CareAction, invokes EACCE, creates ClosureAssessment, prescribes, orders labs or triggers pharmacy behavior.
+
+## New close evidence
+
+- Core/HTTP: atomic states, actual actor/time/close grant, exact replay, current authority/role/IDOR, caller-identity/time injection and parser/browser security; no implicit release; independent explicit release after close; illegal cancel/reschedule/no-show/correction denied.
+- Independent PostgreSQL close-vs-close distinct/same keys and winner rollback; both-order assignment ending/session revoke/clinician and patient disable/org suspension/membership end/affiliation withdrawal; observed `pg_blocking_pids`; expiry after wait and tentative audit; audit failure, real timeout/external deadlock, reusable keys and no automatic retry.
+- Direct SQL partial/missing operation/audit/result/orphan-chain/provenance/terminal mutation rejection.
+- Populated real-runner 19→20 preserves all original values/ledger/checksums and fabricates zero closes; OPEN and CLOSED repeat deploy/status ZERO_WRITE. Original populated 19-repeat proof remains explicitly pinned to 19.
+- Combined runtime **v2** executes genuine HTTP/database-clock close between private drafts and independent explicit releases: 17 assertions. All existing Docker runtimes and real Browser→Next→Nest→PostgreSQL regression remain.
 
 ## Combined coverage and evidence map
 
@@ -33,7 +53,7 @@ Existing slice suites remain intact. New coverage composes their actual services
 | Idempotency, replay abuse, actor/command/module key scope | Existing booking/documentation/intent HTTP and race suites; new `v3-i2-security-exit.test.mjs` reuses one UUID across modules/commands, tests actor independence, changed-payload conflicts, unauthorized replay, immutable retained counts and restricted replay denial. |
 | Cancel, atomic reschedule commit/rollback, attendance/no-show | Existing real PostgreSQL booking races/integrity suites and real-clock booking runtime. No-show is explicit; corrections do not reopen terminal reservations. Opening races retain cancel/reschedule/no-show exclusion. |
 | Clinical grant, current authority, revocation/expiry, disabled identities, source org/member/affiliation loss | Existing opening/documentation concurrency and full Slice 6 authority matrix (both orderings and rollback); new combined withdrawal and suspension checks across both clinical modules. No booking/role/author shortcut. |
-| Consultation exact provenance, current relationship, cross-provider/patient isolation | Opening integrity/HTTP/concurrency suites and combined persisted booking/encounter/patient/booked/treating/recorder assertions. New cross-provider link tests confirm logistics creates zero target-provider clinical authority. **Close remains blocked as above.** |
+| Consultation exact provenance, current relationship, cross-provider/patient isolation | Opening integrity/HTTP/concurrency suites and combined persisted booking/encounter/patient/booked/treating/recorder assertions. New cross-provider link tests confirm logistics creates zero target-provider clinical authority. Explicit close is covered by the new core, concurrency, integrity, upgrade and HTTP journey proofs. |
 | Human complaints/problems/diagnoses/allergy uncertainty, private note author-only, released summaries, immutable correction/addenda/history | Existing documentation unit/HTTP/integrity/concurrency/populated upgrade and runtime; new composed journey checks explicit human values, unreleased/private canaries, explicit release, patient HEAD and withdrawn-author denial. |
 | Privacy/IDOR/reference/count/history suppression | Existing documentation and intent privacy suites plus new independent same-consultation restrictions, linked-booking/reference suppression, wrong-patient cancelled versus nonexistent target uniform 404, changed replay and observed privacy races. No cross-module automatic privacy propagation. |
 | Intent draft/release/correction/link/replacement, other-provider same patient | All retained `follow-up-intents*.test.mjs`, including cross-provider and replacement races; new composed HTTP link/isolation/security checks. Booking and linking remain explicit independent commands. |
@@ -46,8 +66,7 @@ Existing slice suites remain intact. New coverage composes their actual services
 
 Full Golden Journey A is still incomplete pending separately authorized I3. No prescriptions, medication catalog, lab/results, pharmacy, EACCE, notifications, AI diagnosis or unrelated frontend work is included. Synthetic data only; no real-patient or production-readiness claim.
 
-## Review limits and next gate
 
-Database guards protect ordinary writes, not a schema owner/superuser disabling guards. Expiry checks are check-time protections; an already authorized response is not recalled. Current-authority and privacy guarantees remain the frozen ones. Historical slice validation reports are retained unchanged and are not represented as new runs.
+## Final gate and limits
 
-[Validation record](V3_I2_SLICE7_VALIDATION.md) distinguishes local observations, deliberate red regression, interrupted attempts and final exact-head CI. The next gate is independent Control Center review of this exact PR head and resolution of I2-S7-EXIT-01. This PR must remain OPEN / UNMERGED with auto-merge OFF.
+[Validation record](V3_I2_SLICE7_VALIDATION.md) separates focused/local evidence, historical attempts and final exact-head CI. Final PR evidence supplies actual head, merge parents, run/jobs, counts and verdict after inspection. Independent final-head review remains required; DO NOT MERGE. Expiry is check-time protection, not recall of authorized responses. No frontend implementation, I3, EACCE, prescription/catalog/lab/pharmacy/notifications/AI or deployment work.

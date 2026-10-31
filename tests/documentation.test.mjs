@@ -15,7 +15,7 @@ test('I2S5 seventeen historical migration hashes and exact appended API/model in
  const {readFile,readdir}=await import('node:fs/promises'),{createHash}=await import('node:crypto'),{beforeI2Slice5}=await import('./support/openapi-baseline.mjs');
  const hashes=JSON.parse(await readFile('tests/fixtures/v3-i2-slice5-migration-checksums.json','utf8'));assert.equal(Object.keys(hashes).length,17);
  for(const [name,hash] of Object.entries(hashes))assert.equal(createHash('sha256').update(await readFile('packages/db/prisma/migrations/'+name+'/migration.sql')).digest('hex'),hash);
- const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();assert.equal(names.length,19);assert.equal(names[17],'20261030090000_v3_i2_consultation_documentation');
+ const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();assert.equal(names.length,20);assert.equal(names[17],'20261030090000_v3_i2_consultation_documentation');
  const {beforeI2Slice6}=await import('./support/openapi-baseline.mjs');const raw=beforeI2Slice6(await readFile('docs/openapi.json','utf8')),base=beforeI2Slice5(raw),api=JSON.parse(raw),old=JSON.parse(base);assert.equal(createHash('sha256').update(base).digest('hex'),'59ff2ec82fa623a06d13dad897bc3829eb1c671a49daea35f82424c97a5f4e32');
  const paths=Object.keys(api.paths).slice(Object.keys(old.paths).length);assert.equal(paths.length,11);assert.ok(paths.every(p=>p.includes('/documents')||p.includes('/summaries')));
  const schema=await readFile('packages/db/prisma/schema.prisma','utf8');assert.equal([...schema.matchAll(/^model /gm)].length,48);assert.doesNotMatch(schema,/model (Prescription|LabOrder)\b/);

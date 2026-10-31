@@ -125,6 +125,19 @@ export async function proveI2Journey() {
       for(const who of ['journey','other','admin','lab','pharmacy'])for(const path of [docs,intents])
         assert.equal((await request(path,{who})).status,404);
     });
+    await check('explicit real HTTP close atomically persists CLOSED/CONSULTED without implicit signing or release',async () => {
+      const path='/consultations/'+c.id+'/close',body={operationKey:key,expectedVersion:1};
+      const closed=await request(path,{who:'clinician',method:'PUT',body});assert.equal(closed.status,200,closed.raw);
+      assert.equal(closed.json.data.state,'CLOSED');assert.equal(closed.json.data.bookingState,'CONSULTED');
+      const row=(await f.pool.query('SELECT state,closed_at,closed_by_user_id FROM consultations WHERE id=$1',[c.id])).rows[0];
+      assert.equal(row.state,'CLOSED');assert.equal(row.closed_at.toISOString(),closed.json.data.closedAt);assert.equal(row.closed_by_user_id,f.users.clinician.id);
+      assert.equal((await request('/me/bookings/'+booking.id,{who:'journey'})).json.data.state,'CONSULTED');
+      assert.equal((await request('/me/summaries',{who:'journey'})).json.meta.total,0);
+      assert.equal((await request('/me/follow-up-intents',{who:'journey'})).json.meta.total,0);
+      assert.equal((await f.pool.query('SELECT state FROM consultation_document_versions WHERE id=$1',[privateNote.json.data.versions[0].id])).rows[0].state,'DRAFT');
+      assert.deepEqual((await request(path,{who:'clinician',method:'PUT',body})).json,closed.json);
+      assert.equal((await f.pool.query("SELECT count(*)::int n FROM audit_logs WHERE action_type='CONSULTATION_CLOSED'")).rows[0].n,1);
+    });
     const root=docs+'/'+summary.json.data.id, intentRoot=intents+'/'+intent.json.data.id;
     const released=await request(root+'/sign-release',{who:'clinician',method:'POST',body:{expectedVersion:1,operationKey:key}});
     const releasedIntent=await request(intentRoot+'/sign-release',{who:'clinician',method:'POST',body:{expectedVersion:1,operationKey:key}});
@@ -179,7 +192,7 @@ export async function proveI2Journey() {
       assert.equal((await f.pool.query('SELECT count(*)::int n FROM follow_up_intent_versions')).rows[0].n,2);
     });
   });
-  return {manifest:'eh-v3-i2-slice7-combined-journey-proof-v1',result:'PASS',cases:cases.length,caseNames:cases,
+  return {manifest:'eh-v3-i2-slice7-combined-journey-proof-v2',result:'PASS',cases:cases.length,caseNames:cases,
     realHttp:true,realPostgreSqlClock:true,isolatedSyntheticDatabase:true,
-    scope:'Merged Slices 1–6 journey; lifecycle close is assessed separately in the exit verdict'};
+    scope:'Bounded I2 journey including explicit close; no I3 or EACCE'};
 }

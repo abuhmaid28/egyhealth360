@@ -91,7 +91,7 @@ export {AvailabilityError,availabilityExact,availabilityId,availabilityInteger,a
 export {createBookingPersistence,BookingError,bookingInput} from './bookings.js';
 export type {BookingPersistence} from './bookings.js';
 
-export {createConsultationPersistence,consultationInput} from './consultations.js';
+export {createConsultationPersistence,consultationInput,consultationCloseInput} from './consultations.js';
 export type {ConsultationPersistence} from './consultations.js';
 
 export {createDocumentationPersistence} from './documentation.js';

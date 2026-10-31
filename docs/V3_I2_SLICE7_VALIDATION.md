@@ -1,32 +1,27 @@
 # V3-I2 Slice 7 — Validation record
 
-Scope/base/authority/findings and **I2 exit BLOCKED** are in the [exit review](V3_I2_SLICE7_EXIT_REVIEW.md). Baseline Bootstrap 41146078616 SUCCESS is base evidence only. Final PR body records the observed final head/run/job/event/attempt/conclusion and complete counts after CI; do not infer candidate success from the base run.
+The [current exit review](V3_I2_SLICE7_EXIT_REVIEW.md) describes explicit close, the preserved privacy fix and full coverage. Final verdict/counts/exact head/Bootstrap evidence are recorded in PR #63 after logs are inspected; no pending run is described as successful. PR OPEN / UNMERGED; auto-merge OFF.
 
-## Local environment and commands
+## Continuation gate and focused proof
 
-Pinned Node 24.21.0 and pnpm 10.34.6 installed in a task-local tool directory; frozen install with no dependency/lockfile changes. PostgreSQL 18.6 runs in Docker on a disposable local database. The 8 GB executor uses Docker vfs; full application-image build/runtime is assigned to the unchanged exact-head `docker-runtime` lane rather than exhausting this host's disk. No gate is skipped or weakened in CI.
+Review [5723355039](https://github.com/abuhmaid28/egyhealth360/pull/63#pullrequestreview-5723355039) authorizes close on this same branch/PR. Bootstrap 41211238454 was verified COMPLETED / SUCCESS on exact main `689a9a5c1e8e6d262dfce05a9adc27cc87b01304` (push/main, attempt 1, aggregate 124570081382) before normal main merge and final full validation. No rebase, new branch/PR or force push.
 
-Executed commands include frozen install, generate/workspace build, Prisma validate, typecheck, lint, unit tests, historical migration verification, focused documentation/security/integrity/concurrency suites, latest-schema populated repeat deploy/status, controlled browser and real browser checks, production/full HIGH audits and the composed runtime. Final outcomes are reported only when the corresponding command completes.
+Focused close core/HTTP **3/3 PASS**; real PostgreSQL concurrency/current-authority/expiry/audit/timeout/deadlock **21/21 PASS**; SQL integrity **5/5 PASS**. Direct-SQL review strengthened only the new deferred guard to reject an orphan CLOSE ledger or fabricated OPEN/CLOSE booking chain without a consultation. Real blocker/waiter PIDs, exact commit/rollback and durable counts are asserted; no sleep-only race proof. Expiry at both positions and audit failure prove complete rollback and reusable key. No automatic retry or legacy lock-order change.
 
-Initial composed real-HTTP/database-clock journey: **16 assertions PASS**. New latest-schema populated repeat proof: **48 domain tables / 19 migration rows / 108 retained domain rows**, exact full snapshot and ledger unchanged, **ZERO_WRITE**. Historical populated upgrade suites remain separate and retain every historical row/checksum assertion.
+Focused input/API/checksum unit **36/36 PASS**. New API helper strips only the one appended close path, two schemas and exact booking-state/event enum additions, restoring previous OpenAPI SHA256 `da32158718b0475d44c9b4bdcee495cd165814de0b8ba11a2fe3d5c2e3ada8cb`. Every prior API/hash assertion remains. All nineteen historical SQL byte hashes/lockfile remain; the total inventory extends exactly to 20, with 48 models/tables unchanged.
 
-## Deliberate regression and minimum fix
+Populated real-runner **19→20 PASS**: all 48 historical domain tables and 86 retained rows' original values unchanged; original nineteen ledger entries/checksums retained; old consultations remain OPEN/version 1 with NULL close metadata; zero fabricated close facts. Repeat deploy/status is **ZERO_WRITE** on both OPEN and genuinely CLOSED datasets. The original 19-schema populated repeat is explicitly run against migration count 19.
 
-`node --env-file=.env --test --test-name-pattern='independent document/intent privacy' tests/integration/v3-i2-security-exit.test.mjs` reproduced I2-S7-SEC-01 before the source fix: **1 failed, actual 409 / expected 404**. This is retained red evidence, not a passing run. The fix moves targeted/retained-result privacy checks before non-PRIVACY operation fingerprint conflicts, without changing any SQL/schema/route/authority or immutable source.
+Extended composed Journey A executed close through genuine HTTP/database time, verified CLOSED/CONSULTED and one audit, no signing/release, then independently released records and linked a follow-up booking. Manifest `eh-v3-i2-slice7-combined-journey-proof-v2`, **17 assertions**, no runtime time/trigger/assignment bypass. The final image must execute v2 in the unchanged Docker lane.
 
-New independent PostgreSQL race cases hold a real privacy transaction after INSERT, observe the retry's blocker PID through `pg_blocking_pids`, then commit or force rollback. A committed restriction must deny changed-payload replay with DOCUMENT_NOT_FOUND; rollback must preserve DOCUMENT_CONFLICT. Exact version/operation counts remain unchanged by either rejected retry.
+## Final full validation gate
 
-## Attempt accounting
+Pinned Node 24.21.0 / pnpm 10.34.6; frozen install, generate, lint, Prisma validate, build/typecheck/unit, historical/fresh/populated/repeat migrations, complete integration, controlled/real browser, auth measurements, both HIGH audits, Docker config/build/health/container tests/all accepted runtimes/v2 journey/smoke/cleanup remain required. Existing accelerated lanes and fail-closed aggregate are unchanged. The 8 GB/vfs executor uses disposable Docker PostgreSQL locally; full app-image/runtime proof can use exact-head CI. No gate is waived.
 
-- An initial broad local integration invocation was interrupted to rebuild the discovered privacy fix; it is not complete passing evidence.
-- The first real-browser command did not load the local `.env` and refused to run without DATABASE_URL. It is a failed invocation, not application regression evidence; the corrected command explicitly loads the private local environment file.
-- Initial lint identified missing Node/global qualifications in the new test helper; those test-only errors were corrected before final lint/CI.
-- Focused counts overlap aggregate integration counts and must not be added to them.
+Final exact head, normal merge parents, PR, run/event/attempt/jobs, actual counts/audits/cleanup belong in final PR evidence after observation. Focused counts overlap aggregate counts and are not added. Technical PASS is not milestone merge/completion; independent final-head review and later exact-main verification remain separate.
 
-Production and full audits keep the existing HIGH gate: local observations **0 HIGH / 0 CRITICAL**; production has 2 LOW / 3 MODERATE, full has 2 LOW / 5 MODERATE. Advisory data can change independently of the unchanged lockfile. Exact-head CI supplies its own observed audit outcome. Nothing is suppressed, updated or reclassified by this PR.
+## Historical first checkpoint — not a completed handoff
 
-## Required exact-head acceptance evidence
+`ca37f5a2a60904819c70e78f323eeb214ecda880` / Bootstrap 41152598210 passed 256 unit / 1105 integration / 7 container auth and old 16-case v1 journey but did not implement close. Its BLOCKED report was not a completed handoff and does not validate the continuation head.
 
-All existing static-browser, postgres and docker-runtime steps remain; one combined runtime command is appended after the existing Slice 6 runtime. Fail-closed aggregate `validate` still requires success from all three lanes. Full integration includes all historical authorization/migrations/clinical/availability/booking/documentation/intent regressions and all new exit tests. Docker must also pass every accepted runtime, auth measurement/container tests, API/web smoke and unconditional cleanup. Browser proof remains real Browser→Next→Nest→PostgreSQL where the existing suite specifies it.
-
-Final head/PR/run IDs, job outcomes, test totals, runtime manifests and cleanup are recorded in the final PR evidence after actual logs are inspected, avoiding a self-referential commit that claims CI for its own untested SHA. Unresolved consultation close remains an exit blocker even if all executable checks pass. Independent review is still required; DO NOT MERGE.
+The original privacy red regression reproduced 409 != 404 before the preserved minimum fix. Initial local lint had test-only missing Node/global qualifications (corrected); the first real-browser invocation lacked DATABASE_URL and refused (corrected command passed). One pre-fix broad local run was interrupted for rebuilding. A later duplicate hit an unchanged EH-014 case's 45s bound; that case passed alone without code/timeout changes and in completed prior full CI. Neither interrupted aggregate is claimed green. Historical warnings/audit counts do not substitute for the final head's observed results.

@@ -20053,6 +20053,256 @@
           }
         }
       }
+    },
+    "/api/v1/consultations/{consultationId}/close": {
+      "put": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Explicitly close the exact treating consultation",
+        "description": "Current exact booked and actual treating ACTIVE clinician, valid current session/profile, ACTIVE/null-ended assignment and exact active clinic/organization/compatible membership/provider/affiliation authority. Atomic OPEN to CLOSED and IN_CONSULTATION to CONSULTED. Server-owned actual closedAt, exact close actor and assignment; immutable opening and close event/operation/audit provenance. expectedVersion is the consultation version (OPEN=1). Exact actor/command/key replay returns the retained result after current authority; changed payload conflicts only after scope authorization; rollback leaves the key reusable. No implicit private-note signing, summary or FollowUpIntent release, CareAction completion, EACCE or I3 behavior. Strict PUT operationKey/expectedVersion only, canonical UUIDv4, bounded JSON/fatal UTF8/duplicate rejection, Origin/Fetch Metadata/session CSRF, no mutation query or Idempotency-Key; no-store; all other methods including HEAD return 405 (HEAD bodyless).",
+        "responses": {
+          "400": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "BOOKING_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "BOOKING_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Request verification failed.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_CSRF_INVALID",
+                      "message": "Request verification failed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "BOOKING_CONFLICT",
+                      "message": "Conflicting booking operation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_TOO_LARGE",
+                      "message": "Request too large."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_CONTENT_TYPE_INVALID",
+                      "message": "Unsupported content type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Exact logistics projection",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsultationClosingResponse"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsultationClose"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "consultationId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -21166,14 +21416,16 @@
               "RESCHEDULE",
               "ATTEND",
               "CORRECT",
-              "OPEN"
+              "OPEN",
+              "CLOSE"
             ]
           },
           "fromState": {
             "enum": [
               null,
               "BOOKED",
-              "NO_SHOW"
+              "NO_SHOW",
+              "IN_CONSULTATION"
             ]
           },
           "toState": {
@@ -21182,7 +21434,8 @@
               "CANCELLED",
               "RESCHEDULED",
               "NO_SHOW",
-              "IN_CONSULTATION"
+              "IN_CONSULTATION",
+              "CONSULTED"
             ]
           },
           "recordedAt": {
@@ -21295,7 +21548,8 @@
               "CANCELLED",
               "RESCHEDULED",
               "NO_SHOW",
-              "IN_CONSULTATION"
+              "IN_CONSULTATION",
+              "CONSULTED"
             ]
           },
           "version": {
@@ -23022,6 +23276,90 @@
                 "type": "integer",
                 "minimum": 0,
                 "maximum": 2147483647
+              }
+            }
+          }
+        }
+      },
+      "ConsultationClose": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          }
+        }
+      },
+      "ConsultationClosingResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "encounterId",
+              "bookingId",
+              "state",
+              "bookingState",
+              "version",
+              "closedAt",
+              "providerId",
+              "clinicId"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "encounterId": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "bookingId": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "providerId": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "clinicId": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+              },
+              "state": {
+                "const": "CLOSED"
+              },
+              "bookingState": {
+                "const": "CONSULTED"
+              },
+              "version": {
+                "const": 2
+              },
+              "closedAt": {
+                "type": "string",
+                "format": "date-time"
               }
             }
           }
