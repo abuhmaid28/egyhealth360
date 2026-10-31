@@ -231,5 +231,49 @@
       "passes": 29
     }
   ],
-  "errors": []
+  "errors": [],
+  "pointerActions": [
+    {
+      "locale": "en",
+      "width": 1440,
+      "pointerActionActivated": true,
+      "draftEditorReset": true,
+      "clinicalWrites": 0
+    },
+    {
+      "locale": "en",
+      "width": 834,
+      "pointerActionActivated": true,
+      "draftEditorReset": true,
+      "clinicalWrites": 0
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "pointerActionActivated": true,
+      "draftEditorReset": true,
+      "clinicalWrites": 0
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "pointerActionActivated": true,
+      "draftEditorReset": true,
+      "clinicalWrites": 0
+    },
+    {
+      "locale": "ar",
+      "width": 834,
+      "pointerActionActivated": true,
+      "draftEditorReset": true,
+      "clinicalWrites": 0
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "pointerActionActivated": true,
+      "draftEditorReset": true,
+      "clinicalWrites": 0
+    }
+  ]
 }

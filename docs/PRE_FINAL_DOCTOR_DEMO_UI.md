@@ -92,7 +92,7 @@ post-close cancellation and attendance return HTTP 409. No browser exceptions.
 The visual matrix covers 119 screen/locale/width combinations across 14 screens:
 1440/1200/1024/834/768/560/390 English and representative 1440/834/390 Arabic.
 
-The final frontend candidate is deployment `dpl_CZK3nQQgYSi9wALU1m8vRKr9KRv7`
+The final frontend candidate is deployment `dpl_E8HY54CoDEHwXDgeJHcjqvkAbmSK`
 in the existing staging project. Its stable URL is
 [pre-final Live staging](https://egyhealth360-pre-final-staging-abuhmaid2810gmailcoms-projects.vercel.app/).
 Final CSS/height-observer refinements were checked through read-only hosted
@@ -106,7 +106,9 @@ has 4.76:1 contrast; normal primary button text is 6.89:1 and muted canvas text
 checks, not treated as automatic conformance certification. The sticky header
 tracks its actual wrapped height; real hosted links remain unobscured at all
 seven widths. Controlled EN/AR tests cover the same seven widths, modal focus,
-Escape, pending dismissal guards and explicit release/close boundaries. Language
+Escape, pending dismissal guards and explicit release/close boundaries. Six additional hosted EN/AR pointer checks at 1440/834/390 confirm separate-summary
+draft actions activate and reset the editor, with zero clinical writes. Focus scrolling
+respects visible keyboard focus so pointer action targets stay in place. Language
 and icon controls use 44px targets. Status always includes text.
 
 Evidence is synthetic, token-free, and committed for later slides/PDF use:

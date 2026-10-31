@@ -116,7 +116,8 @@ function ScopedWorkspace({
       const field = event.target;
       const ribbon = ribbonElement.current;
       if (!ribbon || ribbon.contains(field) || field.closest('dialog') ||
-        !field.matches('input, textarea, select, button, a')) return;
+        !field.matches('input, textarea, select, button, a') ||
+        !field.matches(':focus-visible')) return;
       const bounds = field.getBoundingClientRect();
       if (bounds.top < ribbon.getBoundingClientRect().bottom + 8 || bounds.bottom > window.innerHeight)
         field.scrollIntoView({ block: 'start', behavior: 'instant' });

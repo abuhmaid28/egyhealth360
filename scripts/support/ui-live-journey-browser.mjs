@@ -110,7 +110,7 @@ export async function testLiveJourney(browser, origin, shots) {
     calls.length = 0;
     failProfile = true;
     await page.goto(origin + "/patient");
-    await page.getByRole("alert").waitFor();
+    await page.locator(".patient-identity-card").getByRole("alert").waitFor();
     await page.getByRole("heading", { name: t("Make room for your next visit"), exact: true }).waitFor();
     assert.ok(calls.includes("/api/v1/me/bookings"));
     assert.ok(!calls.some(path => /blood-pressure|clinical-encounters|follow-up-appointments/.test(path)));
