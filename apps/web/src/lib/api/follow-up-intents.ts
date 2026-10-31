@@ -285,6 +285,7 @@ export function createLiveFollowUpApi(
             "RESCHEDULED",
             "NO_SHOW",
             "IN_CONSULTATION",
+            "CONSULTED",
           ].includes(String(l.bookingState))
         )
           return fail();

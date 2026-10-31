@@ -1,3 +1,4 @@
+import { createConsultationCloseApi, CloseUiError } from "./consultation-close";
 import { createLiveFollowUpApi, followUpHttpError } from "./follow-up-intents";
 import {
   createLiveDocumentationApi,
@@ -40,9 +41,16 @@ export function createLiveAdapter(): HealthcareAdapter {
       sessionIdentity = "";
       liveBookings.clearCommands();
       consultationOpening.clear();
+      consultationClose.clear();
       documentation.clear?.("expired");
       followUpIntents.clear("expired");
     }
+    if (
+      !response.ok &&
+      (path.endsWith("/close") ||
+        (path.endsWith("/consultation") && init?.method !== "POST"))
+    )
+      throw new CloseUiError(response.status, !path.endsWith("/close"));
     if (!response.ok && /\/follow-up-intents(?:\/|\?|$)/.test(path))
       throw followUpHttpError(response.status, init?.method === "POST");
     if (
@@ -89,6 +97,7 @@ export function createLiveAdapter(): HealthcareAdapter {
     if (sessionIdentity && sessionIdentity !== identity) {
       liveBookings.clearCommands();
       consultationOpening.clear();
+      consultationClose.clear();
       documentation.clear?.();
       followUpIntents.clear();
     }
@@ -103,6 +112,7 @@ export function createLiveAdapter(): HealthcareAdapter {
     );
   };
   const liveBookings = createLiveBookingApi(request, () => csrf);
+  const consultationClose = createConsultationCloseApi(request, () => csrf);
   const consultationOpening = createConsultationOpeningApi(request, () => csrf);
   const documentation = createLiveDocumentationApi(request, () => csrf);
   const followUpIntents = createLiveFollowUpApi(request, () => csrf);
@@ -112,6 +122,7 @@ export function createLiveAdapter(): HealthcareAdapter {
     documentation,
     liveDocumentation: documentation,
     consultationOpening,
+    consultationClose,
     liveBookings,
     async session() {
       try {
@@ -121,6 +132,7 @@ export function createLiveAdapter(): HealthcareAdapter {
         sessionIdentity = "";
         liveBookings.clearCommands();
         consultationOpening.clear();
+        consultationClose.clear();
         documentation.clear?.("expired");
         followUpIntents.clear("expired");
         return null;
@@ -149,6 +161,7 @@ export function createLiveAdapter(): HealthcareAdapter {
       sessionIdentity = "";
       liveBookings.clearCommands();
       consultationOpening.clear();
+      consultationClose.clear();
     },
     async providers() {
       return (

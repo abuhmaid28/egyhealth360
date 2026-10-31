@@ -11385,6 +11385,248 @@
             }
           }
         ]
+      },
+      "get": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "REQUEST_INVALID",
+                      "message": "Invalid request."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "BOOKING_NOT_FOUND",
+                      "message": "Not found."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "METHOD_NOT_ALLOWED",
+                      "message": "Method not allowed."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "BOOKING_UNAVAILABLE",
+                      "message": "Service unavailable."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "const": {
+                    "error": {
+                      "code": "AUTH_UNAUTHENTICATED",
+                      "message": "Authentication required."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Exact logistics projection",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ConsultationContext"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bookingId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "summary": "Recover current treating consultation context for this exact booking",
+        "description": "Bounded I2 Live recovery only. Exact booked and actual treating clinician with current session, active patient relationship and current clinician/clinic/membership/provider/affiliation authority. Publication hiding alone does not end clinical authority. OPEN or CLOSED state and version; no clinical content, patient identifiers, authority identifiers or operation keys. Zero writes. Canonical path, no query or request body; no-store; HEAD is bodyless. Other roles and inaccessible or unopened consultations receive uniform 404."
+      },
+      "head": {
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Current minimized projection. No ETag, Last-Modified or 304.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Exact logistics projection",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bookingId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "summary": "Bodyless current consultation context check",
+        "description": "Bounded I2 Live recovery only. Exact booked and actual treating clinician with current session, active patient relationship and current clinician/clinic/membership/provider/affiliation authority. Publication hiding alone does not end clinical authority. OPEN or CLOSED state and version; no clinical content, patient identifiers, authority identifiers or operation keys. Zero writes. Canonical path, no query or request body; no-store; HEAD is bodyless. Other roles and inaccessible or unopened consultations receive uniform 404."
       }
     },
     "/api/v1/consultations/{consultationId}/documents": {
@@ -23369,6 +23611,112 @@
             }
           }
         }
+      },
+      "ConsultationContext": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "encounterId",
+          "bookingId",
+          "providerId",
+          "clinicId",
+          "state",
+          "bookingState",
+          "openedAt",
+          "version",
+          "closedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "encounterId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "bookingId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "providerId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "clinicId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "state": {
+            "enum": [
+              "OPEN",
+              "CLOSED"
+            ]
+          },
+          "bookingState": {
+            "enum": [
+              "IN_CONSULTATION",
+              "CONSULTED"
+            ]
+          },
+          "openedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "enum": [
+              1,
+              2
+            ]
+          },
+          "closedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "state": {
+                "const": "OPEN"
+              },
+              "bookingState": {
+                "const": "IN_CONSULTATION"
+              },
+              "version": {
+                "const": 1
+              },
+              "closedAt": {
+                "type": "null"
+              }
+            }
+          },
+          {
+            "properties": {
+              "state": {
+                "const": "CLOSED"
+              },
+              "bookingState": {
+                "const": "CONSULTED"
+              },
+              "version": {
+                "const": 2
+              },
+              "closedAt": {
+                "type": "string"
+              }
+            }
+          }
+        ]
       }
     }
   }

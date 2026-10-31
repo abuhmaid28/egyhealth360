@@ -56,6 +56,8 @@ try {
     await api.listen(0, "127.0.0.1");
     const backend = await api.getUrl();
     const networkFault = {
+      dropNextCloseSuccess: false,
+      closesDropped: 0,
       dropNextOpeningSuccess: false,
       dropped: 0,
       dropDocumentSuffix: "",
@@ -70,6 +72,13 @@ try {
         (r) => {
           // A genuine committed response is lost once, not replaced by a fake
           // backend outcome. The user must explicitly retry the same command.
+          if (networkFault.dropNextCloseSuccess && incoming.method === "PUT" && incoming.url.endsWith("/close") && r.statusCode === 200) {
+            networkFault.dropNextCloseSuccess = false;
+            networkFault.closesDropped++;
+            r.resume();
+            r.once("end", () => outgoing.destroy());
+            return;
+          }
           if (
             networkFault.dropNextOpeningSuccess &&
             incoming.url.endsWith("/consultation") &&

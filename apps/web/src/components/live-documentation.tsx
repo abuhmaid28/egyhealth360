@@ -1,4 +1,6 @@
 "use client";
+import { ConsultationCloseCard } from "./consultation-close";
+import type { ConsultationContext } from "../lib/api/consultation-close";
 import { FollowUpScreen } from "./follow-up-intents";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -19,7 +21,7 @@ export function LiveDocumentationWorkspace({
   const { api } = useApp();
   const { t } = useLocale();
   const resource = useResource(async () => {
-    const receipt = api.consultationOpening?.receipt(bookingId);
+    const receipt = await api.consultationClose?.context(bookingId);
     if (!receipt || !api.liveBookings || !api.liveDocumentation)
       throw new DocumentationError("context");
     const [booking, providers, clinics] = await Promise.all([
@@ -62,11 +64,22 @@ function ScopedWorkspace({
 }: {
   providerName: string;
   clinicName: string;
-  receipt: import("../lib/api/consultation-opening").OpeningReceipt;
+  receipt: ConsultationContext;
   booking: import("../lib/api/live-booking").LiveBooking;
 }) {
   const { api } = useApp();
   const { t } = useLocale();
+  const [lifecycle, setLifecycle] = useState(receipt);
+  const documentation = useMemo(
+    () => ({
+      receipt,
+      patientName: booking.patientDisplayName,
+      providerName,
+      clinicName,
+      timeZone: booking.timeZone,
+    }),
+    [receipt, booking, providerName, clinicName],
+  );
   const service = useMemo(
     () =>
       api.liveDocumentation!.forConsultation({
@@ -84,12 +97,20 @@ function ScopedWorkspace({
   );
   return (
     <>
+      <ConsultationCloseCard
+        context={lifecycle}
+        documentation={documentation}
+        update={setLifecycle}
+      />
       <nav
         className="documentation-action-row"
         aria-label={t("Consultation steps")}
       >
         <a className="button secondary" href="#live-documentation">
           {t("Clinical documentation")}
+        </a>
+        <a className="button secondary" href="#review-close">
+          {t("Review & close consultation")}
         </a>
         <a className="button secondary" href="#live-follow-up">
           {t("Follow-up instructions")}

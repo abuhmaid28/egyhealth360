@@ -1,5 +1,9 @@
 # EgyHealth 360 — Project State
 
+## Current I2 Live Demo Closeout sprint
+
+PR #63 is merged at authoritative sprint base `43d9f28db2cbff4d604e97bb5bfdb353759ee699`. [Issue #48 closeout authorization](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6545624864) explicitly authorizes the bounded graduation-demo UI/Live work. The [closeout delivery record](V3_UI_I2_LIVE_CLOSEOUT.md) describes explicit real close, reload-safe current-authority recovery, truthful CLOSED/CONSULTED views, EN/AR/RTL and real browser proof. One active sprint; I3 NOT AUTHORIZED; EACCE NOT STARTED. No hosted Live deployment or merge is claimed. The Slice 7/pre-merge status sections below preserve historical evidence and do not reopen the merged backend work or override this sprint authorization.
+
 ## Current Slice 7 exit-review boundary
 
 [Issue #48 authorization 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435) and [PR #63 continuation review 5723355039](https://github.com/abuhmaid28/egyhealth360/pull/63#pullrequestreview-5723355039) authorize the bounded Consultation Close remediation in this same Slice 7 branch/PR. Explicit OPEN→CLOSED / IN_CONSULTATION→CONSULTED, current exact treating authority, immutable server-owned close provenance and safe replay are implemented through one additive migration 20; all nineteen historical SQL bytes and the restricted-document replay fix remain preserved. [Current exit review](V3_I2_SLICE7_EXIT_REVIEW.md) and exact-head PR evidence govern the verdict; the earlier BLOCKED checkpoint is superseded by this continuation. Final full validation and independent exact-head review remain required. PR OPEN / UNMERGED; auto-merge OFF; I3 NOT AUTHORIZED; EACCE NOT STARTED. No frontend or deployment changes in this track.

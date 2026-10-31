@@ -71,6 +71,10 @@ export async function testConsultationOpening(browser, origin, shots) {
             },
           },
         });
+      if (path.endsWith("/consultation") && req.method() === "GET") return route.fulfill({ json: { data: {
+        id:id(8),encounterId:id(9),bookingId:booking.id,providerId:booking.providerId,clinicId:booking.clinicId,
+        openedAt:"2026-10-29T10:00:00Z",state:"OPEN",bookingState:"IN_CONSULTATION",version:1,closedAt:null,
+      } } });
       if (path.endsWith("/consultation")) {
         attempts++;
         if (wait) {
@@ -297,7 +301,7 @@ export async function testConsultationOpening(browser, origin, shots) {
       .getByText(t("Consultation opened"), { exact: true })
       .first()
       .waitFor();
-    const posts = calls.filter((c) => c.path.endsWith("/consultation"));
+    const posts = calls.filter((c) => c.path.endsWith("/consultation") && c.method === "POST");
     assert.equal(posts.length, 5);
     assert.equal(new Set(posts.slice(0, 3).map((c) => c.body)).size, 1);
     assert.equal(new Set(posts.slice(3).map((c) => c.body)).size, 1);
@@ -346,14 +350,7 @@ export async function testConsultationOpening(browser, origin, shots) {
       "no clinical read or relationship writes",
     );
     await page.reload();
-    await page
-      .getByText(
-        t(
-          "Opening metadata is not retained after a page reload. Return to the booking to check its current server state. No clinical data is loaded here.",
-        ),
-        { exact: true },
-      )
-      .waitFor();
+    await page.getByText(t("Opening confirmed"), { exact: true }).waitFor();
     assert.equal(attempts, 5, "no automatic replay on reload");
     assert.equal(
       await page.locator("html").getAttribute("dir"),

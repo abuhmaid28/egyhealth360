@@ -1,3 +1,4 @@
+import { testRealClose } from "./ui-consultation-close-real.mjs";
 import { testRealFollowUps } from "./ui-follow-up-intents-real.mjs";
 /** Synthetic actual Browser → Next → Nest → PostgreSQL proof. No route mocks.
  * Reuses the approved past-booking fixture with every DB guard restored. */
@@ -559,6 +560,7 @@ export async function testRealDocumentation(browser, page, f, fault) {
   await patientContext.close();
   await otherContext.close();
   page.off("request", collect);
+  await testRealClose(browser, page, f, fault, login);
   console.log(
     "PASS real Slice5 Browser→Next→Nest→PostgreSQL: immutable draft/private signing; all four allergy states; explicit release; lost committed response and exact retry with no duplicate; own/current-related released reads; private boundary; correction/addendum; wrong-patient restriction masking/replay denial; current-authority and session denial; memory-only content; responsive presentation.",
   );

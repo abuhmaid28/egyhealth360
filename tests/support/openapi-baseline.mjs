@@ -58,9 +58,21 @@ export function beforeI2Slice6(text) {
 
 /** Remove only close and its exact additive booking-state/event enum deltas. */
 export function beforeI2Slice7(text) {
- return text.replace(/,\n {4}"\/api\/v1\/consultations\/\{consultationId\}\/close": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
+ return beforeI2LiveCloseout(text).replace(/,\n {4}"\/api\/v1\/consultations\/\{consultationId\}\/close": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
   .replace(/,\n {6}"ConsultationClose": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'')
   .replace(/"OPEN",\n {14}"CLOSE"/g,'"OPEN"')
   .replace(/"IN_CONSULTATION",\n {14}"CONSULTED"/g,'"IN_CONSULTATION"')
   .replace(/"BOOKED",\n {14}"NO_SHOW",\n {14}"IN_CONSULTATION"\n {12}\]/g,'"BOOKED",\n              "NO_SHOW"\n            ]');
+}
+
+/** Strip only the bounded Live context recovery methods/schema. This preserves
+ * every historical route, mutation contract and migration hash gate unchanged. */
+export function beforeI2LiveCloseout(text) {
+ const start=text.indexOf('    "/api/v1/me/bookings/{bookingId}/consultation": {');
+ const end=start<0?-1:text.indexOf('\n    },',start);
+ if(end>=0) {
+  const block=text.slice(start,end),delta=block.indexOf(',\n      "get": {');
+  if(delta>=0)text=text.slice(0,start)+block.slice(0,delta)+text.slice(end);
+ }
+ return text.replace(/,\n {6}"ConsultationContext": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
 }

@@ -36,6 +36,7 @@ import {
 export const bookingLabels = {
   BOOKED: "Booked",
   IN_CONSULTATION: "Consultation opened",
+  CONSULTED: "Consulted",
   CANCELLED: "Cancelled",
   RESCHEDULED: "Rescheduled",
   NO_SHOW: "No-show",
@@ -47,6 +48,7 @@ export const bookingLabels = {
   ATTEND: "Attendance recorded",
   CORRECT: "Attendance corrected",
   OPEN: "Consultation opened",
+  CLOSE: "Consultation closed",
 } as const;
 function useLiveBookings() {
   const { api } = useApp();
@@ -541,6 +543,14 @@ function BookingDetails({
           </div>
         </Card>
       </div>
+      {!clinician && b.state === "CONSULTED" && <Card className="tinted">
+        <CardTitle title={t("Your consultation is closed")} />
+        <p>{t("Only information explicitly released by your clinician appears in your care record. Closing alone does not share notes, summaries or follow-up instructions.")}</p>
+        <div className="documentation-action-row">
+          <Link className="button secondary" href="/patient/summaries">{t("View released summaries")}</Link>
+          <Link className="button secondary" href="/patient/follow-up">{t("Follow-up instructions")}</Link>
+        </div>
+      </Card>}
       {clinician && <ConsultationOpeningCard booking={b} refresh={reload} />}
       <Card>
         <CardTitle title={t("Attendance observations")} />

@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import type { ConsultationContext } from "../lib/api/consultation-close";
 import type { LiveBooking } from "../lib/api/live-booking";
 import {
   openingEligibility,
@@ -72,7 +73,8 @@ export function ConsultationOpeningCard({
   const service = api.consultationOpening;
   const eligibility = openingEligibility(booking, now);
   const receipt = service?.receipt(booking.id);
-  const opened = booking.state === "IN_CONSULTATION" || !!receipt;
+  const closed = booking.state === "CONSULTED";
+  const opened = booking.state === "IN_CONSULTATION" || closed || !!receipt;
   const [confirm, setConfirm] = useState(false);
   const explanation = !service?.available
     ? "Consultation opening is unavailable. Refresh the booking before trying again."
@@ -89,7 +91,7 @@ export function ConsultationOpeningCard({
         <>
           <p className="opening-success" role="status">
             <Icon name="check" />
-            {t("Consultation opened")}
+            {t(closed ? "Consultation closed" : "Consultation opened")}
           </p>
           <p>
             {t(
@@ -100,7 +102,7 @@ export function ConsultationOpeningCard({
             className="button primary"
             href={`/doctor/consultation/${booking.id}`}
           >
-            {t("View opening details")}
+            {t(closed ? "Review closed consultation" : "View opening details")}
             <Icon name="arrow" size={16} />
           </Link>
         </>
@@ -241,7 +243,7 @@ function OpeningMetadata({
   receipt,
   booking,
 }: {
-  receipt?: OpeningReceipt;
+  receipt?: OpeningReceipt | ConsultationContext;
   booking: LiveBooking;
 }) {
   const { t } = useLocale();
@@ -250,11 +252,11 @@ function OpeningMetadata({
     <div className="two-column">
       <Card>
         <CardTitle
-          title={t(receipt ? "Consultation opened" : "Opening status")}
+          title={t(booking.state === "CONSULTED" ? "Consultation closed" : receipt ? "Consultation opened" : "Opening status")}
         />
         {receipt ? (
           <>
-            <Badge tone="green">{t("Opening confirmed")}</Badge>
+            <Badge tone="green">{t(booking.state === "CONSULTED" ? "Closed · booking consulted" : "Opening confirmed")}</Badge>
             <p className="muted">
               {t("Actual opening time, confirmed by the server")}
             </p>
@@ -271,7 +273,7 @@ function OpeningMetadata({
         ) : (
           <p>
             {t(
-              "Opening metadata is not retained after a page reload. Return to the booking to check its current server state. No clinical data is loaded here.",
+              "Return to the booking to check its current server state before opening the consultation.",
             )}
           </p>
         )}
@@ -308,14 +310,16 @@ function OpeningMetadata({
     </div>
   );
 }
-/** This URL is booking-scoped. No consultation-read API is invented. Receipt is
- * ephemeral in-session metadata, never a persisted clinical workspace or grant. */
+/** Booking-scoped recovery rechecks current treating authority on the server. */
 export function LiveConsultationShell({ bookingId }: { bookingId: string }) {
   const { t } = useLocale();
   const { api, refresh } = useApp();
   const resource = useResource(async () => {
     if (!api.liveBookings) throw new Error("Live booking context missing.");
-    return api.liveBookings.detail(bookingId);
+    const booking = await api.liveBookings.detail(bookingId);
+    const receipt = (booking.state === "IN_CONSULTATION" || booking.state === "CONSULTED")
+      ? await api.consultationClose!.context(bookingId) : undefined;
+    return { booking, receipt };
   }, [api, bookingId, refresh]);
   return (
     <>
@@ -331,9 +335,9 @@ export function LiveConsultationShell({ bookingId }: { bookingId: string }) {
       />
       <ClinicalOpeningBoundary />
       <Resource resource={resource}>
-        {(booking) => (
+        {({ booking, receipt }) => (
           <OpeningMetadata
-            receipt={api.consultationOpening?.receipt(bookingId)}
+            receipt={receipt}
             booking={booking}
           />
         )}
