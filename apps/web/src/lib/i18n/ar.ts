@@ -1,4 +1,84 @@
 export const ar: Record<string, string> = {
+  "In consultation": "الاستشارة جارية",
+  "Clinical documentation": "التوثيق السريري",
+  "Consultation steps": "خطوات الاستشارة",
+  "Previous page": "الصفحة السابقة",
+  "Next page": "الصفحة التالية",
+  Released: "صادر",
+  "Next steps": "الخطوات التالية",
+
+  "Only released follow-up instructions shared with you appear here. A desired window is not a booked appointment.":
+    "تظهر هنا فقط تعليمات المتابعة الصادرة والمشاركة معك. الفترة المرغوبة ليست موعداً محجوزاً.",
+  "Follow-up instructions": "تعليمات المتابعة",
+  "After documenting the visit, save a separate follow-up draft, review it, then deliberately sign and release it. Summary release and follow-up release are independent.":
+    "بعد توثيق الزيارة، احفظ مسودة متابعة منفصلة وراجعها ثم وقّعها وأصدرها صراحةً. إصدار الملخص وإصدار المتابعة عمليتان مستقلتان.",
+  "No visible follow-up drafts or released instructions":
+    "لا توجد مسودات متابعة أو تعليمات صادرة متاحة",
+  "No released follow-up instructions": "لا توجد تعليمات متابعة صادرة",
+  "Only currently permitted content is shown. Hidden or restricted entries are not included.":
+    "يظهر فقط المحتوى المسموح به حالياً. لا تُعرض العناصر المخفية أو المقيّدة.",
+  "Follow-up pages": "صفحات المتابعة",
+  "Refresh follow-up instructions": "تحديث تعليمات المتابعة",
+  "No desired follow-up window specified": "لم تُحدد فترة مرغوبة للمتابعة",
+  "Desired follow-up window": "الفترة المرغوبة للمتابعة",
+  "This window is a preference, not a booking or an automatic reminder.":
+    "هذه الفترة تفضيل وليست حجزاً أو تذكيراً تلقائياً.",
+  "Clinician instruction": "تعليمات الطبيب",
+  "Follow-up instruction": "تعليمات المتابعة",
+  "Draft · clinician only": "مسودة · للطبيب فقط",
+  "Linked booking": "الحجز المرتبط",
+  "View linked booking": "عرض الحجز المرتبط",
+  "The linked booking is no longer booked. This follow-up instruction remains separate.":
+    "لم يعد الحجز المرتبط قائماً. تظل تعليمات المتابعة مستقلة.",
+  "No booking linked to this instruction": "لا يوجد حجز مرتبط بهذه التعليمات",
+  "Review follow-up release": "مراجعة إصدار المتابعة",
+  "Correct released follow-up": "تصحيح المتابعة الصادرة",
+  "Signing releases this instruction to the patient. It does not create a booking or release other clinical documentation.":
+    "يصدر التوقيع هذه التعليمات للمريض. لا ينشئ حجزاً ولا يصدر توثيقاً سريرياً آخر.",
+  "I reviewed this instruction for the correct patient":
+    "راجعت هذه التعليمات للمريض الصحيح",
+  "Sign and release follow-up": "توقيع وإصدار المتابعة",
+  "New follow-up draft": "مسودة متابعة جديدة",
+  "Maximum 2,000 characters. Each save creates a separate immutable draft.":
+    "الحد الأقصى ٢٠٠٠ حرف. ينشئ كل حفظ مسودة مستقلة لا يمكن تعديلها.",
+  "Add an optional desired follow-up window":
+    "إضافة فترة مرغوبة اختيارية للمتابعة",
+  "Enter both instants with explicit offsets, for example 2026-11-15T09:00:00+02:00, and the exact IANA zone, for example Africa/Cairo. The server validates the window.":
+    "أدخل وقتي البداية والنهاية مع إزاحة زمنية صريحة، مثل 2026-11-15T09:00:00+02:00، واسم منطقة IANA الدقيق مثل Africa/Cairo. يتحقق الخادم من الفترة.",
+  "Desired window starts at": "بداية الفترة المرغوبة",
+  "Desired window ends at": "نهاية الفترة المرغوبة",
+  "Desired window time zone": "المنطقة الزمنية للفترة المرغوبة",
+  "Reason for follow-up correction": "سبب تصحيح المتابعة",
+  "This correction will be signed and released immediately. The earlier signed instruction remains in clinical history.":
+    "سيُوقّع هذا التصحيح ويصدر فوراً. تبقى التعليمات الموقّعة السابقة في السجل السريري.",
+  "Edit correction": "تعديل التصحيح",
+  "Sign and release correction": "توقيع وإصدار التصحيح",
+  "Review follow-up correction": "مراجعة تصحيح المتابعة",
+  "Save follow-up draft": "حفظ مسودة المتابعة",
+  "Read released follow-up instructions": "قراءة تعليمات المتابعة الصادرة",
+  "Follow-up draft saved. Review it before release.":
+    "حُفظت مسودة المتابعة. راجعها قبل الإصدار.",
+  "Follow-up command accepted. Current access is checked again below.":
+    "قُبل أمر المتابعة. يجري التحقق مجدداً من صلاحيات الوصول الحالية أدناه.",
+  "Follow-up instructions could not be refreshed. Please try again.":
+    "تعذر تحديث تعليمات المتابعة. حاول مرة أخرى.",
+  "The follow-up result is uncertain. Retry the unchanged command explicitly before editing it.":
+    "نتيجة المتابعة غير مؤكدة. أعد محاولة الأمر نفسه صراحةً قبل تعديله.",
+  "Follow-up instructions are unavailable for your current access. Refresh your session before continuing.":
+    "تعليمات المتابعة غير متاحة لصلاحياتك الحالية. حدّث جلستك قبل المتابعة.",
+  "Check the follow-up instruction and desired window. Use explicit timestamp offsets and the exact IANA time zone.":
+    "تحقق من تعليمات المتابعة والفترة المرغوبة. استخدم إزاحات زمنية صريحة واسم منطقة IANA الدقيق.",
+  "This follow-up intent changed. Refresh before making a new command.":
+    "تغيرت نية المتابعة هذه. حدّث البيانات قبل إجراء أمر جديد.",
+  "The follow-up request exceeds the save limit. Shorten it before saving.":
+    "يتجاوز طلب المتابعة حد الحفظ. اختصره قبل الحفظ.",
+  "The follow-up request must use JSON.":
+    "يجب أن يستخدم طلب المتابعة تنسيق JSON.",
+  "Measurements and HTN records appear below. Signed consultation summaries are available in Released visit summaries. Released follow-up instructions are available in Follow-up. Prescriptions and laboratory fulfillment remain Demo-only.":
+    "تظهر القياسات وسجلات ضغط الدم أدناه. تتوفر ملخصات الاستشارة الموقّعة في ملخصات الزيارات الصادرة وتعليمات المتابعة في قسم المتابعة. تظل الوصفات وتنفيذ المختبر في العرض التجريبي فقط.",
+  "Booking is logistics only. It grants no access to medical records. Consultation opening requires a separate current clinical relationship. Documentation and follow-up instructions require current clinical authority. Prescriptions and tests remain Demo-only.":
+    "الحجز إجراء تنظيمي فقط ولا يمنح وصولاً إلى السجلات الطبية. يتطلب فتح الاستشارة علاقة سريرية حالية مستقلة. يتطلب التوثيق وتعليمات المتابعة صلاحية سريرية حالية. تظل الوصفات والفحوصات في العرض التجريبي فقط.",
+
   "Connected live care": "رعاية متصلة بالخادم المباشر",
   "Browser-only demo care": "رعاية تجريبية داخل المتصفح فقط",
   "Live uses the connected backend. Demo is a separate synthetic journey in this browser.":

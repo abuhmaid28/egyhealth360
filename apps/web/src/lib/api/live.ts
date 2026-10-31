@@ -1,3 +1,4 @@
+import { createLiveFollowUpApi, followUpHttpError } from "./follow-up-intents";
 import {
   createLiveDocumentationApi,
   documentationHttpError,
@@ -40,7 +41,10 @@ export function createLiveAdapter(): HealthcareAdapter {
       liveBookings.clearCommands();
       consultationOpening.clear();
       documentation.clear?.("expired");
+      followUpIntents.clear("expired");
     }
+    if (!response.ok && /\/follow-up-intents(?:\/|\?|$)/.test(path))
+      throw followUpHttpError(response.status, init?.method === "POST");
     if (
       !response.ok &&
       (/^\/consultations\//.test(path) || /\/summaries(?:\/|\?|$)/.test(path))
@@ -86,6 +90,7 @@ export function createLiveAdapter(): HealthcareAdapter {
       liveBookings.clearCommands();
       consultationOpening.clear();
       documentation.clear?.();
+      followUpIntents.clear();
     }
     documentation.activate();
     sessionIdentity = identity;
@@ -100,8 +105,10 @@ export function createLiveAdapter(): HealthcareAdapter {
   const liveBookings = createLiveBookingApi(request, () => csrf);
   const consultationOpening = createConsultationOpeningApi(request, () => csrf);
   const documentation = createLiveDocumentationApi(request, () => csrf);
+  const followUpIntents = createLiveFollowUpApi(request, () => csrf);
   return {
     mode: "live",
+    followUpIntents,
     documentation,
     liveDocumentation: documentation,
     consultationOpening,
@@ -115,6 +122,7 @@ export function createLiveAdapter(): HealthcareAdapter {
         liveBookings.clearCommands();
         consultationOpening.clear();
         documentation.clear?.("expired");
+        followUpIntents.clear("expired");
         return null;
       }
     },
@@ -131,6 +139,7 @@ export function createLiveAdapter(): HealthcareAdapter {
     },
     async logout() {
       documentation.clear?.();
+      followUpIntents.clear();
       await request("/auth/logout", {
         method: "POST",
         body: JSON.stringify({}),

@@ -1,3 +1,4 @@
+import { testFollowUpPresentation } from "./support/ui-follow-up-intents-browser.mjs";
 /** Real-browser Golden Demo regression. Built Next app; no API or database required. */
 import { testDocumentation } from "./support/ui-documentation-browser.mjs";
 import { testConsultationOpening } from "./support/ui-consultation-opening-browser.mjs";
@@ -403,6 +404,7 @@ try {
   await testArabic(browser, origin, shots);
   await testPolish(browser, origin, shots);
   await testLiveJourney(browser, origin, shots);
+  await testFollowUpPresentation(browser, origin);
   await testLiveBooking(browser, origin, shots);
   await testConsultationOpening(browser, origin, shots);
   await testDocumentation(browser, origin, shots);

@@ -3325,3 +3325,15 @@ textarea {
 .documentation-preview-controls summary { font-weight:700; cursor:pointer; }
 .documentation-preview-control-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; padding-block:1rem; }
 @media(max-width:600px) { .documentation-preview-control-grid { grid-template-columns:minmax(0,1fr); } }
+
+/* Follow-up instructions share the existing clinical card/editor hierarchy. */
+.follow-up-workspace { display: grid; gap: 20px; margin-block: 24px; }
+.follow-up-workspace > div { display: grid; gap: 20px; }
+.follow-up-editor { display: grid; gap: 16px; margin-block: 16px; }
+.follow-up-editor fieldset { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 12px; }
+.follow-up-intent .button { margin-block-start: 12px; }
+.follow-up-intent p, .follow-up-editor p { overflow-wrap: anywhere; }
+
+.follow-up-dialog { width: 680px; }
+.follow-up-workspace .checkbox-label, .follow-up-dialog .checkbox-label { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.follow-up-workspace .checkbox-label input, .follow-up-dialog .checkbox-label input { width: 18px; height: 18px; flex-shrink: 0; }

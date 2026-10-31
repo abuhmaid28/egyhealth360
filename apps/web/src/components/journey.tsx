@@ -56,6 +56,9 @@ export function LiveSummaryEntry() {
         {t("Open released summaries")}
         <Icon name="arrow" size={16} />
       </Link>
+      <Link className="button secondary" href="/patient/follow-up">
+        {t("Read released follow-up instructions")}
+      </Link>
     </div>
   );
 }

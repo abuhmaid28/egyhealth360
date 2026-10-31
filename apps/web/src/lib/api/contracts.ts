@@ -1,3 +1,4 @@
+import type { LiveFollowUpApi } from "./follow-up-intents";
 import type { LiveDocumentationApi } from "./documentation";
 import type { DocumentationApi } from "../clinical/documentation";
 import type { ConsultationOpeningApi } from "./consultation-opening";
@@ -124,6 +125,7 @@ export interface Operations {
 }
 export interface HealthcareAdapter {
   readonly mode: Mode;
+  readonly followUpIntents?: LiveFollowUpApi;
   readonly liveBookings?: LiveBookingApi;
   readonly consultationOpening?: ConsultationOpeningApi;
   readonly documentation?: DocumentationApi;
