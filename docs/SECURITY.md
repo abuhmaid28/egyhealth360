@@ -1,5 +1,9 @@
 # Security & Medical Safety — V3 Policy, M0–M2 Enforcement
 
+## Current Slice 7 exit-review boundary
+
+[Issue #48 authorization 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435) and [PR #63 continuation review 5723355039](https://github.com/abuhmaid28/egyhealth360/pull/63#pullrequestreview-5723355039) authorize the bounded Consultation Close remediation in this same Slice 7 branch/PR. Explicit OPEN→CLOSED / IN_CONSULTATION→CONSULTED, current exact treating authority, immutable server-owned close provenance and safe replay are implemented through one additive migration 20; all nineteen historical SQL bytes and the restricted-document replay fix remain preserved. [Current exit review](V3_I2_SLICE7_EXIT_REVIEW.md) and exact-head PR evidence govern the verdict; the earlier BLOCKED checkpoint is superseded by this continuation. Final full validation and independent exact-head review remain required. PR OPEN / UNMERGED; auto-merge OFF; I3 NOT AUTHORIZED; EACCE NOT STARTED. No frontend or deployment changes in this track.
+
 ## Current V3-I2 Slice 5 boundary
 
 [Slice 5](V3_I2_SLICE5.md) preserves sole current ACTIVE assignment authority and Booking ZERO clinical authority. Private/draft payload and existence are exact-author/current-authority only. Patient/current-related released views exclude every private/draft reference. Explicit summary release, immutable signed corrections/addenda and independent privacy targets; unsafe exact document lineage is withheld from ordinary pages/counts/replays. Bounded canonical locks, after-wait/final checks and atomic {} audit; no staff/ADMIN shortcut or forensic view.

@@ -29,6 +29,7 @@ export function documentationRequestBoundary(auth: AuthRuntime) {
     const normalized = decoded.toLowerCase().replace(/\/+$/, '');
     if (!/^\/api\/v1\/(?:consultations(?:\/|$)|me\/summaries(?:\/|$)|patients\/[^/]+\/summaries(?:\/|$))/.test(normalized)) return next();
     if (/^\/api\/v1\/consultations\/[^/]+\/follow-up-intents(?:\/|$)/.test(normalized)) return next();
+    if (/^\/api\/v1\/consultations\/[^/]+\/close(?:\/|$)/.test(normalized)) return next();
     s.setHeader('Cache-Control', 'no-store');
     const reject = (e: unknown) => { const x = failure(e); send(q, s, x.getStatus(), x.getResponse()); };
     let command: DocumentCommand = 'DRAFT';

@@ -98,17 +98,19 @@ export function createDocumentationPersistence(connectionString: string | undefi
       const root = input.documentId ? (await tx.query('SELECT * FROM public.consultation_documents WHERE id=$1 AND consultation_id=$2 AND author_user_id=$3 FOR UPDATE', [input.documentId, s.id, a.userId])).rows[0] : null;
       if (input.documentId && !root) deny();
       if (root) await tx.query('SELECT id FROM public.consultation_document_versions WHERE document_id=$1 ORDER BY version FOR SHARE', [root.id]);
+      if (root && command !== 'PRIVACY' && (await tx.query('SELECT id FROM public.consultation_privacy_restrictions WHERE document_id=$1', [root.id])).rowCount) deny();
       const prior = (await tx.query('SELECT * FROM public.consultation_document_operations WHERE actor_user_id=$1 AND command=$2 AND operation_key=$3 FOR SHARE', [a.userId, command, input.operationKey])).rows[0];
       if (prior) {
+        // Restricted retained results must not disclose even key-conflict
+        // existence through changed-payload retries (including DRAFT).
+        if (command !== 'PRIVACY' && (await tx.query('SELECT id FROM public.consultation_privacy_restrictions WHERE document_id=$1', [prior.document_id])).rowCount) deny();
         if (prior.fingerprint !== fingerprint) documentFail('DOCUMENT_CONFLICT');
         await final();
         if (command === 'PRIVACY') return { data: { restricted: true } };
-        if ((await tx.query('SELECT id FROM public.consultation_privacy_restrictions WHERE document_id=$1', [prior.document_id])).rowCount) deny();
         const retained = (await tx.query('SELECT version FROM public.consultation_document_versions WHERE id=$1', [prior.result_version_id])).rows[0];
         return projection(tx, a, s.patient_id, prior.document_id, s.id, false, 1, 20, retained.version);
       }
       let head = root ? (await tx.query('SELECT * FROM public.consultation_document_versions WHERE document_id=$1 ORDER BY version DESC LIMIT 1', [root.id])).rows[0] : null;
-      if (root && command !== 'PRIVACY' && (await tx.query('SELECT id FROM public.consultation_privacy_restrictions WHERE document_id=$1', [root.id])).rowCount) deny();
       if (root && command !== 'PRIVACY' && (head.version !== input.expectedVersion || input.predecessorId !== null && input.predecessorId !== head.id)) documentFail('DOCUMENT_CONFLICT');
       if (command === 'SIGN' && root.kind !== 'PRIVATE_NOTE' || command === 'RELEASE' && root.kind !== 'PATIENT_SUMMARY' || ['SIGN', 'RELEASE'].includes(command) && head.state !== 'DRAFT' || ['ADDENDUM', 'CORRECT'].includes(command) && head.state === 'DRAFT') documentFail('DOCUMENT_CONFLICT');
       await final();

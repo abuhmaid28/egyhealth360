@@ -1,7 +1,7 @@
 import pg from 'pg';
 import { createHash } from 'node:crypto';
 import type { AuthPrincipal } from './auth.js';
-import { availabilityExact, availabilityId } from './availability-values.js';
+import { availabilityExact, availabilityId, availabilityInteger } from './availability-values.js';
 import { BookingError } from './bookings.js';
 
 const fail = (code: BookingError['code']): never => { throw new BookingError(code); };
@@ -9,6 +9,12 @@ export function consultationInput(value: unknown) {
   try {
     availabilityExact(value, ['bookingId', 'operationKey']);
     return { bookingId: availabilityId(value.bookingId), operationKey: availabilityId(value.operationKey) };
+  } catch { return fail('BOOKING_INVALID'); }
+}
+export function consultationCloseInput(value: unknown) {
+  try {
+    availabilityExact(value, ['consultationId', 'operationKey', 'expectedVersion']);
+    return { consultationId: availabilityId(value.consultationId), operationKey: availabilityId(value.operationKey), expectedVersion: availabilityInteger(value.expectedVersion, 1, 2147483646) };
   } catch { return fail('BOOKING_INVALID'); }
 }
 type Actor = { userId: string; sessionId: string; role: string };
@@ -118,6 +124,64 @@ export function createConsultationPersistence(connectionString: string | undefin
       return fail('BOOKING_UNAVAILABLE');
     } finally { tx?.release(); }
   }
-  return { open, close: () => pool.end() };
+  async function closeConsultation(principal: AuthPrincipal, value: unknown) {
+    const input = consultationCloseInput(value), a = actor(principal);
+    const fingerprint = createHash('sha256').update(JSON.stringify({ consultationId: input.consultationId, expectedVersion: input.expectedVersion })).digest('hex');
+    let tx: pg.PoolClient | undefined;
+    try {
+      // Immutable scope hints only. The same clinical prefix as opening is held
+      // before locking booking -> consultation and rechecking current authority.
+      const s = (await pool.query<Scope>(`SELECT b.*,sl.provider_id,sl.membership_id,sl.affiliation_id,p.specialty_id
+        FROM public.consultations c JOIN public.bookings b ON b.id=c.booking_id
+        JOIN public.availability_slots sl ON sl.id=b.slot_id JOIN public.clinician_directory p ON p.id=sl.provider_id WHERE c.id=$1`, [input.consultationId])).rows[0];
+      tx = await pool.connect(); await tx.query('BEGIN');
+      await tx.query("SET LOCAL transaction_timeout='30s'"); await tx.query("SET LOCAL lock_timeout='5s'"); await tx.query("SET LOCAL statement_timeout='10s'");
+      if (a.role === 'CLINICIAN') await tx.query('LOCK TABLE public.users,public.patient_profiles,public.clinician_profiles,public.clinician_patient_assignments IN ROW EXCLUSIVE MODE');
+      for (const id of [...new Set([a.userId, ...(s ? [s.patient_user_id, s.clinician_user_id] : [])])].sort()) await tx.query('SELECT id FROM public.users WHERE id=$1 FOR NO KEY UPDATE', [id]);
+      await tx.query('SELECT id FROM public.sessions WHERE id=$1 FOR UPDATE', [a.sessionId]); await current(tx, a);
+      if (a.role !== 'CLINICIAN' || !s || s.clinician_user_id !== a.userId) fail('BOOKING_NOT_FOUND');
+      if (!(await tx.query("SELECT id FROM public.clinician_profiles WHERE id=$1 AND user_id=$2 AND user_role='CLINICIAN' FOR SHARE", [s.clinician_id, a.userId])).rowCount) fail('BOOKING_NOT_FOUND');
+      const grant = (await tx.query("SELECT id FROM public.clinician_patient_assignments WHERE clinician_id=$1 AND patient_id=$2 AND status='ACTIVE' AND ended_at IS NULL FOR SHARE", [s.clinician_id, s.patient_id])).rows[0];
+      if (!grant) fail('BOOKING_NOT_FOUND');
+      if (!(await tx.query("SELECT id FROM public.patient_profiles WHERE id=$1 AND user_id=$2 AND user_role='PATIENT' FOR SHARE", [s.patient_id, s.patient_user_id])).rowCount) fail('BOOKING_NOT_FOUND');
+      const stages = [['specialties','id',s.specialty_id],['organizations','id',s.organization_id],['clinic_directory','organization_id',s.organization_id],['organization_memberships','id',s.membership_id],['clinician_directory','id',s.provider_id],['directory_affiliations','id',s.affiliation_id]];
+      for (const [table,column,id] of stages) await tx.query(`SELECT ${column} FROM public.${table} WHERE ${column}=$1 FOR SHARE`, [id]);
+      if (!(await tx.query('SELECT version FROM public.clinic_scheduling_settings WHERE organization_id=$1 ORDER BY version DESC LIMIT 1 FOR SHARE', [s.organization_id])).rowCount) fail('BOOKING_NOT_FOUND');
+      await authority(tx, a, s, grant.id);
+      await tx.query('SELECT pg_catalog.pg_advisory_xact_lock(1162359376,pg_catalog.hashtext($1::text))', [s.patient_id]);
+      await tx.query('SELECT pg_catalog.pg_advisory_xact_lock(1162359363,pg_catalog.hashtext($1::text))', [s.clinician_id]);
+      await tx.query('SELECT id FROM public.availability_slots WHERE id=$1 FOR UPDATE', [s.slot_id]);
+      const booking = (await tx.query('SELECT * FROM public.bookings WHERE id=$1 FOR UPDATE', [s.id])).rows[0];
+      const c = (await tx.query('SELECT * FROM public.consultations WHERE id=$1 FOR UPDATE', [input.consultationId])).rows[0];
+      if (!c || c.booking_id !== s.id || c.patient_id !== s.patient_id || c.booked_clinician_user_id !== a.userId || c.treating_clinician_user_id !== a.userId) fail('BOOKING_NOT_FOUND');
+      await tx.query('SELECT id FROM public.clinical_encounters WHERE id=$1 FOR SHARE', [c.encounter_id]);
+      await authority(tx, a, s, grant.id);
+      const prior = (await tx.query("SELECT fingerprint,result FROM public.booking_operations WHERE actor_user_id=$1 AND command='CLOSE' AND operation_key=$2", [a.userId, input.operationKey])).rows[0];
+      if (prior) {
+        if (prior.fingerprint !== fingerprint) fail('BOOKING_CONFLICT');
+        await authority(tx, a, s, grant.id); await tx.query('COMMIT');
+        return prior.result as Record<string, unknown>;
+      }
+      if (c.state !== 'OPEN' || c.version !== input.expectedVersion || booking.state !== 'IN_CONSULTATION') fail('BOOKING_CONFLICT');
+      await authority(tx, a, s, grant.id);
+      const updated = (await tx.query("UPDATE public.bookings SET state='CONSULTED',version=version+1 WHERE id=$1 AND state='IN_CONSULTATION' RETURNING version", [s.id])).rows[0];
+      if (!updated) fail('BOOKING_CONFLICT');
+      await tx.query("INSERT INTO public.booking_events(booking_id,version,command,from_state,to_state,actor_user_id,operation_key) VALUES($1,$2,'CLOSE','IN_CONSULTATION','CONSULTED',$3,$4)", [s.id, updated.version, a.userId, input.operationKey]);
+      const closed = (await tx.query(`UPDATE public.consultations SET state='CLOSED',version=2,closed_by_user_id=$2,close_assignment_id=$3,close_command='CLOSE',close_operation_key=$4 WHERE id=$1 AND state='OPEN' AND version=$5 RETURNING to_char(closed_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.MS"Z"') closed_at`, [c.id, a.userId, grant.id, input.operationKey, input.expectedVersion])).rows[0];
+      if (!closed) fail('BOOKING_CONFLICT');
+      const locators = (await tx.query('SELECT p.public_id provider,cd.public_id clinic FROM public.clinician_directory p JOIN public.clinic_directory cd ON cd.organization_id=$2 WHERE p.id=$1', [s.provider_id, s.organization_id])).rows[0];
+      const result = { id:c.id, encounterId:c.encounter_id, bookingId:s.id, state:'CLOSED', bookingState:'CONSULTED', version:2, closedAt:closed.closed_at, providerId:locators.provider, clinicId:locators.clinic };
+      await tx.query("INSERT INTO public.booking_operations(actor_user_id,command,operation_key,fingerprint,booking_id,result) VALUES($1,'CLOSE',$2,$3,$4,$5)", [a.userId, input.operationKey, fingerprint, s.id, JSON.stringify(result)]);
+      await tx.query("INSERT INTO public.audit_logs(actor_user_id,action_type,entity_type,entity_id,safe_metadata,timestamp) VALUES($1,'CONSULTATION_CLOSED','consultation',$2,'{}',clock_timestamp())", [a.userId, c.id]);
+      await authority(tx, a, s, grant.id); await tx.query('COMMIT');
+      return result;
+    } catch (e) {
+      if (tx) await tx.query('ROLLBACK').catch(() => {});
+      if (e instanceof BookingError) throw e;
+      if (e && typeof e === 'object' && 'code' in e && ['23P01','23505'].includes(String(e.code))) fail('BOOKING_CONFLICT');
+      return fail('BOOKING_UNAVAILABLE');
+    } finally { tx?.release(); }
+  }
+  return { open, closeConsultation, close: () => pool.end() };
 }
 export type ConsultationPersistence = ReturnType<typeof createConsultationPersistence>;

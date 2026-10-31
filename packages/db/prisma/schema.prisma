@@ -1000,6 +1000,12 @@ model Consultation {
  timeZone String @map("time_zone") @db.VarChar(100)
  openedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("opened_at") @db.Timestamptz(3)
  state String @default("OPEN") @db.VarChar(16)
+ version Int @default(1)
+ closedAt DateTime? @map("closed_at") @db.Timestamptz(3)
+ closedByUserId String? @map("closed_by_user_id") @db.Uuid
+ closeAssignmentId String? @map("close_assignment_id") @db.Uuid
+ closeOperationKey String? @map("close_operation_key") @db.Uuid
+ closeCommand String? @map("close_command") @db.VarChar(16)
  operationKey String @map("operation_key") @db.Uuid
  command String @default("OPEN") @db.VarChar(16)
  @@map("consultations")

@@ -6,7 +6,7 @@ import { Pool } from './database.mjs';
 import { createOrganizationPersistence, createPersistence, createAuthPersistence } from '../../packages/db/dist/index.js';
 import { hashPassword } from '../../apps/api/dist/password.js';
 
-export async function isolatedOrganizations(run,{realRunner=false}={}) {
+export async function isolatedOrganizations(run,{realRunner=false,migrationCount}={}) {
   const root = new Pool({ connectionString: process.env.DATABASE_URL });
   const name = `i1s2_${randomUUID().replaceAll('-', '')}`;
   const url = new URL(process.env.DATABASE_URL); url.pathname = `/${name}`;
@@ -14,7 +14,7 @@ export async function isolatedOrganizations(run,{realRunner=false}={}) {
   try {
     await root.query(`CREATE DATABASE ${name}`);
     pool = new Pool({ connectionString: url.toString() });
-    if(realRunner) migrationRunner(url.toString(),'deploy',(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').length);
+    if(realRunner) migrationRunner(url.toString(),'deploy',(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').slice(0,migrationCount).length);
     else for (const migration of (await readdir('packages/db/prisma/migrations')).sort()) {
       if (migration === 'migration_lock.toml') continue;
       await pool.query(await readFile(`packages/db/prisma/migrations/${migration}/migration.sql`, 'utf8'));

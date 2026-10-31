@@ -186,3 +186,9 @@ The current schema has **34 models / 15 migrations**. [Availability implementati
 ## Slice 6 additive persistence
 
 Migration 19 adds FollowUpIntent, FollowUpIntentVersion, FollowUpIntentBookingLink, FollowUpIntentOperation and FollowUpIntentPrivacyRestriction: 48 domain models/tables. [Reconciled contract](V3_I2_SLICE6.md) describes exact composite provenance, immutable version/link chains, operation identity, privacy and deferred atomic-audit guards. Eighteen historical migration hashes/rows are preserved; no backfill or legacy appointment adapter.
+
+## Slice 7 close extension
+
+Migration `20261031140000_v3_i2_consultation_close` adds Consultation `version` (OPEN=1/CLOSED=2) and nullable `closedAt`, `closedByUserId`, `closeAssignmentId`, `closeOperationKey`, `closeCommand`. Original opening/provenance columns remain immutable; old rows gain only version 1/NULL close metadata, with no fabricated close facts. There are still 48 domain models/tables and twenty migrations; all nineteen historical SQL files are unchanged.
+
+The sole update is one current-authorized OPEN→CLOSED, atomic with booking IN_CONSULTATION→CONSULTED. Existing append-only BookingEvent/BookingOperation retain CLOSE history/result; server-owned close actor/time/current grant are immutable after close. Composite FKs and deferred guards require matching states/source/event/operation/current-transaction audit and reject partial/orphan closes. No document/intent/legacy HTN/CareAction/EACCE bridge. See [Slice 7](V3_I2_SLICE7_EXIT_REVIEW.md).
