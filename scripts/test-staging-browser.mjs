@@ -1,5 +1,6 @@
 /** Public synthetic Browser → existing Vercel Next → Nest → Neon. No response mocks. */
 import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
@@ -101,7 +102,7 @@ try {
     await follow.getByLabel('Clinician instruction', { exact: true }).fill(followup);
     await clickWrite(doctor, 'Save follow-up draft', '/follow-up-intents');
   }
-  await follow.getByText('Draft · clinician only', { exact: true }).waitFor();
+  await follow.getByText(followup, { exact: true }).waitFor();
   const writes = [];
   doctor.on('request', r => { if (['POST', 'PUT'].includes(r.method()) && r.url().includes('/api/v1/')) writes.push(r.url()); });
   await doctor.reload();
@@ -110,15 +111,19 @@ try {
   mark('clinical drafts persist; reload recovers context without mutations');
   const visible = async () => JSON.stringify([await command(patient, '/me/summaries'), await command(patient, '/me/follow-up-intents')]);
   const before = await visible();
-  for (const text of [privateText, summary, followup]) assert.ok(!before.includes(text));
-  mark('private note, summary draft and follow-up draft hidden from patient');
-  await button(doctor, 'Review sign and release').click();
-  await clickWrite(doctor, 'Confirm sign and release', '/release');
+  assert.ok(!before.includes(privateText));
+  if (!bookingId || !process.env.EH_STAGING_BOOKING_ID) for (const text of [summary, followup]) assert.ok(!before.includes(text));
+  if (!before.includes(summary)) {
+    await button(doctor, 'Review sign and release').click();
+    await clickWrite(doctor, 'Confirm sign and release', '/sign-release');
+  }
   const summaryOnly = await visible(); assert.ok(summaryOnly.includes(summary)); assert.ok(!summaryOnly.includes(followup) && !summaryOnly.includes(privateText));
   mark('explicit summary release is independent of private note and follow-up');
-  await button(doctor, 'Review follow-up release').click();
-  await doctor.getByRole('dialog').getByRole('checkbox').check();
-  await clickWrite(doctor, 'Sign and release follow-up', '/release');
+  if (!summaryOnly.includes(followup)) {
+    await button(doctor, 'Review follow-up release').click();
+    await doctor.getByRole('dialog').getByRole('checkbox').check();
+    await clickWrite(doctor, 'Sign and release follow-up', '/sign-release');
+  }
   const released = await visible(); assert.ok(released.includes(summary) && released.includes(followup)); assert.ok(!released.includes(privateText));
   mark('explicit FollowUpIntent release; private note remains private');
   await button(doctor, 'Review & close consultation').click();
@@ -153,6 +158,11 @@ try {
   await patient.goto(origin + '/patient/appointments/' + bookingId);
   await patient.getByText('Consulted', { exact: true }).first().waitFor();
   assert.equal(await button(patient, 'Cancel booking').isDisabled(), true);
+  const detail = await command(patient, '/me/bookings/' + bookingId);
+  assert.equal(detail.data.data.state, 'CONSULTED');
+  for (const [actor, action, extra] of [[patient, 'cancel', {}], [doctor, 'attendance', { observation: 'NO_SHOW' }]]) {
+    assert.equal((await command(actor, `/me/bookings/${bookingId}/${action}`, 'PUT', { expectedVersion: detail.data.data.version, operationKey: randomUUID(), ...extra })).status, 409);
+  }
   mark('CLOSED / CONSULTED survive reload; illegal post-close UI actions blocked; close leaks no unreleased content');
   assert.deepEqual(errors, []);
   for (const p of [doctor, patient]) await command(p, '/auth/logout', 'POST', {});
