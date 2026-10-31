@@ -1,3 +1,5 @@
+// Vercel's NestJS detector must select the listening entrypoint, not the app factory.
+import '@nestjs/core';
 import {createFollowUpIntentPersistence} from '@egyhealth/db';
 import {createDocumentationPersistence} from '@egyhealth/db';
 import {createConsultationPersistence} from '@egyhealth/db';
@@ -48,7 +50,7 @@ async function main() {
   const shutdown = () => { void close().catch(() => { console.error('API shutdown failed'); process.exitCode = 1; }); };
   process.once('SIGTERM', shutdown);
   process.once('SIGINT', shutdown);
-  await app.listen(positiveInteger(process.env.API_PORT, 3001), '0.0.0.0');
+  await app.listen(positiveInteger(process.env.PORT ?? process.env.API_PORT, 3001), '0.0.0.0');
   console.log('API started');
 }
 main().catch(() => { console.error('API startup failed'); process.exit(1); });
