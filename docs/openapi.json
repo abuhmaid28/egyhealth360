@@ -20111,6 +20111,11 @@
           "405": {
             "description": "Current minimized projection. No ETag, Last-Modified or 304.",
             "headers": {
+              "Allow": {
+                "schema": {
+                  "const": "PUT"
+                }
+              },
               "Cache-Control": {
                 "schema": {
                   "const": "no-store"

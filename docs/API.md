@@ -138,3 +138,9 @@ See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLIC
 ## Slice 6 Follow-up Intent
 
 The exact new bounded routes, strict inputs, author/released projections, status and replay semantics are in [Slice 6](V3_I2_SLICE6.md) and [OpenAPI](openapi.json). Existing EH-012 routes remain unchanged. Clinical authority comes solely from current ClinicianPatientAssignment; Booking linkage grants none. The Slice 6 runtime verifier is wired into accelerated CI before smoke and cleanup.
+
+## Slice 7 explicit Consultation Close
+
+`PUT /api/v1/consultations/{consultationId}/close` accepts exactly `{operationKey,expectedVersion}` (consultation OPEN version 1). Only the exact booked/actual treating clinician with current session/account/profile/assignment and exact active source clinic/membership/provider/affiliation authority may close. Booking grants zero clinical authority. Atomically persist Consultation CLOSED/version 2 and Booking CONSULTED, server-owned actual close time/actor/assignment, immutable CLOSE event/operation and minimized audit. Exact replay returns the retained result after current authority; changed payload conflicts; failure rolls everything back with reusable key. No caller close timestamp or actor.
+
+200 `{data:{id,encounterId,bookingId,state,bookingState,version,closedAt,providerId,clinicId}}`; CLOSED/CONSULTED/version 2 are fixed. Same strict browser/parser/no-store and minimized BOOKING errors as opening; only PUT, `Allow: PUT`, bodyless HEAD 405. Close signs/releases/completes nothing else. See [exact contract, locks and proof](V3_I2_SLICE7_EXIT_REVIEW.md). No other consultation API is introduced.
