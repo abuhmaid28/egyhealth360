@@ -8,7 +8,7 @@ EgyHealth 360 is an integrated synthetic graduation healthcare platform: patient
 
 **Live:** pre-final Vercel frontend → Vercel NestJS API → Neon PostgreSQL 18, with evidenced I2 login/booking/consultation/documentation/follow-up/close and EN/AR/RTL. Prescription/pharmacy backend on main is not verified deployed or integrated into Live UI. Pharmacy/lab frontend shells remain Demo/unsupported. Current UI is a functional V1 prototype, not final design; current logo is not final. Protected final domain: `egyhealth360.vercel.app`.
 
-**Active:** CI Accelerator V2 infrastructure sprint before Stage 2, following accepted Foundation Reboot V2 Stage 0+1 / independent review PASS. [Current scope and gates](CURRENT_STATUS.md), [CI policy](CI_POLICY.md). Stage 1.5 is not required on accepted evidence. Stage 2 has NOT started. Lab, I4/I5/EACCE, final design/frontend implementation and final-domain promotion remain unauthorized.
+**Active:** Foundation Reboot V2 Stage 2 — Product UX Foundation, documentation/product analysis only, after accepted Stage 0+1 and merged/independently reviewed CI Accelerator V2. [Current scope and gates](CURRENT_STATUS.md), [Product UX reading path](UX_FOUNDATION.md), [CI policy](CI_POLICY.md). Stage 1.5 is not required on accepted evidence. Stage 2 outputs remain subject to independent review and owner acceptance; Stage 3, Lab, I4/I5/EACCE, final design/frontend implementation and final-domain promotion remain unauthorized.
 
 ## Product and execution boundaries
 

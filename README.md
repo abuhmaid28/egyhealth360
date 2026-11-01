@@ -4,7 +4,7 @@ An integrated synthetic graduation healthcare platform connecting patient access
 
 Start with [CURRENT_STATUS](docs/CURRENT_STATUS.md), [stable charter](docs/FOUNDATION_CHARTER.md) and [source index](docs/SOURCE_OF_TRUTH.md). Agents follow [AGENTS](AGENTS.md) and current GitHub authorization first.
 
-Accepted complete: M0/M1/M2, V3-G0, I1, I2, I3 contract, I3 Slice 1 Prescription and Slice 2 Pharmacy. Active: Foundation Reboot V2 Stage 0+1, documentation/governance/audit only. Lab and I4/I5/EACCE remain paused. [Roadmap](docs/IMPLEMENTATION_ROADMAP.md).
+Accepted complete: M0/M1/M2, V3-G0, I1, I2, I3 contract, I3 Slice 1 Prescription and Slice 2 Pharmacy. Active: Foundation Reboot V2 Stage 2, Product UX documentation/analysis only; [current UX reading path](docs/UX_FOUNDATION.md). Stage 0+1 and CI Accelerator V2 are accepted/merged; Stage 2 review/owner acceptance and separate Stage 3 authorization remain required. Lab and I4/I5/EACCE remain paused. [Roadmap](docs/IMPLEMENTATION_ROADMAP.md).
 
 The functional V1 web UI includes separate Demo and Live adapters. [Pre-final Live](https://egyhealth360-pre-final-staging-abuhmaid2810gmailcoms-projects.vercel.app/) evidences the I2 patient/clinician journey through explicit close; I3 cloud/UI parity is not verified. Current UI/logo/design are not final. `egyhealth360.vercel.app` remains protected.
 

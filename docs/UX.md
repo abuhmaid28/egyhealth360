@@ -1,27 +1,9 @@
-# UX scope and V1 audit boundary
+# UX entrypoint and V1 boundary
 
-CURRENT AUTHORITATIVE UX boundary, **not an approved final UX/navigation specification**. The Live V1 UI exists; older “UI/UX NOT STARTED / DESIGN FROZEN” snapshots do not describe implementation. Issue #72 authorizes an audit only; it does not authorize redesign. [CURRENT_STATUS](CURRENT_STATUS.md), [charter and owner gates](FOUNDATION_CHARTER.md).
+CURRENT AUTHORITATIVE compatibility entrypoint. The current Product UX foundation is [UX_FOUNDATION](UX_FOUNDATION.md), followed by [USER_JOURNEYS](USER_JOURNEYS.md) and [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md). Use those documents for five behavioral groups/JTBD, task priorities, information needs, principles, safety constraints, cross-role handoffs and owner decision gates. [CURRENT_STATUS](CURRENT_STATUS.md) owns delivery/authorization; [SOURCE_OF_TRUTH](SOURCE_OF_TRUTH.md) classifies references.
 
-Current UI is a **FUNCTIONAL V1 PROTOTYPE / BEFORE BASELINE**. Reusable safety/client boundaries coexist with an unapproved final IA, repeated card hierarchy, technical terminology and incomplete date/content localization. See [frontend/UX audit](FOUNDATION_REBOOT_V2_AUDIT.md#frontend-ux-arabic-brand-and-design-system). Current logo/colors/fonts are not final. No new navigation, terminology or screens are selected here.
+Stage 2 is Product UX definition only. Its proposed rankings/journeys/principles are review candidates, not final owner approval or permission to implement. Existing accepted clinical/security constraints remain binding. **Stage 3 has not been authorized.** Exact navigation, sitemap/page hierarchy, final content/Arabic wording, brand/visual decisions, Design System V2 and frontend architecture/implementation remain later owner gates under the [charter](FOUNDATION_CHARTER.md).
 
-## Conceptual workspace responsibilities — scope, not delivery promises
+Current UI is a **FUNCTIONAL V1 PROTOTYPE / BEFORE BASELINE**. [PRODUCT_UX_INVENTORY](PRODUCT_UX_INVENTORY.md) distinguishes actual domain capabilities, current V1 routes/Live-versus-Demo exposure and target user needs. Patient/clinician I2 Live flows exist; prescription/pharmacy backend exists without verified Live UI/hosted integration; Laboratory, integrated I4 continuity, EACCE and research remain future. Admin Demo does not execute operational mutations.
 
-Patient/clinician I2 flows and prescription/pharmacy backend are implemented within accepted contracts. Lab and integrated longitudinal journeys remain future/unauthorized. The following table describes scope responsibilities; it must not be read as a statement that all five Live workspaces exist.
-
-| Workspace | Conceptual information flow | Access/release boundary |
-|---|---|---|
-| Patient | Register/login/profile → public discovery/profile/availability → own booking → explicit relationship → released consultation/prescription/lab/follow-up → own longitudinal record/BP/plan/actions and in-app updates | No private clinician notes, drafts, privileged role choice or clinical authoring |
-| Doctor | Professional information/availability → own schedule/minimal logistics → current authorized patient consultation → human documentation/orders/prescription/follow-up → clinically appropriate released history/BP/plan/actions | Booking alone no clinical record; private notes author-only under current relationship |
-| Laboratory / Diagnostics | Routed order → fulfillment progress/result entry → explicit verification/finalization → release/correction history | Current artifact-scoped staff authority; no whole-record search. Imaging optional in same workspace |
-| Pharmacy | Valid signed routed prescription → full-item dispensing → status/history | No prescription alteration, partial/refill/substitution or adherence inference |
-| Admin | Operational users/providers/membership/status/config/demo and research administration | No clinical payload, impersonation or fulfillment by ADMIN alone |
-
-## Product journey coverage before design
-
-- A: Register → discover → book → explicit patient authorization/clinician acceptance → consultation → signed/released summary, prescription, test order and follow-up.
-- B: Clinician order → routed lab → process/finalize → permitted patient/current-doctor result → longitudinal source history.
-- C: Signed prescription → routed pharmacy → full-item dispense → preserved quantity/actor/time → appropriate patient/current-doctor view.
-- D: Timeline/follow-up/BP → retained CarePlan/actions → future explicitly contracted EACCE. No care plan/engine prerequisite for A–C.
-
-
-Journey C's backend is implemented through pharmacy Slice 2, with no Live pharmacy frontend claim. Journey A still lacks Lab; B is future; D has M2 foundations but lacks I4/I5 integration. This is not final IA or approved user-facing terminology. Future UX/IA/content/Arabic, three visual directions, owner selection, Brand V2, Design System V2 and prototypes precede frontend implementation under the charter. Preserve all doctor-demo screenshots byte-for-byte.
+Preserve [historical screenshots](ui-screenshots/doctor-demo/) byte-for-byte. [DESIGN_SYSTEM](DESIGN_SYSTEM.md) remains incomplete historical V1 direction, not approved final colors/fonts/layout or Design System V2. The earlier [UX boundary at the Stage 2 base](https://github.com/abuhmaid28/egyhealth360/blob/7156b7fe667342a2ed4b356d857ff56c2f7da7fa/docs/UX.md) is historical context, not a competing current requirement. No screens were redesigned or regenerated in this stage.
