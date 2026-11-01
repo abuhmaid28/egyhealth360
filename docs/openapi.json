@@ -21061,6 +21061,28 @@
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
             }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
           }
         ],
         "responses": {
@@ -21131,6 +21153,28 @@
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
             }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
           }
         ],
         "responses": {
@@ -21756,6 +21800,28 @@
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
             }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
           }
         ],
         "responses": {
@@ -21816,6 +21882,28 @@
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
             }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
           }
         ],
         "responses": {
@@ -22042,6 +22130,28 @@
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
             }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
           }
         ],
         "responses": {
@@ -22112,6 +22222,28 @@
               "format": "uuid",
               "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
             }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            },
+            "description": "Pages each permitted item routing/correction history; never changes the immutable signed payload."
           }
         ],
         "responses": {
@@ -22135,6 +22267,1271 @@
           },
           "503": {
             "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      }
+    },
+    "/api/v1/pharmacy-destinations": {
+      "get": {
+        "summary": "Current clinician selects active pharmacy identities/names; no clinical grant",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PharmacyDestination"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        }
+      },
+      "head": {
+        "summary": "Current clinician selects active pharmacy identities/names; no clinical grant",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}/pharmacy-routes": {
+      "post": {
+        "summary": "Exact current source author routes specified signed items",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful command or exact retained replay under current authority/privacy; no duplicate facts/history/audit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyRouteCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}/pharmacy-routes/{routeId}/withdrawals": {
+      "post": {
+        "summary": "Reasoned withdrawal of whole pending route only",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "routeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful command or exact retained replay under current authority/privacy; no duplicate facts/history/audit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyWithdrawCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}/pharmacy-routes/{routeId}/reroutes": {
+      "post": {
+        "summary": "Atomic pending withdrawal and fresh route of same items to another pharmacy",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "routeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful command or exact retained replay under current authority/privacy; no duplicate facts/history/audit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyRerouteCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pharmacies/{pharmacyId}/routes": {
+      "get": {
+        "summary": "Exact current pharmacy membership queue; filter before counts/pages",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pharmacyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "purpose",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "fulfillment",
+                "history"
+              ],
+              "default": "fulfillment"
+            },
+            "description": "History is bounded to completed/cancelled/expired accepted artifacts and actual dispense corrections. No source instructions or unrelated route lineage."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PharmacyRoute"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total",
+                        "purpose"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        },
+                        "purpose": {
+                          "type": "string",
+                          "enum": [
+                            "fulfillment",
+                            "history"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        }
+      },
+      "head": {
+        "summary": "Exact current pharmacy membership queue; filter before counts/pages",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pharmacyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "purpose",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "fulfillment",
+                "history"
+              ],
+              "default": "fulfillment"
+            },
+            "description": "History is bounded to completed/cancelled/expired accepted artifacts and actual dispense corrections. No source instructions or unrelated route lineage."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        }
+      }
+    },
+    "/api/v1/pharmacies/{pharmacyId}/routes/{routeId}": {
+      "get": {
+        "summary": "Exact routed artifact; separate bounded correction/history purpose",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pharmacyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "routeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "purpose",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "fulfillment",
+                "history"
+              ],
+              "default": "fulfillment"
+            },
+            "description": "History is bounded to completed/cancelled/expired accepted artifacts and actual dispense corrections. No source instructions or unrelated route lineage."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        }
+      },
+      "head": {
+        "summary": "Exact routed artifact; separate bounded correction/history purpose",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pharmacyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "routeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "name": "purpose",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "fulfillment",
+                "history"
+              ],
+              "default": "fulfillment"
+            },
+            "description": "History is bounded to completed/cancelled/expired accepted artifacts and actual dispense corrections. No source instructions or unrelated route lineage."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        }
+      }
+    },
+    "/api/v1/pharmacies/{pharmacyId}/routes/{routeId}/accept": {
+      "post": {
+        "summary": "Current exact pharmacy staff explicitly accepts pending route",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pharmacyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "routeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful command or exact retained replay under current authority/privacy; no duplicate facts/history/audit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyAcceptCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pharmacies/{pharmacyId}/routes/{routeId}/items/{itemId}/dispenses": {
+      "post": {
+        "summary": "One database-unique full prescribed item fact, after acceptance and within validity",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pharmacyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "routeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful command or exact retained replay under current authority/privacy; no duplicate facts/history/audit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyDispenseCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pharmacies/{pharmacyId}/routes/{routeId}/dispenses/{dispenseId}/corrections": {
+      "post": {
+        "summary": "Reasoned append-only corrections; expectedVersion is correction version (initial zero)",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pharmacyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "routeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "dispenseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful command or exact retained replay under current authority/privacy; no duplicate facts/history/audit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyCorrectionCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pharmacies/{pharmacyId}/routes/{routeId}/dispenses/{dispenseId}/reversals": {
+      "post": {
+        "summary": "Reasoned append-only reversals; expectedVersion is correction version (initial zero)",
+        "description": "No-store; strict session/request defenses. Current exact author or routed pharmacy/org/membership authority and privacy rechecked after locks and before commit. Full-item only; no caller quantity, actor, patient, membership, medication substitution or time. Database half-open validity governs new dispensing. Corrections preserve the original fact and never restore entitlement.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "pharmacyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "routeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "dispenseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful command or exact retained replay under current authority/privacy; no duplicate facts/history/audit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PharmacyRoute"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Origin/Fetch Metadata/CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized, restricted or no current artifact authority; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted version/state/operation conflict"
+          },
+          "503": {
+            "description": "Unavailable/uncertain commit; explicitly retry identical command/key, never automatic retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PharmacyCorrectionCommand"
+              }
+            }
           }
         }
       }
@@ -25638,7 +27035,28 @@
           "fulfillmentState": {
             "type": "string",
             "enum": [
-              "NOT_DISPENSED"
+              "NOT_DISPENSED",
+              "FULLY_DISPENSED"
+            ]
+          },
+          "routingHistory": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "$ref": "#/components/schemas/PharmacyRoutingHistory"
+            }
+          },
+          "routingHistoryMeta": {
+            "$ref": "#/components/schemas/PharmacyPageMeta"
+          },
+          "dispense": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PharmacyDispense"
+              },
+              {
+                "type": "null"
+              }
             ]
           }
         }
@@ -25824,6 +27242,575 @@
           "restricted": {
             "type": "boolean",
             "const": true
+          }
+        }
+      },
+      "PharmacyRouteCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion",
+          "itemIds",
+          "destinationId"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "itemIds": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          "destinationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          }
+        }
+      },
+      "PharmacyWithdrawCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion",
+          "reason"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "pattern": "\\S"
+          }
+        }
+      },
+      "PharmacyRerouteCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion",
+          "destinationId",
+          "reason"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "destinationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "pattern": "\\S"
+          }
+        }
+      },
+      "PharmacyAcceptCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          }
+        }
+      },
+      "PharmacyDispenseCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          }
+        }
+      },
+      "PharmacyCorrectionCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion",
+          "reason"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2147483646
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "pattern": "\\S"
+          }
+        }
+      },
+      "PharmacyPageMeta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "page",
+          "pageSize",
+          "total"
+        ],
+        "properties": {
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          }
+        }
+      },
+      "PharmacyDestination": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "PharmacyTransition": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "state",
+          "recordedAt",
+          "reason"
+        ],
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ACCEPTED",
+              "WITHDRAWN"
+            ]
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "PharmacyDispenseCorrection": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "reason",
+          "recordedAt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "CORRECTION",
+              "REVERSAL"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000,
+            "pattern": "\\S"
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PharmacyDispense": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "routeId",
+          "pharmacyId",
+          "pharmacyName",
+          "dispensedAt",
+          "medicationId",
+          "medicationDisplay",
+          "quantity",
+          "unit",
+          "correctionVersion",
+          "corrections",
+          "correctionHistoryMeta",
+          "reversed"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "routeId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "pharmacyId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "pharmacyName": {
+            "type": "string"
+          },
+          "dispensedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "medicationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "medicationDisplay": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "correctionVersion": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "corrections": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "$ref": "#/components/schemas/PharmacyDispenseCorrection"
+            }
+          },
+          "correctionHistoryMeta": {
+            "$ref": "#/components/schemas/PharmacyPageMeta"
+          },
+          "reversed": {
+            "type": "boolean",
+            "description": "Preserved original fact was recorded as erroneous. Never resets FULLY_DISPENSED or permits a second fact."
+          }
+        }
+      },
+      "PharmacyRoutingHistory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "pharmacyId",
+          "pharmacyName",
+          "state",
+          "createdAt",
+          "predecessorId",
+          "transitions"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "pharmacyId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "pharmacyName": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ACCEPTED",
+              "WITHDRAWN",
+              "COMPLETED",
+              "CANCELLED",
+              "REPLACED",
+              "EXPIRED"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "predecessorId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "transitions": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "$ref": "#/components/schemas/PharmacyTransition"
+            }
+          }
+        }
+      },
+      "PharmacyRoutedItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "medicationId",
+          "medicationDisplay",
+          "quantity",
+          "unit",
+          "instructions",
+          "fulfillmentState",
+          "dispense"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "medicationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "medicationDisplay": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "instructions": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Omitted as null in bounded correction/history purpose."
+          },
+          "fulfillmentState": {
+            "type": "string",
+            "enum": [
+              "NOT_DISPENSED",
+              "FULLY_DISPENSED"
+            ]
+          },
+          "dispense": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PharmacyDispense"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        }
+      },
+      "PharmacyRoute": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "prescriptionId",
+          "pharmacyId",
+          "pharmacyName",
+          "version",
+          "state",
+          "recordedState",
+          "purpose",
+          "createdAt",
+          "patientDisplayName",
+          "validFrom",
+          "validUntil",
+          "transitions",
+          "items"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "prescriptionId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "pharmacyId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "pharmacyName": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ACCEPTED",
+              "WITHDRAWN",
+              "COMPLETED",
+              "CANCELLED",
+              "REPLACED",
+              "EXPIRED"
+            ]
+          },
+          "recordedState": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ACCEPTED",
+              "WITHDRAWN"
+            ]
+          },
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "FULFILLMENT",
+              "CORRECTION_HISTORY"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "patientDisplayName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "transitions": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "$ref": "#/components/schemas/PharmacyTransition"
+            }
+          },
+          "items": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 20,
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/PrescriptionItem"
+                },
+                {
+                  "$ref": "#/components/schemas/PharmacyRoutedItem"
+                }
+              ]
+            }
           }
         }
       }

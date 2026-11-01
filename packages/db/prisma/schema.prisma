@@ -1269,3 +1269,88 @@ model MedicationOperation {
  recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
  @@map("medication_operations")
 }
+
+// I3 Slice 2 pharmacy fulfillment.
+model PharmacyRoute {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ pharmacyId String @map("pharmacy_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ assignmentId String @map("assignment_id") @db.Uuid
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ createdAt DateTime @map("created_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+ @@map("pharmacy_routes")
+}
+model PharmacyRouteItem {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ routeId String @map("route_id") @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ itemId String @map("item_id") @db.Uuid
+ sequence Int
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ @@map("pharmacy_route_items")
+}
+model PharmacyRouteVersion {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ routeId String @map("route_id") @db.Uuid
+ version Int
+ command String @db.VarChar(12)
+ state String @db.VarChar(12)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ assignmentId String? @map("assignment_id") @db.Uuid
+ membershipId String? @map("membership_id") @db.Uuid
+ reason String?
+ operationId String @map("operation_id") @db.Uuid
+ recordedAt DateTime @map("recorded_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+ @@map("pharmacy_route_versions")
+}
+model PharmacyDispense {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ routeId String @map("route_id") @db.Uuid
+ itemId String @map("item_id") @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ pharmacyId String @map("pharmacy_id") @db.Uuid
+ medicationId String @map("medication_id") @db.Uuid
+ medicationDisplay String @map("medication_display")
+ quantity Decimal @db.Decimal(12,3)
+ unit String
+ actorUserId String @map("actor_user_id") @db.Uuid
+ membershipId String @map("membership_id") @db.Uuid
+ operationId String @map("operation_id") @db.Uuid
+ recordedAt DateTime @map("recorded_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+ @@map("pharmacy_dispenses")
+}
+model PharmacyDispenseCorrection {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ dispenseId String @map("dispense_id") @db.Uuid
+ routeId String @map("route_id") @db.Uuid
+ itemId String @map("item_id") @db.Uuid
+ pharmacyId String @map("pharmacy_id") @db.Uuid
+ version Int
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ kind String @db.VarChar(12)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ membershipId String @map("membership_id") @db.Uuid
+ reason String
+ operationId String @map("operation_id") @db.Uuid
+ recordedAt DateTime @map("recorded_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+ @@map("pharmacy_dispense_corrections")
+}
+model PharmacyOperation {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String @db.VarChar(12)
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ targetRouteId String @map("target_route_id") @db.Uuid
+ resultRouteId String @map("result_route_id") @db.Uuid
+ resultRouteVersionId String? @map("result_route_version_id") @db.Uuid
+ resultDispenseId String? @map("result_dispense_id") @db.Uuid
+ resultCorrectionId String? @map("result_correction_id") @db.Uuid
+ auditId String @map("audit_id") @db.Uuid
+ recordedAt DateTime @map("recorded_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+ @@map("pharmacy_operations")
+}

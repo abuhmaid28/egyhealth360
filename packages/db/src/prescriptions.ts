@@ -1,3 +1,5 @@
+import {PharmacyError} from './pharmacy-values.js';
+import {createPharmacyModule} from './pharmacy.js';
 import pg from 'pg';
 import { createHash, randomUUID } from 'node:crypto';
 import type { AuthPrincipal } from './auth.js';
@@ -9,7 +11,7 @@ const fingerprint = (value:unknown) => createHash('sha256').update(JSON.stringif
 function principal(value:AuthPrincipal):Actor {
   try { const d=Object.getOwnPropertyDescriptors(value); if(['userId','sessionId','role'].some(k=>!d[k]?.enumerable||!('value' in d[k]))||typeof d.role.value!=='string'||!['PATIENT','CLINICIAN','ADMIN','LAB_STAFF','PHARMACY_STAFF'].includes(d.role.value))fail('PRESCRIPTION_UNAUTHENTICATED'); return {userId:availabilityId(d.userId.value),sessionId:availabilityId(d.sessionId.value),role:d.role.value as string}; } catch {return fail('PRESCRIPTION_UNAUTHENTICATED');}
 }
-/** Slice 1 source persistence. No fulfillment entitlement, retry loop or clinical inference. */
+/** Source authority and pharmacy artifact composition. No clinical inference or mutation retries. */
 export function createPrescriptionPersistence(connectionString:string|undefined) {
   if(!connectionString)fail('PRESCRIPTION_UNAVAILABLE');
   const pool=new pg.Pool({connectionString,max:4,connectionTimeoutMillis:5000,lock_timeout:5000,statement_timeout:10000});pool.on('error',()=>{});
@@ -66,13 +68,15 @@ export function createPrescriptionPersistence(connectionString:string|undefined)
       await final();const result=await action(tx,grants,final);await final();await tx.query('COMMIT');return result;
     } catch(e) {
       if(tx)await tx.query('ROLLBACK').catch(()=>{});
-      if(e instanceof PrescriptionError)throw e;
+      if(e instanceof PrescriptionError||e instanceof PharmacyError)throw e;
       if(e&&typeof e==='object'&&'code' in e&&['23505','23P01'].includes(String(e.code)))fail('PRESCRIPTION_CONFLICT');
       return fail('PRESCRIPTION_UNAVAILABLE');
     } finally {tx?.release();tx?.removeListener('error',connectionError);}
   }
   async function restricted(tx:pg.PoolClient,rootId:string) {return !!(await tx.query('SELECT p.id FROM public.prescriptions r JOIN public.prescription_privacy_restrictions p ON p.lineage_id=r.lineage_id WHERE r.id=$1',[rootId])).rowCount;}
   async function projection(tx:pg.PoolClient,a:Actor,patient:string,rootId:string|null,consultation:string|null,signed:boolean,page=prescriptionPage({}),retainedVersion:string|null=null) {
+    const available=(await tx.query("SELECT to_regclass('public.pharmacy_dispenses') IS NOT NULL ready")).rows[0].ready;
+    const fulfillment=available?'public.i3_pharmacy_item_projection(i.id,$9,$10)':"jsonb_build_object('fulfillmentState','NOT_DISPENSED')";
     const result=(await tx.query(`WITH visible AS MATERIALIZED (
       SELECT r.*,v.id version_id,v.version,v.state,v.valid_from,v.valid_until,v.signed_at,v.recorded_at,v.reason,v.replacement_id,
       (SELECT state FROM public.prescription_versions latest WHERE latest.root_id=r.id ORDER BY version DESC LIMIT 1) current_state,
@@ -87,8 +91,8 @@ export function createPrescriptionPersistence(connectionString:string|undefined)
       'state',r.state,'currentState',r.current_state,'validFrom',r.valid_from,'validUntil',r.valid_until,'signedAt',r.signed_at,'createdAt',r.created_at,'eligible',r.eligible,
       'predecessorId',CASE WHEN EXISTS(SELECT 1 FROM public.prescriptions x WHERE x.id=r.predecessor_id AND NOT EXISTS(SELECT 1 FROM public.prescription_privacy_restrictions p WHERE p.lineage_id=x.lineage_id)) THEN r.predecessor_id ELSE NULL END,
       'replacementId',CASE WHEN EXISTS(SELECT 1 FROM public.prescriptions x WHERE x.id=r.replacement_id AND NOT EXISTS(SELECT 1 FROM public.prescription_privacy_restrictions p WHERE p.lineage_id=x.lineage_id)) THEN r.replacement_id ELSE NULL END,
-      'reason',r.reason,'history',(SELECT coalesce(jsonb_agg(jsonb_build_object('state',h.state,'signedAt',h.signed_at,'recordedAt',h.recorded_at,'reason',h.reason) ORDER BY h.version),'[]'::jsonb) FROM public.prescription_versions h WHERE h.root_id=r.id AND h.state<>'DRAFT' AND h.version<=r.version),'items',(SELECT jsonb_agg(jsonb_build_object('id',i.id,'medicationId',i.medication_id,'medicationDisplay',i.medication_display,'quantity',trim(trailing '.' FROM trim(trailing '0' FROM i.quantity::text)),'unit',i.unit,'instructions',i.instructions,'fulfillmentState','NOT_DISPENSED') ORDER BY vi.position) FROM public.prescription_version_items vi JOIN public.prescription_items i ON i.id=vi.item_id WHERE vi.version_id=r.version_id)
-    ) ORDER BY r.created_at DESC,r.id ASC) FROM selected r),'[]'::jsonb) data`,[patient,rootId,consultation,signed,a.userId,rootId?1:page.pageSize,rootId?0:(page.page-1)*page.pageSize,retainedVersion])).rows[0];
+      'reason',r.reason,'history',(SELECT coalesce(jsonb_agg(jsonb_build_object('state',h.state,'signedAt',h.signed_at,'recordedAt',h.recorded_at,'reason',h.reason) ORDER BY h.version),'[]'::jsonb) FROM public.prescription_versions h WHERE h.root_id=r.id AND h.state<>'DRAFT' AND h.version<=r.version),'items',(SELECT jsonb_agg(jsonb_build_object('id',i.id,'medicationId',i.medication_id,'medicationDisplay',i.medication_display,'quantity',trim(trailing '.' FROM trim(trailing '0' FROM i.quantity::text)),'unit',i.unit,'instructions',i.instructions)||CASE WHEN $9::int>=1 AND $10::int>=1 THEN ${fulfillment} ELSE '{}'::jsonb END ORDER BY vi.position) FROM public.prescription_version_items vi JOIN public.prescription_items i ON i.id=vi.item_id WHERE vi.version_id=r.version_id)
+    ) ORDER BY r.created_at DESC,r.id ASC) FROM selected r),'[]'::jsonb) data`,[patient,rootId,consultation,signed,a.userId,rootId?1:page.pageSize,rootId?0:(page.page-1)*page.pageSize,retainedVersion,rootId?page.page:1,rootId?page.pageSize:1])).rows[0];
     if(rootId) {if(!result.data.length)deny();return {data:result.data[0]};}
     return {data:result.data,meta:{...page,total:result.total}};
   }
@@ -162,9 +166,11 @@ export function createPrescriptionPersistence(connectionString:string|undefined)
         if(['SIGN','REPLACE'].includes(command)&&!(await tx.query('SELECT valid_until>clock_timestamp() valid FROM public.prescription_versions WHERE id=$1',[versionId])).rows[0].valid)fail('PRESCRIPTION_CONFLICT');
         return {status:['DRAFT','REPLACE'].includes(command)?201:200,...(command==='PRIVACY'?{data:{restricted:true}}:await projection(tx,a,s.patient_id,resultId,s.id,false,prescriptionPage({}),versionId))};
       });
-    } catch(e) {if(e instanceof PrescriptionError)throw e;return fail('PRESCRIPTION_UNAVAILABLE');}
+    } catch(e) {if(e instanceof PrescriptionError||e instanceof PharmacyError)throw e;return fail('PRESCRIPTION_UNAVAILABLE');}
   }
+  const pharmacy=createPharmacyModule(pool,{principal,scope,current,run});
   return {
+    pharmacy,
     execute,
     async authorRead(actor:AuthPrincipal,consultationId:string,prescriptionId:string|null,page:unknown={}) {
       const a=principal(actor);let id:string,target:string|null;try{id=availabilityId(consultationId);target=prescriptionId===null?null:availabilityId(prescriptionId);}catch{return deny();}

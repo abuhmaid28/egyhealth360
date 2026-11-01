@@ -33,6 +33,7 @@ export function prescriptionRequestBoundary(auth: AuthRuntime) {
     const raw = q.url ?? '', path = raw.split('?')[0]; let decoded = path; try { decoded = decodeURIComponent(path); } catch { /* no aliases */ }
     const normalized = decoded.toLowerCase().replace(/\/+$/, '');
     if (!/^\/api\/v1\/(?:consultations\/[^/]+\/prescriptions|me\/prescriptions|patients\/[^/]+\/prescriptions|medications)(?:\/|$)/.test(normalized)) return next();
+    if (/^\/api\/v1\/consultations\/[^/]+\/prescriptions\/[^/]+\/pharmacy-routes(?:\/|$)/.test(normalized)) return next();
     s.setHeader('Cache-Control', 'no-store');
     const reject = (e: unknown) => { const x = failure(e); send(q, s, x.getStatus(), x.getResponse()); };
     let command: PrescriptionCommand | 'CATALOG' = 'DRAFT';

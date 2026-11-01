@@ -86,6 +86,7 @@ jobs:
       - run: docker compose exec -T api node scripts/verify-follow-up-intent-runtime.mjs
       - run: docker compose exec -T api node scripts/verify-v3-i2-exit-runtime.mjs
       - run: docker compose exec -T api node scripts/verify-prescription-runtime.mjs
+      - run: docker compose exec -T api node scripts/verify-pharmacy-runtime.mjs
       - run: |
           curl --fail http://localhost:3000
           curl --fail http://localhost:3001/api/v1/health
