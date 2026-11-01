@@ -2,10 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { beforeI2LiveCloseout } from "./support/openapi-baseline.mjs";
+import { beforeI2LiveCloseout, beforeI3Slice1 } from "./support/openapi-baseline.mjs";
 
 test("Live recovery adds only GET/HEAD context and preserves every merged I2 API byte", async () => {
-  const raw = await readFile("docs/openapi.json", "utf8"),
+  const raw = beforeI3Slice1(await readFile("docs/openapi.json", "utf8")),
     prior = beforeI2LiveCloseout(raw);
   assert.equal(
     createHash("sha256").update(prior).digest("hex"),

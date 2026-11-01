@@ -68,6 +68,7 @@ export function beforeI2Slice7(text) {
 /** Strip only the bounded Live context recovery methods/schema. This preserves
  * every historical route, mutation contract and migration hash gate unchanged. */
 export function beforeI2LiveCloseout(text) {
+ text=beforeI3Slice1(text);
  const start=text.indexOf('    "/api/v1/me/bookings/{bookingId}/consultation": {');
  const end=start<0?-1:text.indexOf('\n    },',start);
  if(end>=0) {
@@ -75,4 +76,10 @@ export function beforeI2LiveCloseout(text) {
   if(delta>=0)text=text.slice(0,start)+block.slice(0,delta)+text.slice(end);
  }
  return text.replace(/,\n {6}"ConsultationContext": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
+}
+
+/** Remove exactly the additive I3 Slice 1 blocks. Historical hashes stay pinned. */
+export function beforeI3Slice1(text) {
+ return text.replace(/,\n {4}"\/api\/v1\/medications": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
+  .replace(/,\n {6}"PrescriptionItemInput": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
 }

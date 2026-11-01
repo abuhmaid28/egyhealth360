@@ -192,3 +192,7 @@ Migration 19 adds FollowUpIntent, FollowUpIntentVersion, FollowUpIntentBookingLi
 Migration `20261031140000_v3_i2_consultation_close` adds Consultation `version` (OPEN=1/CLOSED=2) and nullable `closedAt`, `closedByUserId`, `closeAssignmentId`, `closeOperationKey`, `closeCommand`. Original opening/provenance columns remain immutable; old rows gain only version 1/NULL close metadata, with no fabricated close facts. There are still 48 domain models/tables and twenty migrations; all nineteen historical SQL files are unchanged.
 
 The sole update is one current-authorized OPEN→CLOSED, atomic with booking IN_CONSULTATION→CONSULTED. Existing append-only BookingEvent/BookingOperation retain CLOSE history/result; server-owned close actor/time/current grant are immutable after close. Composite FKs and deferred guards require matching states/source/event/operation/current-transaction audit and reject partial/orphan closes. No document/intent/legacy HTN/CareAction/EACCE bridge. See [Slice 7](V3_I2_SLICE7_EXIT_REVIEW.md).
+
+## V3-I3 Slice 1
+
+Migration 21 adds immutable prescription roots, item snapshots, append-only lifecycle versions and version-item bindings, atomic operation/audit references and lineage-wide privacy restrictions, plus three curated medication identities and operational catalog version/operation history. See [source persistence and invariants](V3_I3_SLICE1.md). Existing migration bytes and populated clinical history are preserved; no clinical backfill.

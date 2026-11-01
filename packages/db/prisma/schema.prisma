@@ -1156,3 +1156,116 @@ model FollowUpIntentPrivacyRestriction {
  recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
  @@map("follow_up_intent_privacy_restrictions")
 }
+
+// I3 Slice 1 source foundation.
+model Medication {
+ id String @id @db.Uuid
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ @@map("medications")
+}
+
+model MedicationVersion {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ medicationId String @map("medication_id") @db.Uuid
+ version Int
+ displayName String @map("display_name")
+ isActive Boolean @map("is_active")
+ isPublished Boolean @map("is_published")
+ actorUserId String? @map("actor_user_id") @db.Uuid
+ operationId String? @unique @map("operation_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("medication_versions")
+}
+
+model Prescription {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ consultationId String @map("consultation_id") @db.Uuid
+ encounterId String @map("encounter_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ authorClinicianId String @map("author_clinician_id") @db.Uuid
+ organizationId String @map("organization_id") @db.Uuid
+ membershipId String @map("membership_id") @db.Uuid
+ assignmentId String @map("assignment_id") @db.Uuid
+ lineageId String @map("lineage_id") @db.Uuid
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ @@map("prescriptions")
+}
+
+model PrescriptionItem {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ medicationId String @map("medication_id") @db.Uuid
+ medicationDisplay String @map("medication_display")
+ quantity Decimal @db.Decimal(12,3)
+ unit String
+ instructions String
+ @@map("prescription_items")
+}
+
+model PrescriptionVersion {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ assignmentId String @map("assignment_id") @db.Uuid
+ version Int
+ command String @db.VarChar(12)
+ state String @db.VarChar(12)
+ validFrom DateTime @map("valid_from") @db.Timestamptz(3)
+ validUntil DateTime @map("valid_until") @db.Timestamptz(3)
+ signedAt DateTime? @map("signed_at") @db.Timestamptz(3)
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ reason String?
+ replacementId String? @map("replacement_id") @db.Uuid
+ operationId String @map("operation_id") @db.Uuid
+ @@map("prescription_versions")
+}
+
+model PrescriptionVersionItem {
+ versionId String @map("version_id") @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ itemId String @map("item_id") @db.Uuid
+ position Int
+ @@id([versionId,position])
+ @@map("prescription_version_items")
+}
+
+model PrescriptionOperation {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String @db.VarChar(12)
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ targetRootId String @map("target_root_id") @db.Uuid
+ resultRootId String @map("result_root_id") @db.Uuid
+ resultVersionId String? @map("result_version_id") @db.Uuid
+ auditId String @unique @map("audit_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("prescription_operations")
+}
+
+model PrescriptionPrivacyRestriction {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ lineageId String @unique @map("lineage_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ targetRootId String @map("target_root_id") @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ operationId String @unique @map("operation_id") @db.Uuid
+ assignmentId String @map("assignment_id") @db.Uuid
+ reason String
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("prescription_privacy_restrictions")
+}
+
+model MedicationOperation {
+ id String @id @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ medicationId String @map("medication_id") @db.Uuid
+ resultVersionId String @unique @map("result_version_id") @db.Uuid
+ auditId String @unique @map("audit_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("medication_operations")
+}

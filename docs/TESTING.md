@@ -243,3 +243,7 @@ See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLIC
 ## V3-I2 Slice 2 executable proof
 
 [Implementation](V3_I2_SLICE2.md), [validation](V3_I2_SLICE2_VALIDATION.md). New availability unit/functional/HTTP/integrity/concurrency/populated-upgrade suites exercise only finite availability and internal ADMIN settings. PostgreSQL independent connections assert blocker/waiter PIDs, direct exclusion protection, both configuration/revocation orderings, rollback/expiry/audit/timeout/deadlock and M1/M2 lock compatibility. Real HTTP isolated runtime manifest `eh-v3-i2-slice2-availability-proof-v1` adds 22 cases after accepted runtimes. All historical byte hashes and prior test/CI/security gates remain; exact additive inventory is separately pinned. No future booking or clinical evidence is claimed.
+
+## V3-I3 Slice 1
+
+Run `node --test tests/prescriptions.test.mjs`, then `node --test tests/integration/prescriptions*.test.mjs` against disposable PostgreSQL 18. The latter includes real two-connection races, timeout/deadlock/audit/connection failures and populated 20→21 upgrade/checksum proof. `NODE_ENV=test node scripts/verify-prescription-runtime.mjs` exercises the real synthetic HTTP journey; CI also runs it inside the built runtime container. See [Slice 1 evidence coverage](V3_I3_SLICE1.md). All historical migration/OpenAPI byte gates remain enforced against their bounded historical sets.
