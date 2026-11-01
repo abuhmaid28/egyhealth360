@@ -22,21 +22,24 @@ The frontend has separate explicit Demo and Live adapters; Live failures stay Li
 
 ## Active, paused and next
 
-Active umbrella: [#72](https://github.com/abuhmaid28/egyhealth360/issues/72). [Owner CI direction](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564634056) and the current explicit Product Owner CI Accelerator V2 sprint request authorize validation infrastructure only, on `infra/ci-accelerator-v2`, one open/unmerged PR with auto-merge off. [CI policy](CI_POLICY.md) documents the candidate's path/risk routing, full safety net, caches and cancellation. Exact-head CI and independent CI review are required before acceptance; no merge is authorized by this snapshot.
+Active umbrella: [#72](https://github.com/abuhmaid28/egyhealth360/issues/72). **Stage 2 — Product UX Foundation** is authorized by [owner disposition 6565142946](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565142946) and the current explicit Stage 2 request. The documentation proposal defines behavioral roles/JTBD, task priorities, journeys/handoffs, principles and owner decisions. It does not finalize IA, content/Arabic, visual design or implement UI/backend behavior. Delivery branch: `docs/foundation-reboot-v2-stage2-product-ux`; one PR, OPEN / UNMERGED / auto-merge OFF. Independent Product UX review and owner acceptance remain pending.
 
-**Health verdict: B — HEALTHY WITH NON-BLOCKING DEBT, accepted. Stage 1.5 is NOT REQUIRED on the reviewed evidence.** [Audit, severity register and limits](FOUNDATION_REBOOT_V2_AUDIT.md). The bounded CI work addresses validation cost; it does not authorize backend/product/design changes.
+**CI Accelerator V2:** [PR #74](https://github.com/abuhmaid28/egyhealth360/pull/74) independently reviewed PASS and merged at **`7156b7fe667342a2ed4b356d857ff56c2f7da7fa`**, the Stage 2 inspection/branch baseline. [CI policy](CI_POLICY.md) now routes docs/governance changes through classify → docs-check → validate with heavy lanes intentionally skipped. The post-merge full run [41359576936](https://github.com/abuhmaid28/egyhealth360/actions/runs/41359576936) is tracked in the [Stage 2 validation handoff](PRODUCT_UX_VALIDATION.md); a genuine main regression blocks review-ready status. No new application runtime validation claim follows from a lightweight docs run.
 
-**Paused / not authorized:** I3 Slice 3 Lab Order, Slice 4 Lab Results, Slice 5 Integrated Exit, I4, I5/EACCE, AI inference, production/final-domain promotion; UI redesign, logo/brand/Design System implementation. A contract describing future Lab behavior is not Lab execution authorization.
+**Health verdict: B — HEALTHY WITH NON-BLOCKING DEBT, accepted. Stage 1.5 is NOT REQUIRED on the reviewed evidence.** [Audit, severity register and limits](FOUNDATION_REBOOT_V2_AUDIT.md), [independent acceptance](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564358810). Stage 2 records V1 exposure gaps and UX debt without remediating runtime or reopening accepted clinical/security policy.
 
-**Next gate:** complete CI Accelerator V2 and its independent review before separately authorizing Stage 2 — Product UX Foundation. Stage 2 has NOT started. Product UX/IA, Content/Arabic UX, brand/Design System and frontend work retain the [charter owner gates](FOUNDATION_CHARTER.md#future-productdesign-approval-process--document-only). No automatic progression.
+**Paused / not authorized:** Stage 3 execution; I3 Slice 3 Lab Order, Slice 4 Lab Results, Slice 5 Integrated Exit, I4, I5/EACCE, research execution/AI inference, production/final-domain promotion; UI redesign, logo/brand/Design System or frontend implementation. A future Lab journey is not Lab execution authorization.
+
+**Next gate:** independent Stage 2 Product UX review, owner accept/revise decisions and whole-project health review, then separately bounded Stage 3 — Information Architecture authorization. [Decision register](UX_DECISION_REGISTER.md) separates inherited approved constraints, foundation candidates, recommendations and material owner decisions. No automatic progression; final content/Arabic, brand/Design System and frontend gates remain intact.
 
 ## Fast reading path and truth maintenance
 
 1. [AGENTS](../AGENTS.md), then current GitHub authorization above.
 2. This file.
 3. [Stable charter](FOUNDATION_CHARTER.md) + [source classification index](SOURCE_OF_TRUTH.md).
-4. Relevant contracts/current references, then implementation/tests.
+4. For Product UX: [UX_FOUNDATION](UX_FOUNDATION.md) → [USER_JOURNEYS](USER_JOURNEYS.md) → [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md); [inventory](PRODUCT_UX_INVENTORY.md) supplies evidence.
+5. Relevant accepted contracts/current references, then implementation/tests when needed.
 
-[PROJECT](PROJECT.md) supplies context; milestone reports and screenshots are historical evidence. [Fresh-agent comprehension](FOUNDATION_REBOOT_V2_VALIDATION.md) answers the 20 handoff questions without old PR archaeology. Every milestone must refresh this snapshot and pass the charter's whole-project health review before the next is authorized.
+[PROJECT](PROJECT.md) supplies context; milestone reports and screenshots are historical evidence. [Stage 2 comprehension and validation](PRODUCT_UX_VALIDATION.md) covers the new 20 Product UX questions; [Stage 0+1 validation](FOUNDATION_REBOOT_V2_VALIDATION.md) remains historical evidence. Every milestone must refresh this snapshot and pass the charter's whole-project health review before the next is authorized.
 
 Baseline post-merge CI: [41348249063](https://github.com/abuhmaid28/egyhealth360/actions/runs/41348249063); final observed result is recorded in the validation handoff. CI is technical evidence, never Product/UX/Design approval.
