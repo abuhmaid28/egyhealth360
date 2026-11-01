@@ -18,17 +18,15 @@ CURRENT AUTHORITATIVE sequencing; execution still requires a separately scoped P
 
 Pre-final I2 Live UI/hosting and UI polish are implemented/evidenced; they are not acceptance of final V2 design. [Hosted evidence](PRE_FINAL_DOCTOR_DEMO_UI.md). **Overall I3 is incomplete.**
 
-## Active
+## Foundation acceptance and active Stage 2
 
-**Foundation Reboot V2 Stage 0+1** — charter, truth/drift and architecture/UX/data/security/deployment health audit, current references and review/CI handoff. [Issue #72 final authorization](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6563757904) supersedes 6563631251. Documentation/governance only. Independent review remains the next gate; no merge authority is granted.
+Foundation Reboot V2 Stage 0+1 is complete/accepted: [independent review PASS and PR #73 merge](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564358810). Verdict B — healthy with non-blocking debt; Stage 1.5 is NOT REQUIRED on reviewed evidence. A newly established P0/P1 defect would require separate triage/remediation authorization, not an automatic fix in Product UX work.
 
-## Conditional next: Stage 1.5
-
-If independent review finds P0/P1 foundation defects, the owner must authorize bounded Foundation Remediation before Product UX. The current [audit](FOUNDATION_REBOOT_V2_AUDIT.md) finds non-blocking debt and does not require Stage 1.5. This is a recommendation subject to review, not automatic authorization for the next stage.
+CI Accelerator V2 is independently reviewed PASS and merged through [PR #74 / owner disposition](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565142946). Current task: **Stage 2 — Product UX Foundation**, documentation/product analysis only. [UX_FOUNDATION](UX_FOUNDATION.md), [USER_JOURNEYS](USER_JOURNEYS.md) and [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md) define the review package; [validation](PRODUCT_UX_VALIDATION.md) records scope/evidence. Independent Stage 2 review, owner acceptance and whole-project health review precede any separately authorized Stage 3. No merge, auto-merge or implementation permission is granted here.
 
 ## Product/Design sequence — future authorizations
 
-1. Product UX Foundation and Information Architecture.
+1. **Stage 2 — Product UX Foundation** proposal/review, then separately authorized **Stage 3 — Information Architecture**. Stage 2 leaves exact navigation, labels, sitemap and page hierarchy open.
 2. Content System and Arabic UX; **Product Owner UX/content approval**.
 3. Brand research; **exactly three meaningfully distinct visual/brand directions**.
 4. **Owner selection/rejection/hybrid approval**; Codex cannot choose the winner.
