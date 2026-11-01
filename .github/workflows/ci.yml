@@ -4,8 +4,14 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+  workflow_dispatch:
 permissions:
   contents: read
+# Only obsolete PR work is cancelled. Main/manual runs keep their safety proof.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 env:
   POSTGRES_USER: egyhealth
   POSTGRES_PASSWORD: ci-local-only
@@ -14,94 +20,147 @@ env:
   NEXT_TELEMETRY_DISABLED: '1'
   AUTH_BROWSER_ORIGIN: http://localhost:3000
 jobs:
-  static-browser:
+  classify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 5
+    outputs:
+      plan: ${{ steps.policy.outputs.plan }}
+      docs-check: ${{ steps.policy.outputs.docs-check }}
+      frontend-check: ${{ steps.policy.outputs.frontend-check }}
+      backend-check: ${{ steps.policy.outputs.backend-check }}
+      postgres: ${{ steps.policy.outputs.postgres }}
+      docker-runtime: ${{ steps.policy.outputs.docker-runtime }}
+      dependency-audit: ${{ steps.policy.outputs.dependency-audit }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
         with:
-          node-version: 24.21.0
-      - run: npm install --global pnpm@10.34.6
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm generate
-      - run: pnpm lint
-      - run: pnpm --filter @egyhealth/db validate
-      - run: pnpm build
-      - run: pnpm typecheck
-      - run: node --test tests/*.test.mjs
-      - run: pnpm exec playwright install --with-deps chromium
+          fetch-depth: 0
+      - name: Classify complete change set (renames include both paths)
+        id: policy
+        env:
+          CI_PLAN_PATH: ${{ runner.temp }}/ci-plan.json
+        run: node scripts/ci/classify.mjs
+  docs-check:
+    needs: classify
+    if: needs.classify.outputs.docs-check == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          fetch-depth: 0
+      - run: node --test tests/ci/*.test.mjs
+      - run: node scripts/ci/check-docs.mjs
+      - run: git diff --check HEAD^ HEAD
+  frontend-check:
+    needs: classify
+    if: needs.classify.outputs.frontend-check == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: ./.github/actions/setup-pnpm
+      - run: pnpm exec eslint apps/web packages/ui tests/ui*.test.mjs scripts/test-ui-browser.mjs scripts/support/ui-*-browser.mjs
+      - run: pnpm --filter @egyhealth/ui build && pnpm --filter @egyhealth/web build
+      - run: pnpm --filter @egyhealth/ui typecheck && pnpm --filter @egyhealth/web typecheck
+      - run: node --test tests/ui*.test.mjs
+      - uses: ./.github/actions/setup-browser
       - run: pnpm test:ui:browser
-      - run: pnpm audit --prod --audit-level high
-      - run: pnpm audit --audit-level high
-  postgres:
+  backend-check:
+    needs: classify
+    if: needs.classify.outputs.backend-check == 'true'
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 15
+    env:
+      CI_PLAN: ${{ needs.classify.outputs.plan }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
-        with:
-          node-version: 24.21.0
-      - run: npm install --global pnpm@10.34.6
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup-pnpm
       - run: pnpm generate
-      - run: pnpm build
-      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm exec eslint . --ignore-pattern 'apps/web/**' --ignore-pattern 'packages/ui/**'
+      - run: pnpm --filter @egyhealth/db validate
+      # Build dependencies once; do not call root typecheck (which rebuilds them).
+      - run: pnpm -r --filter '!@egyhealth/web' --filter '!@egyhealth/ui' build
+      - run: pnpm -r --filter '!@egyhealth/web' --filter '!@egyhealth/ui' typecheck
+      - run: node scripts/ci/run-tests.mjs unit
+  postgres:
+    needs: classify
+    if: needs.classify.outputs.postgres == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      CI_PLAN: ${{ needs.classify.outputs.plan }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: ./.github/actions/setup-pnpm
+      - if: fromJSON(needs.classify.outputs.plan).full
+        run: pnpm build
+      - if: ${{ !fromJSON(needs.classify.outputs.plan).full }}
+        run: pnpm generate && pnpm -r --filter '!@egyhealth/web' --filter '!@egyhealth/ui' build
+      - if: fromJSON(needs.classify.outputs.plan).full
+        uses: ./.github/actions/setup-browser
       - run: docker compose -f compose.yaml -f compose.local.yaml up -d --wait postgres
-      - run: pnpm test:migrations
-      - run: pnpm test:integration
-      - run: pnpm test:ui:real
-      - run: node scripts/measure-auth.mjs
+      - if: fromJSON(needs.classify.outputs.plan).full
+        run: pnpm test:migrations
+      - run: node scripts/ci/run-tests.mjs integration
+      - if: fromJSON(needs.classify.outputs.plan).full
+        run: pnpm test:ui:real
+      - if: fromJSON(needs.classify.outputs.plan).full
+        run: node scripts/measure-auth.mjs
       - if: always()
         run: docker compose -f compose.yaml -f compose.local.yaml down --volumes
   docker-runtime:
+    needs: classify
+    if: needs.classify.outputs.docker-runtime == 'true'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
+    env:
+      CI_PLAN: ${{ needs.classify.outputs.plan }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
       - run: docker compose config --quiet
-      - run: docker compose build
-      # Runtime checks need the schema, not host integration-test fixtures.
-      # Own a fresh database; migration/upgrade assertions remain in postgres.
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
+      - name: Build the shared Compose image once
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+        with:
+          context: .
+          load: true
+          tags: egyhealth360-bootstrap:local
+          cache-from: type=gha,scope=ci-runtime
+          cache-to: type=gha,mode=max,scope=ci-runtime
       - run: docker compose -f compose.yaml -f compose.local.yaml up -d --wait postgres
       - name: Deploy schema to the disposable runtime database
         run: docker compose run --rm --no-deps api node packages/db/node_modules/prisma/build/index.js migrate deploy --config packages/db/prisma.config.ts
-      - run: docker compose up -d --wait --wait-timeout 120
+      - run: docker compose up -d --no-build --wait --wait-timeout 120
       - run: docker compose exec -T api node --test tests/auth.test.mjs tests/authorization.test.mjs
-      - run: docker compose exec -T api node scripts/measure-auth.mjs
-      - run: docker compose exec -T api node scripts/verify-auth-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-authorization-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-m1-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-clinical-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-care-action-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-organization-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-patient-entry-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-directory-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-relationship-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-v3-i1-exit-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-availability-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-booking-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-consultation-opening-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-consultation-documentation-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-follow-up-intent-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-v3-i2-exit-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-prescription-runtime.mjs
-      - run: docker compose exec -T api node scripts/verify-pharmacy-runtime.mjs
+      - if: fromJSON(needs.classify.outputs.plan).full
+        run: docker compose exec -T api node scripts/measure-auth.mjs
+      - run: node scripts/ci/run-runtime.mjs
       - run: |
           curl --fail http://localhost:3000
           curl --fail http://localhost:3001/api/v1/health
       - if: always()
         run: docker compose -f compose.yaml -f compose.local.yaml down --volumes
-  # Keep the existing required-check name, including when a dependency fails
-  # or is cancelled. Never allow a skipped dependency to produce a green gate.
+  dependency-audit:
+    needs: classify
+    if: needs.classify.outputs.dependency-audit == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - uses: ./.github/actions/setup-pnpm
+      # The full graph audit includes production; retain both existing reports.
+      - run: pnpm audit --prod --audit-level high
+      - run: pnpm audit --audit-level high
   validate:
-    needs: [static-browser, postgres, docker-runtime]
+    needs: [classify, docs-check, frontend-check, backend-check, postgres, docker-runtime, dependency-audit]
     if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - name: Require every validation lane to succeed
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Require selected success and explicit policy skips
         env:
+          CI_PLAN: ${{ needs.classify.outputs.plan }}
           JOB_RESULTS: ${{ toJSON(needs) }}
-        run: |
-          echo "$JOB_RESULTS" | jq -e 'all(.[]; .result == "success")'
+        run: node scripts/ci/gate.mjs

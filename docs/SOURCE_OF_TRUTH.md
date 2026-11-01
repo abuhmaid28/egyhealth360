@@ -38,6 +38,7 @@ All tracked documentation Markdown paths are classified below. Research files ar
 | --- | --- |
 | [API.md](API.md) | Current route families; later accepted slice notes retain introduction context. |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Actual runtime/module/frontend/data/deployment architecture. |
+| [CI_POLICY.md](CI_POLICY.md) | Deterministic CI classification, targeted dependencies, full regression, caching/cancellation and evidence limits. |
 | [CURRENT_STATUS.md](CURRENT_STATUS.md) | Single mutable delivery/Live/authorization snapshot; start here. |
 | [DATA_MODEL.md](DATA_MODEL.md) | Current schema-derived inventory; later slice notes are historical. |
 | [DOMAIN.md](DOMAIN.md) | Current domain boundaries and preserved meaning distinctions. |

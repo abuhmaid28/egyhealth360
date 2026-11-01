@@ -1,6 +1,6 @@
 # Current status
 
-CURRENT AUTHORITATIVE delivery snapshot for Foundation Reboot V2 Stage 0+1. Audited baseline main: **`eb61da263ce44db5ca71ffdfea6a87309c8e17ef`** (PR #71). This is a pinned implementation baseline, not a claim that main never advances. Recheck the remote at task start; the docs PR's eventual merge changes main without changing this runtime baseline.
+CURRENT AUTHORITATIVE delivery snapshot. Foundation Reboot V2 Stage 0+1 is complete/accepted after independent review PASS and PR #73 merge at `2fb940c2759056d63d3a22b640d67a587abccf07`; [acceptance and exact-main CI](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564358810). Audited baseline main: **`eb61da263ce44db5ca71ffdfea6a87309c8e17ef`** (PR #71). This is a pinned implementation baseline, not a claim that main never advances. Recheck the remote at task start; the docs PR's eventual merge changes main without changing this runtime baseline.
 
 ## Product and accepted implementation
 
@@ -22,13 +22,13 @@ The frontend has separate explicit Demo and Live adapters; Live failures stay Li
 
 ## Active, paused and next
 
-Active issue: [#72](https://github.com/abuhmaid28/egyhealth360/issues/72). **Current authorization: [6563757904](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6563757904)**. Earlier comment **6563631251 is SUPERSEDED**. Only Foundation Reboot V2 Stage 0+1 governance/documentation/audit is authorized. Its deliverables are proposed for independent review in one open, unmerged PR, auto-merge off; this snapshot does not assert owner acceptance of the reboot.
+Active umbrella: [#72](https://github.com/abuhmaid28/egyhealth360/issues/72). [Owner CI direction](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564634056) and the current explicit Product Owner CI Accelerator V2 sprint request authorize validation infrastructure only, on `infra/ci-accelerator-v2`, one open/unmerged PR with auto-merge off. [CI policy](CI_POLICY.md) documents the candidate's path/risk routing, full safety net, caches and cancellation. Exact-head CI and independent CI review are required before acceptance; no merge is authorized by this snapshot.
 
-**Health verdict: B — HEALTHY WITH NON-BLOCKING DEBT. Stage 1.5 is not required by the observed foundation findings.** [Audit, severity register and limits](FOUNDATION_REBOOT_V2_AUDIT.md). No concrete P0/P1 foundation defect was found; review may amend that verdict. No backend rewrite or frontend restructuring is authorized by it.
+**Health verdict: B — HEALTHY WITH NON-BLOCKING DEBT, accepted. Stage 1.5 is NOT REQUIRED on the reviewed evidence.** [Audit, severity register and limits](FOUNDATION_REBOOT_V2_AUDIT.md). The bounded CI work addresses validation cost; it does not authorize backend/product/design changes.
 
 **Paused / not authorized:** I3 Slice 3 Lab Order, Slice 4 Lab Results, Slice 5 Integrated Exit, I4, I5/EACCE, AI inference, production/final-domain promotion; UI redesign, logo/brand/Design System implementation. A contract describing future Lab behavior is not Lab execution authorization.
 
-**Next authorized action:** independently review Stage 0+1 and its exact-head CI. After acceptance, the Product Owner may separately authorize Product UX/IA and Content/Arabic UX. If independent review identifies P0/P1 foundation debt, authorize a bounded Stage 1.5 before Product UX. Neither route starts automatically. [Future sequence and owner gates](FOUNDATION_CHARTER.md#future-productdesign-approval-process--document-only).
+**Next gate:** complete CI Accelerator V2 and its independent review before separately authorizing Stage 2 — Product UX Foundation. Stage 2 has NOT started. Product UX/IA, Content/Arabic UX, brand/Design System and frontend work retain the [charter owner gates](FOUNDATION_CHARTER.md#future-productdesign-approval-process--document-only). No automatic progression.
 
 ## Fast reading path and truth maintenance
 
