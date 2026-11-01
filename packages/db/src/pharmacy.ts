@@ -25,7 +25,7 @@ export function createPharmacyModule(pool:pg.Pool,source:SourceAccess){
  async function route(tx:pg.PoolClient,id:string,root?:string){return(await tx.query('SELECT r.*,v.version,v.state FROM public.pharmacy_routes r JOIN LATERAL(SELECT * FROM public.pharmacy_route_versions WHERE route_id=r.id ORDER BY version DESC LIMIT 1) v ON true WHERE r.id=$1 AND ($2::uuid IS NULL OR r.root_id=$2) FOR UPDATE OF r',[id,root??null])).rows[0];}
  async function orgLocks(tx:pg.PoolClient,ids:string[],exclusive=false){for(const id of [...new Set(ids)].sort())if(!(await tx.query(`SELECT id FROM public.organizations WHERE id=$1 AND kind='PHARMACY' FOR ${exclusive?'UPDATE':'SHARE'}`,[id])).rowCount)deny();}
  async function staffRun<T>(a:Actor,org:string,hints:Hint[],action:(tx:pg.PoolClient,members:Map<string,string>,final:()=>Promise<void>)=>Promise<T>,artifactCheck?:(tx:pg.PoolClient)=>Promise<void>){
-  let tx:pg.PoolClient|undefined;const connectionError=()=>{};
+  let tx:pg.PoolClient|undefined,discard=false;const connectionError=()=>{discard=true;};
   try{
    tx=await pool.connect();tx.on('error',connectionError);await tx.query('BEGIN');await tx.query("SET LOCAL transaction_timeout='30s'");await tx.query("SET LOCAL lock_timeout='5s'");await tx.query("SET LOCAL statement_timeout='10s'");
    await tx.query('LOCK TABLE public.users,public.patient_profiles,public.clinician_profiles,public.clinician_patient_assignments IN ROW EXCLUSIVE MODE');
@@ -37,7 +37,7 @@ export function createPharmacyModule(pool:pg.Pool,source:SourceAccess){
    await final();for(const id of [...new Set(hints.map(h=>h.patient_id))].sort())await tx.query('SELECT pg_catalog.pg_advisory_xact_lock(1162359376,pg_catalog.hashtext($1::text))',[id]);
    for(const id of [...new Set(hints.map(h=>h.root_id))].sort())await tx.query('SELECT id FROM public.prescriptions WHERE id=$1 FOR UPDATE',[id]);
    await final();const result=await action(tx,members,final);await final();await tx.query('COMMIT');return result;
-  }catch(e){if(tx)await tx.query('ROLLBACK').catch(()=>{});return translate(e);}finally{tx?.release();tx?.removeListener('error',connectionError);}
+  }catch(e){if(!(e instanceof PharmacyError)&&!(e instanceof PrescriptionError))discard=true;if(tx)await tx.query('ROLLBACK').catch(()=>{discard=true;});return translate(e);}finally{tx?.release(discard);tx?.removeListener('error',connectionError);}
  }
  async function view(tx:pg.PoolClient,org:string|null,root:string|null,id:string|null,page=pharmacyPage({}),staff=false,receipt=false){
   const result=(await tx.query(`WITH visible AS MATERIALIZED (

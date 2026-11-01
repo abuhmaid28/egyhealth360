@@ -20,8 +20,8 @@ export function createPrescriptionPersistence(connectionString:string|undefined)
   }
   async function scope(id:string) {return (await pool.query<Scope>('SELECT c.*,p.specialty_id FROM public.consultations c JOIN public.clinician_directory p ON p.id=c.provider_id WHERE c.id=$1',[id])).rows[0];}
   async function run<T>(a:Actor,patientId:string|null,sources:Scope[],author:boolean,action:(tx:pg.PoolClient,grants:Map<string,string>,final:()=>Promise<void>)=>Promise<T>,catalog=false) {
-    let tx:pg.PoolClient|undefined;
-    const connectionError=()=>{};
+    let tx:pg.PoolClient|undefined,discard=false;
+    const connectionError=()=>{discard=true;};
     try {
       const patients=catalog?[]:(await pool.query('SELECT id,user_id FROM public.patient_profiles WHERE '+(sources.length?'id=ANY($1::uuid[])':patientId?'id=$1':'user_id=$1'),[sources.length?[...new Set(sources.map(s=>s.patient_id))]:patientId??a.userId])).rows as {id:string;user_id:string}[];
       tx=await pool.connect();tx.on('error',connectionError);await tx.query('BEGIN');await tx.query("SET LOCAL transaction_timeout='30s'");await tx.query("SET LOCAL lock_timeout='5s'");await tx.query("SET LOCAL statement_timeout='10s'");
@@ -67,11 +67,14 @@ export function createPrescriptionPersistence(connectionString:string|undefined)
       for(const s of [...sources].sort((a,b)=>a.id.localeCompare(b.id))) {await tx.query('SELECT id FROM public.consultations WHERE id=$1 FOR SHARE',[s.id]);await tx.query('SELECT id FROM public.clinical_encounters WHERE id=$1 FOR SHARE',[s.encounter_id]);}
       await final();const result=await action(tx,grants,final);await final();await tx.query('COMMIT');return result;
     } catch(e) {
-      if(tx)await tx.query('ROLLBACK').catch(()=>{});
+      // A failed/uncertain transaction must never return a damaged connection
+      // to the pool before pg delivers its asynchronous disconnect event.
+      if(!(e instanceof PrescriptionError)&&!(e instanceof PharmacyError))discard=true;
+      if(tx)await tx.query('ROLLBACK').catch(()=>{discard=true;});
       if(e instanceof PrescriptionError||e instanceof PharmacyError)throw e;
       if(e&&typeof e==='object'&&'code' in e&&['23505','23P01'].includes(String(e.code)))fail('PRESCRIPTION_CONFLICT');
       return fail('PRESCRIPTION_UNAVAILABLE');
-    } finally {tx?.release();tx?.removeListener('error',connectionError);}
+    } finally {tx?.release(discard);tx?.removeListener('error',connectionError);}
   }
   async function restricted(tx:pg.PoolClient,rootId:string) {return !!(await tx.query('SELECT p.id FROM public.prescriptions r JOIN public.prescription_privacy_restrictions p ON p.lineage_id=r.lineage_id WHERE r.id=$1',[rootId])).rowCount;}
   async function projection(tx:pg.PoolClient,a:Actor,patient:string,rootId:string|null,consultation:string|null,signed:boolean,page=prescriptionPage({}),retainedVersion:string|null=null) {
