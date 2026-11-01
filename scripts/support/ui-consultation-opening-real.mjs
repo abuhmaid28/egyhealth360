@@ -302,11 +302,11 @@ export async function testRealConsultation(page, f, booked, networkFault) {
   ).rows;
   assert.deepEqual(
     documentTables,
-    ["consultation_document_operations","consultation_document_versions","consultation_documents"].map(tablename=>({tablename})),
-    "Only separately authorized Slice 5 documentation tables; no prescribing/lab source",
+    ["consultation_document_operations","consultation_document_versions","consultation_documents","prescription_items","prescription_operations","prescription_privacy_restrictions","prescription_version_items","prescription_versions","prescriptions"].map(tablename=>({tablename})),
+    "Only authorized documentation and prescription source tables; no lab source",
   );
-  for (const table of ["consultation_documents","consultation_document_versions","consultation_document_operations","consultation_privacy_restrictions"]) {
-    assert.equal((await f.pool.query(`SELECT count(*)::int n FROM public.${table}`)).rows[0].n,0,"Opening UI never creates documentation: "+table);
+  for (const table of ["consultation_documents","consultation_document_versions","consultation_document_operations","consultation_privacy_restrictions","prescriptions","prescription_versions","prescription_items","prescription_version_items","prescription_operations","prescription_privacy_restrictions"]) {
+    assert.equal((await f.pool.query(`SELECT count(*)::int n FROM public.${table}`)).rows[0].n,0,"Opening UI never creates documentation or prescriptions: "+table);
   }
   // Patient self-service retains existing own BP/HTN/profile APIs. The clinician
   // opening flow must not browse clinical records or future artifact APIs.
