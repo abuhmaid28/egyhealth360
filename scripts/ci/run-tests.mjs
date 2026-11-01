@@ -1,0 +1,11 @@
+import { readdirSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { selectTests } from './test-selection.mjs';
+const plan = JSON.parse(process.env.CI_PLAN);
+const kind = process.argv[2];
+const directory = kind === 'unit' ? 'tests' : 'tests/integration';
+const files = selectTests(plan, kind, readdirSync(directory));
+console.log(`Selected ${kind} tests:\n${files.join('\n')}`);
+const result = spawnSync(process.execPath, ['--test', ...files], { stdio: 'inherit' });
+if (result.error) throw result.error;
+process.exit(result.status ?? 1);

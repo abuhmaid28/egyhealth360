@@ -4,14 +4,11 @@ CURRENT AUTHORITATIVE validation reference. Actual workflow: [Bootstrap CI](../.
 
 ## Actual CI lanes
 
-| Lane | Current checks |
-| --- | --- |
-| `static-browser` | Frozen install/generate, lint, Prisma validate, build/typecheck, all top-level Node tests, controlled Playwright browser and production/full dependency audits |
-| `postgres` | Build, disposable PostgreSQL, fresh/repeat migration proof, full integration tests, real Live browser integration, auth measurement, cleanup |
-| `docker-runtime` | Compose config/build, fresh DB + explicit schema deploy, API/web/health-only worker startup, auth and every accepted runtime verifier through prescription **and pharmacy**, HTTP smoke and cleanup |
-| `validate` | Required aggregate name; always runs and requires every dependency lane to succeed, rejecting failure/cancellation/skips |
+[CI Accelerator V2 policy](CI_POLICY.md) and [executable mapping](../scripts/ci/policy.mjs) define deterministic path/risk routing. `classify` selects `docs-check`, `frontend-check`, `backend-check`, `postgres`, `docker-runtime` and `dependency-audit`; the stable `validate` gate requires all selected checks to succeed and all omitted checks to be explicitly skipped. Missing/failing/cancelled selected checks fail closed.
 
-Push to main and PRs to main trigger the full workflow. No docs/path filter, automatic concurrency cancellation, Markdown checker or link checker is configured. Build/generate and preserved auth/domain proofs repeat across lanes; some duplication buys host/container/runtime assurance. Consolidation/path-aware optimization is P2 future infrastructure work, not permission to remove gates. There is no implemented EACCE golden or research experiment lane.
+Docs/governance-only changes run local-reference/source-index/repository sanity and policy tests without dependencies, PostgreSQL, Docker or browsers. Frontend changes run build/typecheck/lint/UI units and controlled browser proof. Known backend modules run affected unit/integration/runtime families with authority dependencies. Persistence, migrations, auth/security/clinical contracts, infrastructure and unknown paths require the full historical safety suite, including real Live browser, migration/concurrency, audits and every accepted runtime through pharmacy. Mixed changes take the union.
+
+PRs and main pushes use the same complete-diff contract. Superseded PR runs cancel; main/manual runs are not actively cancelled. pnpm store and exact-revision Chromium caches reduce repeat setup; one local Compose image build avoids repeated application builds; job artifacts/databases remain isolated. Manual dispatch always runs full; `ci:full` or `milestone-exit` PR labels elevate routing. No nightly schedule is added. See the policy for paths, targeted module dependencies, historical timing evidence, limits and maintenance commands. There is no implemented EACCE golden or research experiment lane.
 
 ## Validation by risk
 
