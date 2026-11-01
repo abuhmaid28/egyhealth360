@@ -5,7 +5,9 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 const origin = 'https://egyhealth360-pre-final-staging-abuhmaid2810gmailcoms-projects.vercel.app';
-const output = '/workspace/staging-evidence';
+const output = process.env.EH_STAGING_EVIDENCE_DIR || '/workspace/staging-evidence';
+const polishEvidence = process.env.EH_STAGING_UI_POLISH === '1';
+const matrix = [];
 if (!process.env.EH_DEMO_PASSWORD || process.env.EH_DEMO_PASSWORD.length < 16) throw new Error('Private synthetic credential required');
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ headless: true, ...(process.env.HTTPS_PROXY ? { proxy: { server: process.env.HTTPS_PROXY } } : {}) });
@@ -14,16 +16,48 @@ const checks = [];
 const errors = [];
 const mark = message => { checks.push(message); console.log('PASS ' + message); };
 const button = (p, name) => p.getByRole('button', { name, exact: true });
+// Opt-in final presentation evidence uses the same real I2 journey, without mocks.
+async function presentation(page, name, arabic = false) {
+  if (!polishEvidence) return;
+  await page.waitForFunction(() => !globalThis.document.querySelector('.loading'));
+  if (name === '01-login') await page.getByLabel('Email address', { exact: true }).waitFor();
+  await page.evaluate(() => globalThis.document.fonts.ready);
+  for (const width of [1440, 1200, 1024, 834, 768, 560, 390]) {
+    await page.setViewportSize({ width, height: 1000 });
+    assert.ok(await page.evaluate(() => globalThis.document.documentElement.scrollWidth <= globalThis.innerWidth + 1), `${name}: overflow at ${width}`);
+    if (await page.getByRole('dialog').count()) {
+      const box = await page.getByRole('dialog').boundingBox();
+      assert.ok(box && box.x >= 0 && box.y >= 0 && box.x + box.width <= width + 1 && box.y + box.height <= 1001, `${name}: clipped dialog`);
+    }
+    matrix.push({ screen: name, locale: 'en', width, overflow: false });
+    if ([1440, 390].includes(width)) await page.screenshot({ path: `${output}/${name}-en-${width}.png`, fullPage: !await page.getByRole('dialog').count() });
+  }
+  if (arabic) {
+    await button(page, 'العربية').click();
+    assert.equal(await page.locator('html').getAttribute('dir'), 'rtl');
+    await page.evaluate(() => globalThis.document.fonts.ready);
+    for (const width of [1440, 834, 390]) {
+      await page.setViewportSize({ width, height: 1000 });
+      assert.ok(await page.evaluate(() => globalThis.document.documentElement.scrollWidth <= globalThis.innerWidth + 1));
+      matrix.push({ screen: name, locale: 'ar', width, overflow: false });
+    }
+    await page.screenshot({ path: `${output}/${name}-ar-390.png`, fullPage: !await page.getByRole('dialog').count() });
+    await button(page, 'English').click();
+  }
+  await page.setViewportSize({ width: 1440, height: 1000 });
+}
+
 async function account(email) {
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } }); contexts.push(context);
   const page = await context.newPage(); page.setDefaultTimeout(60000);
   page.on('pageerror', e => errors.push(e.message));
   await page.addInitScript(() => { globalThis.localStorage.setItem('eh360-ui-mode', 'live'); globalThis.localStorage.setItem('eh360-locale', 'en'); });
   await page.goto(origin);
+  if (polishEvidence && email.includes('patient-a')) await presentation(page, '01-login', true);
   await page.getByLabel('Email address', { exact: true }).fill(email);
   await page.getByLabel('Password', { exact: true }).fill(process.env.EH_DEMO_PASSWORD);
   await button(page, 'Sign in with live account').click();
-  await page.getByText('Live API', { exact: true }).waitFor();
+  await page.getByText('Live care', { exact: true }).waitFor();
   const cookies = await context.cookies();
   const session = cookies.find(c => c.name === '__Host-eh_session');
   assert.ok(session?.secure && session.httpOnly && session.sameSite === 'Lax' && session.path === '/');
@@ -48,12 +82,15 @@ let patient, doctor, bookingId = process.env.EH_STAGING_BOOKING_ID;
 try {
   doctor = await account('eh-m1-clinician-assigned@example.invalid');
   patient = await account('eh-m1-patient-a@example.invalid');
+  await presentation(patient, '02-patient-dashboard', true);
+  await presentation(doctor, '03-clinician-home', true);
   assert.equal((await command(patient, '/health')).status, 200);
   mark('frontend HTTPS, proxied API health, hosted login and secure sessions');
   assert.equal((await command(patient, '/auth/logout', 'POST', {}, false)).status, 403);
   mark('CSRF-free mutation rejected');
   const providers = await command(patient, '/directory/providers');
   assert.equal(providers.status, 200); const provider = providers.data.data[0]; assert.ok(provider.id);
+  if (polishEvidence) { await patient.goto(origin + '/patient/discover'); await presentation(patient, '04-provider-discovery'); }
   if (!bookingId) {
   await doctor.goto(origin + '/doctor/availability');
   await doctor.getByLabel('Publication clinic', { exact: true }).selectOption({ index: 1 });
@@ -64,7 +101,9 @@ try {
   await clickWrite(doctor, 'Publish interval', '/me/availability');
   await patient.goto(origin + '/patient/doctors/' + provider.id);
   await patient.locator('.live-slots button').last().click();
+  await presentation(patient, '05-provider-booking', true);
   await button(patient, 'Review live booking').click();
+  await presentation(patient, '06-booking-review');
   const booked = patient.waitForResponse(r => r.url().endsWith('/api/v1/me/bookings') && r.request().method() === 'POST');
   await button(patient, 'Confirm live booking').click();
   const receipt = await booked; assert.equal(receipt.status(), 200); bookingId = (await receipt.json()).data.id;
@@ -72,6 +111,8 @@ try {
   mark('clinician availability publication and patient booking through public UI');
   await doctor.goto(origin + '/doctor/schedule');
   await doctor.locator(`a[href="/doctor/appointments/${bookingId}"]`).waitFor();
+  await presentation(doctor, '07-clinician-schedule');
+  await presentation(patient, '08-booking-confirmed');
   mark('clinician schedule shows the hosted booking');
   console.log('Waiting for the real published start time; no clock/record backdating.');
   while (Date.now() < start.getTime() + 1500) await new Promise(resolve => setTimeout(resolve, Math.min(10000, start.getTime() + 1500 - Date.now())));
@@ -86,9 +127,9 @@ try {
   }
   await doctor.getByLabel('Private note content', { exact: true }).waitFor();
   mark('consultation opens with current treating authority');
-  const privateText = 'SYNTHETIC_STAGING_PRIVATE_' + bookingId;
-  const summary = 'Synthetic hosted visit summary ' + bookingId;
-  const followup = 'Synthetic hosted follow-up instruction ' + bookingId;
+  const privateText = polishEvidence ? 'Synthetic demonstration: confidential clinician note. This saved draft is private.' : 'SYNTHETIC_STAGING_PRIVATE_' + bookingId;
+  const summary = polishEvidence ? 'Synthetic demonstration: we reviewed the visit together. Keep your questions ready for your next discussion with the doctor.' : 'Synthetic hosted visit summary ' + bookingId;
+  const followup = polishEvidence ? 'Synthetic demonstration: arrange a follow-up discussion with your doctor. This instruction does not reserve an appointment.' : 'Synthetic hosted follow-up instruction ' + bookingId;
   if (await doctor.getByLabel('Private note content', { exact: true }).inputValue() !== privateText) {
     await doctor.getByLabel('Private note content', { exact: true }).fill(privateText);
     await clickWrite(doctor, 'Save private note draft', '/documents');
@@ -108,6 +149,7 @@ try {
   await doctor.reload();
   await doctor.getByLabel('Private note content', { exact: true }).waitFor();
   assert.equal(writes.length, 0); assert.equal(await doctor.getByLabel('Private note content', { exact: true }).inputValue(), privateText);
+  await presentation(doctor, '09-documentation-drafts', true);
   mark('clinical drafts persist; reload recovers context without mutations');
   const visible = async () => JSON.stringify([await command(patient, '/me/summaries'), await command(patient, '/me/follow-up-intents')]);
   const before = await visible();
@@ -125,11 +167,22 @@ try {
     await clickWrite(doctor, 'Sign and release follow-up', '/sign-release');
   }
   const released = await visible(); assert.ok(released.includes(summary) && released.includes(followup)); assert.ok(!released.includes(privateText));
+  await presentation(doctor, '10-documentation-released');
+  if (polishEvidence) {
+    await patient.goto(origin + '/patient/summaries');
+    await patient.getByText(summary, { exact: true }).waitFor();
+    assert.ok(!(await patient.locator('body').innerText()).includes(privateText));
+    await presentation(patient, '11-patient-released-summary', true);
+    await patient.goto(origin + '/patient/follow-up');
+    await patient.getByText(followup, { exact: true }).waitFor();
+    await presentation(patient, '12-patient-follow-up');
+  }
   mark('explicit FollowUpIntent release; private note remains private');
   await button(doctor, 'Review & close consultation').click();
   const dialog = doctor.getByRole('dialog');
   assert.equal(await button(dialog, 'Confirm close consultation').isDisabled(), true);
   await dialog.getByRole('checkbox').check();
+  await presentation(doctor, '13-review-close');
   for (const width of [1440, 390]) {
     await doctor.setViewportSize({ width, height: 1000 });
     assert.ok(await doctor.evaluate(() => globalThis.document.documentElement.scrollWidth <= globalThis.innerWidth + 1));
@@ -151,6 +204,7 @@ try {
   await button(dialog, 'Confirm close consultation').click();
   await doctor.getByText('Closed · booking consulted', { exact: true }).waitFor();
   await doctor.reload(); await doctor.getByText('Closed · booking consulted', { exact: true }).waitFor();
+  await presentation(doctor, '14-closed-consultation', true);
   assert.equal(await visible(), released);
   await doctor.getByRole('link', { name: 'View consulted booking', exact: true }).click();
   await doctor.getByText('Consulted', { exact: true }).first().waitFor();
@@ -166,7 +220,7 @@ try {
   mark('CLOSED / CONSULTED survive reload; illegal post-close UI actions blocked; close leaks no unreleased content');
   assert.deepEqual(errors, []);
   for (const p of [doctor, patient]) await command(p, '/auth/logout', 'POST', {});
-  await writeFile(output + '/hosted-results.json', JSON.stringify({ origin, bookingId, checks, browserErrors: errors }, null, 2));
+  await writeFile(output + '/hosted-results.json', JSON.stringify({ origin, bookingId, checks, browserErrors: errors, matrix }, null, 2));
 } catch (error) {
   for (const [name, page] of [['doctor', doctor], ['patient', patient]]) if (page) await page.screenshot({ path: `${output}/${name}-failure.png`, fullPage: true }).catch(() => {});
   throw error;

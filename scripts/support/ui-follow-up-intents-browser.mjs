@@ -133,7 +133,7 @@ export async function testFollowUpPresentation(browser, origin) {
     assert.ok(!body.includes("PRIVATE_SQL_CANARY"));
     assert.ok(!body.includes("Synthetic released follow-up"));
     assert.ok(!body.includes("Demo error preview"));
-    assert.ok(body.includes(t("Live API")));
+    assert.ok(body.includes(t("Live care")));
     assert.equal(
       await page.evaluate(() =>
         globalThis.localStorage.getItem("eh360-ui-mode"),

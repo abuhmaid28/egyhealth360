@@ -376,7 +376,7 @@ try {
     .getByLabel("Password", { exact: true })
     .fill("synthetic-test-only");
   await live.getByRole("button", { name: "Sign in with live account" }).click();
-  await live.getByText("Live API", { exact: true }).waitFor();
+  await live.getByText("Live care", { exact: true }).waitFor();
   await live.getByText("We couldn’t load this view", { exact: true }).waitFor();
   assert.equal(await live.getByLabel("Demo workspace").count(), 0);
   assert.equal(

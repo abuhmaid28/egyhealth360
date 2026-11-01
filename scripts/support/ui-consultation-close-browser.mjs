@@ -104,6 +104,28 @@ export async function testConsultationClose(browser, origin) {
       await page
         .getByLabel(t("Private note content"), { exact: true })
         .waitFor();
+      if (status === 0) {
+        for (const width of [1440, 1200, 1024, 834, 768, 560, 390]) {
+          await page.setViewportSize({ width, height: 1000 });
+          await page.waitForFunction(() => {
+            const ribbon = globalThis.document.querySelector('.consultation-ribbon');
+            const note = globalThis.document.querySelector('#doc-private');
+            return parseFloat(globalThis.getComputedStyle(note).scrollMarginBlockStart) >= ribbon.getBoundingClientRect().height + 20;
+          });
+          await page.locator('.documentation-outline a[href="#doc-private"]').click();
+          await page.waitForFunction(() => {
+            const ribbon = globalThis.document.querySelector('.consultation-ribbon').getBoundingClientRect();
+            const note = globalThis.document.querySelector('#doc-private').getBoundingClientRect();
+            return note.top >= ribbon.bottom - 1;
+          });
+          for (const editor of await page.locator('.documentation-content textarea').all()) {
+            await editor.focus();
+            const editorBounds = await editor.boundingBox();
+            const ribbonBounds = await page.locator('.consultation-ribbon').boundingBox();
+            assert.ok(editorBounds.y >= ribbonBounds.y + ribbonBounds.height - 1, 'focused editor stays below patient context');
+          }
+        }
+      }
       await button("Review & close consultation").click();
       const dialog = page.getByRole("dialog");
       await dialog.getByRole("checkbox").check();

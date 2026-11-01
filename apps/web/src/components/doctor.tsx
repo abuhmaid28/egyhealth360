@@ -35,7 +35,7 @@ export function DoctorScreen({ path }: { path: string }) {
     api.mode === "live" &&
     (path === "/doctor" || path === "/doctor/schedule")
   )
-    return <LiveBookingList clinician />;
+    return <LiveBookingList clinician dashboard={path === "/doctor"} />;
   if (api.mode === "live" && path.startsWith("/doctor/appointments/"))
     return <LiveBookingDetail clinician id={path.split("/")[3]} />;
   if (

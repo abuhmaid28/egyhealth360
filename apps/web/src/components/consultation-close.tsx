@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { presentationName } from '../lib/presentation';
 import { useEffect, useRef, useState } from "react";
 import {
   CloseUiError,
@@ -31,7 +32,7 @@ export function CloseIndependence() {
       <li>{t("Private notes are not automatically signed.")}</li>
       <li>{t("Patient summaries are not automatically released.")}</li>
       <li>{t("Follow-up instructions are not automatically released.")}</li>
-      <li>{t("Closing does not complete care actions or run EACCE.")}</li>
+      <li>{t("Other care tasks stay unchanged when you close this visit.")}</li>
     </ul>
   );
 }
@@ -135,7 +136,7 @@ function ReviewCloseDialog({
   cancel: () => void;
   update: (next: ConsultationContext) => void;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const { api, changed } = useApp();
   const [busy, setBusy] = useState(false),
     [ack, setAck] = useState(false);
@@ -229,12 +230,14 @@ function ReviewCloseDialog({
               <>
                 <div className="confirmation-details">
                   <h3>
-                    <bdi>{documentation.patientName}</bdi>
+                    <bdi>{presentationName(documentation.patientName, t)}</bdi>
                   </h3>
                   <p>
-                    <bdi>{documentation.providerName}</bdi> ·{" "}
-                    <bdi>{documentation.clinicName}</bdi>
+                    <bdi>{presentationName(documentation.providerName ?? '', t)}</bdi> ·{" "}
+                    <bdi>{presentationName(documentation.clinicName ?? '', t)}</bdi>
                   </p>
+                  <p className="review-visit-time"><Icon name="calendar" size={16}/><bdi>{date(current.openedAt, documentation.timeZone, locale)} · {time(current.openedAt, documentation.timeZone, locale)} · {documentation.timeZone}</bdi></p>
+                  <Badge tone="blue">{t('Consultation open')}</Badge>
                 </div>
                 <h3>{t("Recent saved documentation")}</h3>
                 <p className="small muted">

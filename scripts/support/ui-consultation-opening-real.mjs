@@ -74,7 +74,7 @@ export async function testRealConsultation(page, f, booked, networkFault) {
     await page.getByLabel(t("Password"), { exact: true }).fill(f.password);
     currentRole = name;
     await button("Sign in with live account").click();
-    await page.getByText(t("Live API"), { exact: true }).waitFor();
+    await page.getByText(t("Live care"), { exact: true }).waitFor();
   };
   const openingPath = `/me/bookings/${booked.id}/consultation`;
   await page.goto(origin + "/doctor/schedule");
