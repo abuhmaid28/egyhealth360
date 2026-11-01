@@ -1,44 +1,20 @@
 # EgyHealth 360
 
-> Separate bounded UI track: Product Owner session authorization (27 October 2026), [Issue #51](https://github.com/abuhmaid28/egyhealth360/issues/51), unfreezes graduation-demo frontend work only. See [UI candidate, live/demo boundaries and screenshots](docs/V3_UI_DEMO.md). Backend milestone/governance status and historical evidence below retain their meaning; no backend completion or merge is claimed.
+An integrated synthetic graduation healthcare platform connecting patient access, booking, consultation, prescriptions, diagnostics, dispensing and follow-up, with later longitudinal continuity and bounded explainable HTN research.
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
+Start with [CURRENT_STATUS](docs/CURRENT_STATUS.md), [stable charter](docs/FOUNDATION_CHARTER.md) and [source index](docs/SOURCE_OF_TRUTH.md). Agents follow [AGENTS](AGENTS.md) and current GitHub authorization first.
 
-EgyHealth 360 is an **integrated digital healthcare journey** graduation prototype: patient access, discovery, booking, consultation, prescriptions, diagnostics, dispensing and follow-up connect through a longitudinal record, structured care coordination and later bounded explainable evidence-aware monitoring.
+Accepted complete: M0/M1/M2, V3-G0, I1, I2, I3 contract, I3 Slice 1 Prescription and Slice 2 Pharmacy. Active: Foundation Reboot V2 Stage 0+1, documentation/governance/audit only. Lab and I4/I5/EACCE remain paused. [Roadmap](docs/IMPLEMENTATION_ROADMAP.md).
 
-## Product and implementation status
+The functional V1 web UI includes separate Demo and Live adapters. [Pre-final Live](https://egyhealth360-pre-final-staging-abuhmaid2810gmailcoms-projects.vercel.app/) evidences the I2 patient/clinician journey through explicit close; I3 cloud/UI parity is not verified. Current UI/logo/design are not final. `egyhealth360.vercel.app` remains protected.
 
-| Area | Status |
-|---|---|
-| Product V3 policy | **APPROVED** — [owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901), [D01–D36/lineage](docs/PRODUCT_V3_DECISIONS.md) |
-| V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [evidence](docs/PROJECT.md#v3-g0-completion-evidence) |
-| M0 / M1 / M2 | **COMPLETE**, accepted historical foundations; [project/evidence](docs/PROJECT.md) |
-| V3-I1 / EACCE implementation | I1 contract APPROVED; Slice 1 merged/verified; [Slice 2 organization/membership implementation](docs/V3_I1_SLICE2.md) COMPLETE, I1 COMPLETE, Slice 3 COMPLETE; Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE; EACCE NOT STARTED; [Roadmap V3](docs/IMPLEMENTATION_ROADMAP.md) |
-| Product UI/design | **NOT STARTED / DESIGN FROZEN**, separate explicit design-unfreeze approval required |
+Runtime: Next.js/TypeScript → NestJS modular monolith → PostgreSQL 18/Prisma 7; pnpm monorepo, REST/OpenAPI, Docker and GitHub Actions. Hosted pre-final uses Vercel web/API and Neon. [Architecture](docs/ARCHITECTURE.md). Backend authority, current assignments, exact staff artifact scope, immutable source history and wrong-patient privacy are preserved.
 
-Approved future workspaces: **Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin**, one application. Bounded patient registration, doctor discovery/booking, human-authored consultation, prescriptions, full-item pharmacy dispensing and laboratory fulfillment are Tier 1 product scope; implemented subsets are identified above. Imaging is optional Tier 2. Ordinary healthcare does not require a CarePlan/EACCE. Current fixed backend roles are PATIENT/CLINICIAN/ADMIN/LAB_STAFF/PHARMACY_STAFF. Slice 2 operational memberships are COMPLETE; Slice 3 registration/own profile is COMPLETE; Slice 4 curated discovery is COMPLETE; Slice 5 bilateral enrollment is COMPLETE; Slice 6 is COMPLETE and V3-I1 technical exit is COMPLETE; booking/fulfillment remain unimplemented.
+Synthetic/free-first/self-hostable scope only. No real-patient deployment, diagnostic AI/autonomous prescribing, payments/insurance, inventory/hospital ERP, full LIS/PACS/DICOM or partial/refill/substitution workflow. [Product](docs/PRODUCT.md), [execution policy](docs/EXECUTION_POLICY.md).
 
-The current implementation includes secure identity/session/ACTIVE-assignment foundations, version-pinned HTN plans, immutable BP and encounter/follow-up evidence, coverage/applicability/correction/privacy, and bounded INITIAL CareAction generation. These remain unchanged; they do not constitute complete V3 journeys. [API](docs/API.md) and [DATA_MODEL](docs/DATA_MODEL.md) distinguish actual interfaces/models from future concepts.
+## Local setup and retained runbooks
 
-The research differentiator remains bounded HTN care closure under incomplete records, with six future product classifications, explicit uncertainty and isolated B0/B1/P1 evaluation. Engine/worker/FHIR scaffolds are not completed EACCE or experiments. Clinical actors enter diagnoses/prescriptions; no diagnostic AI, autonomous treatment/dose recommendation or adherence inference.
-
-## Architecture
-
-Next.js/TypeScript web application; NestJS modular-monolith API; PostgreSQL 18/Prisma 7; REST/OpenAPI; shared TypeScript packages; experiment worker/FHIR adapter boundaries; Docker Compose/GitHub Actions. No microservice/FastAPI/Python/ML rewrite or paid service requirement.
-
-## Scope boundaries
-
-Synthetic/free-first/self-hostable graduation scope only. No real-patient deployment, payments/insurance, video infrastructure, national marketplace economics, delivery, inventory/hospital ERP, full LIS/PACS/DICOM, diagnostic AI, generalized IAM/rule editor or broad disease/recurrence engine. Pharmacy partial quantities/refills/substitution are outside the frozen release. See [PRODUCT](docs/PRODUCT.md) for complete tiers.
-
-No default fieldwork/interview/survey/real-patient data dependency; see [execution policy](docs/EXECUTION_POLICY.md). ADMIN has no clinical entitlement. Current authority, source history and privacy masking remain mandatory, including future artifact-scoped lab/pharmacy [D36](docs/SECURITY.md#d36--cross-module-fulfillment-authority-and-suspension).
-
-## Source of truth
-
-Read [AGENTS](AGENTS.md), [PROJECT](docs/PROJECT.md), current issue, relevant approved docs and existing contracts/tests/implementation. [Requirements](docs/REQUIREMENTS.md) and [traceability](docs/TRACEABILITY_MATRIX_V1.md) preserve V2 IDs/evidence and version new V3 scope. [ADR-031](docs/DECISIONS.md#adr-031--approved-product-v3-integrated-journey-and-bounded-authorization) records explicit supersession; no historical contract is rewritten. Product V3 is now the repository source of truth. Product approval is not implementation completion/authorization.
-
-## Executable workspace and local tooling
-
-The commands below retain the working bootstrap/M1/M2 setup. The web surface and worker remain scaffolds; API/persistence includes the accepted slices in PROJECT. Shared clinical-rules now contains the exact approved HTN definition; closure-engine, FHIR adapter and UI remain scaffolds. No integrated product UI is claimed.
+The web/API now implement the accepted slices above. Only closure-engine, FHIR adapter, shared UI package and research worker capability remain scaffolds; clinical-rules contains the exact accepted definition. Commands below are local/disposable workflows, not permission to initialize/migrate hosted staging or the final domain.
 
 ### Pinned toolchain
 
@@ -117,7 +93,3 @@ It loads only the exact approved WHO CR-HTN-FU-001 catalog, fails on conflicts a
 preserves identical repeat state. It does not run on application startup. See
 [clinical-definition contract](docs/EH-009_CLINICAL_DEFINITION_CONTRACT.md) and
 [validation](docs/EH-009_VALIDATION.md). This describes the EH-009 catalog slice only. Later M2 slices add patient plans, BP/evidence and INITIAL actions; M2 is COMPLETE. No EACCE evaluator is implemented.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](docs/V3_I2_CONTRACT.md) and [Slice 2 implementation](docs/V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.

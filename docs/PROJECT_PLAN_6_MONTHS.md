@@ -2,9 +2,7 @@
 
 ## Status and supersession — D33
 
-Product V3 policy is APPROVED; M0–M2 COMPLETE; V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)). V3-I1 Slices 1/2/3 COMPLETE after PR #43 / exact-main CI 40116846242; [Slice 4](V3_I1_SLICE4.md) COMPLETE via PR #44 / exact-main CI 40195060034; [Slice 5](V3_I1_SLICE5.md) COMPLETE via PR #45 / exact-main CI 40252309467; overall COMPLETE; Slice 6 COMPLETE; EACCE/UI NOT STARTED, DESIGN FROZEN. The filename retains the previous planning reference; it does **not** assert a verified six-month V3 delivery commitment.
-
-The [pre-V3 six-month plan](https://github.com/abuhmaid28/egyhealth360/blob/ea777ce71c3639a37ec015739a12f0fadc0b4dcc/docs/PROJECT_PLAN_6_MONTHS.md) is preserved as historical planning. Its assumed 12 October 2026 start, month/sprint allocations, milestone weights and fixed buffer assumptions are **superseded as active scheduling assumptions**. They are not an approved V3 estimate, academic deadline or percentage-complete measure. Do not infer V3 velocity from the speed of M0–M2.
+CURRENT AUTHORITATIVE capacity constraints, not a dated delivery commitment. [CURRENT_STATUS](CURRENT_STATUS.md) owns delivery; [roadmap](IMPLEMENTATION_ROADMAP.md) owns sequencing. Issue #72 now inserts the owner-gated Foundation/Product/Design/Frontend V2 process before remaining Lab work. Prior six-month dates/weights/buffers remain invalid as current commitments.
 
 ## Inputs needed before a delivery commitment
 
@@ -18,9 +16,9 @@ These inputs are not verified by policy approval. Missing schedule data does not
 
 ## Dependency plan and scope control
 
-Use [Roadmap V3](IMPLEMENTATION_ROADMAP.md): G0 reconciliation → I1 access/domain → I2 booking/consultation → I3 prescriptions/lab/pharmacy → I4 longitudinal integration → I5 bounded EACCE → I6 separately approved product UI → I7 research pipeline/evaluation → I8 final evaluation/hardening. Preserve M0–M2 IDs and old M3–M7 as superseded/resequenced planning history.
+Use the [current roadmap](IMPLEMENTATION_ROADMAP.md): accepted foundations through I3 Slice 2 → Foundation Reboot/review → conditional Stage 1.5 → owner-gated Product/Design/Frontend V2 → remaining I3 Lab/results/exit → I4 → I5 → research/evaluation → final hardening/presentation/domain. Preserve M0–M2 IDs and old M3–M7 as superseded/resequenced planning history.
 
-This is a dependency spine, not all-to-all serial waiting: prepare I5 research-input feasibility early; lab/pharmacy need their own signed sources; ordinary UI needs relevant I1–I4 plus separate design approval, not final research results. Security, clinical-history integrity, verification and documentation occur throughout.
+This is a dependency spine, not all-to-all serial waiting: prepare I5 research-input feasibility early; lab/pharmacy need their own signed sources; Frontend V2 integrates existing implemented contracts after explicit design/prototype approval; future Lab UI additionally needs its separately authorized backend. Final research results are not a prerequisite for ordinary UI. Security, clinical-history integrity, verification and documentation occur throughout.
 
 Prioritize complete thin journeys A–D over enterprise depth. Curated catalogs, finite availability, simple clinic/provider representation, full-item dispensing and laboratory fulfillment are frozen scope choices. Counts/slot length/horizon are fixture/configuration choices, not architectural limits. Imaging, extra measurement types, richer reminders/catalog/admin and fixture breadth are SHOULD, removed first if necessary.
 
@@ -48,7 +46,3 @@ At each lightweight checkpoint record merged evidence, requirement/acceptance st
 | Demo environment/thesis pressure | Local self-hosted rehearsal/recovery with preserved history, regular evidence-backed chapter updates and viva preparation |
 
 No dates, estimates, success probabilities, delivery commitments or new implementation authorization are created here.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.

@@ -1,5 +1,7 @@
 # EgyHealth 360 — Execution Policy
 
+> Stable execution constraints. [FOUNDATION_CHARTER](FOUNDATION_CHARTER.md) governs decision rights, source priority, future Product/Design gates and milestone health review; [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable task state. CI is technical evidence and does not approve Product/UX/Design.
+
 ## Purpose
 This policy defines how the graduation project is executed and what the student team is, and is not, required to do.
 

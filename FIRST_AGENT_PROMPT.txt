@@ -1,39 +1,6 @@
-You are continuing the issue-scoped EgyHealth 360 project. Work may be documentation/planning only; implementation is never implied by product-policy approval.
-
-Current backend delivery: V3-I2 Slices 1–3 COMPLETE. [Slice 3 completion and Slice 4 authorization 6485213892](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6485213892) authorizes consultation opening only. [Slice 4](docs/V3_I2_SLICE4.md) is IMPLEMENTED / IN REVIEW, not COMPLETE. V3-I2 INCOMPLETE. Slice 5 NOT IMPLEMENTED; Slices 5–7 excluded from this authorization. I3 NOT AUTHORIZED. EACCE NOT STARTED. The completed separate English/Arabic/RTL UI track is unchanged. No merge authorized.
-
-Before writing code:
-
-1. Read AGENTS.md completely.
-2. Read docs/PROJECT.md.
-3. Read the current GitHub Issue completely.
-4. Read only the task-relevant approved documentation referenced by the issue.
-5. Inspect the current branch, Pull Request, code, tests, and existing contracts before changing anything.
-
-Do not rely on prior AI chat history. Do not silently redesign architecture or restore superseded product scope.
-
-Before making changes, summarize:
-- the current task and acceptance criteria,
-- what already exists,
-- what remains,
-- relevant architecture/security/clinical constraints,
-- your implementation plan,
-- any conflict or ambiguity that blocks safe execution.
-
-Then perform only the defined issue scope.
-
-Product V3 policy is APPROVED; read docs/PRODUCT_V3_DECISIONS.md and the current PROJECT status. M0–M2 remain accepted COMPLETE history. V3-G0 is COMPLETE: PR #36 merged, exact-main CI passed and Issue #35 is CLOSED/completed (evidence in docs/PROJECT.md). Product V3 is the repository source of truth. V3-I1 contract is APPROVED in Issue #39; read docs/V3_I1_CONTRACT.md. Slice 1 is merged/verified in PR #40 at a03c0b63a0ed44bcf39a32428002af0c92edc7e0 (exact-main CI 39948145751 SUCCESS). Slice 2 is authorized by Issue #39 comment 6366843150; its organization/membership implementation is COMPLETE (PR #41; exact-main CI 40010140478 SUCCESS; docs/V3_I1_SLICE2.md). V3-I1 overall is COMPLETE; Slice 3 is COMPLETE after PR #43 and exact-main CI 40116846242 SUCCESS; Slice 4 is COMPLETE via PR #44 / exact-main CI 40195060034; Slice 5 is COMPLETE via PR #45 / exact-main CI 40252309467; Slice 6 is COMPLETE. EACCE remains NOT STARTED. Design remains FROZEN until separate explicit design-unfreeze approval. Preserve historical contracts, validations, migrations and fixed M1 seed. Approved future entities/roles/resources are not implemented capabilities; do not bypass current ownership/ACTIVE-assignment security or claim a policy-covered golden journey as delivered.
-
-Required operating rules:
-- preserve the free-first/self-hostable policy,
-- keep Core V1 free of FastAPI/Python runtime and ML unless a later approved ADR changes that,
-- never invent clinical rules,
-- preserve immutable assessment/audit history,
-- enforce backend resource-level authorization,
-- keep research ground truth isolated from engine input,
-- add and run the tests required by the issue and docs/TESTING.md,
-- leave the Pull Request as the handoff point with completed work, checks/results, limitations, remaining work, and next recommended step.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](docs/V3_I2_CONTRACT.md) and [Slice 2 implementation](docs/V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
+Start by reading AGENTS.md.
+Then read the current GitHub issue and latest applicable explicit Product Owner authorization, docs/CURRENT_STATUS.md, docs/FOUNDATION_CHARTER.md and docs/SOURCE_OF_TRUTH.md.
+Read only task-relevant accepted contracts and current implementation/tests after that path.
+Do not infer authorization or delivery state from this starter prompt, historical PRs or chat memory.
+Apply the charter's preservation boundaries, Product/Design owner gates and milestone health-review rule.
+Complete the authorized task through its required validation and reviewable PR; never merge or promote without authorization.

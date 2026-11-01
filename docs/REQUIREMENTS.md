@@ -1,16 +1,16 @@
 # EgyHealth 360 — Versioned Requirements V3
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
+> CURRENT AUTHORITATIVE requirement wording; delivery columns reconciled through I3 Slice 2. [CURRENT_STATUS](CURRENT_STATUS.md) owns task/Live state and [FOUNDATION_CHARTER](FOUNDATION_CHARTER.md) owns approval gates. Later retained V2 sections preserve historical requirement meanings.
 
-[I1 contract](V3_I1_CONTRACT.md) is APPROVED by Issue #39. Slice 1/2 COMPLETE; [Slice 3 registration/profile](V3_I1_SLICE3.md) completes the bounded V3-FR-001 surface after PR #43 / exact-main CI 40116846242. I1 COMPLETE; Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. V3-FR-003 and the operational V3-FR-018 subset have accepted Slice 2 foundations; remaining end-to-end V3 capabilities are future work. Existing requirement IDs and historical evidence below are unchanged.
+Accepted I1/I2 and I3 Slice 1/2 evidence is summarized in the delivery column below and [current trace map](TRACEABILITY_MATRIX_V1.md). Complete integrated journeys, Lab and I4/I5/research remain incomplete. Requirement meanings and historical IDs are preserved.
 
 ## Current requirement authority and status
 
-Product V3 policy is **APPROVED** by [Issue #35 final owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901); [D01–D36](PRODUCT_V3_DECISIONS.md) governs the complete frozen package. V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); V3-I1 COMPLETE; EACCE NOT STARTED; DESIGN FROZEN. Policy approval does not mean any new workflow is implemented or authorized to start.
+Product V3 policy is **APPROVED** by [Issue #35 final owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901); [D01–D36](PRODUCT_V3_DECISIONS.md) governs the complete frozen package. Delivery is tracked in [CURRENT_STATUS](CURRENT_STATUS.md). Policy approval does not mean any new workflow is implemented or authorized to start.
 
 The new `V3-FR-*` grouping is versioned separately from existing `FR-*`, `BR-*`, `AC-*`, `ERR-*`, `NFR-*` and `P-*` IDs. Those historical requirements/evidence are retained below. No ID is recycled and no unfinished acceptance criterion is relabeled satisfied.
 
-## Approved future V3 requirements — NOT IMPLEMENTED as complete V3 capabilities
+## Approved V3 requirements — current bounded delivery
 
 The rows define approved V3 scope, with current delivery identified in the last column: registration/own profile are COMPLETE in Slice 3, public directory is COMPLETE in Slice 4, and the Slice 5 bilateral lifecycle is COMPLETE. Broader end-to-end journeys remain future work; I1 is COMPLETE through its separate combined exit and final closeout gates. Current slice contracts and OpenAPI govern delivered methods; further implementation needs separately authorized reviewed work. Five workspaces operate in one application; ordinary care needs no CarePlan/EACCE.
 
@@ -18,22 +18,22 @@ The rows define approved V3 scope, with current delivery identified in the last 
 |---|---|---|---|---|
 | V3-FR-001 | Patient-only bounded self-registration and permitted own profile/demographics; managed privileged accounts; preserve M1 seed and separately version integrated fixtures | D06-A / D03 | I1 | Slice 3 guarded registration/own profile COMPLETE; preserved M1 fixture; no claim of complete integrated journey |
 | V3-FR-002 | Curated public doctors/profiles/specialties/clinic/location; simple provider affiliation, no fixed count limits or enterprise hierarchy | D02 / D07 | I1 | Slice 4 curated public directory COMPLETE; explicit specialty/publication, minimized public IDs, current eligibility and no clinical authority; see V3_I1_SLICE4.md |
-| V3-FR-003 | Fixed LAB_STAFF/PHARMACY_STAFF operations under active organization membership; no generalized multi-role IAM | D05 / D28 / D36 | I1 | Slice 2 fixed staff roles/operational memberships COMPLETE; no artifact fulfillment authority |
+| V3-FR-003 | Fixed LAB_STAFF/PHARMACY_STAFF operations under active organization membership; no generalized multi-role IAM | D05 / D28 / D36 | I1 | I1 operational roles/memberships COMPLETE; I3 Slice 2 adds exact pharmacy artifact authority; Lab fulfillment remains future |
 | V3-FR-004 | Explicit patient authorization + clinician acceptance before/at consultation; continuing current relationship until either ends; preserve history and deny subsequent access, including author | D10 / D11-A | I1 | Slice 5 participant authorization/accept/decline/withdraw/history/exact end COMPLETE; sole ACTIVE assignment grant, legacy confirmation without backfill, accepted withdrawal atomic, no booking/consultation authority |
-| V3-FR-005 | Finite clinician-published start/end availability, declared clinic timezone, provider/patient overlap and capacity protection; bounded configurable duration/lead/horizon/cutoff | D08 | I2 | No availability/slots |
-| V3-FR-006 | Patient own booking/cancel/reschedule/history, clinician own schedule, explicit attendance/no-show; before-start/consultation-opening changes, safe retries, failed replacement preserves original; no fees | D09 / D10 | I2 | EH-012 HTN follow-up is not general booking |
-| V3-FR-007 | General consultation/booking/encounter/provider/actual treating provenance; optional artifact creation; preserve EH-012 history and BP links | D12 | I2 | Immutable HTN encounter/link foundation only |
-| V3-FR-008 | Human-entered complaint/problems/diagnoses and minimal allergy/intolerance review including unknown/not-reviewed; optional curated codes, no automated inference | D14 | I2 | Synthetic applicability tuples are not clinical problem/allergy records |
-| V3-FR-009 | Author-only private notes under current relationship, separate signed/released patient summary/instructions and preserved addenda/corrections | D13 / D15 | I2 | No consultation documentation/release model |
-| V3-FR-010 | Small medication catalog; clinician-signed prescription/items preserving prescribed identity/quantity/unit/instructions and clinician-entered validity; cancellation/replacement reconciles past dispensing | D16 / D17 | I3 | No prescribing/catalog/medication workflow |
-| V3-FR-011 | Routed authorized pharmacy full prescribed quantity per item, items separately fulfillable, actual quantity/unit/actor/time/history; no partial quantities/refills/substitution/adherence inference | D18-A / D19 / D36 | I3 | No prescription-scoped staff/dispense workflow |
+| V3-FR-005 | Finite clinician-published start/end availability, declared clinic timezone, provider/patient overlap and capacity protection; bounded configurable duration/lead/horizon/cutoff | D08 | I2 | I2 finite availability/configuration COMPLETE; booking protects provider/patient overlap and capacity |
+| V3-FR-006 | Patient own booking/cancel/reschedule/history, clinician own schedule, explicit attendance/no-show; before-start/consultation-opening changes, safe retries, failed replacement preserves original; no fees | D09 / D10 | I2 | I2 general booking/change/attendance/schedule COMPLETE; EH-012 remains separately preserved |
+| V3-FR-007 | General consultation/booking/encounter/provider/actual treating provenance; optional artifact creation; preserve EH-012 history and BP links | D12 | I2 | I2 general consultation opening/recovery and explicit close COMPLETE |
+| V3-FR-008 | Human-entered complaint/problems/diagnoses and minimal allergy/intolerance review including unknown/not-reviewed; optional curated codes, no automated inference | D14 | I2 | I2 versioned human documentation with minimal allergy review COMPLETE; no automated inference |
+| V3-FR-009 | Author-only private notes under current relationship, separate signed/released patient summary/instructions and preserved addenda/corrections | D13 / D15 | I2 | I2 separate private notes and explicitly released summaries/addenda/privacy COMPLETE |
+| V3-FR-010 | Small medication catalog; clinician-signed prescription/items preserving prescribed identity/quantity/unit/instructions and clinician-entered validity; cancellation/replacement reconciles past dispensing | D16 / D17 | I3 | I3 Slice 1 catalog/prescription source lifecycle COMPLETE; accepted source/fulfillment history preserved |
+| V3-FR-011 | Routed authorized pharmacy full prescribed quantity per item, items separately fulfillable, actual quantity/unit/actor/time/history; no partial quantities/refills/substitution/adherence inference | D18-A / D19 / D36 | I3 | I3 Slice 2 route/accept/full-item dispense/correction/reversal backend COMPLETE; no Live pharmacy UI claim |
 | V3-FR-012 | Clinician lab order routed to recipient lab; meaningful fulfillment progress and reasoned cancellation/rejection; order/result distinct; no mandatory LIS sample-state depth | D20 / D36 | I3 | No lab order/provider workflow |
 | V3-FR-013 | Lab entry and explicit verification/finalization with patient/original order/test/provider/author/validator/time/status/provenance; same entry/validator allowed; linked corrections/retractions preserve versions | D15 / D21 | I3 | No result/version/finalization workflow |
 | V3-FR-014 | Verified final lab results available to own patient/current authorized doctor; drafts hidden, amendments/retractions identified; no mandatory doctor-release queue in synthetic demo | D22 / D23-B | I3 | Laboratory MUST; imaging not implemented/required |
-| V3-FR-015 | Follow-up clinical intent remains meaningful without a slot and connects to one operational booking authority; preserve EH-012 behavior and use legacy links only where needed | D24 | I2 / I4 | Legacy operational HTN appointment only, no unbooked intent/general booking |
+| V3-FR-015 | Follow-up clinical intent remains meaningful without a slot and connects to one operational booking authority; preserve EH-012 behavior and use legacy links only where needed | D24 | I2 / I4 | I2 released FollowUpIntent and explicit Booking links COMPLETE; I4 continuity integration remains future |
 | V3-FR-016 | Authorized source-linked longitudinal view of booking/encounter/problems/prescriptions/dispenses/labs/follow-up/BP/plans/actions with occurrence/recording/correction provenance; separate clinical sources, operations, projection and audit | D25 / D26 | I4 | BP/encounter/internal normalized evidence only, not integrated timeline |
 | V3-FR-017 | In-app important appointment/result/prescription/dispense/follow-up/action updates and bounded reminders with deduplication/status/cancellation/current privacy; no paid channels | D27 | I4 | No notification module |
-| V3-FR-018 | Operational user/provider/affiliation/membership/status/catalog/demo/config and research administration without ADMIN clinical payload/impersonation/signing/fulfillment or routine history reset | D28 / D36 | I1–I4 / I7 | Identity/provisioning plus Slice 2 bounded organization/membership operations COMPLETE; Slice 4 internal catalog/publication management COMPLETE; no admin workspace |
+| V3-FR-018 | Operational user/provider/affiliation/membership/status/catalog/demo/config and research administration without ADMIN clinical payload/impersonation/signing/fulfillment or routine history reset | D28 / D36 | I1–I4 / I7 | Bounded internal organization/membership/directory/scheduling/catalog management implemented; UI operational shell is Demo/read-only or unsupported, not a complete Live ADMIN system |
 | V3-FR-019 | Retain exact-pinned BP/CarePlan/immutable INITIAL action/protected decision and privacy behavior; future explicit links only, no automatic applicability/coverage/completion or recurrence bridge | D26 / D30 | I4 / I5 | M2 accepted; integrated exposure/evidence bridges not implemented |
 | V3-FR-020 | Retained bounded HTN EACCE/six classifications/immutable explanations and clinician overrides; isolated reproducible B0/B1/P1 evaluation, no all-disease/recurrence expansion | D29 / D30 | I5 / I7 / I8 | Engine/FHIR/worker scaffolds are not completed research functionality |
 
@@ -46,7 +46,7 @@ The rows define approved V3 scope, with current delivery identified in the last 
 - Signed history uses reasoned corrections/addenda/retractions/reversals; wrong-patient restriction independently masks payload and revealing references/counts/notifications. No silent cross-patient transfer or destructive rewrite. Generic audit and clinical history/timeline remain distinct.
 - Patient signup cannot select privileged roles or author clinical artifacts. No paid verification, production identity assurance or mandatory full recovery subsystem is introduced. Staff provisioning remains managed.
 - Laboratory fulfillment is MUST; imaging SHOULD/optional and claimed only after implemented/proven. Full-item dispensing is frozen; partial/refill/substitution need a new decision.
-- Synthetic/free-first scope, deterministic catalogs/fixtures, unchanged research ground-truth isolation and source-traceable HTN rules remain mandatory. Design stays separately frozen; accessibility/i18n goals do not authorize design work.
+- Synthetic/free-first scope, deterministic catalogs/fixtures, unchanged research ground-truth isolation and source-traceable HTN rules remain mandatory. Final UX/brand/design follows the charter owner gates; accessibility/i18n goals do not themselves authorize implementation.
 
 ## V2 → V3 crosswalk and supersession
 
@@ -198,7 +198,7 @@ No implementation may reorder these in a way that changes approved acceptance be
 - NFR-007 Normal product evaluation should be interactive under demo-scale load; no unsupported uptime/latency SLA is claimed.
 - NFR-008 Secrets and sensitive authentication data must not be committed or logged.
 
-## Source relationships
+## Historical V2 source relationships
 - `docs/PRODUCT.md` defines product scope.
 - `docs/UX.md` defines navigation/screen behavior.
 - `docs/API.md` defines conceptual endpoint groups until implementation freezes OpenAPI contracts.
@@ -218,18 +218,10 @@ FR-021 — satisfied for the approved Core V1 bounded INITIAL generation scope. 
 [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. [Contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md); [validation](EH-014_VALIDATION.md#post-merge-validation).
 
 
-## Current completion boundary after V3 adoption
+## Historical completion boundary after V3 adoption
 
 M0–M2 COMPLETE; Issue #28 CLOSED/completed at the reconciliation baseline. This corrects prior pending-closeout status, not historical behavior. FR-021 bounded INITIAL only; FR-024 incomplete; AC-004/005 unsatisfied. No V3 capability, EACCE assessment/research result or design completion is created by this documentation reconciliation.
 
-## Current I2 Slice 2 applicability
-
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
-
-## V3-I2 Slice 2 applicability
+## Historical V3-I2 Slice 2 applicability
 
 V3-FR-005 / D08 finite availability and D28 bounded internal ADMIN scheduling configuration are implemented for review in [Slice 2](V3_I2_SLICE2.md), with current authority, immutable snapshots/history, withdrawal, overlap integrity and public projection proof. This delivers only that foundation. Booking, other I2 requirements and the complete golden journey remain incomplete; Slices 3–7 are not authorized.

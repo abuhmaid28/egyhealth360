@@ -1,85 +1,46 @@
-# EgyHealth 360 — Data Model Status and V3 Concepts
+# Current data model
 
-## Current V3-I2 Slice 5 boundary
+CURRENT AUTHORITATIVE inventory at baseline `eb61da263ce44db5ca71ffdfea6a87309c8e17ef`. Exactly **63 Prisma models/domain tables, 22 additive migrations**; the migration ledger is one additional table (64 public tables in accepted migration/runtime evidence). [Schema](../packages/db/prisma/schema.prisma), [SQL migrations](../packages/db/prisma/migrations) and accepted contracts govern executable constraints. The earlier 31/34/39/43-model inventories were slice snapshots, not today's schema.
 
-[Slice 5](V3_I2_SLICE5.md) adds ConsultationDocument, ConsultationDocumentVersion, ConsultationDocumentOperation and ConsultationPrivacyRestriction: migration 18, 43 domain models/tables, 17 historical SQL files unchanged. Immutable roots/versions/operations/privacy targets, composite RESTRICT provenance/lineage and legal sign/release guards; no backfill. Earlier inventories below are historical slice snapshots.
+## Implemented model inventory
 
-## Current Slice 4 consultation-opening boundary
+### Identity/session/assignment/audit
 
-Migration 17 adds only Consultation, bringing the current model/domain-table total to 39. Unique booking/encounter, composite same-patient identity, immutable opening provenance and deferred atomic-link guards. General encounters are new rows only; historical tables/rows are not backfilled. See [schema and guarantees](V3_I2_SLICE4.md). Historical status/validation statements below retain their original point-in-time meaning.
+`User`, `Session`, `PatientProfile`, `ClinicianProfile`, `ClinicianPatientAssignment`, `AuditLog`.
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
+### M2 planning and evidence
 
-[Slice 2](V3_I1_SLICE2.md) Organization/OrganizationMembership and fixed staff roles are COMPLETE. [Slice 3](V3_I1_SLICE3.md) reuses User/PatientProfile/Session/AuditLog with no schema or migration change. I1 COMPLETE; Slice 3 COMPLETE; Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. Specialty/public directory are COMPLETE in Slice 4. RelationshipRequest and AssignmentEndProvenance are COMPLETE in Slice 5. Historical schema/migration/clinical behavior is preserved.
+`GuidelineSource`, `CarePlanTemplate`, `CareRuleDefinition`, `CarePlan`, `BloodPressureMeasurement`, `FollowUpAppointment`, `ClinicalEncounter`, `EncounterBloodPressureAssociation`, `RecordCoverageWindow`, `ObservedClinicalApplicabilitySnapshot`, `ObservedClinicalApplicabilityRetraction`, `BpAmendmentOperation`, `BpExclusion`, `BpPrivacyTarget`, `CareAction`, `CareActionDecision`, `CareActionApplicabilityInput`.
 
-## Implemented model inventory — 34 models; I1 COMPLETE; I2 Slice 2 IN REVIEW
+### I1 organizations/directory/relationships
 
-Exactly the following **34 Prisma models** exist: 31 accepted I1 models plus ClinicSchedulingSettings, AvailabilitySlot and AvailabilityOperation in this authorized I2 Slice 2 PR. One additive scheduling migration follows fourteen immutable historical migrations. The [Prisma schema](../packages/db/prisma/schema.prisma), migration SQL and accepted slice contracts are authoritative for executable fields/constraints.
+`Organization`, `OrganizationMembership`, `Specialty`, `ClinicDirectory`, `ClinicianDirectory`, `DirectoryAffiliation`, `RelationshipRequest`, `AssignmentEndProvenance`.
 
-- `User`
-- `Session`
-- `PatientProfile`
-- `ClinicianProfile`
-- `ClinicianPatientAssignment`
-- `AuditLog`
-- `GuidelineSource`
-- `CarePlanTemplate`
-- `CareRuleDefinition`
-- `CarePlan`
-- `BloodPressureMeasurement`
-- `FollowUpAppointment`
-- `ClinicalEncounter`
-- `EncounterBloodPressureAssociation`
-- `RecordCoverageWindow`
-- `ObservedClinicalApplicabilitySnapshot`
-- `ObservedClinicalApplicabilityRetraction`
-- `BpAmendmentOperation`
-- `BpExclusion`
-- `BpPrivacyTarget`
-- `CareAction`
-- `CareActionDecision`
-- `CareActionApplicabilityInput`
-- `Organization`
-- `OrganizationMembership`
-- `Specialty`
-- `ClinicDirectory`
-- `ClinicianDirectory`
-- `DirectoryAffiliation`
-- `RelationshipRequest`
-- `AssignmentEndProvenance`
-- `ClinicSchedulingSettings`
-- `AvailabilitySlot`
-- `AvailabilityOperation`
+### I2 availability/booking/consultation/documents/intent
 
-Current User roles are PATIENT/CLINICIAN/ADMIN/LAB_STAFF/PHARMACY_STAFF. Organization and OrganizationMembership provide operational scope only. RelationshipRequest is provenance only; no general booking, prescription, lab order/result, notification, ClosureAssessment or experiment-result model is implemented. A model's existence does not imply a public route, workspace or completed product requirement.
+`ClinicSchedulingSettings`, `AvailabilitySlot`, `AvailabilityOperation`, `Booking`, `BookingOperation`, `BookingEvent`, `BookingAttendance`, `Consultation`, `ConsultationDocument`, `ConsultationDocumentVersion`, `ConsultationDocumentOperation`, `ConsultationPrivacyRestriction`, `FollowUpIntent`, `FollowUpIntentVersion`, `FollowUpIntentBookingLink`, `FollowUpIntentOperation`, `FollowUpIntentPrivacyRestriction`.
 
-## Approved V3 domain concepts — delivered foundations and future scope
+### I3 prescription/catalog
 
-Product V3 policy is APPROVED; V3-I1 overall is COMPLETE. The table distinguishes delivered I1 foundations from broader future concepts; the exact 34-model inventory above governs this branch. These concepts do not prescribe one table per concept. Further physical schema changes require separately authorized slices; Slice 6 is COMPLETE.
+`Medication`, `MedicationVersion`, `Prescription`, `PrescriptionItem`, `PrescriptionVersion`, `PrescriptionVersionItem`, `PrescriptionOperation`, `PrescriptionPrivacyRestriction`, `MedicationOperation`.
 
-| Concept | Approved meaning, current delivery and integrity boundary |
-|---|---|
-| Provider / Clinic / location / Specialty | [Slice 4](V3_I1_SLICE4.md) curated Specialty/directory foundation COMPLETE; richer provider/routing capabilities remain future, without enterprise hierarchy or record-completeness inference |
-| Provider membership | Slice 2 operational foundation COMPLETE: bounded LAB_STAFF/PHARMACY_STAFF with current active organization/membership and fixed operation scope; not generalized IAM or routed-artifact authority |
-| Published availability / general booking | [I2 Slice 2](V3_I2_SLICE2.md) finite availability/configuration/history/withdrawal is IMPLEMENTED / IN REVIEW. General booking, patient reservation operations and booked schedule remain future and NOT AUTHORIZED |
-| Genuine clinical relationship | Slice 5 RelationshipRequest / AssignmentEndProvenance COMPLETE: bilateral workflow/provenance around the sole ClinicianPatientAssignment grant, preserved history/current checks; no legacy consent backfill or I1 completion claim |
-| General consultation documentation | Booking/encounter/provider/actual treating provenance; signed protected author-only notes versus released summaries/addenda; optional artifacts |
-| Problem / Diagnosis / allergy context | Human-entered clinical assertions and minimal unknown/not-reviewed safety context with provenance; no inferred eligibility or diagnosis |
-| Medication / Prescription / item | Small catalog and signed immutable prescribed identity/quantity/unit/instructions/validity; cancellation/replacement preserves linkage and reconciles previous dispensing |
-| Medication dispense | Routed pharmacy's full-item fulfillment fact/history with actual quantity/unit/actor/time; not medication ingestion; no partial/refill/substitution engine |
-| Lab order / result | Distinct clinician request and recipient lab fulfillment/final result; original patient/order/test/source/author/validator/time/status retained; corrections/amendments/retractions preserve prior versions |
-| Optional imaging order/report | Tier 2 only, shared diagnostics principles where useful; report/reference metadata, no PACS/DICOM/required binary upload infrastructure |
-| Follow-up intent | Clinical intent exists without a slot, may later link to the one new operational booking; no competing editable legacy booking |
-| Timeline / in-app notification | Authorized source-linked projection and bounded important updates/reminders; filter current privacy/authority, including revealing counts/references; not generic audit |
-| Later closure/review/research | Immutable assessments/explanation/evidence/reviews and isolated experiment manifests/predictions/metrics; I5/I7 scope, not new broad disease/recurrence research |
+### I3 pharmacy
 
-Source clinical records, operational records, timeline projections and immutable audit remain distinct. Signed clinical records use reasoned versions/addenda/retractions/reversals; no silent overwrite or cross-patient move. Apply [D36](PRODUCT_V3_DECISIONS.md#d36--fulfillment-authorization-and-suspension) to new lab/pharmacy artifacts. Completed fulfillment and relationship ending never erase historical sources or imply ongoing personal entitlement.
+`PharmacyRoute`, `PharmacyRouteItem`, `PharmacyRouteVersion`, `PharmacyDispense`, `PharmacyDispenseCorrection`, `PharmacyOperation`.
 
-The former V1 field/lifecycle sketches are not a schema specification; conceptual COMPLETED CarePlan, mutable CareAction lifecycle, DataSource, four-state legacy follow-up and generic research tables were never made executable by documentation. Existing CarePlan remains DRAFT/ACTIVE/CANCELLED; EH-012 only SCHEDULED/CANCELLED; EH-014 immutable INITIAL with no operational status. That original V3 reconciliation added no schema/SQL. Subsequent Slice 4 delivered the four directory models; Slice 5 adds the two provenance models above, COMPLETE. Historical schema and migrations remain preserved.
+## Ownership, integrity and future concepts
 
-## Historical executable slice notes — retained implementation truth
+One `packages/db` schema owns the migration chain. Migrations 1–10 establish M2, 11–14 I1, 15–20 I2, 21 prescriptions/catalog and 22 pharmacy. Latest migration: `20261101170000_v3_i3_pharmacy_fulfillment`, SHA-256 `d1482ce8ac43bb9eb6d86397ce22ca2f015c874d04eeb96eacd9aa5a731eca37`. Add future changes; never edit accepted SQL/checksum history. No migration/schema changes are made by this reboot.
 
-The notes below describe what each slice introduced at its time. Later slices extend earlier deferrals; read them together with the exact inventory above and accepted contracts. In particular, Issue #31 supplies BP correction/privacy and EH-014 supplies INITIAL actions; no EACCE, recurrence or V3 models are claimed. References to old conceptual fields/lifecycles describe the [baseline V1 sketches](https://github.com/abuhmaid28/egyhealth360/blob/ea777ce71c3639a37ec015739a12f0fadc0b4dcc/docs/DATA_MODEL.md), not implemented models or newly frozen V3 fields.
+Cross-module foreign keys bind same-patient sources, actual treating/recording identities, exact organization/membership/route provenance and immutable history. SQL adds guards beyond Prisma: append-only update/delete/truncate prevention, immutable published catalog/provenance, unique/exclusion constraints, operation/result/audit completeness, privacy and source eligibility. Review SQL and service lock order together. Application code uses both Prisma and explicit pg transactions, not Prisma-only persistence.
+
+Current clinical authority is assignment; operational membership is distinct. Prescription and dispense are separate facts; reversal does not restore an item entitlement. FollowUpAppointment (legacy HTN) and Booking (general operations) are intentionally distinct; FollowUpIntent is human clinical instruction with explicit booking links. ConsultationDocument private notes/released summaries have separate identities and privacy. INITIAL CareActionDecision is generation provenance, not ClosureAssessment.
+
+There are **no LabOrder/LabResult, notification, ClosureAssessment or experiment-result models**. Future conceptual models in accepted contracts are not implemented. Source-linked I4 longitudinal integration and I5/research remain unauthorized. Hosted migration state is not inferred from this repository inventory; staging evidence currently proves only migrations through 20.
+
+## Retained implementation notes — historical slice scope
+
+The following notes preserve what each slice introduced. Counts, “no later model” and authorization claims inside a slice note apply to that point in history only. The exact inventory above governs the current baseline; accepted behavior/privacy contracts remain preserved.
 
 ## EH-009 executable clinical-definition slice
 
@@ -171,15 +132,7 @@ The executable EH-014 slice supersedes the conceptual care_actions lifecycle abo
 
 Status evidence: [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. [Post-merge validation](EH-014_VALIDATION.md#post-merge-validation). No behavioral or R1–R8 contract change is introduced by this status closeout.
 
-## Current I2 Slice 2 applicability
-
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
-
-## V3-I2 Slice 2 current additive inventory
+## Historical I2 Slice 2 additive inventory
 
 The current schema has **34 models / 15 migrations**. [Availability implementation](V3_I2_SLICE2.md#database-and-configuration) adds immutable ClinicSchedulingSettings versions, AvailabilitySlot and immutable AvailabilityOperation. No Booking/Consultation/FollowUpIntent models. All 31 previous domain tables and fourteen historical migration bytes remain preserved. There is no scheduling backfill. Existing slice-specific counts above describe those historical stages, not the current complete schema.
 

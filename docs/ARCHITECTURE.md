@@ -1,63 +1,76 @@
-# EgyHealth 360 — Architecture and V3 Extension Boundary
+# Current architecture
 
-## Current V3-I2 Slice 5 boundary
+CURRENT AUTHORITATIVE reference at the [CURRENT_STATUS](CURRENT_STATUS.md) implementation baseline. Accepted contracts constrain behavior; code/schema/OpenAPI establish actual inventory. Health/debt judgments are in the [audit](FOUNDATION_REBOOT_V2_AUDIT.md), not embedded as a PR diary.
 
-[Slice 5 documentation](V3_I2_SLICE5.md) is a bounded API/persistence module, additive purpose-built roots/versions/privacy/operation tables and no new dependency. It reuses the existing canonical clinical prefix without nesting or changing legacy runtime lock order. No generic clinical-document/workflow platform, frontend change, Slice 6, I3 or EACCE.
+## System context
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
+One integrated synthetic healthcare platform targets **Patient, Clinician, Pharmacy, Laboratory and Admin** workspaces. These are domain experiences in one web application and one API, not five microservices. Patient/clinician I2 Live journeys exist; pharmacy backend is implemented through I3 Slice 2, while pharmacy/lab frontend shells are Demo/unsupported. Laboratory backend is future and unauthorized. ADMIN is operational, without blanket clinical access.
 
-[Slice 2](V3_I1_SLICE2.md) operational memberships are COMPLETE. [Slice 3](V3_I1_SLICE3.md) adds a narrow patient-entry persistence service and isolated HTTP boundary, reusing existing schema/auth/password/audit. Slice 1 COMPLETE; Slice 3 COMPLETE; I1 COMPLETE; Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. Membership remains operational only; D36 artifact authority is I3.
+## Runtime and deployment
 
-## Current architecture — retained
+| Layer | Actual responsibility |
+| --- | --- |
+| `apps/web` | Next.js 16 / React 19 / TypeScript App Router; client-rendered integrated V1 prototype with explicit Demo/Live modes |
+| `apps/api` | NestJS 11 / Express TypeScript modular monolith; REST `/api/v1`, request boundaries, session/CSRF guards and sanitized responses |
+| `packages/db` | Prisma 7 schema/client and domain persistence factories; both Prisma operations and explicit `pg` SQL transactions/locks/DB projections |
+| PostgreSQL 18 | Domain constraints, FKs, partial/exclusion/unique indexes, append-only/history triggers, deferred completeness/audit checks and transaction/advisory locks |
+| Tooling | pnpm monorepo; pinned Node 24.21.0/pnpm 10.34.6; Docker/Compose; GitHub Actions; checked-in OpenAPI |
 
-One Next.js/TypeScript application, one NestJS/TypeScript modular-monolith API, PostgreSQL 18/Prisma 7 and shared packages in a pnpm monorepo. Retain REST/OpenAPI, server-side sessions/HttpOnly cookies, Argon2id, CSRF/Origin controls, Docker Compose and GitHub Actions. No microservice/FastAPI/Python/ML rewrite, Redis/BullMQ, Kafka/RabbitMQ, GraphQL, Kubernetes, MongoDB or paid auth/AI dependency.
+Pre-final hosting is **Browser → Vercel Next.js → Vercel NestJS API → Neon PostgreSQL 18**. Next rewrites same-origin `/api/v1/:path*` to a server-only configured HTTPS API origin. Secure HttpOnly host cookies and exact browser Origin/CSRF checks remain; no permissive CORS bridge is assumed. Prisma does not replace explicit PostgreSQL concurrency semantics.
 
-| Workspace package | Actual baseline status versus intended responsibility |
-|---|---|
-| `apps/web` | Bootstrap web surface; integrated product workspaces/UI NOT STARTED, design FROZEN |
-| `apps/api` | Health, auth/session, scoped profile/BP/EH-012 and Slice 4 public directory HTTP behavior; [API inventory](API.md) and OpenAPI govern actual routes |
-| `packages/db` | Implemented M0–M2 persistence/internal principal-checked services and Slice 2/4 operational-directory and relationship models/fourteen migrations; exact [31-model inventory](DATA_MODEL.md) |
-| `packages/clinical-rules` | Exact approved HTN definition/manifest/validation; no arbitrary rule editor/evaluator |
-| `packages/closure-engine` | Bootstrap import check only; EACCE implementation NOT STARTED |
-| `packages/fhir-adapter` | Scaffold; no completed import pipeline |
-| `apps/experiment-worker` | Database health polling scaffold, not a running experiment pipeline |
-| `packages/ui` | Scaffold; no V3 Design System/components authorized |
-| `packages/config` | Shared validated runtime configuration |
+[Staging evidence](PRE_FINAL_LIVE_STAGING.md) identifies the two Vercel projects, Neon project/branch/database, pooled TLS API connection and explicit initializer off switch. Builds do not migrate. Historical hosted proof covers I2 and migrations through 20, not verified I3 cloud parity. Current observed deployment IDs/readiness and health checks are in the audit. `egyhealth360.vercel.app` remains protected. Docker is the local/CI alternative: PostgreSQL 18.6, API, web and a health-only worker, with persistent disposable volumes; it is not the current hosted deployment topology.
 
-Node 24.21.0 and pnpm 10.34.6 remain pinned. Local/self-hosted Docker Compose without paid services is the demo target; optional cloud hosting does not imply production healthcare readiness. Browser/API same-origin integration remains later reviewed work, not a new CORS allowance.
+## Composition and backend boundaries
 
-## Approved modules — bounded delivery versus future scope
+`apps/api/src/main.ts` constructs persistence factories, authentication/password dependencies and `createApp`; it closes resources on signals. `app.ts` composes controller factories into an AuthModule/AppModule and installs ordered request-boundary middleware. It does **not** provide one separately injectable Nest feature module per domain. Conditional composition also supports bounded test runtimes. No controller may substitute frontend role checks for server authorization.
 
-[Product V3](PRODUCT.md) targets **Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin workspaces in the same application**, not five applications/microservices. Imaging adds no sixth portal. Slice 2 memberships, Slice 3 patient onboarding and Slice 4 public directory are COMPLETE within their bounded contracts. Slice 5 bilateral relationship lifecycle is COMPLETE around the sole ClinicianPatientAssignment grant. Remaining conceptual modular extensions are availability/booking, consultation/documentation/problems, medication/prescription, diagnostics/result, dispensing, longitudinal projection and in-app coordination; Slice 6 is COMPLETE and I1 technical exit is COMPLETE. Their final package/table/route layout remains milestone-specific reviewed work.
+| Implemented boundary | Owning code / scope |
+| --- | --- |
+| Identity/session/patient authorization | `auth.ts`, `authorization.ts`, `password.ts`; database session, ownership/current assignment |
+| Patient entry | `patient-entry.ts`; guarded patient-only registration and own profile |
+| Organizations/memberships | `packages/db/src/organizations.ts`; principal-checked internal management, no generic public ADMIN mutation API |
+| Public directory | `directory.ts`; curated publication/active operational scope, no clinical data |
+| Bilateral relationships | `relationships.ts`; request/accept/decline/withdraw/end around the sole assignment grant |
+| Availability | `availability.ts`; finite published slots/configuration/history |
+| Booking | `bookings.ts`; reservation/change/attendance/schedule logistics with protected overlap/capacity |
+| Consultation/open/close | opening via bookings controller, `consultation-close.ts`, database `consultations.ts`; immutable treating/encounter provenance and explicit close |
+| Documentation | `documentation.ts`; separate private notes and explicitly released summaries, versions/corrections/privacy |
+| FollowUpIntent | `follow-up-intents.ts`; independent release, booking links and privacy |
+| Prescription/catalog | `prescriptions.ts`; author-owned lifecycle, medication snapshots, signed patient/current-clinician views |
+| Pharmacy | `pharmacy.ts`; clinician routing and exact current recipient staff queue/accept/full-item dispense/correction/reversal |
+| M2 evidence/planning | DB catalog, plans, BP/amendments, EH-012 follow-up/encounters, coverage, normalized evidence, applicability and INITIAL CareActions |
 
-Keep clinical sources owned by their modules. Connect them through explicit same-patient/source links and authorized read projections, not a universal clinical JSON event table, event-sourcing rewrite or messaging platform. Timeline and audit are separate. Clinical occurrence, signing/availability and local recording provenance must remain truthful; no generalized historical-knowledge guarantee is created.
+These are bounded modules by persistence/controller ownership, not physical service isolation. M2 catalog/plans/coverage/applicability/INITIAL operations remain internal principal-checked services unless explicitly exposed by OpenAPI; BP/EH-012 have bounded HTTP resources. Pharmacy is composed inside prescription persistence, sharing its pool and source-authority transaction capability internally. No raw pharmacy transaction capability is exported publicly. Cross-module reads/FKs are intentional same-patient/source/provenance coupling; they do not authorize a universal workflow or JSON event store.
 
-Authorization remains backend-first: public directory is published professional data only; booking logistics do not grant clinical access; current patient ownership/ACTIVE relationship governs clinical records; future current organization membership plus routed artifact scope governs staff fulfillment under [D36](PRODUCT_V3_DECISIONS.md#d36--fulfillment-authorization-and-suspension). Private notes, release and wrong-patient masking apply through projections/counts/notifications. ADMIN remains operational.
+## Data and transaction ownership
 
-## Preserved M2 service boundaries
+One schema and additive migration chain own **63 domain models / 22 migrations**; [DATA_MODEL](DATA_MODEL.md) enumerates them. The migration ledger is an additional database table. Schema alone omits important SQL guards; review migration SQL and checksum fixtures together.
 
-CarePlan, catalog, normalized coverage/applicability, BP amendment and INITIAL action services are not automatically public routes. Existing session/transaction locks, exact plan/rule pins, history guards and minimized atomic audit remain as frozen in their contracts. New booking or staff authority cannot bypass legacy checks. EH-012 retains HTN follow-up/immutable encounter-BP semantics; new general consultation is an explicit later extension.
+Persistence factories own transactions, safe projections, current checks and minimized audit. Most own separate small connection pools; prescription/pharmacy share one. Explicit SQL handles lock ordering, DB clock expiry, atomic operations and projection privacy. This creates connection-budget and reviewability debt, not evidence that a new distributed architecture is needed.
 
-EH-014 adds principal-checked INITIAL generation and protected immutable decision records, without HTTP route or autonomous hook. Ordinary action views are minimized/current-privacy-safe; generation snapshots never become timeline expansions. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md), [post-merge validation](EH-014_VALIDATION.md#post-merge-validation), [BP correction/privacy](BP_CORRECTION_INVALIDATION_CONTRACT.md).
+Reuse sorted user/session/profile/assignment/operational scope locks, existing patient/clinician advisory namespaces, source/root/item locks and after-wait/final current-authority checks according to the accepted slice. Canonical actor/command operation keys retain zero-write replay only after current privacy/authority; uncertain commit needs an explicit identical command retry. Immutable source versions and append-only correction/restriction histories retain facts. Unique pharmacy item dispense identity remains consumed after reversal. Source cancellation/replacement/expiry blocks new fulfillment without erasing history. [Security](SECURITY.md), [I3 contracts](V3_I3_CONTRACT.md).
 
-## Future research boundary — I5/I7
+## Authority and privacy
 
-EACCE remains pure deterministic shared TypeScript called by API and worker, with no Nest/Prisma/Next imports in domain logic or database/HTTP access by the engine. It will consume approved observed action/evidence/coverage/evaluation-time inputs and emit classification/explanation; implementation NOT STARTED. CareActionDecision is generation provenance, not a closure assessment.
+- Patients read own permitted data. Clinical grant is current ACTIVE `ClinicianPatientAssignment`; bilateral workflow records its provenance. Booking, public publication, membership and authorship alone grant no clinical access.
+- Clinical authoring additionally requires the exact current treating/source-author and originating clinic scope specified by the contract. Closing a consultation does not automatically sign/release other artifacts, complete actions or run EACCE.
+- PHARMACY_STAFF use active user/session, exact current active pharmacy/membership and valid routed artifact authority. They receive no general patient browser or prescriber assignment grant. Ending the prescriber relationship does not cancel valid pharmacy artifact authority. LAB_STAFF fulfillment is future.
+- ADMIN is operational. Private notes remain author-only under current authority; summary/intent release is explicit and independent. Wrong-patient restrictions suppress payload, identifiers, revealing counts/history/replay conflicts. Audit is minimized and distinct from a clinical timeline.
 
-Use FHIR R4 at the adapter boundary, not as the primary database. Pin Synthea/config/concept sets; prepare observed-input feasibility before I5. Planned experiment execution uses PostgreSQL-backed TypeScript worker states and isolated ground truth, with no new queue service. Research B0/B1/P1 and the HTN protocol remain bounded and unchanged.
+## Frontend as implemented
 
-## Files, notifications and design
+`app/[[...path]]/page.tsx` renders `Application`; layout supplies LocaleProvider and LiveSessionProvider. `application.tsx` owns shell/navigation, role-path dispatch and mode/session orchestration; large feature components own local state and feature flows. Routing is not yet organized into independent workspace/feature route trees.
 
-No medical file/image storage infrastructure is required. Laboratory final results are Tier 1; imaging narrative/report is Tier 2 and unimplemented. Important in-app events/bounded reminders are approved future scope; paid SMS/WhatsApp/email is not required. Separate explicit design-unfreeze approval remains mandatory after scope/domain prerequisites; this document specifies no screens, components or visual work.
+`src/lib/api` contains typed contracts, same-origin Live clients and feature command/recovery handling; `src/lib/mock` is a separate browser-persisted synthetic Demo implementation. The persistent client Live capability scope retains only in-memory request/command state; HttpOnly sessions remain server-owned and reads/writes reauthorize. Unsupported Live capabilities fail explicitly, with no silent Demo fallback.
 
-## Current I2 Slice 2 applicability
+`src/components/ui.tsx` holds actual shared primitives/icons/logo/date formatting. `packages/ui/src/index.ts` is only `export {}` and has no real shared Design System. `globals.css` owns local fonts, color/spacing-like variables and many feature rules; no complete semantic token/component specification exists.
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
+Localization uses an English-string-key Arabic catalog, React context/localStorage preference, document `lang`/`dir`, RTL CSS and Intl formatting. Missing translations fall back to English. Some date/time calls omit locale and default to English; clinician-authored clinical text and proper nouns are preserved. This is implemented bilingual V1 support, not a complete Arabic Content System.
 
-## V3-I2 contract/readiness boundary
+V1 is a **FUNCTIONAL PROTOTYPE / BEFORE BASELINE**. Frontend Architecture V2 and final design are future owner-gated work; the current layout, logo, colors and fonts are not final decisions. Preserve current safety/client contracts and historical screenshots while later architecture is approved.
 
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
+## Other packages and future boundaries
 
-## V3-I2 Slice 2 current scheduling boundary
+`packages/config` validates runtime configuration. `packages/clinical-rules` contains the exact approved HTN definition/manifest; it is not an arbitrary rule editor. `packages/closure-engine` contains only `bootstrapSmoke`, `packages/fhir-adapter` is empty, and `apps/experiment-worker` polls database health/heartbeat only. They do not implement inference, EACCE, FHIR import, experiments or a deployed job pipeline.
 
-[Finite availability](V3_I2_SLICE2.md) adds one bounded persistence factory and HTTP boundary/controller within the existing API/database packages. Three additive models and one migration; pg/Node Intl reuse existing dependencies. ADMIN scheduling configuration is internal; public availability uses one current SQL projection and protected clinician history/commands reuse session/Origin/CSRF. No frontend, background scheduling, booking service or legacy runtime lock reordering.
+Future, currently unauthorized: Lab orders/results and I3 integrated exit; I4 longitudinal continuity/in-app updates; I5 deterministic EACCE; research/evaluation pipeline. FHIR R4 remains an adapter boundary rather than the product database. Research ground truth stays logically isolated. No ML/FastAPI/microservice/queue replacement is implied. [Governance](FOUNDATION_CHARTER.md) and [roadmap](IMPLEMENTATION_ROADMAP.md) govern subsequent authorization.

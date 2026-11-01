@@ -1,20 +1,6 @@
-# EgyHealth 360 — Product Definition V3
+# EgyHealth 360 — Product V3 scope
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
-## Authoritative status
-
-| Area | Status |
-|---|---|
-| Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
-| V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
-| M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
-| V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) COMPLETE; I1 overall **COMPLETE**, Slice 3 **COMPLETE**; Slice 4 **COMPLETE**; Slice 5 **COMPLETE**; Slice 6 **COMPLETE** |
-| V3-I2 | Slice 1 COMPLETE; Slice 2 AUTHORIZED / IMPLEMENTED IN REVIEW; overall INCOMPLETE; Slices 3–7 NOT AUTHORIZED |
-| EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
-| Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
-
-Product V3 is now the repository source of truth. Policy approval is not implementation completion or blanket implementation authorization; it does not retroactively redefine M0–M2.
+CURRENT AUTHORITATIVE product scope, distinct from delivery and task authorization. [CURRENT_STATUS](CURRENT_STATUS.md) owns implemented/Live/active/paused truth; [SOURCE_OF_TRUTH](SOURCE_OF_TRUTH.md) classifies accepted contracts and historical evidence. M0–M2, G0, I1, I2, I3 contract and Slices 1/2 are accepted complete; I3 overall is incomplete. Current task is issue #72 Stage 0+1 audit/governance only. The existing V1 UI and logo are not final approval.
 
 ## Vision
 
@@ -28,11 +14,11 @@ The deployment/demo/research boundary remains a synthetic, free-first, self-host
 2. **Layer B — Longitudinal Continuity:** visits, human-entered problems, prescriptions, medications/dispenses, diagnostics, BP, follow-up, CarePlans and CareActions form a coherent authorized record.
 3. **Layer C — Research Differentiator:** bounded explainable evidence-aware continuity/EACCE distinguishes unresolved, scheduled, completed and uncertain care without diagnosing or choosing treatment.
 
-## Five future workspaces — one application
+## Five workspaces — approved scope versus delivery
 
-These are approved capabilities, **not claims of implemented portals**. The Slice 2 implementation supports PATIENT, CLINICIAN, ADMIN, LAB_STAFF and PHARMACY_STAFF plus bounded operational organization membership. Slices 2–4 are COMPLETE, including entry/profile and curated public discovery. Slice 5 bilateral enrollment is COMPLETE; Slice 6 is COMPLETE and I1 technical exit is COMPLETE. This does not deliver portal/UI or clinical fulfillment.
+The table describes approved full workspace scope, not delivery of every feature. Patient/clinician I2 Live journeys and I3 prescription/pharmacy backend are implemented; Lab, integrated continuity and research remain future. [CURRENT_STATUS](CURRENT_STATUS.md) separates accepted, implemented and hosted evidence.
 
-| Workspace | Approved future capability | Essential boundary |
+| Workspace | Approved capability / target scope | Essential boundary |
 |---|---|---|
 | Patient | Self-register, login/session, permitted own profile/demographics; discover doctors/specialties/clinics/availability; book/cancel/reschedule own appointments; view released summaries/problems, prescriptions, medication/dispense history, lab orders/final results, follow-up, timeline, BP and applicable CarePlan/actions; receive in-app updates | No privileged-role selection, clinical authoring or arbitrary action closure |
 | Doctor | Curated professional/public profile and clinic/specialty; finite availability/own schedule; authorized consultation, complaint/problems/diagnoses, minimal allergy/intolerance review including unknown/not-reviewed, measurements, protected notes, released summary/instructions, signed prescriptions/orders, follow-up and longitudinal review | Explicit patient authorization + clinician acceptance establish continuing current relationship; booking alone grants logistics only |
@@ -86,10 +72,6 @@ The bounded HTN contribution remains CR-HTN-FU-001, B0/B1/P1, controlled missing
 | C — Pharmacy | Signed valid prescription → authorized routed pharmacy → full-item dispense → preserved quantity/unit/actor/time → patient/current-doctor status; no duplicate entitlement/adherence claim |
 | D — Continuity | Longitudinal sources → follow-up → BP → preserved CarePlan/actions → later explicitly contracted EACCE; no automatic bridges or private-data leaks |
 
-These journeys passed the policy-coverage gate only; they are not implemented/tested V3 workflows. Graduation success requires real domain behavior, negative authorization/history/concurrency proof and honest reproducible academic results. If deadline/capacity cannot support the thin Tier 1 journey plus research, raise the specific scope tradeoff rather than silently omit fulfillment.
+These are complete target journeys. A remains partial without Lab; B is future; C backend is accepted through I3 Slice 2, with no hosted/UI claim; D has M2 foundations and future I4/I5 integration. Graduation success requires real domain behavior, negative authorization/history/concurrency proof and honest reproducible academic results. If deadline/capacity cannot support the thin Tier 1 journey plus research, raise the specific scope tradeoff rather than silently omit fulfillment.
 
-The approved [D01–D36 record](PRODUCT_V3_DECISIONS.md), [Roadmap V3](IMPLEMENTATION_ROADMAP.md), [requirements](REQUIREMENTS.md) and [security policy](SECURITY.md) govern later work. Product V2's narrower positioning/exclusions are superseded through ADR-031; historical contracts remain unchanged. Design remains separately frozen.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
+The approved [D01–D36 record](PRODUCT_V3_DECISIONS.md), [Roadmap V3](IMPLEMENTATION_ROADMAP.md), [requirements](REQUIREMENTS.md) and [security policy](SECURITY.md) govern later work. Product V2's narrower positioning/exclusions are superseded through ADR-031; historical contracts remain unchanged. Final Product/UX/Brand/Design decisions follow the [charter owner gates](FOUNDATION_CHARTER.md); this scope document grants no design or implementation authority.

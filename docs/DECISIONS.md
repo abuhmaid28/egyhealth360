@@ -1,5 +1,7 @@
 # EgyHealth 360 — Decision Register V3
 
+> ACCEPTED CONTRACT / DECISION RECORD: ADR text retains its adoption context. Mutable status is in [CURRENT_STATUS](CURRENT_STATUS.md); issue #72 and the [charter](FOUNDATION_CHARTER.md) supersede historical final-design sequencing/freeze instructions. Clinical/security decisions are unchanged.
+
 AI agents must not silently reverse accepted decisions.
 
 ## Historical 2026 reboot supersessions
@@ -8,21 +10,19 @@ At the 2026 reboot, the original five-role continuity-of-care scope, separate Fa
 
 ## Current applicability and explicit supersession
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
 | Existing decision / planning area | Current applicability | Relationship to ADR-031 |
 |---|---|---|
 | ADR-001 chronic-care-first product center | Historical accepted scope; superseded as current positioning | Superseded by ADR-031/D01; integrated journey precedes continuity/research |
 | ADR-002 three-experience wording | Single frontend retained; future workspace list amended | Amended by ADR-031/D04 for five future workspaces |
 | ADR-019 three-role first persistence slice | Accepted implementation unchanged | Fixed staff/membership COMPLETE in Slice 2 and patient entry COMPLETE in Slice 3 under ADR-031/D05/06; no profile/role invariant bypass |
-| ADR-021 relationship-aware authorization | Accepted current enforcement unchanged | Bilateral relationship lifecycle COMPLETE in Slice 5 under ADR-031/D10/11, with assignment as the sole clinical grant; D36 artifact authority remains future I3; no booking-based clinical exception |
+| ADR-021 relationship-aware authorization | Accepted current enforcement unchanged | Bilateral relationship lifecycle COMPLETE in Slice 5 under ADR-031/D10/11, with assignment as the sole clinical grant; D36 pharmacy artifact authority is implemented through I3 Slice 2; Lab remains future; no booking-based clinical exception |
 | ADR-022 fixed M1 seed | Retained unchanged | Integrated fixture separately versioned under D02/06 |
-| ADR-026 EH-012 narrow scheduling/encounter scope | Accepted historical contract unchanged | General booking/consultation and follow-up intent later extend under D12/24; no retroactive patient mutation or new legacy statuses |
+| ADR-026 EH-012 narrow scheduling/encounter scope | Accepted historical contract unchanged | I2 general booking/consultation and follow-up intent extend under D12/24; no retroactive patient mutation or new legacy statuses |
 | ADR-023–030 clinical/evidence/generation decisions | Accepted invariants and history retained | D15/26 preserve exact pins/immutability/privacy/INITIAL scope; no automatic diagnosis/result/dispense bridges |
 | Product V2 lab/pharmacy/booking and broad diagnosis/prescription exclusions | Superseded current scope statements | D01–36 permit bounded human-authored integrated journey; diagnostic AI/autonomous treatment/enterprise exclusions retained |
 | Old unstarted M3–M7 plan | Superseded/resequenced, IDs/history retained | Roadmap V3 under D32; EACCE moves to I5, design separate |
 
-The original ADR bodies below describe their accepted scope at the time; slice deferrals/old closeout status are historical. Current status is [PROJECT](PROJECT.md): M0–M2 COMPLETE; Issue #28 CLOSED/completed. No historical contract or validation report is rewritten to pretend it originally targeted V3.
+The original ADR bodies below describe their accepted scope at the time; slice deferrals/old closeout status are historical. Current status is [CURRENT_STATUS](CURRENT_STATUS.md); M0–M2 and their accepted completion evidence remain preserved. No historical contract or validation report is rewritten to pretend it originally targeted V3.
 
 ### ADR-031 — Approved Product V3 integrated journey and bounded authorization
 
@@ -357,16 +357,8 @@ Status: Accepted implementation design within approved Slice 4; PR review/merge 
 
 Adopt [Slice 4](V3_I1_SLICE4.md): four minimal directory models, independent public IDs, explicit curated specialty (legacy free text unchanged), separate clinic operational/publication state, global provider switch and exact terminal membership-affiliation approvals. Internal current-ADMIN management follows Slice 2; four minimized public GET/HEAD resources only, current SQL/no-store, no clinical authority. Additive thirteenth migration with zero data backfill; retained history/atomic audit/current-source eligibility and real PostgreSQL concurrency proof. No directory UI, availability, RelationshipRequest, fulfillment or EACCE. [Validation](V3_I1_SLICE4_VALIDATION.md) supplies execution evidence, not I1 completion.
 
-## Current I2 Slice 2 applicability
-
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
 ## ADR-036 — Bilateral provenance around the sole assignment grant
 
 Status: Approved Slice 5 contract; implementation in review, not accepted milestone completion. Authority: [Issue #39 comment 6401378826](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6401378826). Extends ADR-032 without changing D01–D36.
 
 Adopt [Slice 5](V3_I1_SLICE5.md): RelationshipRequest records patient authorization and designated clinician decision, binding the exact ACTIVE ClinicianPatientAssignment. It is never a second grant. Legacy assignments retain authority without fabricated consent. Separate append-only AssignmentEndProvenance records only actual new participant endings, preserving historical Prisma scalar queries. Accepted authorization withdrawal retains ACCEPTED history and atomically ends the exact bound grant; exact old-target retries never end a new grant. Additive fourteenth migration, zero backfill, participant-only HTTP, current actor/session locks, pair serialization, M1/M2 overlap proof and minimized audit. Slice 6 remains unauthorized; I1 incomplete; EACCE/design untouched.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.

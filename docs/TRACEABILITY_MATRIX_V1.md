@@ -1,6 +1,22 @@
-# EgyHealth 360 — Versioned Requirements Traceability
+# Requirements traceability — current map and retained evidence
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
+CURRENT AUTHORITATIVE delivery map below. Requirement definitions remain in [REQUIREMENTS](REQUIREMENTS.md); [CURRENT_STATUS](CURRENT_STATUS.md) owns current authorization/Live status. Existing historical identifiers are preserved.
+
+| Requirements | Current accepted evidence |
+| --- | --- |
+| V3-FR-001–004 | I1 entry/directory/staff/bilateral lifecycle: [closeout](V3_I1_CLOSEOUT.md) |
+| V3-FR-005–009 | I2 availability/booking/consultation/human documentation/release: [exit review](V3_I2_SLICE7_EXIT_REVIEW.md) |
+| V3-FR-010 | I3 Slice 1 medication catalog/prescription lifecycle: [source contract](V3_I3_SLICE1.md) |
+| V3-FR-011 | I3 Slice 2 pharmacy backend: [fulfillment evidence](V3_I3_SLICE2.md); no hosted/frontend claim |
+| V3-FR-012–014 | Lab future/unauthorized, no implementation evidence |
+| V3-FR-015 | I2 intent + Booking links implemented; broader I4 integration future |
+| V3-FR-016–020 | M2/internal/operational foundations only where identified; I4 continuity/notifications and I5/research incomplete |
+
+Full Journey A still needs Lab; B is future; C backend accepted, Live UI not integrated; D is not complete. Technical CI does not prove final UX/design approval.
+
+## Historical trace matrices and acceptance obligations
+
+The text below retains prior trace/acceptance evidence. Old “all rows future,” slice counts and freeze/status paragraphs apply to their earlier snapshot only; use the current map above for delivery. Policy/requirement definitions are unchanged. Earlier navigation/design claims cannot approve V2 design.
 
 [I1 acceptance trace](V3_I1_CONTRACT.md#acceptance-traceability-and-exit-proof) remains the complete I1 exit map. Slice 1/2 COMPLETE; [Slice 3 implementation](V3_I1_SLICE3.md) and [evidence](V3_I1_SLICE3_VALIDATION.md) cover V3-FR-001, D06-A, FR-060/061, patient ownership and retained security/history requirements. Slice 2 covers bounded V3-FR-003/018. [Slice 4](V3_I1_SLICE4.md) / [evidence](V3_I1_SLICE4_VALIDATION.md) covers V3-FR-002 and the internal catalog/publication portion of V3-FR-018, D02/07/28 and retained privacy/history requirements. I1 COMPLETE; Slice 3 COMPLETE; Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. [Slice 5](V3_I1_SLICE5.md) / [evidence](V3_I1_SLICE5_VALIDATION.md) implements the V3-FR-004/D10/D11-A participant lifecycle (COMPLETE), with sole-assignment authority, genuine consent/end provenance, atomic accepted withdrawal, exact old-end safety and retained M1/M2 behavior. Complete integrated journeys remain later obligations.
 
@@ -334,14 +350,6 @@ FR-021 — satisfied for the approved Core V1 bounded INITIAL generation scope. 
 | FR-024 / AC-004 / AC-005 | Foundation-only/incomplete / unsatisfied / unsatisfied | Final SCHEDULED evidence contract and future EACCE closure evaluation required; no action–appointment coupling or completion inference |
 
 [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. Exact post-merge results: 67/67 unit, 407/407 integration (69 EH-014), 10 migrations, 7/7 container auth, synthetic runtime proof PASS. [Contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md); [validation](EH-014_VALIDATION.md#post-merge-validation).
-
-## Current I2 Slice 2 applicability
-
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
 
 ## V3-I2 Slice 2 bounded implementation evidence
 

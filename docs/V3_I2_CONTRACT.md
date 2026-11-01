@@ -1,5 +1,7 @@
 # V3-I2 — Booking & Consultation Contract
 
+> ACCEPTED CONTRACT. Behavior remains binding within its accepted scope. Adoption-time status, inventory and authorization paragraphs below are historical, not today's execution authority. Read [CURRENT_STATUS](CURRENT_STATUS.md) and [SOURCE_OF_TRUTH](SOURCE_OF_TRUTH.md) first. I1/I2 and I3 Slices 1/2 are accepted complete; later I3 Lab/results/exit and I4/I5/EACCE remain paused. Final V2 Product/Design work requires [charter owner gates](FOUNDATION_CHARTER.md).
+
 ## Current Slice 7 exit-review boundary
 
 [Issue #48 authorization 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435) and [PR #63 continuation review 5723355039](https://github.com/abuhmaid28/egyhealth360/pull/63#pullrequestreview-5723355039) authorize the bounded Consultation Close remediation in this same Slice 7 branch/PR. Explicit OPEN→CLOSED / IN_CONSULTATION→CONSULTED, current exact treating authority, immutable server-owned close provenance and safe replay are implemented through one additive migration 20; all nineteen historical SQL bytes and the restricted-document replay fix remain preserved. [Current exit review](V3_I2_SLICE7_EXIT_REVIEW.md) and exact-head PR evidence govern the verdict; the earlier BLOCKED checkpoint is superseded by this continuation. Final full validation and independent exact-head review remain required. PR OPEN / UNMERGED; auto-merge OFF; I3 NOT AUTHORIZED; EACCE NOT STARTED. No frontend or deployment changes in this track.

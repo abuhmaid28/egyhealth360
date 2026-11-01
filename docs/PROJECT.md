@@ -1,36 +1,28 @@
-# EgyHealth 360 — Project State
+# EgyHealth 360 — project context
 
-## Current I2 Live Demo Closeout sprint
+CURRENT AUTHORITATIVE overview; [CURRENT_STATUS](CURRENT_STATUS.md) is the concise delivery/deployment/authorization source. Start with current GitHub authorization → CURRENT_STATUS → [charter](FOUNDATION_CHARTER.md) + [source index](SOURCE_OF_TRUTH.md) → relevant contracts/code/tests.
 
-PR #63 is merged at authoritative sprint base `43d9f28db2cbff4d604e97bb5bfdb353759ee699`. [Issue #48 closeout authorization](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6545624864) explicitly authorizes the bounded graduation-demo UI/Live work. The [closeout delivery record](V3_UI_I2_LIVE_CLOSEOUT.md) describes explicit real close, reload-safe current-authority recovery, truthful CLOSED/CONSULTED views, EN/AR/RTL and real browser proof. One active sprint; I3 NOT AUTHORIZED; EACCE NOT STARTED. No hosted Live deployment or merge is claimed. The Slice 7/pre-merge status sections below preserve historical evidence and do not reopen the merged backend work or override this sprint authorization.
+EgyHealth 360 is an integrated synthetic graduation healthcare platform: patient access/discovery/booking, human-authored consultation and released care information, prescriptions, pharmacy, future diagnostics, follow-up and longitudinal continuity; later bounded evidence-aware HTN research. Patient, Clinician, Pharmacy, Laboratory and Admin share one platform. Ordinary healthcare journeys do not require a CarePlan or EACCE.
 
-## Current Slice 7 exit-review boundary
+**Complete accepted foundation:** M0/M1/M2, V3-G0, I1, I2, I3 contract, I3 Slice 1 Prescription and Slice 2 Pharmacy. I3 overall remains incomplete. The [current roadmap](IMPLEMENTATION_ROADMAP.md) links completion evidence. M2 remains bounded planning/evidence/INITIAL generation, not closure classifications or recurring actions.
 
-[Issue #48 authorization 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435) and [PR #63 continuation review 5723355039](https://github.com/abuhmaid28/egyhealth360/pull/63#pullrequestreview-5723355039) authorize the bounded Consultation Close remediation in this same Slice 7 branch/PR. Explicit OPEN→CLOSED / IN_CONSULTATION→CONSULTED, current exact treating authority, immutable server-owned close provenance and safe replay are implemented through one additive migration 20; all nineteen historical SQL bytes and the restricted-document replay fix remain preserved. [Current exit review](V3_I2_SLICE7_EXIT_REVIEW.md) and exact-head PR evidence govern the verdict; the earlier BLOCKED checkpoint is superseded by this continuation. Final full validation and independent exact-head review remain required. PR OPEN / UNMERGED; auto-merge OFF; I3 NOT AUTHORIZED; EACCE NOT STARTED. No frontend or deployment changes in this track.
+**Live:** pre-final Vercel frontend → Vercel NestJS API → Neon PostgreSQL 18, with evidenced I2 login/booking/consultation/documentation/follow-up/close and EN/AR/RTL. Prescription/pharmacy backend on main is not verified deployed or integrated into Live UI. Pharmacy/lab frontend shells remain Demo/unsupported. Current UI is a functional V1 prototype, not final design; current logo is not final. Protected final domain: `egyhealth360.vercel.app`.
 
-> Separate bounded UI track: Product Owner session authorization (27 October 2026), [Issue #51](https://github.com/abuhmaid28/egyhealth360/issues/51), unfreezes graduation-demo frontend work only. See [UI candidate, live/demo boundaries and screenshots](V3_UI_DEMO.md). Backend milestone/governance status and historical evidence below retain their meaning; no backend completion or merge is claimed.
+**Active:** issue #72 Foundation Reboot V2 Stage 0+1 documentation/governance/audit, proposed for independent review. **Next:** review and owner acceptance, then separately scoped Product UX/IA/content/Arabic and owner-gated brand/design/frontend work. Stage 1.5 is conditional on P0/P1 foundation defects; the current audit does not require it. **Paused:** Lab Slices 3/4/5, I4/I5/EACCE, AI inference and final-domain promotion. No automatic next milestone.
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
+## Product and execution boundaries
 
-## Current authoritative backend status
+Keep [Product V3](PRODUCT.md), accepted [D01–D36](PRODUCT_V3_DECISIONS.md), [security](SECURITY.md) and task contracts distinct from implementation evidence. Clinical authority is the current assignment; booking grants none. Staff fulfillment is current exact recipient/artifact scope. ADMIN is operational. Retain wrong-patient privacy, immutable history, operation keys, PostgreSQL concurrency and additive migration checksums.
 
-The delivery paragraph above is the historical Slice 2 PR snapshot inherited through the separate UI merge. This current record supersedes its older authorization/completion statements.
+The student team owns scope/design decisions, coordination and understanding/presentation; agents implement authorized contracts. [Execution policy](EXECUTION_POLICY.md) preserves synthetic data, authoritative clinical sources, free-first scope and no default fieldwork dependency.
 
-Current backend delivery: V3-I2 Slices 1–5 COMPLETE. [Flow Accelerator authorization 6524790227](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6524790227) follows exact-main `42b59da01e591f9c4792b81c2cb9b48a0a00cd2d`, Bootstrap 41008236990 / validate 123907937943 SUCCESS and authorizes Slice 6 Core. [Slice 6](V3_I2_SLICE6.md) production implementation is IMPLEMENTED / IN REVIEW. The Lane A gate is open: exact-main `4cb20b39370e5317eba14c4916517b6ae88c12e5` / Bootstrap 41118583027 SUCCESS, [routing 6532727912](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6532727912). Main was normally merged into the existing branch and the runtime verifier is wired into accelerated CI. Final validation and independent exact-head review remain required; DO NOT MERGE. V3-I2 INCOMPLETE. Slice 7 and I3 NOT AUTHORIZED. EACCE NOT STARTED. No frontend or deployment work in Slice 6. No merge authorized.
+## Retained research direction — future execution
 
-## Authoritative status
+CR-HTN-FU-001 controlled uncomplicated HTN follow-up; B0 naive overdue, B1 normalized coverage-blind, P1 EACCE. Report false-gap rate alongside recall, decision coverage/abstention and isolated ground truth. The integrated product does not expand the rule/benchmark. Engine, FHIR and worker packages remain scaffolds. [Research](RESEARCH.md) and [protocol](research/EXPERIMENT_PROTOCOL_V1.md) are plans, not completed experiments.
 
-| Area | Status |
-|---|---|
-| Product V3 policy | **APPROVED** — [final Product Owner approval](https://github.com/abuhmaid28/egyhealth360/issues/35#issuecomment-6346537901) |
-| V3-G0 documentation reconciliation | **COMPLETE**; PR #36 merged, exact-main CI PASS, Issue #35 CLOSED/completed; [closeout evidence](PROJECT.md#v3-g0-completion-evidence) |
-| M0 / M1 / M2 | **COMPLETE**; accepted historical IDs, contracts and evidence preserved |
-| V3-I1 | **Contract APPROVED**; Slice 1 merged/verified; [Slice 2 implementation](V3_I1_SLICE2.md) COMPLETE; I1 overall **COMPLETE**, Slice 3 **COMPLETE**; Slice 4 **COMPLETE**; Slice 5 **COMPLETE**; Slice 6 **COMPLETE** |
-| V3-I2 | Slices 1–5 COMPLETE; Slice 6 IMPLEMENTED / IN REVIEW; accelerated runtime CI wired; overall INCOMPLETE; Slice 7 not authorized |
-| EACCE implementation | **NOT STARTED**; old M3 is superseded/resequenced to V3-I5 |
-| Product UI/design | **NOT STARTED / DESIGN FROZEN**; separate explicit design-unfreeze approval required |
+## Historical completion evidence
 
-Product V3 is now the repository source of truth. Policy approval is not implementation completion or blanket implementation authorization; it does not retroactively redefine M0–M2.
+The records below preserve accepted point-in-time evidence. They do not set today's task, deployment or design authorization. Earlier project wording remains available at the [audited baseline](https://github.com/abuhmaid28/egyhealth360/blob/eb61da263ce44db5ca71ffdfea6a87309c8e17ef/docs/PROJECT.md).
 
 ## V3-G0 completion evidence
 
@@ -40,58 +32,7 @@ Product V3 is now the repository source of truth. Policy approval is not impleme
 
 [PR #47](https://github.com/abuhmaid28/egyhealth360/pull/47) merged at `d1b0a017896bdbef0062951264d2e0176732e6b9`, ordered parents `7f977466252dcf96caca7510e85c66aee24b9cd8` and `63af9483964263114ce234470c584f678830a964`. Exact-main Bootstrap 40496696728 SUCCESS, push/main, attempt 1, validate 122163838525; all 37 steps passed. Accepted 98 unit / 583 integration / 7 container / 14 migrations PASS; no failures/skips/cancellations; both audits 0 HIGH / 0 CRITICAL; Slice 6 25/25, all runtimes/smoke/cleanup PASS. Issue #39 CLOSED / completed with final comment 6441304825. These are I1 completion results, not I2 implementation proof.
 
-## Current direction
 
-EgyHealth 360 is an integrated digital healthcare platform that connects patient access, booking, consultation, prescriptions, diagnostics, dispensing and follow-up into one longitudinal healthcare journey, enhanced by structured care coordination and bounded explainable evidence-aware monitoring.
+## M0–M2 retained exit evidence
 
-The integrated journey is Layer A, longitudinal continuity Layer B, bounded HTN EACCE Layer C. Approved future workspaces are Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin in one application. Ordinary care does not require a CarePlan/EACCE. See [PRODUCT](PRODUCT.md) for scope and [approved D01–D36/lineage](PRODUCT_V3_DECISIONS.md) for policy. Final owner approval is product-policy approval only.
-
-## Accepted implementation foundation
-
-| Milestone | Accepted delivered scope and evidence |
-|---|---|
-| M0 — Repository Reboot / Bootstrap | COMPLETE: EH-002 documentation, EH-003 tooling/monorepo/Docker/CI; EH-004 deep audit. [Bootstrap validation](EH-003_VALIDATION.md) |
-| M1 — Identity, Authorization, and Core Data Foundation | COMPLETE at `a4b2f2a4a496daba32aead5b612cb105e8873d27`: EH-005 users/profiles/assignments/audit, EH-006 sessions/auth/CSRF, EH-007 own/ACTIVE-assignment authorization, EH-008 deterministic seed and runtime proof. [Final exit evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884) |
-| M2 — Clinical Planning & Evidence | COMPLETE: EH-009 definitions, EH-010 exact-pinned plans, EH-011 immutable BP, EH-012 HTN follow-up/encounters/BP links, EH-013 coverage/normalized evidence, EH-015 observed applicability, Issue #31 correction/privacy, EH-014 immutable INITIAL generation. [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33), [functional exit PASS](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518), [post-merge validation](EH-014_VALIDATION.md#post-merge-validation) |
-
-Issue [#28](https://github.com/abuhmaid28/egyhealth360/issues/28) is CLOSED/completed. `ea777ce71c3639a37ec015739a12f0fadc0b4dcc` was the original verified main baseline for PR #36, including M2 documentation closeout. [Final M2 completion record](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6330230875) and [successful exact-baseline CI 39702452808](https://github.com/abuhmaid28/egyhealth360/actions/runs/39702452808) preserve that final closeout evidence. Older closeout-pending/Open statements in immutable validation reports describe an earlier review point and do not reopen M2. These are historical results, not CI rerun for this documentation change.
-
-M0–M2 were built under the narrower V2 scope. They remain valuable accepted foundations, not completed V3 booking/consultation/fulfillment. Preserve contract text, migrations, fixed M1 seed and validation/issue/PR evidence. Exact implemented models are in [DATA_MODEL](DATA_MODEL.md); actual routes are in [API](API.md) and [OpenAPI](openapi.json). Internal services are not automatically public APIs.
-
-FR-021 is satisfied only for the bounded INITIAL scope. FR-024 is foundation-only/incomplete; AC-004 SCHEDULED and AC-005 COMPLETED remain unsatisfied. There is no recurrence or EACCE implementation. Existing CareActionDecision is immutable generation provenance, not a closure assessment.
-
-## Next gates
-
-1. V3-G0 is COMPLETE. Slice 1 contract adoption is merged in [PR #40](https://github.com/abuhmaid28/egyhealth360/pull/40) at `a03c0b63a0ed44bcf39a32428002af0c92edc7e0`; exact-main [CI 39948145751](https://github.com/abuhmaid28/egyhealth360/actions/runs/39948145751) SUCCESS. [Authorization 6366843150](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6366843150) permits Slice 2 only. Its [bounded implementation](V3_I1_SLICE2.md) is COMPLETE: PR #41 merged at `2c96b2ce7cfd407a828f9ba510e563fe1e5983a9`, exact-main CI 40010140478 SUCCESS.
-2. Confirm actual academic deadline/capacity and re-estimate selected V3 scope under D33; old dates/weights/buffer percentages are not V3 commitments.
-3. PR #43 merged at `e1a87df5031e7be48a43d99e2b311dbe397b2e7e`; exact-main push/main CI 40116846242 SUCCESS completes security restoration and Slice 3. [Slice 4 authorization 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285) permits curated public discovery only. Slice 4 COMPLETE via PR #44 / exact-main CI 40195060034. Slice 5 is COMPLETE via PR #45 / exact-main CI 40252309467. Slice 6 COMPLETE via PR #46 / exact-main CI 40433851129 SUCCESS. V3-I1 COMPLETE; final documentation closeout PR #47 merged, exact-main CI 40496696728 SUCCESS; Issue #39 CLOSED / completed. I2 Slice 1 COMPLETE; Slice 2 only is authorized by comment 6452226103 and implemented in this PR.
-4. Follow [Roadmap V3](IMPLEMENTATION_ROADMAP.md). Old unstarted M3–M7 are superseded/resequenced; EACCE moves to I5. Final schedule/completion/coverage/observed-input feasibility contracts precede EACCE.
-
-**Design is frozen** even after V3 policy approval/PR #36 merge: no screens, wireframes, Design System, branding, UI/UX or frontend visual work until separate explicit approval after scope/domain prerequisites. Existing visual documents are historical, not ready-to-implement instructions.
-
-## Architecture and execution
-
-Retain Next.js/TypeScript, NestJS modular monolith, PostgreSQL 18/Prisma 7, shared packages, TypeScript experiment worker/FHIR adapter scaffolds, Docker and GitHub Actions. No microservice rewrite, FastAPI/Python runtime or ML service. Current auth/own-data/ACTIVE-assignment checks remain in force; future staff/relationship policies require reviewed extensions.
-
-AI agents execute issue-scoped work; the student team owns decisions, understands/presents deliverables and coordinates submission. No default fieldwork/interview/survey/real-patient dependency. Use authoritative sources, desk research and synthetic data. See [EXECUTION_POLICY](EXECUTION_POLICY.md).
-
-## Retained research direction
-
-CR-HTN-FU-001 controlled uncomplicated HTN follow-up; B0 naive overdue, B1 normalized coverage-blind, P1 EACCE. Primary false-gap rate must be reported with true-gap recall and decision coverage/abstention. Ground truth remains isolated; missingness/uncertainty is explicit. The integrated product does not broaden the clinical rule or benchmark.
-
-## Required reading
-
-- Every task: [AGENTS](../AGENTS.md), this file, current issue, [EXECUTION_POLICY](EXECUTION_POLICY.md), relevant accepted contracts/tests/branch/PR.
-- Product/planning: [PRODUCT](PRODUCT.md), [approved decisions](PRODUCT_V3_DECISIONS.md), [DECISIONS](DECISIONS.md), [REQUIREMENTS](REQUIREMENTS.md), [TRACEABILITY](TRACEABILITY_MATRIX_V1.md), [ROADMAP](IMPLEMENTATION_ROADMAP.md), [capacity planning](PROJECT_PLAN_6_MONTHS.md).
-- Backend: [DOMAIN](DOMAIN.md), [DATA_MODEL](DATA_MODEL.md), [ARCHITECTURE](ARCHITECTURE.md), [SECURITY](SECURITY.md), [API](API.md), plus the exact M0–M2 slice contracts and validation reports referenced there.
-- Conceptual journeys only: [UX](UX.md). UX_VALIDATION_V2 and DESIGN_SYSTEM are historical/frozen references, not permission to design.
-- Research: [RESEARCH](RESEARCH.md), [TESTING](TESTING.md), [clinical source audit](research/CLINICAL_RULE_SOURCE_AUDIT.md), [rule catalog](research/CLINICAL_RULE_CATALOG_V1.md), [protocol](research/EXPERIMENT_PROTOCOL_V1.md), [metrics](research/METRICS_SPEC_V1.md), literature/related-work/competitor matrices in `research/`.
-- Reporting: [THESIS_STRUCTURE_V1](THESIS_STRUCTURE_V1.md). [Deep audit](DEEP_PLANNING_AUDIT_SUMMARY.md) and [V1 diagrams](diagrams/SYSTEM_DIAGRAMS_V1.md) retain historical context; they do not supersede V3 policy or actual implementation evidence.
-
-## Current I2 Slice 2 applicability
-
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
+M0: [EH-003 validation](EH-003_VALIDATION.md). M1: [issue #14 final exit](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884). M2: [EH-014 post-merge validation](EH-014_VALIDATION.md#post-merge-validation), [issue #28 completion](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6330230875). FR-024 remains foundation-only; AC-004/005 are not satisfied by INITIAL generation. Historical evidence is not a fresh CI execution for this docs sprint.
