@@ -100,6 +100,7 @@ test('workflow wires every lane, full controls, pinned actions, safe concurrency
   assert.match(workflow, /needs: \[classify, docs-check, frontend-check, backend-check, postgres, docker-runtime, dependency-audit\]\n {4}if: always\(\)/);
   assert.match(workflow, /workflow_dispatch:/);
   assert.match(workflow, /types: .*labeled, unlabeled/);
+  assert.ok(workflow.includes('github.event.pull_request.number || github.run_id'));
   assert.match(workflow, /cancel-in-progress: \$\{\{ github.event_name == 'pull_request' \}\}/);
   assert.doesNotMatch(workflow, /continue-on-error|paths-ignore|^ {4}paths:/m);
   assert.match(workflow, /pnpm test:migrations/); assert.match(workflow, /pnpm test:ui:real/);
@@ -130,4 +131,9 @@ test('every indexed accepted contract and new sensitive Markdown path selects de
   const section = readFileSync('docs/SOURCE_OF_TRUTH.md', 'utf8').split('## ACCEPTED CONTRACT\n')[1].split('\n## ')[0];
   for (const match of section.matchAll(/\]\(([^)#]+\.md)\)/g)) assert.ok(classifyPaths([`docs/${match[1]}`]).full, match[1]);
   for (const path of ['docs/security/new-policy.md', 'docs/authority-boundaries.md', 'docs/research/CLINICAL_RULE_CATALOG_V1.md']) assert.ok(classifyPaths([path]).full, path);
+});
+
+test('ordinary frontend filenames containing clock or block do not imply lockfile changes', () => {
+  for (const path of ['apps/web/src/components/clock.tsx', 'apps/web/src/components/block.tsx']) assert.deepEqual(classifyPaths([path]).classes, ['FRONTEND_ONLY']);
+  for (const path of ['pnpm-lock.yaml', 'package-lock.json', 'yarn.lock', 'bun.lockb']) assert.ok(classifyPaths([path]).full);
 });

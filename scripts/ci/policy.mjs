@@ -21,7 +21,7 @@ export const MODULES = {
 };
 const SECURITY = /(?:^|[/_.-])(auth(?:orization)?|session|password|csrf|origin|privacy|masking|authority|membership|assignment|security)(?:[/_.-]|$)/i;
 const CONTRACT = /^docs\/(?:SECURITY\.md|PRODUCT(?:_V3_DECISIONS)?\.md|DECISIONS\.md|.*CONTRACT\.md|V3_I[123]_SLICE[0-9]+\.md|research\/CLINICAL_RULE_CATALOG_V1\.md|EH-00[5-9].*\.md|openapi\.json)$/;
-const INFRA = /^(?:\.github\/|Dockerfile(?:\.|$)|compose.*\.ya?ml$|\.dockerignore$|\.npmrc$|.*(?:^|\/)package\.json$|pnpm-.*\.yaml$|.*lock.*$|.*tsconfig.*\.json$|eslint\.config\.|.*vercel\.json$|scripts\/ci\/|tests\/ci\/)/;
+const INFRA = /^(?:\.github\/|Dockerfile(?:\.|$)|compose.*\.ya?ml$|\.dockerignore$|\.npmrc$|.*(?:^|\/)package\.json$|pnpm-.*\.yaml$|.*(?:\.lockb?|-lock\.json)$|.*tsconfig.*\.json$|eslint\.config\.|.*vercel\.json$|scripts\/ci\/|tests\/ci\/)/;
 export function classifyPaths(paths, { full = false, reason = '' } = {}) {
   const classes = new Set();
   const modules = new Set();

@@ -10,7 +10,7 @@ permissions:
   contents: read
 # Only obsolete PR work is cancelled. Main/manual runs keep their safety proof.
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 env:
   POSTGRES_USER: egyhealth

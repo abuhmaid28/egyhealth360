@@ -64,7 +64,7 @@ Full mode preserves all historical top-level unit tests (UI and non-UI across fr
 - Chromium binaries are cached by runner OS/architecture and exact lockfile; only browser lanes restore/install them. System libraries are always installed. No broad restore keys mix browser revisions.
 - Buildx builds and loads the shared Compose image once, with GitHub Actions cache import/export scoped to ci-runtime. Compose starts with --no-build. Dockerfile, image contents and runtime commands are unchanged; no registry push occurs. PR cache isolation follows GitHub's cache access rules.
 - Each job builds the artifacts it needs in its own isolated filesystem. Backend build/typecheck no longer invokes root scripts that repeatedly generate/rebuild dependencies. The full PostgreSQL job still builds web for its real browser proof; Docker still independently builds the deployed artifact. Cross-job dist/node_modules transfer is deliberately avoided to preserve isolation.
-- Concurrency groups use workflow + PR number (otherwise ref). Only PR events set cancel-in-progress true, cancelling superseded commits. Main/manual runs are not actively cancelled; standard GitHub concurrency may replace a pending run with a newer pending run. Every resulting main push is still path-classified; milestone proof is pinned to the candidate SHA.
+- Concurrency groups use workflow + PR number; main/manual use a unique run ID. Only PR events set cancel-in-progress true, cancelling superseded commits. Main/manual runs neither cancel nor replace pending proofs of earlier pushes. Every main push is path-classified; milestone proof is pinned to the candidate SHA.
 
 ## Cost audit and evidence limits
 
