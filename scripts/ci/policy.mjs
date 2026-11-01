@@ -20,7 +20,7 @@ export const MODULES = {
   'consultation-close': { tests: ['consultation-close', 'consultations', 'documentation', 'follow-up-intents'], runtime: ['consultation-opening', 'consultation-documentation', 'follow-up-intent', 'v3-i2-exit'] },
 };
 const SECURITY = /(?:^|[/_.-])(auth(?:orization)?|session|password|csrf|origin|privacy|masking|authority|membership|assignment|security)(?:[/_.-]|$)/i;
-const CONTRACT = /^docs\/(?:SECURITY\.md|PRODUCT(?:_V3_DECISIONS)?\.md|DECISIONS\.md|.*CONTRACT\.md|EH-00[5-9].*\.md|openapi\.json)$/;
+const CONTRACT = /^docs\/(?:SECURITY\.md|PRODUCT(?:_V3_DECISIONS)?\.md|DECISIONS\.md|.*CONTRACT\.md|V3_I[123]_SLICE[0-9]+\.md|research\/CLINICAL_RULE_CATALOG_V1\.md|EH-00[5-9].*\.md|openapi\.json)$/;
 const INFRA = /^(?:\.github\/|Dockerfile(?:\.|$)|compose.*\.ya?ml$|\.dockerignore$|\.npmrc$|.*(?:^|\/)package\.json$|pnpm-.*\.yaml$|.*lock.*$|.*tsconfig.*\.json$|eslint\.config\.|.*vercel\.json$|scripts\/ci\/|tests\/ci\/)/;
 export function classifyPaths(paths, { full = false, reason = '' } = {}) {
   const classes = new Set();
@@ -35,8 +35,9 @@ export function classifyPaths(paths, { full = false, reason = '' } = {}) {
     if (CONTRACT.test(path)) elevate('SECURITY_HIGH_RISK', `Accepted behavior/security contract: ${path}`);
     else if (/^packages\/db\//.test(path) || /(?:^|\/)migrations?\//.test(path) || /(?:persistence|transaction|locking)/i.test(path)) elevate('DATABASE_HIGH_RISK', `Persistence/schema/transaction boundary: ${path}`);
     else if (INFRA.test(path)) elevate('INFRASTRUCTURE', `CI/build/tooling boundary: ${path}`);
-    else if (path.endsWith('.md') || path === 'FIRST_AGENT_PROMPT.txt' || /^docs\/ui-screenshots\//.test(path)) classes.add('DOCS_GOVERNANCE');
+    else if (/^docs\/ui-screenshots\//.test(path)) classes.add('DOCS_GOVERNANCE');
     else if (SECURITY.test(path)) elevate('SECURITY_HIGH_RISK', `Security/authority boundary: ${path}`);
+    else if (path.endsWith('.md') || path === 'FIRST_AGENT_PROMPT.txt') classes.add('DOCS_GOVERNANCE');
     else if (/^(?:apps\/web\/|packages\/ui\/|tests\/ui[^/]*\.test\.mjs$|scripts\/test-ui-browser\.mjs$|scripts\/support\/ui-.*-browser\.mjs$)/.test(path)) classes.add('FRONTEND_ONLY');
     else if (/^apps\/api\/src\/(?:prescriptions|pharmacy)\.ts$/.test(path) || /^packages\/clinical-rules\//.test(path)) elevate('DATABASE_HIGH_RISK', `Clinical/prescription/fulfillment boundary: ${path}`);
     else {

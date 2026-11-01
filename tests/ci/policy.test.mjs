@@ -125,3 +125,9 @@ test('booking selection includes actual race, integrity and authority suites wit
   assert.ok(!selected.some(f => f.includes('pharmacy') || f.includes('prescriptions')));
   assert.throws(() => selectTests(plan, 'integration', []));
 });
+
+test('every indexed accepted contract and new sensitive Markdown path selects deep validation', () => {
+  const section = readFileSync('docs/SOURCE_OF_TRUTH.md', 'utf8').split('## ACCEPTED CONTRACT\n')[1].split('\n## ')[0];
+  for (const match of section.matchAll(/\]\(([^)#]+\.md)\)/g)) assert.ok(classifyPaths([`docs/${match[1]}`]).full, match[1]);
+  for (const path of ['docs/security/new-policy.md', 'docs/authority-boundaries.md', 'docs/research/CLINICAL_RULE_CATALOG_V1.md']) assert.ok(classifyPaths([path]).full, path);
+});
