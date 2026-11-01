@@ -23,7 +23,7 @@ test('Issue31 strict command validation rejects authority, partial pairs, target
 
 test('Issue31 preserves product/research boundary: no public mutation route, client export or clinical selector', async () => {
   const raw=await readFile('docs/openapi.json','utf8'),api=JSON.parse(beforeI2Slice5(raw));
-  assert.deepEqual(Object.keys(JSON.parse(raw).paths).filter(path=>/privacy/.test(path)),['/api/v1/consultations/{consultationId}/documents/{documentId}/privacy-restrictions','/api/v1/consultations/{consultationId}/follow-up-intents/{intentId}/privacy-restrictions']);
+  assert.deepEqual(Object.keys(JSON.parse(raw).paths).filter(path=>/privacy/.test(path)),['/api/v1/consultations/{consultationId}/documents/{documentId}/privacy-restrictions','/api/v1/consultations/{consultationId}/follow-up-intents/{intentId}/privacy-restrictions','/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}/privacy-restrictions']);
   assert.ok(Object.keys(api.paths).every(path => !/amendment|privacy|exclusion|restatement/.test(path)));
   const source = await readFile('packages/db/src/bp-amendments.ts', 'utf8');
   assert.doesNotMatch(source, /CareAction|ClosureAssessment|TRUE_GAP|COMPLETED|groundTruth|eligible\s*:/);

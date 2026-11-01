@@ -223,3 +223,7 @@ See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLIC
 ## Slice 6 current authority and privacy
 
 Follow-up Intent commands require exact treating author plus current ACTIVE/null-ended assignment and exact current source clinic/member/provider/affiliation. Author reads require current assignment; patient own and current-related clinician reads are released-only. Any targeted version suppresses its entire root, link identities and counts, including replay. Sorted multi-provider locking extends existing order without legacy changes; no ADMIN shortcut. See [Slice 6](V3_I2_SLICE6.md) for exact lock/HTTP/replay bounds; the runtime verifier is wired into accelerated CI after consultation-documentation and before smoke/cleanup.
+
+## V3-I3 Slice 1 prescription boundaries
+
+Prescription source writes require the exact current treating author, active assignment, valid current session and originating clinic/membership/affiliation. Signed read authority remains patient-own or a clinician's own current assignment. ADMIN is catalog-operational only; lab/pharmacy staff have no source access. Lineage privacy precedes projection/count/replay/conflict disclosure. See the [concrete lock graph, audit and replay rules](V3_I3_SLICE1.md). No staff artifact entitlement is introduced.

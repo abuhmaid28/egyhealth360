@@ -20,5 +20,5 @@ test('I2S7 adds only frozen PUT close plus exact booking enums; all previous Ope
   assert.deepEqual(Object.keys(api.paths[added[0]]),['put']);assert.equal(Object.keys(api.components.schemas).length,Object.keys(prior.components.schemas).length+2);
   assert.deepEqual(api.components.schemas.ConsultationClose.required,['operationKey','expectedVersion']);
   assert.deepEqual(api.components.schemas.Booking.properties.state.enum,[...prior.components.schemas.Booking.properties.state.enum,'CONSULTED']);
-  const migrations=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();assert.equal(migrations.length,20);assert.equal(migrations.at(-1),'20261031140000_v3_i2_consultation_close');
+  const migrations=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort().slice(0,20);assert.equal(migrations.length,20);assert.equal(migrations.at(-1),'20261031140000_v3_i2_consultation_close');
 });

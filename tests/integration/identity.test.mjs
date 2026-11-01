@@ -92,7 +92,8 @@ test('audit object checks, actor integrity, polymorphism and append-only SQL', (
   }
   await rejectsConstraint(connection, insert, [actor.id, ' \t', ...values.slice(2)], '23514', 'audit_logs_action_type_nonblank_check');
   await rejectsConstraint(connection, insert, [actor.id, values[1], '\n', ...values.slice(3)], '23514', 'audit_logs_entity_type_nonblank_check');
-  for (const sql of ['UPDATE audit_logs SET action_type = \'REWRITE\'', 'DELETE FROM audit_logs', 'TRUNCATE audit_logs']) {
+  await rejectsConstraint(connection, 'TRUNCATE audit_logs', [], '0A000');
+  for (const sql of ['UPDATE audit_logs SET action_type = \'REWRITE\'', 'DELETE FROM audit_logs', 'TRUNCATE audit_logs CASCADE']) {
     await rejectsConstraint(connection, sql, [], '23514', 'audit_logs_append_only_guard');
   }
   await rejectsConstraint(connection, 'DELETE FROM users WHERE id = $1', [actor.id], '23001', 'audit_logs_actor_fkey');

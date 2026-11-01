@@ -1,5 +1,6 @@
 // Vercel's NestJS detector must select the listening entrypoint, not the app factory.
 import '@nestjs/core';
+import {createPrescriptionPersistence} from '@egyhealth/db';
 import {createFollowUpIntentPersistence} from '@egyhealth/db';
 import {createDocumentationPersistence} from '@egyhealth/db';
 import {createConsultationPersistence} from '@egyhealth/db';
@@ -12,6 +13,7 @@ import { createPasswordVerifier } from './password.js';
 async function main() {
   const config = authConfiguration(process.env);
   const passwords = await createPasswordVerifier();
+  const prescriptions=createPrescriptionPersistence(process.env.DATABASE_URL);
   const followUpIntents=createFollowUpIntentPersistence(process.env.DATABASE_URL);
   const documentation = createDocumentationPersistence(process.env.DATABASE_URL);
   const consultations = createConsultationPersistence(process.env.DATABASE_URL);
@@ -26,7 +28,7 @@ async function main() {
   const bloodPressure = createBloodPressureMeasurementPersistence(process.env.DATABASE_URL);
   const appointments = createFollowUpAppointmentPersistence(process.env.DATABASE_URL);
   const encounters = createClinicalEncounterPersistence(process.env.DATABASE_URL);
-  const app = await createApp(database, { config, passwords, store }, authorization, bloodPressure, { appointments, encounters }, patientEntryRuntime(patientEntry), directory, relationships, availability, bookings, consultations, documentation, followUpIntents);
+  const app = await createApp(database, { config, passwords, store }, authorization, bloodPressure, { appointments, encounters }, patientEntryRuntime(patientEntry), directory, relationships, availability, bookings, consultations, documentation, followUpIntents, prescriptions);
   let closing = false;
   const close = async () => {
     if (closing) return;
@@ -39,6 +41,7 @@ async function main() {
     await consultations.close();
     await documentation.close();
     await followUpIntents.close();
+    await prescriptions.close();
     await directory.close();
     await patientEntry.close();
     await store.close();

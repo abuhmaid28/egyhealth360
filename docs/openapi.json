@@ -20550,6 +20550,1594 @@
           }
         ]
       }
+    },
+    "/api/v1/medications": {
+      "get": {
+        "summary": "Published active catalog for current clinician; operational inventory for ADMIN",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Medication"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      },
+      "head": {
+        "summary": "Published active catalog for current clinician; operational inventory for ADMIN",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      }
+    },
+    "/api/v1/medications/{medicationId}/settings": {
+      "post": {
+        "summary": "ADMIN-only keyed/versioned maintenance of existing curated medication",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "medicationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Medication"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MedicationSettings"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/prescriptions": {
+      "get": {
+        "summary": "Exact current treating author list",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Prescription"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      },
+      "head": {
+        "summary": "Exact current treating author list",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create private draft only while OPEN; exact replay 200",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Prescription"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          },
+          "200": {
+            "description": "Exact retained replay under current authority/privacy; no duplicate writes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Prescription"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrescriptionDraft"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}": {
+      "get": {
+        "summary": "Exact current treating author source detail",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Prescription"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      },
+      "head": {
+        "summary": "Exact current treating author source detail",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}/edits": {
+      "post": {
+        "summary": "edits; current exact author required, permitted after close",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Prescription"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrescriptionEdit"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}/sign": {
+      "post": {
+        "summary": "sign; current exact author required, permitted after close",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Prescription"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrescriptionSign"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}/cancellations": {
+      "post": {
+        "summary": "cancellations; current exact author required, permitted after close",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Prescription"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrescriptionCancel"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}/replacements": {
+      "post": {
+        "summary": "replacements; current exact author required, permitted after close",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Prescription"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          },
+          "200": {
+            "description": "Exact retained replay under current authority/privacy; no duplicate writes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Prescription"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrescriptionReplace"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}/privacy-restrictions": {
+      "post": {
+        "summary": "privacy-restrictions; current exact author required, permitted after close",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "consultationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PrescriptionRestricted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrescriptionPrivacy"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/me/prescriptions": {
+      "get": {
+        "summary": "Own signed sources / currently assigned clinician signed sources",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Prescription"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      },
+      "head": {
+        "summary": "Own signed sources / currently assigned clinician signed sources",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      }
+    },
+    "/api/v1/me/prescriptions/{prescriptionId}": {
+      "get": {
+        "summary": "Own signed source / currently assigned clinician signed source",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Prescription"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      },
+      "head": {
+        "summary": "Own signed source / currently assigned clinician signed source",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      }
+    },
+    "/api/v1/patients/{patientId}/prescriptions": {
+      "get": {
+        "summary": "Own signed sources / currently assigned clinician signed sources",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Prescription"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      },
+      "head": {
+        "summary": "Own signed sources / currently assigned clinician signed sources",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      }
+    },
+    "/api/v1/patients/{patientId}/prescriptions/{prescriptionId}": {
+      "get": {
+        "summary": "Own signed source / currently assigned clinician signed source",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data"
+                  ],
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Prescription"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      },
+      "head": {
+        "summary": "Own signed source / currently assigned clinician signed source",
+        "description": "No-store. Current session/authority/privacy rechecked after locks and before commit. No automatic mutation retry. Drafts and restricted sources filtered before counts. Retained replays include currentState and current eligibility.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          },
+          {
+            "name": "prescriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Request origin or CSRF denied"
+          },
+          "404": {
+            "description": "Absent, unauthorized or restricted; uniform denial"
+          },
+          "409": {
+            "description": "Authorized nonrestricted conflict"
+          },
+          "503": {
+            "description": "Unavailable; uncertain commit requires explicit identical key/payload retry"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -23717,6 +25305,527 @@
             }
           }
         ]
+      },
+      "PrescriptionItemInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "medicationId",
+          "quantity",
+          "unit",
+          "instructions"
+        ],
+        "properties": {
+          "medicationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "quantity": {
+            "type": "string",
+            "pattern": "^(?:0|[1-9][0-9]{0,8})(?:\\.[0-9]{1,3})?$",
+            "description": "Positive exact decimal; zero forbidden. At most nine integer and three fractional digits."
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "instructions": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        }
+      },
+      "PrescriptionDraft": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "items",
+          "validFrom",
+          "validUntil"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "$ref": "#/components/schemas/PrescriptionItemInput"
+            }
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; strictly before validUntil."
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; future at final signing. No duration inferred."
+          }
+        }
+      },
+      "PrescriptionEdit": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion",
+          "items",
+          "validFrom",
+          "validUntil"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "$ref": "#/components/schemas/PrescriptionItemInput"
+            }
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; strictly before validUntil."
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; future at final signing. No duration inferred."
+          }
+        }
+      },
+      "PrescriptionSign": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          }
+        }
+      },
+      "PrescriptionCancel": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion",
+          "reason"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        }
+      },
+      "PrescriptionReplace": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion",
+          "reason",
+          "items",
+          "validFrom",
+          "validUntil"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "$ref": "#/components/schemas/PrescriptionItemInput"
+            }
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; strictly before validUntil."
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Explicit offset required; future at final signing. No duration inferred."
+          }
+        }
+      },
+      "PrescriptionPrivacy": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "reason"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        }
+      },
+      "MedicationSettings": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationKey",
+          "expectedVersion",
+          "displayName",
+          "isActive",
+          "isPublished"
+        ],
+        "properties": {
+          "operationKey": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2147483646
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isPublished": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Medication": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "version",
+          "displayName",
+          "isActive",
+          "isPublished"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isPublished": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PrescriptionItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "medicationId",
+          "medicationDisplay",
+          "quantity",
+          "unit",
+          "instructions",
+          "fulfillmentState"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "medicationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "medicationDisplay": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "quantity": {
+            "type": "string"
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "instructions": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          },
+          "fulfillmentState": {
+            "type": "string",
+            "enum": [
+              "NOT_DISPENSED"
+            ]
+          }
+        }
+      },
+      "PrescriptionHistory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "state",
+          "signedAt",
+          "recordedAt",
+          "reason"
+        ],
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "SIGNED",
+              "CANCELLED",
+              "REPLACED"
+            ]
+          },
+          "signedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "Prescription": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "consultationId",
+          "encounterId",
+          "patientId",
+          "authorClinicianId",
+          "originatingClinicId",
+          "state",
+          "currentState",
+          "validFrom",
+          "validUntil",
+          "signedAt",
+          "createdAt",
+          "eligible",
+          "predecessorId",
+          "replacementId",
+          "reason",
+          "items",
+          "history"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "consultationId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "encounterId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "patientId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "authorClinicianId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "originatingClinicId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "SIGNED",
+              "CANCELLED",
+              "REPLACED"
+            ]
+          },
+          "currentState": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "SIGNED",
+              "CANCELLED",
+              "REPLACED"
+            ]
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "signedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "eligible": {
+            "type": "boolean",
+            "description": "Current SIGNED state and validFrom <= database clock < validUntil. No pharmacy authority."
+          },
+          "predecessorId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "replacementId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "$ref": "#/components/schemas/PrescriptionItem"
+            }
+          },
+          "history": {
+            "type": "array",
+            "maxItems": 2,
+            "items": {
+              "$ref": "#/components/schemas/PrescriptionHistory"
+            }
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Only current treating-author projection. Omitted from patient and assigned-clinician projections."
+          }
+        }
+      },
+      "PrescriptionRestricted": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "restricted"
+        ],
+        "properties": {
+          "restricted": {
+            "type": "boolean",
+            "const": true
+          }
+        }
       }
     }
   }
