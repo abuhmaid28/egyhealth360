@@ -104,7 +104,7 @@ test('workflow wires every lane, full controls, pinned actions, safe concurrency
   assert.match(workflow, /cancel-in-progress: \$\{\{ github.event_name == 'pull_request' \}\}/);
   assert.doesNotMatch(workflow, /continue-on-error|paths-ignore|^ {4}paths:/m);
   assert.match(workflow, /pnpm test:migrations/); assert.match(workflow, /pnpm test:ui:real/);
-  assert.match(workflow, /cache-from: type=gha/); assert.match(workflow, /load: true/);
+  assert.match(workflow, /docker compose build api/); assert.match(workflow, /up -d --no-build/);
   for (const source of [workflow, readFileSync('.github/actions/setup-pnpm/action.yml', 'utf8'), readFileSync('.github/actions/setup-browser/action.yml', 'utf8')]) for (const match of source.matchAll(/uses: ([^\n]+)/g)) assert.ok(match[1].startsWith('./') || /@[a-f\d]{40}$/.test(match[1]), match[1]);
   const cache = readFileSync('.github/actions/setup-pnpm/action.yml', 'utf8');
   assert.match(cache, /cache: pnpm/); assert.match(cache, /cache-dependency-path: pnpm-lock.yaml/);
