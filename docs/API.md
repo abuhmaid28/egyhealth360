@@ -154,3 +154,7 @@ No query or request body; canonical lowercase UUIDv4 and path, `Cache-Control: n
 ## V3-I3 Slice 1 prescription source
 
 The implemented catalog, author commands and patient/current-assignment signed reads are specified in [Slice 1](V3_I3_SLICE1.md) and the additive OpenAPI schemas. Every mutation is keyed; edits/sign/cancel/replace require an expected version. No pharmacy or lab endpoint exists in this slice.
+
+## V3-I3 Slice 2 pharmacy fulfillment
+
+[Slice 2](V3_I3_SLICE2.md) defines explicit clinician route/withdraw/reroute, exact pharmacy membership queue/detail/accept, full-item dispense and append-only correction/reversal endpoints. Signed prescription items now expose truthful bounded routing/dispense history and binary fulfillment state. Normal fulfillment and explicit correction/history purposes remain distinct; staff receive no general patient browser.

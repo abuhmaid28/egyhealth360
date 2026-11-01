@@ -247,3 +247,7 @@ See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLIC
 ## V3-I3 Slice 1
 
 Run `node --test tests/prescriptions.test.mjs`, then `node --test tests/integration/prescriptions*.test.mjs` against disposable PostgreSQL 18. The latter includes real two-connection races, timeout/deadlock/audit/connection failures and populated 20→21 upgrade/checksum proof. `NODE_ENV=test node scripts/verify-prescription-runtime.mjs` exercises the real synthetic HTTP journey; CI also runs it inside the built runtime container. See [Slice 1 evidence coverage](V3_I3_SLICE1.md). All historical migration/OpenAPI byte gates remain enforced against their bounded historical sets.
+
+## V3-I3 Slice 2
+
+Use `node --test tests/pharmacy.test.mjs` and `node --test tests/integration/pharmacy*.test.mjs` with disposable PostgreSQL 18. These cover exact artifact authority, full-item-only facts, append-only corrections/reversals, real two-connection/actual-blocking-PID races, current revocation/privacy/expiry, rollback/audit/timeout/deadlock/connection failure and populated 21→22 upgrade/checksum preservation. `NODE_ENV=test node scripts/verify-pharmacy-runtime.mjs` exercises real login/source/routing/acceptance/dispense/patient-read and denial paths; CI runs it inside Docker. Preserved I2 browser opening proof must still create no documentation or prescription facts. See [Slice 2 evidence](V3_I3_SLICE2.md).

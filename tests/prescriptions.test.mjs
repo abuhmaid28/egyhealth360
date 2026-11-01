@@ -18,10 +18,10 @@ test('I3S1 strict reason, version, catalog and pagination',()=>{
  invalid(()=>medicationInput({medicationId:randomUUID(),operationKey:randomUUID(),expectedVersion:1,displayName:'Test',isActive:1,isPublished:true}));assert.deepEqual(prescriptionPage({pageSize:3}),{page:1,pageSize:3});invalid(()=>prescriptionPage({pageSize:101}));
 });
 test('I3S1 additive OpenAPI and all twenty historical migration checksums remain byte-identical',async()=>{
- const {readFile,readdir}=await import('node:fs/promises'),{createHash}=await import('node:crypto'),{beforeI3Slice1}=await import('./support/openapi-baseline.mjs');
- const raw=await readFile('docs/openapi.json','utf8'),old=beforeI3Slice1(raw),api=JSON.parse(raw),baseline=JSON.parse(old);assert.equal(createHash('sha256').update(old).digest('hex'),'d909bd9a8130f6db9d3c9b4ccfb16f8a69950416bf77180d309ffd27da0f9594');
+ const {readFile,readdir}=await import('node:fs/promises'),{createHash}=await import('node:crypto'),{beforeI3Slice1,beforeI3Slice2}=await import('./support/openapi-baseline.mjs');
+ const raw=beforeI3Slice2(await readFile('docs/openapi.json','utf8')),old=beforeI3Slice1(raw),api=JSON.parse(raw),baseline=JSON.parse(old);assert.equal(createHash('sha256').update(old).digest('hex'),'d909bd9a8130f6db9d3c9b4ccfb16f8a69950416bf77180d309ffd27da0f9594');
  const paths=Object.keys(api.paths).filter(p=>!Object.hasOwn(baseline.paths,p));assert.equal(paths.length,13);assert.ok(paths.every(p=>p.includes('/prescriptions')||p.includes('/medications')));for(const p of paths)assert.ok(Object.keys(api.paths[p]).every(m=>['get','head','post'].includes(m)));
  const checksums=JSON.parse(await readFile('tests/fixtures/v3-i3-slice1-migration-checksums.json','utf8'));assert.equal(Object.keys(checksums).length,20);for(const [name,hash]of Object.entries(checksums))assert.equal(createHash('sha256').update(await readFile('packages/db/prisma/migrations/'+name+'/migration.sql')).digest('hex'),hash);
- const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();assert.equal(names.length,21);assert.equal(names.at(-1),'20261101150000_v3_i3_prescription_source');
- const schema=await readFile('packages/db/prisma/schema.prisma','utf8');assert.equal([...schema.matchAll(/^model /gm)].length,57);assert.doesNotMatch(schema,/model (PharmacyRoute|Dispense|LabOrder|LabResult)\b/);
+ const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort().slice(0,21);assert.equal(names.length,21);assert.equal(names.at(-1),'20261101150000_v3_i3_prescription_source');
+ const schema=(await readFile('packages/db/prisma/schema.prisma','utf8')).split('// I3 Slice 2 pharmacy fulfillment.')[0];assert.equal([...schema.matchAll(/^model /gm)].length,57);assert.doesNotMatch(schema,/model (PharmacyRoute|Dispense|LabOrder|LabResult)\b/);
 });

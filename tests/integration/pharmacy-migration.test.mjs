@@ -1,0 +1,22 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {randomUUID,createHash} from 'node:crypto';
+import {readFile} from 'node:fs/promises';
+import {isolatedPrescriptions,prescriptionBody} from '../support/prescriptions.mjs';
+import {migrationRunner} from '../support/migration-runner.mjs';
+import {pharmacyTables} from '../support/pharmacy.mjs';
+test('I3S2 populated main 21 to 22 preserves every prior source, item, ledger and checksum; zero fulfillment backfill and repeat ZERO_WRITE',()=>isolatedPrescriptions(async f=>{
+ const c=await f.readyRx(),draft=await f.draft(c),signed=await f.command(c,draft,'SIGN');
+ const cancelled=await f.signed(c);await f.command(c,cancelled,'CANCEL',{reason:'Retained clinical cancellation'});
+ const replaced=await f.signed(c);await f.command(c,replaced,'REPLACE',prescriptionBody({reason:'Retained clinical replacement'}));
+ const privateSource=await f.signed(c);await f.command(c,privateSource,'PRIVACY',{reason:'Retained wrong-patient restriction'});await f.draft(c);await f.consultations.closeConsultation(f.actors.clinician,{consultationId:c.id,expectedVersion:1,operationKey:randomUUID()});
+ const tables=(await f.pool.query("SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename")).rows.map(r=>r.tablename);assert.equal(tables.length,58);
+ const snapshot=async names=>Object.fromEntries(await Promise.all(names.map(async t=>[t,(await f.pool.query(`SELECT to_jsonb(x) value FROM public.${t} x ORDER BY to_jsonb(x)::text`)).rows]))),before=await snapshot(tables),ledger=(await f.pool.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;assert.equal(ledger.length,21);
+ migrationRunner(f.url,'deploy',22);migrationRunner(f.url,'status',22);
+ for(const t of tables.filter(t=>t!=='_prisma_migrations'))assert.deepEqual((await snapshot([t]))[t],before[t],t);
+ const next=(await f.pool.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;assert.equal(next.length,22);assert.deepEqual(next.slice(0,21),ledger);for(const row of next)assert.equal(row.checksum,createHash('sha256').update(await readFile('packages/db/prisma/migrations/'+row.migration_name+'/migration.sql')).digest('hex'));
+ for(const table of pharmacyTables)assert.equal((await f.pool.query(`SELECT count(*)::int n FROM public.${table}`)).rows[0].n,0);
+ const p=await f.prescriptions.signedRead(f.actors.patient,null,signed.data.id);assert.equal(p.data.items[0].fulfillmentState,'NOT_DISPENSED');assert.deepEqual(p.data.items[0].routingHistory,[]);
+ const all=(await f.pool.query("SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename")).rows.map(r=>r.tablename),after=await snapshot(all);assert.equal(all.length,64);migrationRunner(f.url,'deploy',22);migrationRunner(f.url,'status',22);assert.deepEqual(await snapshot(all),after);
+ console.log('I3S2_POPULATED_UPGRADE',JSON.stringify({from:21,to:22,oldDomainTables:57,newDomainTables:63,allHistoricalRowsAndChecksumsUnchanged:true,fabricatedRoutes:0,fabricatedAccepts:0,fabricatedDispenses:0,fabricatedCorrections:0,repeatDeploy:'ZERO_WRITE'}));
+},{realRunner:true,migrationCount:21}));

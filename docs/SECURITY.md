@@ -227,3 +227,7 @@ Follow-up Intent commands require exact treating author plus current ACTIVE/null
 ## V3-I3 Slice 1 prescription boundaries
 
 Prescription source writes require the exact current treating author, active assignment, valid current session and originating clinic/membership/affiliation. Signed read authority remains patient-own or a clinician's own current assignment. ADMIN is catalog-operational only; lab/pharmacy staff have no source access. Lineage privacy precedes projection/count/replay/conflict disclosure. See the [concrete lock graph, audit and replay rules](V3_I3_SLICE1.md). No staff artifact entitlement is introduced.
+
+## V3-I3 Slice 2 exact pharmacy artifact authority
+
+Current PHARMACY_STAFF user/session, active PHARMACY organization, exact current active/unended membership and the exact routed artifact/privacy are all required. This grants no clinician or patient-record authority. Prescriber assignment ending denies the clinician but does not cancel an independent valid route. Current pharmacy revocation denies subsequent staff access; explicit correction/history purpose is limited to genuine accepted-artifact facts, with no source instructions or unrelated route lineage. Source privacy masks payload/references/counts/replay before conflict; additive database fences serialize queue reads with actual source restriction writers. See [Slice 2 authority, replay and locking](V3_I3_SLICE2.md).

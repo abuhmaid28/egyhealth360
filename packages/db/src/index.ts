@@ -104,3 +104,6 @@ export {FollowUpIntentError,intentInput,intentJson,intentWindow,intentPage,type 
 
 export {createPrescriptionPersistence,type PrescriptionPersistence} from './prescriptions.js';
 export {PrescriptionError,prescriptionInput,prescriptionContent,prescriptionJson,prescriptionPage,medicationInput,type PrescriptionCommand} from './prescription-values.js';
+
+export {PharmacyError,pharmacyInput,pharmacyJson,pharmacyPage,type PharmacyCommand} from './pharmacy-values.js';
+export type PharmacyPersistence=ReturnType<typeof import('./pharmacy.js').createPharmacyModule>;

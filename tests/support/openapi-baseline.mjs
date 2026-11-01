@@ -80,6 +80,29 @@ export function beforeI2LiveCloseout(text) {
 
 /** Remove exactly the additive I3 Slice 1 blocks. Historical hashes stay pinned. */
 export function beforeI3Slice1(text) {
+ text=beforeI3Slice2(text);
  return text.replace(/,\n {4}"\/api\/v1\/medications": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
   .replace(/,\n {6}"PrescriptionItemInput": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
+}
+
+/** Restore only the exact Slice 2 paths/schemas and source-item extensions. */
+export function beforeI3Slice2(text) {
+ text=text.replace(/,\n {4}"\/api\/v1\/pharmacy-destinations": [\s\S]*?(?=\n {2}},\n {2}"components")/,'')
+  .replace(/,\n {6}"PharmacyRouteCommand": [\s\S]*?(?=\n {4}}\n {2}}\n}\n$)/,'');
+ for(const path of ['/api/v1/consultations/{consultationId}/prescriptions/{prescriptionId}','/api/v1/me/prescriptions/{prescriptionId}','/api/v1/patients/{patientId}/prescriptions/{prescriptionId}']) {
+  const start=text.indexOf('    "'+path+'": {');if(start<0)continue;
+  const pathsEnd=text.indexOf('\n  },\n  "components"'),next=text.indexOf('\n    "',start+1),end=next<0?pathsEnd:Math.min(next,pathsEnd),segment=text.slice(start,end),comma=segment.trimEnd().endsWith(',');
+  const value=JSON.parse('{'+segment.trim().replace(/,$/,'')+'}')[path];
+  for(const method of ['get','head'])value[method].parameters=value[method].parameters.filter(p=>p.in!=='query'||!['page','pageSize'].includes(p.name));
+  const block=JSON.stringify({[path]:value},null,2).split('\n').slice(1,-1).map(line=>'  '+line).join('\n');text=text.slice(0,start)+block+(comma?',':'')+text.slice(end);
+ }
+ const start=text.indexOf('      "PrescriptionItem": {'),end=text.indexOf('\n      "PrescriptionHistory": {',start);
+ if(start>=0&&end>start) {
+  const item=JSON.parse('{'+text.slice(start,end).trim().replace(/,$/,'')+'}').PrescriptionItem;
+  item.properties.fulfillmentState.enum=['NOT_DISPENSED'];
+  for(const key of ['routingHistory','routingHistoryMeta','dispense'])delete item.properties[key];
+  const block=JSON.stringify({PrescriptionItem:item},null,2).split('\n').slice(1,-1).map(line=>'    '+line).join('\n');
+  text=text.slice(0,start)+block+','+text.slice(end);
+ }
+ return text;
 }

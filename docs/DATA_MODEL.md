@@ -196,3 +196,7 @@ The sole update is one current-authorized OPEN→CLOSED, atomic with booking IN_
 ## V3-I3 Slice 1
 
 Migration 21 adds immutable prescription roots, item snapshots, append-only lifecycle versions and version-item bindings, atomic operation/audit references and lineage-wide privacy restrictions, plus three curated medication identities and operational catalog version/operation history. See [source persistence and invariants](V3_I3_SLICE1.md). Existing migration bytes and populated clinical history are preserved; no clinical backfill.
+
+## V3-I3 Slice 2
+
+Migration 22 adds immutable PharmacyRoute, PharmacyRouteItem, PharmacyRouteVersion, PharmacyDispense, PharmacyDispenseCorrection and PharmacyOperation. Parent/item locks plus immutable binding chains prevent multiple active destinations; unique item dispense identity remains consumed after reversal. Actual source cancellation/replacement/privacy writers gain a recipient-organization queue fence through additive triggers. See [persistence and lock graph](V3_I3_SLICE2.md). All 21 previous SQL files and existing rows are preserved; there is no fulfillment backfill.
