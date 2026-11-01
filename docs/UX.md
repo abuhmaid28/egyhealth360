@@ -1,12 +1,12 @@
-# EgyHealth 360 — Conceptual Journeys and Workspace Scope V3
+# UX scope and V1 audit boundary
 
-## Design gate
+CURRENT AUTHORITATIVE UX boundary, **not an approved final UX/navigation specification**. The Live V1 UI exists; older “UI/UX NOT STARTED / DESIGN FROZEN” snapshots do not describe implementation. Issue #72 authorizes an audit only; it does not authorize redesign. [CURRENT_STATUS](CURRENT_STATUS.md), [charter and owner gates](FOUNDATION_CHARTER.md).
 
-**DESIGN FROZEN. Product UI/UX NOT STARTED.** Product V3 policy approval and this documentation reconciliation authorize no wireframes, portal screens, components, Design System, branding, typography/color or frontend visual work. Separate explicit design-unfreeze approval is required after scope/domain prerequisites. UX_VALIDATION_V2 and DESIGN_SYSTEM retain historical references only.
+Current UI is a **FUNCTIONAL V1 PROTOTYPE / BEFORE BASELINE**. Reusable safety/client boundaries coexist with an unapproved final IA, repeated card hierarchy, technical terminology and incomplete date/content localization. See [frontend/UX audit](FOUNDATION_REBOOT_V2_AUDIT.md#frontend-ux-arabic-brand-and-design-system). Current logo/colors/fonts are not final. No new navigation, terminology or screens are selected here.
 
-This document describes product information flows and access boundaries, not navigation layouts or visual specifications. [PRODUCT](PRODUCT.md) / [D01–D36](PRODUCT_V3_DECISIONS.md) / [SECURITY](SECURITY.md) govern future behavior.
+## Conceptual workspace responsibilities — scope, not delivery promises
 
-## Five workspace information responsibilities — approved future, not implemented
+Patient/clinician I2 flows and prescription/pharmacy backend are implemented within accepted contracts. Lab and integrated longitudinal journeys remain future/unauthorized. The following table describes scope responsibilities; it must not be read as a statement that all five Live workspaces exist.
 
 | Workspace | Conceptual information flow | Access/release boundary |
 |---|---|---|
@@ -23,6 +23,5 @@ This document describes product information flows and access boundaries, not nav
 - C: Signed prescription → routed pharmacy → full-item dispense → preserved quantity/actor/time → appropriate patient/current-doctor view.
 - D: Timeline/follow-up/BP → retained CarePlan/actions → future explicitly contracted EACCE. No care plan/engine prerequisite for A–C.
 
-These are policy-covered journeys, not implemented frontend flows. Source records, operational booking/fulfillment, timeline and audit remain distinct. Current masking also governs revealing references/counts/notifications. Patient-facing future continuity wording must distinguish uncertainty from confirmed unresolved care without invented urgency or diagnostic claims; six EACCE classifications and accessible semantics remain later approved work.
 
-Ordinary UI eventually depends on stable relevant I1–I4 contracts; EACCE presentation additionally I5, and all visual work requires the separate design gate. Nothing here specifies screens/layouts or revives the old Care-action-first navigation.
+Journey C's backend is implemented through pharmacy Slice 2, with no Live pharmacy frontend claim. Journey A still lacks Lab; B is future; D has M2 foundations but lacks I4/I5 integration. This is not final IA or approved user-facing terminology. Future UX/IA/content/Arabic, three visual directions, owner selection, Brand V2, Design System V2 and prototypes precede frontend implementation under the charter. Preserve all doctor-demo screenshots byte-for-byte.

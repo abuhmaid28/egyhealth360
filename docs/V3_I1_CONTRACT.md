@@ -1,5 +1,7 @@
 # V3-I1 — Integrated Domain & Access Foundations Contract
 
+> ACCEPTED CONTRACT. Behavior remains binding within its accepted scope. Adoption-time status, inventory and authorization paragraphs below are historical, not today's execution authority. Read [CURRENT_STATUS](CURRENT_STATUS.md) and [SOURCE_OF_TRUTH](SOURCE_OF_TRUTH.md) first. I1/I2 and I3 Slices 1/2 are accepted complete; later I3 Lab/results/exit and I4/I5/EACCE remain paused. Final V2 Product/Design work requires [charter owner gates](FOUNDATION_CHARTER.md).
+
 Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
 
 ## Authority and delivery status

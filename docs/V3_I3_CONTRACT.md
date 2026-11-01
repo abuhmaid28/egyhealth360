@@ -1,5 +1,7 @@
 # V3-I3 — Contract and readiness
 
+> ACCEPTED CONTRACT. Behavior remains binding within its accepted scope. Adoption-time status, inventory and authorization paragraphs below are historical, not today's execution authority. Read [CURRENT_STATUS](CURRENT_STATUS.md) and [SOURCE_OF_TRUTH](SOURCE_OF_TRUTH.md) first. I1/I2 and I3 Slices 1/2 are accepted complete; later I3 Lab/results/exit and I4/I5/EACCE remain paused. Final V2 Product/Design work requires [charter owner gates](FOUNDATION_CHARTER.md).
+
 Status: **proposed technical contract for independent review; documentation only**. [Owner authorization](https://github.com/abuhmaid28/egyhealth360/issues/68#issuecomment-6555043007) covers this readiness sprint, not implementation. Baseline: main `8a1b76729d3ec2a830ec35a2449bebae4d67b31a`. [D01–D36](PRODUCT_V3_DECISIONS.md), [I1](V3_I1_CONTRACT.md), [I2](V3_I2_CONTRACT.md), [I2 close exit](V3_I2_SLICE7_EXIT_REVIEW.md), [security](SECURITY.md), [data model](DATA_MODEL.md), [API](API.md), [OpenAPI](openapi.json), [decisions](DECISIONS.md), and [roadmap](IMPLEMENTATION_ROADMAP.md) remain authoritative for their existing scope. Historical status text in those files is not a current authorization. This document specifies future behavior, not existing routes or tables. No slice is authorized by this document.
 
 ## 1. Compatibility inventory at baseline

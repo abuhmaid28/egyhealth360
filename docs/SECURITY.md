@@ -1,43 +1,22 @@
-# Security & Medical Safety — V3 Policy, M0–M2 Enforcement
+# Security and clinical authority
 
-## Current Slice 7 exit-review boundary
+CURRENT AUTHORITATIVE security reference at the [CURRENT_STATUS](CURRENT_STATUS.md) baseline, constrained by accepted EH/I1/I2/I3 contracts. This reboot changes no security policy or implementation.
 
-[Issue #48 authorization 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435) and [PR #63 continuation review 5723355039](https://github.com/abuhmaid28/egyhealth360/pull/63#pullrequestreview-5723355039) authorize the bounded Consultation Close remediation in this same Slice 7 branch/PR. Explicit OPEN→CLOSED / IN_CONSULTATION→CONSULTED, current exact treating authority, immutable server-owned close provenance and safe replay are implemented through one additive migration 20; all nineteen historical SQL bytes and the restricted-document replay fix remain preserved. [Current exit review](V3_I2_SLICE7_EXIT_REVIEW.md) and exact-head PR evidence govern the verdict; the earlier BLOCKED checkpoint is superseded by this continuation. Final full validation and independent exact-head review remain required. PR OPEN / UNMERGED; auto-merge OFF; I3 NOT AUTHORIZED; EACCE NOT STARTED. No frontend or deployment changes in this track.
+## Current authority map
 
-## Current V3-I2 Slice 5 boundary
+| Boundary | Current enforcement |
+| --- | --- |
+| Auth/session | Server-side database sessions, Argon2id, Secure/HttpOnly production host cookies, session expiry/revocation, CSRF + Origin/Fetch Metadata |
+| Patient | Own permitted resources; no clinical authoring or other-patient data |
+| Clinician | Current ACTIVE ClinicianPatientAssignment is the clinical grant; authoring additionally checks exact treating/source author and clinic scope |
+| Booking/directory/membership | Operational logistics/publication only; ZERO clinical authority |
+| Private notes/released data | Notes author-only with current authority; summaries and FollowUpIntent independently explicitly released; close grants no release/signature |
+| Pharmacy | Active exact staff user/session, PHARMACY org, exact current active membership and valid routed artifact; minimum necessary source/items/history, no general patient browser |
+| Lab | Operational staff/org foundation exists; fulfillment backend is future/unauthorized |
+| ADMIN | Operational only; no blanket clinical payload, authoring, assignment creation, impersonation, fulfillment or break-glass shortcut |
+| Wrong-patient privacy | Preserved source history with ordinary payload/identifier/reference/count/replay/conflict suppression; no cross-patient move |
 
-[Slice 5](V3_I2_SLICE5.md) preserves sole current ACTIVE assignment authority and Booking ZERO clinical authority. Private/draft payload and existence are exact-author/current-authority only. Patient/current-related released views exclude every private/draft reference. Explicit summary release, immutable signed corrections/addenda and independent privacy targets; unsafe exact document lineage is withheld from ordinary pages/counts/replays. Bounded canonical locks, after-wait/final checks and atomic {} audit; no staff/ADMIN shortcut or forensic view.
-
-## Current Slice 4 consultation-opening boundary
-
-Booking remains ZERO clinical authority. Consultation opening requires exact booked current clinician, valid session, ACTIVE assignment and exact current clinic scope with final after-wait checks. No consent/assignment writer or ADMIN shortcut. Strict request/projection, atomic empty-metadata audit, canonical locks and safe replay are in [Slice 4](V3_I2_SLICE4.md). EH-012 remains HTN-only. Historical status/validation statements below retain their original point-in-time meaning.
-
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
-[Issue #39 I1 contract](V3_I1_CONTRACT.md) remains APPROVED. Slice 1/2 COMPLETE; [Slice 3](V3_I1_SLICE3.md) security contract COMPLETE; I1 COMPLETE and Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. Registration is guarded anonymous patient-only creation; profile read/replace requires current PATIENT ownership, and writes retain session CSRF. No ADMIN/staff clinical or profile entitlement. D36 routed-artifact authority remains I3; membership alone never suffices. Existing security contracts below are preserved.
-
-## Slice 4 directory enforcement
-
-[Contract](V3_I1_SLICE4.md) separates public locator/projection from current clinical authority. All directory queries recheck current User/profile, curated Specialty, exact approved publication, exact ACTIVE compatible membership, ACTIVE CLINIC organization and separate clinic publication. Public reads are one SQL statement, no-store/no ETag or 304; no cookies/roles widen the allowlist. Public routes never query clinical tables. Internal ADMIN management rechecks user/session before and after locks and at transaction end; no new browser mutation bypass. Minimized audit is atomic; exact replay/no-op creates no event. Database composite FKs/history guards and real PostgreSQL revocation/deadlock tests support these guarantees. No directory state creates assignments, consent or D36 fulfillment authority.
-
-## Policy versus implementation
-
-Product V3 is APPROVED at policy level; V3-I1 overall is COMPLETE. Existing PATIENT/CLINICIAN/ADMIN roles, EH-006 session/CSRF/Origin and own/ACTIVE-assignment checks remain implemented and unchanged. Slice 2 adds fixed LAB_STAFF/PHARMACY_STAFF and operational organization membership COMPLETE; bilateral enrollment is COMPLETE in Slice 5; booking and fulfillment remain **NOT IMPLEMENTED**. No current endpoint gains a booking/staff exception.
-
-## Approved future authorization boundary
-
-| Area | Policy for later reviewed implementation contracts |
-|---|---|
-| Registration / own data | Only patient self-registration; no privileged role selection. Permitted own profile/bookings/released clinical data only; no clinical authoring, arbitrary action closure or another patient's owner/reference assignment. Managed privileged accounts; no production identity-assurance or mandatory paid verification/recovery subsystem |
-| Public provider discovery | Slice 4 curated published professional profile and clinic/specialty only; availability is deferred to I2; no patient bookings, account/private identity data or clinical history |
-| Doctor schedule / booking | Own professional/provider scope and minimum identity/time/logistics only before a genuine relationship; complaint/history are clinical data, not scheduling metadata |
-| Relationship | Explicit patient authorization + clinician acceptance before/at consultation. Continue until either ends; preserve history. Recheck current authority on subsequent access; no author entitlement, automatic renewal or pending-result exception. Other doctors need their own current relationship |
-| Private notes / released summary | Private notes author-only under current clinical authority; no automatic patient/other-doctor/staff/ADMIN disclosure. Signed/released summaries/instructions have separate permitted projections and preserved addenda |
-| Lab | Active bounded staff, matching active organization/membership, valid routed order and minimum necessary patient/test context; own result/fulfillment history only |
-| Pharmacy | Equivalent current routed signed-prescription authority and own full-item dispense history only; cannot rewrite prescribing; no unrelated medication/diagnosis/timeline access |
-| Admin | Operational account/provider/membership/status/config/demo and research administration only; no clinical payload, impersonation, signing, finalization, dispensing or unconsented relationship creation by ADMIN alone |
-| IDOR/provider isolation | Patient and nested artifact identity never grants authority. Deny cross-patient/cross-provider access without protected existence/payload disclosure; no global staff patient search shortcut |
-| History/privacy | Preserve signed source versions/addenda/retractions/reversals; wrong-patient restriction independent of exclusion/correction. No cross-patient move; mask payload and revealing references/counts/notifications in ordinary projections. Patients/ADMIN may flag concerns without gaining clinical edit authority |
+Reauthorize reads/writes/replay against current state. Preserve canonical lock order, DB clock expiry, immutable history, operation keys and minimized atomic audit. Accepted concurrency guarantees concern the actual ordering of transactions/current checks, not recall of responses already authorized. Source cancellation/replacement/expiry blocks new fulfillment; relationship ending does not itself cancel a valid routed pharmacy artifact. [Pharmacy implementation/security](V3_I3_SLICE2.md).
 
 ## D36 — Cross-module fulfillment authority and suspension
 
@@ -54,7 +33,7 @@ Product V3 is APPROVED at policy level; V3-I1 overall is COMPLETE. Existing PATI
 
 The authorized clinician signs/routes to an approved recipient considering patient preference; patient does not rewrite the signed artifact. Authorized pre-acceptance rerouting preserves history; completed/processing work needs cancellation/reissue/reconciliation. New source-owning correction authority does not open existing BP/CarePlan/CareAction resources or protected generation decisions.
 
-**Policy completeness:** own data, public directory, schedule/logistics, relationship transitions/ending, artifact-scoped fulfillment, revocation, private notes, release, cancellation/correction, IDOR/provider isolation and timeline masking are covered by [D01–D36](PRODUCT_V3_DECISIONS.md). Technical enforcement/permission/error/race contracts and verification remain future work. No implementation-level permission table or transaction change is introduced here.
+**Policy completeness:** own data, public directory, schedule/logistics, relationship transitions/ending, artifact-scoped fulfillment, revocation, private notes, release, cancellation/correction, IDOR/provider isolation and timeline masking are covered by [D01–D36](PRODUCT_V3_DECISIONS.md). Pharmacy enforcement is implemented under I3 Slice 2; Laboratory enforcement remains future. Exact contracts/tests define current methods and race semantics. No implementation-level permission table or transaction change is introduced here.
 
 ## Retained security principles and accepted implementation notes
 
@@ -207,14 +186,6 @@ Private BP payload/references are omitted from patient and clinician history, en
 EH-014 generation requires current ACTIVE assigned-clinician authority and exact session locks, exclusive patient scope, plan/template and selected-BP locks plus final expiry check. Both explicit human selection and NULL-actor derivation audits are atomic with immutable state, metadata {}. Privacy suppresses whole affected ordinary action/read/count/page/retry results, including dates and protected references; fail-closed linkage checks prevent raw fallback. Self-patient reads only, Admin denied, no forensic/public mutation route or research writer. See [contract](EH-014_INITIAL_CARE_ACTION_CONTRACT.md) and [validation](EH-014_VALIDATION.md).
 
 Status evidence: [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. [Post-merge validation](EH-014_VALIDATION.md#post-merge-validation). No behavioral or R1–R8 contract change is introduced by this status closeout.
-
-## Current I2 Slice 2 applicability
-
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
 
 ## V3-I2 Slice 2 operational scheduling enforcement
 

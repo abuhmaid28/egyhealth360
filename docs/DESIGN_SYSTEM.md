@@ -1,6 +1,10 @@
-# Design System V1
+# Design System V1 — historical direction
 
-> **V3 applicability:** Historical V1 visual reference only. **DESIGN FROZEN** under approved D35; this file grants no implementation/design authority. No visual specification is changed by the V3 reconciliation. Separate explicit design-unfreeze approval is required after scope/domain prerequisites. See [approved policy/lineage](PRODUCT_V3_DECISIONS.md).
+**SUPERSEDED / LEGACY REFERENCE for final visual decisions.** This document is incomplete historical V1 direction and **insufficient for final implementation**. It is not Design System V2. The V1 implementation exists, but its logo, colors and typography are not approved final choices. Audit-only scope does not authorize replacement. [Owner gates](FOUNDATION_CHARTER.md#future-productdesign-approval-process--document-only), [maturity audit](FOUNDATION_REBOOT_V2_AUDIT.md#frontend-ux-arabic-brand-and-design-system).
+
+Missing: semantic token contracts, complete component anatomy/variants/states, responsive grid/density/type specifications, healthcare patterns, Arabic typography/content rules, do/don't examples and a prototype-based visual QA contract. Actual primitives currently live in `apps/web/src/components/ui.tsx`; `packages/ui` is empty. Its future role needs an approved Frontend Architecture V2 decision.
+
+## Preserved historical V1 direction — not final approval
 
 ## Brand direction
 Calm Clinical Intelligence: clear, calm, reliable, evidence-driven.

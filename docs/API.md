@@ -1,67 +1,37 @@
-# EgyHealth 360 — API Status and V3 Resource Boundaries
+# Current API boundary
 
-## Current V3-I2 Slice 5 boundary
+CURRENT AUTHORITATIVE overview at the [CURRENT_STATUS](CURRENT_STATUS.md) baseline. [OpenAPI](openapi.json) contains **82 distinct path templates**, including prescription/catalog and pharmacy. These are implemented repository routes, not proof that every route is deployed or integrated into the Live UI. No OpenAPI bytes or API behavior change in this reboot.
 
-Live [Slice 5 documentation](V3_I2_SLICE5.md) adds exact consultation document draft/history/sign/release/addendum/correction/privacy commands and own/current-related released summaries. PRIVATE_NOTE author-only plus current authority; explicit summary sign-and-release only; independent append-only privacy with current retry masking. Exact schemas, bounded pagination, HEAD and safe errors are in OpenAPI. No consultation close or Slice 6 API. Historical Slice 4 statements below retain their original scope.
+## Implemented HTTP groups
 
-## Current Slice 4 consultation-opening boundary
+All paths are under `/api/v1`; exact methods/bodies/bounds/errors are in OpenAPI and accepted contracts.
 
-Live Slice 4 adds only POST `/api/v1/me/bookings/{bookingId}/consultation`, exact `{operationKey}`. Current booked clinician + ACTIVE assignment + exact clinic scope; no booking clinical authority. Strict eight-field opening result, no clinical payload. See [exact route/security](V3_I2_SLICE4.md). No close/document APIs. Historical status/validation statements below retain their original point-in-time meaning.
+| Group | Route families and ownership |
+| --- | --- |
+| Readiness/auth | `/health`, `/auth/login`, `/auth/logout`, `/auth/me`; patient-only `/auth/register` |
+| Own/legacy patient profile | `/me/profile`, `/patients/{patientId}/profile`; current own/assignment boundaries |
+| Public directory | `/directory/specialties`, `/directory/clinics`, `/directory/providers[/{publicId}]`, provider `/availability` |
+| Relationships | `/me/relationship-requests` detail/accept/decline/withdraw and `/me/relationships` detail/end |
+| Availability | `/me/availability` and exact slot withdrawal |
+| General booking | `/me/bookings` detail/cancel/reschedule/attendance/correct; `/me/schedule`; booking-scoped `/consultation` opening/recovery |
+| Consultation documents | `/consultations/{consultationId}/documents` with detail/sign/sign-release/addenda/corrections/privacy; `/me/summaries` and `/patients/{patientId}/summaries` detail |
+| FollowUpIntent | Consultation-scoped intents/detail/release/correction/booking-link/replacement/privacy; own/current-clinician released reads |
+| Explicit close | `/consultations/{consultationId}/close`; no automatic signature/release/action closure |
+| Prescription/catalog | `/medications`, exact medication `/settings`; consultation prescriptions/detail/edit/sign/cancel/replace/privacy; own/current-clinician signed-source reads |
+| Pharmacy | `/pharmacy-destinations`; prescription pharmacy-routes/withdrawals/reroutes; exact `/pharmacies/{pharmacyId}/routes` queue/detail/accept/item dispense/fact correction/reversal |
+| BP/EH-012 | Patient-scoped BP measurements, legacy follow-up appointments/cancel, clinical encounters and exact BP associations |
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
+Organizations/memberships, directory maintenance, scheduling configuration, M2 clinical catalog/CarePlans/coverage/applicability/INITIAL actions include principal-checked internal services; their existence does not imply a public generic ADMIN/clinical API. No Lab, I4 notification/timeline, EACCE, experiment or AI endpoint is implemented. Accepted future contract names are not executable routes.
 
-[Slice 3](V3_I1_SLICE3.md) implements guarded anonymous registration and current-PATIENT own-profile operations. Slice 1/2/3 are COMPLETE; I1 COMPLETE and Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. Existing auth/clinical routes remain unchanged. Internal Slice 2 operations are not public HTTP routes; availability remains I2 and fulfillment I3.
+## Current enforcement
 
-## Implemented HTTP boundary
+Server-owned sessions/identity, HttpOnly cookies, Origin/Fetch Metadata/CSRF on state-changing requests, strict bounded input, safe errors and no-store/HEAD behavior remain per-resource contracts. Own-data/current clinical assignment grants are distinct from pharmacy's exact active user/session/org/membership/routed-artifact grant. Private drafts/notes and wrong-patient restricted payload/IDs/counts/history/conflicts remain suppressed. No ADMIN clinical override.
 
-The [OpenAPI](openapi.json) and accepted M0–M2 contracts define actual behavior at baseline `ea777ce71c3639a37ec015739a12f0fadc0b4dcc`. REST under `/api/v1`, JSON, ISO timestamps, backend session/CSRF/Origin and per-resource authorization remain in force. Future conceptual names are not live routes.
+Clinical mutation keys/replay are explicitly scoped, reauthorized and privacy-checked; no automatic mutation retry is introduced. History/audit/current eligibility remain distinct. [Security](SECURITY.md), [I2](V3_I2_CONTRACT.md), [I3](V3_I3_CONTRACT.md).
 
-| Implemented group | Actual routes relative to `/api/v1` | Scope |
-|---|---|---|
-| Readiness | `/health` | Public database-backed readiness |
-| Authentication | `/auth/login`, `/auth/logout`, `/auth/me` | EH-006 frozen operations |
-| Slice 3 entry/profile | `/auth/register`, `/me/profile` | Guarded anonymous creation and current PATIENT own read/replace; [exact contract](V3_I1_SLICE3.md) |
-| Patient profile | `/patients/{patientId}/profile` | Minimal own/ACTIVE-assigned read; legacy read only; separate Slice 3 own-profile route below |
-| BP | `/patients/{patientId}/blood-pressure-measurements` | EH-011 create/history with current correction/privacy filtering |
-| HTN follow-up | `/patients/{patientId}/follow-up-appointments` and `/{appointmentId}/cancel` beneath it | EH-012 clinician create/cancel, own/assigned history; not general patient booking |
-| Encounter / BP associations | `/patients/{patientId}/clinical-encounters`, `/{encounterId}/blood-pressure-measurements/{measurementId}` and `/{encounterId}/blood-pressure-associations` beneath it | EH-012 immutable HTN encounter/link and minimized history |
+## Retained accepted slice notes
 
-Methods, validation, pagination, response/error shapes and status mappings remain exactly those in OpenAPI/contracts; this reconciliation changes none. Do not infer that generic examples in former API planning were frozen routes. Current patient reads require own identity; clinician access requires current ACTIVE assignment; ADMIN denied clinical payload. Staff roles can use existing authentication; Slice 3 adds patient registration/own-profile HTTP; Slice 4 adds four public directory GET/HEAD resources. No organization/membership/directory management HTTP route, marketplace or fulfillment API exists.
-
-## V3-I1 Slice 5 participant relationships
-
-[Exact Slice 5 API/privacy contract](V3_I1_SLICE5.md#participant-api-and-privacy). GET/HEAD/POST `/me/relationship-requests`, GET/HEAD detail, PUT accept/decline/withdraw on exact request; GET/HEAD `/me/relationships` and exact assignment detail; PUT end on exact assignment. Only current PATIENT/CLINICIAN participants, existing session/Origin/CSRF; no ADMIN manufacture. Requests never authorize clinical access. Accepted withdrawal retains acceptance and atomically ends the exact bound grant. OpenAPI appends exactly eight paths/five schemas without historical-byte changes.
-
-## V3-I1 Slice 4 public directory
-
-[Exact Slice 4 contract](V3_I1_SLICE4.md#public-http-contract) / [validation](V3_I1_SLICE4_VALIDATION.md). Actual GET/HEAD routes: `/api/v1/directory/specialties`, `/api/v1/directory/clinics`, `/api/v1/directory/providers`, `/api/v1/directory/providers/{publicId}`. Public allowlist identical for every role, no-store/current reads/no conditional 304; exact bounded page/pageSize and specialty/clinic filters only. Separate generated public locators never grant clinical access. Management is internal current-ADMIN service, matching Slice 2; no new management browser endpoint or CSRF exception. OpenAPI pins the exact response/errors; no availability, clinical payload, private identifiers or future routes.
-
-## V3-I1 Slice 3 HTTP contract
-
-POST `/api/v1/auth/register` requires **`X-EH-Register: 1`**, exact configured Origin and strict JSON containing exactly email/password/displayName. Fetch Metadata cross-site/unknown/duplicate is denied; missing metadata does not bypass the mandatory Origin/header. New identity and valid canonical duplicate/retry share 202 `{ "data": { "accepted": true } }`, no account identifiers/state or Set-Cookie; explicit login follows. Infrastructure failure is sanitized 503, resource saturation/throttling 429.
-
-GET/HEAD/PUT `/api/v1/me/profile` are current authenticated PATIENT-only; no target IDs. GET exposes the server-derived read-only own profile id (a locator for existing scoped resources), plus displayName/dateOfBirth/sex context, preserving legacy stored values. No IDs are permitted as update input. PUT requires all three permitted fields, existing session-derived CSRF plus Origin, and bounded full-replacement validation; no role/status/email/password/owner changes. Other roles receive generic denial. All responses no-store; HEAD has no body.
-
-Exact bounds: 16384-byte body, 8192-byte aggregate raw header names/values, email representation <=1024 UTF-8 bytes, password 1–1024 unmodified UTF-8 bytes, displayName 1–160 Unicode scalar values, nullable valid-calendar DOB years 0001–9999, nullable opaque sex 1–64 scalars on writes. No outer name/sex whitespace, C0/C1 controls or unpaired surrogates. Local registration budget: two active operations, no queue, 30 validated attempts per 60000ms process window; no distributed guarantee. See [complete frozen contract](V3_I1_SLICE3.md), [OpenAPI](openapi.json) and [evidence](V3_I1_SLICE3_VALIDATION.md). Existing login/password/clinical routes are unchanged.
-
-## PLANNED / NOT IMPLEMENTED — approved V3 resource groups
-
-These are remaining future groups only. Delivered registration/own-profile (Slice 3 COMPLETE), public directory (Slice 4 COMPLETE) and participant bilateral lifecycle (Slice 5 COMPLETE) are specified above and in current OpenAPI; they are not absent/future APIs. No additional endpoint paths, fields or HTTP mappings are frozen by this future map; I1 technical exit is COMPLETE.
-
-| Future group | Product boundary |
-|---|---|
-| Professional schedule and booking | Clinician availability/own schedule; own patient booking/cancel/reschedule and preserved history; minimum logistics access before relationship |
-| Consultation | Actual treating/booking/encounter links, human-entered problems/minimal allergy context, protected notes and signed/released summaries/addenda |
-| Prescribing and medication history | Signed prescription/items/validity/cancel/replace; prescribed versus dispensed versus actual-use distinctions |
-| Diagnostics | Routed lab order/processing/result/finalization/release/corrections; imaging optional, not implemented |
-| Pharmacy fulfillment | Current routed valid prescription access and full-item dispense/history; no prescription modification/adherence inference |
-| Longitudinal coordination | Authorized source-linked timeline, follow-up intent/booking, in-app important updates/reminders; current privacy on payload/references/counts |
-| Operational administration | Bounded users/providers/memberships/status/catalog/demo/config; no clinical entitlement or impersonation |
-| Later continuity/research | Approved product exposure of retained M2 internal services; later EACCE/review and isolated Evaluation Lab, not protected generation snapshot export |
-
-Future exposure needs milestone-specific auth, IDOR/provider isolation, privacy/history, retry/concurrency and input contracts before implementation. [D36](PRODUCT_V3_DECISIONS.md#d36--fulfillment-authorization-and-suspension) requires current user/org/membership/artifact authority for lab/pharmacy; booking or role alone never grants whole-record access. Separate released summaries/final results from private notes/drafts. Current OpenAPI must change only in a separately authorized implementation task.
-
-The former V2 conceptual endpoint list is superseded as an active API plan; it never overrode frozen EH-006/007/011/012 paths. Source/history operations and timeline/audit are different resources. EACCE stays a future shared TypeScript package, not an HTTP microservice.
+These notes record each bounded slice's introduction. Old authorization, inventory and exclusions apply to that historical slice; current route coverage is the inventory above/OpenAPI. “Live” in old API notes means an executable route, not verified current hosted deployment parity.
 
 ## Accepted implementation notes
 
@@ -123,15 +93,7 @@ EH-014 adds zero HTTP routes and leaves OpenAPI unchanged. Root internal factory
 
 Status evidence: [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. [Post-merge validation](EH-014_VALIDATION.md#post-merge-validation). No behavioral or R1–R8 contract change is introduced by this status closeout.
 
-## Current I2 Slice 2 applicability
-
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
-
-## V3-I2 Slice 2 availability — live in this PR
+## Historical I2 Slice 2 availability boundary
 
 [Exact scheduling API and security contract](V3_I2_SLICE2.md#http-and-projection): GET/HEAD `/directory/providers/{publicId}/availability`, GET/HEAD/POST `/me/availability`, PUT `/me/availability/{slotId}/withdraw`, all under `/api/v1`. Public allowlist is id/providerId/clinicId/startAt/endAt/timeZone/bookable=true; no role widens it. Own history is operational, with current clinician/session/profile. Publication/withdrawal additionally require exact current clinic/member/directory authority and strict Origin/CSRF/input checks. ADMIN configuration stays internal. OpenAPI now has 28 paths / 26 schemas. Booking and all later I2 APIs remain unimplemented and unauthorized; older slice-specific API inventories above retain their historical scope.
 

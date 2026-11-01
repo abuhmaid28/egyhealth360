@@ -1,101 +1,33 @@
-# Testing Strategy — V3 Acceptance and Retained Slice Evidence
+# Current testing and retained evidence
 
-## Current Slice 7 exit-review boundary
+CURRENT AUTHORITATIVE validation reference. Actual workflow: [Bootstrap CI](../.github/workflows/ci.yml). Historical report counts are point-in-time evidence, not freshly executed results or Product/UX/Design approval. [CURRENT_STATUS](CURRENT_STATUS.md), [audit](FOUNDATION_REBOOT_V2_AUDIT.md), [reboot validation](FOUNDATION_REBOOT_V2_VALIDATION.md).
 
-[Issue #48 authorization 6536467435](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6536467435) and [PR #63 continuation review 5723355039](https://github.com/abuhmaid28/egyhealth360/pull/63#pullrequestreview-5723355039) authorize the bounded Consultation Close remediation in this same Slice 7 branch/PR. Explicit OPEN→CLOSED / IN_CONSULTATION→CONSULTED, current exact treating authority, immutable server-owned close provenance and safe replay are implemented through one additive migration 20; all nineteen historical SQL bytes and the restricted-document replay fix remain preserved. [Current exit review](V3_I2_SLICE7_EXIT_REVIEW.md) and exact-head PR evidence govern the verdict; the earlier BLOCKED checkpoint is superseded by this continuation. Final full validation and independent exact-head review remain required. PR OPEN / UNMERGED; auto-merge OFF; I3 NOT AUTHORIZED; EACCE NOT STARTED. No frontend or deployment changes in this track.
+## Actual CI lanes
 
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
+| Lane | Current checks |
+| --- | --- |
+| `static-browser` | Frozen install/generate, lint, Prisma validate, build/typecheck, all top-level Node tests, controlled Playwright browser and production/full dependency audits |
+| `postgres` | Build, disposable PostgreSQL, fresh/repeat migration proof, full integration tests, real Live browser integration, auth measurement, cleanup |
+| `docker-runtime` | Compose config/build, fresh DB + explicit schema deploy, API/web/health-only worker startup, auth and every accepted runtime verifier through prescription **and pharmacy**, HTTP smoke and cleanup |
+| `validate` | Required aggregate name; always runs and requires every dependency lane to succeed, rejecting failure/cancellation/skips |
 
-[I1 compatibility inventory](V3_I1_CONTRACT.md#compatibility-inventory--reviewed-runtime-baseline) remains protected. Slice 1/2 COMPLETE; [Slice 3 tests/evidence](V3_I1_SLICE3_VALIDATION.md) cover guarded registration, duplicate atomicity, own-profile isolation, current authority and real PostgreSQL concurrency. I1 COMPLETE; Slice 3 COMPLETE; Slice 4 COMPLETE; Slice 5 COMPLETE; Slice 6 COMPLETE. Combined I1 exit obligations passed in PR #46 / exact-main CI 40433851129; historical tests/evidence are preserved.
+Push to main and PRs to main trigger the full workflow. No docs/path filter, automatic concurrency cancellation, Markdown checker or link checker is configured. Build/generate and preserved auth/domain proofs repeat across lanes; some duplication buys host/container/runtime assurance. Consolidation/path-aware optimization is P2 future infrastructure work, not permission to remove gates. There is no implemented EACCE golden or research experiment lane.
 
-## Slice 5 executable evidence
+## Validation by risk
 
-[Slice 5 validation](V3_I1_SLICE5_VALIDATION.md): strict participant API/privacy, bilateral state machine, sole grant, exact legacy confirmation/end, accepted withdrawal, idempotency, SQL/Prisma bypass guards, audit rollback, populated 13→14 actual runner, observed PostgreSQL race/blocker/timeout/deadlock, M1 seed and M2 clinical lock overlap. Separate 15-case real-HTTP runtime manifest `eh-v3-i1-slice5-bilateral-proof-v1`; all historical gates retained. This historical Slice 5 evidence predates the separate Slice 6 exit proof.
+Use focused affected checks during implementation; run the required final CI once the candidate is stable. Docs-only work proves exact diff scope, local links/anchors and consistency, plus unchanged runtime/schema/migrations/OpenAPI/lockfile/screenshots; do not rebuild the entire runtime locally repeatedly without cause. Runtime/API changes need appropriate build/type/lint/unit/integration/browser checks. Clinical/security/migration changes additionally need actual PostgreSQL constraints, current authority/privacy, audit rollback, replay, revocation and real lock-barrier races. Never weaken accepted tests to match an implementation defect.
 
-## Slice 4 executable evidence
+Accepted I3 Slice 2 evidence includes 327 unit and 1,286 PostgreSQL tests, 40 real barrier races and 18 pharmacy HTTP runtime cases in [PR #71](https://github.com/abuhmaid28/egyhealth360/pull/71). These are historical candidate results, not a new run in this docs sprint. [Main run 41348249063](https://github.com/abuhmaid28/egyhealth360/actions/runs/41348249063) verifies the audited merge baseline; final result and PR exact-head CI are in the reboot handoff.
 
-[Slice 4 validation](V3_I1_SLICE4_VALIDATION.md): exact allowlists/OpenAPI inventories, all-role public equivalence, internal ADMIN denial/current session, raw SQL/composite FK/terminal-history/TEMP-shadow bypass attempts, audit rollback, actual DB-failure HTTP sanitization, populated twelve-to-thirteen real-runner upgrade, publication/revocation/expiry/timeout/deadlock races and current MVCC reads. New runtime manifest `eh-v3-i1-slice4-directory-proof-v1` has twelve cases in a separately isolated synthetic database + real HTTP API within the Docker container; all prior runtime gates remain. This is historical Slice 4 evidence, not I1 completion or blanket authorization; Slice 5 has separate authorization 6401378826.
+## Browser, research and design evidence limits
 
-## V3 policy versus delivered evidence
+I2 hosted journey, 119 screen/locale/width matrix, focused Axe and keyboard evidence exist in [doctor-demo report](PRE_FINAL_DOCTOR_DEMO_UI.md). They prove bounded synthetic checks, not all-page WCAG certification, final UX/design acceptance or I3 hosting. Doctor-demo screenshots and JSON remain byte-identical BEFORE evidence.
 
-Product V3 policy APPROVED; V3-G0 COMPLETE ([verified closeout](PROJECT.md#v3-g0-completion-evidence)); V3-I1 COMPLETE; EACCE/UI NOT STARTED and DESIGN FROZEN. The requirements below are future verification obligations, not new tests or passing implementation claims. Existing M0–M2 validation reports/test contracts remain unchanged.
+EACCE golden classifications, isolated B0/B1/P1 experiment smoke/full matrix, holdout/reproducibility/metrics and clinical review/override tests remain future I5/research obligations under separately approved contracts. No experiment results may be inferred from engine import/worker heartbeat. Future Visual QA must compare to owner-approved prototypes and Design System V2; current browser assertions cannot select the winning design.
 
-Prove [journeys A–D](PRODUCT.md#golden-journeys-and-success) through real backend/domain behavior: signup/discovery/booking/relationship/consultation, lab final results, full-item dispensing and longitudinal BP/plan/action continuity. Then prove future EACCE against its explicitly approved input/evidence contracts. Imaging is SHOULD only and claimed only after proof. Policy coverage PASS is not executable PASS.
+## Retained historical slice evidence
 
-Extend security verification to public/private directory data, patient-only signup/no role escalation, own bookings, own schedule/minimal pre-relationship logistics, explicit authorization/acceptance/ending, current cross-provider clinical relationship and private-note/released-summary separation. Add recipient-scoped lab/pharmacy cross-patient/provider IDOR and D36 current user/org/membership/artifact suspension/cancellation checks, without weakening legacy ACTIVE-assignment tests.
-
-Later signed prescription/result/consultation tests must preserve source versions/corrections/retractions, wrong-patient payload/reference/count/notification masking and patient/current-doctor independent access; ADMIN must never gain clinical payload or fulfillment by role. Verify booking contention/retries/failed replacement, full-item duplicate dispensing and cancellation/replacement reconciliation in their own frozen contracts. No operational event implies adherence, applicability, coverage sufficiency or action completion.
-
-Map future evidence through [V3 requirements/traceability](TRACEABILITY_MATRIX_V1.md). Preserve the fixed M1 seed, ten historical migrations and M2 exact-pin/INITIAL/privacy regressions. Research B0/B1/P1/holdout isolation remains unchanged. Frontend/accessibility checks occur only after separate design-unfreeze approval and implemented relevant domain behavior.
-
-## Retained strategy and historical slice evidence
-
-General principles remain applicable; old screen-centric journey names and M3 references below are historical Layer C targets, mapped to V3-I5/I6/I7. They are not the complete V3 product journey or current design authorization.
-
-## Principle
-A feature is not done because code compiles or a screen renders. Tests are selected by risk and requirement coverage.
-
-## Core layers
-- Unit/domain tests
-- Database constraint tests
-- Integration tests against PostgreSQL
-- API contract/validation tests
-- Authorization/IDOR regression tests
-- Frontend behavior/accessibility tests
-- Playwright golden-journey E2E tests
-- Security/regression tests
-- Research-integrity/reproducibility tests
-
-## EACCE golden cases
-At minimum test deterministic cases for:
-- NOT_DUE
-- COMPLETED
-- SCHEDULED
-- TRUE_GAP
-- UNCERTAIN
-- EXEMPT
-
-Edge cases include irrelevant missing windows, cancelled future appointments, out-of-window completion evidence, duplicate events, conflicting evidence, and deterministic repeatability.
-
-Classification and explanation/reason codes must remain logically consistent.
-
-## Authorization matrix
-Automated tests must verify:
-- Patient A -> own data allowed
-- Patient A -> Patient B denied
-- Clinician -> assigned patient allowed
-- Clinician -> unassigned patient denied
-- Admin -> normal clinical editing denied
-
-Every protected endpoint referencing patient/care-plan/action/assessment IDs requires object-level authorization regression coverage.
-
-## Research-integrity tests
-- ground-truth-only fields absent from engine inputs
-- Baseline and EACCE receive equivalent observed inputs
-- corruption deterministic for fixed seed/config
-- corruption does not change preserved ground truth
-- silent missingness supplies no hidden hint
-- metrics verified against small known confusion matrices
-- small experiment reproducible across repeated runs
-
-## Golden E2E journeys
-1. Clinician -> TRUE_GAP case -> explanation -> confirm
-2. Clinician -> incomplete-coverage case -> UNCERTAIN, not confirmed gap
-3. New evidence changes current classification while preserving history
-4. Patient -> plan -> BP measurement flow
-5. Admin -> Evaluation Lab -> experiment completes -> real metrics displayed
-
-## CI
-Typical PR gate:
-Lint -> Typecheck -> Unit -> EACCE Golden -> DB/Integration -> Authorization/API -> critical frontend tests -> Build.
-
-Add Playwright golden journeys once the application foundation is stable. Full research matrix is not required on every PR; CI uses a small smoke experiment and full runs are explicit research workflows.
-
-## Demo readiness
-A deterministic demo-verification command should verify database health, demo seed, logins, and fixed TRUE_GAP/UNCERTAIN/SCHEDULED/COMPLETED scenarios before the final presentation.
-
-## Bug policy
-Every meaningful fixed bug receives a regression test. Final-demo target: zero known P0/P1 defects.
+The following notes preserve the exact scope introduced at each slice. Old “future,” “no later feature,” counts and authorization statements describe that slice only; current workflow coverage is the table above. M0–M2, I1/I2 and I3 Slice 1/2 contracts remain protected.
 
 ## EH-007 automated evidence
 
@@ -231,14 +163,6 @@ EH-014 acceptance is in tests/integration/care-actions.test.mjs: R1–R8, exact/
 [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) merged at `4a717c4c6be5b1fa9d089823bb093eca43813853`; exact-main [Bootstrap CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) completed successfully; [Issue #28 exit review 6329641518](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518) records **M2 EXIT GATE: PASS**. The exact-main validate job passed **67/67 unit**, **407/407 integration** (including 69 EH-014), fresh/populated/repeat verification across **10 migrations**, **7/7 container auth**, and the **EH-014 synthetic runtime proof PASS** (`eh-m2-initial-action-proof-v1`, INITIAL_ONLY, four cases). Lint/generation/Prisma validation/build/typecheck, audits, Docker health, existing runtime probes and smoke/cleanup also passed. These are observed remote results, not reruns in this documentation task; historical development failures remain intact in the validation report.
 
 M2 functional exit gate PASS applies to traceable INITIAL generation, not EACCE. FR-024 remains foundation-only/incomplete; AC-004/AC-005 unsatisfied. Issue #28 is CLOSED/completed at the reconciliation baseline; M0–M2 remain COMPLETE. Old unstarted M3 is superseded/resequenced to V3-I5; EACCE has not started; Slice 2 is COMPLETE, Slice 3 is COMPLETE and I1 technical exit is complete. Historical results above are retained evidence, not tests rerun for this documentation change.
-
-## Current I2 Slice 2 applicability
-
-Current delivery: Product V3 APPROVED; M0, M1, M2, V3-G0 and V3-I1 COMPLETE. V3-I2 Slice 1 COMPLETE: PR #49 MERGED at `925c4f7bb02d9ee7e6ee443ad290bc70c343fc47`; exact-main [Bootstrap 40519168675](https://github.com/abuhmaid28/egyhealth360/actions/runs/40519168675) SUCCESS (push/main, attempt 1, validate 122241181235); [completion 6444726271](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6444726271). [Issue #48 authorization 6452226103](https://github.com/abuhmaid28/egyhealth360/issues/48#issuecomment-6452226103) authorizes V3-I2 Slice 2 only; its finite availability implementation is IMPLEMENTED / IN REVIEW in this PR. V3-I2 overall INCOMPLETE. Slices 3–7 NOT AUTHORIZED. I3 NOT AUTHORIZED. EACCE NOT STARTED. Design/UI FROZEN. No merge authorized.
-
-## V3-I2 contract/readiness boundary
-
-See the [I2 contract](V3_I2_CONTRACT.md) and [Slice 2 implementation](V3_I2_SLICE2.md) for the frozen boundaries and current delivery. Only finite availability and operational scheduling configuration are implemented in Slice 2. Full Journey A is incomplete. Historical evidence and D01–D36 retain their original meaning.
 
 ## V3-I2 Slice 2 executable proof
 
