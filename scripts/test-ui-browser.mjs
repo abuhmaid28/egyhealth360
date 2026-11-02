@@ -95,7 +95,7 @@ try {
     .waitFor();
   await snapshot("01-login");
   await page.getByRole("button", { name: "Explore the patient demo" }).click();
-  await visible("Good morning, Ahmed");
+  await visible("Welcome back, Ahmed");
   await visible("Your care at a glance");
   await snapshot("02-patient-dashboard");
   await page
@@ -312,7 +312,7 @@ try {
   await snapshot("14-mobile-discovery");
   await page.setViewportSize({ width: 834, height: 1112 });
   await page.goto(`${origin}/patient`);
-  await visible("Good morning, Ahmed");
+  await visible("Welcome back, Ahmed");
   assert.ok(
     await page.evaluate(
       () =>

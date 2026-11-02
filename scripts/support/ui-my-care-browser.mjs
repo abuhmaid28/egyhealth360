@@ -106,6 +106,13 @@ export async function testPatientMyCare(browser, origin, shots) {
       .getByRole("heading", { name: c.recentCare, exact: true })
       .waitFor();
     await page.evaluate(() => globalThis.document.fonts.ready);
+    await page
+      .getByRole("heading", { name: `${c.greeting} Ahmed`, exact: true })
+      .waitFor();
+    assert.equal(
+      await page.locator("[data-clinician-monogram]").innerText(),
+      "MH",
+    );
     assert.equal(
       await page.locator("[data-my-care]").getAttribute("dir"),
       locale === "ar" ? "rtl" : "ltr",
@@ -141,6 +148,7 @@ export async function testPatientMyCare(browser, origin, shots) {
     }
     await capture(`patient-my-care-320-${locale}`, true);
     await page.setViewportSize({ width: 390, height: 844 });
+    assert.ok(await page.locator("[data-clinician-monogram]").isVisible());
     await page.evaluate(() => globalThis.scrollTo(0, 0));
     await capture(`patient-my-care-mobile-${locale}`);
     await capture(`patient-my-care-mobile-${locale}-full`, true);

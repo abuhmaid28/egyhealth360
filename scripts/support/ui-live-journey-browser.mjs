@@ -149,7 +149,7 @@ export async function testLiveJourney(browser, origin, shots) {
   await page.waitForURL("**/doctor");
   await page.getByLabel("Demo workspace").selectOption("PATIENT");
   await page.waitForURL("**/patient");
-  await page.getByText("Good morning, Ahmed", { exact: true }).waitFor();
+  await page.getByText("Welcome back, Ahmed", { exact: true }).waitFor();
   await page.close();
   console.log(
     "PASS: Live patient journey, EN/AR responsive summary entry, independent recovery and storage-denied demo.",

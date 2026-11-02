@@ -42,7 +42,9 @@ A/B/C remain rejected as current final-direction candidates. D/E/F, their six lo
 
 **Paused / not authorized:** wider frontend redesign or rollout; Clinician implementation; Final Brand V2 or Design System V2 freeze; backend/API/OpenAPI/schema/migration/security changes; Lab/I4/I5/EACCE/AI; production or protected-final-domain promotion; merge/auto-merge.
 
-**Next gate: independent Patient My Care visual implementation review + Product Owner review.** Technical Green does not approve visual fidelity. Existing Live prescription integration, diagnostics, longitudinal completeness, native Egyptian participant/editorial, real-device/assistive and deployment-parity gaps remain explicit. No broader implementation milestone is authorized by this slice.
+**Active refinement:** [independent review 6577639703](https://github.com/abuhmaid28/egyhealth360/pull/79#issuecomment-6577639703) found technical/scope validation green at `218887c5d15b88bbad6e5bb5a336202305fe655e` and requested only a neutral greeting, compact appointment rhythm, lighter desktop shortcuts, clinician initials and a stronger muted-text contrast margin. The user authorizes that focused pass. [Refinement evidence and preservation](ui-reference/PATIENT_MY_CARE_REFINEMENT.md). Existing IA, real adapters, event-time/timezone conventions, RTL/bidi, Demo/Live and security/privacy decisions remain preserved. Earlier implementation evidence remains unchanged.
+
+**Next gate: independent Patient My Care visual refinement review + Product Owner review.** Technical Green does not approve visual fidelity. Existing Live prescription integration, diagnostics, longitudinal completeness, native Egyptian participant/editorial, real-device/assistive and deployment-parity gaps remain explicit. No broader implementation milestone is authorized by this slice.
 
 ## Fast reading path and truth maintenance
 

@@ -12,6 +12,8 @@ EgyHealth 360 is an integrated synthetic graduation healthcare platform: patient
 
 ## Product and execution boundaries
 
+Current My Care follow-up: implement only [independent review 6577639703](https://github.com/abuhmaid28/egyhealth360/pull/79#issuecomment-6577639703)'s five visual/content refinements, preserving the implementation decisions it marks as good. [Refinement evidence](ui-reference/PATIENT_MY_CARE_REFINEMENT.md). No wider implementation or deployment is authorized.
+
 Keep [Product V3](PRODUCT.md), accepted [D01–D36](PRODUCT_V3_DECISIONS.md), [security](SECURITY.md) and task contracts distinct from implementation evidence. Clinical authority is the current assignment; booking grants none. Staff fulfillment is current exact recipient/artifact scope. ADMIN is operational. Retain wrong-patient privacy, immutable history, operation keys, PostgreSQL concurrency and additive migration checksums.
 
 The student team owns scope/design decisions, coordination and understanding/presentation; agents implement authorized contracts. [Execution policy](EXECUTION_POLICY.md) preserves synthetic data, authoritative clinical sources, free-first scope and no default fieldwork dependency.

@@ -23,6 +23,7 @@ import {
   type CareAppointment,
 } from "../lib/patient-my-care";
 import { myCareCopy, type MyCareCopy } from "../lib/patient-my-care-copy";
+import { clinicianMonogram } from "../lib/patient-my-care-avatar";
 import { LanguageSwitch, useLocale } from "../lib/i18n/context";
 import { useApp } from "./context";
 import { useDirectoryNames } from "./live-booking";
@@ -471,8 +472,16 @@ function AppointmentAnchor({
       ) : a ? (
         <>
           <div className={styles.appointmentDetails}>
-            <span className={styles.doctorAvatar} aria-hidden="true">
-              <Icon name="user" size={30} />
+            <span
+              className={styles.doctorAvatar}
+              aria-hidden="true"
+              data-clinician-monogram
+            >
+              <bdi>
+                {clinicianMonogram(
+                  a.doctor ? presentationName(a.doctor, translate) : null,
+                )}
+              </bdi>
             </span>
             <div className={styles.doctorInfo}>
               <h3>
@@ -490,14 +499,13 @@ function AppointmentAnchor({
             <div className={styles.appointmentWhen}>
               <p>
                 <bdi>{careDate(a.startAt, a.timeZone, locale)}</bdi>
-              </p>
-              <p>
+                {" "}
                 <bdi dir="ltr">{careTime(a.startAt, a.timeZone)}</bdi>
-                <small>
-                  <bdi dir="ltr">
-                    {a.timeZone} · {careOffset(a.startAt, a.timeZone)}
-                  </bdi>
-                </small>
+              </p>
+              <p className={styles.eventZone}>
+                <bdi dir="ltr">
+                  {a.timeZone} · {careOffset(a.startAt, a.timeZone)}
+                </bdi>
               </p>
               <p>
                 <bdi>
@@ -632,7 +640,11 @@ function CareShortcuts({
       aria-labelledby="care-shortcuts-title"
     >
       <h2 id="care-shortcuts-title">{c.yourCare}</h2>
-      <nav className={styles.tiles} aria-label={c.secondary}>
+      <nav
+        className={styles.tiles}
+        aria-label={c.secondary}
+        data-care-shortcuts
+      >
         {items.map((item) => {
           const content: ReactNode = (
             <>

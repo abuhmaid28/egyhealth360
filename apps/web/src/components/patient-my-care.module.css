@@ -33,7 +33,7 @@
   --care-border-strong: #cbd5e1;
   --care-ink: #0f172a;
   --care-secondary: #475569;
-  --care-muted: #64748b;
+  --care-muted: #526178;
   --care-success: #16a34a;
   --care-success-surface: #ecfdf3;
   --care-warning: #b7791f;
@@ -256,18 +256,18 @@
 .appointment {
   grid-column: 1;
   grid-row: 1;
-  padding: 24px;
+  padding: 20px;
   background: linear-gradient(90deg, var(--care-navy), var(--care-teal));
   color: #fff;
   border-radius: var(--care-radius-lg);
-  min-block-size: 246px;
+  min-block-size: 0;
 }
 .appointmentTop {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-block-end: 20px;
+  margin-block-end: 8px;
 }
 .appointmentTop h2 {
   font-size: 12px;
@@ -281,46 +281,57 @@
 }
 .appointmentDetails {
   display: grid;
-  grid-template-columns: 68px minmax(0, 1fr) minmax(170px, 0.7fr);
-  gap: 20px;
+  grid-template-columns: 56px minmax(0, 1fr) minmax(170px, 0.7fr);
+  gap: 16px;
   align-items: center;
 }
 .doctorAvatar {
   display: grid;
   place-items: center;
-  inline-size: 68px;
-  block-size: 68px;
+  inline-size: 56px;
+  block-size: 56px;
+  font-size: 20px;
+  font-weight: 600;
   border-radius: 50%;
   background: #d7e9ee;
   color: var(--care-teal-dark);
 }
 .doctorInfo h3 {
-  font-size: 24px;
-  line-height: 1.3;
+  font-size: 20px;
+  line-height: 1.35;
   letter-spacing: -0.4px;
-  margin-block-end: 8px;
+  margin-block-end: 4px;
   font-weight: 600;
+}
+.doctorInfo {
+  overflow-wrap: anywhere;
 }
 .doctorInfo p {
   font-size: 15px;
 }
 .doctorInfo small {
   display: block;
-  margin-block-start: 8px;
+  margin-block-start: 4px;
   color: #fff;
 }
 .appointmentWhen {
+  display: grid;
+  gap: 4px;
   border-inline-start: 1px solid rgb(255 255 255 / 32%);
-  padding-inline-start: 24px;
+  padding-inline-start: 16px;
   font-size: 13px;
+  line-height: 1.55;
+}
+.appointmentWhen p:first-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
 }
 .appointmentWhen p + p {
-  margin-block-start: 8px;
+  margin-block-start: 0;
 }
-.appointmentWhen small {
-  display: block;
+.eventZone {
   font-size: 12px;
-  margin-block-start: 2px;
   overflow-wrap: anywhere;
   line-height: 1.55;
 }
@@ -329,7 +340,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  margin-block-start: 20px;
+  margin-block-start: 12px;
 }
 .appointmentBottom p {
   font-size: 12px;
@@ -415,7 +426,7 @@
 }
 .nextForYou {
   grid-column: 2;
-  grid-row: 1;
+  grid-row: 1 / span 2;
   padding: 24px 22px;
   border: 1px solid var(--care-border);
   background: var(--care-surface);
@@ -488,27 +499,31 @@
 }
 .tiles > a,
 .tiles > div {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  background: var(--care-surface);
-  border: 1px solid var(--care-border);
-  border-radius: var(--care-radius-md);
-  min-block-size: 128px;
+  padding: 12px 0;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 4px 12px;
+  align-content: center;
+  align-items: center;
+  background: transparent;
+  border-block-end: 1px solid var(--care-border);
+  min-block-size: 80px;
 }
 .tiles .iconSpot {
-  margin-block-end: 14px;
+  grid-row: 1 / 3;
+  margin-block-end: 0;
 }
 .tiles strong {
+  grid-column: 2;
   font-size: 16px;
   line-height: 1.4;
 }
 .tiles small {
+  grid-column: 2;
   font-size: 12px;
   line-height: 1.45;
   color: var(--care-muted);
-  margin-block-start: 6px;
+  margin-block-start: 0;
 }
 .tiles > *:nth-child(2) .iconSpot {
   background: var(--care-info-surface);
@@ -755,7 +770,7 @@
   }
   .tiles > a,
   .tiles > div {
-    padding: 14px;
+    padding: 12px 0;
   }
   .nextForYou {
     padding: 24px 18px;
@@ -896,7 +911,7 @@
     min-block-size: 0;
   }
   .appointmentTop {
-    margin-block-end: 16px;
+    margin-block-end: 8px;
     gap: 10px;
     align-items: start;
     flex-wrap: wrap;
@@ -905,7 +920,15 @@
     font-size: 12px;
   }
   .appointmentDetails {
-    display: block;
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 8px 12px;
+  }
+  .doctorAvatar {
+    display: grid;
+    inline-size: 44px;
+    block-size: 44px;
+    font-size: 16px;
   }
   .doctorInfo h3 {
     font-size: 20px;
@@ -915,18 +938,19 @@
   }
   .doctorInfo p {
     font-size: 14px;
-    margin-block-start: 8px;
+    margin-block-start: 4px;
   }
   .doctorInfo small {
     display: none;
   }
   .appointmentWhen {
+    grid-column: 1 / -1;
     border: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 12px;
-    margin-block-start: 14px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    margin-block-start: 0;
     font-size: 13px;
   }
   .appointmentWhen p {
@@ -939,8 +963,8 @@
     font-size: 12px;
   }
   .appointmentBottom {
-    margin-block-start: 16px;
-    gap: 12px;
+    margin-block-start: 12px;
+    gap: 8px;
     flex-direction: column-reverse;
     align-items: stretch;
   }
@@ -1225,6 +1249,8 @@
   .tiles > a,
   .tiles > div {
     min-block-size: 58px;
+    display: flex;
+    flex-direction: column;
     padding: 0;
     background: transparent;
     border: 0;

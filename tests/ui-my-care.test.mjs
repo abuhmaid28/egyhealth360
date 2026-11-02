@@ -16,6 +16,30 @@ new Function(
   ).outputText,
 )(view);
 
+const avatar = {};
+new Function(
+  "exports",
+  ts.transpileModule(
+    readFileSync("apps/web/src/lib/patient-my-care-avatar.ts", "utf8"),
+    {
+      compilerOptions: {
+        module: ts.ModuleKind.CommonJS,
+        target: ts.ScriptTarget.ES2022,
+      },
+    },
+  ).outputText,
+)(avatar);
+test("clinician monograms use actual Latin/Arabic names without honorifics and never fabricate missing identity", () => {
+  assert.equal(avatar.clinicianMonogram("Dr. Mariam Hassan"), "MH");
+  assert.equal(avatar.clinicianMonogram("د. مريم حسن"), "مح");
+  assert.equal(avatar.clinicianMonogram("  Doctor Élodie Brun  "), "ÉB");
+  assert.equal(avatar.clinicianMonogram("Hassan"), "H");
+  assert.equal(avatar.clinicianMonogram("Drake"), "D");
+  for (const missing of [null, undefined, "", "  ", "Dr.", "دكتور", "123…"]) {
+    assert.equal(avatar.clinicianMonogram(missing), "—");
+  }
+});
+
 test("My Care preserves past booked status, prioritizes open visits, and never selects a terminal visit as upcoming", () => {
   const rows = [
     { id: "closed", state: "CONSULTED", startAt: "2026-11-02T10:00:00Z" },
