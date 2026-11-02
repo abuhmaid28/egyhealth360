@@ -1,3 +1,4 @@
+import { myCareCopy } from "./ui-my-care-browser.mjs";
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
@@ -39,24 +40,24 @@ export async function testArabic(browser, origin, shots) {
     .waitFor();
   await arabic().click();
   await page.getByRole("button", { name: "استكشف تجربة المريض" }).click();
-  await page.getByRole("heading", { name: "صباح الخير، Ahmed." }).waitFor();
+  await page.getByRole("heading", { name: `${myCareCopy.ar.greeting} Ahmed` }).waitFor();
   await snap("21-ar-patient-dashboard");
   await page.getByText("أدوات العرض التجريبي", { exact: true }).click();
   for (const state of ["loading", "empty", "error", "ready"]) {
     await page.getByLabel("حالة الشاشة").selectOption(state);
     if (state === "loading")
       await page
-        .getByRole("status", { name: "جارٍ التحميل", exact: true })
+        .getByRole("status", { name: myCareCopy.ar.loading, exact: true })
         .first()
         .waitFor();
     if (state === "empty")
       await page
-        .getByText("لا توجد بيانات هنا بعد", { exact: true })
+        .getByText(myCareCopy.ar.empty, { exact: true })
         .first()
         .waitFor();
     if (state === "error")
       await page
-        .getByText("تعذر تحميل هذه الشاشة", { exact: true })
+        .getByText(myCareCopy.ar.error, { exact: true })
         .first()
         .waitFor();
   }
@@ -74,7 +75,7 @@ export async function testArabic(browser, origin, shots) {
   );
   await page
     .getByRole("navigation")
-    .getByRole("link", { name: "ابحث عن طبيب" })
+    .getByRole("link", { name: myCareCopy.ar.findCare, exact: true })
     .click();
   await snap("22-ar-discovery");
   await page

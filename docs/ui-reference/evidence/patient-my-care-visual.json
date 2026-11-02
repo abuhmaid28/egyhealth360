@@ -1,0 +1,283 @@
+{
+  "base": "04311ba44336f164ca13c8ced310a64d957f2ed3",
+  "browser": "154.0.8037.57",
+  "measurements": [
+    {
+      "locale": "en",
+      "viewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "headerHeight": 72,
+      "pagePadding": "40px",
+      "anchorRadius": "16px",
+      "anchorWidth": 1011.21875,
+      "anchorHeight": 258.375,
+      "anchorBackground": "linear-gradient(90deg, rgb(11, 37, 69), rgb(11, 110, 127))",
+      "bodyFamily": "\"EH My Care Manrope\", Inter, \"EH My Care Arabic\", \"Noto Sans Arabic\", system-ui, sans-serif",
+      "loadedFonts": [
+        "Inter",
+        "EH My Care Manrope",
+        "EH My Care Arabic"
+      ]
+    },
+    {
+      "locale": "ar",
+      "viewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "headerHeight": 72,
+      "pagePadding": "40px",
+      "anchorRadius": "16px",
+      "anchorWidth": 1011.21875,
+      "anchorHeight": 266.15625,
+      "anchorBackground": "linear-gradient(90deg, rgb(11, 37, 69), rgb(11, 110, 127))",
+      "bodyFamily": "\"EH My Care Arabic\", \"Noto Sans Arabic\", \"EH My Care Manrope\", Inter, system-ui, sans-serif",
+      "loadedFonts": [
+        "Inter",
+        "EH My Care Manrope",
+        "EH My Care Arabic",
+        "EH My Care Arabic"
+      ]
+    }
+  ],
+  "contrast": [
+    {
+      "locale": "en",
+      "foreground": "rgb(11, 110, 127)",
+      "background": "rgb(255, 255, 255)",
+      "method": "solid surface",
+      "example": "Skip to content",
+      "ratio": 5.91
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(11, 37, 69)",
+      "background": "rgb(255, 255, 255)",
+      "method": "solid surface",
+      "example": "EgyHealth 360",
+      "ratio": 15.39
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(11, 110, 127)",
+      "background": "rgb(234, 246, 248)",
+      "method": "solid surface",
+      "example": "My care",
+      "ratio": 5.36
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(15, 23, 42)",
+      "background": "rgb(255, 255, 255)",
+      "method": "solid surface",
+      "example": "Find care",
+      "ratio": 17.85
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(71, 85, 105)",
+      "background": "rgb(255, 255, 255)",
+      "method": "solid surface",
+      "example": "العربية",
+      "ratio": 7.58
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(11, 37, 69)",
+      "background": "rgb(226, 232, 240)",
+      "method": "solid surface",
+      "example": "AM",
+      "ratio": 12.48
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(15, 23, 42)",
+      "background": "rgb(247, 249, 252)",
+      "method": "solid surface",
+      "example": "Good morning,",
+      "ratio": 16.93
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(100, 116, 139)",
+      "background": "rgb(247, 249, 252)",
+      "method": "solid surface",
+      "example": "Here’s your care today.",
+      "ratio": 4.51
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(11, 110, 127)",
+      "method": "worst appointment gradient endpoint",
+      "example": "YOUR NEXT APPOINTMENT",
+      "ratio": 5.91
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(100, 116, 139)",
+      "background": "rgb(255, 255, 255)",
+      "method": "solid surface",
+      "example": "View available sources",
+      "ratio": 4.76
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(11, 110, 127)",
+      "background": "rgb(247, 249, 252)",
+      "method": "solid surface",
+      "example": "View available history",
+      "ratio": 5.61
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(15, 23, 42)",
+      "background": "rgb(236, 253, 243)",
+      "method": "solid surface",
+      "example": "Shared with you",
+      "ratio": 16.93
+    },
+    {
+      "locale": "en",
+      "foreground": "rgb(71, 85, 105)",
+      "background": "rgb(247, 249, 252)",
+      "method": "solid surface",
+      "example": "© 2026 EgyHealth 360",
+      "ratio": 7.18
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(11, 110, 127)",
+      "background": "rgb(255, 255, 255)",
+      "method": "solid surface",
+      "example": "انتقل للمحتوى",
+      "ratio": 5.91
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(11, 37, 69)",
+      "background": "rgb(255, 255, 255)",
+      "method": "solid surface",
+      "example": "EgyHealth 360",
+      "ratio": 15.39
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(11, 110, 127)",
+      "background": "rgb(234, 246, 248)",
+      "method": "solid surface",
+      "example": "متابعتي",
+      "ratio": 5.36
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(15, 23, 42)",
+      "background": "rgb(255, 255, 255)",
+      "method": "solid surface",
+      "example": "دور على دكتور",
+      "ratio": 17.85
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(71, 85, 105)",
+      "background": "rgb(255, 255, 255)",
+      "method": "solid surface",
+      "example": "English",
+      "ratio": 7.58
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(11, 37, 69)",
+      "background": "rgb(226, 232, 240)",
+      "method": "solid surface",
+      "example": "AM",
+      "ratio": 12.48
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(15, 23, 42)",
+      "background": "rgb(247, 249, 252)",
+      "method": "solid surface",
+      "example": "صباح الخير يا",
+      "ratio": 16.93
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(100, 116, 139)",
+      "background": "rgb(247, 249, 252)",
+      "method": "solid surface",
+      "example": "دي متابعتك النهارده.",
+      "ratio": 4.51
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(11, 110, 127)",
+      "method": "worst appointment gradient endpoint",
+      "example": "ميعادك الجاي",
+      "ratio": 5.91
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(100, 116, 139)",
+      "background": "rgb(255, 255, 255)",
+      "method": "solid surface",
+      "example": "شوف المصادر المتاحة",
+      "ratio": 4.76
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(11, 110, 127)",
+      "background": "rgb(247, 249, 252)",
+      "method": "solid surface",
+      "example": "شوف السجل المتاح",
+      "ratio": 5.61
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(15, 23, 42)",
+      "background": "rgb(236, 253, 243)",
+      "method": "solid surface",
+      "example": "متشارك معاك",
+      "ratio": 16.93
+    },
+    {
+      "locale": "ar",
+      "foreground": "rgb(71, 85, 105)",
+      "background": "rgb(247, 249, 252)",
+      "method": "solid surface",
+      "example": "© 2026 EgyHealth 360",
+      "ratio": 7.18
+    }
+  ],
+  "browserScreens": [
+    "patient-my-care-desktop-en.png",
+    "patient-my-care-320-en.png",
+    "patient-my-care-mobile-en.png",
+    "patient-my-care-mobile-en-full.png",
+    "patient-my-care-text-200-en.png",
+    "patient-my-care-focus-en.png",
+    "patient-my-care-loading-en.png",
+    "patient-my-care-empty-en.png",
+    "patient-my-care-error-en.png",
+    "patient-my-care-uncertain-en.png",
+    "patient-my-care-desktop-ar.png",
+    "patient-my-care-320-ar.png",
+    "patient-my-care-mobile-ar.png",
+    "patient-my-care-mobile-ar-full.png",
+    "patient-my-care-text-200-ar.png",
+    "patient-my-care-focus-ar.png",
+    "patient-my-care-loading-ar.png",
+    "patient-my-care-empty-ar.png",
+    "patient-my-care-error-ar.png",
+    "patient-my-care-uncertain-ar.png",
+    "patient-my-care-live-desktop-en.png",
+    "patient-my-care-live-error-en.png",
+    "patient-my-care-live-desktop-ar.png",
+    "patient-my-care-live-error-ar.png"
+  ],
+  "reference": "Original SVG rasterized without source edits. Matched window captures exclude board/device chrome; responsive written spec still governs.",
+  "limits": "Chromium Linux only; sampled text roles, not WCAG certification or independent visual approval."
+}

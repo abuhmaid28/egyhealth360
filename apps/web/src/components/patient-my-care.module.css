@@ -1,0 +1,1264 @@
+@font-face {
+  font-family: "EH My Care Manrope";
+  src: url("/fonts/my-care/manrope.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "EH My Care Arabic";
+  src: url("/fonts/my-care/plex-arabic-regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "EH My Care Arabic";
+  src: url("/fonts/my-care/plex-arabic-semibold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+}
+/* Owner-directed, slice-local tokens. No global Design System or other-workspace rollout. */
+.root {
+  --care-navy: #0b2545;
+  --care-teal: #0b6e7f;
+  --care-teal-dark: #084e5a;
+  --care-aqua: #14b8a6;
+  --care-blue: #3b82f6;
+  --care-canvas: #f7f9fc;
+  --care-surface: #fff;
+  --care-alt: #f1f5f9;
+  --care-border: #e2e8f0;
+  --care-border-strong: #cbd5e1;
+  --care-ink: #0f172a;
+  --care-secondary: #475569;
+  --care-muted: #64748b;
+  --care-success: #16a34a;
+  --care-success-surface: #ecfdf3;
+  --care-warning: #b7791f;
+  --care-warning-surface: #fff8e6;
+  --care-error: #dc2626;
+  --care-error-surface: #fef2f2;
+  --care-info: #2563eb;
+  --care-info-surface: #eff6ff;
+  --care-radius-xs: 6px;
+  --care-radius-sm: 8px;
+  --care-radius-md: 12px;
+  --care-radius-lg: 16px;
+  --care-shadow: 0 1px 2px rgb(15 23 42 / 4%), 0 8px 24px rgb(15 23 42 / 4%);
+  min-block-size: 100dvh;
+  background: var(--care-canvas);
+  color: var(--care-ink);
+  font-family:
+    "EH My Care Manrope", Inter, "EH My Care Arabic", "Noto Sans Arabic",
+    system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+  font-synthesis: none;
+}
+.root[dir="rtl"] {
+  font-family:
+    "EH My Care Arabic", "Noto Sans Arabic", "EH My Care Manrope", Inter,
+    system-ui, sans-serif;
+  line-height: 1.8;
+}
+.root * {
+  box-sizing: border-box;
+  min-inline-size: 0;
+}
+.root h1,
+.root h2,
+.root h3,
+.root p {
+  margin: 0;
+}
+.root h1 {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+}
+.root h2 {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+}
+.root h3 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+.root[dir="rtl"] h1,
+.root[dir="rtl"] h2,
+.root[dir="rtl"] h3 {
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+.root small {
+  font-size: 13px;
+  line-height: 1.55;
+}
+.root strong {
+  font-weight: 600;
+}
+.root bdi[dir="ltr"] {
+  font-family: "EH My Care Manrope", Inter, system-ui, sans-serif;
+  unicode-bidi: isolate;
+}
+.root button,
+.root select {
+  font: inherit;
+  color: inherit;
+}
+.root a,
+.root button,
+.root select,
+.root summary {
+  touch-action: manipulation;
+}
+.root a:focus-visible,
+.root button:focus-visible,
+.root select:focus-visible,
+.root summary:focus-visible {
+  outline: 3px solid var(--care-teal);
+  outline-offset: 4px;
+}
+.root svg {
+  flex-shrink: 0;
+  stroke-width: 1.85;
+}
+.root[dir="rtl"] svg[data-directional="true"] {
+  transform: scaleX(-1);
+}
+.skip {
+  position: fixed;
+  inset-block-start: -100px;
+  inset-inline-start: 20px;
+  z-index: 50;
+  background: var(--care-surface);
+  color: var(--care-teal);
+  padding: 12px 20px;
+  border: 1px solid var(--care-teal);
+  border-radius: 8px;
+}
+.skip:focus {
+  inset-block-start: 12px;
+}
+.header {
+  min-block-size: 72px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  padding-inline: 40px;
+  background: var(--care-surface);
+  border-block-end: 1px solid var(--care-border);
+}
+.wordmark {
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--care-navy);
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+.primaryNav {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex: 1;
+}
+.primaryNav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 44px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.primaryNav a[aria-current="page"] {
+  background: #eaf6f8;
+  color: var(--care-teal);
+  font-weight: 600;
+}
+.utilities {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.utilities :global(.language-switch) {
+  margin: 0;
+  flex-shrink: 0;
+}
+.utilities :global(.language-switch button) {
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  font-size: 12px;
+  padding: 4px 7px;
+  color: var(--care-secondary);
+  background: transparent;
+  border: 0;
+}
+.utilities :global(.language-switch button[aria-pressed="true"]) {
+  color: var(--care-teal);
+  font-weight: 600;
+}
+.utilities :global(.language-switch span) {
+  display: none;
+}
+.mode {
+  font-size: 12px;
+  color: var(--care-secondary);
+  white-space: nowrap;
+}
+.avatar {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--care-border);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--care-navy);
+}
+.main {
+  max-inline-size: 1600px;
+  margin-inline: auto;
+  padding: 40px 40px 32px;
+  outline: none;
+}
+.intro {
+  margin-block-end: 32px;
+}
+.intro p {
+  color: var(--care-muted);
+  margin-block-start: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.086fr) minmax(280px, 1fr);
+  gap: 32px 24px;
+  align-items: start;
+}
+.appointment {
+  grid-column: 1;
+  grid-row: 1;
+  padding: 24px;
+  background: linear-gradient(90deg, var(--care-navy), var(--care-teal));
+  color: #fff;
+  border-radius: var(--care-radius-lg);
+  min-block-size: 246px;
+}
+.appointmentTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-block-end: 20px;
+}
+.appointmentTop h2 {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0.06em;
+}
+.root[dir="rtl"] .appointmentTop h2 {
+  letter-spacing: 0;
+  font-size: 13px;
+}
+.appointmentDetails {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr) minmax(170px, 0.7fr);
+  gap: 20px;
+  align-items: center;
+}
+.doctorAvatar {
+  display: grid;
+  place-items: center;
+  inline-size: 68px;
+  block-size: 68px;
+  border-radius: 50%;
+  background: #d7e9ee;
+  color: var(--care-teal-dark);
+}
+.doctorInfo h3 {
+  font-size: 24px;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+  margin-block-end: 8px;
+  font-weight: 600;
+}
+.doctorInfo p {
+  font-size: 15px;
+}
+.doctorInfo small {
+  display: block;
+  margin-block-start: 8px;
+  color: #fff;
+}
+.appointmentWhen {
+  border-inline-start: 1px solid rgb(255 255 255 / 32%);
+  padding-inline-start: 24px;
+  font-size: 13px;
+}
+.appointmentWhen p + p {
+  margin-block-start: 8px;
+}
+.appointmentWhen small {
+  display: block;
+  font-size: 12px;
+  margin-block-start: 2px;
+  overflow-wrap: anywhere;
+  line-height: 1.55;
+}
+.appointmentBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-block-start: 20px;
+}
+.appointmentBottom p {
+  font-size: 12px;
+  line-height: 1.6;
+  max-inline-size: 66%;
+}
+.whiteButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-block-size: 44px;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--care-surface);
+  color: var(--care-ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  flex-shrink: 0;
+  text-align: center;
+}
+.appointment .whiteButton:focus-visible {
+  outline-color: #fff;
+}
+.appointmentState h3 {
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+.appointmentState p {
+  font-size: 15px;
+  max-inline-size: 510px;
+  margin-block: 12px 16px;
+}
+.appointmentState .boundary {
+  font-size: 12px;
+  margin-block-end: 0;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.45;
+  white-space: normal;
+  border-radius: var(--care-radius-xs);
+  padding: 4px 8px;
+  background: var(--care-alt);
+  color: var(--care-ink);
+  align-self: start;
+}
+.status > span {
+  inline-size: 5px;
+  block-size: 5px;
+  border-radius: 50%;
+  background: var(--care-muted);
+  flex-shrink: 0;
+}
+.status[data-state="Shared with you"] {
+  background: var(--care-success-surface);
+}
+.status[data-state="Shared with you"] > span {
+  background: var(--care-success);
+}
+.status[data-state="BOOKED"],
+.status[data-state="IN_CONSULTATION"] {
+  background: var(--care-info-surface);
+}
+.status[data-state="BOOKED"] > span,
+.status[data-state="IN_CONSULTATION"] > span {
+  background: var(--care-info);
+}
+.appointment .status {
+  background: rgb(255 255 255 / 14%);
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 32%);
+}
+.appointment .status > span {
+  background: #fff;
+}
+.nextForYou {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 24px 22px;
+  border: 1px solid var(--care-border);
+  background: var(--care-surface);
+  border-radius: var(--care-radius-lg);
+  min-block-size: 246px;
+}
+.nextForYou h2 {
+  margin-block-end: 20px;
+}
+.nextForYou ul,
+.activityList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nextForYou li + li {
+  margin-block-start: 8px;
+}
+.nextForYou li > a {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 18px;
+  gap: 12px;
+  align-items: center;
+  min-block-size: 56px;
+  background: var(--care-canvas);
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+.nextForYou strong {
+  display: block;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.nextForYou small {
+  display: block;
+  font-size: 12px;
+  color: var(--care-muted);
+  line-height: 1.45;
+  margin-block-start: 3px;
+}
+.iconSpot {
+  display: grid;
+  place-items: center;
+  inline-size: 32px;
+  block-size: 32px;
+  border-radius: 50%;
+  color: var(--care-teal);
+  background: #e6f7f4;
+  flex-shrink: 0;
+}
+.nextForYou li:nth-child(2) .iconSpot {
+  background: var(--care-info-surface);
+  color: var(--care-info);
+}
+.nextForYou li:nth-child(3) .iconSpot {
+  background: var(--care-alt);
+  color: var(--care-secondary);
+}
+.shortcuts {
+  grid-column: 1;
+  grid-row: 2;
+}
+.shortcuts h2 {
+  margin-block-end: 20px;
+}
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.tiles > a,
+.tiles > div {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background: var(--care-surface);
+  border: 1px solid var(--care-border);
+  border-radius: var(--care-radius-md);
+  min-block-size: 128px;
+}
+.tiles .iconSpot {
+  margin-block-end: 14px;
+}
+.tiles strong {
+  font-size: 16px;
+  line-height: 1.4;
+}
+.tiles small {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--care-muted);
+  margin-block-start: 6px;
+}
+.tiles > *:nth-child(2) .iconSpot {
+  background: var(--care-info-surface);
+  color: var(--care-info);
+}
+.tiles > *:nth-child(3) .iconSpot {
+  background: var(--care-alt);
+  color: var(--care-secondary);
+}
+.tiles > *:nth-child(4) .iconSpot {
+  background: var(--care-alt);
+  color: var(--care-navy);
+}
+.recent {
+  grid-column: 1;
+  grid-row: 3;
+}
+.sectionHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-block-end: 20px;
+}
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-block-size: 44px;
+  color: var(--care-teal);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.activity {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+  padding-block: 20px;
+  border-block-start: 1px solid var(--care-border);
+}
+.activity .iconSpot {
+  background: var(--care-info-surface);
+  color: var(--care-info);
+  margin-block-start: 3px;
+}
+.activity h3 {
+  font-size: 15px;
+  line-height: 1.4;
+}
+.activity p {
+  font-size: 13px;
+  color: var(--care-muted);
+  margin-block-start: 4px;
+  line-height: 1.55;
+}
+.activity .textLink {
+  font-size: 12px;
+  min-block-size: 44px;
+  margin-block-start: 4px;
+}
+.sourceNote {
+  font-size: 12px;
+  color: var(--care-muted);
+  padding-block-start: 16px;
+  border-block-start: 1px solid var(--care-border);
+}
+.sourceNote span {
+  display: block;
+  margin-block-start: 4px;
+}
+.emptyRecent {
+  padding: 24px 0;
+  border-block-start: 1px solid var(--care-border);
+  color: var(--care-secondary);
+}
+.emptyRecent svg {
+  margin-block-end: 12px;
+  color: var(--care-teal);
+}
+.emptyRecent h3 {
+  color: var(--care-ink);
+  margin-block-end: 8px;
+}
+.emptyRecent p {
+  font-size: 13px;
+}
+.loading {
+  padding: 20px 0;
+  min-block-size: 100px;
+  font-size: 13px;
+}
+.loading > div {
+  block-size: 10px;
+  background: var(--care-border);
+  margin-block-start: 16px;
+  border-radius: 4px;
+  max-inline-size: 80%;
+}
+.loading > div:last-child {
+  max-inline-size: 55%;
+}
+.appointment .loading > div {
+  background: rgb(255 255 255 / 25%);
+}
+.verification {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  padding: 16px;
+  background: var(--care-warning-surface);
+  border-inline-start: 3px solid var(--care-warning);
+  margin-block-end: 20px;
+  border-radius: var(--care-radius-sm);
+  color: var(--care-ink);
+}
+.verification > svg {
+  color: var(--care-warning);
+  margin-block-start: 3px;
+}
+.verification h3 {
+  font-size: 15px;
+}
+.verification p {
+  font-size: 13px;
+  color: var(--care-secondary);
+  margin-block-start: 6px;
+}
+.profileError {
+  padding: 12px 16px;
+  background: var(--care-error-surface);
+  border-inline-start: 3px solid var(--care-error);
+  margin-block-end: 20px !important;
+  font-size: 13px;
+  color: var(--care-ink);
+}
+.footer {
+  max-inline-size: 1600px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  padding: 24px 40px;
+  color: var(--care-secondary);
+  font-size: 12px;
+  border-block-start: 1px solid var(--care-border);
+}
+.footer button {
+  background: transparent;
+  border: 0;
+  min-block-size: 44px;
+  padding: 8px 12px;
+}
+.demoTools {
+  margin-inline-start: auto;
+  display: flex;
+  gap: 24px;
+  align-items: start;
+  flex-wrap: wrap;
+}
+.demoTools label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+}
+.demoTools select {
+  min-block-size: 44px;
+  background: var(--care-surface);
+  border: 1px solid var(--care-muted);
+  border-radius: var(--care-radius-sm);
+  padding: 8px;
+  max-inline-size: 180px;
+}
+.demoTools summary {
+  min-block-size: 44px;
+  display: list-item;
+  padding: 10px;
+  cursor: pointer;
+}
+.demoTools details > label {
+  margin-block-start: 8px;
+}
+.bottomNav {
+  display: none;
+}
+.toast {
+  position: fixed;
+  z-index: 10;
+  inset-inline: 24px;
+  inset-block-end: 24px;
+  max-inline-size: 600px;
+  margin-inline: auto;
+  background: var(--care-navy);
+  color: #fff;
+  box-shadow: var(--care-shadow);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.toast button {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+}
+@media (max-width: 1200px) {
+  .header {
+    gap: 24px;
+    padding-inline: 28px;
+  }
+  .mode {
+    display: none;
+  }
+  .main {
+    padding-inline: 28px;
+  }
+  .grid {
+    grid-template-columns: minmax(0, 2.086fr) minmax(270px, 1fr);
+    gap: 32px 20px;
+  }
+  .appointmentDetails {
+    grid-template-columns: 48px minmax(0, 1fr) minmax(145px, 0.7fr);
+    gap: 14px;
+  }
+  .doctorAvatar {
+    inline-size: 48px;
+    block-size: 48px;
+  }
+  .doctorInfo h3 {
+    font-size: 20px;
+  }
+  .appointmentWhen {
+    padding-inline-start: 16px;
+  }
+  .tiles {
+    gap: 12px;
+  }
+  .tiles > a,
+  .tiles > div {
+    padding: 14px;
+  }
+  .nextForYou {
+    padding: 24px 18px;
+  }
+  .nextForYou li > a {
+    gap: 8px;
+    padding-inline: 10px;
+  }
+}
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: minmax(0, 1.7fr) minmax(250px, 1fr);
+  }
+  .appointmentDetails {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .doctorAvatar {
+    display: none;
+  }
+  .appointmentWhen {
+    display: flex;
+    gap: 12px;
+    border-inline-start: 0;
+    border-block-start: 1px solid rgb(255 255 255 / 32%);
+    padding: 12px 0 0;
+    flex-wrap: wrap;
+  }
+  .appointmentWhen p + p {
+    margin-block-start: 0;
+  }
+  .appointmentWhen p {
+    flex: 1;
+    min-inline-size: 100px;
+  }
+  .appointmentBottom {
+    align-items: start;
+    flex-direction: column;
+  }
+  .appointmentBottom p {
+    max-inline-size: none;
+  }
+  .appointmentBottom .whiteButton {
+    align-self: stretch;
+  }
+  .nextForYou li > a {
+    grid-template-columns: 26px minmax(0, 1fr) 18px;
+  }
+  .nextForYou .iconSpot {
+    inline-size: 26px;
+    block-size: 26px;
+  }
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .activity {
+    grid-template-columns: 32px minmax(0, 1fr);
+  }
+  .activity > .status {
+    grid-column: 2;
+  }
+  .utilities {
+    gap: 8px;
+  }
+  .primaryNav {
+    gap: 4px;
+  }
+  .primaryNav a {
+    padding-inline: 12px;
+  }
+  .wordmark {
+    font-size: 16px;
+  }
+}
+@media (max-width: 760px) {
+  .header {
+    min-block-size: 68px;
+    justify-content: space-between;
+    padding: 10px 20px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .primaryNav {
+    display: none;
+  }
+  .wordmark {
+    font-size: 16px;
+    letter-spacing: -0.3px;
+  }
+  .utilities {
+    gap: 8px;
+  }
+  .utilities :global(.language-switch button) {
+    font-size: 12px;
+    padding-inline: 4px;
+  }
+  .utilities :global(.language-switch) {
+    display: flex;
+    gap: 0;
+  }
+  .avatar {
+    inline-size: 36px;
+    block-size: 44px;
+    background: transparent;
+  }
+  .avatar bdi {
+    display: grid;
+    place-items: center;
+    inline-size: 32px;
+    block-size: 32px;
+    border-radius: 50%;
+    background: var(--care-border);
+  }
+  .main {
+    padding: 24px 20px 24px;
+  }
+  .intro {
+    margin-block-end: 24px;
+  }
+  .root h1 {
+    font-size: 24px;
+    line-height: 1.25;
+    letter-spacing: -0.7px;
+  }
+  .intro p {
+    font-size: 13px;
+    margin-block-start: 8px;
+  }
+  .grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .grid > * {
+    inline-size: 100%;
+  }
+  .appointment {
+    padding: 20px;
+    min-block-size: 0;
+  }
+  .appointmentTop {
+    margin-block-end: 16px;
+    gap: 10px;
+    align-items: start;
+    flex-wrap: wrap;
+  }
+  .appointmentTop h2 {
+    font-size: 12px;
+  }
+  .appointmentDetails {
+    display: block;
+  }
+  .doctorInfo h3 {
+    font-size: 20px;
+    line-height: 1.35;
+    letter-spacing: 0;
+    max-inline-size: 250px;
+  }
+  .doctorInfo p {
+    font-size: 14px;
+    margin-block-start: 8px;
+  }
+  .doctorInfo small {
+    display: none;
+  }
+  .appointmentWhen {
+    border: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    margin-block-start: 14px;
+    font-size: 13px;
+  }
+  .appointmentWhen p {
+    min-inline-size: 0;
+  }
+  .appointmentWhen p:nth-child(3) {
+    grid-column: 1/-1;
+  }
+  .appointmentWhen small {
+    font-size: 12px;
+  }
+  .appointmentBottom {
+    margin-block-start: 16px;
+    gap: 12px;
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .appointmentBottom p {
+    font-size: 12px;
+    max-inline-size: none;
+  }
+  .whiteButton {
+    min-block-size: 48px;
+    line-height: 1.4;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+  .appointmentState h3 {
+    font-size: 20px;
+  }
+  .appointmentState .whiteButton {
+    display: flex;
+    inline-size: 100%;
+  }
+  .nextForYou {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    min-block-size: 0;
+  }
+  .root h2 {
+    font-size: 20px;
+    line-height: 1.35;
+    letter-spacing: -0.25px;
+  }
+  .nextForYou h2 {
+    margin-block-end: 16px;
+  }
+  .nextForYou li > a {
+    background: var(--care-alt);
+    min-block-size: 64px;
+    padding: 12px;
+    grid-template-columns: 30px minmax(0, 1fr) 18px;
+    gap: 12px;
+  }
+  .nextForYou strong {
+    font-size: 15px;
+  }
+  .nextForYou small {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .nextForYou .iconSpot {
+    inline-size: 30px;
+    block-size: 30px;
+  }
+  .shortcuts h2 {
+    margin-block-end: 16px;
+  }
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .tiles > a,
+  .tiles > div {
+    min-block-size: 112px;
+    padding: 14px;
+    background: var(--care-surface);
+  }
+  .tiles .iconSpot {
+    margin-block-end: 10px;
+  }
+  .tiles strong {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .tiles small {
+    font-size: 12px;
+  }
+  .sectionHeading {
+    align-items: start;
+    gap: 16px;
+    margin-block-end: 8px;
+    flex-wrap: wrap;
+  }
+  .sectionHeading h2 {
+    padding-block: 9px;
+  }
+  .sectionHeading > .textLink {
+    font-size: 12px;
+  }
+  .activity {
+    padding-block: 16px;
+    gap: 8px 12px;
+    grid-template-columns: 30px minmax(0, 1fr);
+  }
+  .activity .iconSpot {
+    inline-size: 30px;
+    block-size: 30px;
+  }
+  .activity h3 {
+    font-size: 14px;
+  }
+  .activity p {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .activity > .status {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .activityBody .textLink {
+    min-block-size: 44px;
+  }
+  .footer {
+    padding: 20px 20px 100px;
+    gap: 12px 20px;
+  }
+  .demoTools {
+    margin-inline-start: 0;
+    inline-size: 100%;
+    gap: 12px;
+    justify-content: space-between;
+  }
+  .demoTools label {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .demoTools select {
+    max-inline-size: 160px;
+  }
+  .bottomNav {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    position: sticky;
+    inset-block-end: 0;
+    background: var(--care-surface);
+    border-block-start: 1px solid var(--care-border);
+    z-index: 5;
+    padding: 8px 12px max(8px, env(safe-area-inset-bottom));
+    gap: 4px;
+  }
+  .bottomNav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-block-size: 52px;
+    font-size: 12px;
+    line-height: 1.3;
+    padding: 4px;
+    color: var(--care-muted);
+    text-align: center;
+  }
+  .bottomNav a[aria-current="page"] {
+    color: var(--care-teal);
+    font-weight: 600;
+  }
+  .bottomNav svg {
+    inline-size: 20px;
+    block-size: 20px;
+  }
+  .toast {
+    inset-block-end: 88px;
+  }
+  .verification {
+    padding: 14px;
+    gap: 10px;
+  }
+  .sourceNote {
+    line-height: 1.8;
+  }
+  .root[dir="rtl"] h1 {
+    line-height: 1.5;
+  }
+  .root[dir="rtl"] .intro p {
+    line-height: 1.8;
+  }
+}
+@media (max-width: 350px) {
+  .header {
+    padding-inline: 20px;
+    gap: 8px;
+  }
+  .wordmark {
+    font-size: 14px;
+  }
+  .utilities {
+    gap: 0;
+  }
+  .utilities :global(.language-switch button) {
+    font-size: 12px;
+    min-inline-size: 44px;
+  }
+  .avatar {
+    inline-size: 28px;
+  }
+  .avatar bdi {
+    inline-size: 28px;
+    block-size: 28px;
+    font-size: 12px;
+  }
+  .root h1 {
+    font-size: 24px;
+  }
+  .appointmentWhen {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .appointmentWhen p:nth-child(3) {
+    grid-column: auto;
+  }
+  .appointmentWhen small {
+    margin-block-start: 3px;
+  }
+  .appointmentTop .status {
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .root a,
+  .root button,
+  .root summary {
+    transition:
+      background-color 160ms ease-out,
+      color 160ms ease-out;
+  }
+  .whiteButton:active {
+    transform: translateY(1px);
+  }
+}
+.wordmark {
+  display: flex;
+  align-items: center;
+  min-block-size: 44px;
+}
+.avatar {
+  min-inline-size: 44px;
+}
+
+.root .appointmentTop h2 {
+  font-size: 12px;
+  line-height: 1.45;
+}
+.activityEnd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  justify-content: flex-end;
+}
+.activityEnd .textLink {
+  min-block-size: 24px;
+  font-size: 12px;
+}
+.activity {
+  align-items: center;
+  padding-block: 16px;
+  min-block-size: 80px;
+}
+.activityEnd .status {
+  align-self: center;
+}
+@media (max-width: 960px) {
+  .activityEnd {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
+}
+.tiles strong,
+.tiles small {
+  overflow-wrap: anywhere;
+}
+.appointment .status {
+  background: transparent;
+}
+
+@media (max-width: 760px) {
+  .nextForYou li:nth-child(n + 3) {
+    display: none;
+  }
+  .tiles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .tiles > a,
+  .tiles > div {
+    min-block-size: 58px;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .tiles .iconSpot {
+    inline-size: min(58px, 100%);
+    block-size: 54px;
+    border-radius: 12px;
+    margin-block-end: 0;
+  }
+  .tiles strong,
+  .tiles small {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .tiles [aria-disabled="true"] .iconSpot {
+    background: var(--care-border);
+    color: var(--care-secondary);
+  }
+  .tiles [aria-disabled="true"] small {
+    position: static;
+    inline-size: auto;
+    block-size: auto;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+    text-align: center;
+    margin-block-start: 8px;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+}

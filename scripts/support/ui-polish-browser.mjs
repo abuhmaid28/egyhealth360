@@ -54,6 +54,10 @@ export async function testPolish(browser, origin, shots) {
     await button("Explore the patient demo").click();
     await ready();
     await responsive("dashboard");
+    // The authorized My Care slice has bottom navigation. Keep the legacy drawer
+    // regression on the unchanged Appointments surface instead of requiring it on My Care.
+    await page.locator('[data-my-care] a[href="/patient/appointments"]').last().click();
+    await page.waitForURL("**/patient/appointments");
     // Wait for the media-query effect, not only browser viewport metrics.
     await page.locator(".sidebar[inert]").waitFor({ state: "attached" });
     // Closed mobile navigation is absent from keyboard/accessibility traversal.
@@ -161,7 +165,7 @@ export async function testPolish(browser, origin, shots) {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto(origin + "/patient");
     await ready();
-    await page.locator(".hero-compact").waitFor();
+    await page.locator('[data-appointment-anchor] a[href*="/patient/appointments/"]').waitFor();
     if (shots) {
       await mkdir(shots, { recursive: true });
       await page.screenshot({
