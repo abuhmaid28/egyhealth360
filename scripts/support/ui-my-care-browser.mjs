@@ -18,6 +18,23 @@ function moduleValue(path) {
   return exports;
 }
 const fixture = moduleValue("apps/web/src/lib/mock/fixtures.ts");
+export async function openDemoUtility(page) {
+  await page
+    .locator(
+      'select[aria-label="Demo workspace"], select[aria-label="مساحة العرض التجريبي"]',
+    )
+    .first()
+    .waitFor({ state: "attached" });
+  const utility = page.locator("[data-demo-utility]");
+  if ((await utility.count()) && !(await utility.evaluate((el) => el.open))) {
+    await utility.locator("summary").click();
+  }
+}
+export async function toggleDemoControls(page, legacyLabel = "Demo controls") {
+  const utility = page.locator("[data-demo-utility]");
+  if (await utility.count()) await utility.locator("summary").click();
+  else await page.getByText(legacyLabel, { exact: true }).click();
+}
 export const { myCareCopy } = moduleValue(
   "apps/web/src/lib/patient-my-care-copy.ts",
 );
@@ -106,6 +123,29 @@ export async function testPatientMyCare(browser, origin, shots) {
       .getByRole("heading", { name: c.recentCare, exact: true })
       .waitFor();
     await page.evaluate(() => globalThis.document.fonts.ready);
+    assert.equal(await page.locator("[data-demo-utility][open]").count(), 0);
+    assert.equal(
+      await page.getByLabel(c.demoWorkspace, { exact: true }).isVisible(),
+      false,
+    );
+    assert.equal(
+      await page.getByLabel(c.screenState, { exact: true }).isVisible(),
+      false,
+    );
+    assert.equal(
+      await page
+        .locator("#main")
+        .getByText(c.sourceMissing, { exact: true })
+        .count(),
+      0,
+    );
+    assert.equal(
+      await page
+        .locator("#main")
+        .getByText(c.dateMissing, { exact: true })
+        .count(),
+      0,
+    );
     await page
       .getByRole("heading", { name: `${c.greeting} Ahmed`, exact: true })
       .waitFor();
@@ -134,6 +174,29 @@ export async function testPatientMyCare(browser, origin, shots) {
       report.screens.push(name + ".png");
     };
     await capture(`patient-my-care-desktop-${locale}`);
+    await capture(`patient-my-care-desktop-${locale}-full`, true);
+    const quickAccess = page.locator("[data-care-shortcuts] a").first();
+    await quickAccess.hover();
+    assert.equal(
+      await quickAccess.evaluate(
+        (el) => globalThis.getComputedStyle(el).backgroundColor,
+      ),
+      "rgb(241, 245, 249)",
+    );
+    await quickAccess.focus();
+    await page.keyboard.press("Shift+Tab");
+    await page.keyboard.press("Tab");
+    assert.equal(
+      await quickAccess.evaluate(
+        (el) => globalThis.getComputedStyle(el).outlineWidth,
+      ),
+      "3px",
+    );
+    await capture(`patient-my-care-focus-desktop-${locale}`);
+    await page.mouse.move(0, 0);
+    await page
+      .getByRole("heading", { name: `${c.greeting} Ahmed`, exact: true })
+      .click();
     const boxes = await page.locator("[data-appointment-anchor]").boundingBox();
     assert.ok(boxes.width > 600);
     for (const width of [1440, 1200, 1024, 834, 768, 390, 320]) {
@@ -218,14 +281,28 @@ export async function testPatientMyCare(browser, origin, shots) {
     assert.equal(focus.outline, "solid");
     report.focus.push({ locale, ...focus });
     await capture(`patient-my-care-focus-${locale}`);
-    await page.getByText(c.demoControls, { exact: true }).click();
+    await openDemoUtility(page);
+    assert.ok(
+      await page.getByLabel(c.demoWorkspace, { exact: true }).isVisible(),
+    );
+    await page.getByLabel(c.screenState, { exact: true }).focus();
+    await page.keyboard.press("Escape");
+    assert.equal(await page.locator("[data-demo-utility][open]").count(), 0);
+    assert.equal(
+      await page
+        .locator("[data-demo-utility] summary")
+        .evaluate((el) => el === globalThis.document.activeElement),
+      true,
+    );
     for (const [state, key] of [
       ["loading", "loading"],
       ["empty", "empty"],
       ["error", "error"],
       ["uncertain", "unverified"],
     ]) {
+      await openDemoUtility(page);
       await page.getByLabel(c.screenState, { exact: true }).selectOption(state);
+      await toggleDemoControls(page);
       if (state === "loading")
         await page
           .getByRole("status", { name: c.loading, exact: true })
@@ -364,6 +441,7 @@ export async function testPatientMyCare(browser, origin, shots) {
       );
     }
     await page.setViewportSize({ width: 1600, height: 1000 });
+    assert.equal(await page.locator("[data-demo-utility]").count(), 0);
     assert.equal(await page.getByLabel(c.demoWorkspace).count(), 0);
     assert.equal(await page.getByLabel(c.screenState).count(), 0);
     assert.equal(

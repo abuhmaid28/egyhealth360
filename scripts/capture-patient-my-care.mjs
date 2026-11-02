@@ -11,15 +11,20 @@ import {
   myCareCopy,
 } from "./support/ui-my-care-browser.mjs";
 
-const refinement = process.env.MY_CARE_REFINEMENT === "1";
-const evidenceDirectory = refinement
-  ? "docs/ui-reference/refinement-evidence"
-  : "docs/ui-reference/evidence";
+const composition = process.env.MY_CARE_COMPOSITION === "1";
+const refinement = composition || process.env.MY_CARE_REFINEMENT === "1";
+const evidenceDirectory = composition
+  ? "docs/ui-reference/composition-evidence"
+  : refinement
+    ? "docs/ui-reference/refinement-evidence"
+    : "docs/ui-reference/evidence";
 const root = process.cwd(),
   output = resolve(root, evidenceDirectory);
-const evidenceBase = refinement
-  ? "218887c5d15b88bbad6e5bb5a336202305fe655e"
-  : "04311ba44336f164ca13c8ced310a64d957f2ed3";
+const evidenceBase = composition
+  ? "b1421ecf41a01c9734649f3d1833608fab19dc43"
+  : refinement
+    ? "218887c5d15b88bbad6e5bb5a336202305fe655e"
+    : "04311ba44336f164ca13c8ced310a64d957f2ed3";
 const origin = process.env.MY_CARE_ORIGIN ?? "http://127.0.0.1:3222";
 const app = process.env.MY_CARE_ORIGIN
   ? null
@@ -161,6 +166,39 @@ try {
               background: globalThis.getComputedStyle(el).backgroundColor,
               border: globalThis.getComputedStyle(el).borderWidth,
             })),
+            usefulWidth:
+              main.getBoundingClientRect().width -
+              parseFloat(globalThis.getComputedStyle(main).paddingInlineStart) -
+              parseFloat(globalThis.getComputedStyle(main).paddingInlineEnd),
+            mainContentStart:
+              main.getBoundingClientRect().x +
+              parseFloat(globalThis.getComputedStyle(main).paddingLeft),
+            headerContentStart:
+              header.firstElementChild.getBoundingClientRect().x +
+              parseFloat(
+                globalThis.getComputedStyle(header.firstElementChild)
+                  .paddingLeft,
+              ),
+            quickAccessWidth: root
+              .querySelector("[data-care-shortcuts]")
+              .getBoundingClientRect().width,
+            recentWidth: root
+              .querySelector("#care-recent-title")
+              .closest("section")
+              .getBoundingClientRect().width,
+            topRowGap:
+              globalThis.innerWidth <= 1000
+                ? null
+                : (() => {
+                    const boxes = [
+                      anchor.getBoundingClientRect(),
+                      root
+                        .querySelector("#care-actions-title")
+                        .closest("section")
+                        .getBoundingClientRect(),
+                    ].sort((a, b) => a.x - b.x);
+                    return boxes[1].x - boxes[0].right;
+                  })(),
             bodyFamily: globalThis.getComputedStyle(root).fontFamily,
             loadedFonts: [...globalThis.document.fonts]
               .filter((f) => f.status === "loaded")
@@ -255,6 +293,19 @@ try {
     contrast.every((p) => p.ratio >= 4.5),
     JSON.stringify(contrast.filter((p) => p.ratio < 4.5)),
   );
+  if (composition) {
+    for (const m of measurements.filter((m) => m.viewport.width === 1600)) {
+      assert.ok(m.usefulWidth >= 1360 && m.usefulWidth <= 1440);
+      assert.ok(Math.abs(m.mainContentStart - m.headerContentStart) < 1);
+      assert.ok(Math.abs(m.quickAccessWidth - m.usefulWidth) < 1);
+      assert.ok(Math.abs(m.recentWidth - m.usefulWidth) < 1);
+      assert.ok(Math.abs(m.topRowGap - 24) < 1);
+      assert.ok(
+        m.anchorHeight >= (m.locale === "en" ? 210 : 216) &&
+          m.anchorHeight <= (m.locale === "en" ? 220 : 226),
+      );
+    }
+  }
   if (refinement) {
     for (const m of measurements.filter((m) => m.viewport.width === 1600)) {
       assert.ok(
@@ -288,13 +339,15 @@ try {
                 await readFile(
                   resolve(
                     root,
-                    "docs/ui-reference/evidence/patient-my-care-visual.json",
+                    composition
+                      ? "docs/ui-reference/refinement-evidence/patient-my-care-visual.json"
+                      : "docs/ui-reference/evidence/patient-my-care-visual.json",
                   ),
                   "utf8",
                 ),
               ).measurements,
               previousShortcutMinimum: {
-                pixels: 128,
+                pixels: composition ? 80 : 128,
                 source:
                   "baseline CSS min-block-size, confirmed by independent review",
               },
@@ -328,6 +381,41 @@ try {
       )
       .join("");
     html = html.replace("</main>", comparison + "</main>");
+  }
+  if (composition) {
+    html = html
+      .replaceAll("visual refinement review", "premium composition review")
+      .replace(
+        "../PATIENT_MY_CARE_REFINEMENT.md",
+        "../PATIENT_MY_CARE_COMPOSITION.md",
+      );
+    html = html
+      .replaceAll(
+        "../evidence/patient-my-care-desktop-",
+        "../refinement-evidence/patient-my-care-desktop-",
+      )
+      .replaceAll(
+        "../evidence/patient-my-care-mobile-",
+        "../refinement-evidence/patient-my-care-mobile-",
+      );
+    html = html.replace(
+      "Original supplied board — 1600 × 1000",
+      "Original study — superseded where the current owner instruction changes composition",
+    );
+    html = html.replace(
+      "</main>",
+      '<h2>Full-page desktop EN / AR</h2><section><img src="patient-my-care-desktop-en-full.png" alt="Full-page English desktop"><img src="patient-my-care-desktop-ar-full.png" alt="Full-page Arabic desktop"></section></main>',
+    );
+  }
+  if (composition) {
+    html = html.replace(
+      /<h2>Original study[\s\S]*?<h2>Required desktop views/,
+      "<h2>Required desktop views",
+    );
+    html = html.replace(
+      "Owner reference + actual built frontend. Accepted IA, data, 24-hour time, type/accessibility and touch-size constraints take precedence over illustrative content. No pixel-perfect parity claim. Review all recorded discrepancies before approval.",
+      "Second owner-directed premium composition. The current instruction supersedes the earlier left-column layout. These are actual built-frontend captures with preserved clinical/privacy boundaries; visual approval remains pending.",
+    );
   }
   await writeFile(resolve(output, "patient-my-care-review.html"), html);
   await page.setViewportSize({ width: 1600, height: 1000 });

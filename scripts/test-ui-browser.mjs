@@ -1,4 +1,8 @@
-import { testPatientMyCare } from "./support/ui-my-care-browser.mjs";
+import {
+  testPatientMyCare,
+  openDemoUtility,
+  toggleDemoControls,
+} from "./support/ui-my-care-browser.mjs";
 import { testConsultationClose } from "./support/ui-consultation-close-browser.mjs";
 import { testFollowUpPresentation } from "./support/ui-follow-up-intents-browser.mjs";
 /** Real-browser Golden Demo regression. Built Next app; no API or database required. */
@@ -83,6 +87,7 @@ try {
       .waitFor({ state: "visible" });
   };
   const switchRole = async (role) => {
+    await openDemoUtility(page);
     await page.getByLabel("Demo workspace").selectOption(role);
     await page.waitForURL(
       `**/${{ PATIENT: "patient", CLINICIAN: "doctor", PHARMACY_STAFF: "pharmacy", LAB_STAFF: "laboratory", ADMIN: "admin" }[role]}`,
@@ -174,7 +179,10 @@ try {
   await visible("Shared result");
   await snapshot("10-laboratory");
   await switchRole("PATIENT");
-  await page.locator('[data-my-care] a[href="/patient/record"]').first().click();
+  await page
+    .locator('[data-my-care] a[href="/patient/record"]')
+    .first()
+    .click();
   await visible("Synthetic follow-up review");
   assert.ok(
     !(await page.locator("#main").innerText()).includes(
@@ -224,19 +232,32 @@ try {
     await page.goto(origin + route);
     await page.locator("#main").waitFor();
     await page.locator("#main .loading").first().waitFor({ state: "hidden" });
-    await page.getByText("Demo controls", { exact: true }).click();
+    await toggleDemoControls(page);
     for (const state of ["loading", "empty", "error", "ready"]) {
       await page.getByLabel("Screen state").selectOption(state);
       if (state === "loading")
         assert.ok(
           await page
-            .getByRole("status", { name: route === "/patient" ? "Loading your care" : "Loading", exact: true })
+            .getByRole("status", {
+              name: route === "/patient" ? "Loading your care" : "Loading",
+              exact: true,
+            })
             .count(),
         );
-      if (state === "empty") await visible(route === "/patient" ? "No upcoming appointments" : "Nothing here yet");
-      if (state === "error") await visible(route === "/patient" ? "Appointments could not load" : "We couldn’t load this view");
+      if (state === "empty")
+        await visible(
+          route === "/patient"
+            ? "No upcoming appointments"
+            : "Nothing here yet",
+        );
+      if (state === "error")
+        await visible(
+          route === "/patient"
+            ? "Appointments could not load"
+            : "We couldn’t load this view",
+        );
     }
-    await page.getByText("Demo controls", { exact: true }).click();
+    await toggleDemoControls(page);
   }
 
   const workspaceRoutes = [
@@ -269,13 +290,23 @@ try {
       await page.goto(origin + route);
       await page.locator("#main").waitFor();
       await page.locator("#main .loading").first().waitFor({ state: "hidden" });
-      await page.getByText("Demo controls", { exact: true }).click();
+      await toggleDemoControls(page);
       for (const state of ["loading", "empty", "error", "ready"]) {
         await page.getByLabel("Screen state").selectOption(state);
-        if (state === "empty") await visible(route === "/patient" ? "No upcoming appointments" : "Nothing here yet");
-        if (state === "error") await visible(route === "/patient" ? "Appointments could not load" : "We couldn’t load this view");
+        if (state === "empty")
+          await visible(
+            route === "/patient"
+              ? "No upcoming appointments"
+              : "Nothing here yet",
+          );
+        if (state === "error")
+          await visible(
+            route === "/patient"
+              ? "Appointments could not load"
+              : "We couldn’t load this view",
+          );
       }
-      await page.getByText("Demo controls", { exact: true }).click();
+      await toggleDemoControls(page);
     }
   }
   await switchRole("PATIENT");

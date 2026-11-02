@@ -12,7 +12,9 @@ EgyHealth 360 is an integrated synthetic graduation healthcare platform: patient
 
 ## Product and execution boundaries
 
-Current My Care follow-up: implement only [independent review 6577639703](https://github.com/abuhmaid28/egyhealth360/pull/79#issuecomment-6577639703)'s five visual/content refinements, preserving the implementation decisions it marks as good. [Refinement evidence](ui-reference/PATIENT_MY_CARE_REFINEMENT.md). No wider implementation or deployment is authorized.
+The latest owner instruction authorizes a second **Patient My Care premium composition** pass only, superseding the prior left-column-only layout. [Current evidence](ui-reference/PATIENT_MY_CARE_COMPOSITION.md). Data/read contracts, other workspaces, backend/API/schema/security, CI/hosting and no-deploy/no-merge boundaries remain unchanged.
+
+Earlier [independent review 6577639703](https://github.com/abuhmaid28/egyhealth360/pull/79#issuecomment-6577639703)'s five refinements form the preserved [before baseline](ui-reference/PATIENT_MY_CARE_REFINEMENT.md). The latest composition instruction above supersedes its left-column-only layout. No wider implementation or deployment is authorized.
 
 Keep [Product V3](PRODUCT.md), accepted [D01–D36](PRODUCT_V3_DECISIONS.md), [security](SECURITY.md) and task contracts distinct from implementation evidence. Clinical authority is the current assignment; booking grants none. Staff fulfillment is current exact recipient/artifact scope. ADMIN is operational. Retain wrong-patient privacy, immutable history, operation keys, PostgreSQL concurrency and additive migration checksums.
 

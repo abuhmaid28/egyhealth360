@@ -177,34 +177,36 @@ function CareScreen({
         {c.skip}
       </a>
       <header className={styles.header}>
-        <Link
-          href="/patient"
-          className={styles.wordmark}
-          aria-label="EgyHealth 360"
-        >
-          <bdi dir="ltr">EgyHealth 360</bdi>
-        </Link>
-        <nav className={styles.primaryNav} aria-label={c.primary}>
-          <Link href="/patient" aria-current="page">
-            {c.myCare}
-          </Link>
-          <Link href="/patient/discover">{c.findCare}</Link>
-        </nav>
-        <div className={styles.utilities}>
-          <LanguageSwitch />
+        <div className={styles.headerInner}>
           <Link
-            className={styles.avatar}
-            href="/patient/settings"
-            aria-label={c.settings}
+            href="/patient"
+            className={styles.wordmark}
+            aria-label="EgyHealth 360"
           >
-            <bdi>
-              {displayName
-                .split(" ")
-                .slice(0, 2)
-                .map((n) => n[0])
-                .join("")}
-            </bdi>
+            <bdi dir="ltr">EgyHealth 360</bdi>
           </Link>
+          <nav className={styles.primaryNav} aria-label={c.primary}>
+            <Link href="/patient" aria-current="page">
+              {c.myCare}
+            </Link>
+            <Link href="/patient/discover">{c.findCare}</Link>
+          </nav>
+          <div className={styles.utilities}>
+            <LanguageSwitch />
+            <Link
+              className={styles.avatar}
+              href="/patient/settings"
+              aria-label={c.settings}
+            >
+              <bdi>
+                {displayName
+                  .split(" ")
+                  .slice(0, 2)
+                  .map((n) => n[0])
+                  .join("")}
+              </bdi>
+            </Link>
+          </div>
         </div>
       </header>
       <main id="main" className={styles.main} tabIndex={-1}>
@@ -319,29 +321,41 @@ function CareScreen({
           {c.signOut}
         </button>
         {api.mode === "demo" && (
-          <div className={styles.demoTools}>
-            <label>
-              {c.demoWorkspace}
-              <select
-                aria-label={c.demoWorkspace}
-                value="PATIENT"
-                onChange={(e) => void onRoleChange(e.target.value as Role)}
-              >
-                {[
-                  ["PATIENT", c.patient],
-                  ["CLINICIAN", c.doctor],
-                  ["PHARMACY_STAFF", c.pharmacy],
-                  ["LAB_STAFF", c.laboratory],
-                  ["ADMIN", c.admin],
-                ].map(([role, name]) => (
-                  <option key={role} value={role}>
-                    {name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <details>
-              <summary>{c.demoControls}</summary>
+          <details
+            className={styles.demoTools}
+            data-demo-utility
+            onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                event.currentTarget.open = false;
+                event.currentTarget.querySelector("summary")?.focus();
+              }
+            }}
+          >
+            <summary>
+              {c.demoUtility}
+              <Icon name="chevron" size={16} />
+            </summary>
+            <div className={styles.demoPanel}>
+              <label>
+                {c.demoWorkspace}
+                <select
+                  aria-label={c.demoWorkspace}
+                  value="PATIENT"
+                  onChange={(e) => void onRoleChange(e.target.value as Role)}
+                >
+                  {[
+                    ["PATIENT", c.patient],
+                    ["CLINICIAN", c.doctor],
+                    ["PHARMACY_STAFF", c.pharmacy],
+                    ["LAB_STAFF", c.laboratory],
+                    ["ADMIN", c.admin],
+                  ].map(([role, name]) => (
+                    <option key={role} value={role}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
+              </label>
               <label>
                 {c.screenState}
                 <select
@@ -362,8 +376,8 @@ function CareScreen({
                   ))}
                 </select>
               </label>
-            </details>
-          </div>
+            </div>
+          </details>
         )}
       </footer>
       <nav
@@ -498,8 +512,7 @@ function AppointmentAnchor({
             </div>
             <div className={styles.appointmentWhen}>
               <p>
-                <bdi>{careDate(a.startAt, a.timeZone, locale)}</bdi>
-                {" "}
+                <bdi>{careDate(a.startAt, a.timeZone, locale)}</bdi>{" "}
                 <bdi dir="ltr">{careTime(a.startAt, a.timeZone)}</bdi>
               </p>
               <p className={styles.eventZone}>
@@ -701,24 +714,24 @@ function RecentCare({
         </span>
         <div className={styles.activityBody}>
           <h3>{item.kind === "summary" ? c.summary : c.appointment}</h3>
-          <p>
-            <bdi>
-              {item.source
-                ? presentationName(item.source, translate)
-                : c.sourceMissing}
-            </bdi>
-            <span aria-hidden="true"> · </span>
-            {item.occurredAt ? (
-              <time dateTime={item.occurredAt}>
-                <bdi>{careDate(item.occurredAt, item.timeZone, locale)}</bdi>{" "}
-                <bdi dir="ltr">
-                  {careOffset(item.occurredAt, item.timeZone)}
-                </bdi>
-              </time>
-            ) : (
-              c.dateMissing
-            )}
-          </p>
+          {(item.source || item.occurredAt) && (
+            <p>
+              {item.source && (
+                <bdi>{presentationName(item.source, translate)}</bdi>
+              )}
+              {item.source && item.occurredAt && (
+                <span aria-hidden="true"> · </span>
+              )}
+              {item.occurredAt ? (
+                <time dateTime={item.occurredAt}>
+                  <bdi>{careDate(item.occurredAt, item.timeZone, locale)}</bdi>{" "}
+                  <bdi dir="ltr">
+                    {careOffset(item.occurredAt, item.timeZone)}
+                  </bdi>
+                </time>
+              ) : null}
+            </p>
+          )}
         </div>
         <div className={styles.activityEnd}>
           <StateLabel state={item.state} c={c} />
