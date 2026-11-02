@@ -1,5 +1,7 @@
 # Stage 3 — proposed workspace sitemaps
 
+> Current disposition: **Stage 3 IA01–IA05, Patient Candidate B and Clinician Candidate B are ACCEPTED / MERGED** at `86cc044314c865404a114903bbe417fde00e10ec`, under [owner acceptance 6567526978](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567526978). Pending-gate language below records the Stage 3 delivery-time proposal, not a reopened IA decision. Working labels remain nonfinal. Current naming proposals live in [Content system](CONTENT_SYSTEM.md), [Arabic UX](ARABIC_UX.md), [glossary](TERMINOLOGY_GLOSSARY.md) and [content decisions](CONTENT_DECISION_REGISTER.md); no visuals or runtime changes follow from acceptance.
+
 CURRENT AUTHORITATIVE proposal detail; read [Information Architecture](INFORMATION_ARCHITECTURE.md) for rationale/candidates and [decisions](IA_DECISION_REGISTER.md) for owner gates. All labels are **WORKING LABELS ONLY**. IDs are review references, not URLs. These sitemaps describe the recommended candidates, subject to owner choice; they do not authorize implementation.
 
 ## Reading the destination records
