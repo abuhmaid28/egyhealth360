@@ -109,6 +109,14 @@
     },
     {
       "locale": "en",
+      "foreground": "rgb(71, 85, 105)",
+      "background": "rgb(247, 249, 252)",
+      "method": "solid surface",
+      "example": "Demo · synthetic data",
+      "ratio": 7.18
+    },
+    {
+      "locale": "en",
       "foreground": "rgb(255, 255, 255)",
       "background": "rgb(11, 110, 127)",
       "method": "worst appointment gradient endpoint",
@@ -138,14 +146,6 @@
       "method": "solid surface",
       "example": "Shared with you",
       "ratio": 16.93
-    },
-    {
-      "locale": "en",
-      "foreground": "rgb(71, 85, 105)",
-      "background": "rgb(247, 249, 252)",
-      "method": "solid surface",
-      "example": "© 2026 EgyHealth 360",
-      "ratio": 7.18
     },
     {
       "locale": "ar",
@@ -213,6 +213,14 @@
     },
     {
       "locale": "ar",
+      "foreground": "rgb(71, 85, 105)",
+      "background": "rgb(247, 249, 252)",
+      "method": "solid surface",
+      "example": "عرض تجريبي · بيانات افتراضية",
+      "ratio": 7.18
+    },
+    {
+      "locale": "ar",
       "foreground": "rgb(255, 255, 255)",
       "background": "rgb(11, 110, 127)",
       "method": "worst appointment gradient endpoint",
@@ -242,14 +250,6 @@
       "method": "solid surface",
       "example": "متشارك معاك",
       "ratio": 16.93
-    },
-    {
-      "locale": "ar",
-      "foreground": "rgb(71, 85, 105)",
-      "background": "rgb(247, 249, 252)",
-      "method": "solid surface",
-      "example": "© 2026 EgyHealth 360",
-      "ratio": 7.18
     }
   ],
   "browserScreens": [

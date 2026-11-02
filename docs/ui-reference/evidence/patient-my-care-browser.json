@@ -136,6 +136,7 @@
       "sourceVerification": true,
       "liveFailureStaysLive": true,
       "expiredSessionRecovery": true,
+      "visibleModeAt320": true,
       "methods": [
         "GET"
       ],
@@ -155,6 +156,7 @@
       "sourceVerification": true,
       "liveFailureStaysLive": true,
       "expiredSessionRecovery": true,
+      "visibleModeAt320": true,
       "methods": [
         "GET"
       ],

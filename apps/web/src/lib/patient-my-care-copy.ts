@@ -161,7 +161,7 @@ export const myCareCopy = {
     settings: "الحساب والإعدادات",
     signOut: "تسجيل الخروج",
     demo: "عرض تجريبي · بيانات افتراضية",
-    live: "الوضع المتصل",
+    live: "رعاية متصلة",
     demoControls: "أدوات العرض التجريبي",
     demoWorkspace: "مساحة العرض التجريبي",
     screenState: "حالة الشاشة",

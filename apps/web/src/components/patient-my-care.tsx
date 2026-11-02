@@ -191,9 +191,6 @@ function CareScreen({
         </nav>
         <div className={styles.utilities}>
           <LanguageSwitch />
-          <span className={styles.mode}>
-            {api.mode === "demo" ? c.demo : c.live}
-          </span>
           <Link
             className={styles.avatar}
             href="/patient/settings"
@@ -214,7 +211,12 @@ function CareScreen({
           <h1>
             {c.greeting} <bdi>{firstName}</bdi>
           </h1>
-          <p>{c.support}</p>
+          <p>
+            <span>{c.support}</span>
+            <span className={styles.mode}>
+              {api.mode === "demo" ? c.demo : c.live}
+            </span>
+          </p>
         </div>
         {profile.error && (
           <p className={styles.profileError} role="alert" data-profile-error>

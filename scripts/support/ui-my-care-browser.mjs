@@ -136,6 +136,7 @@ export async function testPatientMyCare(browser, origin, shots) {
         scroll: globalThis.document.documentElement.scrollWidth,
       }));
       assert.ok(metrics.scroll <= width, `${locale} overflow at ${width}`);
+      assert.ok(await page.getByText(c.demo, { exact: true }).isVisible());
       report.reflow.push({ locale, ...metrics });
     }
     await capture(`patient-my-care-320-${locale}`, true);
@@ -343,6 +344,18 @@ export async function testPatientMyCare(browser, origin, shots) {
       await page.screenshot({ path: resolve(shots, name) });
       report.screens.push(name);
     }
+    for (const width of [390, 320]) {
+      await page.setViewportSize({ width, height: 844 });
+      assert.ok(await page.getByText(c.live, { exact: true }).isVisible());
+      assert.ok(
+        await page.evaluate(
+          () =>
+            globalThis.document.documentElement.scrollWidth <=
+            globalThis.innerWidth,
+        ),
+      );
+    }
+    await page.setViewportSize({ width: 1600, height: 1000 });
     assert.equal(await page.getByLabel(c.demoWorkspace).count(), 0);
     assert.equal(await page.getByLabel(c.screenState).count(), 0);
     assert.equal(
@@ -411,6 +424,7 @@ export async function testPatientMyCare(browser, origin, shots) {
       sourceVerification: true,
       liveFailureStaysLive: true,
       expiredSessionRecovery: true,
+      visibleModeAt320: true,
       methods: [...new Set(calls.map((r) => r.method))],
       paths: [...new Set(calls.map((r) => r.path))],
     });
