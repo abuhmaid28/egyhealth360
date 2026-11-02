@@ -4,9 +4,9 @@ CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutab
 
 ## Fast reading order
 
-Read [AGENTS](../AGENTS.md) → current issue/latest applicable explicit authorization → [CURRENT_STATUS](CURRENT_STATUS.md) → [FOUNDATION_CHARTER](FOUNDATION_CHARTER.md) + this index → task-relevant contracts/references → implementation/tests. PROJECT/history is optional context, not mandatory archaeology. Current Stage 2 scope follows [issue #72 comment 6565142946](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565142946) and the explicit Stage 2 request. Earlier 6563757904 established Stage 0+1/charter and superseded 6563631251; it is not today's task scope.
+Read [AGENTS](../AGENTS.md) → current issue/latest applicable explicit authorization → [CURRENT_STATUS](CURRENT_STATUS.md) → [FOUNDATION_CHARTER](FOUNDATION_CHARTER.md) + this index → task-relevant contracts/references → implementation/tests. PROJECT/history is optional context, not mandatory archaeology. Current Stage 3 scope follows [issue #72 comment 6565633586](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565633586). [Stage 2 acceptance 6565530772](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565530772) supersedes adoption-time pending language for accepted UXD10–UXD16 and role/task/journey foundations; UXD19 remains planning only. Earlier 6563757904 established Stage 0+1/charter and superseded 6563631251; it is not today's task scope.
 
-Product/design reading path: [UX_FOUNDATION](UX_FOUNDATION.md) → [USER_JOURNEYS](USER_JOURNEYS.md) → [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md), with [PRODUCT_UX_INVENTORY](PRODUCT_UX_INVENTORY.md) as evidence and [PRODUCT_UX_VALIDATION](PRODUCT_UX_VALIDATION.md) as the point-in-time validation record. Proposed experience decisions remain owner-gated. Mutable task sentences in older product/contract/audit snapshots never override CURRENT_STATUS or newer explicit authorization; in particular PRODUCT.md's Stage 0+1 opening sentence is retained historical task context, not a Stage 2 blocker.
+Product/design reading path: [UX_FOUNDATION](UX_FOUNDATION.md) → [USER_JOURNEYS](USER_JOURNEYS.md) → [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md), with [PRODUCT_UX_INVENTORY](PRODUCT_UX_INVENTORY.md) as evidence and [PRODUCT_UX_VALIDATION](PRODUCT_UX_VALIDATION.md) as the point-in-time validation record. Then read [INFORMATION_ARCHITECTURE](INFORMATION_ARCHITECTURE.md) → [IA_SITEMAPS](IA_SITEMAPS.md) → [IA_DECISION_REGISTER](IA_DECISION_REGISTER.md) → [IA_VALIDATION](IA_VALIDATION.md). Stage 3 navigation choices remain owner-gated; Stage 2 acceptance is recorded in CURRENT_STATUS. Mutable task sentences in older product/contract/audit snapshots never override CURRENT_STATUS or newer explicit authorization; in particular PRODUCT.md's Stage 0+1 opening sentence is retained historical task context, not a current task blocker.
 
 ## Priority and classification rules
 
@@ -47,6 +47,9 @@ All tracked documentation Markdown paths are classified below. Research files ar
 | [EXECUTION_POLICY.md](EXECUTION_POLICY.md) | Stable synthetic/free-first academic/execution constraints. |
 | [FOUNDATION_CHARTER.md](FOUNDATION_CHARTER.md) | Stable authority, preservation, owner gates and mandatory milestone health review. |
 | [FOUNDATION_REBOOT_V2_AUDIT.md](FOUNDATION_REBOOT_V2_AUDIT.md) | Proposed current health verdict, evidence, drift/debt and review limits. |
+| [INFORMATION_ARCHITECTURE.md](INFORMATION_ARCHITECTURE.md) | Stage 3 authoritative proposal: audit, principles, workspace model, two Patient/Clinician candidates, responsive structure, gaps and owner gate; not approved final navigation. |
+| [IA_SITEMAPS.md](IA_SITEMAPS.md) | Five proposed workspace hierarchies and full destination records; working labels, current/Live-gap/future and authority distinctions. |
+| [IA_DECISION_REGISTER.md](IA_DECISION_REGISTER.md) | Inherited foundation, recommendations, material owner decisions and future deferrals; no implicit owner acceptance. |
 | [IMPLEMENTATION_ROADMAP.md](IMPLEMENTATION_ROADMAP.md) | Current sequencing; entries are not execution authorization. |
 | [PRODUCT.md](PRODUCT.md) | Approved product scope, distinct from delivered/Live subsets. |
 | [PROJECT.md](PROJECT.md) | Concise product/current opening and clearly separated completion evidence. |
@@ -100,6 +103,7 @@ All tracked documentation Markdown paths are classified below. Research files ar
 
 | Document | Responsibility / limits |
 | --- | --- |
+| [IA_VALIDATION.md](IA_VALIDATION.md) | Stage 3 task/destination/depth/privacy/current-future/mobile checks, fresh-reader evidence and focused docs validation; not independent Stage 3 acceptance. |
 | [PRODUCT_UX_INVENTORY.md](PRODUCT_UX_INVENTORY.md) | Stage 2 point-in-time capability/V1/target-need evidence, existing routes/screenshots and mismatch disposition. |
 | [PRODUCT_UX_VALIDATION.md](PRODUCT_UX_VALIDATION.md) | Stage 2 scope/reference checks, simulated fresh-agent 20-question result and CI handoff limits. |
 | [BP_CORRECTION_INVALIDATION_VALIDATION.md](BP_CORRECTION_INVALIDATION_VALIDATION.md) | Point-in-time validation/implementation evidence; preserve links/paths; old counts/status/permissions do not set current scope. |
