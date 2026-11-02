@@ -11,7 +11,7 @@ Read, in this order:
 1. Current GitHub authorization and repository source-of-truth docs.
 2. `docs/ui-reference/README_START_HERE.md`
 3. `docs/ui-reference/PREMIUM_SYNTHESIS_SPEC.md`
-4. Decode and inspect `docs/ui-reference/reference/premium-synthesis-v1-board.jpg.b64` as described in the README.
+4. Open and inspect `docs/ui-reference/reference/patient-my-care-reference.svg`.
 
 Do not reconstruct the design from prior chat memory.
 
@@ -101,7 +101,7 @@ Additionally produce review evidence for:
 - 200% text scaling
 - keyboard focus
 - contrast/accessibility notes
-- visual discrepancy list against the supplied board/spec
+- visual discrepancy list against the supplied SVG/spec
 
 For every visual discrepancy, record whether it is:
 - intentional/required
