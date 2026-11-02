@@ -173,9 +173,12 @@ export async function testLiveJourney(browser, origin, shots) {
   await page
     .getByRole("button", { name: "Explore the patient demo", exact: true })
     .click();
+  await page.waitForURL("**/patient");
+  await page.locator("[data-my-care]").waitFor();
   await openDemoUtility(page);
   await page.getByLabel("Demo workspace").selectOption("CLINICIAN");
   await page.waitForURL("**/doctor");
+  await page.locator("[data-my-care]").waitFor({ state: "detached" });
   await openDemoUtility(page);
   await page.getByLabel("Demo workspace").selectOption("PATIENT");
   await page.waitForURL("**/patient");
