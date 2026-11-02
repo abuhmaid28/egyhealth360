@@ -61,7 +61,7 @@ Every stem has `.html` and `.png`. The three mobile stems also have `-viewport.p
 | Candidate | Concept | Main risk to test |
 | --- | --- | --- |
 | D1 — Aligned custody | Offset steps transfer responsibility across a visible negative-space boundary | Logistics/collaboration resemblance |
-| D2 — Accountable edge | Clipped tile, open inner edge and distinct endpoint | Storage/document interpretation; no corresponding paper UI metaphor |
+| D2 — Accountable point | Circular custodian beside an open right-angle support | Location/furniture/generic-person association |
 | E1 — Shared support | Unequal curved supports create an open shared space | Letter U/furniture association |
 | E2 — Meeting place | Open rounded enclosure and separate square at its threshold | Doorway/property association |
 | F1 — Routed context | Three stepped digital bands align independent sources | Network/speed implication |

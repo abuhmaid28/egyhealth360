@@ -15,7 +15,7 @@ No scores, ranking, inferred owner preference or calculated winner. [Visual comp
 | Color purpose | Graphite text; cool neutral planes; controlled blue-teal action | White space and deep-green responsibility anchor; functional semantics independent | Graphite containment; cyan orientation/action; light next-appointment contrast |
 | Type | Inter + Noto Sans Arabic, measured headings and tabular quantities | Manrope + IBM Plex Sans Arabic; rounded Latin rhythm, fluent Arabic hierarchy | IBM Plex Sans + Noto Sans Arabic; compact numeric/clinical rhythm |
 | Icons / imagery | Fine original functional strokes, text labels, no illustrations | Slightly more visual prominence for source icons, no portraits/stock imagery | Restrained functional strokes; accent only on relevant source/action |
-| Logo families | Stepped custody / clipped accountable endpoint | Curved supports / open meeting threshold | Stepped routing / paired angular endpoints |
+| Logo families | Stepped custody / circular accountable point | Curved supports / open meeting threshold | Stepped routing / paired angular endpoints |
 | Surface grouping | Appointment and true concurrent tasks contained; sources separated by rules | One patient anchor, open content, quiet clinical context strip | Flat planes; no floating glass, no ornamental gradients |
 | Patient fit hypothesis | Clear next appointment and direct retrieval | Human welcome with strong appointment identity | Current context and recent shared information easy to distinguish |
 | Doctor fit hypothesis | Dense parallel context suits sustained work | Context strip reduces repeated visual boxes | High density and persistent source separation |
