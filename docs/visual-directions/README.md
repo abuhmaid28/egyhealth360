@@ -1,5 +1,7 @@
 # EgyHealth 360 — exactly three visual directions
 
+> **REJECTED VISUAL HISTORY:** The Product Owner rejected A/B/C as current final-direction candidates on 2 November 2026. No logo, palette, font or treatment here is approved. Accepted UX/content foundations remain accepted. See [the new D/E/F package](../visual-directions-v2/README.md). Existing visual assets are preserved byte-for-byte.
+
 **EXPLORATORY VISUAL REVIEW — NOT FINAL BRAND / NOT DESIGN SYSTEM / NOT PRODUCTION UI.**
 
 Authority: [Issue #72 comment 6568574368](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568574368). Base main: `0a0e9c2038ecad420e95c2c67ae367129e195839`. Accepted UX, IA01–IA05, CD01–CD07 and BR01–BR08 are preserved. No winner selected.

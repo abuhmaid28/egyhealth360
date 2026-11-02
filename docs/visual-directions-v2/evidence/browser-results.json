@@ -1,0 +1,4846 @@
+{
+  "browser": "154.0.8037.57",
+  "deviceScaleFactor": 1,
+  "captureMethod": "Actual Chromium render; no external requests",
+  "screens": [
+    {
+      "direction": "d",
+      "screen": "patient",
+      "language": "en",
+      "path": "direction-d/patient-en.html",
+      "width": 1440,
+      "height": 1099,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "patient",
+      "language": "ar",
+      "path": "direction-d/patient-ar.html",
+      "width": 1440,
+      "height": 1101,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "find",
+      "language": "en",
+      "path": "direction-d/find-en.html",
+      "width": 1440,
+      "height": 991,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "find",
+      "language": "ar",
+      "path": "direction-d/find-ar.html",
+      "width": 1440,
+      "height": 1025,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "patient-mobile",
+      "language": "en",
+      "path": "direction-d/patient-mobile-en.html",
+      "width": 390,
+      "height": 1714,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "patient-mobile",
+      "language": "ar",
+      "path": "direction-d/patient-mobile-ar.html",
+      "width": 390,
+      "height": 1710,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "appointment-mobile",
+      "language": "en",
+      "path": "direction-d/appointment-mobile-en.html",
+      "width": 390,
+      "height": 1072,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "appointment-mobile",
+      "language": "ar",
+      "path": "direction-d/appointment-mobile-ar.html",
+      "width": 390,
+      "height": 1048,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "schedule",
+      "language": "en",
+      "path": "direction-d/schedule-en.html",
+      "width": 1440,
+      "height": 993,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "schedule",
+      "language": "ar",
+      "path": "direction-d/schedule-ar.html",
+      "width": 1440,
+      "height": 1043,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "consultation",
+      "language": "en",
+      "path": "direction-d/consultation-en.html",
+      "width": 1440,
+      "height": 994,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "consultation",
+      "language": "ar",
+      "path": "direction-d/consultation-ar.html",
+      "width": 1440,
+      "height": 1030,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "doctor-mobile",
+      "language": "en",
+      "path": "direction-d/doctor-mobile-en.html",
+      "width": 390,
+      "height": 1158,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "doctor-mobile",
+      "language": "ar",
+      "path": "direction-d/doctor-mobile-ar.html",
+      "width": 390,
+      "height": 1174,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "states",
+      "language": "en",
+      "path": "direction-d/states-en.html",
+      "width": 1440,
+      "height": 1158,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "states",
+      "language": "ar",
+      "path": "direction-d/states-ar.html",
+      "width": 1440,
+      "height": 1155,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "typography",
+      "language": "en",
+      "path": "direction-d/typography-en.html",
+      "width": 1440,
+      "height": 1212,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "d",
+      "screen": "typography",
+      "language": "ar",
+      "path": "direction-d/typography-ar.html",
+      "width": 1440,
+      "height": 1243,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "patient",
+      "language": "en",
+      "path": "direction-e/patient-en.html",
+      "width": 1440,
+      "height": 1108,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "patient",
+      "language": "ar",
+      "path": "direction-e/patient-ar.html",
+      "width": 1440,
+      "height": 1131,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "find",
+      "language": "en",
+      "path": "direction-e/find-en.html",
+      "width": 1440,
+      "height": 1142,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "find",
+      "language": "ar",
+      "path": "direction-e/find-ar.html",
+      "width": 1440,
+      "height": 1180,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "patient-mobile",
+      "language": "en",
+      "path": "direction-e/patient-mobile-en.html",
+      "width": 390,
+      "height": 1754,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "patient-mobile",
+      "language": "ar",
+      "path": "direction-e/patient-mobile-ar.html",
+      "width": 390,
+      "height": 1749,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "appointment-mobile",
+      "language": "en",
+      "path": "direction-e/appointment-mobile-en.html",
+      "width": 390,
+      "height": 1101,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "appointment-mobile",
+      "language": "ar",
+      "path": "direction-e/appointment-mobile-ar.html",
+      "width": 390,
+      "height": 1076,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "schedule",
+      "language": "en",
+      "path": "direction-e/schedule-en.html",
+      "width": 1440,
+      "height": 1085,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "schedule",
+      "language": "ar",
+      "path": "direction-e/schedule-ar.html",
+      "width": 1440,
+      "height": 1134,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "consultation",
+      "language": "en",
+      "path": "direction-e/consultation-en.html",
+      "width": 1440,
+      "height": 1143,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "consultation",
+      "language": "ar",
+      "path": "direction-e/consultation-ar.html",
+      "width": 1440,
+      "height": 1164,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "doctor-mobile",
+      "language": "en",
+      "path": "direction-e/doctor-mobile-en.html",
+      "width": 390,
+      "height": 1165,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "doctor-mobile",
+      "language": "ar",
+      "path": "direction-e/doctor-mobile-ar.html",
+      "width": 390,
+      "height": 1180,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "states",
+      "language": "en",
+      "path": "direction-e/states-en.html",
+      "width": 1440,
+      "height": 1203,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "states",
+      "language": "ar",
+      "path": "direction-e/states-ar.html",
+      "width": 1440,
+      "height": 1199,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "typography",
+      "language": "en",
+      "path": "direction-e/typography-en.html",
+      "width": 1440,
+      "height": 1242,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "e",
+      "screen": "typography",
+      "language": "ar",
+      "path": "direction-e/typography-ar.html",
+      "width": 1440,
+      "height": 1286,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "patient",
+      "language": "en",
+      "path": "direction-f/patient-en.html",
+      "width": 1440,
+      "height": 966,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "patient",
+      "language": "ar",
+      "path": "direction-f/patient-ar.html",
+      "width": 1440,
+      "height": 974,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "find",
+      "language": "en",
+      "path": "direction-f/find-en.html",
+      "width": 1440,
+      "height": 1040,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "find",
+      "language": "ar",
+      "path": "direction-f/find-ar.html",
+      "width": 1440,
+      "height": 1073,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "patient-mobile",
+      "language": "en",
+      "path": "direction-f/patient-mobile-en.html",
+      "width": 390,
+      "height": 1627,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "patient-mobile",
+      "language": "ar",
+      "path": "direction-f/patient-mobile-ar.html",
+      "width": 390,
+      "height": 1641,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "appointment-mobile",
+      "language": "en",
+      "path": "direction-f/appointment-mobile-en.html",
+      "width": 390,
+      "height": 1093,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "appointment-mobile",
+      "language": "ar",
+      "path": "direction-f/appointment-mobile-ar.html",
+      "width": 390,
+      "height": 1087,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "schedule",
+      "language": "en",
+      "path": "direction-f/schedule-en.html",
+      "width": 1440,
+      "height": 964,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "schedule",
+      "language": "ar",
+      "path": "direction-f/schedule-ar.html",
+      "width": 1440,
+      "height": 1015,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "consultation",
+      "language": "en",
+      "path": "direction-f/consultation-en.html",
+      "width": 1440,
+      "height": 1047,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "consultation",
+      "language": "ar",
+      "path": "direction-f/consultation-ar.html",
+      "width": 1440,
+      "height": 1083,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "doctor-mobile",
+      "language": "en",
+      "path": "direction-f/doctor-mobile-en.html",
+      "width": 390,
+      "height": 1158,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "doctor-mobile",
+      "language": "ar",
+      "path": "direction-f/doctor-mobile-ar.html",
+      "width": 390,
+      "height": 1192,
+      "scrollWidth": 390,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "states",
+      "language": "en",
+      "path": "direction-f/states-en.html",
+      "width": 1440,
+      "height": 1162,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "states",
+      "language": "ar",
+      "path": "direction-f/states-ar.html",
+      "width": 1440,
+      "height": 1158,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "typography",
+      "language": "en",
+      "path": "direction-f/typography-en.html",
+      "width": 1440,
+      "height": 1201,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "direction": "f",
+      "screen": "typography",
+      "language": "ar",
+      "path": "direction-f/typography-ar.html",
+      "width": 1440,
+      "height": 1247,
+      "scrollWidth": 1440,
+      "overflow": [],
+      "fonts": []
+    }
+  ],
+  "reflow320": [
+    {
+      "path": "direction-d/patient-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1854,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-d/patient-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1882,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1854,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1882,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-d/appointment-mobile-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1170,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-d/appointment-mobile-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1195,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1216,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1214,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-e/patient-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1796,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-e/patient-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1898,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1796,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1898,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-e/appointment-mobile-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1101,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-e/appointment-mobile-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1223,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1204,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1220,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1706,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1709,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1706,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1709,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1093,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1217,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1197,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "width": 320,
+      "scrollWidth": 320,
+      "height": 1214,
+      "overflow": [],
+      "fonts": []
+    }
+  ],
+  "textResize200": [
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 2977,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 3408,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 2935,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 3408,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 2760,
+      "overflow": [],
+      "fonts": []
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 3095,
+      "overflow": [],
+      "fonts": []
+    }
+  ],
+  "keyboard": [
+    {
+      "direction": "d",
+      "lang": "ar",
+      "tag": "INPUT",
+      "id": "specialty",
+      "outline": "solid"
+    },
+    {
+      "direction": "d",
+      "lang": "en",
+      "tag": "INPUT",
+      "id": "specialty",
+      "outline": "solid"
+    },
+    {
+      "direction": "e",
+      "lang": "ar",
+      "tag": "INPUT",
+      "id": "specialty",
+      "outline": "solid"
+    },
+    {
+      "direction": "e",
+      "lang": "en",
+      "tag": "INPUT",
+      "id": "specialty",
+      "outline": "solid"
+    },
+    {
+      "direction": "f",
+      "lang": "ar",
+      "tag": "INPUT",
+      "id": "specialty",
+      "outline": "solid"
+    },
+    {
+      "direction": "f",
+      "lang": "en",
+      "tag": "INPUT",
+      "id": "specialty",
+      "outline": "solid"
+    }
+  ],
+  "failures": [],
+  "externalRequests": [],
+  "fontErrors": [],
+  "textContrast": [
+    {
+      "path": "direction-d/patient-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/patient-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "My care",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/patient-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/patient-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/patient-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "My care",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/patient-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Good morning, Omar. Here’s what’s next.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/patient-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/patient-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "View appointment",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/patient-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(240, 243, 246)",
+      "example": "Shared with you",
+      "tag": "SPAN",
+      "ratio": 5.61
+    },
+    {
+      "path": "direction-d/patient-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/patient-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "متابعتي",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/patient-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/patient-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/patient-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "متابعتي",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/patient-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "صباح الخير يا عمر. دي خطوتك الجاية.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/patient-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/patient-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "تفاصيل الميعاد",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/patient-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(240, 243, 246)",
+      "example": "متشارك معاك",
+      "tag": "SPAN",
+      "ratio": 5.61
+    },
+    {
+      "path": "direction-d/find-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/find-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "My care",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/find-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/find-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/find-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Find care",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/find-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Choose a doctor, then find a time that works for you.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/find-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "Search",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/find-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/find-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "متابعتي",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/find-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/find-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/find-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "دور على دكتور",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/find-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "اختار دكتور وشوف الميعاد المناسب ليك.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/find-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "دور",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "My care",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Good morning, Omar. Here’s what’s next.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Next appointment",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "View appointment",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/patient-mobile-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(240, 243, 246)",
+      "example": "Shared with you",
+      "tag": "SPAN",
+      "ratio": 5.61
+    },
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "متابعتي",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "صباح الخير يا عمر. دي خطوتك الجاية.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "ميعادك الجاي",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "تفاصيل الميعاد",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/patient-mobile-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(240, 243, 246)",
+      "example": "متشارك معاك",
+      "tag": "SPAN",
+      "ratio": 5.61
+    },
+    {
+      "path": "direction-d/appointment-mobile-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/appointment-mobile-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/appointment-mobile-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Find care",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/appointment-mobile-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Your appointment",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/appointment-mobile-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Next appointment",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/appointment-mobile-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/appointment-mobile-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "View appointment",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/appointment-mobile-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Date",
+      "tag": "SPAN",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/appointment-mobile-en.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "This booking does not give the doctor access to your medical informati",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-d/appointment-mobile-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/appointment-mobile-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/appointment-mobile-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "دور على دكتور",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/appointment-mobile-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "ميعادك",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/appointment-mobile-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "ميعادك الجاي",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/appointment-mobile-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/appointment-mobile-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "تفاصيل الميعاد",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/appointment-mobile-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "التاريخ",
+      "tag": "SPAN",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/appointment-mobile-ar.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "الحجز ده مش بيدي الدكتور صلاحية يشوف معلوماتك الطبية.",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "Schedule",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "People in your care",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Doctor workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Schedule",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Your day, with the right context for each visit.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "Mon",
+      "tag": "SPAN",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(240, 243, 246)",
+      "example": "Consulted",
+      "tag": "SPAN",
+      "ratio": 5.61
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(234, 243, 248)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 14.49
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(234, 243, 248)",
+      "example": "Synthetic patient",
+      "tag": "P",
+      "ratio": 5.55
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/schedule-en.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "Current care assignment permits this consultation. Booking alone does ",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "جدول المواعيد",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "مرضاي",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "مساحة الدكتور2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "جدول المواعيد",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "يومك وتفاصيل كل زيارة في مكانها.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "اثنين",
+      "tag": "SPAN",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(240, 243, 246)",
+      "example": "الزيارة تمت",
+      "tag": "SPAN",
+      "ratio": 5.61
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(234, 243, 248)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 14.49
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(234, 243, 248)",
+      "example": "مريض تجريبي",
+      "tag": "P",
+      "ratio": 5.55
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/schedule-ar.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "علاقة الرعاية الحالية بتسمح بالاستشارة دي. الحجز لوحده مش بيدي صلاحية ",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-d/consultation-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/consultation-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "Schedule",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/consultation-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "People in your care",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/consultation-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Active consultation",
+      "tag": "SPAN",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/consultation-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Omar Abdelrahman",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/consultation-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Current care access",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/consultation-en.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "Allergies not reviewed",
+      "tag": "STRONG",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-d/consultation-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(240, 243, 246)",
+      "example": "Draft saved · 14:42",
+      "tag": "SPAN",
+      "ratio": 5.61
+    },
+    {
+      "path": "direction-d/consultation-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "Review private-note signing",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/consultation-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Open signed source",
+      "tag": "SPAN",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/consultation-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/consultation-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "جدول المواعيد",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/consultation-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "مرضاي",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/consultation-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "الاستشارة الحالية",
+      "tag": "SPAN",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/consultation-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "عمر عبدالرحمن",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/consultation-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "صلاحية رعاية حالية",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/consultation-ar.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "الحساسية لسه متراجعتش",
+      "tag": "STRONG",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-d/consultation-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(240, 243, 246)",
+      "example": "المسودة محفوظة · 14:42",
+      "tag": "SPAN",
+      "ratio": 5.61
+    },
+    {
+      "path": "direction-d/consultation-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "راجع توقيع الملاحظات الخاصة",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/consultation-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(255, 255, 255)",
+      "example": "افتح المصدر المتوقّع",
+      "tag": "SPAN",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Dokki Clinic · 2 November 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Your afternoon",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Cairo time",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "Mon",
+      "tag": "SPAN",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(234, 243, 248)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 14.49
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(234, 243, 248)",
+      "example": "Consultation open · In person",
+      "tag": "P",
+      "ratio": 5.55
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Selected visit",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Current care access",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/doctor-mobile-en.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "Current care assignment permits visit review. Booking alone does not g",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "عيادة الدقي · 2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "مواعيد بعد الظهر",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "بتوقيت القاهرة",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "اثنين",
+      "tag": "SPAN",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(234, 243, 248)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 14.49
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(234, 243, 248)",
+      "example": "الاستشارة مفتوحة · في العيادة",
+      "tag": "P",
+      "ratio": 5.55
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "الزيارة المختارة",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "صلاحية رعاية حالية",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/doctor-mobile-ar.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "علاقة الرعاية الحالية بتسمح بمراجعة الزيارة. الحجز لوحده مش بيدي صلاحي",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-d/states-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/states-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "My care",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/states-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/states-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/states-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "State language",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/states-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Meaning comes from words, structure and color together.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/states-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/states-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "متابعتي",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/states-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/states-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/states-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "لغة الحالات",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/states-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "المعنى بيظهر بالكلام والشكل واللون مع بعض.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/typography-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/typography-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "My care",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/typography-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/typography-en.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/typography-en.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "Typography & visual language",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/typography-en.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "A bilingual system designed together, with mixed medical content.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/typography-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "Continue",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/typography-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Shared",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/typography-en.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "Needs review",
+      "tag": "SPAN",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-d/typography-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 16.29
+    },
+    {
+      "path": "direction-d/typography-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(234, 243, 248)",
+      "example": "متابعتي",
+      "tag": "SPAN",
+      "ratio": 6.54
+    },
+    {
+      "path": "direction-d/typography-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(255, 255, 255)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 6.25
+    },
+    {
+      "path": "direction-d/typography-ar.html",
+      "foreground": "rgb(21, 91, 131)",
+      "background": "rgb(247, 249, 251)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 6.97
+    },
+    {
+      "path": "direction-d/typography-ar.html",
+      "foreground": "rgb(23, 33, 43)",
+      "background": "rgb(247, 249, 251)",
+      "example": "الخطوط واللغة البصرية",
+      "tag": "H1",
+      "ratio": 15.44
+    },
+    {
+      "path": "direction-d/typography-ar.html",
+      "foreground": "rgb(83, 98, 115)",
+      "background": "rgb(247, 249, 251)",
+      "example": "العربي والإنجليزي متصممين مع بعض، بمحتوى طبي مختلط.",
+      "tag": "P",
+      "ratio": 5.92
+    },
+    {
+      "path": "direction-d/typography-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(21, 91, 131)",
+      "example": "كمّل",
+      "tag": "BUTTON",
+      "ratio": 7.35
+    },
+    {
+      "path": "direction-d/typography-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "متشارك",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-d/typography-ar.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "محتاج مراجعة",
+      "tag": "SPAN",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-e/patient-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/patient-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "My care",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/patient-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/patient-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/patient-en.html",
+      "foreground": "rgb(215, 233, 225)",
+      "background": "rgb(32, 92, 78)",
+      "example": "Next appointment",
+      "tag": "SPAN",
+      "ratio": 6.15
+    },
+    {
+      "path": "direction-e/patient-en.html",
+      "foreground": "rgb(23, 68, 53)",
+      "background": "rgb(213, 238, 224)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 8.95
+    },
+    {
+      "path": "direction-e/patient-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "02",
+      "tag": "BDI",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/patient-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(66, 119, 104)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 5.16
+    },
+    {
+      "path": "direction-e/patient-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Shared with you",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/patient-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/patient-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "متابعتي",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/patient-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/patient-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/patient-ar.html",
+      "foreground": "rgb(215, 233, 225)",
+      "background": "rgb(32, 92, 78)",
+      "example": "ميعادك الجاي",
+      "tag": "SPAN",
+      "ratio": 6.15
+    },
+    {
+      "path": "direction-e/patient-ar.html",
+      "foreground": "rgb(23, 68, 53)",
+      "background": "rgb(213, 238, 224)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 8.95
+    },
+    {
+      "path": "direction-e/patient-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "02",
+      "tag": "BDI",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/patient-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(66, 119, 104)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 5.16
+    },
+    {
+      "path": "direction-e/patient-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "متشارك معاك",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/find-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/find-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "My care",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/find-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/find-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/find-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "Search",
+      "tag": "BUTTON",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/find-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Selected appointment",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/find-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Dr Mariam Hassan",
+      "tag": "H2",
+      "ratio": 13.74
+    },
+    {
+      "path": "direction-e/find-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/find-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "متابعتي",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/find-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/find-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/find-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "دور",
+      "tag": "BUTTON",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/find-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "الميعاد اللي اخترته",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/find-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(243, 247, 244)",
+      "example": "د. مريم حسن",
+      "tag": "H2",
+      "ratio": 13.74
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Good morning, Omar. Here’s what’s next.",
+      "tag": "P",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "foreground": "rgb(215, 233, 225)",
+      "background": "rgb(32, 92, 78)",
+      "example": "Next appointment",
+      "tag": "SPAN",
+      "ratio": 6.15
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "foreground": "rgb(23, 68, 53)",
+      "background": "rgb(213, 238, 224)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 8.95
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "02",
+      "tag": "BDI",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(66, 119, 104)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 5.16
+    },
+    {
+      "path": "direction-e/patient-mobile-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Shared with you",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "صباح الخير يا عمر. دي خطوتك الجاية.",
+      "tag": "P",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "foreground": "rgb(215, 233, 225)",
+      "background": "rgb(32, 92, 78)",
+      "example": "ميعادك الجاي",
+      "tag": "SPAN",
+      "ratio": 6.15
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "foreground": "rgb(23, 68, 53)",
+      "background": "rgb(213, 238, 224)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 8.95
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "02",
+      "tag": "BDI",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(66, 119, 104)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 5.16
+    },
+    {
+      "path": "direction-e/patient-mobile-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "متشارك معاك",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/appointment-mobile-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/appointment-mobile-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/appointment-mobile-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Find care",
+      "tag": "DIV",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/appointment-mobile-en.html",
+      "foreground": "rgb(215, 233, 225)",
+      "background": "rgb(32, 92, 78)",
+      "example": "Next appointment",
+      "tag": "SPAN",
+      "ratio": 6.15
+    },
+    {
+      "path": "direction-e/appointment-mobile-en.html",
+      "foreground": "rgb(23, 68, 53)",
+      "background": "rgb(213, 238, 224)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 8.95
+    },
+    {
+      "path": "direction-e/appointment-mobile-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "02",
+      "tag": "BDI",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/appointment-mobile-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(66, 119, 104)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 5.16
+    },
+    {
+      "path": "direction-e/appointment-mobile-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Date",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/appointment-mobile-en.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "This booking does not give the doctor access to your medical informati",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-e/appointment-mobile-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/appointment-mobile-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/appointment-mobile-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "دور على دكتور",
+      "tag": "DIV",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/appointment-mobile-ar.html",
+      "foreground": "rgb(215, 233, 225)",
+      "background": "rgb(32, 92, 78)",
+      "example": "ميعادك الجاي",
+      "tag": "SPAN",
+      "ratio": 6.15
+    },
+    {
+      "path": "direction-e/appointment-mobile-ar.html",
+      "foreground": "rgb(23, 68, 53)",
+      "background": "rgb(213, 238, 224)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 8.95
+    },
+    {
+      "path": "direction-e/appointment-mobile-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "02",
+      "tag": "BDI",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/appointment-mobile-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(66, 119, 104)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 5.16
+    },
+    {
+      "path": "direction-e/appointment-mobile-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "التاريخ",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/appointment-mobile-ar.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "الحجز ده مش بيدي الدكتور صلاحية يشوف معلوماتك الطبية.",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Schedule",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "People in your care",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "Mon",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Consulted",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(232, 243, 237)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 13.07
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(232, 243, 237)",
+      "example": "Synthetic patient",
+      "tag": "P",
+      "ratio": 5.3
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Omar Abdelrahman",
+      "tag": "H2",
+      "ratio": 13.74
+    },
+    {
+      "path": "direction-e/schedule-en.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "Current care assignment permits this consultation. Booking alone does ",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "جدول المواعيد",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "مرضاي",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "اثنين",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "الزيارة تمت",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(232, 243, 237)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 13.07
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(232, 243, 237)",
+      "example": "مريض تجريبي",
+      "tag": "P",
+      "ratio": 5.3
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(243, 247, 244)",
+      "example": "عمر عبدالرحمن",
+      "tag": "H2",
+      "ratio": 13.74
+    },
+    {
+      "path": "direction-e/schedule-ar.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "علاقة الرعاية الحالية بتسمح بالاستشارة دي. الحجز لوحده مش بيدي صلاحية ",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-e/consultation-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/consultation-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Schedule",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/consultation-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "People in your care",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/consultation-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/consultation-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Current care access",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-e/consultation-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Clinical context",
+      "tag": "H3",
+      "ratio": 13.74
+    },
+    {
+      "path": "direction-e/consultation-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Visit reason",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/consultation-en.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "Allergies not reviewed",
+      "tag": "STRONG",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-e/consultation-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "Review private-note signing",
+      "tag": "BUTTON",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/consultation-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Open signed source",
+      "tag": "SPAN",
+      "ratio": 7.19
+    },
+    {
+      "path": "direction-e/consultation-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/consultation-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "جدول المواعيد",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/consultation-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "مرضاي",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/consultation-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/consultation-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "صلاحية رعاية حالية",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-e/consultation-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(243, 247, 244)",
+      "example": "السياق الطبي",
+      "tag": "H3",
+      "ratio": 13.74
+    },
+    {
+      "path": "direction-e/consultation-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "سبب الزيارة",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/consultation-ar.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "الحساسية لسه متراجعتش",
+      "tag": "STRONG",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-e/consultation-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "راجع توقيع الملاحظات الخاصة",
+      "tag": "BUTTON",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/consultation-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(243, 247, 244)",
+      "example": "افتح المصدر المتوقّع",
+      "tag": "SPAN",
+      "ratio": 7.19
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Dokki Clinic · 2 November 2026",
+      "tag": "DIV",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Cairo time",
+      "tag": "P",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "Mon",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(232, 243, 237)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 13.07
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(232, 243, 237)",
+      "example": "Consultation open · In person",
+      "tag": "P",
+      "ratio": 5.3
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Selected visit",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(243, 247, 244)",
+      "example": "Omar Abdelrahman",
+      "tag": "H2",
+      "ratio": 13.74
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Current care access",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-e/doctor-mobile-en.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "Current care assignment permits visit review. Booking alone does not g",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "عيادة الدقي · 2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "بتوقيت القاهرة",
+      "tag": "P",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "اثنين",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(232, 243, 237)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 13.07
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(232, 243, 237)",
+      "example": "الاستشارة مفتوحة · في العيادة",
+      "tag": "P",
+      "ratio": 5.3
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(243, 247, 244)",
+      "example": "الزيارة المختارة",
+      "tag": "SPAN",
+      "ratio": 5.57
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(243, 247, 244)",
+      "example": "عمر عبدالرحمن",
+      "tag": "H2",
+      "ratio": 13.74
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "صلاحية رعاية حالية",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-e/doctor-mobile-ar.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "علاقة الرعاية الحالية بتسمح بمراجعة الزيارة. الحجز لوحده مش بيدي صلاحي",
+      "tag": "DIV",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-e/states-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/states-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "My care",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/states-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/states-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/states-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/states-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "متابعتي",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/states-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/states-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/typography-en.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/typography-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "My care",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/typography-en.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/typography-en.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/typography-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "Continue",
+      "tag": "BUTTON",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/typography-en.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "Shared",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-e/typography-en.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "Needs review",
+      "tag": "SPAN",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-e/typography-ar.html",
+      "foreground": "rgb(23, 43, 41)",
+      "background": "rgb(255, 255, 255)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 14.85
+    },
+    {
+      "path": "direction-e/typography-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(255, 255, 255)",
+      "example": "متابعتي",
+      "tag": "SPAN",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/typography-ar.html",
+      "foreground": "rgb(83, 103, 98)",
+      "background": "rgb(255, 255, 255)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 6.03
+    },
+    {
+      "path": "direction-e/typography-ar.html",
+      "foreground": "rgb(32, 92, 78)",
+      "background": "rgb(232, 243, 237)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 6.84
+    },
+    {
+      "path": "direction-e/typography-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(32, 92, 78)",
+      "example": "كمّل",
+      "tag": "BUTTON",
+      "ratio": 7.77
+    },
+    {
+      "path": "direction-e/typography-ar.html",
+      "foreground": "rgb(33, 102, 72)",
+      "background": "rgb(233, 245, 238)",
+      "example": "متشارك",
+      "tag": "SPAN",
+      "ratio": 6.13
+    },
+    {
+      "path": "direction-e/typography-ar.html",
+      "foreground": "rgb(128, 86, 20)",
+      "background": "rgb(255, 245, 220)",
+      "example": "محتاج مراجعة",
+      "tag": "SPAN",
+      "ratio": 5.94
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(69, 95, 108)",
+      "background": "rgb(233, 243, 246)",
+      "example": "Next appointment",
+      "tag": "SPAN",
+      "ratio": 5.99
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(32, 83, 62)",
+      "background": "rgb(210, 231, 221)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 6.85
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(20, 40, 49)",
+      "background": "rgb(233, 243, 246)",
+      "example": "02",
+      "tag": "BDI",
+      "ratio": 13.51
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(25, 77, 96)",
+      "background": "rgb(210, 231, 237)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 7.22
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(22, 79, 99)",
+      "example": "View appointment",
+      "tag": "BUTTON",
+      "ratio": 9
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Recently shared",
+      "tag": "SPAN",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "From your doctors",
+      "tag": "SPAN",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(30, 42, 51)",
+      "example": "Shared with you",
+      "tag": "SPAN",
+      "ratio": 6.89
+    },
+    {
+      "path": "direction-f/patient-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Read summary",
+      "tag": "SPAN",
+      "ratio": 10.25
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(69, 95, 108)",
+      "background": "rgb(233, 243, 246)",
+      "example": "ميعادك الجاي",
+      "tag": "SPAN",
+      "ratio": 5.99
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(32, 83, 62)",
+      "background": "rgb(210, 231, 221)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 6.85
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(20, 40, 49)",
+      "background": "rgb(233, 243, 246)",
+      "example": "02",
+      "tag": "BDI",
+      "ratio": 13.51
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(25, 77, 96)",
+      "background": "rgb(210, 231, 237)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 7.22
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(22, 79, 99)",
+      "example": "تفاصيل الميعاد",
+      "tag": "BUTTON",
+      "ratio": 9
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "اتشارك معاك مؤخرًا",
+      "tag": "SPAN",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "من دكاترتك",
+      "tag": "SPAN",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(30, 42, 51)",
+      "example": "متشارك معاك",
+      "tag": "SPAN",
+      "ratio": 6.89
+    },
+    {
+      "path": "direction-f/patient-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(24, 33, 41)",
+      "example": "اقرأ الملخص",
+      "tag": "SPAN",
+      "ratio": 10.25
+    },
+    {
+      "path": "direction-f/find-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/find-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "My care",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/find-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/find-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/find-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Doctor or specialty",
+      "tag": "LABEL",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/find-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "",
+      "tag": "INPUT",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/find-en.html",
+      "foreground": "rgb(18, 40, 49)",
+      "background": "rgb(139, 217, 234)",
+      "example": "Search",
+      "tag": "BUTTON",
+      "ratio": 9.62
+    },
+    {
+      "path": "direction-f/find-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/find-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "متابعتي",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/find-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/find-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/find-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "اسم الدكتور أو التخصص",
+      "tag": "LABEL",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/find-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "",
+      "tag": "INPUT",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/find-ar.html",
+      "foreground": "rgb(18, 40, 49)",
+      "background": "rgb(139, 217, 234)",
+      "example": "دور",
+      "tag": "BUTTON",
+      "ratio": 9.62
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Good morning, Omar. Here’s what’s next.",
+      "tag": "P",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "foreground": "rgb(69, 95, 108)",
+      "background": "rgb(233, 243, 246)",
+      "example": "Next appointment",
+      "tag": "SPAN",
+      "ratio": 5.99
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "foreground": "rgb(32, 83, 62)",
+      "background": "rgb(210, 231, 221)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 6.85
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "foreground": "rgb(20, 40, 49)",
+      "background": "rgb(233, 243, 246)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 13.51
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(22, 79, 99)",
+      "example": "View appointment",
+      "tag": "BUTTON",
+      "ratio": 9
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(30, 42, 51)",
+      "example": "Shared with you",
+      "tag": "SPAN",
+      "ratio": 6.89
+    },
+    {
+      "path": "direction-f/patient-mobile-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Find an appointment",
+      "tag": "BUTTON",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "صباح الخير يا عمر. دي خطوتك الجاية.",
+      "tag": "P",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "foreground": "rgb(69, 95, 108)",
+      "background": "rgb(233, 243, 246)",
+      "example": "ميعادك الجاي",
+      "tag": "SPAN",
+      "ratio": 5.99
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "foreground": "rgb(32, 83, 62)",
+      "background": "rgb(210, 231, 221)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 6.85
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "foreground": "rgb(20, 40, 49)",
+      "background": "rgb(233, 243, 246)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 13.51
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(22, 79, 99)",
+      "example": "تفاصيل الميعاد",
+      "tag": "BUTTON",
+      "ratio": 9
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(30, 42, 51)",
+      "example": "متشارك معاك",
+      "tag": "SPAN",
+      "ratio": 6.89
+    },
+    {
+      "path": "direction-f/patient-mobile-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "دور على ميعاد",
+      "tag": "BUTTON",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Find care",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "foreground": "rgb(69, 95, 108)",
+      "background": "rgb(233, 243, 246)",
+      "example": "Next appointment",
+      "tag": "SPAN",
+      "ratio": 5.99
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "foreground": "rgb(32, 83, 62)",
+      "background": "rgb(210, 231, 221)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 6.85
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "foreground": "rgb(20, 40, 49)",
+      "background": "rgb(233, 243, 246)",
+      "example": "02",
+      "tag": "BDI",
+      "ratio": 13.51
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "foreground": "rgb(25, 77, 96)",
+      "background": "rgb(210, 231, 237)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 7.22
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(22, 79, 99)",
+      "example": "View appointment",
+      "tag": "BUTTON",
+      "ratio": 9
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Date",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/appointment-mobile-en.html",
+      "foreground": "rgb(241, 202, 124)",
+      "background": "rgb(60, 50, 33)",
+      "example": "This booking does not give the doctor access to your medical informati",
+      "tag": "DIV",
+      "ratio": 8.07
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "دور على دكتور",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "foreground": "rgb(69, 95, 108)",
+      "background": "rgb(233, 243, 246)",
+      "example": "ميعادك الجاي",
+      "tag": "SPAN",
+      "ratio": 5.99
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "foreground": "rgb(32, 83, 62)",
+      "background": "rgb(210, 231, 221)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 6.85
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "foreground": "rgb(20, 40, 49)",
+      "background": "rgb(233, 243, 246)",
+      "example": "02",
+      "tag": "BDI",
+      "ratio": 13.51
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "foreground": "rgb(25, 77, 96)",
+      "background": "rgb(210, 231, 237)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 7.22
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(22, 79, 99)",
+      "example": "تفاصيل الميعاد",
+      "tag": "BUTTON",
+      "ratio": 9
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "التاريخ",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/appointment-mobile-ar.html",
+      "foreground": "rgb(241, 202, 124)",
+      "background": "rgb(60, 50, 33)",
+      "example": "الحجز ده مش بيدي الدكتور صلاحية يشوف معلوماتك الطبية.",
+      "tag": "DIV",
+      "ratio": 8.07
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "People in your care",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Doctor workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(18, 40, 49)",
+      "background": "rgb(139, 217, 234)",
+      "example": "Mon",
+      "tag": "SPAN",
+      "ratio": 9.62
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(30, 42, 51)",
+      "example": "Consulted",
+      "tag": "SPAN",
+      "ratio": 6.89
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(35, 62, 73)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 9.83
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(35, 62, 73)",
+      "example": "Synthetic patient",
+      "tag": "P",
+      "ratio": 5.32
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(154, 219, 183)",
+      "background": "rgb(32, 62, 50)",
+      "example": "Booked",
+      "tag": "SPAN",
+      "ratio": 7.34
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Selected visit",
+      "tag": "SPAN",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Omar Abdelrahman",
+      "tag": "H2",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/schedule-en.html",
+      "foreground": "rgb(241, 202, 124)",
+      "background": "rgb(60, 50, 33)",
+      "example": "Current care assignment permits this consultation. Booking alone does ",
+      "tag": "DIV",
+      "ratio": 8.07
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "مرضاي",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "مساحة الدكتور2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(18, 40, 49)",
+      "background": "rgb(139, 217, 234)",
+      "example": "اثنين",
+      "tag": "SPAN",
+      "ratio": 9.62
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(30, 42, 51)",
+      "example": "الزيارة تمت",
+      "tag": "SPAN",
+      "ratio": 6.89
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(35, 62, 73)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 9.83
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(35, 62, 73)",
+      "example": "مريض تجريبي",
+      "tag": "P",
+      "ratio": 5.32
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(154, 219, 183)",
+      "background": "rgb(32, 62, 50)",
+      "example": "محجوز",
+      "tag": "SPAN",
+      "ratio": 7.34
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "الزيارة المختارة",
+      "tag": "SPAN",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "عمر عبدالرحمن",
+      "tag": "H2",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/schedule-ar.html",
+      "foreground": "rgb(241, 202, 124)",
+      "background": "rgb(60, 50, 33)",
+      "example": "علاقة الرعاية الحالية بتسمح بالاستشارة دي. الحجز لوحده مش بيدي صلاحية ",
+      "tag": "DIV",
+      "ratio": 8.07
+    },
+    {
+      "path": "direction-f/consultation-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/consultation-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "People in your care",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/consultation-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/consultation-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Active consultation",
+      "tag": "SPAN",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/consultation-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Omar Abdelrahman",
+      "tag": "H1",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/consultation-en.html",
+      "foreground": "rgb(154, 219, 183)",
+      "background": "rgb(32, 62, 50)",
+      "example": "Current care access",
+      "tag": "SPAN",
+      "ratio": 7.34
+    },
+    {
+      "path": "direction-f/consultation-en.html",
+      "foreground": "rgb(241, 202, 124)",
+      "background": "rgb(60, 50, 33)",
+      "example": "Allergies not reviewed",
+      "tag": "STRONG",
+      "ratio": 8.07
+    },
+    {
+      "path": "direction-f/consultation-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(30, 42, 51)",
+      "example": "Draft saved · 14:42",
+      "tag": "SPAN",
+      "ratio": 6.89
+    },
+    {
+      "path": "direction-f/consultation-en.html",
+      "foreground": "rgb(18, 40, 49)",
+      "background": "rgb(139, 217, 234)",
+      "example": "Review private-note signing",
+      "tag": "BUTTON",
+      "ratio": 9.62
+    },
+    {
+      "path": "direction-f/consultation-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Open signed source",
+      "tag": "SPAN",
+      "ratio": 10.25
+    },
+    {
+      "path": "direction-f/consultation-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/consultation-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "مرضاي",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/consultation-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/consultation-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "الاستشارة الحالية",
+      "tag": "SPAN",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/consultation-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "عمر عبدالرحمن",
+      "tag": "H1",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/consultation-ar.html",
+      "foreground": "rgb(154, 219, 183)",
+      "background": "rgb(32, 62, 50)",
+      "example": "صلاحية رعاية حالية",
+      "tag": "SPAN",
+      "ratio": 7.34
+    },
+    {
+      "path": "direction-f/consultation-ar.html",
+      "foreground": "rgb(241, 202, 124)",
+      "background": "rgb(60, 50, 33)",
+      "example": "الحساسية لسه متراجعتش",
+      "tag": "STRONG",
+      "ratio": 8.07
+    },
+    {
+      "path": "direction-f/consultation-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(30, 42, 51)",
+      "example": "المسودة محفوظة · 14:42",
+      "tag": "SPAN",
+      "ratio": 6.89
+    },
+    {
+      "path": "direction-f/consultation-ar.html",
+      "foreground": "rgb(18, 40, 49)",
+      "background": "rgb(139, 217, 234)",
+      "example": "راجع توقيع الملاحظات الخاصة",
+      "tag": "BUTTON",
+      "ratio": 9.62
+    },
+    {
+      "path": "direction-f/consultation-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(24, 33, 41)",
+      "example": "افتح المصدر المتوقّع",
+      "tag": "SPAN",
+      "ratio": 10.25
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Dokki Clinic · 2 November 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Cairo time",
+      "tag": "P",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(18, 40, 49)",
+      "background": "rgb(139, 217, 234)",
+      "example": "Mon",
+      "tag": "SPAN",
+      "ratio": 9.62
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(35, 62, 73)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 9.83
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(35, 62, 73)",
+      "example": "Consultation open · In person",
+      "tag": "P",
+      "ratio": 5.32
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Selected visit",
+      "tag": "SPAN",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Omar Abdelrahman",
+      "tag": "H2",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(154, 219, 183)",
+      "background": "rgb(32, 62, 50)",
+      "example": "Current care access",
+      "tag": "SPAN",
+      "ratio": 7.34
+    },
+    {
+      "path": "direction-f/doctor-mobile-en.html",
+      "foreground": "rgb(241, 202, 124)",
+      "background": "rgb(60, 50, 33)",
+      "example": "Current care assignment permits visit review. Booking alone does not g",
+      "tag": "DIV",
+      "ratio": 8.07
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "MH",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "عيادة الدقي · 2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "بتوقيت القاهرة",
+      "tag": "P",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(18, 40, 49)",
+      "background": "rgb(139, 217, 234)",
+      "example": "اثنين",
+      "tag": "SPAN",
+      "ratio": 9.62
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(35, 62, 73)",
+      "example": "14:30",
+      "tag": "BDI",
+      "ratio": 9.83
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(35, 62, 73)",
+      "example": "الاستشارة مفتوحة · في العيادة",
+      "tag": "P",
+      "ratio": 5.32
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "الزيارة المختارة",
+      "tag": "SPAN",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "عمر عبدالرحمن",
+      "tag": "H2",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(154, 219, 183)",
+      "background": "rgb(32, 62, 50)",
+      "example": "صلاحية رعاية حالية",
+      "tag": "SPAN",
+      "ratio": 7.34
+    },
+    {
+      "path": "direction-f/doctor-mobile-ar.html",
+      "foreground": "rgb(241, 202, 124)",
+      "background": "rgb(60, 50, 33)",
+      "example": "علاقة الرعاية الحالية بتسمح بمراجعة الزيارة. الحجز لوحده مش بيدي صلاحي",
+      "tag": "DIV",
+      "ratio": 8.07
+    },
+    {
+      "path": "direction-f/states-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/states-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/states-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/states-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/states-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "01 / Loading",
+      "tag": "SPAN",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/states-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "Loading appointments",
+      "tag": "H2",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/states-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/states-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/states-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/states-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/states-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "01 / تحميل",
+      "tag": "SPAN",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/states-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "بنحمّل مواعيدك",
+      "tag": "H2",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/typography-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/typography-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Find care",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/typography-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/typography-en.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "Patient workspace2 November 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/typography-en.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "IBM Plex Sans + Noto Sans Arabic · Typography exploration",
+      "tag": "DIV",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/typography-en.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "متابعتك أوضح.وكل خطوة في مكانها.",
+      "tag": "DIV",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/typography-en.html",
+      "foreground": "rgb(18, 40, 49)",
+      "background": "rgb(139, 217, 234)",
+      "example": "Continue",
+      "tag": "BUTTON",
+      "ratio": 9.62
+    },
+    {
+      "path": "direction-f/typography-en.html",
+      "foreground": "rgb(154, 219, 183)",
+      "background": "rgb(32, 62, 50)",
+      "example": "Shared",
+      "tag": "SPAN",
+      "ratio": 7.34
+    },
+    {
+      "path": "direction-f/typography-en.html",
+      "foreground": "rgb(241, 202, 124)",
+      "background": "rgb(60, 50, 33)",
+      "example": "Needs review",
+      "tag": "SPAN",
+      "ratio": 8.07
+    },
+    {
+      "path": "direction-f/typography-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(17, 23, 29)",
+      "example": "EgyHealth",
+      "tag": "SPAN",
+      "ratio": 15.67
+    },
+    {
+      "path": "direction-f/typography-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(17, 23, 29)",
+      "example": "دور على دكتور",
+      "tag": "SPAN",
+      "ratio": 8.48
+    },
+    {
+      "path": "direction-f/typography-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(35, 62, 73)",
+      "example": "OA",
+      "tag": "SPAN",
+      "ratio": 7.12
+    },
+    {
+      "path": "direction-f/typography-ar.html",
+      "foreground": "rgb(139, 217, 234)",
+      "background": "rgb(17, 23, 29)",
+      "example": "متابعتك الصحية2 نوفمبر 2026",
+      "tag": "DIV",
+      "ratio": 11.35
+    },
+    {
+      "path": "direction-f/typography-ar.html",
+      "foreground": "rgb(164, 180, 193)",
+      "background": "rgb(24, 33, 41)",
+      "example": "IBM Plex Sans + Noto Sans Arabic · استكشاف الخطوط",
+      "tag": "DIV",
+      "ratio": 7.67
+    },
+    {
+      "path": "direction-f/typography-ar.html",
+      "foreground": "rgb(233, 240, 245)",
+      "background": "rgb(24, 33, 41)",
+      "example": "متابعتك أوضح.وكل خطوة في مكانها.",
+      "tag": "DIV",
+      "ratio": 14.16
+    },
+    {
+      "path": "direction-f/typography-ar.html",
+      "foreground": "rgb(18, 40, 49)",
+      "background": "rgb(139, 217, 234)",
+      "example": "كمّل",
+      "tag": "BUTTON",
+      "ratio": 9.62
+    },
+    {
+      "path": "direction-f/typography-ar.html",
+      "foreground": "rgb(154, 219, 183)",
+      "background": "rgb(32, 62, 50)",
+      "example": "متشارك",
+      "tag": "SPAN",
+      "ratio": 7.34
+    },
+    {
+      "path": "direction-f/typography-ar.html",
+      "foreground": "rgb(241, 202, 124)",
+      "background": "rgb(60, 50, 33)",
+      "example": "محتاج مراجعة",
+      "tag": "SPAN",
+      "ratio": 8.07
+    }
+  ]
+}
