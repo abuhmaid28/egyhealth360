@@ -18,15 +18,17 @@ CURRENT AUTHORITATIVE sequencing; execution still requires a separately scoped P
 
 Pre-final I2 Live UI/hosting and UI polish are implemented/evidenced; they are not acceptance of final V2 design. [Hosted evidence](PRE_FINAL_DOCTOR_DEMO_UI.md). **Overall I3 is incomplete.**
 
-## Foundation acceptance and active Stage 2
+## Foundation acceptance and active Stage 3
 
 Foundation Reboot V2 Stage 0+1 is complete/accepted: [independent review PASS and PR #73 merge](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564358810). Verdict B — healthy with non-blocking debt; Stage 1.5 is NOT REQUIRED on reviewed evidence. A newly established P0/P1 defect would require separate triage/remediation authorization, not an automatic fix in Product UX work.
 
-CI Accelerator V2 is independently reviewed PASS and merged through [PR #74 / owner disposition](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565142946). Current task: **Stage 2 — Product UX Foundation**, documentation/product analysis only. [UX_FOUNDATION](UX_FOUNDATION.md), [USER_JOURNEYS](USER_JOURNEYS.md) and [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md) define the review package; [validation](PRODUCT_UX_VALIDATION.md) records scope/evidence. Independent Stage 2 review, owner acceptance and whole-project health review precede any separately authorized Stage 3. No merge, auto-merge or implementation permission is granted here.
+CI Accelerator V2 is independently reviewed PASS and merged through [PR #74 / owner disposition](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565142946). Stage 2 Product UX is accepted/merged through [PR #75 / owner acceptance](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565530772), main `248347f72a7c1d4646cbceb7224f0ec1a9d92f06`; post-merge CI 41362415955 SUCCESS. Accepted UXD10–UXD16 and role/task/journey foundation inform IA; UXD19 is planning only.
+
+Current task: **Stage 3 — Information Architecture**, documentation/product structure only under [6565633586](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565633586). [Proposal](INFORMATION_ARCHITECTURE.md), [sitemaps](IA_SITEMAPS.md), [decisions](IA_DECISION_REGISTER.md) and [validation](IA_VALIDATION.md) form the review package. Independent Stage 3 review, explicit owner IA acceptance and whole-project health review precede any separately authorized next stage. No merge, auto-merge or implementation permission is granted here.
 
 ## Product/Design sequence — future authorizations
 
-1. **Stage 2 — Product UX Foundation** proposal/review, then separately authorized **Stage 3 — Information Architecture**. Stage 2 leaves exact navigation, labels, sitemap and page hierarchy open.
+1. **Stage 2 — Product UX Foundation** accepted; **Stage 3 — Information Architecture** currently authorized as a proposal. Final grouping/navigation remains owner-gated and labels remain working labels.
 2. Content System and Arabic UX; **Product Owner UX/content approval**.
 3. Brand research; **exactly three meaningfully distinct visual/brand directions**.
 4. **Owner selection/rejection/hybrid approval**; Codex cannot choose the winner.
