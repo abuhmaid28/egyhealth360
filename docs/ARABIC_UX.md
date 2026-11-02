@@ -1,96 +1,125 @@
 # Arabic UX and English parity — proposal
 
-CURRENT AUTHORITATIVE localization proposal under [owner authorization](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567540211). [Content system](CONTENT_SYSTEM.md) defines source-specific meaning; [glossary](TERMINOLOGY_GLOSSARY.md) supplies bilingual candidate terms; [CD01–CD07](CONTENT_DECISION_REGISTER.md) remain owner-gated. This defines content behavior, not CSS, layout, typography, parser implementation or a translated runtime catalog. Current UI remains unchanged.
+CURRENT AUTHORITATIVE localization proposal under [owner authorization](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567540211), revised on the owner's instruction for PR #77 from reviewed head `1193d05d70b5c0a8441bb9e768af66a20f63c16a`. **Natural modern Egyptian Arabic for product UI** supersedes the earlier MSA recommendation. [Content system](CONTENT_SYSTEM.md) defines source meanings; [glossary](TERMINOLOGY_GLOSSARY.md) and [CD01–CD07](CONTENT_DECISION_REGISTER.md) remain proposals requiring owner acceptance. No IA, authority, clinical contract, stored data, CSS/layout, visual or runtime behavior changes.
 
 ## Recommended register and voice
 
-Recommend clear contemporary Modern Standard Arabic with familiar healthcare vocabulary used in Egypt, without slang or classical/institutional phrasing. Arabic is authored from the task and clinical meaning, not from English sentence structure. Use short verbs, explicit objects, ordinary connectors, calm factual feedback and respectful personal language. Prefer طبيب، عيادة، موعد، وصفة طبية، صرف الدواء، ملخص الزيارة. Avoid transliterated بورتال، أرتيفاكت، فولفيلمنت، روت and نية متابعة. دكتور and روشتة are recognizable Egyptian alternatives, but طبيب and وصفة طبية are recommended for consistent professional product UI.
+Recommend **polished Egyptian Arabic**: modern, friendly, simple, clear, professional, warm without being casual, natural when read aloud and appropriate for healthcare. Write as a thoughtful Egyptian digital product for ordinary Egyptian users. Author the task and meaning directly in Arabic; English does not dictate grammar, navigation wording, status syntax or word order. This is a reasoned content recommendation, not measured Egyptian user research.
 
-CD01 evaluates contemporary professional MSA against conversational Egyptian Arabic (warmer/local but less suitable for formal medical/task copy) and formal institutional Arabic (precise but often distant/bureaucratic). This is an editorial recommendation, not a finding from Egyptian participants or licensed clinical translation review. A later native Arabic task review must test naturalness, comprehension and vocabulary before implementation approval.
+CD01 compares three approaches: **A polished Egyptian Arabic (recommended)** for local clarity/familiarity and an approachable Egypt-focused graduation product; **B formal Modern Standard Arabic**, broadly legible but liable to sound translated, governmental or institutional in ordinary app tasks; **C heavy conversational Egyptian slang**, familiar in chat but unsuitable for precise, respectful healthcare UI. The target uses Egyptian structures and clear familiar medical nouns together; it does not turn every noun into slang.
 
-| Literal/weak wording to reject | Recommended Arabic | Meaning / English equivalent |
-| --- | --- | --- |
-| تم معالجة الأرتيفاكت بنجاح | حُفظت المسودة. | Draft saved; name actual source/state |
-| نية المتابعة الخاصة بالمريض | توصية بالمتابعة | Follow-up recommendation; no reservation |
-| الملخص المنشور | ملخص الزيارة · تمت مشاركته معك | Visit summary, shared with you; not public publication |
-| فشل تنفيذ العملية. حاول مرة أخرى. after unknown write | تعذّر تأكيد تسجيل الصرف. راجع البند وسجله. لا تسجّل صرفًا آخر. | Could not confirm dispense; check exact item/history; no new dispense |
-| المريض الخاص بك في رحلة العناية | من ترعاهم؛ اسم الشخص في سياق الاستشارة | People in your care; exact person identity in consultation |
-| الدواء متاح after acceptance | قبلت الصيدلية الوصفة. القبول لا يؤكد توافر الدواء أو صرفه. | Acceptance does not confirm availability/dispense |
+Prefer مواعيدك، روشتتك، الدكتور، ميعاد، مفيش، لسه، اتأكد، اتسجل، اختار، دور where appropriate. Use ordinary direct sentences with exact objects. Avoid bureaucratic قد تم، يرجى، يتعين، المستخدم، الرجاء القيام بـ، تمت عملية and repeating المريض inside the personal patient experience. Avoid street/chat expressions عايز، بتاع، خش، دوس، معلش، تمام كده، يلا, jokes, vulgarity, highly local expressions and unclear abbreviations. Phrases shown as rejected alternatives are evidence, not recommendations.
 
-Use grammatical whole messages, not fragment concatenation. ملاحظة موقّعة وخاصة; ملخص موقّع ومُشارَك; وصفة موقّعة; تعليمات تمت مشاركتها. Status grammar depends on object/recipient, not a universal translation for SIGNED/RELEASED. “Shared with you” is تمت مشاركته معك for a summary, تمت مشاركتها معك for instructions. Avoid unvocalized ambiguities where a light diacritic makes passive meaning clear: سُجّل صرف الدواء, أُرسل الطلب. Avoid guessed gender/honorifics in greetings; address the task or recorded name. A button can consistently use the verbal noun حجز الموعد while guidance says راجع الطبيب والعيادة والتوقيت.
+Keep familiar medical nouns when already clear: ملخص الزيارة، عيادة، حساسية، الكمية، الوحدة، صرف الدواء. Patient-facing دكتور / روشتة and professional طبيب / وصفة طبية can express the same real profession/source; they do not create different identities or security roles. Preserve exact recorded names, signed text and medication instructions; never “Egyptianize” or silently rewrite clinical content.
+
+### Precision when consequences matter
+
+Use more explicit, and where helpful more formal, wording for clinical warnings, medication instructions, privacy/authorization consequences, legally/clinically sensitive descriptions, signing, dispensing, reversal and future result finalization. Precision means naming the actor, target, scope and effect, not adopting government prose. Pair concise action names with understandable Egyptian explanations. For example: **أبطل تسجيل الصرف** with «التسجيل الأصلي هيفضل في السجل. إبطال التسجيل مش بيسمح بصرف البند تاني.» Never shorten this to ارجع or خلاص. Authored medication instructions remain exactly as recorded, regardless of register; this policy changes UI explanations, not clinical instructions or legal policy.
+
+Examples: clinical warning «صلاحية صرف الوصفة انتهت. مش مسموح بتسجيل صرف جديد.»; care permission «الحجز لوحده مش بيدي الدكتور صلاحية يشوف معلوماتك الطبية. طلب الرعاية الجديد محتاج سماحك وقبول الدكتور.»; signing «وقّع الملاحظة الخاصة. التوقيع مش بيشاركها مع المريض.» These retain precision without invented authority or false reassurance. Necessary formal role nouns can remain inside natural Egyptian sentences.
 
 ## Task and terminology parity
 
-Patient P1/P2 retain My care / رعايتي and Find care / ابحث عن رعاية as recommendations, with explicit secondary مواعيدي، وصفاتي الطبية، الملخصات وتعليمات المتابعة، السجل المتاح. Doctor C1/C3 retain جدول المواعيد and من ترعاهم, with requests/current care clearly separated; consultation has local المراجعة والتوثيق، الوصفة الطبية والصيدلية، المتابعة، المراجعة والإغلاق and future diagnostics. These translations do not regroup or move accepted destinations. Personal patient headings do not repeat المريض. Doctor-side identity must never be obscured by a possessive or generic “this person” during a consequential action.
+| Context | English working label | Egyptian Arabic recommendation | Scope / alternatives |
+| --- | --- | --- | --- |
+| Patient P1 | My care | **متابعتي** | Compare رعايتي (short but abstract), صحتي (may overclaim a full record), رعايتي الصحية (long/institutional). Purpose: مواعيدك وملخصات زياراتك وروشتاتك والخطوة الجاية. Includes bounded history; not just follow-up. CD03 pending |
+| Patient P2 | Find care | **دور على دكتور** | Most natural current physician/clinic/time journey; اختار دكتور is clearer at selection after search; ابحث عن دكتور is understandable but more formal. Do not use the old literal care-search translation. No triage, ranking or medical suitability claim; IA02/P2 unchanged |
+| Patient retrieval | Appointments; Prescriptions; Shared summaries and follow-up; Available history | **مواعيدك؛ روشتاتك؛ الملخصات والمتابعة؛ السجل المتاح** | Explicit secondary retrieval even with no current task; neither buried nor a complete I4 health record |
+| Patient P9 | Your doctors | **دكاترتي** in navigation; **دكاترتك** in messages | أطباؤك is the formal alternative; الدكاترة بتوعك is too colloquial. Helper: الدكاترة اللي سمحت لهم يتابعوا حالتك، حسب صلاحية الرعاية الحالية. Pending requests separate; booking alone grants none. CD04 pending |
+| Doctor C1 | Schedule | **جدول المواعيد** | Familiar existing phrase; اليوم is a date scope, not a new primary |
+| Doctor C3 | People in your care | **مرضاي** | Compare المرضى (can suggest unrestricted directory) and متابعة المرضى (longer, task-narrowing). Subordinate طلبات جديدة / طلبات الرعاية and متابعة حالية. No guardian-like personal label. IA03/C3 unchanged; CD04 pending |
+| Consultation local tasks | Review/documentation; Prescription/pharmacy; Follow-up; Review/close | **المراجعة والتوثيق؛ الوصفة الطبية والصيدلية؛ المتابعة؛ المراجعة والإغلاق** | Precise professional nouns are familiar; no new global modules. Future diagnostics stay FUTURE |
+| Visit summary | Visit summary | **ملخص الزيارة** | Already simple, natural and medically clear; do not force slang. Patient state: الدكتور شارك الملخص معاك. Close ≠ sharing |
+| Follow-up | Follow-up recommendation | **متابعة مقترحة**; **الدكتور رشّح لك متابعة** | الدكتور طلب متابعة may sound mandatory; الدكتور طلب إنك تتابع is natural but directive. Recommend suggestion wording, while preserving the clinician's exact instruction unchanged |
+| Prescription | Prescription | **روشتة** for patient, **الوصفة الطبية** for professional source/work | Same object/status/history. Explain once if needed: الروشتة هي الوصفة الطبية اللي الدكتور وقّعها. No clinical payload translation |
 
-Care request explanation: «طلب الرعاية ينتظر قبول الطبيب. الحجز وحده لا يمنح صلاحية الاطّلاع على المعلومات الطبية.» / “The care request is awaiting doctor acceptance. Booking alone does not give access to medical information.” Active care access derives from the current assignment, not from the request history badge. CD04's role-specific labels require this explanation; they must not become a general patient or doctor directory.
+**مرضاي is a user-facing label only**. It is not a general patient directory, access to every patient, permanent authority or access created by booking. Only legitimately current care relationships and permitted minimal request contexts appear; each read/write still rechecks actual authority. Patient دكاترتي likewise excludes the inference “everyone I ever booked with.” New care requests require patient authorization and doctor acceptance; independently valid legacy grants retain their current contract without a new request predicate. Pending/new requests do not expose a clinical chart.
 
-Follow-up: «أوصى الطبيب بمتابعة. هذه التوصية لا تحجز موعدًا.» / “The doctor recommended follow-up. This recommendation does not book an appointment.” Show an actual booking only from its committed state; when no known association, say «لا يوجد موعد مرتبط هنا» / “No appointment is linked here.” Do not say no appointment exists elsewhere when source association is unknown.
+Follow-up explanation: «الدكتور رشّح لك متابعة. التوصية دي مش حجز ميعاد.» / “The doctor recommended follow-up. This recommendation does not book an appointment.” If no association is known, say «لسه مفيش ميعاد مرتبط بالتوصية هنا.» / “No appointment is linked to the recommendation here.” Only an authoritative booking lookup can support «لسه مفيش ميعاد متابعة محجوز ضمن المواعيد المعروضة.» Never assert no appointment exists elsewhere from a missing link. Actual committed booking state remains separate; no automatic booking/link/reminder.
 
-Clinical distinctions retain independent Arabic words: موقّعة وخاصة ≠ مُشارَكة; أُغلقت الاستشارة ≠ تمت مشاركة كل الملاحظات; قبلت الصيدلية الوصفة ≠ سُجّل صرف الدواء; أُبطل تسجيل الصرف ≠ يمكن الصرف مجددًا; نتيجة نهائية ≠ راجعها الطبيب. “Final” is FUTURE laboratory verification/finalization, not diagnosis or clinician interpretation.
+Pharmacy acceptance: patient «الصيدلية قبلت الروشتة»; professional «الصيدلية قبلت الوصفة الطبية». Explain «ده قبول للمسؤولية عن الوصفة، مش تأكيد إن الدواء متوفر أو جاهز للاستلام أو إن الصرف اتسجل.» Reject الصيدلية استلمت الروشتة للمراجعة as acceptance wording: it can mean mere route receipt and invent a review stage. Dispense «صرف الدواء اتسجل» records supply, not consumption/delivery. Reversal «تسجيل الصرف اتبطل. البند ده مش مسموح بصرفه تاني» retains the original fact/history and FULLY_DISPENSED, terminal correction state and no renewed entitlement.
 
 ## Dates, times, quantities and numbers
 
-CD07 recommends Latin digits `0123456789` in both languages for consistent clinical/operational numbers, spelled-out Gregorian months, 24-hour time, and explicit event/clinic timezone. Alternative: Arabic-Indic digits `٠١٢٣٤٥٦٧٨٩` with localized decimal conventions and explicit ص/م. Both are plausible; owner choice plus later Arabic comprehension review is required. Do not invent a user preference feature to avoid deciding. Arabic language does not require one numbering system, and Latin digits do not permit English UI fallback.
+CD07 remains **OWNER DECISION REQUIRED**. Recommendation unchanged in meaning: Latin digits `0123456789`, spelled-out Gregorian month, 24-hour time and actual event/clinic timezone where important. Alternative Arabic-Indic `٠١٢٣٤٥٦٧٨٩` with localized decimal conventions and explicit ص/م remains evaluated; no preference feature invented. Egyptian sentence structure is independent of numeric/data semantics.
 
-| Content | Recommended English | Recommended Arabic | Rules / ambiguity checks |
+| Content | English | Natural Egyptian Arabic example | Safety rule |
 | --- | --- | --- | --- |
-| Appointment absolute date/time | 2 November 2026, 14:30 — Cairo time (UTC+02:00) | 2 نوفمبر 2026، 14:30 — بتوقيت القاهرة (UTC+02:00) | Use actual event zone/offset at that instant; example is not a hard-coded +02 rule |
-| Month vocabulary | January…December | يناير، فبراير، مارس، أبريل، مايو، يونيو، يوليو، أغسطس، سبتمبر، أكتوبر، نوفمبر، ديسمبر | Gregorian explicitly; no unannounced Hijri conversion |
-| Day/month | 2 November 2026 | 2 نوفمبر 2026 | Never ambiguous 02/11/26; year on clinical/operational evidence/history |
-| Relative date | Today · 2 November 2026, 14:30 — Cairo time | اليوم · 2 نوفمبر 2026، 14:30 — بتوقيت القاهرة | Relative label supplementary; same clinic/event timezone as absolute date, not browser's accidental timezone |
-| Timezone | Clinic time — Cairo; UTC offset when material | توقيت العيادة — القاهرة؛ فرق التوقيت عند الحاجة | Bind to actual booking/clinic zone. Do not assume every clinic uses Cairo; show IANA identifier only for legitimate ambiguity/configuration |
-| Duration | 30 minutes | المدة: 30 دقيقة | State duration, not end instant; derive from exact actual interval, no invented fixed visit length |
-| Validity | Valid from {absolute instant} until {absolute instant} | سارية من {التوقيت الكامل} حتى {التوقيت الكامل} | Eligibility is start inclusive, end exclusive, current server time; show timezone and sufficient precision near boundary |
-| Quantity | Quantity: 1.25; Unit: {recorded unit} | الكمية: 1.25؛ الوحدة: {الوحدة المسجّلة} | Decimal dot recommended; no digit grouping for clinical decimal quantities; preserve exact numeric value and original unit |
-| Medicine instruction | {exact authored instruction} | {النص كما سجّله الطبيب} | No dose conversion, unit expansion, translation, rounding or medical rule generation |
-| Phone / email / reference | +20 10 1234 5678; care@example.test; safe reference | Same recorded value with Arabic surrounding labels | Preserve plus, leading zeros, @, hyphen and character order; examples synthetic |
-| Date of birth | 2 November 2000 | 2 نوفمبر 2000 | Calendar date stays that date; never shift through timezone or infer unsupported demographic/clinical meaning |
+| Absolute appointment | 2 November 2026, 14:30 — Cairo time (UTC+02:00) | ميعادك يوم 2 نوفمبر 2026، الساعة 14:30 بتوقيت القاهرة (UTC+02:00). | Actual event zone/offset, not a permanent +02 assumption |
+| Gregorian months | January…December | يناير، فبراير، مارس، أبريل، مايو، يونيو، يوليو، أغسطس، سبتمبر، أكتوبر، نوفمبر، ديسمبر | No unannounced Hijri conversion; no ambiguous 02/11/26 |
+| Relative supplement | Today · 2 November 2026, 14:30 — Cairo time | ميعادك النهارده، 2 نوفمبر 2026، الساعة 14:30 بتوقيت القاهرة. | Relative text supplements full absolute time in same event zone |
+| Duration | Duration: 30 minutes | مدة الميعاد: 30 دقيقة. | Use actual interval, no fixed visit-length claim |
+| Validity | Valid from {instant} until {instant} | الوصفة سارية من {التوقيت الكامل} لحد {التوقيت الكامل}. | Current server eligibility: start inclusive, end exclusive; zone and enough boundary precision |
+| Quantity and unit | Quantity: 1.25; Unit: {recorded unit} | الكمية: 1.25؛ الوحدة: {الوحدة المسجّلة}. | Preserve exact value/unit and numeric precision; quantity ≠ dose |
+| Recorded instructions | {exact authored instruction} | تعليمات الدكتور: {النص زي ما اتسجّل}. | No rounding, rewriting, dose conversion or silent translation |
+| Birth date | 2 November 2000 | تاريخ الميلاد: 2 نوفمبر 2000. | Date-only value never shifts timezone; no inferred medical meaning |
+| Phone/email/reference | +20 10 1234 5678; care@example.test; safe reference | رقم التليفون: +20 10 1234 5678؛ البريد الإلكتروني: care@example.test | Exact recorded spelling/order/plus/leading zeros; synthetic examples |
 
-Clinical quantity inputs permit accepted numeric strings; this document does not change their parser or stored decimal precision. Preserve up to the existing three fractional digits and nine integer digits without rounding or treating comma as thousands/decimal interchangeably. A source unit such as `mg`, `mL` or an authored Arabic unit is kept exactly; quantity is not dose. Exact signed medication name/display snapshot remains unchanged when catalog display later changes.
+Clinical quantity strings retain accepted precision (up to three fractional digits and nine integer digits); decimal dot recommended, no digit grouping for clinical decimals and no comma/dot ambiguity. Units such as `mg`, `mL` or recorded Arabic units stay exact, including case. Signed medication display snapshots do not change with later catalog names. No parser, stored values, clinical rules or medication text is changed.
 
-Content must support Arabic zero/one/two/few/many/other meaning without English noun concatenation. Prefer a clear labelled count when natural: «عدد البنود: 2» / “Items: 2,” or author full correct forms (بند واحد، بندان، 3 بنود). Do not force English “item(s)” into Arabic. Zero is only shown for a successfully loaded permitted scope, never for hidden or failed results. No implementation library is selected.
+Use the actual clinic/event timezone and daylight-saving rules. Repeated clock hours need zone/offset to distinguish instants; cross-midnight windows show both dates/times. Client minute precision cannot decide eligibility near server seconds/millisecond boundaries; expose enough detail when needed. Relative “today/tomorrow” alone is insufficient for booking, signing, validity, dispense, verification or correction evidence. Do not convert UTC storage or offset-bearing contract semantics.
 
-Use the clinic/event's actual timezone and daylight-saving rules; do not store or infer a permanently fixed offset. In repeated/ambiguous clock hours include offset and zone to distinguish two instants with the same local time. Cross-midnight windows show both full dates and times. Displayed minute precision must not assert eligibility at a boundary when server seconds/milliseconds decide it: expose finer time detail if needed and rely on authoritative eligibility, not a client countdown. Never change UTC storage or canonical offset-bearing semantics. Relative words “today,” “tomorrow,” and “yesterday” are not sufficient for booking, validity, signing, dispensing, verification or correction evidence.
+Counts need natural complete Arabic grammar, not translated English fragments. A clear labelled count such as «عدد البنود: 2» is acceptable; otherwise use correct forms (بند واحد، بندان، 3 بنود). Zero means successfully loaded permitted scope, never a failed/hidden result. No i18n library or rendering implementation is selected.
 
 ## RTL and mixed-direction semantic requirements
 
-Arabic text reads as Arabic. Embedded recorded Latin content keeps its internal reading order. This specifies expected meaning and reading/copy behavior only; no CSS, mirroring, component or layout technique is selected.
+Arabic prose reads naturally; embedded recorded Latin content keeps its internal order and identity. These requirements concern meaning, reading/copy behavior and assistive order, not CSS/layout or mirroring choices.
 
-| Mixed content / risk | Expected semantic behavior | Review fixture and acceptance condition |
-| --- | --- | --- |
-| Arabic + English person name | Name remains exact, one recognizable identity; title/parenthetical status stays attached to intended name | «الطبيب: Omar Ali — الموعد محجوز»; rendered/copied name must be `Omar Ali`, not reversed |
-| Medicine name plus quantity/unit | Treat name and numeric/unit span as distinct semantic content; do not reorder digits/unit or translate brand | «الدواء: Amoxicillin؛ الكمية: 1.25؛ الوحدة: mL»; `1.25` remains one value, `mL` case/order preserved; synthetic, not a prescription |
-| Range / negative / decimal / offset | Keep sign, decimal and full endpoint together; label bounds rather than relying only on dash direction | «من 2 نوفمبر 2026، 23:30 إلى 3 نوفمبر 2026، 00:30»; dates do not swap; `UTC+02:00` plus sign stays with offset |
-| Time and date | Date parts/time digits retain order, Arabic month prose natural | «2 نوفمبر 2026، 14:30 — بتوقيت القاهرة»; 14:30 never reads 30:14 |
-| Necessary ID/reference | Show exact permitted opaque reference only for legitimate reconciliation; no hidden IDs from failure | «المرجع: RX-AB12-34»; copy remains `RX-AB12-34`, no inserted directional characters in stored value |
-| Phone | Preserve full number/leading plus/zero; surrounding Arabic punctuation not part of value | «الهاتف: +20 10 1234 5678»; copied number retains +20 |
-| Email | Keep complete local/domain spelling; Arabic sentence punctuation separate | «البريد: care@example.test»; copy exactly `care@example.test` |
-| English proper noun / product / clinic | Official name retained as recorded when no authorized Arabic name; no arbitrary transliteration | «العيادة: Nile Care Clinic»; the clinic identity remains intact |
-| Screen reader / selection / copy | Spoken/selected sequence reflects person → medicine → quantity/unit → state, without hidden bidi controls leaking into payload | Review both Arabic-first and English-first names, parentheses, slash, hyphen, plus, mixed scripts; no misleading target attribution |
+| Risk / fixture | Expected result |
+| --- | --- |
+| «ميعادك مع Omar Ali — الحجز اتأكد» | Name stays exactly `Omar Ali`; state belongs to the same appointment/person |
+| «الدواء: Amoxicillin؛ الكمية: 1.25؛ الوحدة: mL» | Exact medicine, decimal and case-sensitive unit order; synthetic, not a prescription |
+| «من 2 نوفمبر 2026، 23:30 لحد 3 نوفمبر 2026، 00:30» | Endpoint dates/times do not swap; label each boundary |
+| «ميعادك الساعة 14:30 بتوقيت القاهرة (UTC+02:00)» | 14:30 never 30:14; plus stays attached to offset |
+| «المرجع: RX-AB12-34» | Exact allowed necessary reference; copy contains no extra direction controls |
+| «رقم التليفون: +20 10 1234 5678» | Preserve leading plus and digit order |
+| «البريد الإلكتروني: care@example.test» | Preserve complete email, keep sentence punctuation separate |
+| «العيادة: Nile Care Clinic» | Official proper name remains exact without invented transliteration |
+| Mixed name/medicine/quantity/unit/status read by assistive tech or copied | Preserve semantic sequence/target attribution; test parentheses, slash, hyphen, plus and both script orders |
 
-Mixed-direction runs require semantic separation/isolation when later implemented; this is an expected behavior, not a CSS prescription. Never reverse chronology, clinical sequence or state transitions simply because the locale is RTL. Do not insert directional control characters into medication names, signed content, IDs, phone/email or stored clinical data to repair presentation. Later validation must test actual rendering, keyboard selection, copying and screen-reader order on supported clients; the present sprint performs editorial fixture review only.
+Later implementation must isolate mixed-direction semantic runs without changing recorded values. RTL does not reverse chronology, clinical task sequence or transitions. Never put presentation direction controls into signed text, medication names, IDs, phone/email or stored data. Actual rendering, keyboard selection, copying and assistive-technology behavior require later authorized client verification; this revision is editorial only.
 
 ## English leakage, fallback and transliteration
 
-Arabic screens must have authored Arabic for navigation, buttons, statuses, helpers, empty/loading/error/success messages, accessible names, confirmations and uncertain-write recovery. A missing entry is a localization defect, not permission to return the English key. No full English sentence fallback. Review active language across session expiry, offline/error, permission denial and capability gaps, not just the happy path.
+Keep authored Arabic navigation, buttons, statuses, helper/error/loading/empty/success text, confirmations, accessible names and unknown-write recovery. A missing key is a defect, never permission to return full English UI strings. Language must remain coherent during session expiry, read failure, denied access and capability gaps.
 
-Explicit exceptions:
+Explicit allowed exceptions: recorded medication/brand/proper names; attributed clinician/patient free text, clinical instructions and exact units; necessary safe references/timezone identifiers; email/phone; and the language selector's English / العربية. No ordinary internal enums, raw server errors, model names, operation keys or arbitrary transliterations. Natural Arabic exists for settings, prescription and record; use it. Do not invent Arabic medication spellings or product brand lockups.
 
-- Official medication and brand names, including immutable signed display snapshots; preserve exact official/recorded text.
-- Person, clinic, organization and product proper names when no authorized Arabic form is recorded. Do not invent Arabic brand lockups here.
-- Clinician/patient-authored free text, clinical instructions and opaque recorded units, clearly attributable to their source; never silently machine-translate. This is recorded source content, not untranslated UI copy.
-- A genuinely necessary safe technical reference, IANA timezone identifier or email/phone, labelled in Arabic. Raw enum names, error codes, internal model names and operation keys are not routine user content.
-- The explicit language selector may name English and العربية in their own languages.
+For later implementation, a missing low-risk optional label may use authored generic Arabic only if meaning/retrieval is preserved; record missing-key metadata without clinical/person payload. Missing critical action/identity/status/consequence/recovery copy must block the incomplete action and show a safe Arabic state: «المهمة دي مش متاحة بالعربي دلوقتي.» No automatic language switch, silent English fallback, background write, Demo replacement or new-command retry. Preserve an uncertain original operation for safe recovery when possible. This fallback contains a defect; critical Arabic coverage must be complete before delivery.
 
-Fallback policy for later implementation: a missing low-risk nonessential label uses an authored generic Arabic label or is omitted only if task meaning and retrieval remain intact; log missing-key metadata without medical/person payload for correction. Missing critical action/consequence/identity/status/recovery copy must prevent that action being offered with incomplete meaning; use an authored Arabic safe state «هذه المهمة غير متاحة بالعربية حاليًا.» / “This task is currently unavailable in Arabic.” No background submission, auto-switch, English fallback or silent Demo replacement. Coverage must be complete before shipping critical workflows; this fallback is containment, not an acceptable permanent gap. Offer a deliberate language choice only where the user remains in control and no write is silently repeated.
+## Egyptian Arabic fixtures — proposed copy
 
-Do not transliterate ordinary technical terms when a natural Arabic term exists: وصفة طبية not بريسكريبشن; سجل الصرف not فولفيلمنت; طلب رعاية not أسّاينمنت; الإعدادات not سيتنغز. Proper names may remain as recorded, with any authorized bilingual name used consistently. Never invent a transliterated medication name that could suggest a different medicine.
+These fixtures are newly authored review candidates, not deployed strings or approved final wording. Existing formal phrases in the “before” column are revision evidence only. Sensitive content can be more precise without becoming bureaucratic; none of the fixtures changes a backend meaning.
+
+| # / context | Before / previous candidate | Revised Egyptian Arabic fixture | Meaning check |
+| --- | --- | --- | --- |
+| E01 Patient P1 navigation | رعايتي | **متابعتي** — مواعيدك وملخصات زياراتك وروشتاتك والخطوة الجاية. | Whole existing-care purpose, not follow-up alone; CD03 pending |
+| E02 Patient P2 navigation | Previous literal care-search label | **دور على دكتور** | Current physician discovery, no medical recommendation; P2/English Find care unchanged |
+| E03 Patient retrieval | مواعيدي؛ وصفاتي الطبية | **مواعيدك؛ روشتاتك؛ الملخصات والمتابعة؛ السجل المتاح** | Explicit secondary retrieval, bounded history |
+| E04 Doctor navigation | Previous guardian-like C3 label | **جدول المواعيد؛ مرضاي** — طلبات جديدة؛ متابعة حالية | Current legitimate scope/minimal requests only; no general directory |
+| E05 Booking review/success | راجع الطبيب والعيادة والتوقيت؛ تم حجز الموعد | **راجع الدكتور والعيادة والميعاد. احجز الميعاد.** After commit: **ميعادك اتأكد.** | “Confirmed” only committed booking; not clinical access/start |
+| E06 Appointment change | إعادة جدولة الموعد | **غيّر الميعاد.** Review: **الميعاد القديم هيتغيّر بس لو الحجز الجديد اتأكد.** | Atomic change; failure keeps original |
+| E07 Care permission | السماح لهذا الطبيب بتقديم الرعاية | **اسمح للدكتور يتابع حالتك.** Helper: **طلب الرعاية الجديد محتاج سماحك وقبول الدكتور. الحجز لوحده مش بيدي الدكتور صلاحية يشوف معلوماتك الطبية.** | No booking-created authority; legacy policy unchanged |
+| E08 Patient care relationships | أطباؤك | **دكاترتي** — **الدكاترة اللي سمحت لهم يتابعوا حالتك، حسب صلاحية الرعاية الحالية.** | Not every previously booked doctor; pending request separate |
+| E09 Visit summary | تمت مشاركته معك | **ملخص الزيارة** — **الدكتور شارك الملخص معاك.** | Actual shared source only, no private/draft hint |
+| E10 Follow-up recommendation | أوصى الطبيب بمتابعة | **الدكتور رشّح لك متابعة. التوصية دي مش حجز ميعاد.** | Recommendation ≠ reservation; exact authored instruction retained |
+| E11 Unknown follow-up booking link | No natural Egyptian example | **لسه مفيش ميعاد مرتبط بالتوصية هنا. تقدر تدور على ميعاد.** | Missing link ≠ no appointment elsewhere; no auto-book |
+| E12 Patient prescription | وصفتك الطبية متاحة | **روشتتك متاحة. راجع تعليمات الدكتور وفترة الصلاحية.** | Signed permitted source only; no stock/use inference |
+| E13 Pharmacy acceptance | قبلت الصيدلية الوصفة | **الصيدلية قبلت الروشتة. ده مش تأكيد إن الدواء متوفر أو جاهز للاستلام أو إن الصرف اتسجل.** | Acceptance distinct from stock/readiness/dispense |
+| E14 Dispense fact | سُجّل صرف الدواء لهذا البند | **صرف الدواء اتسجل للبند ده.** | Full-item recorded supply, not consumed or delivered |
+| E15 Session expiry | انتهت جلسة الدخول | **الجلسة انتهت. سجّل دخول تاني، وبعدها راجع حالة المهمة الحالية.** | No automatic resubmission on login |
+| E16 Uniform unavailable/permission denial | هذا العنصر غير متاح ضمن صلاحياتك الحالية | **العنصر ده مش متاح ضمن صلاحياتك الحالية. ارجع لمساحة العمل.** | Same for absent/denied/restricted, no identifying hints |
+| E17 Empty availability | لا توجد مواعيد متاحة لهذا الاختيار | **مفيش مواعيد متاحة للاختيار ده دلوقتي.** | Successfully loaded selected scope, not whole market or no need for care |
+| E18 Read error | تعذّر تحميل المواعيد. أعد تحميل القائمة | **حصلت مشكلة وإحنا بنحمّل مواعيدك. حمّل القائمة تاني.** | Read-only retry; no clinical write |
+| E19 Uncertain dispense | تعذّر تأكيد تسجيل الصرف | **مش قادرين نأكد إذا كان صرف الدواء اتسجل ولا لأ. راجع حالة البند وسجل الصرف المرتبط بيه. ما تسجّلش صرف جديد. لو استعادة الطلب الأصلي متاحة، استخدمها.** | Explicit identical-request recovery with original key/payload/current checks, never new dispense |
+| E20 High-risk private signing | توقيع الملاحظة الخاصة | **وقّع الملاحظة الخاصة. التوقيع مش بيشاركها مع المريض.** | SIGNED private ≠ shared; no casual “Done” |
+| E21 Summary action | توقيع الملخص ومشاركته | **وقّع وشارك الملخص. المريض هيقدر يقرأ الملخص ده؛ الملاحظات الخاصة هتفضل خاصة.** | Actual combined sign/share, not share-all |
+| E22 Reversal | أُبطل تسجيل الصرف | **تسجيل الصرف اتبطل. التسجيل الأصلي هيفضل في السجل. البند ده مش مسموح بصرفه تاني أو إضافة تصحيح عليه بعد الإبطال.** | Terminal annotation, retained FULLY_DISPENSED, no renewed entitlement |
+| E23 Explicit close | إغلاق الاستشارة | **اقفل الاستشارة. الإغلاق مش بيحفظ أو يوقّع أو يشارك المحتوى التاني.** | Close ≠ save/sign/share/all done |
+| E24 Future final result — FUTURE | نتيجة نهائية؛ لا تعني مراجعة الطبيب | **النتيجة النهائية متاحة. ده مش معناه إن دكتور راجعها.** — FUTURE | Lab final ≠ doctor reviewed, no current product claim |
 
 ## Editorial validation and delivery gate
 
-Review English and Arabic from the same semantic specification independently. Check role, object, current state, action, recipient, consequence, known/unknown result, and safe next step in each language. Reject literal English order, robotic passive chains, institutional flourishes, grammatical disagreement, unexplained abbreviations and mixed English UI terms. Prefer «تعذّر تحميل المواعيد» over «حدث خطأ أثناء القيام بعملية تحميل البيانات الخاصة بالمواعيد».
+For each fixture and full content model, review modern Egyptian app naturalness, translated phrasing, governmental/formal tone, excessive slang, precise high-risk healthcare meaning and immediate action comprehension. Read aloud; keep clear source nouns and Egyptian sentence structure. [Validation](CONTENT_VALIDATION.md) records the dedicated independent Egyptian naturalness review and rerun 20-question fresh-agent test with their actual limitations. Editorial review is not a native-speaker certification or measured usability study.
 
-Test all [dangerous misunderstandings](CONTENT_VALIDATION.md#semantic-safety-test--english-and-arabic), every accepted IA destination, medical/proper-name exceptions and directional fixtures above. Current evidence is authored-content/source inspection, not browser QA or empirical Arabic usability. Native Arabic product/clinical review and later rendering/assistive-technology validation remain required before shipping; no product correctness or owner acceptance follows from a docs-only CI pass.
-
-No visual design, font/color/logo selection, screen design, frontend/backend/API/schema/security change, Lab implementation, Brand Research or Design System work occurs here.
+Re-run the ten dangerous semantic inferences in English and Egyptian Arabic, all 43 accepted IA contexts, no-English-fallback policy and nine directional fixture classes. Later native Egyptian product/clinical task review and actual rendering/copy/assistive validation remain delivery gates, not reasons to defer the authorized docs revision. CD01–CD07 remain owner-gated. No visual design, fonts/colors/logo, frontend/backend/runtime, Brand Research, Visual Directions or Design System work occurs.
