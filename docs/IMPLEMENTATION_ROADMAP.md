@@ -18,7 +18,7 @@ CURRENT AUTHORITATIVE sequencing; execution still requires a separately scoped P
 
 Pre-final I2 Live UI/hosting and UI polish are implemented/evidenced; they are not acceptance of final V2 design. [Hosted evidence](PRE_FINAL_DOCTOR_DEMO_UI.md). **Overall I3 is incomplete.**
 
-## Foundation acceptance and active Content / Arabic UX
+## Foundation acceptance and active Brand Research
 
 Foundation Reboot V2 Stage 0+1 is complete/accepted: [independent review PASS and PR #73 merge](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564358810). Verdict B — healthy with non-blocking debt; Stage 1.5 is NOT REQUIRED on reviewed evidence. A newly established P0/P1 defect would require separate triage/remediation authorization, not an automatic fix in Product UX work.
 
@@ -26,15 +26,17 @@ CI Accelerator V2 is independently reviewed PASS and merged through [PR #74 / ow
 
 Stage 3 IA is accepted/merged at `86cc044314c865404a114903bbe417fde00e10ec` through [PR #76 / acceptance](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567526978): IA01–IA05, Patient Candidate B and Clinician Candidate B. Post-merge exact-main CI 41377208348 SUCCESS.
 
-Current task: **Content System + Arabic UX**, documentation/content definition only under [6567540211](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567540211). [Content system](CONTENT_SYSTEM.md), [Arabic UX](ARABIC_UX.md), [glossary](TERMINOLOGY_GLOSSARY.md), [decisions](CONTENT_DECISION_REGISTER.md), [validation](CONTENT_VALIDATION.md). Independent content review, explicit owner content acceptance and whole-project health review precede separately authorized Brand Research. One open/unmerged PR, auto-merge OFF; no implementation or merge permission.
+Content System + Egyptian Arabic UX is accepted/merged at `80cb2bc27d9439f0e57e5bec320ac9bde0121e87` through [PR #77 / owner acceptance 6568210676](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568210676), accepting CD01–CD07. Exact-main CI 41382337698 SUCCESS. Older pending content wording is adoption-time context.
+
+Current task: **Brand Research only**, under the same explicit authorization and owner brief. [Research](BRAND_RESEARCH.md), [references](BRAND_REFERENCE_MAP.md), [strategy](BRAND_STRATEGY.md), [future exploration brief](BRAND_EXPLORATION_BRIEF.md), [decisions](BRAND_DECISION_REGISTER.md), [validation](BRAND_RESEARCH_VALIDATION.md). Independent research review, explicit owner strategic disposition/acceptance and whole-project health review precede separately authorized visual directions. One open/unmerged PR, auto-merge OFF; no implementation or merge permission.
 
 ## Product/Design sequence — future authorizations
 
-1. **Stage 2 — Product UX Foundation** accepted; **Stage 3 — Information Architecture** accepted (IA01–IA05, Patient B, Clinician B). Material bilingual terminology remains owner-gated.
-2. Content System and Arabic UX currently authorized as a documentation-only proposal; independent review and **Product Owner UX/content approval** required.
-3. Brand research; **exactly three meaningfully distinct visual/brand directions**.
+1. **Stage 2 — Product UX Foundation** accepted; **Stage 3 — Information Architecture** accepted (IA01–IA05, Patient B, Clinician B). CD01–CD07 material terminology is now accepted; later material changes remain owner-gated.
+2. Content System and Egyptian Arabic UX accepted/merged (CD01–CD07); no runtime implementation implied.
+3. Brand Research currently authorized as evidence/strategy only; acceptance and separate start instruction precede **exactly three meaningfully distinct visual/brand directions**, each with at least two materially different logo concepts (**minimum six total**), rationales and comparable Patient + Doctor UI.
 4. **Owner selection/rejection/hybrid approval**; Codex cannot choose the winner.
-5. Final Brand V2, then Design System V2 with approved final choices.
+5. Refinement after direction choice, then a separate **Final Brand V2 approval gate** for final logo/palette/typography; Design System V2 follows approved final choices.
 6. High-fidelity Patient + Clinician prototypes; **owner final visual approval**.
 7. Frontend Architecture V2, then Frontend V2 implementation.
 8. Visual QA against approved prototypes and preserved before/after evidence.
