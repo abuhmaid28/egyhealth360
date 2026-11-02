@@ -1,5 +1,7 @@
 # Brand strategy proposal
 
+> Current disposition: BR01–BR08 and Brand Research are **ACCEPTED / MERGED** at `0a0e9c2038ecad420e95c2c67ae367129e195839` under [owner acceptance / visual authorization 6568574368](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568574368). Exactly three isolated [Visual Directions](visual-directions/README.md) are now authorized. Earlier pending/not-started wording below records the research-stage adoption context. No final logo, palette, font, winning direction, Brand V2 or Design System is approved.
+
 **RECOMMENDATION — NOT OWNER-ACCEPTED BRAND.** Authority: [Issue #72 / 6568210676](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568210676). Research baseline: `80cb2bc27d9439f0e57e5bec320ac9bde0121e87`. [Decision register](BRAND_DECISION_REGISTER.md) separates accepted foundations, findings and owner choices. No final logo, palette, font or visual direction has been selected.
 
 ## Product truth before positioning

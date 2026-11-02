@@ -1,0 +1,2925 @@
+{
+  "engine": "154.0.8037.57",
+  "viewport": {
+    "desktop": [
+      1440,
+      1000
+    ],
+    "mobile": [
+      390,
+      844
+    ],
+    "overview": [
+      1600,
+      2360
+    ]
+  },
+  "deviceScaleFactor": 1,
+  "timezone": "Africa/Cairo",
+  "offline": true,
+  "focus": {
+    "tag": "BUTTON",
+    "text": "شوف الميعاد",
+    "outline": "solid"
+  },
+  "errors": [],
+  "failures": [],
+  "results": [
+    {
+      "file": "direction-a/patient-ar.html",
+      "png": "direction-a/patient-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1165,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "46px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/patient-mobile-ar.html",
+      "png": "direction-a/patient-mobile-ar.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 1919,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "27px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "21px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "21px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/appointment-ar.html",
+      "png": "direction-a/appointment-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1000,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "46px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/schedule-ar.html",
+      "png": "direction-a/schedule-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1108,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "46px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/consultation-ar.html",
+      "png": "direction-a/consultation-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1191,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "EH-DEMO-204",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "128/82 mmHg",
+          "dir": "ltr"
+        },
+        {
+          "text": "72 bpm",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:40",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "29px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "16px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "20px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "14px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/doctor-mobile-ar.html",
+      "png": "direction-a/doctor-mobile-ar.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 1681,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/states-ar.html",
+      "png": "direction-a/states-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1042,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "46px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "18px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "18px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "18px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/patient-en.html",
+      "png": "direction-a/patient-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1188,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "46px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/patient-mobile-en.html",
+      "png": "direction-a/patient-mobile-en.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 2044,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "27px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "21px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "21px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/appointment-en.html",
+      "png": "direction-a/appointment-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1000,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "46px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/schedule-en.html",
+      "png": "direction-a/schedule-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1110,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "46px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/consultation-en.html",
+      "png": "direction-a/consultation-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1232,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "EH-DEMO-204",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "128/82 mmHg",
+          "dir": "ltr"
+        },
+        {
+          "text": "72 bpm",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:40",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "29px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "16px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "20px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "14px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/doctor-mobile-en.html",
+      "png": "direction-a/doctor-mobile-en.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 1759,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/states-en.html",
+      "png": "direction-a/states-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1042,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "46px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "18px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "18px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "18px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/patient-ar.html",
+      "png": "direction-b/patient-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1040,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/patient-mobile-ar.html",
+      "png": "direction-b/patient-mobile-ar.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 1928,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/appointment-ar.html",
+      "png": "direction-b/appointment-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1000,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/schedule-ar.html",
+      "png": "direction-b/schedule-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1000,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/consultation-ar.html",
+      "png": "direction-b/consultation-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1147,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "EH-DEMO-204",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "128/82 mmHg",
+          "dir": "ltr"
+        },
+        {
+          "text": "72 bpm",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:40",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "25px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "16px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "14px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/doctor-mobile-ar.html",
+      "png": "direction-b/doctor-mobile-ar.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 1658,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/states-ar.html",
+      "png": "direction-b/states-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1131,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/patient-en.html",
+      "png": "direction-b/patient-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1077,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/patient-mobile-en.html",
+      "png": "direction-b/patient-mobile-en.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 1987,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/appointment-en.html",
+      "png": "direction-b/appointment-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1000,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "17px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/schedule-en.html",
+      "png": "direction-b/schedule-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1000,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/consultation-en.html",
+      "png": "direction-b/consultation-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1196,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "EH-DEMO-204",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "128/82 mmHg",
+          "dir": "ltr"
+        },
+        {
+          "text": "72 bpm",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:40",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "25px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "16px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "14px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/doctor-mobile-en.html",
+      "png": "direction-b/doctor-mobile-en.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 1717,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/states-en.html",
+      "png": "direction-b/states-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1131,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "32px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "19px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/patient-ar.html",
+      "png": "direction-c/patient-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1111,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "37px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/patient-mobile-ar.html",
+      "png": "direction-c/patient-mobile-ar.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 2091,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/appointment-ar.html",
+      "png": "direction-c/appointment-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1025,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "37px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/schedule-ar.html",
+      "png": "direction-c/schedule-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1117,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "37px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/consultation-ar.html",
+      "png": "direction-c/consultation-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1470,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "EH-DEMO-204",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "128/82 mmHg",
+          "dir": "ltr"
+        },
+        {
+          "text": "72 bpm",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:40",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "29px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "family": "\"Trebuchet MS\", ExistingArabic, Arial, sans-serif",
+          "size": "14px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/doctor-mobile-ar.html",
+      "png": "direction-c/doctor-mobile-ar.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 1670,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "20px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/states-ar.html",
+      "png": "direction-c/states-ar.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1025,
+      "brokenImages": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "37px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/patient-en.html",
+      "png": "direction-c/patient-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1180,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "37px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/patient-mobile-en.html",
+      "png": "direction-c/patient-mobile-en.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 2154,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/appointment-en.html",
+      "png": "direction-c/appointment-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1025,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "37px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/schedule-en.html",
+      "png": "direction-c/schedule-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1117,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "37px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/consultation-en.html",
+      "png": "direction-c/consultation-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1487,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "EH-DEMO-204",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "128/82 mmHg",
+          "dir": "ltr"
+        },
+        {
+          "text": "72 bpm",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:40",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Amoxicillin",
+          "dir": "ltr"
+        },
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:20",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "29px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "TEXTAREA",
+          "family": "\"Trebuchet MS\", ExistingArabic, Arial, sans-serif",
+          "size": "14px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/doctor-mobile-en.html",
+      "png": "direction-c/doctor-mobile-en.png",
+      "width": 390,
+      "scrollWidth": 390,
+      "height": 1709,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "UTC+02:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "13:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Nour Mostafa",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Salma Ibrahim",
+          "dir": "ltr"
+        },
+        {
+          "text": "14:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:00",
+          "dir": "ltr"
+        },
+        {
+          "text": "Youssef Mahmoud",
+          "dir": "ltr"
+        },
+        {
+          "text": "15:30",
+          "dir": "ltr"
+        },
+        {
+          "text": "Hana Mohamed",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "34px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "20px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/states-en.html",
+      "png": "direction-c/states-en.png",
+      "width": 1440,
+      "scrollWidth": 1440,
+      "height": 1025,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "ltr",
+      "bdi": [
+        {
+          "text": "Omar Abdelrahman",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, Arial, sans-serif",
+          "size": "37px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        },
+        {
+          "tag": "H2",
+          "family": "\"Trebuchet MS\", ExistingArabic, Arial, sans-serif",
+          "size": "22px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-a/overview.html",
+      "png": "direction-a/direction-a-overview.png",
+      "width": 1600,
+      "scrollWidth": 1600,
+      "height": 2360,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "",
+      "bdi": [
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "Georgia, \"Noto Naskh Arabic\", ExistingArabic, serif",
+          "size": "52px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "15px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "15px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "15px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-b/overview.html",
+      "png": "direction-b/direction-b-overview.png",
+      "width": 1600,
+      "scrollWidth": 1600,
+      "height": 2360,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "",
+      "bdi": [
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "52px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "15px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "15px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "15px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "direction-c/overview.html",
+      "png": "direction-c/direction-c-overview.png",
+      "width": 1600,
+      "scrollWidth": 1600,
+      "height": 2360,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "",
+      "bdi": [
+        {
+          "text": "1.25 mL",
+          "dir": "ltr"
+        }
+      ],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "\"Trebuchet MS\", \"Noto Kufi Arabic\", ExistingArabic, sans-serif",
+          "size": "52px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "15px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "15px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "15px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "comparison/board.html",
+      "png": "comparison/logo-free-comparison.png",
+      "width": 1800,
+      "scrollWidth": 1800,
+      "height": 1000,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "",
+      "bdi": [],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "42px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        },
+        {
+          "tag": "H2",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "23px"
+        }
+      ],
+      "clipped": []
+    },
+    {
+      "file": "logos/gallery.html",
+      "png": "logos/six-logo-exploration.png",
+      "width": 1920,
+      "scrollWidth": 1920,
+      "height": 1319,
+      "brokenImages": [],
+      "lang": "en",
+      "dir": "",
+      "bdi": [],
+      "fonts": [
+        {
+          "tag": "H1",
+          "family": "ExistingInter, ExistingArabic, Arial, sans-serif",
+          "size": "40px"
+        }
+      ],
+      "clipped": []
+    }
+  ]
+}
