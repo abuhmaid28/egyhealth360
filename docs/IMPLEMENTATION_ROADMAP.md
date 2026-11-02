@@ -18,18 +18,20 @@ CURRENT AUTHORITATIVE sequencing; execution still requires a separately scoped P
 
 Pre-final I2 Live UI/hosting and UI polish are implemented/evidenced; they are not acceptance of final V2 design. [Hosted evidence](PRE_FINAL_DOCTOR_DEMO_UI.md). **Overall I3 is incomplete.**
 
-## Foundation acceptance and active Stage 3
+## Foundation acceptance and active Content / Arabic UX
 
 Foundation Reboot V2 Stage 0+1 is complete/accepted: [independent review PASS and PR #73 merge](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564358810). Verdict B — healthy with non-blocking debt; Stage 1.5 is NOT REQUIRED on reviewed evidence. A newly established P0/P1 defect would require separate triage/remediation authorization, not an automatic fix in Product UX work.
 
 CI Accelerator V2 is independently reviewed PASS and merged through [PR #74 / owner disposition](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565142946). Stage 2 Product UX is accepted/merged through [PR #75 / owner acceptance](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565530772), main `248347f72a7c1d4646cbceb7224f0ec1a9d92f06`; post-merge CI 41362415955 SUCCESS. Accepted UXD10–UXD16 and role/task/journey foundation inform IA; UXD19 is planning only.
 
-Current task: **Stage 3 — Information Architecture**, documentation/product structure only under [6565633586](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565633586). [Proposal](INFORMATION_ARCHITECTURE.md), [sitemaps](IA_SITEMAPS.md), [decisions](IA_DECISION_REGISTER.md) and [validation](IA_VALIDATION.md) form the review package. Independent Stage 3 review, explicit owner IA acceptance and whole-project health review precede any separately authorized next stage. No merge, auto-merge or implementation permission is granted here.
+Stage 3 IA is accepted/merged at `86cc044314c865404a114903bbe417fde00e10ec` through [PR #76 / acceptance](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567526978): IA01–IA05, Patient Candidate B and Clinician Candidate B. Post-merge exact-main CI 41377208348 SUCCESS.
+
+Current task: **Content System + Arabic UX**, documentation/content definition only under [6567540211](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567540211). [Content system](CONTENT_SYSTEM.md), [Arabic UX](ARABIC_UX.md), [glossary](TERMINOLOGY_GLOSSARY.md), [decisions](CONTENT_DECISION_REGISTER.md), [validation](CONTENT_VALIDATION.md). Independent content review, explicit owner content acceptance and whole-project health review precede separately authorized Brand Research. One open/unmerged PR, auto-merge OFF; no implementation or merge permission.
 
 ## Product/Design sequence — future authorizations
 
-1. **Stage 2 — Product UX Foundation** accepted; **Stage 3 — Information Architecture** currently authorized as a proposal. Final grouping/navigation remains owner-gated and labels remain working labels.
-2. Content System and Arabic UX; **Product Owner UX/content approval**.
+1. **Stage 2 — Product UX Foundation** accepted; **Stage 3 — Information Architecture** accepted (IA01–IA05, Patient B, Clinician B). Material bilingual terminology remains owner-gated.
+2. Content System and Arabic UX currently authorized as a documentation-only proposal; independent review and **Product Owner UX/content approval** required.
 3. Brand research; **exactly three meaningfully distinct visual/brand directions**.
 4. **Owner selection/rejection/hybrid approval**; Codex cannot choose the winner.
 5. Final Brand V2, then Design System V2 with approved final choices.

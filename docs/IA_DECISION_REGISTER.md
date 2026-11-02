@@ -1,5 +1,7 @@
 # Stage 3 — IA decision register
 
+> Current disposition: **Stage 3 IA01–IA05, Patient Candidate B and Clinician Candidate B are ACCEPTED / MERGED** at `86cc044314c865404a114903bbe417fde00e10ec`, under [owner acceptance 6567526978](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567526978). Pending-gate language below records the Stage 3 delivery-time proposal, not a reopened IA decision. Working labels remain nonfinal. Current naming proposals live in [Content system](CONTENT_SYSTEM.md), [Arabic UX](ARABIC_UX.md), [glossary](TERMINOLOGY_GLOSSARY.md) and [content decisions](CONTENT_DECISION_REGISTER.md); no visuals or runtime changes follow from acceptance.
+
 CURRENT AUTHORITATIVE decision-status reference for the [IA proposal](INFORMATION_ARCHITECTURE.md), [sitemaps](IA_SITEMAPS.md) and [validation](IA_VALIDATION.md). [Stage 3 owner authorization](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565633586) permits recommendations, not final navigation approval. [Stage 2 acceptance](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565530772) accepts UXD10–UXD16 and role/task/journey foundations, with UXD19 as planning only. Accepted clinical/security contracts are unchanged.
 
 ## Status meanings

@@ -4,9 +4,9 @@ CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutab
 
 ## Fast reading order
 
-Read [AGENTS](../AGENTS.md) → current issue/latest applicable explicit authorization → [CURRENT_STATUS](CURRENT_STATUS.md) → [FOUNDATION_CHARTER](FOUNDATION_CHARTER.md) + this index → task-relevant contracts/references → implementation/tests. PROJECT/history is optional context, not mandatory archaeology. Current Stage 3 scope follows [issue #72 comment 6565633586](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565633586). [Stage 2 acceptance 6565530772](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565530772) supersedes adoption-time pending language for accepted UXD10–UXD16 and role/task/journey foundations; UXD19 remains planning only. Earlier 6563757904 established Stage 0+1/charter and superseded 6563631251; it is not today's task scope.
+Read [AGENTS](../AGENTS.md) → current issue/latest applicable explicit authorization → [CURRENT_STATUS](CURRENT_STATUS.md) → [FOUNDATION_CHARTER](FOUNDATION_CHARTER.md) + this index → task-relevant contracts/references → implementation/tests. PROJECT/history is optional context, not mandatory archaeology. Current Content System + Arabic UX scope follows [issue #72 comment 6567540211](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567540211). [Stage 3 acceptance 6567526978](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567526978) accepts IA01–IA05, Patient B and Clinician B at main `86cc044314c865404a114903bbe417fde00e10ec`; old IA pending-gate language is adoption-time context, not a reopened decision. [Stage 2 acceptance 6565530772](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565530772) supersedes adoption-time pending language for accepted UXD10–UXD16 and role/task/journey foundations; UXD19 remains planning only. Earlier 6563757904 established Stage 0+1/charter and superseded 6563631251; it is not today's task scope.
 
-Product/design reading path: [UX_FOUNDATION](UX_FOUNDATION.md) → [USER_JOURNEYS](USER_JOURNEYS.md) → [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md), with [PRODUCT_UX_INVENTORY](PRODUCT_UX_INVENTORY.md) as evidence and [PRODUCT_UX_VALIDATION](PRODUCT_UX_VALIDATION.md) as the point-in-time validation record. Then read [INFORMATION_ARCHITECTURE](INFORMATION_ARCHITECTURE.md) → [IA_SITEMAPS](IA_SITEMAPS.md) → [IA_DECISION_REGISTER](IA_DECISION_REGISTER.md) → [IA_VALIDATION](IA_VALIDATION.md). Stage 3 navigation choices remain owner-gated; Stage 2 acceptance is recorded in CURRENT_STATUS. Mutable task sentences in older product/contract/audit snapshots never override CURRENT_STATUS or newer explicit authorization; in particular PRODUCT.md's Stage 0+1 opening sentence is retained historical task context, not a current task blocker.
+Product/design reading path: [UX_FOUNDATION](UX_FOUNDATION.md) → [USER_JOURNEYS](USER_JOURNEYS.md) → [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md), with [PRODUCT_UX_INVENTORY](PRODUCT_UX_INVENTORY.md) as evidence and [PRODUCT_UX_VALIDATION](PRODUCT_UX_VALIDATION.md) as the point-in-time validation record. Then read [INFORMATION_ARCHITECTURE](INFORMATION_ARCHITECTURE.md) → [IA_SITEMAPS](IA_SITEMAPS.md) → [IA_DECISION_REGISTER](IA_DECISION_REGISTER.md) → [IA_VALIDATION](IA_VALIDATION.md). Then read [CONTENT_SYSTEM](CONTENT_SYSTEM.md) → [ARABIC_UX](ARABIC_UX.md) → [TERMINOLOGY_GLOSSARY](TERMINOLOGY_GLOSSARY.md) → [CONTENT_DECISION_REGISTER](CONTENT_DECISION_REGISTER.md) → [CONTENT_VALIDATION](CONTENT_VALIDATION.md). Stage 3 IA is accepted; CD01–CD07 content choices remain owner-gated. CURRENT_STATUS records current acceptance. Mutable task sentences in older product/contract/audit snapshots never override CURRENT_STATUS or newer explicit authorization; in particular PRODUCT.md's Stage 0+1 opening sentence is retained historical task context, not a current task blocker.
 
 ## Priority and classification rules
 
@@ -41,15 +41,19 @@ All tracked documentation Markdown paths are classified below. Research files ar
 | [API.md](API.md) | Current route families; later accepted slice notes retain introduction context. |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Actual runtime/module/frontend/data/deployment architecture. |
 | [CI_POLICY.md](CI_POLICY.md) | Deterministic CI classification, targeted dependencies, full regression, caching/cancellation and evidence limits. |
+| [CONTENT_SYSTEM.md](CONTENT_SYSTEM.md) | Content proposal: V1 audit, bilingual voice, semantic statuses/actions, consequential recovery packs, all accepted IA destination models. |
+| [ARABIC_UX.md](ARABIC_UX.md) | Arabic register/localization proposal, date/time/numbers, RTL/bidi semantics, language exceptions and fallback; no implementation. |
+| [TERMINOLOGY_GLOSSARY.md](TERMINOLOGY_GLOSSARY.md) | Canonical bilingual terminology proposal with internal mappings, avoid/reason/context/status; material names owner-gated. |
+| [CONTENT_DECISION_REGISTER.md](CONTENT_DECISION_REGISTER.md) | CD01–CD07 material owner vocabulary package plus inherited/routine/future statuses; no final acceptance. |
 | [CURRENT_STATUS.md](CURRENT_STATUS.md) | Single mutable delivery/Live/authorization snapshot; start here. |
 | [DATA_MODEL.md](DATA_MODEL.md) | Current schema-derived inventory; later slice notes are historical. |
 | [DOMAIN.md](DOMAIN.md) | Current domain boundaries and preserved meaning distinctions. |
 | [EXECUTION_POLICY.md](EXECUTION_POLICY.md) | Stable synthetic/free-first academic/execution constraints. |
 | [FOUNDATION_CHARTER.md](FOUNDATION_CHARTER.md) | Stable authority, preservation, owner gates and mandatory milestone health review. |
 | [FOUNDATION_REBOOT_V2_AUDIT.md](FOUNDATION_REBOOT_V2_AUDIT.md) | Proposed current health verdict, evidence, drift/debt and review limits. |
-| [INFORMATION_ARCHITECTURE.md](INFORMATION_ARCHITECTURE.md) | Stage 3 authoritative proposal: audit, principles, workspace model, two Patient/Clinician candidates, responsive structure, gaps and owner gate; not approved final navigation. |
-| [IA_SITEMAPS.md](IA_SITEMAPS.md) | Five proposed workspace hierarchies and full destination records; working labels, current/Live-gap/future and authority distinctions. |
-| [IA_DECISION_REGISTER.md](IA_DECISION_REGISTER.md) | Inherited foundation, recommendations, material owner decisions and future deferrals; no implicit owner acceptance. |
+| [INFORMATION_ARCHITECTURE.md](INFORMATION_ARCHITECTURE.md) | Accepted IA01–IA05, Patient B and Clinician B; preserved candidate rationale/exposure gaps; exact vocabulary remains proposed in content package. |
+| [IA_SITEMAPS.md](IA_SITEMAPS.md) | Accepted five-workspace hierarchy/destination records with current acceptance notice; working labels, current/Live-gap/future and authority distinctions. |
+| [IA_DECISION_REGISTER.md](IA_DECISION_REGISTER.md) | Stage 3 decision evidence with explicit current acceptance notice; old pending statuses retained as adoption-time context. |
 | [IMPLEMENTATION_ROADMAP.md](IMPLEMENTATION_ROADMAP.md) | Current sequencing; entries are not execution authorization. |
 | [PRODUCT.md](PRODUCT.md) | Approved product scope, distinct from delivered/Live subsets. |
 | [PROJECT.md](PROJECT.md) | Concise product/current opening and clearly separated completion evidence. |
@@ -103,6 +107,7 @@ All tracked documentation Markdown paths are classified below. Research files ar
 
 | Document | Responsibility / limits |
 | --- | --- |
+| [CONTENT_VALIDATION.md](CONTENT_VALIDATION.md) | This content sprint's bilingual semantic/destination/editorial checks, fresh-agent result and scope/reference/CI evidence limits. |
 | [IA_VALIDATION.md](IA_VALIDATION.md) | Stage 3 task/destination/depth/privacy/current-future/mobile checks, fresh-reader evidence and focused docs validation; not independent Stage 3 acceptance. |
 | [PRODUCT_UX_INVENTORY.md](PRODUCT_UX_INVENTORY.md) | Stage 2 point-in-time capability/V1/target-need evidence, existing routes/screenshots and mismatch disposition. |
 | [PRODUCT_UX_VALIDATION.md](PRODUCT_UX_VALIDATION.md) | Stage 2 scope/reference checks, simulated fresh-agent 20-question result and CI handoff limits. |
