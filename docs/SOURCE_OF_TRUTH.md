@@ -4,7 +4,7 @@ CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutab
 
 ## Fast reading order
 
-**Current bounded reference:** [Issue #72 / authorization 6594105174](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6594105174) and the [Clinician controlling master](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_MASTER_SPEC.md) → [execution contract](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_CODEX_PROMPT.md) → [implementation/evidence](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_IMPLEMENTATION.md). Scope is the existing Live clinician documentation route family only. No new clinical integration, backend/security change, final identity freeze, merge or deployment.
+**Current bounded reference:** [PR #80 owner direction 6604240346](https://github.com/abuhmaid28/egyhealth360/pull/80#issuecomment-6604240346) and the [Patient-DNA premium visual pass](ui-reference/CLINICIAN_PATIENT_DNA_PREMIUM.md), refining the [approved Clinician master](https://github.com/abuhmaid28/egyhealth360/pull/80#issuecomment-6603761429). Original scope: [Issue #72 / authorization 6594105174](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6594105174) and the [Clinician controlling master](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_MASTER_SPEC.md) → [execution contract](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_CODEX_PROMPT.md) → [implementation/evidence](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_IMPLEMENTATION.md). Scope is the existing Live clinician documentation route family only. No new clinical integration, backend/security change, final identity freeze, merge or deployment.
 
 **Preserved Patient visual foundation:** My Care final baseline `f0d94e7e2579dc9bd1e2ef87ba493172b0f4cfb0`, with [final optical evidence](ui-reference/PATIENT_MY_CARE_POLISH.md), follows the original [owner gate 6574268901](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6574268901). Earlier implementation/refinement/composition reports retain their point-in-time evidence. Patient PR #79 and its source/assets/evidence remain unchanged; no wider rollout is authorized.
 
@@ -44,7 +44,8 @@ All tracked documentation Markdown paths are classified below. Research files ar
 | --- | --- |
 | [ui-reference/CLINICIAN_ACTIVE_CONSULTATION_MASTER_SPEC.md](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_MASTER_SPEC.md) | Controlling owner visual/product specification for the exact Live Active Consultation documentation shell; accepted clinical/security contracts remain binding. |
 | [ui-reference/CLINICIAN_ACTIVE_CONSULTATION_CODEX_PROMPT.md](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_CODEX_PROMPT.md) | Exact route, inheritance, forbidden invention, source/command preservation and required evidence. |
-| [ui-reference/CLINICIAN_ACTIVE_CONSULTATION_IMPLEMENTATION.md](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_IMPLEMENTATION.md) | Implementation resolutions, controlled-source provenance, evidence, discrepancies, scope/validation and pending independent review. |
+| [ui-reference/CLINICIAN_ACTIVE_CONSULTATION_IMPLEMENTATION.md](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_IMPLEMENTATION.md) | Original master implementation/evidence at e28dbfb, now approved under 6603761429; earlier pending language is adoption-time context. |
+| [ui-reference/CLINICIAN_PATIENT_DNA_PREMIUM.md](ui-reference/CLINICIAN_PATIENT_DNA_PREMIUM.md) | Current one-pass visual inventory, fresh before/after/EN/AR/state/reflow/dialog evidence, source provenance and strict CSS-only preservation; visual review pending. |
 
 | Preserved My Care implementation reference | Responsibility / limits |
 | --- | --- |
