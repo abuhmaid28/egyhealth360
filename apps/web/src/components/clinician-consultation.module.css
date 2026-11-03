@@ -678,11 +678,11 @@
   margin-block: 12px 20px;
 }
 .root :global(.modal) {
-  max-inline-size: min(720px, calc(100vw - 48px));
+  max-inline-size: min(760px, calc(100vw - 48px));
   max-block-size: calc(100dvh - 48px);
-  padding: 32px;
+  padding: 24px;
   border: 1px solid var(--care-border);
-  border-radius: var(--care-radius-lg);
+  border-radius: 12px;
   background: var(--care-surface);
   color: var(--care-ink);
   box-shadow: 0 12px 32px rgb(11 37 69 / 10%);
@@ -700,25 +700,37 @@
   border-radius: 8px;
 }
 .root :global(.modal-header) {
-  margin-block-end: 20px;
-  color: var(--care-teal);
+  margin-block-end: 16px;
 }
 .root :global(.modal h2) {
-  font-size: 22px;
-  color: var(--care-navy);
-  margin-block-end: 12px;
+  font-size: 20px;
 }
-.root :global(.modal > p) {
+.root :global(.modal:is([aria-labelledby="documentation-sign-title"], .close-review-modal) > p) {
   color: var(--care-secondary);
   font-size: 14px;
   line-height: 1.7;
+}
+/* Signing/release share the existing source-review dialog. Other dialogs retain the approved master treatment. */
+.root :global(.modal:is([aria-labelledby="documentation-sign-title"], .close-review-modal)) {
+  max-inline-size: min(720px, calc(100vw - 48px));
+  padding: 32px;
+  border-radius: var(--care-radius-lg);
+}
+.root :global(.modal:is([aria-labelledby="documentation-sign-title"], .close-review-modal) .modal-header) {
+  margin-block-end: 20px;
+  color: var(--care-teal);
+}
+.root :global(.modal:is([aria-labelledby="documentation-sign-title"], .close-review-modal) h2) {
+  font-size: 22px;
+  color: var(--care-navy);
+  margin-block-end: 12px;
 }
 .root :global(.documentation-release-preview) {
   margin-block: 20px;
   padding: 20px;
   border-radius: var(--care-radius-md);
 }
-.root :global(.modal .documentation-action-row) {
+.root :global(.modal:is([aria-labelledby="documentation-sign-title"], .close-review-modal) .documentation-action-row) {
   padding-block-start: 20px;
   border-block-start: 1px solid var(--care-border);
 }
@@ -726,7 +738,7 @@
   padding: 16px;
   border-radius: var(--care-radius-md);
 }
-.root :global(.close-review-modal) {
+.root :global(.modal.close-review-modal) {
   padding-block: 24px;
 }
 .root :global(.close-review-modal .confirmation-details .detail) {

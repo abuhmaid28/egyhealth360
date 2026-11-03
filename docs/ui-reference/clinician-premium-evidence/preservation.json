@@ -65,6 +65,7 @@
   "priorClinicianEvidenceFiles": 43,
   "preservedInventorySha256": "6db7bd2dd7f7d5791b51f51dd95fe8cefef314856cf3ff9cb9dd31c5d7db1899",
   "allExistingTsTsxMjsUnchanged": true,
+  "unrelatedGenericDialogStylingUnchanged": true,
   "patientImplementationFontsTokensAndEvidenceUnchanged": true,
   "backendApiSchemaMigrationsOpenApiSecurityCiDependenciesAndHostingUnchanged": true,
   "capturesBoundToCurrentRuntimeSources": true,
