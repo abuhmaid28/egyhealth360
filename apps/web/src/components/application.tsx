@@ -26,6 +26,7 @@ import {
 } from "./ui";
 import { PatientScreen } from "./patient";
 import { PatientMyCare } from "./patient-my-care";
+import { ClinicianConsultation, ClinicianConsultationBoot } from "./clinician-consultation";
 import { DoctorScreen } from "./doctor";
 import { OperationsScreen } from "./operations";
 export const homes: Record<Role, string> = {
@@ -192,6 +193,8 @@ export function Application({
       setToast(safeErrorMessage(e));
     }
   };
+  if ((!ready || !api || !booking) && /^\/doctor\/consultation\/[^/]+\/documentation$/.test(pathname))
+    return <ClinicianConsultationBoot />;
   if (!ready || !api || !booking)
     return (
       <main className="boot">
@@ -217,6 +220,12 @@ export function Application({
     return (
       <Context.Provider value={{ api, booking, session, preview, refresh, notify: setToast, changed: () => setRefresh(v => v + 1), openDemoWorkspace: enter }}>
         <PatientMyCare onLogout={logout} onRoleChange={enter} toast={toast} onDismiss={() => setToast("")} />
+      </Context.Provider>
+    );
+  if (api.mode === "live" && session.role === "CLINICIAN" && /^\/doctor\/consultation\/[^/]+\/documentation$/.test(pathname))
+    return (
+      <Context.Provider value={{ api, booking, session, preview, refresh, notify: setToast, changed: () => setRefresh(v => v + 1), openDemoWorkspace: enter }}>
+        <ClinicianConsultation bookingId={pathname.split("/")[3]} onLogout={logout} toast={toast} onDismiss={() => setToast("")} />
       </Context.Provider>
     );
   const allowed =

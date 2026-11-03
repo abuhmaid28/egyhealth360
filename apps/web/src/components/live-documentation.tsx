@@ -1,5 +1,6 @@
 "use client";
 import { ConsultationCloseCard } from "./consultation-close";
+import { ConsultationIdentity, ConsultationTasks } from "./clinician-consultation-presentation";
 import type { ConsultationContext } from "../lib/api/consultation-close";
 import { FollowUpScreen } from "./follow-up-intents";
 import Link from "next/link";
@@ -16,8 +17,10 @@ import { Badge, Card, Field, Icon, Resource, date, time, useResource } from "./u
 
 export function LiveDocumentationWorkspace({
   bookingId,
+  professional = false,
 }: {
   bookingId: string;
+  professional?: boolean;
 }) {
   const { api } = useApp();
   const { t } = useLocale();
@@ -41,9 +44,9 @@ export function LiveDocumentationWorkspace({
   }, [api, bookingId]);
   return (
     <>
-      <Link className="back-link" href={`/doctor/consultation/${bookingId}`}>
+      {(!professional || resource.pending || resource.error) && <Link className="back-link" href={`/doctor/consultation/${bookingId}`}>
         {t("Back to consultation")}
-      </Link>
+      </Link>}
       <Resource resource={resource}>
         {({ receipt, booking, providerName, clinicName }) => (
           <ScopedWorkspace
@@ -51,6 +54,7 @@ export function LiveDocumentationWorkspace({
             booking={booking}
             providerName={providerName}
             clinicName={clinicName}
+            professional={professional}
           />
         )}
       </Resource>
@@ -62,9 +66,11 @@ function ScopedWorkspace({
   booking,
   providerName,
   clinicName,
+  professional = false,
 }: {
   providerName: string;
   clinicName: string;
+  professional?: boolean;
   receipt: ConsultationContext;
   booking: import("../lib/api/live-booking").LiveBooking;
 }) {
@@ -122,7 +128,10 @@ function ScopedWorkspace({
       if (bounds.top < ribbon.getBoundingClientRect().bottom + 8 || bounds.bottom > window.innerHeight)
         field.scrollIntoView({ block: 'start', behavior: 'instant' });
     }}>
-      <header className="consultation-ribbon" ref={ribbonElement}>
+      {professional ? <section className="consultation-ribbon" ref={ribbonElement} aria-label={t("Patient and visit")}>
+        <ConsultationIdentity patientName={booking.patientDisplayName} providerName={providerName} clinicName={clinicName} startAt={booking.startAt} timeZone={booking.timeZone} state={lifecycle.state} bookingId={booking.id} />
+        <ConsultationTasks />
+      </section> : <header className="consultation-ribbon" ref={ribbonElement}>
         <div className="consultation-ribbon-identity"><span className="icon-tile"><Icon name="user"/></span><div>
           <p className="eyebrow">{t('Patient and visit')}</p>
           <strong className="consultation-patient-name"><bdi>{presentationName(booking.patientDisplayName, t)}</bdi></strong>
@@ -144,12 +153,12 @@ function ScopedWorkspace({
           {t("Review & close consultation")}
         </a>
       </nav>
-      </header>
+      </header>}
       <div id="live-documentation">
-        <DocumentationWorkspaceScreen service={service} />
+        <DocumentationWorkspaceScreen service={service} professional={professional} />
       </div>
       <FollowUpScreen service={followUp} author />
-      <ConsultationCloseCard context={lifecycle} documentation={documentation} update={setLifecycle} />
+      <ConsultationCloseCard context={lifecycle} documentation={documentation} update={setLifecycle} professional={professional} />
     </div>
   );
 }

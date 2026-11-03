@@ -1,0 +1,91 @@
+[
+  {
+    "locale": "en",
+    "viewport": 1600,
+    "scroll": 1600,
+    "usefulWidth": 1360,
+    "columns": "200px 790px 280px",
+    "font": "\"EH My Care Manrope\", Inter, \"EH My Care Arabic\", \"Noto Sans Arabic\", system-ui, sans-serif",
+    "brand": "EgyHealth 360",
+    "headerStart": 120,
+    "workspaceStart": 120,
+    "contextHeight": 99.984375,
+    "headerHeight": 73,
+    "colors": {
+      "navy": "#0b2545",
+      "teal": "#0b6e7f",
+      "muted": "#526178",
+      "canvas": "#f7f9fc",
+      "ink": "#0f172a"
+    },
+    "nav": [
+      "#live-documentation",
+      "#live-follow-up",
+      "#review-close"
+    ]
+  },
+  {
+    "locale": "en",
+    "command": "uncertain explicit private save",
+    "mutations": 1,
+    "noAutomaticRetry": true,
+    "releasePreviewExcludesPrivate": true
+  },
+  {
+    "locale": "en",
+    "writes": [],
+    "errors": []
+  },
+  {
+    "locale": "ar",
+    "viewport": 1600,
+    "scroll": 1600,
+    "usefulWidth": 1360,
+    "columns": "200px 790px 280px",
+    "font": "\"EH My Care Arabic\", \"Noto Sans Arabic\", \"EH My Care Manrope\", Inter, system-ui, sans-serif",
+    "brand": "EgyHealth 360",
+    "headerStart": 120,
+    "workspaceStart": 120,
+    "contextHeight": 104.390625,
+    "headerHeight": 73,
+    "colors": {
+      "navy": "#0b2545",
+      "teal": "#0b6e7f",
+      "muted": "#526178",
+      "canvas": "#f7f9fc",
+      "ink": "#0f172a"
+    },
+    "nav": [
+      "#live-documentation",
+      "#live-follow-up",
+      "#review-close"
+    ]
+  },
+  {
+    "locale": "ar",
+    "command": "uncertain explicit private save",
+    "mutations": 1,
+    "noAutomaticRetry": true,
+    "releasePreviewExcludesPrivate": true
+  },
+  {
+    "locale": "ar",
+    "writes": [],
+    "errors": []
+  },
+  {
+    "runtimeSourcesSha256": {
+      "apps/web/src/components/application.tsx": "f2600c436cd049f6e2871755a06eccd52d328e550fd68f3550e1067c99c50aed",
+      "apps/web/src/components/documentation.tsx": "e778b7de3d695611eb6663b5d16310a1e501ca2f05efb9bc2820935b729e8890",
+      "apps/web/src/components/live-documentation.tsx": "4e2cecdcf3ed51ae45eb0e3911434a60f1d0c3e1987a195135f32e1634354870",
+      "apps/web/src/components/consultation-close.tsx": "2d0012b3013a854d61e7a83bd8499d4e9b0b3265d6e6095bef6dece2b0a50c61",
+      "apps/web/src/components/follow-up-intents.tsx": "72942fc15b90adee551e5a382a52ebd0311c997348e976603fd3559099004471",
+      "apps/web/src/components/clinician-consultation.tsx": "202050e958146010004e36accbda695a6c26fe5b939d70d37bce039c11c23067",
+      "apps/web/src/components/clinician-consultation-presentation.tsx": "aefaa118d3f7e6a8959d6d538ea59a8579eb5afd84f0c0144f6d040d62aa571b",
+      "apps/web/src/components/clinician-consultation.module.css": "0dd962d428b033f298658681af701d2789c4a27694d3a2b159c47f41478723f4",
+      "apps/web/src/components/patient-my-care.module.css": "c6295daeacdd1cdff81127e0c13e43ee7a6739ba8af8ad8eb0d3bf603639c909",
+      "apps/web/src/lib/clinician-consultation-copy.ts": "7b8cc0a056c14e6f62c316df320ed99bb05d8f4952b6bc067c1d142a67050dfb"
+    },
+    "buildId": "AJqE07t5Y_4BJJ-5iqZOK"
+  }
+]

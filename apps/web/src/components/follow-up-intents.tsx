@@ -1,12 +1,15 @@
 "use client";
 import Link from "next/link";
 import {
+  useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
   useSyncExternalStore,
 } from "react";
+import { ClinicalTimestamp, ClinicianPresentationContext } from "./clinician-consultation-presentation";
+import { careDate } from "../lib/patient-my-care";
 import { useApp } from "./context";
 import { useLocale } from "../lib/i18n/context";
 import { safeErrorMessage } from "../lib/api/errors";
@@ -215,6 +218,7 @@ function FollowUpScope({
 }
 function WindowRead({ value }: { value: DesiredWindow | null }) {
   const { t, locale } = useLocale();
+  const professional = useContext(ClinicianPresentationContext);
   if (!value)
     return (
       <p className="muted">{t("No desired follow-up window specified")}</p>
@@ -230,7 +234,7 @@ function WindowRead({ value }: { value: DesiredWindow | null }) {
       <h3>{t("Desired follow-up window")}</h3>
       <p>
         <bdi>
-          {format(value.startAt)} → {format(value.endAt)}
+          {professional ? <bdi dir="ltr"><ClinicalTimestamp value={value.startAt} zone={value.timeZone} /> → <ClinicalTimestamp value={value.endAt} zone={value.timeZone} /></bdi> : <>{format(value.startAt)} → {format(value.endAt)}</>}
         </bdi>
         <br />
         <bdi>{value.timeZone}</bdi>
@@ -267,6 +271,7 @@ function IntentCard({
   done(): void;
 }) {
   const { t, locale } = useLocale();
+  const professional = useContext(ClinicianPresentationContext);
   const [action, setAction] = useState<"release" | "correct" | null>(null);
   const [confirmed, setConfirmed] = useState(false),
     [busy, setBusy] = useState(false),
@@ -292,7 +297,7 @@ function IntentCard({
         <p className="small muted">
           {t("Released")}:{" "}
           <bdi>
-            {new Intl.DateTimeFormat(locale === "ar" ? "ar-EG" : "en-GB", {
+            {professional ? <>{careDate(intent.releasedAt, "UTC", locale)} · <bdi dir="ltr">UTC</bdi></> : new Intl.DateTimeFormat(locale === "ar" ? "ar-EG" : "en-GB", {
               dateStyle: "medium",
             }).format(new Date(intent.releasedAt))}
           </bdi>

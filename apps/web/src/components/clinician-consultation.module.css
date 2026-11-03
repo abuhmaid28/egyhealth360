@@ -1,0 +1,754 @@
+/* Professional mode of the approved Patient family; inherited assets/tokens are authoritative. */
+.root[data-clinician-master] {
+  --navy: var(--care-navy);
+  --blue: var(--care-teal);
+  --blue-dark: var(--care-teal-dark);
+  --blue-soft: var(--care-alt);
+  --teal: var(--care-teal);
+  --teal-dark: var(--care-teal-dark);
+  --teal-soft: var(--care-alt);
+  --ink: var(--care-ink);
+  --muted: var(--care-muted);
+  --line: var(--care-border);
+  --canvas: var(--care-canvas);
+  --white: var(--care-surface);
+  --amber: var(--care-warning);
+  --shadow: none;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.root[data-clinician-master][dir="rtl"] {
+  line-height: 1.8;
+}
+.root[data-clinician-master] h1 {
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+}
+.root[data-clinician-master] h2 {
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: -0.25px;
+}
+.root[data-clinician-master] h3 {
+  font-size: 15px;
+  line-height: 1.5;
+}
+.root[dir="rtl"][data-clinician-master] :is(h1, h2, h3) {
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+.headerInner {
+  min-block-size: 72px;
+}
+.root .primaryNav {
+  display: flex;
+}
+.primaryNav > span {
+  display: flex;
+  align-items: center;
+  min-block-size: 44px;
+  padding: 10px 16px;
+  color: var(--care-muted);
+  font-size: 14px;
+  cursor: not-allowed;
+}
+.primaryNav > span:focus-visible {
+  outline: 3px solid var(--care-teal);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+.account {
+  position: relative;
+}
+.account summary {
+  cursor: pointer;
+  list-style: none;
+}
+.account summary::-webkit-details-marker {
+  display: none;
+}
+.account > div {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: calc(100% + 8px);
+  z-index: 30;
+  display: grid;
+  min-inline-size: 220px;
+  padding: 8px;
+  border: 1px solid var(--care-border);
+  border-radius: 12px;
+  background: var(--care-surface);
+}
+.account > div :is(a, button) {
+  display: flex;
+  align-items: center;
+  min-block-size: 44px;
+  padding: 10px 12px;
+  font-size: 13px;
+  text-align: start;
+  border: 0;
+  background: transparent;
+  border-radius: 8px;
+}
+.account > div :is(a, button):hover {
+  background: var(--care-alt);
+}
+.main {
+  max-inline-size: 1440px;
+  margin-inline: auto;
+  padding: 24px 40px 32px;
+  outline: none;
+  container: clinician-workspace / inline-size;
+}
+.root :global(.consultation-ribbon) {
+  display: block;
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 12;
+  padding: 0 0 12px;
+  margin: 0 0 12px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--care-canvas);
+}
+.root :global(.master-context-ribbon) {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-block-size: 96px;
+  padding: 16px 20px;
+  border: 1px solid var(--care-border);
+  border-radius: 12px;
+  background: var(--care-surface);
+}
+.root :global(.master-identity) {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-inline-end: auto;
+}
+.root :global(.master-identity > div) {
+  display: grid;
+  gap: 2px;
+}
+.root :global(.master-patient-monogram) {
+  inline-size: max(44px, 2.6em);
+  block-size: max(44px, 2.6em);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: var(--care-navy);
+  background: var(--care-alt);
+  font-size: 16px;
+  font-weight: 600;
+}
+.root :global(.master-context-ribbon p) {
+  margin: 0;
+}
+.root :global(.master-context-ribbon .eyebrow) {
+  color: var(--care-muted);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+  margin: 0;
+}
+.root :global(.master-provider) {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--care-secondary);
+}
+.root :global(.master-visit) {
+  display: grid;
+  gap: 2px;
+  padding-inline-start: 24px;
+  border-inline-start: 1px solid var(--care-border);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.root :global(.master-visit small) {
+  font-size: 12px;
+  color: var(--care-muted);
+}
+.root :global(.master-consultation-state) {
+  flex-shrink: 0;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--care-teal-dark);
+  background: var(--care-alt);
+  border-radius: 6px;
+}
+.root :global(.master-consultation-state[data-state="CLOSED"]) {
+  color: var(--care-navy);
+  background: var(--care-success-surface);
+}
+.root :global(.master-back) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-block-size: 44px;
+  font-size: 12px;
+  color: var(--care-secondary);
+}
+.root :global(.master-back svg[data-directional="true"]) {
+  transform: rotate(180deg);
+}
+.root[dir="rtl"] :global(.master-back svg[data-directional="true"]) {
+  transform: none;
+}
+.root :global(.master-local-tasks) {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  margin: 8px 0 0;
+  padding: 0 20px;
+  border: 1px solid var(--care-border);
+  border-radius: 8px;
+  background: var(--care-surface);
+}
+.root :global(.master-local-tasks a) {
+  flex: 0 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-block-size: 48px;
+  padding: 10px 4px;
+  border: 0;
+  border-radius: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--care-secondary);
+}
+.root :global(.master-local-tasks a[aria-current="location"]) {
+  color: var(--care-teal);
+  font-weight: 600;
+}
+.root :global(.master-local-tasks a[aria-current="location"]::after) {
+  content: "";
+  position: absolute;
+  inset-inline: 4px;
+  inset-block-end: 0;
+  block-size: 2px;
+  background: var(--care-teal);
+}
+.root :global(.master-local-tasks a:hover) {
+  color: var(--care-teal-dark);
+  background: var(--care-canvas);
+}
+.root :global(.documentation-grid) {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 280px;
+  gap: 24px;
+  align-items: start;
+  padding: 20px;
+  border: 1px solid var(--care-border);
+  border-radius: 12px;
+  background: var(--care-surface);
+}
+.root :global(.documentation-outline) {
+  display: grid;
+  position: sticky;
+  gap: 4px;
+  inset-block-start: var(--consultation-offset);
+  padding-inline-end: 16px;
+  border-inline-end: 1px solid var(--care-border);
+}
+.root :global(.documentation-outline a) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  min-block-size: 44px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--care-secondary);
+  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+}
+.root :global(.documentation-outline a:hover) {
+  color: var(--care-teal-dark);
+  background: var(--care-alt);
+}
+.root :global(.master-purpose) {
+  color: var(--care-muted);
+  font-size: 12px;
+  line-height: 1.55;
+  font-weight: 400;
+}
+.root :global(.documentation-content) {
+  display: block;
+}
+.root :global(.documentation-content > .card) {
+  padding: 0 0 24px;
+  margin: 0 0 24px;
+  border: 0;
+  border-block-end: 1px solid var(--care-border);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.root :global(.card-title) {
+  margin-block-end: 10px;
+}
+.root :global(.documentation-content > .card > p) {
+  font-size: 13px;
+  line-height: 1.65;
+  margin-block-end: 12px;
+  color: var(--care-secondary);
+}
+.root :global(.documentation-field) {
+  margin-block: 14px;
+}
+.root :global(.field) {
+  gap: 6px;
+  margin-block-end: 12px;
+}
+.root :global(.field > span),
+.root :global(.field > label) {
+  font-size: 13px;
+  font-weight: 600;
+}
+.root :global(.field small),
+.root :global(.documentation-counter),
+.root :global(.small) {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--care-muted);
+}
+.root :global(.field :is(input, textarea, select)) {
+  font: inherit;
+  color: var(--care-ink);
+  inline-size: 100%;
+  min-block-size: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--care-border-strong);
+  border-radius: 8px;
+  background: var(--care-surface);
+  box-shadow: none;
+}
+.root :global(.field textarea) {
+  min-block-size: 108px;
+  resize: vertical;
+  line-height: 1.65;
+}
+.root :global(#doc-private textarea),
+.root :global(#doc-summary textarea) {
+  min-block-size: 148px;
+}
+.root :global(.documentation-counter) {
+  margin-block-start: 4px;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.root :global(.documentation-list .documentation-action-row > span) {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.root :global(.button) {
+  min-block-size: 44px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.5;
+  border-radius: 8px;
+  padding: 10px 14px;
+  white-space: normal;
+  box-shadow: none;
+}
+.root :global(.button:hover) {
+  transform: none;
+}
+.root :global(.button.secondary) {
+  color: var(--care-navy);
+  background: var(--care-surface);
+  border: 1px solid var(--care-border-strong);
+}
+.root :global(.button.secondary:hover) {
+  background: var(--care-alt);
+}
+.root :global(.button.primary) {
+  color: var(--care-surface);
+  background: var(--care-teal);
+  border: 1px solid var(--care-teal);
+}
+.root :global(.button.primary:hover) {
+  background: var(--care-teal-dark);
+}
+.root :global(.button:disabled) {
+  color: var(--care-secondary);
+  background: var(--care-alt);
+  border-color: var(--care-border);
+  opacity: 1;
+  cursor: not-allowed;
+}
+.root :global(.documentation-list) {
+  margin-block: 10px 16px;
+  padding: 12px;
+  border-color: var(--care-border);
+  border-radius: 8px;
+}
+.root :global(.documentation-list legend) {
+  font-size: 13px;
+  font-weight: 600;
+}
+.root :global(.documentation-list .documentation-action-row) {
+  gap: 8px;
+}
+.root :global(#doc-allergy) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0 20px;
+}
+.root :global(#doc-allergy > .documentation-field),
+.root :global(#doc-allergy > .documentation-review) {
+  grid-column: 1/-1;
+}
+.root :global(.documentation-review) {
+  padding-block: 12px 0;
+  scroll-margin-block-start: var(--consultation-offset);
+}
+.root :global(.documentation-review h3) {
+  margin-block-end: 8px;
+}
+.root :global(.documentation-review .field) {
+  margin-block-end: 8px;
+}
+.root :global(#doc-private) {
+  border-inline-start: 2px solid var(--care-navy);
+  padding-inline-start: 16px;
+}
+.root :global(#doc-summary) {
+  border-inline-start: 2px solid var(--care-teal);
+  padding-inline-start: 16px;
+}
+.root :global(.badge),
+.root :global(.documentation-private .badge) {
+  display: inline-flex;
+  gap: 6px;
+  padding: 5px 9px;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 500;
+  border-radius: 6px;
+  color: var(--care-navy);
+  background: var(--care-alt);
+}
+.root :global(.badge.green) {
+  color: var(--care-ink);
+  background: var(--care-success-surface);
+}
+.root :global(.badge.amber) {
+  color: var(--care-ink);
+  background: var(--care-warning-surface);
+}
+.root :global(.badge.blue) {
+  color: var(--care-teal-dark);
+  background: var(--care-info-surface);
+}
+.root :global(.master-source-rail) {
+  position: sticky;
+  inset-block-start: var(--consultation-offset);
+  padding-inline-start: 20px;
+  border-inline-start: 1px solid var(--care-border);
+}
+.root :global(.master-source-rail h2) {
+  font-size: 15px;
+  margin-block-end: 16px;
+}
+.root :global(.master-source-rail dl) {
+  margin: 0;
+}
+.root :global(.master-source-rail dl > div) {
+  padding-block: 12px;
+  border-block-end: 1px solid var(--care-border);
+}
+.root :global(.master-source-rail dl > div:first-child) {
+  padding-block-start: 0;
+}
+.root :global(.master-source-rail dt) {
+  color: var(--care-secondary);
+  font-size: 12px;
+  margin-block-end: 5px;
+}
+.root :global(.master-source-rail dd) {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.root :global(.master-source-rail .master-source-state) {
+  font-weight: 600;
+  color: var(--care-navy);
+}
+.root :global(.master-source-rail .master-purpose) {
+  margin-block-start: 4px;
+  font-size: 12px;
+  color: var(--care-muted);
+}
+.root :global(.master-source-boundary),
+.root :global(.master-independent) {
+  margin-block: 16px 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--care-muted);
+}
+.root :global(.master-source-rail > a) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  min-block-size: 44px;
+  color: var(--care-teal);
+  font-size: 13px;
+  font-weight: 600;
+}
+.root :global(.master-source-rail > small) {
+  font-size: 12px;
+  color: var(--care-muted);
+}
+.root :global(.documentation-action-row) {
+  gap: 10px;
+}
+.root :global(.documentation-content > .card > .documentation-action-row) {
+  margin-block: 16px 12px;
+}
+.root :global(.documentation-content > .card > .button) {
+  margin-block-start: 8px;
+}
+.root :global(.documentation-content > .button) {
+  margin-block: 0 24px;
+}
+.root :global(.documentation-feedback:not(:empty)) {
+  margin-block-end: 16px;
+  padding: 12px;
+  border: 1px solid var(--care-border);
+  border-radius: 8px;
+  background: var(--care-alt);
+  font-size: 13px;
+}
+.root :global(.documentation-warning) {
+  background: var(--care-warning-surface);
+  color: var(--care-ink);
+  border: 1px solid var(--care-border);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.root :global(.error-panel) {
+  color: var(--care-ink);
+  background: var(--care-error-surface);
+  border: 1px solid var(--care-border);
+  box-shadow: none;
+}
+.root :global(.empty) {
+  padding: 20px;
+  background: var(--care-alt);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: none;
+}
+.root :global(.empty > .icon-tile) {
+  display: none;
+}
+.root :global(.documentation-danger) {
+  color: var(--care-error);
+}
+.root :global(.follow-up-workspace) {
+  margin-block-start: 24px;
+  padding: 24px;
+  background: var(--care-surface);
+  border: 1px solid var(--care-border);
+  border-radius: 12px;
+}
+.root :global(.follow-up-workspace .card) {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin-block-end: 24px;
+  box-shadow: none;
+}
+.root :global(.follow-up-workspace h2) {
+  margin-block: 8px;
+}
+.root :global(.follow-up-workspace .card > p) {
+  max-inline-size: 80ch;
+  margin-block-end: 12px;
+  font-size: 13px;
+  color: var(--care-secondary);
+}
+.root :global(.follow-up-workspace > div),
+.root :global(.follow-up-workspace .follow-up-editor) {
+  gap: 16px;
+}
+.root :global(.follow-up-editor > .button) {
+  justify-self: start;
+}
+.root :global(.follow-up-workspace .card) {
+  margin-block-end: 0;
+}
+.root :global(.consultation-close-card) {
+  margin-block-start: 24px;
+  padding: 24px;
+  border: 1px solid var(--care-border);
+  border-radius: 12px;
+  background: var(--care-surface);
+  box-shadow: none;
+}
+.root :global(.consultation-close-card > .button.primary) {
+  color: var(--care-teal-dark);
+  background: var(--care-surface);
+  border: 1px solid var(--care-border-strong);
+}
+.root :global(.close-boundaries) {
+  font-size: 13px;
+  color: var(--care-secondary);
+  padding-inline-start: 20px;
+  margin-block: 12px 20px;
+}
+.root :global(.modal) {
+  max-inline-size: min(760px, calc(100vw - 48px));
+  max-block-size: calc(100dvh - 48px);
+  padding: 24px;
+  border: 1px solid var(--care-border);
+  border-radius: 12px;
+  background: var(--care-surface);
+  color: var(--care-ink);
+  box-shadow: 0 12px 32px rgb(11 37 69 / 10%);
+}
+.root :global(.modal::backdrop) {
+  background: rgb(11 37 69 / 32%);
+  backdrop-filter: none;
+}
+.root :global(.documentation-release-preview),
+.root :global(.close-review-modal .confirmation-details),
+.root :global(.close-ack) {
+  color: var(--care-ink);
+  background: var(--care-alt);
+  border: 1px solid var(--care-border);
+  border-radius: 8px;
+}
+.root :global(.modal-header) {
+  margin-block-end: 16px;
+}
+.root :global(.modal h2) {
+  font-size: 20px;
+}
+.root :global(.modal :is(input[type="checkbox"], input[type="radio"])) {
+  accent-color: var(--care-teal);
+}
+.footer {
+  max-inline-size: 1440px;
+  margin-inline: auto;
+  padding: 0 40px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  justify-content: space-between;
+  color: var(--care-muted);
+  font-size: 12px;
+}
+@container clinician-workspace (max-width:86em) {
+  .root :global(.documentation-grid) {
+    grid-template-columns: minmax(0, 1fr) 260px;
+  }
+  .root :global(.documentation-outline) {
+    grid-column: 1/-1;
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    border: 0;
+    padding: 0 0 12px;
+    border-block-end: 1px solid var(--care-border);
+  }
+  .root :global(.documentation-outline a) {
+    padding: 8px 12px;
+  }
+  .root :global(.documentation-outline .master-purpose) {
+    display: none;
+  }
+  .root :global(.documentation-content) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .root :global(.master-source-rail) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+@container clinician-workspace (max-width:52em) {
+  .root :global(.documentation-grid) {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+  }
+  .root :global(.documentation-content) {
+    grid-row: auto;
+  }
+  .root :global(.master-source-rail) {
+    grid-column: 1;
+    grid-row: auto;
+    position: static;
+    padding: 20px 0 0;
+    border: 0;
+    border-block-start: 1px solid var(--care-border);
+  }
+  .root :global(#doc-allergy) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .root :global(.master-context-ribbon) {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px;
+  }
+  .root :global(.master-identity) {
+    flex-basis: 100%;
+  }
+  .root :global(.master-visit) {
+    border: 0;
+    padding: 0;
+    margin-inline-end: auto;
+  }
+  .root :global(.master-local-tasks) {
+    gap: 8px;
+    padding-inline: 8px;
+    flex-wrap: wrap;
+  }
+  .root :global(.master-local-tasks a) {
+    flex: 1 1 auto;
+  }
+}
+@media (max-width: 760px) {
+  .headerInner {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-inline: 20px;
+  }
+  .root .primaryNav {
+    display: flex;
+    order: 3;
+    flex-basis: 100%;
+    gap: 4px;
+  }
+  .primaryNav > span {
+    padding-inline: 12px;
+  }
+  .main {
+    padding: 16px 20px 24px;
+  }
+  .footer {
+    padding-inline: 20px;
+  }
+  .root :global(.follow-up-workspace),
+  .root :global(.consultation-close-card) {
+    padding: 16px;
+  }
+  .root :global(.button.primary) {
+    min-block-size: 48px;
+  }
+}
