@@ -211,6 +211,51 @@ export async function testPatientMyCare(browser, origin, shots) {
     }
     await capture(`patient-my-care-320-${locale}`, true);
     await page.setViewportSize({ width: 390, height: 844 });
+    const labels = await page
+      .locator("[data-care-shortcuts] strong")
+      .evaluateAll((els) =>
+        els.map((el) => {
+          const lines = new Set();
+          const words = [];
+          const text = el.firstChild;
+          for (const match of text.textContent.matchAll(/\S+/gu)) {
+            const range = globalThis.document.createRange();
+            range.setStart(text, match.index);
+            range.setEnd(text, match.index + match[0].length);
+            const rects = [...range.getClientRects()];
+            rects.forEach((r) => lines.add(Math.round(r.top)));
+            words.push({
+              text: match[0],
+              lines: new Set(rects.map((r) => Math.round(r.top))).size,
+            });
+          }
+          return {
+            label: el.textContent,
+            lines: lines.size,
+            words,
+            wrap: globalThis.getComputedStyle(el).overflowWrap,
+            top: el.parentElement.getBoundingClientRect().top,
+          };
+        }),
+      );
+    assert.equal(
+      new Set(labels.map((x) => x.top)).size,
+      1,
+      "390px shortcuts retain one row",
+    );
+    for (const label of labels) {
+      assert.notEqual(label.wrap, "anywhere");
+      assert.ok(
+        label.lines <= 2,
+        `${locale} shortcut exceeds two lines: ${label.label}`,
+      );
+      assert.ok(
+        label.words.every((word) => word.lines === 1),
+        `${locale} shortcut splits a word: ${label.label}`,
+      );
+    }
+    assert.equal(await page.locator("[data-demo-indication]").count(), 1);
+    assert.equal(await page.locator("#main [data-demo-indication]").count(), 0);
     assert.ok(await page.locator("[data-clinician-monogram]").isVisible());
     await page.evaluate(() => globalThis.scrollTo(0, 0));
     await capture(`patient-my-care-mobile-${locale}`);
@@ -442,6 +487,8 @@ export async function testPatientMyCare(browser, origin, shots) {
     }
     await page.setViewportSize({ width: 1600, height: 1000 });
     assert.equal(await page.locator("[data-demo-utility]").count(), 0);
+    assert.equal(await page.locator("[data-demo-indication]").count(), 0);
+    assert.equal(await page.getByText(c.demo, { exact: true }).count(), 0);
     assert.equal(await page.getByLabel(c.demoWorkspace).count(), 0);
     assert.equal(await page.getByLabel(c.screenState).count(), 0);
     assert.equal(

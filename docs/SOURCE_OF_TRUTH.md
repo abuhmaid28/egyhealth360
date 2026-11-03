@@ -4,7 +4,9 @@ CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutab
 
 ## Fast reading order
 
-**Latest bounded direction:** the Product Owner's second My Care composition instruction in the current chat explicitly supersedes the previous left-column layout. [Current composition report](ui-reference/PATIENT_MY_CARE_COMPOSITION.md) records the new centered/full-width treatment and preservation of data, time, authority/privacy and Demo/Live semantics. Earlier implementation/refinement reports remain historical evidence of their reviewed heads.
+**Latest bounded direction:** the Product Owner accepts the current My Care composition in the latest chat and authorizes final optical polish only. [Final optical report](ui-reference/PATIENT_MY_CARE_POLISH.md) preserves that structure, type/palette and all behavior; final visual sign-off remains pending.
+
+**Accepted composition baseline:** the Product Owner's second My Care composition instruction in the current chat explicitly supersedes the previous left-column layout. [Current composition report](ui-reference/PATIENT_MY_CARE_COMPOSITION.md) records the new centered/full-width treatment and preservation of data, time, authority/privacy and Demo/Live semantics. Earlier implementation/refinement reports remain historical evidence of their reviewed heads.
 
 **Implementation foundation:** [Issue #72 / owner gate 6574268901](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6574268901) authorizes **Patient My Care only**. The [handoff](ui-reference/README_START_HERE.md), [specification](ui-reference/PREMIUM_SYNTHESIS_SPEC.md), [execution prompt](ui-reference/CODEX_PROMPT.md), original SVG, [initial evidence](ui-reference/PATIENT_MY_CARE_IMPLEMENTATION.md) and [first refinement](ui-reference/PATIENT_MY_CARE_REFINEMENT.md) remain the preserved foundation. The latest owner composition instruction above now governs the centered/full-width layout and utilities. Preserve accepted data, IA, clinical/security semantics and unchanged fonts/palette. No broad rollout or final identity is approved.
 
@@ -47,6 +49,7 @@ All tracked documentation Markdown paths are classified below. Research files ar
 | [ui-reference/CODEX_PROMPT.md](ui-reference/CODEX_PROMPT.md) | Explicit implementation task, checks, preservation and required review handoff. |
 | [ui-reference/PATIENT_MY_CARE_IMPLEMENTATION.md](ui-reference/PATIENT_MY_CARE_IMPLEMENTATION.md) | Exact implementation base, intentional deviations, screenshots, validation and limitations. |
 | [ui-reference/PATIENT_MY_CARE_REFINEMENT.md](ui-reference/PATIENT_MY_CARE_REFINEMENT.md) | Preserved first refinement at b1421ec: neutral greeting, density, shortcuts, initials and contrast; before baseline for the current composition pass. |
+| [ui-reference/PATIENT_MY_CARE_POLISH.md](ui-reference/PATIENT_MY_CARE_POLISH.md) | Final owner-directed optical pass only, with fresh EN/AR mobile/desktop/reflow/text evidence and scope preservation. |
 | [ui-reference/PATIENT_MY_CARE_COMPOSITION.md](ui-reference/PATIENT_MY_CARE_COMPOSITION.md) | Current owner-directed premium composition pass: centered container, full-width connected quick access/recent care, truthful metadata omission, collapsed Demo utility and scoped mobile/RTL polish. |
 | `ui-reference/reference/patient-my-care-reference.svg` | Original owner visual reference, preserved byte-for-byte. |
 

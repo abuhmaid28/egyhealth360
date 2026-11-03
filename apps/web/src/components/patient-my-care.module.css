@@ -1249,7 +1249,9 @@
 }
 .tiles strong,
 .tiles small {
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 .appointment .status {
   background: transparent;
@@ -1451,6 +1453,17 @@
 .demoTools summary::-webkit-details-marker {
   display: none;
 }
+.demoLabel {
+  display: grid;
+  gap: 2px;
+  line-height: 1.4;
+}
+.demoLabel .demoIndication {
+  color: var(--care-muted);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+}
 .demoTools summary svg {
   transform: rotate(90deg);
 }
@@ -1534,7 +1547,7 @@
     font-size: 16px;
   }
   .utilities {
-    gap: 4px;
+    gap: 8px;
   }
   .utilities :global(.language-switch) {
     padding: 0;
@@ -1544,6 +1557,7 @@
   }
   .utilities :global(.language-switch button) {
     padding-inline: 4px;
+    font-size: 11px;
   }
   .utilities :global(.language-switch button[aria-pressed="true"]) {
     background: var(--care-alt);
@@ -1551,9 +1565,13 @@
   .avatar {
     border: 0;
     background: transparent;
+    inline-size: max(44px, 2.6em);
+    block-size: max(44px, 2.6em);
   }
   .avatar bdi {
     background: var(--care-alt);
+    inline-size: max(28px, 2.4em);
+    block-size: max(28px, 2.4em);
   }
   .main {
     padding: 24px 20px 28px;
@@ -1594,7 +1612,7 @@
   }
   .tiles > a,
   .tiles > div {
-    padding: 0 4px;
+    padding: 0 2px;
     min-block-size: 88px;
     gap: 8px;
     align-items: center;
@@ -1615,6 +1633,14 @@
     font-size: 12px;
     line-height: 1.45;
     text-align: center;
+  }
+  .root[dir="ltr"] .tiles strong {
+    letter-spacing: -0.01em;
+  }
+  .root[dir="rtl"] .tiles strong {
+    max-inline-size: calc(100% - 4px);
+    line-height: 1.6;
+    text-wrap: balance;
   }
   .tiles small {
     display: none;
@@ -1652,27 +1678,43 @@
     min-block-size: 44px;
   }
   .footer {
-    padding: 16px 20px 24px;
-    gap: 8px 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12em), 1fr));
+    padding: 16px 20px;
+    gap: 4px 12px;
+  }
+  .footer > span {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    color: var(--care-muted);
+  }
+  .footer > button {
+    justify-self: start;
+    padding-inline: 0 12px;
   }
   .demoTools {
     inline-size: auto;
     margin-inline-start: auto;
   }
+  .demoTools summary {
+    padding-inline: 8px 0;
+  }
   .bottomNav {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.8em), 1fr));
     padding-block-start: 6px;
     padding-block-end: max(6px, env(safe-area-inset-bottom));
   }
   .bottomNav a {
     display: grid;
-    grid-template-rows: 20px 28px;
-    align-items: center;
+    grid-template-rows: 20px minmax(2.6em, auto);
+    align-items: start;
+    align-content: start;
     justify-items: center;
-    gap: 3px;
-    min-block-size: 59px;
+    gap: 5px;
+    min-block-size: 64px;
     padding: 4px 2px;
     font-size: 12px;
-    line-height: 1.25;
+    line-height: 1.3;
     border-radius: 10px;
   }
   .bottomNav a[aria-current="page"] {
@@ -1680,6 +1722,7 @@
   }
   .root[dir="rtl"] .bottomNav a {
     line-height: 1.4;
+    grid-template-rows: 20px minmax(2.8em, auto);
   }
 }
 @media (max-width: 350px) {
@@ -1701,11 +1744,11 @@
   .utilities {
     margin-inline-start: auto;
   }
-  .bottomNav a {
-    grid-template-rows: minmax(20px, auto) minmax(28px, auto);
-  }
   .bottomNav span {
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    text-wrap: balance;
   }
 }
 .appointment .status {
@@ -1736,6 +1779,30 @@
     block-size: max(44px, 2em);
   }
   .tiles {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 4.4em), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.5em), 1fr));
+  }
+  .shortcuts {
+    container: care-shortcuts / inline-size;
+  }
+}
+@media (max-width: 350px) {
+  .bottomNav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container care-shortcuts (max-width: 23em) {
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .tiles > :nth-child(odd)::before {
+    display: none;
+  }
+}
+@container care-shortcuts (max-width: 10.5em) {
+  .tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tiles > ::before {
+    display: none;
   }
 }

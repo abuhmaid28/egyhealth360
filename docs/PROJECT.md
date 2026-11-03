@@ -12,7 +12,7 @@ EgyHealth 360 is an integrated synthetic graduation healthcare platform: patient
 
 ## Product and execution boundaries
 
-The latest owner instruction authorizes a second **Patient My Care premium composition** pass only, superseding the prior left-column-only layout. [Current evidence](ui-reference/PATIENT_MY_CARE_COMPOSITION.md). Data/read contracts, other workspaces, backend/API/schema/security, CI/hosting and no-deploy/no-merge boundaries remain unchanged.
+The latest owner instruction accepts the current composition and authorizes one final **Patient My Care optical polish** pass only, preserving its structure, size, type/palette and behavior. [Final evidence](ui-reference/PATIENT_MY_CARE_POLISH.md). Data/read contracts, other workspaces, backend/API/schema/security, CI/hosting and no-deploy/no-merge boundaries remain unchanged.
 
 Earlier [independent review 6577639703](https://github.com/abuhmaid28/egyhealth360/pull/79#issuecomment-6577639703)'s five refinements form the preserved [before baseline](ui-reference/PATIENT_MY_CARE_REFINEMENT.md). The latest composition instruction above supersedes its left-column-only layout. No wider implementation or deployment is authorized.
 

@@ -216,9 +216,9 @@ function CareScreen({
           </h1>
           <p>
             <span>{c.support}</span>
-            <span className={styles.mode}>
-              {api.mode === "demo" ? c.demo : c.live}
-            </span>
+            {api.mode === "live" && (
+              <span className={styles.mode}>{c.live}</span>
+            )}
           </p>
         </div>
         {profile.error && (
@@ -332,7 +332,12 @@ function CareScreen({
             }}
           >
             <summary>
-              {c.demoUtility}
+              <span className={styles.demoLabel}>
+                {c.demoUtility}
+                <small className={styles.demoIndication} data-demo-indication>
+                  {c.demo}
+                </small>
+              </span>
               <Icon name="chevron" size={16} />
             </summary>
             <div className={styles.demoPanel}>
