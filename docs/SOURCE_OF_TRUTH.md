@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+**Current bounded release reference:** [REAL_STAGING_UI_PREFLIGHT](REAL_STAGING_UI_PREFLIGHT.md) records the latest Product Owner scope, exact approved #79/#80 source, fresh infrastructure findings, validation, minimal real-application release sequence and per-action approval gates. [Sanitized inspection evidence](real-staging-preflight/evidence.md) is historical evidence for the 4 November 2026 preflight. Older Brand Research-only task wording below does not override this newer bounded scope. No merge, infrastructure mutation or release is authorized by these documents.
+
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
 
 ## Fast reading order
@@ -35,6 +37,11 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| Real staging refresh | Responsibility / limits |
+| --- | --- |
+| [REAL_STAGING_UI_PREFLIGHT.md](REAL_STAGING_UI_PREFLIGHT.md) | Current release decision/preflight; exact source and further approval gates, not hosted acceptance. |
+| [real-staging-preflight/evidence.md](real-staging-preflight/evidence.md) | HISTORICAL EVIDENCE for this read-only preflight; sanitized source identities, ledger and validation limits. |
 
 | Document | Responsibility / limits |
 | --- | --- |
