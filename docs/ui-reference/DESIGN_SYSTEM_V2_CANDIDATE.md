@@ -3,9 +3,10 @@
 **Status: CANDIDATE FOR INDEPENDENT REVIEW / PRODUCT OWNER DECISION. NOT FINAL BRAND V2, NOT A DESIGN SYSTEM FREEZE, NOT AN IMPLEMENTATION AUTHORIZATION.**
 
 Source checkpoint:
-- Patient My Care accepted visual master: `f0d94e7e2579dc9bd1e2ef87ba493172b0f4cfb0` (PR #79, still open).
-- Clinician Active Consultation Patient-DNA accepted visual master: `6fbd247a09d774fa42d9712068699753a88e10e6` (PR #80, still open).
-- The two visual approvals are **slice-level** reviews, not approval for all portals, a new logo, or cross-project rollout.
+- Patient My Care visual master: `f0d94e7e2579dc9bd1e2ef87ba493172b0f4cfb0`, PR #79 **[final visual sign-off comment 6593490637](https://github.com/abuhmaid28/egyhealth360/pull/79#issuecomment-6593490637)**. Still OPEN / UNMERGED.
+- Clinician Active Consultation Patient-DNA master: `6fbd247a09d774fa42d9712068699753a88e10e6`, PR #80 **[independent premium visual pass comment 6613466373](https://github.com/abuhmaid28/egyhealth360/pull/80#issuecomment-6613466373)**. Still OPEN / UNMERGED; **Product Owner's final acceptance is a distinct, outstanding gate**.
+- These reviews approve bounded visual slices, not Final Brand V2, a universal component library, a logo, mobile Clinician product architecture or cross-portal rollout.
+- This audit-corrected document is **still a candidate**, not complete source-selector inventory or a frozen design standard.
 - Existing approved UX/IA/content rules and actual backend/security/clinical contracts override presentation convenience.
 - No new clinical feature is authorized by this document.
 
@@ -52,16 +53,34 @@ Forbidden visual drift: purple, paper/beige journal style, hospital-software-fro
 | Secondary | `#475569` | Supporting text |
 | Muted | `#526178` | Accessible muted copy in accepted implementation |
 
-### Semantic colors
+### Semantic color primitives — not universal text combinations
 
-| Meaning | Foreground | Background |
-| --- | --- | --- |
-| Success | `#16A34A` | `#ECFDF3` |
-| Warning | `#B7791F` | `#FFF8E6` |
-| Error | `#DC2626` | `#FEF2F2` |
-| Info | `#2563EB` | `#EFF6FF` |
+| Meaning | Accent / indicator primitive | Light surface primitive | Text rule |
+| --- | --- | --- | --- |
+| Success | `#16A34A` | `#ECFDF3` | Prefer readable ink/navy status text; do **not** assume green is contrast-safe on this surface |
+| Warning | `#B7791F` | `#FFF8E6` | Prefer readable ink/navy status text; preserve explicit wording |
+| Error | `#DC2626` | `#FEF2F2` | Prefer ink/navy for normal text; verify red text on its actual background before use |
+| Info | `#2563EB` | `#EFF6FF` | Verify contrast for each rendered text size/state; not universally approved |
 
-Semantic colors must describe **actual state**, never diagnose, infer a medical fact or substitute for copy. A teal selected state is not a clinical success state. Do not infer “no allergies” from absent, UNKNOWN or NOT_REVIEWED data. Errors/redaction must not leak forbidden details.
+**D1 correction:** The accent and surface entries above are **raw tokens**, not approved `foreground/background` pairs. The independent review measured ordinary-text contrast of approximately **3.12:1 success**, **3.44:1 warning**, **4.41:1 error** for accent-on-matching-surface; each misses the usual **4.5:1** normal-text threshold. An accent can still be used as a restrained indicator with a separate qualifying non-text-contrast test. Actual accepted status badges often render ink/navy copy on semantic surfaces or use accent separately. Before any new semantic component ships, test its actual CSS color/background/size against applicable WCAG criteria, including hover, disabled and focus states. Do **not** silently change approved primitive hex codes to remedy this candidate-doc error.
+
+Semantic colors describe **actual verified state**, never diagnosis or inferred medical facts. Teal selection is not clinical success. Missing, UNKNOWN or NOT_REVIEWED allergy state never becomes “no allergies”. Redaction/errors must not leak forbidden details.
+
+### Clinician scoped CSS alias resolution (D2 — extracted)
+
+In `apps/web/src/components/clinician-consultation.module.css`, the `[data-clinician-master]` scope maps legacy UI aliases to the actual Patient tokens as follows:
+
+| Clinician alias | Effective value / source |
+| --- | --- |
+| `--navy` | `var(--care-navy)` = `#0B2545` |
+| `--blue`, `--teal` | `var(--care-teal)` = `#0B6E7F` (**not** `#3B82F6`) |
+| `--blue-dark`, `--teal-dark` | `var(--care-teal-dark)` = `#084E5A` |
+| `--blue-soft`, `--teal-soft` | `var(--care-alt)` = `#F1F5F9` (**not** blue or teal tints) |
+| `--ink`, `--muted` | `var(--care-ink)`, `var(--care-muted)` |
+| `--line`, `--canvas`, `--white` | `var(--care-border)`, `var(--care-canvas)`, `var(--care-surface)` |
+| `--amber`, `--shadow` | `var(--care-warning)`, `none` |
+
+These are compatibility aliases of the existing Clinician presentation; **do not rename or consolidate them without auditing actual selectors and rendering**.
 
 ### Typography
 
@@ -69,12 +88,15 @@ Semantic colors must describe **actual state**, never diagnose, infer a medical 
 - Care root: body 15px, line-height 1.6; RTL line-height 1.8. Care H1 32/600/1.2, H2 24/600/1.3, H3 16/600/1.4; RTL headings use appropriate taller line-height, no negative tracking.
 - Clinician root: body 14px/1.6, RTL 1.8; H1 22px/1.3, H2 18px/1.4, H3 15px/1.5 (RTL headings 1.5).
 - Numeric data should use tabular numbers. Preserve actual source strings, including signed/private narratives and patient display names.
-- The above are **extracted current role-specific sizes**, not a license to force one universal heading scale. A unified semantic type scale is a **candidate** requiring review.
+- The above are **root/heading-level extracted sizes only** and do **not** enumerate component overrides. Examples requiring usage mapping: Patient `.doctorInfo h3` is 20px; review/dialog titles and specific component headings vary (including ~20/22px). Media/container queries and responsive overrides have distinct computed results.
+- A universal semantic type scale is **proposed**; no typography normalization or cascade changes are authorized.
 
 ### Radius / depth / spacing
 
 - Extracted corner tokens: XS 6px, SM 8px, MD 12px, LG 16px.
-- Patient surface shadow: `0 1px 2px rgb(15 23 42 / 4%), 0 8px 24px rgb(15 23 42 / 4%)`; Clinician connected editor planes deliberately have no resting shadow. Use borders, rhythm and elevation only when functionally warranted.
+- Patient surface shadow: `0 1px 2px rgb(15 23 42 / 4%), 0 8px 24px rgb(15 23 42 / 4%)`; Clinician connected editor planes deliberately have no resting shadow, **but dialogs have separate elevation** (e.g., a scoped modal uses `0 12px 32px rgb(11 37 69 / 10%)`). Do not flatten this distinction during extraction.
+- This inventory is **partial** (D3). Literal/local styles remain outside the named root tokens: e.g., `#EAF6F8` in Patient selected nav, `#D7E9EE` for Patient clinician monogram, 20px Patient card titles, role-specific dialog headings, breakpoint text sizes, surface and focus overrides. Future inventory must attach `file → selector → property → computed value → viewport/state` and cascade exceptions before consolidation.
+- Use borders, rhythm and elevation only when functionally warranted.
 - Spacing family: 4/8/12/16/20/24/32/40/48/64px (candidate **abstraction** of accepted rhythm).
 - Root header ~72px; max container 1440px, desktop left/right padding 40px; at 1600px screenshot this gives 1360px usable content.
 - Patient strong appointment anchor uses navy→teal; Clinician visit anchor uses the same family, compact nominal ~104px, with a connected white local task bar.
@@ -85,26 +107,41 @@ Semantic colors must describe **actual state**, never diagnose, infer a medical 
 - Minimum interactive target 44×44px. Mobile primary actions nominal >=48px.
 - Inputs at least ~44px; labels must remain visible and programmatically associated.
 - Focus: conspicuous 3px teal ring (white ring on dark anchor when needed), with visible offset; never color alone.
-- Use focus trapping and return-of-focus for dialogs; keyboard access, escape where safe, and disabled action state clearly distinguishable from pending.
+- **Existing code-backed behavior:** scoped dialogs implement focus containment/restoration; accepted captures demonstrate visible focus and EN/AR reflow. These are not proof of all assistive-technology behavior.
+- **Future acceptance requirements (not yet proven):** native-device and major-browser keyboard/assistive audits, announcement order and screen-reader dialogue semantics, focus return after each consequential action, escape where safe, and differentiation of disabled, pending, uncertain and permission-denied. Do not present screenshot evidence as native AT certification.
 - Respect reduced motion. Do not animate clinical success or privacy actions as celebrations.
 - Existing patient icons are the single permitted family for now; no new external medical-icon pack or icon-as-logo.
 
-## 4. Candidate component taxonomy (not yet a shared code package)
+## 4. Candidate component taxonomy (D4–D6; not yet a shared code package)
 
-| Pattern | Patient source | Clinician source | Boundary |
+**Source labels:** `OBSERVED` = accepted slice implementation; `PROPOSED` = possible abstraction requiring separate implementation review. A visual similarity is **not** evidence of a shared component or behavior.
+
+| Pattern | Patient My Care | Clinician Active Consultation | Status / behavioral boundary |
 | --- | --- | --- | --- |
-| `ProductShell` | My Care header, utilities, account | Consultation header and local utility | Text wordmark only; role destinations must be real |
-| `ContextAnchor` | Appointment hero | Compact visit ribbon | Same gradient family; only source-backed facts |
-| `LocalTaskNav` | Purposeful shortcuts/bottom nav | Documentation / Follow-up / Review & Close | Current route/task meaning; no inert “active” tools |
-| `ConnectedSurface` | Shortcuts and recent care | One coherent 3-plane editor | Avoid card proliferation |
-| `ActionRow` | Next-for-you item | Documentation action groups | Correct target + allowed operation |
-| `SourceState` | Recent care availability | Private note / summary / review status | Label saved vs unsaved separately |
-| `AudienceBoundary` | Patient-visible released summary | Private Note navy / Patient Summary teal | Sign/release never implied by save or close |
-| `FieldControl` | Care-friendly forms | Dense professional forms | Same focus and errors, role-dependent density |
-| `ReviewDialog` | Consequence-aware patient interactions | Release review / Review & Close | Scoped clinical copy + explicit acknowledgements |
-| `SafeState` | Empty / loading / Demo disclosure | Loading / error / redaction / signed / closed | No false authority or stale protected values |
+| `ProductShell` | Header, text wordmark, locale/account | Same Patient-family header primitives | OBSERVED style reuse; destinations must be truly implemented |
+| `ContextAnchor` | Appointment hero | Compact visit ribbon | OBSERVED visual family; source-backed facts only |
+| `DestinationNav` | Quick-access destinations + mobile bottom navigation | **Not applicable** to the Clinician local tasks | OBSERVED Patient behavior: route navigation, real destinations; cannot replace in-page anchors |
+| `SectionAnchorNav` | **Not established from My Care** | `#live-documentation`, `#live-follow-up`, `#review-close`, using `aria-current="location"` | OBSERVED Clinician behavior: scroll/anchor navigation, not route changing |
+| `ConnectedSurface` | Integrated shortcuts / recent care | Connected three-plane authoring workspace | OBSERVED visual pattern; density-specific layout, not a universal `Card` |
+| `ActionRow` | Next-for-you items | Save/sign/release/close action groups | PROPOSED shared visual grammar; operation semantics are separate and must be individually verified |
+| `SourceState` | Recent care availability (limited visibility) | Loaded private/summary/allergy/source rail | Distinct **server-loaded state**, not unsaved editor content |
+| `AudienceBoundary` | Displays only allowed/released patient information | Private note (navy) vs patient summary (teal), independent sign/release | OBSERVED Clinician audience treatment; a **proposed cross-role abstraction**, not an observed My Care control |
+| `FieldControl` | My Care local selects are limited Demo utilities; **no reusable clinical form component established here** | Clinical authoring inputs/selects | PROPOSED cross-role token alignment, not a source-backed shared Patient component |
+| `ReviewDialog` | **Not demonstrated as a My Care consequential dialog** | Actual summary sign/release and independent consultation close | OBSERVED in Clinician only. Future Patient mapping requires separate evidence |
+| `SafeState` | Demo, empty/loading/availability as rendered | Loading, error, redacted, signed, closed, uncertain | PROPOSED taxonomy; never collapse authorization, lifecycle or clinical-content state |
 
-No `packages/ui` migration occurs in this candidate stage. First catalog actual reusable API/props and risk, then extract stable primitives behind regression tests. Avoid making a generic global `Card` that erases differences in audience or clinical consequence.
+### Independent state axes (D6 — preserve actual semantics)
+
+| Axis | Examples | Required interpretation |
+| --- | --- | --- |
+| Visit lifecycle | OPEN, CLOSED | Closing is a separate action; it does **not** save, sign or release existing material, nor create a blanket prohibition on separately authorized edits after closure |
+| Content provenance | unloaded/unselected, **loaded saved draft**, signed private, signed-and-released summary | The Clinician source rail reflects selected **server-loaded** state; unsaved editor values remain separate. A loaded draft is never implicitly patient-visible |
+| Audience/authority | private author, released to patient, permission redacted | Recheck active assignment/current authority. Invalidation/redaction must remove protected projections, IDs and revealing state, not preserve a disconnected source snapshot |
+| Review/finding | NOT_REVIEWED, UNKNOWN, REVIEWED_NO_KNOWN, human positive findings | Unknown/not reviewed are **not** medical negatives; presentation may not infer allergy status |
+| Command outcome | idle, pending, success, known failure, uncertain outcome | A timeout/uncertain result cannot be retried automatically or rendered as confirmed saved/released |
+| Navigation/availability | active route, local current section, unavailable destination | Visually similar controls have different semantics; no fabricated functional People directory |
+
+A code-level component API, state model, selector inventory and clinical safety review **must precede** any consolidation. No `packages/ui` migration occurs in this candidate. A universal `Card` must not erase clinical consequences, audience boundaries or behavior differences.
 
 ## 5. Bilingual, RTL, date and medical-state rules
 
@@ -117,15 +154,15 @@ No `packages/ui` migration occurs in this candidate stage. First catalog actual 
 
 ## 6. Responsive acceptance baseline and states
 
-**Care/Patient:** 1600 desktop and 390×844 mobile EN/AR both first-class; verify 320px, 200% text, full-page, focus and bottom navigation. Preserve readable shortcuts without splitting single words.
+**Care/Patient:** accepted screenshots include 1600 desktop and 390×844 mobile EN/AR with 320px, 200% text, full-page and focus evidence. These screenshots demonstrate reviewed compositions, **not** universal AT/device compliance. Preserve readable shortcuts without splitting single words.
 
-**Clinical/Clinician:** 1600 EN/AR master, 1280 responsive adjustment, 200% text, keyboard focus, full-page, source states, long text, release/close modal, signed/closed, error and redaction. Narrow reflow is structural, **not** an approved mobile-clinician redesign.
+**Clinical/Clinician:** accepted visual evidence includes 1600 EN/AR, 1280, 200% text, keyboard focus, full-page, long text, release/close review, signed/closed and error/redaction states. These are measured browser/screenshot checks, not native/screen-reader certification. Narrow reflow is structural, **not** an approved mobile Clinician redesign.
 
 **Cross-cutting**: loading, empty, error, unavailable, permission redacted, action pending, success, uncertainty/no automatic retry, disabled, focus, long Arabic/Latin content. Do not create purely aesthetic success screens with nonexistent backend actions.
 
 ## 7. Implementation extraction plan — gated separately
 
-1. Create a sourced component/token inventory with file references and per-token usage across Patient/Clinician.
+1. **Complete the missing inventory (D3):** every token and local literal with file, selector, property, cascade, font override, breakpoint, role and state. Distinguish effective computed values from declarations.
 2. Define semantic aliases (e.g., `text-primary`, `surface-subtle`, `action-primary`, `audience-private`) **without changing accepted rendered values**. Keep raw primitives explicit.
 3. Build documented component examples and accessibility/state matrices from *actual accepted screens*, not imagined product screenshots.
 4. Run a **no-visual-diff trial** extracting only a narrowly chosen primitive (e.g., type/font utility or focus ring). Preserve CSS module scoping to prevent bleed.
@@ -136,12 +173,12 @@ No `packages/ui` migration occurs in this candidate stage. First catalog actual 
 
 ## 8. Acceptance checklist for this candidate
 
-- [ ] Exact Patient CSS tokens and Clinician inherited values independently reconciled.
-- [ ] Every proposed abstraction clearly labeled proposed vs extracted.
-- [ ] Source-backed component inventory and explicit usage examples for both densities.
-- [ ] EN/AR, RTL, accessibility, audience, privacy and uncertain-command state requirements reviewed.
-- [ ] No invented logo or UI feature; no clinical behavior change.
+- [x] Root color/radius/Patient shadow declarations and Clinician alias mapping reconciled to accepted source; **full selector inventory remains open**.
+- [x] Candidate component relationships labeled observed vs proposed; independent state axes and distinct nav behavior documented.
+- [ ] Exhaustive per-selector/per-breakpoint usage and measured contrast + AT audit (not yet completed).
+- [x] EN/AR, RTL, privacy, audience and uncertain-command contracts separated from implementation proof; **native/browser/AT acceptance remains open**.
+- [x] No new logo, medical capability or runtime change proposed in these documentation corrections.
 - [ ] Dedicated owner decision on Final Brand/Design System approval still pending.
 - [ ] Any future release follows a separate exact-commit deployment checklist.
 
-**Decision requested:** approve this *candidate documentation* as the starting design contract, or return specific issues. That is not a brand/logo freeze and does not authorize any UI rewrite.
+**Audit disposition:** D1–D8 candidate-document corrections incorporated. **Final candidate acceptance is still pending independent re-review and Product Owner decision.** The Clinician independent visual approval does not replace Product Owner final sign-off. No brand/logo freeze, code extraction, UI rewrite, PR merge or release authorization follows from this document.
