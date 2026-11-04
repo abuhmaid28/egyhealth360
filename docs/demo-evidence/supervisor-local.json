@@ -1,0 +1,68 @@
+{
+  "origin": "http://127.0.0.1:3200",
+  "results": [
+    {
+      "locale": "en",
+      "width": 1440,
+      "landing": true,
+      "patient": true,
+      "booking": true,
+      "documentation": true,
+      "privateSigning": true,
+      "summaryRelease": true,
+      "followUp": true,
+      "reviewClose": true,
+      "patientProjection": true,
+      "reset": true,
+      "noOverflow": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "landing": true,
+      "patient": true,
+      "booking": true,
+      "documentation": true,
+      "privateSigning": true,
+      "summaryRelease": true,
+      "followUp": true,
+      "reviewClose": true,
+      "patientProjection": true,
+      "reset": true,
+      "noOverflow": true
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "landing": true,
+      "patient": true,
+      "booking": true,
+      "documentation": true,
+      "privateSigning": true,
+      "summaryRelease": true,
+      "followUp": true,
+      "reviewClose": true,
+      "patientProjection": true,
+      "reset": true,
+      "noOverflow": true
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "landing": true,
+      "patient": true,
+      "booking": true,
+      "documentation": true,
+      "privateSigning": true,
+      "summaryRelease": true,
+      "followUp": true,
+      "reviewClose": true,
+      "patientProjection": true,
+      "reset": true,
+      "noOverflow": true
+    }
+  ],
+  "errors": [],
+  "unsafe": [],
+  "failures": []
+}
