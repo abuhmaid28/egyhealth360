@@ -102,6 +102,7 @@ export async function testArabic(browser, origin, shots) {
   await page.getByText("تم تأكيد تفاصيل زيارتك", { exact: true }).waitFor();
   await openDemoUtility(page);
   await page.getByLabel("مساحة العرض التجريبي").selectOption("CLINICIAN");
+  await page.waitForURL("**/doctor");
   await page.getByRole("link", { name: "فتح الموعد" }).waitFor();
   await snap("25-ar-doctor-dashboard");
   await page.getByRole("link", { name: "فتح الموعد" }).click();
@@ -136,6 +137,7 @@ export async function testArabic(browser, origin, shots) {
     .waitFor();
   await openDemoUtility(page);
   await page.getByLabel("مساحة العرض التجريبي").selectOption("PATIENT");
+  await page.waitForURL("**/patient");
   await page.goto(origin + "/patient/history");
   await page.getByText(complaint, { exact: true }).waitFor();
   assert.ok(
@@ -144,7 +146,9 @@ export async function testArabic(browser, origin, shots) {
   for (const role of ["PHARMACY_STAFF", "LAB_STAFF", "ADMIN"]) {
     await openDemoUtility(page);
     await page.getByLabel("مساحة العرض التجريبي").selectOption(role);
+    await page.waitForURL(`**/${{ PHARMACY_STAFF: "pharmacy", LAB_STAFF: "laboratory", ADMIN: "admin" }[role]}`);
     await page.locator("#main h1").waitFor();
+    await page.locator("#main .loading").first().waitFor({ state: "hidden" });
     if (role === "PHARMACY_STAFF") {
       await page.getByRole("button", { name: "بدء التجهيز" }).click();
       await page
@@ -164,6 +168,7 @@ export async function testArabic(browser, origin, shots) {
   }
   await openDemoUtility(page);
   await page.getByLabel("مساحة العرض التجريبي").selectOption("PATIENT");
+  await page.waitForURL("**/patient");
   for (const width of [1440, 834, 390]) {
     await page.setViewportSize({ width, height: 1000 });
     for (const route of [
