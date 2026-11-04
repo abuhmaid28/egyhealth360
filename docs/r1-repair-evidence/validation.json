@@ -1,0 +1,33 @@
+{
+  "localBuild": "PASS",
+  "webTypecheck": "PASS",
+  "repositoryEslint": "PASS",
+  "existingUiTests": {
+    "passed": 162,
+    "failed": 0,
+    "skipped": 0
+  },
+  "postgresAuthAuthorization": {
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0
+  },
+  "ciPolicyTests": {
+    "passed": 30,
+    "failed": 0,
+    "skipped": 0
+  },
+  "completeBrowserRegression": "PASS",
+  "completeRealPostgresBrowser": "PASS",
+  "restorationAndLogoutBackProbe": "PASS",
+  "matchedScreenshots": {
+    "before": 59,
+    "after": 59
+  },
+  "realScreenshots": 44,
+  "realIndexedRoutes": 30,
+  "publicAnonymous": "17 page/API probes and 6 security checks PASS",
+  "hostedValidCredentials": "BLOCKED: no authorized R1 synthetic credential binding supplied",
+  "remoteCi": "See exact-head run on PR; no local result substitutes for remote CI.",
+  "deployment": "NOT PERFORMED; owner review/release approval required"
+}

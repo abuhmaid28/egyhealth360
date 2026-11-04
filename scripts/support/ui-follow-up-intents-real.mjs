@@ -1,3 +1,4 @@
+import { r1EvidencePath } from "./ui-r1-evidence.mjs";
 /** Actual browser → Next → merged Nest Slice 6 → disposable PostgreSQL.
  * Synthetic data only. Follow-up HTTP routes are never mocked. */
 import assert from "node:assert/strict";
@@ -12,6 +13,9 @@ export async function testRealFollowUps(
   login,
 ) {
   const origin = "http://localhost:3000";
+  if (process.env.UI_R1_EVIDENCE_DIR) {
+    for (const folder of ["", "follow-up", "closeout"]) await mkdir(r1EvidencePath("docs/ui-screenshots/" + folder), { recursive: true });
+  }
   const base = `/api/v1/consultations/${consultationId}/follow-up-intents`;
   const section = page.getByRole("region", {
     name: "Follow-up instructions",
@@ -111,7 +115,7 @@ export async function testRealFollowUps(
     .check();
   await mkdir("docs/ui-screenshots/follow-up", { recursive: true });
   await page.screenshot({
-    path: "docs/ui-screenshots/follow-up/live-en-release-desktop.png",
+    path: r1EvidencePath("docs/ui-screenshots/follow-up/live-en-release-desktop.png"),
   });
   const dropped = fault.followUpsDropped;
   fault.dropFollowUpSuffix = "/follow-up-intents/" + row.id + "/sign-release";
@@ -253,12 +257,12 @@ export async function testRealFollowUps(
       }
       if (p === patient)
         await p.screenshot({
-          path: `docs/ui-screenshots/follow-up/live-${locale}-patient-mobile.png`,
+          path: r1EvidencePath(`docs/ui-screenshots/follow-up/live-${locale}-patient-mobile.png`),
           fullPage: true,
         });
       else if (locale === "ar")
         await p.locator(".follow-up-intent").screenshot({
-          path: "docs/ui-screenshots/follow-up/live-ar-clinician-mobile.png",
+          path: r1EvidencePath("docs/ui-screenshots/follow-up/live-ar-clinician-mobile.png"),
         });
     }
     await p.getByRole("button", { name: "English", exact: true }).click();

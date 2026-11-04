@@ -1,3 +1,4 @@
+import { r1Capture } from "./ui-r1-evidence.mjs";
 import { randomUUID } from "node:crypto";
 /** Actual browser → Next rewrite → Nest → PostgreSQL. No HTTP mocks. */
 import assert from "node:assert/strict";
@@ -35,6 +36,7 @@ export async function testRealBooking(page, f) {
   );
   await button("Review live booking").click();
   await page.getByRole("dialog").waitFor();
+  await r1Capture(page, "booking-review-ar");
   await button("Confirm live booking").click();
   await page
     .getByRole("heading", { name: t("Booking details"), exact: true })
@@ -56,6 +58,25 @@ export async function testRealBooking(page, f) {
     await page.evaluate(() => globalThis.localStorage.getItem("eh360-ui-mode")),
     "live",
   );
+  await r1Capture(page, "booking-details-ar");
+  // Exercise the original integration failure through same-origin links, then a full reload.
+  await page.locator('header a[href="/patient"]').first().click();
+  await page.locator(`[data-appointment-anchor] a[href$="${created.id}"]`).waitFor();
+  await r1Capture(page, "my-care-booked-ar");
+  await page.reload();
+  await page.locator(`[data-appointment-anchor] a[href$="${created.id}"]`).waitFor();
+  assert.equal((await f.bookings.detail(f.actors.patient, created.id)).data.state, "BOOKED");
+  assert.equal(await page.locator('[data-session-mode="live"]').count(), 1);
+  await r1Capture(page, "my-care-reload-ar");
+  for (const route of ["/patient/appointments", "/patient/history", "/patient/record", "/patient/summaries", "/patient/follow-up", "/patient/medications", "/patient/laboratory", "/patient/settings"]) {
+    await page.goto(origin + route);
+    await ready();
+    assert.equal(await page.locator("#main .error-panel").count(), 0, "supported own-source readers must load");
+    await r1Capture(page, route.slice(1).replaceAll("/", "-") + "-ar");
+    assert.equal(await page.locator('[data-portal-shell="PATIENT"]').count(), 1);
+    assert.equal(await page.getByLabel(t("Demo workspace")).count(), 0);
+  }
+  await page.goto(origin + "/patient/appointments/" + created.id);
   await link("Back to my bookings").click();
   await page
     .getByRole("heading", { name: t("My bookings"), exact: true })
@@ -120,6 +141,7 @@ export async function testRealBooking(page, f) {
     .getByRole("heading", { name: t("My schedule"), exact: true })
     .waitFor();
   await ready();
+  await r1Capture(page, "clinician-schedule-ar");
   const exactSchedule = (await f.bookings.schedule(f.actors.clinician, {}))
     .data;
   assert.equal(exactSchedule.length, 4);
@@ -216,7 +238,7 @@ export async function testRealBooking(page, f) {
   assert.equal(counts.relationship_requests, 0);
   assert.equal(counts.clinical_encounters, 0);
   console.log(
-    "PASS real browser/API Booking: real create and occupied-slot hiding, patient history/detail, atomic same-clinician/clinic reschedule, cancellation after provider unpublication, exact clinician schedule, explicit attendance/no-show, reasoned correction with retained terminal history, logistics privacy, zero clinical queries/assignments/authority.",
+    "PASS real browser/API Booking: real create and occupied-slot hiding, patient history/detail, atomic same-clinician/clinic reschedule, cancellation after provider unpublication, exact clinician schedule, explicit attendance/no-show, reasoned correction with retained terminal history, logistics privacy, no clinician clinical queries from logistics, no booking-created assignments/authority.",
   );
   return { attended };
 }

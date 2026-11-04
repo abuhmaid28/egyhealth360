@@ -281,6 +281,7 @@ export async function assertClinicianMaster(page) {
         .querySelector(".master-context-ribbon")
         .getBoundingClientRect().height,
       headerHeight: root.querySelector("header").getBoundingClientRect().height,
+      primaryHeaderHeight: root.querySelector("header").firstElementChild.getBoundingClientRect().height,
       colors: Object.fromEntries(
         ["navy", "teal", "muted", "canvas", "ink"].map((name) => [
           name,
@@ -298,7 +299,8 @@ export async function assertClinicianMaster(page) {
   assert.equal(metrics.usefulWidth, 1360);
   assert.equal(metrics.brand, "EgyHealth 360");
   assert.equal(metrics.headerStart, metrics.workspaceStart);
-  assert.equal(metrics.headerHeight, 73);
+  assert.equal(metrics.primaryHeaderHeight, 72);
+  assert.ok(metrics.headerHeight >= 116 && metrics.headerHeight <= 144, "shared primary and secondary navigation retain compact desktop bounds");
   assert.ok(
     Math.round(metrics.contextHeight) >= 88 &&
       Math.round(metrics.contextHeight) <= 104,

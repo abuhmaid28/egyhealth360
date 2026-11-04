@@ -189,11 +189,7 @@ export async function testArabic(browser, origin, shots) {
         await snap("27-ar-mobile-dashboard");
     }
   }
-  await page.getByRole("button", { name: "فتح قائمة التنقل" }).click();
-  await page
-    .getByRole("navigation")
-    .getByRole("link", { name: "ابحث عن طبيب" })
-    .click();
+  await page.locator('[data-bottom-navigation] a[href="/patient/discover"]').click();
   await page.waitForURL("**/patient/discover");
   assert.equal(await page.locator(".sidebar.open").count(), 0);
   await english().click();

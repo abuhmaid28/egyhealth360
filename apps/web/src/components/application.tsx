@@ -1,10 +1,9 @@
 "use client";
-import { accountName } from "../lib/presentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { LanguageSwitch, useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type {
   HealthcareAdapter,
   Mode,
@@ -15,18 +14,16 @@ import { createDemoAdapter } from "../lib/mock/adapter";
 import { useLiveSession } from "./live-session";
 import { createBookingService } from "../lib/api/booking";
 import { Context } from "./context";
-import {
-  Avatar,
-  Field,
-  Icon,
-  Loading,
-  Logo,
-  type IconName,
-  type Preview,
-} from "./ui";
+import { Field, Icon, Loading, type Preview } from "./ui";
+import { PortalShell } from "./portal-shell";
+import care from "./patient-my-care.module.css";
+import portal from "./portal-shell.module.css";
 import { PatientScreen } from "./patient";
 import { PatientMyCare } from "./patient-my-care";
-import { ClinicianConsultation, ClinicianConsultationBoot } from "./clinician-consultation";
+import {
+  ClinicianConsultation,
+  ClinicianConsultationBoot,
+} from "./clinician-consultation";
 import { DoctorScreen } from "./doctor";
 import { OperationsScreen } from "./operations";
 export const homes: Record<Role, string> = {
@@ -43,31 +40,6 @@ const roles: { role: Role; name: string }[] = [
   { role: "LAB_STAFF", name: "Laboratory" },
   { role: "ADMIN", name: "Admin" },
 ];
-const navigation: Record<Role, [string, string, IconName][]> = {
-  PATIENT: [
-    ["/patient", "Overview", "grid"],
-    ["/patient/discover", "Find a doctor", "search"],
-    ["/patient/appointments", "Appointments", "calendar"],
-    ["/patient/record", "Medical record", "record"],
-    ["/patient/medications", "Medications", "pill"],
-    ["/patient/laboratory", "Laboratory", "lab"],
-    ["/patient/follow-up", "Follow-up", "heart"],
-  ],
-  CLINICIAN: [
-    ["/doctor", "Overview", "grid"],
-    ["/doctor/schedule", "My schedule", "calendar"],
-    ["/doctor/availability", "Availability", "clock"],
-  ],
-  PHARMACY_STAFF: [["/pharmacy", "Prescription inbox", "pill"]],
-  LAB_STAFF: [["/laboratory", "Request inbox", "lab"]],
-  ADMIN: [
-    ["/admin", "Operations overview", "grid"],
-    ["/admin/organizations", "Organizations & clinics", "building"],
-    ["/admin/users", "Users", "user"],
-    ["/admin/directory", "Directory", "search"],
-    ["/admin/scheduling", "Scheduling settings", "settings"],
-  ],
-};
 export function Application({
   liveConfigured = true,
 }: {
@@ -84,61 +56,10 @@ export function Application({
   const [preview, setPreview] = useState<Preview>("ready");
   const [refresh, setRefresh] = useState(0);
   const [toast, setToast] = useState("");
-  const [mobile, setMobile] = useState(false);
-  const [compact, setCompact] = useState(false);
-  const sidebar = useRef<HTMLElement>(null);
-  const menuButton = useRef<HTMLButtonElement>(null);
   const booking = useMemo(() => api && createBookingService(api), [api]);
   useEffect(() => {
-    const media = window.matchMedia("(max-width: 760px)");
-    const sync = () => {
-      setCompact(media.matches);
-      if (!media.matches) setMobile(false);
-    };
-    sync();
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
-  }, []);
-  useEffect(() => {
-    if (!mobile) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const controls = () =>
-      Array.from(
-        sidebar.current?.querySelectorAll<HTMLElement>(
-          "a[href], button:not(:disabled), select:not(:disabled)",
-        ) ?? [],
-      );
-    controls()[0]?.focus();
-    const keyboard = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMobile(false);
-      if (event.key !== "Tab") return;
-      const items = controls();
-      const first = items[0];
-      const last = items.at(-1);
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last?.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first?.focus();
-      }
-    };
-    document.addEventListener("keydown", keyboard);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", keyboard);
-      menuButton.current?.focus();
-    };
-  }, [mobile]);
-  useEffect(() => {
     let active = true;
-    let mode: Mode = "demo";
-    try {
-      if (localStorage.getItem("eh360-ui-mode") === "live") mode = "live";
-    } catch {
-      /* Default to demo without storage. */
-    }
+    const mode = liveSession.mode(liveConfigured);
     const adapter =
       mode === "live" ? liveSession.adapter() : liveSession.demo();
     setApi(adapter);
@@ -162,22 +83,18 @@ export function Application({
     return () => clearTimeout(timer);
   }, [toast]);
   useEffect(() => {
-    setMobile(false);
     setPreview("ready");
   }, [pathname]);
   const chooseMode = (mode: Mode) => {
     liveSession.clear();
-    try {
-      localStorage.setItem("eh360-ui-mode", mode);
-    } catch {
-      /* In-memory mode still works. */
-    }
+    liveSession.selectMode(mode);
     const adapter =
       mode === "live" ? liveSession.adapter() : liveSession.demo();
     setApi(adapter);
     return adapter;
   };
   const enter = async (role: Role, path?: string) => {
+    if (session?.mode === "live") return;
     const demo = chooseMode("demo") as ReturnType<typeof createDemoAdapter>;
     const s = await demo.enter(role);
     setSession(s);
@@ -193,12 +110,17 @@ export function Application({
       setToast(safeErrorMessage(e));
     }
   };
-  if ((!ready || !api || !booking) && /^\/doctor\/consultation\/[^/]+\/documentation$/.test(pathname))
+  if (
+    (!ready || !api || !booking) &&
+    /^\/doctor\/consultation\/[^/]+\/documentation$/.test(pathname)
+  )
     return <ClinicianConsultationBoot />;
   if (!ready || !api || !booking)
     return (
-      <main className="boot">
-        <Logo />
+      <main className={`${care.root} boot`}>
+        <bdi className={care.wordmark} dir="ltr">
+          EgyHealth 360
+        </bdi>
         <Loading />
       </main>
     );
@@ -211,45 +133,66 @@ export function Application({
           const live = chooseMode("live");
           const s = await live.login(email, password);
           setSession(s);
-          router.push(homes[s.role]);
+          const home = homes[s.role];
+          router.push(
+            pathname === home || pathname.startsWith(`${home}/`)
+              ? pathname
+              : home,
+          );
         }}
       />
     );
-  const userLabel = accountName(session, t);
   if (session.role === "PATIENT" && pathname === "/patient")
     return (
-      <Context.Provider value={{ api, booking, session, preview, refresh, notify: setToast, changed: () => setRefresh(v => v + 1), openDemoWorkspace: enter }}>
-        <PatientMyCare onLogout={logout} onRoleChange={enter} toast={toast} onDismiss={() => setToast("")} />
+      <Context.Provider
+        value={{
+          api,
+          booking,
+          session,
+          preview,
+          refresh,
+          notify: setToast,
+          changed: () => setRefresh((v) => v + 1),
+          openDemoWorkspace: enter,
+        }}
+      >
+        <PatientMyCare
+          onLogout={logout}
+          onRoleChange={enter}
+          toast={toast}
+          onDismiss={() => setToast("")}
+        />
       </Context.Provider>
     );
-  if (api.mode === "live" && session.role === "CLINICIAN" && /^\/doctor\/consultation\/[^/]+\/documentation$/.test(pathname))
+  if (
+    api.mode === "live" &&
+    session.role === "CLINICIAN" &&
+    /^\/doctor\/consultation\/[^/]+\/documentation$/.test(pathname)
+  )
     return (
-      <Context.Provider value={{ api, booking, session, preview, refresh, notify: setToast, changed: () => setRefresh(v => v + 1), openDemoWorkspace: enter }}>
-        <ClinicianConsultation bookingId={pathname.split("/")[3]} onLogout={logout} toast={toast} onDismiss={() => setToast("")} />
+      <Context.Provider
+        value={{
+          api,
+          booking,
+          session,
+          preview,
+          refresh,
+          notify: setToast,
+          changed: () => setRefresh((v) => v + 1),
+          openDemoWorkspace: enter,
+        }}
+      >
+        <ClinicianConsultation
+          bookingId={pathname.split("/")[3]}
+          onLogout={logout}
+          toast={toast}
+          onDismiss={() => setToast("")}
+        />
       </Context.Provider>
     );
   const allowed =
     pathname === homes[session.role] ||
     pathname.startsWith(`${homes[session.role]}/`);
-  const detailTitle = pathname.endsWith("/summaries")
-    ? "Released visit summaries"
-    : pathname.startsWith("/patient/doctors/")
-      ? "Doctor profile"
-      : pathname.startsWith("/patient/clinics/")
-        ? "Clinic & location"
-        : pathname.startsWith("/patient/appointments/")
-          ? "Your appointment"
-          : pathname.startsWith("/doctor/appointments/")
-            ? "Patient appointment"
-            : pathname.startsWith("/doctor/consultation/")
-              ? "Consultation workspace"
-              : pathname.endsWith("/settings")
-                ? "Profile & settings"
-                : pathname === "/patient/history"
-                  ? "Consultations & history"
-                  : "Care workspace";
-  const page =
-    navigation[session.role].find((n) => n[0] === pathname)?.[1] ?? detailTitle;
   return (
     <Context.Provider
       value={{
@@ -263,262 +206,43 @@ export function Application({
         openDemoWorkspace: enter,
       }}
     >
-      <a className="skip" href="#main">
-        {t("Skip to content")}
-      </a>
-      {mobile && (
-        <button
-          className="nav-backdrop"
-          tabIndex={-1}
-          aria-label={t("Close navigation")}
-          onClick={() => setMobile(false)}
-        />
-      )}
-      <aside
-        id="workspace-navigation"
-        ref={sidebar}
-        role={compact && mobile ? "dialog" : undefined}
-        aria-modal={compact && mobile ? true : undefined}
-        aria-label={compact && mobile ? t("Main navigation") : undefined}
-        inert={compact && !mobile}
-        className={`sidebar ${mobile ? "open" : ""}`}
+      <PortalShell
+        onLogout={logout}
+        onRoleChange={enter}
+        toast={toast}
+        onDismiss={() => setToast("")}
+        screenState={{
+          value: preview,
+          change: (v) => setPreview(v as Preview),
+          items: [
+            ["ready", "Populated"],
+            ["loading", "Loading"],
+            ["empty", "Empty"],
+            ["error", "Error"],
+          ],
+        }}
       >
-        {compact && (
-          <button
-            className="icon-button drawer-close"
-            aria-label={t("Close navigation")}
-            onClick={() => setMobile(false)}
-          >
-            <Icon name="close" />
-          </button>
+        {!allowed ? (
+          <div className="empty">
+            <h1>{t("Choose your workspace")}</h1>
+            <p>
+              {t("Your current account opens the")}{" "}
+              {t(roles.find((r) => r.role === session.role)?.name ?? "")}{" "}
+              {t("workspace.")}
+            </p>
+            <Link className="button primary" href={homes[session.role]}>
+              {t("Open workspace")}
+              <Icon name="arrow" />
+            </Link>
+          </div>
+        ) : session.role === "PATIENT" ? (
+          <PatientScreen path={pathname} />
+        ) : session.role === "CLINICIAN" ? (
+          <DoctorScreen path={pathname} />
+        ) : (
+          <OperationsScreen path={pathname} />
         )}
-        <Link href={homes[session.role]} className="logo-link">
-          <Logo />
-        </Link>
-        <div className="workspace-label">
-          {t("{role} workspace", {
-            role: t(roles.find((r) => r.role === session.role)?.name ?? ""),
-          })}
-        </div>
-        <nav aria-label={t("Main navigation")}>
-          {navigation[session.role]
-            .filter(
-              ([href]) =>
-                !(
-                  api.mode === "live" &&
-                  ["/patient/medications", "/patient/laboratory"].includes(href)
-                ),
-            )
-            .concat(
-              api.mode === "live"
-                ? session.role === "CLINICIAN"
-                  ? [
-                      [
-                        "/doctor/summaries",
-                        "Released visit summaries",
-                        "record",
-                      ],
-                    ]
-                  : session.role === "PATIENT"
-                    ? [
-                        [
-                          "/patient/summaries",
-                          "Released visit summaries",
-                          "record",
-                        ],
-                      ]
-                    : []
-                : [],
-            )
-            .map(([href, label, icon]) => {
-              const active =
-                pathname === href ||
-                (href !== homes[session.role] &&
-                  pathname.startsWith(`${href}/`)) ||
-                (href === "/patient/discover" &&
-                  /^\/patient\/(doctors|clinics)\//.test(pathname)) ||
-                (href === "/patient/record" &&
-                  pathname === "/patient/history") ||
-                (href === "/doctor/schedule" &&
-                  /^\/doctor\/(appointments|consultation)\//.test(pathname));
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  aria-current={active ? "page" : undefined}
-                  className={active ? "active" : ""}
-                >
-                  <Icon name={icon} />
-                  <span>{t(label)}</span>
-                  {active && <span className="nav-dot" />}
-                </Link>
-              );
-            })}
-        </nav>
-        <div className="sidebar-bottom">
-          <div className="care-note">
-            <span className="icon-tile">
-              <Icon name="shield" />
-            </span>
-            <strong>{t("Your care, connected.")}</strong>
-            <p>{t("One place for every step of your health journey.")}</p>
-          </div>
-          <Link
-            href={`${homes[session.role]}/settings`}
-            className="nav-settings"
-          >
-            <Icon name="settings" />
-            {t("Profile & settings")}
-          </Link>
-          <button onClick={logout} className="nav-settings">
-            <Icon name="logout" />
-            {t("Sign out")}
-          </button>
-          <div className="sidebar-user">
-            <Avatar name={userLabel} />
-            <div>
-              <strong>{userLabel}</strong>
-              <small>
-                {session.mode === "demo"
-                  ? t("Synthetic demo account")
-                  : t("Live account")}
-              </small>
-            </div>
-          </div>
-        </div>
-      </aside>
-      <div className="app-body" inert={mobile}>
-        <header className="topbar">
-          <div className="breadcrumbs">
-            <button
-              className="icon-button mobile-toggle"
-              ref={menuButton}
-              aria-controls="workspace-navigation"
-              aria-expanded={mobile}
-              aria-label={t("Open navigation")}
-              onClick={() => setMobile(true)}
-            >
-              <Icon name="menu" />
-            </button>
-            <span>{t(roles.find((r) => r.role === session.role)?.name ?? "My workspace")}</span>
-            <Icon name="chevron" size={13} />
-            <strong>{t(page)}</strong>
-          </div>
-          <div className="top-actions">
-            <LanguageSwitch />
-            <span className={`mode-indicator ${api.mode}`}>
-              {api.mode === "demo" ? t("Graduation demo") : t("Live care")}
-            </span>
-            {api.mode === "demo" && (
-              <>
-                <label className="sr-only" htmlFor="workspace-switch">
-                  {t("Demo workspace")}
-                </label>
-                <select
-                  id="workspace-switch"
-                  aria-label={t("Demo workspace")}
-                  value={session.role}
-                  onChange={(e) => {
-                    void enter(e.target.value as Role);
-                  }}
-                >
-                  {roles.map((r) => (
-                    <option key={r.role} value={r.role}>
-                      {t(r.name)}
-                    </option>
-                  ))}
-                </select>
-              </>
-            )}
-            <Avatar name={userLabel} />
-          </div>
-        </header>
-        {api.mode === "demo" && (
-          <div className="demo-bar">
-            <span>
-              <span className="status-dot" />
-              {t(
-                "Synthetic presentation · 28 October 2026 · browser-only state",
-              )}
-            </span>
-            <details>
-              <summary>{t("Demo controls")}</summary>
-              <div className="demo-popover">
-                <label>
-                  {t("Screen state")}
-                  <select
-                    aria-label={t("Screen state")}
-                    value={preview}
-                    onChange={(e) => setPreview(e.target.value as Preview)}
-                  >
-                    <option value="ready">{t("Populated")}</option>
-                    <option value="loading">{t("Loading")}</option>
-                    <option value="empty">{t("Empty")}</option>
-                    <option value="error">{t("Error")}</option>
-                  </select>
-                </label>
-                <button
-                  onClick={() => {
-                    (api as ReturnType<typeof createDemoAdapter>).reset();
-                    setSession(null);
-                    router.push("/login");
-                  }}
-                >
-                  {t("Reset demo journey")}
-                </button>
-              </div>
-            </details>
-          </div>
-        )}
-        {api.mode === "live" && accountName(session) !== session.name && (
-          <div className="live-context-bar"><Icon name="shield" size={16} /><span>{t("Live care · synthetic demonstration data")}</span></div>
-        )}
-        <main id="main" className="content" tabIndex={-1}>
-          {!allowed ? (
-            <div className="empty">
-              <h1>{t("Choose your workspace")}</h1>
-              <p>
-                {t("Your current account opens the")}{" "}
-                {t(roles.find((r) => r.role === session.role)?.name ?? "")}{" "}
-                {t("workspace.")}
-              </p>
-              <Link className="button primary" href={homes[session.role]}>
-                {t("Open workspace")}
-                <Icon name="arrow" />
-              </Link>
-            </div>
-          ) : session.role === "PATIENT" ? (
-            <PatientScreen path={pathname} />
-          ) : session.role === "CLINICIAN" ? (
-            <DoctorScreen path={pathname} />
-          ) : (
-            <OperationsScreen path={pathname} />
-          )}
-        </main>
-        <footer className="footer">
-          <span>{t("© 2026 EgyHealth 360")}</span>
-          <span>{t("Care that stays with you.")}</span>
-          <span>
-            {t("English ·")}{" "}
-            <span lang="ar" dir="rtl">
-              {t("العربية")}
-            </span>{" "}
-            {t("available")}
-          </span>
-        </footer>
-      </div>
-      {toast && (
-        <div className="toast" role="status">
-          <Icon name="check" />
-          {t(toast)}
-          <button
-            aria-label={t("Dismiss notification")}
-            onClick={() => setToast("")}
-          >
-            <Icon name="close" size={16} />
-          </button>
-        </div>
-      )}
+      </PortalShell>
     </Context.Provider>
   );
 }
@@ -538,9 +262,11 @@ function Login({
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
   return (
-    <main className="login">
+    <main className={`${care.root} ${portal.login} login`}>
       <section className="login-story">
-        <Logo />
+        <bdi className={care.wordmark} dir="ltr">
+          EgyHealth 360
+        </bdi>
         <div>
           <p className="eyebrow">{t("A healthier journey starts here")}</p>
           <h1>
@@ -666,7 +392,9 @@ function Login({
             {t("Explore the patient demo")}
             <Icon name="arrow" size={18} />
           </button>
-          <p className="demo-portals-note">{t("Preview a portal with fictional data")}</p>
+          <p className="demo-portals-note">
+            {t("Preview a portal with fictional data")}
+          </p>
           <div className="demo-role-links">
             {roles.slice(1).map((r) => (
               <button

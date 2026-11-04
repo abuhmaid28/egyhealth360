@@ -1,0 +1,362 @@
+[
+  {
+    "name": "my-care-live-en",
+    "pathname": "/patient",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:15.031Z"
+  },
+  {
+    "name": "provider-live-en",
+    "pathname": "/patient/doctors/ea3ed52b-089f-4a57-9ba5-17f6d274d305",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:18.891Z"
+  },
+  {
+    "name": "discovery-live-en",
+    "pathname": "/patient/discover",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:20.155Z"
+  },
+  {
+    "name": "provider-live-ar",
+    "pathname": "/patient/doctors/ea3ed52b-089f-4a57-9ba5-17f6d274d305",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:24.185Z"
+  },
+  {
+    "name": "booking-review-ar",
+    "pathname": "/patient/doctors/ea3ed52b-089f-4a57-9ba5-17f6d274d305",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:26.876Z"
+  },
+  {
+    "name": "booking-details-ar",
+    "pathname": "/patient/appointments/09447124-51fd-4873-b7a8-195ad0b78d1f",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:31.858Z"
+  },
+  {
+    "name": "my-care-booked-ar",
+    "pathname": "/patient",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:34.344Z"
+  },
+  {
+    "name": "my-care-reload-ar",
+    "pathname": "/patient",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:37.448Z"
+  },
+  {
+    "name": "patient-appointments-ar",
+    "pathname": "/patient/appointments",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:38.737Z"
+  },
+  {
+    "name": "patient-history-ar",
+    "pathname": "/patient/history",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:41.332Z"
+  },
+  {
+    "name": "patient-record-ar",
+    "pathname": "/patient/record",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:42.674Z"
+  },
+  {
+    "name": "patient-summaries-ar",
+    "pathname": "/patient/summaries",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:43.383Z"
+  },
+  {
+    "name": "patient-follow-up-ar",
+    "pathname": "/patient/follow-up",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:44.108Z"
+  },
+  {
+    "name": "patient-settings-ar",
+    "pathname": "/patient/settings",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:47.251Z"
+  },
+  {
+    "name": "clinician-schedule-ar",
+    "pathname": "/doctor",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "CLINICIAN",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:56.340Z"
+  },
+  {
+    "name": "patient-medications-ar",
+    "pathname": "/patient/medications",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:45.091Z"
+  },
+  {
+    "name": "patient-laboratory-ar",
+    "pathname": "/patient/laboratory",
+    "locale": "ar",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PATIENT",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:34:46.077Z"
+  },
+  {
+    "name": "real-pharmacy-en",
+    "pathname": "/pharmacy",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PHARMACY_STAFF",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:41.235Z"
+  },
+  {
+    "name": "real-pharmacy-settings-en",
+    "pathname": "/pharmacy/settings",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "PHARMACY_STAFF",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:41.477Z"
+  },
+  {
+    "name": "real-pharmacy-ar-mobile",
+    "pathname": "/pharmacy",
+    "locale": "ar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "shell": "PHARMACY_STAFF",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:42.870Z"
+  },
+  {
+    "name": "real-laboratory-en",
+    "pathname": "/laboratory",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "LAB_STAFF",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:45.691Z"
+  },
+  {
+    "name": "real-laboratory-settings-en",
+    "pathname": "/laboratory/settings",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "LAB_STAFF",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:46.026Z"
+  },
+  {
+    "name": "real-lab-ar-mobile",
+    "pathname": "/laboratory",
+    "locale": "ar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "shell": "LAB_STAFF",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:46.622Z"
+  },
+  {
+    "name": "real-admin-en",
+    "pathname": "/admin",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "ADMIN",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:49.452Z"
+  },
+  {
+    "name": "real-admin-organizations-en",
+    "pathname": "/admin/organizations",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "ADMIN",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:49.764Z"
+  },
+  {
+    "name": "real-admin-users-en",
+    "pathname": "/admin/users",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "ADMIN",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:50.195Z"
+  },
+  {
+    "name": "real-admin-directory-en",
+    "pathname": "/admin/directory",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "ADMIN",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:50.642Z"
+  },
+  {
+    "name": "real-admin-scheduling-en",
+    "pathname": "/admin/scheduling",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "ADMIN",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:50.963Z"
+  },
+  {
+    "name": "real-admin-settings-en",
+    "pathname": "/admin/settings",
+    "locale": "en",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "shell": "ADMIN",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:51.222Z"
+  },
+  {
+    "name": "real-admin-ar-mobile",
+    "pathname": "/admin",
+    "locale": "ar",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "shell": "ADMIN",
+    "mode": "live",
+    "timestamp": "2026-11-04T11:36:52.592Z"
+  }
+]

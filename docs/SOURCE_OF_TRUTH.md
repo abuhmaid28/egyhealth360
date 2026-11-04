@@ -1,5 +1,6 @@
 # Source of truth and document index
 
+Current session: the Product Owner authorized the bounded [R1 UX integration repair](R1_UX_INTEGRATION_REPAIR.md) from frozen real source `6fbd247a09d774fa42d9712068699753a88e10e6`. This candidate extends shared presentation across existing role screens, preserves Live/clinical/security scope, and keeps release, final brand/Design System and stable staging changes gated. Older paused-scope wording below does not block this explicitly authorized repair.
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
 
 ## Fast reading order

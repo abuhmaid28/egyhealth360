@@ -1,0 +1,152 @@
+{
+  "testedAt": "2026-11-04T11:03:29.647Z",
+  "context": "New anonymous browser context, no storageState or supplied cookies",
+  "requests": [
+    {
+      "base": "https://eh360-r1-6fbd247-review.vercel.app",
+      "path": "/",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-6fbd247-review.vercel.app/",
+      "appLogin": true
+    },
+    {
+      "base": "https://eh360-r1-6fbd247-review.vercel.app",
+      "path": "/login",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-6fbd247-review.vercel.app/login",
+      "appLogin": true
+    },
+    {
+      "base": "https://eh360-r1-6fbd247-review.vercel.app",
+      "path": "/patient",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-6fbd247-review.vercel.app/patient",
+      "appLogin": true
+    },
+    {
+      "base": "https://eh360-r1-6fbd247-review.vercel.app",
+      "path": "/api/v1/health",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-6fbd247-review.vercel.app/api/v1/health",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-6fbd247-review.vercel.app",
+      "path": "/api/v1/auth/me",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-6fbd247-review.vercel.app/api/v1/auth/me",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-6fbd247-review.vercel.app",
+      "path": "/api/v1/me/bookings",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-6fbd247-review.vercel.app/api/v1/me/bookings",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-6fbd247-review.vercel.app",
+      "path": "/api/v1/me/schedule",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-6fbd247-review.vercel.app/api/v1/me/schedule",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-6fbd247-review.vercel.app",
+      "path": "/api/v1/me/summaries",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-6fbd247-review.vercel.app/api/v1/me/summaries",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-6fbd247-review.vercel.app",
+      "path": "/api/v1/patients/00000000-0000-4000-8000-000000000001/profile",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-6fbd247-review.vercel.app/api/v1/patients/00000000-0000-4000-8000-000000000001/profile",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-6fbd247-review.vercel.app",
+      "path": "/api/v1/consultations/00000000-0000-4000-8000-000000000001/documents",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-6fbd247-review.vercel.app/api/v1/consultations/00000000-0000-4000-8000-000000000001/documents",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/health",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/health",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/auth/me",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/auth/me",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/me/bookings",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/me/bookings",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/me/schedule",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/me/schedule",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/me/summaries",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/me/summaries",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/patients/00000000-0000-4000-8000-000000000001/profile",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/patients/00000000-0000-4000-8000-000000000001/profile",
+      "appLogin": false
+    },
+    {
+      "base": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/consultations/00000000-0000-4000-8000-000000000001/documents",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/consultations/00000000-0000-4000-8000-000000000001/documents",
+      "appLogin": false
+    }
+  ],
+  "security": [
+    {
+      "label": "wrong Origin",
+      "status": 403
+    },
+    {
+      "label": "missing login verification header",
+      "status": 403
+    },
+    {
+      "label": "invalid synthetic credentials",
+      "status": 401
+    },
+    {
+      "label": "anonymous logout without CSRF/session",
+      "status": 401
+    },
+    {
+      "label": "/.env catches app route; no dotenv payload",
+      "status": 200
+    },
+    {
+      "label": "no Vercel SSO or app-session cookies issued anonymously",
+      "passed": true
+    }
+  ],
+  "errors": []
+}

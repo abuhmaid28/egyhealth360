@@ -1,0 +1,30 @@
+✔ role logins, strict response projection, database hash-only sessions, cookie flags and reload CSRF (32775.71097ms)
+✔ generic invalid-login behavior, failed relogin preserves session, and no failure audit (35152.849743ms)
+✔ missing, invalid, expired, revoked, duplicate and disabled-user sessions fail uniformly and clear cookies (6415.437759ms)
+✔ logout CSRF, rotation/fixation, multi-session isolation and exactly-once revocation audit (7584.783782ms)
+✔ login CSRF rejects hostile origins/simple forms and accepts trusted same-site or absent metadata (4378.016015ms)
+✔ production session cookie is host-only Secure and can be cleared with matching attributes (1538.717971ms)
+✔ database failures are sanitized and never clear an existing cookie or expose/log driver secrets (102.519806ms)
+✔ session database constraints enforce hash, chronology, uniqueness and RESTRICT (101.532987ms)
+✔ transactional login rejects stale verified hashes and disabled status at commit (348.433036ms)
+✔ Express path variants cannot bypass login CSRF or auth no-store headers (1793.963133ms)
+✔ concurrent replacement/logout serialize without deadlocks or duplicate revocation events (10758.774795ms)
+✔ audit failure rolls back creation, replacement and revocation in an isolated database (1737.694325ms)
+✔ real HTTP patient/clinician/admin IDOR, profiles, projection, aliases and uniform nonexistent denial (6706.396749ms)
+✔ path/method/HEAD variants retain authorization and no protected content (1793.158971ms)
+✔ assignment ending, reassignment and repeated reads never use stale cache or add audits/renew sessions (989.220184ms)
+✔ missing/invalid/duplicate/expired/revoked/disabled sessions uniformly fail through actual guard (4167.437734ms)
+✔ state change between guard and scoped read: revoked fails closed (815.301124ms)
+✔ state change between guard and scoped read: disabled fails closed (664.073406ms)
+✔ state change between guard and scoped read: role fails closed (662.672374ms)
+✔ authorization failure is sanitized and logs/denials contain no protected data or secrets (345.916026ms)
+✔ uncommitted assignment end remains visible to a read; committed end denies next HTTP request (633.933171ms)
+✔ logout invalidation applies to the protected profile route (597.564433ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126557.518824

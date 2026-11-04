@@ -1,3 +1,4 @@
+import { testR1Mode } from "./support/ui-r1-mode-browser.mjs";
 import {
   testPatientMyCare,
   openDemoUtility,
@@ -66,6 +67,7 @@ try {
       ? { executablePath: process.env.EH_UI_CHROMIUM }
       : {}),
   });
+  await testR1Mode(browser, origin);
   const page = await browser.newPage({
     viewport: { width: 1440, height: 1100 },
     reducedMotion: "reduce",
@@ -333,11 +335,7 @@ try {
     );
     if (route === "/patient") await snapshot("13-mobile-dashboard");
   }
-  await page.getByRole("button", { name: "Open navigation" }).click();
-  await page
-    .getByRole("navigation")
-    .getByRole("link", { name: "Find a doctor" })
-    .click();
+  await page.locator('[data-bottom-navigation] a[href="/patient/discover"]').click();
   await page.waitForURL("**/patient/discover");
   assert.equal(await page.locator(".sidebar.open").count(), 0);
   await page.locator(".provider-grid").waitFor();
@@ -407,7 +405,8 @@ try {
     .fill("synthetic-test-only");
   await live.getByRole("button", { name: "Sign in with live account" }).click();
   await live.getByText("Live care", { exact: true }).waitFor();
-  await live.getByText("We couldn’t load this view", { exact: true }).waitFor();
+  await live.getByText("Unavailable in the current Live interface", { exact: true }).waitFor();
+  assert.equal(await live.locator(".error-panel").count(), 0);
   assert.equal(await live.getByLabel("Demo workspace").count(), 0);
   assert.equal(
     await live

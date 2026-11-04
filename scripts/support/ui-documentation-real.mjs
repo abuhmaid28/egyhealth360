@@ -1,3 +1,4 @@
+import { r1EvidencePath } from "./ui-r1-evidence.mjs";
 import { testRealClose } from "./ui-consultation-close-real.mjs";
 import { testRealFollowUps } from "./ui-follow-up-intents-real.mjs";
 /** Synthetic actual Browser → Next → Nest → PostgreSQL proof. No route mocks.
@@ -9,6 +10,9 @@ import { pastBooking } from "../../tests/support/bookings.mjs";
 
 export async function testRealDocumentation(browser, page, f, fault) {
   const origin = "http://localhost:3000";
+  if (process.env.UI_R1_EVIDENCE_DIR) {
+    for (const folder of ["", "follow-up", "closeout"]) await mkdir(r1EvidencePath("docs/ui-screenshots/" + folder), { recursive: true });
+  }
   // Start a distinct real visit after the inherited Opening proof has finished.
   const booked = await f.create(await f.publish(480));
   await pastBooking(f, booked, false);
@@ -205,7 +209,7 @@ export async function testRealDocumentation(browser, page, f, fault) {
   assert.ok(!(await dialog.innerText()).includes(privateCanary));
   await mkdir("docs/ui-screenshots", { recursive: true });
   await page.screenshot({
-    path: "docs/ui-screenshots/55-en-live-documentation-release.png",
+    path: r1EvidencePath("docs/ui-screenshots/55-en-live-documentation-release.png"),
   });
   const before = await count();
   fault.dropDocumentSuffix = "/sign-release";
@@ -249,12 +253,12 @@ export async function testRealDocumentation(browser, page, f, fault) {
     );
   }
   await patientPage.screenshot({
-    path: "docs/ui-screenshots/56-en-mobile-live-released-summary.png",
+    path: r1EvidencePath("docs/ui-screenshots/56-en-mobile-live-released-summary.png"),
     fullPage: true,
   });
   await b("العربية", patientPage).click();
   await patientPage.screenshot({
-    path: "docs/ui-screenshots/58-ar-mobile-live-released-summary.png",
+    path: r1EvidencePath("docs/ui-screenshots/58-ar-mobile-live-released-summary.png"),
     fullPage: true,
   });
   await b("English", patientPage).click();
@@ -270,7 +274,7 @@ export async function testRealDocumentation(browser, page, f, fault) {
     );
   }
   await page.screenshot({
-    path: "docs/ui-screenshots/57-ar-mobile-live-documentation.png",
+    path: r1EvidencePath("docs/ui-screenshots/57-ar-mobile-live-documentation.png"),
     fullPage: true,
   });
   await page.setViewportSize({ width: 1440, height: 1000 });

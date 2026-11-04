@@ -24,11 +24,12 @@ import {
 } from "../lib/patient-my-care";
 import { myCareCopy, type MyCareCopy } from "../lib/patient-my-care-copy";
 import { clinicianMonogram } from "../lib/patient-my-care-avatar";
-import { LanguageSwitch, useLocale } from "../lib/i18n/context";
+import { useLocale } from "../lib/i18n/context";
 import { useApp } from "./context";
 import { useDirectoryNames } from "./live-booking";
 import { Icon, useResource, type IconName } from "./ui";
 import styles from "./patient-my-care.module.css";
+import { PortalShell } from "./portal-shell";
 
 type ScreenState = "ready" | "loading" | "empty" | "error" | "uncertain";
 const noSubscribe = () => () => {};
@@ -41,7 +42,7 @@ interface Props {
   onDismiss: () => void;
 }
 
-/** Exact-route shell. Existing sessions, adapters, commands and other workspaces stay intact. */
+/** My Care projection uses the same presentation shell as its destinations. */
 export function PatientMyCare(props: Props) {
   const { api } = useApp();
   const { locale } = useLocale();
@@ -51,12 +52,7 @@ export function PatientMyCare(props: Props) {
     api.documentation?.scopeStamp ?? demoStamp,
   );
   return (
-    <div
-      className={styles.root}
-      lang={locale}
-      dir={locale === "ar" ? "rtl" : "ltr"}
-      data-my-care
-    >
+    <div lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} data-my-care>
       <CareScreen key={api.mode} scopeStamp={stamp} {...props} />
     </div>
   );
@@ -173,52 +169,30 @@ function CareScreen({
     state === "uncertain" || !!care.error || !!sources?.unverified;
   return (
     <>
-      <a className={styles.skip} href="#main">
-        {c.skip}
-      </a>
-      <header className={styles.header}>
-        <div className={styles.headerInner}>
-          <Link
-            href="/patient"
-            className={styles.wordmark}
-            aria-label="EgyHealth 360"
-          >
-            <bdi dir="ltr">EgyHealth 360</bdi>
-          </Link>
-          <nav className={styles.primaryNav} aria-label={c.primary}>
-            <Link href="/patient" aria-current="page">
-              {c.myCare}
-            </Link>
-            <Link href="/patient/discover">{c.findCare}</Link>
-          </nav>
-          <div className={styles.utilities}>
-            <LanguageSwitch />
-            <Link
-              className={styles.avatar}
-              href="/patient/settings"
-              aria-label={c.settings}
-            >
-              <bdi>
-                {displayName
-                  .split(" ")
-                  .slice(0, 2)
-                  .map((n) => n[0])
-                  .join("")}
-              </bdi>
-            </Link>
-          </div>
-        </div>
-      </header>
-      <main id="main" className={styles.main} tabIndex={-1}>
+      <PortalShell
+        onLogout={onLogout}
+        onRoleChange={onRoleChange}
+        toast={toast}
+        onDismiss={onDismiss}
+        mainClassName={styles.main}
+        screenState={{
+          value: preview,
+          change: (v) => setPreview(v as ScreenState),
+          items: [
+            ["ready", c.populated],
+            ["loading", c.loadingState],
+            ["empty", c.emptyState],
+            ["error", c.errorState],
+            ["uncertain", c.uncertainState],
+          ],
+        }}
+      >
         <div className={styles.intro}>
           <h1>
             {c.greeting} <bdi>{firstName}</bdi>
           </h1>
           <p>
             <span>{c.support}</span>
-            {api.mode === "live" && (
-              <span className={styles.mode}>{c.live}</span>
-            )}
           </p>
         </div>
         {profile.error && (
@@ -312,109 +286,7 @@ function CareScreen({
             </p>
           </section>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <span>
-          <bdi dir="ltr">© 2026 EgyHealth 360</bdi>
-        </span>
-        <button type="button" onClick={() => void onLogout()}>
-          {c.signOut}
-        </button>
-        {api.mode === "demo" && (
-          <details
-            className={styles.demoTools}
-            data-demo-utility
-            onKeyDown={(event) => {
-              if (event.key === "Escape") {
-                event.currentTarget.open = false;
-                event.currentTarget.querySelector("summary")?.focus();
-              }
-            }}
-          >
-            <summary>
-              <span className={styles.demoLabel}>
-                {c.demoUtility}
-                <small className={styles.demoIndication} data-demo-indication>
-                  {c.demo}
-                </small>
-              </span>
-              <Icon name="chevron" size={16} />
-            </summary>
-            <div className={styles.demoPanel}>
-              <label>
-                {c.demoWorkspace}
-                <select
-                  aria-label={c.demoWorkspace}
-                  value="PATIENT"
-                  onChange={(e) => void onRoleChange(e.target.value as Role)}
-                >
-                  {[
-                    ["PATIENT", c.patient],
-                    ["CLINICIAN", c.doctor],
-                    ["PHARMACY_STAFF", c.pharmacy],
-                    ["LAB_STAFF", c.laboratory],
-                    ["ADMIN", c.admin],
-                  ].map(([role, name]) => (
-                    <option key={role} value={role}>
-                      {name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                {c.screenState}
-                <select
-                  aria-label={c.screenState}
-                  value={preview}
-                  onChange={(e) => setPreview(e.target.value as ScreenState)}
-                >
-                  {[
-                    ["ready", c.populated],
-                    ["loading", c.loadingState],
-                    ["empty", c.emptyState],
-                    ["error", c.errorState],
-                    ["uncertain", c.uncertainState],
-                  ].map(([value, label]) => (
-                    <option key={value} value={value}>
-                      {label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-          </details>
-        )}
-      </footer>
-      <nav
-        className={styles.bottomNav}
-        aria-label={c.primary}
-        data-bottom-navigation
-      >
-        <Link href="/patient" aria-current="page">
-          <Icon name="grid" />
-          <span>{c.myCare}</span>
-        </Link>
-        <Link href="/patient/discover">
-          <Icon name="search" />
-          <span>{c.findCare}</span>
-        </Link>
-        <Link href="/patient/history">
-          <Icon name="record" />
-          <span>{c.records}</span>
-        </Link>
-        <Link href="/patient/settings">
-          <Icon name="user" />
-          <span>{c.account}</span>
-        </Link>
-      </nav>
-      {toast && (
-        <div className={styles.toast} role="status">
-          <span>{t(toast)}</span>
-          <button onClick={onDismiss} aria-label={c.dismiss}>
-            <Icon name="close" />
-          </button>
-        </div>
-      )}
+      </PortalShell>
     </>
   );
 }
