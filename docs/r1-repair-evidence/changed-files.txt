@@ -7,6 +7,7 @@ apps/web/src/components/patient-my-care.tsx
 apps/web/src/components/patient.tsx
 apps/web/src/components/portal-shell.module.css
 apps/web/src/components/portal-shell.tsx
+apps/web/src/lib/api/documentation.ts
 docs/CURRENT_STATUS.md
 docs/R1_UX_INTEGRATION_REPAIR.md
 docs/SOURCE_OF_TRUTH.md
@@ -144,6 +145,9 @@ docs/r1-repair-evidence/before/pharmacy_staff-live-en-1440.png
 docs/r1-repair-evidence/before/routes.json
 docs/r1-repair-evidence/capture-provenance.json
 docs/r1-repair-evidence/changed-files.txt
+docs/r1-repair-evidence/client-order-baseline.log
+docs/r1-repair-evidence/complete-browser.log
+docs/r1-repair-evidence/documentation-postgres.log
 docs/r1-repair-evidence/mode-browser.log
 docs/r1-repair-evidence/preservation.json
 docs/r1-repair-evidence/public-access.json
@@ -214,3 +218,4 @@ scripts/support/ui-rtl-browser.mjs
 scripts/test-ui-availability-real.mjs
 scripts/test-ui-browser.mjs
 scripts/verify-r1-public.mjs
+tests/ui-documentation-live.test.mjs

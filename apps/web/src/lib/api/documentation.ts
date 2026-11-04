@@ -154,6 +154,7 @@ export function createLiveDocumentationApi(
   ): DocumentationApi {
     const targets = new Map<string, Target>();
     const pending = new Map<string, Pending>();
+    const reservations = new Map<string, Promise<void>>();
     let generation = 0;
     let readSerial = 0;
     let denied = false;
@@ -164,6 +165,7 @@ export function createLiveDocumentationApi(
       readSerial++;
       targets.clear();
       pending.clear();
+      reservations.clear();
       pages = { documents: 1, history: 1 };
     };
     cleaners.add(clean);
@@ -370,18 +372,38 @@ export function createLiveDocumentationApi(
       const g = generation;
       assertCurrent(g);
       const copy = structuredClone(payload);
-      const digest = await crypto.subtle.digest(
-        "SHA-256",
-        new TextEncoder().encode(documentationFingerprint(copy)),
-      );
-      assertCurrent(g);
-      const fingerprint = Array.from(new Uint8Array(digest), (byte) =>
-        byte.toString(16).padStart(2, "0"),
-      ).join("");
-      let command = pending.get(slot);
-      if (!command || command.fingerprint !== fingerprint) {
-        command = { fingerprint, operationKey: uuid(newKey()) };
+      // Hashes can finish out of order. Reserve each slot in invocation order,
+      // before any await, so an older save cannot replace a newer retry identity.
+      // Release after key selection, not after HTTP: requests remain concurrent.
+      const previous = reservations.get(slot);
+      let release!: () => void;
+      const gate = new Promise<void>((resolve) => {
+        release = resolve;
+      });
+      const reservation = previous ? previous.then(() => gate) : gate;
+      reservations.set(slot, reservation);
+      void reservation.then(() => {
+        if (reservations.get(slot) === reservation) reservations.delete(slot);
+      });
+      let command: Pending;
+      try {
+        const digest = await crypto.subtle.digest(
+          "SHA-256",
+          new TextEncoder().encode(documentationFingerprint(copy)),
+        );
+        if (previous) await previous;
+        assertCurrent(g);
+        const fingerprint = Array.from(new Uint8Array(digest), (byte) =>
+          byte.toString(16).padStart(2, "0"),
+        ).join("");
+        const retained = pending.get(slot);
+        command =
+          retained?.fingerprint === fingerprint
+            ? retained
+            : { fingerprint, operationKey: uuid(newKey()) };
         pending.set(slot, command);
+      } finally {
+        release();
       }
       const body = JSON.stringify({
         ...copy,

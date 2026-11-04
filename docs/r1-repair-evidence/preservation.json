@@ -9,9 +9,10 @@
     "apps/web/src/components/patient-my-care.tsx",
     "apps/web/src/components/patient.tsx",
     "apps/web/src/components/portal-shell.tsx",
-    "apps/web/src/components/portal-shell.module.css"
+    "apps/web/src/components/portal-shell.module.css",
+    "apps/web/src/lib/api/documentation.ts"
   ],
-  "protectedExistingFilesVerifiedByteIdentical": 462,
+  "protectedExistingFilesVerifiedByteIdentical": 461,
   "protectedFiles": [
     "apps/api/package.json",
     "apps/api/src/app.ts",
@@ -58,7 +59,6 @@
     "apps/web/src/lib/api/consultation-close.ts",
     "apps/web/src/lib/api/consultation-opening.ts",
     "apps/web/src/lib/api/contracts.ts",
-    "apps/web/src/lib/api/documentation.ts",
     "apps/web/src/lib/api/errors.ts",
     "apps/web/src/lib/api/follow-up-intents.ts",
     "apps/web/src/lib/api/live-booking.ts",
@@ -485,10 +485,12 @@
     "apps/web/src/components/patient-my-care.tsx": "2175a5c8b91c9a960b90ed0bda9f2fa98cbb8e52e2b3f4cc995a6ec090a08794",
     "apps/web/src/components/patient.tsx": "a42b5c9a33f08a49788de464ba0a5679b5aefb6deacac9ad4ba1f40d06648254",
     "apps/web/src/components/portal-shell.tsx": "7c4f8f07105d9b1854097938f3dd2ac7dda37cf86eac5bf7fbbc626284817ed8",
-    "apps/web/src/components/portal-shell.module.css": "57bdcdc44f2ddc037c9e8f13fdb1f5da58d91b397d1ee1812319ce6cd8b4c9ec"
+    "apps/web/src/components/portal-shell.module.css": "57bdcdc44f2ddc037c9e8f13fdb1f5da58d91b397d1ee1812319ce6cd8b4c9ec",
+    "apps/web/src/lib/api/documentation.ts": "d5cce6df973cf88c97484d8d6e401916a3e07d2a824ebc3355d3cfa99dc7d8d8"
   },
   "node": "24.21.0",
   "pnpm": "10.34.6",
   "databaseProof": "Disposable local PostgreSQL 18.6; actual Next/Nest. Supplied Neon branch checked read-only, hosted valid-login journey pending credentials.",
-  "release": "No deployment, alias, protection, main, schema or backend policy changes."
+  "release": "No deployment, alias, protection, main, schema or backend policy changes.",
+  "clientServiceException": "Documentation key reservation is ordered by invocation, preserving the existing canonical retry guarantee. No backend/clinical policy, endpoint or payload changes."
 }

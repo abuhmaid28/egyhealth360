@@ -427,6 +427,81 @@ test("earlier concurrent success cannot erase changed command uncertain retry ke
   await retry;
 });
 
+test("reversed hash completion preserves the newer uncertain command identity", async () => {
+  const rawDigest = globalThis.crypto.subtle.digest.bind(
+    globalThis.crypto.subtle,
+  );
+  const originalDigest = globalThis.crypto.subtle.digest;
+  const gate = Promise.withResolvers();
+  let calls = 0;
+  globalThis.crypto.subtle.digest = async (...args) => {
+    const call = ++calls;
+    if (call === 1) await gate.promise;
+    const result = await rawDigest(...args);
+    if (call === 2) globalThis.setImmediate(gate.resolve);
+    return result;
+  };
+  try {
+    const waits = [];
+    const h = harness(
+      () => new Promise((resolve, reject) => waits.push({ resolve, reject })),
+    );
+    const first = h.service.savePrivateNote("A");
+    const second = h.service.savePrivateNote("B");
+    while (waits.length < 2) await new Promise((r) => setTimeout(r, 1));
+    assert.deepEqual(
+      h.calls.map((c) => c.body.content),
+      ["A", "B"],
+    );
+    const b = h.calls.find((c) => c.body.content === "B");
+    const firstIndex = h.calls[0].body.content === "A" ? 0 : 1,
+      secondIndex = 1 - firstIndex;
+    waits[firstIndex].resolve({ data: doc() });
+    await first;
+    waits[secondIndex].reject(documentationHttpError(503, true));
+    await assert.rejects(second, (e) => e.code === "uncertain");
+    const retry = h.service.savePrivateNote("B");
+    while (waits.length < 3) await new Promise((r) => setTimeout(r, 1));
+    assert.equal(h.calls.at(-1).init.body, b.init.body);
+    waits[2].resolve({ data: doc() });
+    await retry;
+  } finally {
+    globalThis.crypto.subtle.digest = originalDigest;
+  }
+});
+
+test("scope invalidation during queued fingerprinting prevents every stale write", async () => {
+  const originalDigest = globalThis.crypto.subtle.digest;
+  const rawDigest = originalDigest.bind(globalThis.crypto.subtle);
+  const gate = Promise.withResolvers();
+  let first = true;
+  globalThis.crypto.subtle.digest = async (...args) => {
+    if (first) {
+      first = false;
+      await gate.promise;
+    }
+    return rawDigest(...args);
+  };
+  try {
+    const h = harness();
+    const a = assert.rejects(
+      h.service.savePrivateNote("A"),
+      (e) => e.code === "expired",
+    );
+    const b = assert.rejects(
+      h.service.savePrivateNote("B"),
+      (e) => e.code === "expired",
+    );
+    h.api.clear("expired");
+    gate.resolve();
+    await Promise.all([a, b]);
+    assert.equal(h.calls.length, 0);
+  } finally {
+    gate.resolve();
+    globalThis.crypto.subtle.digest = originalDigest;
+  }
+});
+
 test("newer page-one detail supplies the command head after a concurrent sign", async () => {
   const signed = version({
     id: signedId,

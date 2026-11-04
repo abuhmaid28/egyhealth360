@@ -3,9 +3,11 @@
   "webTypecheck": "PASS",
   "repositoryEslint": "PASS",
   "existingUiTests": {
-    "passed": 162,
+    "passed": 164,
     "failed": 0,
-    "skipped": 0
+    "skipped": 0,
+    "baselineTests": 162,
+    "addedRegressions": 2
   },
   "postgresAuthAuthorization": {
     "passed": 22,
@@ -29,5 +31,11 @@
   "publicAnonymous": "17 page/API probes and 6 security checks PASS",
   "hostedValidCredentials": "BLOCKED: no authorized R1 synthetic credential binding supplied",
   "remoteCi": "See exact-head run on PR; no local result substitutes for remote CI.",
-  "deployment": "NOT PERFORMED; owner review/release approval required"
+  "deployment": "NOT PERFORMED; owner review/release approval required",
+  "postgresDocumentationConcurrencyHttp": {
+    "passed": 33,
+    "failed": 0,
+    "skipped": 0
+  },
+  "clientOrderingRegression": "Baseline reversed hash ordering reproduces lost retry identity; corrected invocation-order reservation + invalidated-scope regressions PASS."
 }

@@ -9,11 +9,11 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:15.031Z"
+    "timestamp": "2026-11-04T11:57:51.730Z"
   },
   {
     "name": "provider-live-en",
-    "pathname": "/patient/doctors/ea3ed52b-089f-4a57-9ba5-17f6d274d305",
+    "pathname": "/patient/doctors/fb86a71f-a4bd-4c03-940b-4317ac6aebd6",
     "locale": "en",
     "viewport": {
       "width": 1440,
@@ -21,7 +21,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:18.891Z"
+    "timestamp": "2026-11-04T11:57:55.055Z"
   },
   {
     "name": "discovery-live-en",
@@ -33,11 +33,11 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:20.155Z"
+    "timestamp": "2026-11-04T11:57:55.889Z"
   },
   {
     "name": "provider-live-ar",
-    "pathname": "/patient/doctors/ea3ed52b-089f-4a57-9ba5-17f6d274d305",
+    "pathname": "/patient/doctors/fb86a71f-a4bd-4c03-940b-4317ac6aebd6",
     "locale": "ar",
     "viewport": {
       "width": 1440,
@@ -45,11 +45,11 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:24.185Z"
+    "timestamp": "2026-11-04T11:57:58.477Z"
   },
   {
     "name": "booking-review-ar",
-    "pathname": "/patient/doctors/ea3ed52b-089f-4a57-9ba5-17f6d274d305",
+    "pathname": "/patient/doctors/fb86a71f-a4bd-4c03-940b-4317ac6aebd6",
     "locale": "ar",
     "viewport": {
       "width": 1440,
@@ -57,11 +57,11 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:26.876Z"
+    "timestamp": "2026-11-04T11:58:00.698Z"
   },
   {
     "name": "booking-details-ar",
-    "pathname": "/patient/appointments/09447124-51fd-4873-b7a8-195ad0b78d1f",
+    "pathname": "/patient/appointments/07dd5ac0-5362-4af8-907b-c0120bb95e64",
     "locale": "ar",
     "viewport": {
       "width": 1440,
@@ -69,7 +69,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:31.858Z"
+    "timestamp": "2026-11-04T11:58:03.868Z"
   },
   {
     "name": "my-care-booked-ar",
@@ -81,7 +81,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:34.344Z"
+    "timestamp": "2026-11-04T11:58:06.069Z"
   },
   {
     "name": "my-care-reload-ar",
@@ -93,7 +93,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:37.448Z"
+    "timestamp": "2026-11-04T11:58:07.690Z"
   },
   {
     "name": "patient-appointments-ar",
@@ -105,7 +105,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:38.737Z"
+    "timestamp": "2026-11-04T11:58:08.572Z"
   },
   {
     "name": "patient-history-ar",
@@ -117,7 +117,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:41.332Z"
+    "timestamp": "2026-11-04T11:58:10.082Z"
   },
   {
     "name": "patient-record-ar",
@@ -129,7 +129,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:42.674Z"
+    "timestamp": "2026-11-04T11:58:11.280Z"
   },
   {
     "name": "patient-summaries-ar",
@@ -141,7 +141,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:43.383Z"
+    "timestamp": "2026-11-04T11:58:12.193Z"
   },
   {
     "name": "patient-follow-up-ar",
@@ -153,7 +153,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:44.108Z"
+    "timestamp": "2026-11-04T11:58:13.062Z"
   },
   {
     "name": "patient-settings-ar",
@@ -165,7 +165,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:47.251Z"
+    "timestamp": "2026-11-04T11:58:15.443Z"
   },
   {
     "name": "clinician-schedule-ar",
@@ -177,7 +177,7 @@
     },
     "shell": "CLINICIAN",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:56.340Z"
+    "timestamp": "2026-11-04T11:58:27.748Z"
   },
   {
     "name": "patient-medications-ar",
@@ -189,7 +189,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:45.091Z"
+    "timestamp": "2026-11-04T11:58:13.802Z"
   },
   {
     "name": "patient-laboratory-ar",
@@ -201,7 +201,7 @@
     },
     "shell": "PATIENT",
     "mode": "live",
-    "timestamp": "2026-11-04T11:34:46.077Z"
+    "timestamp": "2026-11-04T11:58:14.597Z"
   },
   {
     "name": "real-pharmacy-en",
@@ -213,7 +213,7 @@
     },
     "shell": "PHARMACY_STAFF",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:41.235Z"
+    "timestamp": "2026-11-04T12:01:43.583Z"
   },
   {
     "name": "real-pharmacy-settings-en",
@@ -225,7 +225,7 @@
     },
     "shell": "PHARMACY_STAFF",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:41.477Z"
+    "timestamp": "2026-11-04T12:01:44.673Z"
   },
   {
     "name": "real-pharmacy-ar-mobile",
@@ -237,7 +237,7 @@
     },
     "shell": "PHARMACY_STAFF",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:42.870Z"
+    "timestamp": "2026-11-04T12:01:46.693Z"
   },
   {
     "name": "real-laboratory-en",
@@ -249,7 +249,7 @@
     },
     "shell": "LAB_STAFF",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:45.691Z"
+    "timestamp": "2026-11-04T12:01:55.729Z"
   },
   {
     "name": "real-laboratory-settings-en",
@@ -261,7 +261,7 @@
     },
     "shell": "LAB_STAFF",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:46.026Z"
+    "timestamp": "2026-11-04T12:01:56.331Z"
   },
   {
     "name": "real-lab-ar-mobile",
@@ -273,7 +273,7 @@
     },
     "shell": "LAB_STAFF",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:46.622Z"
+    "timestamp": "2026-11-04T12:01:59.480Z"
   },
   {
     "name": "real-admin-en",
@@ -285,7 +285,7 @@
     },
     "shell": "ADMIN",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:49.452Z"
+    "timestamp": "2026-11-04T12:02:06.573Z"
   },
   {
     "name": "real-admin-organizations-en",
@@ -297,7 +297,7 @@
     },
     "shell": "ADMIN",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:49.764Z"
+    "timestamp": "2026-11-04T12:02:07.394Z"
   },
   {
     "name": "real-admin-users-en",
@@ -309,7 +309,7 @@
     },
     "shell": "ADMIN",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:50.195Z"
+    "timestamp": "2026-11-04T12:02:08.475Z"
   },
   {
     "name": "real-admin-directory-en",
@@ -321,7 +321,7 @@
     },
     "shell": "ADMIN",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:50.642Z"
+    "timestamp": "2026-11-04T12:02:10.649Z"
   },
   {
     "name": "real-admin-scheduling-en",
@@ -333,7 +333,7 @@
     },
     "shell": "ADMIN",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:50.963Z"
+    "timestamp": "2026-11-04T12:02:12.090Z"
   },
   {
     "name": "real-admin-settings-en",
@@ -345,7 +345,7 @@
     },
     "shell": "ADMIN",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:51.222Z"
+    "timestamp": "2026-11-04T12:02:13.059Z"
   },
   {
     "name": "real-admin-ar-mobile",
@@ -357,6 +357,6 @@
     },
     "shell": "ADMIN",
     "mode": "live",
-    "timestamp": "2026-11-04T11:36:52.592Z"
+    "timestamp": "2026-11-04T12:02:15.663Z"
   }
 ]
