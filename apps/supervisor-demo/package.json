@@ -1,0 +1,12 @@
+{
+  "name": "@egyhealth/supervisor-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/prepare.mjs && next build",
+    "typecheck": "next typegen && tsc --noEmit",
+    "start": "next start --hostname 0.0.0.0"
+  },
+  "dependencies": { "next": "16.4.1", "react": "19.3.0", "react-dom": "19.3.0" },
+  "devDependencies": { "@types/react": "19.3.0", "@types/react-dom": "19.3.0" }
+}

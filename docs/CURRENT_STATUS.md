@@ -1,5 +1,9 @@
 # Current status
 
+## Temporary supervisor demonstration — current bounded exception
+
+The Product Owner's explicit 4 November 2026 chat request authorizes the isolated synthetic-only interactive supervisor demo described in [SUPERVISOR_DEMO](SUPERVISOR_DEMO.md). Branch `demo/supervisor-interactive` starts from PR #80 head `6fbd247a09d774fa42d9712068699753a88e10e6`, already containing Patient #79. It adds a separate static-export Next.js app; original Patient/Clinician sources, Live/auth/backend contracts and databases remain unchanged. PR #81 is a candidate only. No merges, staging/alias/protected-domain changes, Neon operations, paid services or wider roadmap work are authorized. Exact deployment/public verification and remote CI status belong in the delivery PR/final handoff. The older snapshot below is preserved as historical context for the wider paused roadmap.
+
 CURRENT AUTHORITATIVE delivery snapshot. Foundation Reboot V2 Stage 0+1 is complete/accepted after independent review PASS and PR #73 merge at `2fb940c2759056d63d3a22b640d67a587abccf07`; [acceptance and exact-main CI](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564358810). Audited baseline main: **`eb61da263ce44db5ca71ffdfea6a87309c8e17ef`** (PR #71). This is a pinned implementation baseline, not a claim that main never advances. Recheck the remote at task start; the docs PR's eventual merge changes main without changing this runtime baseline.
 
 ## Product and accepted implementation

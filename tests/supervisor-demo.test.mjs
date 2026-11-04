@@ -1,0 +1,43 @@
+import test, { after } from 'node:test';
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { createRequire } from 'node:module';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+const output = mkdtempSync(join(tmpdir(), 'eh-supervisor-'));
+execFileSync(process.execPath, [resolve('node_modules/typescript/bin/tsc'), '--outDir', output, '--module', 'commonjs', '--moduleResolution', 'node', '--target', 'ES2023', '--lib', 'ES2023,DOM', '--strict', '--skipLibCheck', 'apps/supervisor-demo/src/state.ts']);
+after(() => rmSync(output, { recursive: true, force: true }));
+const require = createRequire(import.meta.url);
+const { createSyntheticVisit } = require(join(output, 'supervisor-demo/src/state.js'));
+test('synthetic writes never call fetch and released projection excludes private and restricted content', async () => {
+  const previous = globalThis.fetch;
+  globalThis.fetch = () => { throw new Error('Network forbidden in synthetic visit'); };
+  try {
+    const { documentation: d, followUp: f } = createSyntheticVisit();
+    await d.savePrivateNote('PRIVATE CANARY');
+    await d.saveSummary({ text:'Public synthetic summary', instructions:'Synthetic only' });
+    assert.deepEqual(await d.released(), []);
+    let view = await d.workspace();
+    await d.signPrivateNote(view.note.key);
+    assert.deepEqual(await d.released(), []);
+    await d.releaseSummary(view.summary.key);
+    let patient = await d.released();
+    assert.equal(patient.length, 1);
+    assert.ok(!JSON.stringify(patient).includes('PRIVATE CANARY'));
+    view = await d.workspace();
+    await d.amend({ targetKey:view.summary.key, change:'CORRECTION', text:'Corrected synthetic summary', instructions:'Demo', reason:'Synthetic correction' });
+    patient = await d.released();
+    assert.equal(patient.filter(v => v.current).length, 1);
+    assert.equal(patient.find(v => v.current).text, 'Corrected synthetic summary');
+    view = await d.workspace();
+    await d.restrict({ targetKey:view.summary.key, reason:'Synthetic restriction' });
+    assert.deepEqual(await d.released(), []);
+    await f.create({ instruction:'Synthetic follow-up', desiredWindow:null });
+    const draft = (await f.list()).data[0];
+    assert.equal(draft.state, 'DRAFT');
+    await f.release(draft.key);
+    assert.equal((await f.list()).data[0].state, 'SIGNED_RELEASED');
+    assert.deepEqual(await createSyntheticVisit().documentation.released(), []);
+  } finally { globalThis.fetch = previous; }
+});

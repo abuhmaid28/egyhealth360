@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+Temporary authorized exception: [SUPERVISOR_DEMO](SUPERVISOR_DEMO.md) records the 4 November 2026 Product Owner chat scope, standalone synthetic app, isolation, reproduction, validation and limits. This does not adopt PR #81 as a universal design system or authorize merging/deploying the existing product/staging.
+
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
 
 ## Fast reading order

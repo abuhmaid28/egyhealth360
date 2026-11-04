@@ -1,0 +1,22 @@
+.demo-notice { display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; padding:12px 24px; background:#fff8e6; color:#0b2545; font-size:13px; border-bottom:1px solid #e2e8f0; }
+.demo-notice span { flex:1 1 380px; }
+.demo-notice a { text-decoration:underline; font-weight:700; }
+.demo-notice button, .demo-toast button { color:#0b2545; border:1px solid #cbd5e1; border-radius:6px; padding:6px 12px; background:white; cursor:pointer; }
+.demo-main { max-width:1240px; margin:auto; padding:48px 32px; min-height:70vh; }
+.demo-main > h1 { margin-bottom:24px; }
+.demo-main .card { margin-block:20px; }
+.demo-entry { background:linear-gradient(115deg,#0b2545,#0b6e7f); border-radius:16px; padding:64px 48px; color:white; }
+.demo-entry h1 { max-width:800px; font-size:clamp(32px,4vw,52px); margin-block:16px; }
+.demo-entry > p { max-width:760px; margin-block:16px; }
+.demo-entry .eyebrow { color:white; }
+.demo-entry .documentation-action-row { margin-top:32px; }
+.demo-entry-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:24px; }
+.demo-entry-grid h2 { margin-block:16px; }
+.demo-explanation { margin-top:24px !important; color:#475569; }
+.demo-subnav, .demo-slots { display:flex; flex-wrap:wrap; gap:12px; margin-block:24px; }
+.demo-subnav a { color:#0b6e7f; font-weight:600; text-decoration:underline; }
+.demo-clinical-fields { border:0; padding:0; margin:0; min-width:0; }
+.demo-toast { position:fixed; bottom:24px; inset-inline:24px; z-index:100; background:#0b2545; color:white; border-radius:12px; padding:16px; display:flex; justify-content:space-between; gap:16px; }
+.demo-loading { padding:48px; }
+dialog::before { content:"SYNTHETIC DEMO · محاكاة ببيانات وهمية — no backend write · مفيش حفظ على خادم"; display:block; padding:10px; margin-bottom:16px; background:#fff8e6; color:#0b2545; font-size:13px; font-weight:600; }
+@media(max-width:760px) { .demo-notice { padding:10px 16px; } .demo-main { padding:24px 16px; } .demo-entry { padding:32px 24px; } .demo-entry-grid { grid-template-columns:1fr; gap:0; } .demo-main .button { max-width:100%; white-space:normal; } }
