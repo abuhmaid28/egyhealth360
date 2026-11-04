@@ -15,10 +15,10 @@ test at ../../tmp/r1-documentation-order-probe.mjs:408:1
 ✖ earlier concurrent success cannot erase changed command uncertain retry key (40.829388ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   + actual - expected
-  
+
   + '{"kind":"PRIVATE_NOTE","content":"B","patientInstructions":"","complaint":null,"problems":[],"diagnoses":[],"allergyReview":{"state":"NOT_REVIEWED","items":[]},"operationKey":"0e58f48f-2d61-4292-b360-b108501c5d46"}'
   - '{"kind":"PRIVATE_NOTE","content":"B","patientInstructions":"","complaint":null,"problems":[],"diagnoses":[],"allergyReview":{"state":"NOT_REVIEWED","items":[]},"operationKey":"f4a15fb8-d353-4506-b40f-6f1c928fab26"}'
-  
+
       at TestContext.<anonymous> (file:///tmp/r1-documentation-order-probe.mjs:436:10)
       at async Test.run (node:internal/test_runner/test:1409:7)
       at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
