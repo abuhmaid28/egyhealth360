@@ -131,6 +131,17 @@
 .content :global(.card p) {
   margin-block-start: 8px;
 }
+.content :global(.empty p) {
+  margin: 0;
+}
+.root :global(.tabs button),
+.root :global(.filter-chips button) {
+  min-block-size: 44px;
+}
+.root :global(.slots button strong) {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
 .root :global(.button) {
   border-radius: 8px;
   min-block-size: 44px;

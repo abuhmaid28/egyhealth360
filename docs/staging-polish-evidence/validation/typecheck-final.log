@@ -1,0 +1,6 @@
+
+> @egyhealth/web@0.0.0 typecheck /workspace/egyhealth360/apps/web
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully

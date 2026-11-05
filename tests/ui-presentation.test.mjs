@@ -15,10 +15,21 @@ test('presentation aliases only approved synthetic metadata and leaves session i
   const translated = [];
   const translate = key => { translated.push(key); return 'ترجمة توضيحية'; };
   assert.equal(presentation.presentationName('Synthetic Demo Patient A', translate), 'ترجمة توضيحية');
-  for (const value of ['Real authored name', 'PRIVATE_CLINICAL_CANARY', 'Released', 'constructor', '__proto__']) {
+  for (const value of ['Real authored name', 'PRIVATE_CLINICAL_CANARY', 'Released', 'constructor', '__proto__', 'Cairo', 'Cardiology']) {
     assert.equal(presentation.presentationName(value, translate), value);
   }
   assert.deepEqual(translated, ['Demo patient A']);
+});
+
+test('directory taxonomy localizes without translating recorded names or changing timezones', () => {
+  const labels = { 'Internal medicine': 'الباطنة', Cardiology: 'القلب', Dermatology: 'الجلدية', Cairo: 'القاهرة', 'New Cairo': 'القاهرة الجديدة', 'Cairo time': 'بتوقيت القاهرة' };
+  const translate = key => labels[key] ?? key;
+  for (const key of ['Internal medicine', 'Cardiology', 'Dermatology', 'Cairo', 'New Cairo'])
+    assert.equal(presentation.directoryLabel(key, translate), labels[key]);
+  for (const name of ['Dr. Mariam Hassan', 'Nile Care Clinic', 'Recorded instruction: Cardiology'])
+    assert.equal(presentation.presentationName(name, translate), name);
+  assert.equal(presentation.timeZoneLabel('Africa/Cairo', translate), 'بتوقيت القاهرة');
+  assert.equal(presentation.timeZoneLabel('Europe/Paris', translate), 'Europe/Paris');
 });
 
 test('visit priority preserves source states and chronology without inferring terminal status', () => {

@@ -48,7 +48,7 @@ export function ConsultationCloseCard({
   update: (next: ConsultationContext) => void;
   professional?: boolean;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const [review, setReview] = useState(false);
   const result = useRef<HTMLDivElement>(null);
   const focusResult = useRef(false);
@@ -79,7 +79,7 @@ export function ConsultationCloseCard({
           {context.closedAt && (
             <p>
               <bdi>
-                {professional ? <ClinicalTimestamp value={context.closedAt} zone={documentation.timeZone} /> : <>{date(context.closedAt, documentation.timeZone)} ·{" "}{time(context.closedAt, documentation.timeZone)}</>}
+                {professional ? <ClinicalTimestamp value={context.closedAt} zone={documentation.timeZone} /> : <>{date(context.closedAt, documentation.timeZone, locale)} ·{" "}{time(context.closedAt, documentation.timeZone, locale)}</>}
               </bdi>
             </p>
           )}

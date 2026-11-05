@@ -15,8 +15,16 @@ const names: Readonly<Record<string, string>> = {
   'Synthetic City': 'Demonstration location',
   'Synthetic staging address': 'Demo clinic location',
 };
+// Only authored directory taxonomy is localized; recorded names and clinical text stay exact.
+const directoryLabels = new Set([
+  'Internal medicine', 'Cardiology', 'Dermatology', 'Cairo', 'New Cairo',
+]);
 export const presentationName = (name: string, translate: (value: string) => string = value => value): string =>
   Object.hasOwn(names, name) ? translate(names[name]) : name;
+export const directoryLabel = (value: string, translate: (value: string) => string): string =>
+  directoryLabels.has(value) ? translate(value) : presentationName(value, translate);
+export const timeZoneLabel = (zone: string, translate: (value: string) => string = value => value): string =>
+  zone === 'Africa/Cairo' ? translate('Cairo time') : zone === 'UTC' ? translate('Coordinated Universal Time') : zone;
 export const accountName = (session: Session, translate?: (value: string) => string): string =>
   session.mode === 'live' ? presentationName(session.name, translate) : session.name;
 

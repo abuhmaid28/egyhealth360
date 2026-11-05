@@ -74,6 +74,23 @@ export async function testPolish(browser, origin, shots) {
     await page
       .getByRole("heading", { name: t("No doctors match your search") })
       .waitFor();
+    for (const width of [1440, 390]) {
+      await page.setViewportSize({ width, height: 1000 });
+      const empty = page.locator(".search-empty .empty");
+      const center = await empty.evaluate((el) => {
+        const icon = el.querySelector(".icon-tile").getBoundingClientRect();
+        const heading = el.querySelector("h3").getBoundingClientRect();
+        const box = el.getBoundingClientRect();
+        return [icon, heading].every((r) => Math.abs(r.x + r.width / 2 - box.x - box.width / 2) < 2);
+      });
+      assert.ok(center, `${locale} empty content centered at ${width}`);
+    }
+    if (locale === "ar") {
+      for (const label of ["Internal medicine", "Cardiology", "Dermatology"]) {
+        assert.equal(await page.locator(".filter-chips").getByText(label, { exact: true }).count(), 0);
+        await page.locator(".filter-chips").getByRole("button", { name: t(label), exact: true }).waitFor();
+      }
+    }
     await button("Clear search & filters").last().click();
     assert.equal(
       await page.getByLabel(t("Search doctors"), { exact: true }).inputValue(),

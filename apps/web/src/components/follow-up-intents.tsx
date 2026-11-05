@@ -12,6 +12,7 @@ import { ClinicalTimestamp, ClinicianPresentationContext } from "./clinician-con
 import { careDate } from "../lib/patient-my-care";
 import { useApp } from "./context";
 import { useLocale } from "../lib/i18n/context";
+import { timeZoneLabel } from "../lib/presentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import {
   draftBody,
@@ -224,10 +225,11 @@ function WindowRead({ value }: { value: DesiredWindow | null }) {
       <p className="muted">{t("No desired follow-up window specified")}</p>
     );
   const format = (s: string) =>
-    new Intl.DateTimeFormat(locale === "ar" ? "ar-EG" : "en-GB", {
+    new Intl.DateTimeFormat(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", {
       timeZone: value.timeZone,
       dateStyle: "medium",
       timeStyle: "short",
+      hourCycle: "h23",
     }).format(new Date(s));
   return (
     <div>
@@ -237,7 +239,7 @@ function WindowRead({ value }: { value: DesiredWindow | null }) {
           {professional ? <bdi dir="ltr"><ClinicalTimestamp value={value.startAt} zone={value.timeZone} /> → <ClinicalTimestamp value={value.endAt} zone={value.timeZone} /></bdi> : <>{format(value.startAt)} → {format(value.endAt)}</>}
         </bdi>
         <br />
-        <bdi>{value.timeZone}</bdi>
+        <bdi>{timeZoneLabel(value.timeZone, t)}</bdi>
       </p>
       <p className="small muted">
         {t(
@@ -297,7 +299,7 @@ function IntentCard({
         <p className="small muted">
           {t("Released")}:{" "}
           <bdi>
-            {professional ? <>{careDate(intent.releasedAt, "UTC", locale)} · <bdi dir="ltr">UTC</bdi></> : new Intl.DateTimeFormat(locale === "ar" ? "ar-EG" : "en-GB", {
+            {professional ? <>{careDate(intent.releasedAt, "UTC", locale)} · <bdi dir="ltr">UTC</bdi></> : new Intl.DateTimeFormat(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", {
               dateStyle: "medium",
             }).format(new Date(intent.releasedAt))}
           </bdi>

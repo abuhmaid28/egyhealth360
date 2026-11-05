@@ -8,6 +8,7 @@ import {
   type OpeningReceipt,
 } from "../lib/api/consultation-opening";
 import { safeErrorMessage } from "../lib/api/errors";
+import { timeZoneLabel } from "../lib/presentation";
 import { useLocale } from "../lib/i18n/context";
 import { useApp } from "./context";
 import {
@@ -246,7 +247,7 @@ function OpeningMetadata({
   receipt?: OpeningReceipt | ConsultationContext;
   booking: LiveBooking;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const names = useDirectoryNames();
   return (
     <div className="two-column">
@@ -262,12 +263,12 @@ function OpeningMetadata({
             </p>
             <p className="opening-timestamp">
               <bdi>
-                {date(receipt.openedAt, booking.timeZone)} ·{" "}
-                {time(receipt.openedAt, booking.timeZone)}
+                {date(receipt.openedAt, booking.timeZone, locale)} ·{" "}
+                {time(receipt.openedAt, booking.timeZone, locale)}
               </bdi>
             </p>
             <small>
-              <bdi>{booking.timeZone}</bdi>
+              <bdi>{timeZoneLabel(booking.timeZone, t)}</bdi>
             </small>
           </>
         ) : (

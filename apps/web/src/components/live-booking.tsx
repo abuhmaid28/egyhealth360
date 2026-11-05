@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { presentationName, visitPriority } from '../lib/presentation';
+import { presentationName, visitPriority, timeZoneLabel } from '../lib/presentation';
 import {
   ConsultationOpeningCard,
   OpeningScheduleStatus,
@@ -133,10 +133,10 @@ export function BookingTime({
     <div className="booking-time">
       <bdi>
         {date(b.startAt, b.timeZone, locale)} · {time(b.startAt, b.timeZone, locale)} –{" "}
-        {date(b.startAt, b.timeZone) !== date(b.endAt, b.timeZone) && <>{date(b.endAt, b.timeZone, locale)} · </>}{time(b.endAt, b.timeZone, locale)}
+        {date(b.startAt, b.timeZone, locale) !== date(b.endAt, b.timeZone, locale) && <>{date(b.endAt, b.timeZone, locale)} · </>}{time(b.endAt, b.timeZone, locale)}
       </bdi>
       <small>
-        {t('Clinic time')} · <bdi>{b.timeZone}</bdi>
+        <bdi>{timeZoneLabel(b.timeZone, t)}</bdi>
       </small>
     </div>
   );
@@ -435,7 +435,7 @@ function BookingDetails({
   clinician: boolean;
   reload: () => void;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const now = useNow();
   const { api } = useApp();
   const opened = !!api.consultationOpening?.receipt(b.id);
@@ -540,8 +540,8 @@ function BookingDetails({
                   <strong>{t(bookingLabels[e.command])}</strong>
                   <p>
                     <bdi>
-                      {date(e.recordedAt, b.timeZone)} ·{" "}
-                      {time(e.recordedAt, b.timeZone)}
+                      {date(e.recordedAt, b.timeZone, locale)} ·{" "}
+                      {time(e.recordedAt, b.timeZone, locale)}
                     </bdi>
                   </p>
                   <Badge tone="soft">{t(bookingLabels[e.toState])}</Badge>
@@ -575,8 +575,8 @@ function BookingDetails({
               </span>
               <small>
                 <bdi>
-                  {date(e.recordedAt, b.timeZone)} ·{" "}
-                  {time(e.recordedAt, b.timeZone)}
+                  {date(e.recordedAt, b.timeZone, locale)} ·{" "}
+                  {time(e.recordedAt, b.timeZone, locale)}
                 </bdi>
               </small>
               {e.reason && <p dir="auto">{e.reason}</p>}

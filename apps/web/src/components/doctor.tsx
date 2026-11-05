@@ -1,5 +1,6 @@
 "use client";
 import { LiveDocumentationWorkspace, RelatedSummaries } from "./live-documentation";
+import { timeZoneLabel } from "../lib/presentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
@@ -71,7 +72,7 @@ export function DoctorScreen({ path }: { path: string }) {
           </Detail>
           <p className="muted">
             {t(
-              "Account and organization membership management remains outside this frontend track.",
+              "Account and organization settings are not available here yet.",
             )}
           </p>
         </Card>
@@ -143,7 +144,7 @@ function Schedule({ dashboard }: { dashboard: boolean }) {
                     value={String(
                       rows.filter((a) => a.status === "Upcoming").length,
                     ).padStart(2, "0")}
-                    note="28 October · Africa/Cairo"
+                    note="Demo schedule · Cairo time"
                   />
                   <Stat
                     icon="record"
@@ -188,7 +189,7 @@ function Schedule({ dashboard }: { dashboard: boolean }) {
                   <Empty
                     title={t("A little space in your day")}
                     description={t(
-                      "Patient bookings will appear here. For the Golden Demo, book a visit with Dr. Mariam Hassan from the Patient workspace first.",
+                      "Demo appointments appear here after booking from the Patient workspace.",
                     )}
                   />
                 )}
@@ -235,7 +236,7 @@ function Schedule({ dashboard }: { dashboard: boolean }) {
   );
 }
 function PatientAppointment({ id }: { id: string }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   const { booking, preview, refresh } = useApp();
   const data = useResource(async () => {
@@ -282,10 +283,10 @@ function PatientAppointment({ id }: { id: string }) {
                 </div>
                 <div className="confirmation-details">
                   <Detail icon="calendar" title={t("Visit time")}>
-                    {date(a.slot.startAt, a.slot.timeZone)} {t("·")}{" "}
-                    {time(a.slot.startAt, a.slot.timeZone)}
+                    {date(a.slot.startAt, a.slot.timeZone, locale)} {t("·")}{" "}
+                    {time(a.slot.startAt, a.slot.timeZone, locale)}
                     <small className="muted">
-                      <bdi>{a.slot.timeZone}</bdi>
+                      <bdi>{timeZoneLabel(a.slot.timeZone, t)}</bdi>
                     </small>
                   </Detail>
                   <Detail icon="pin" title={t("Clinic")}>
@@ -323,7 +324,7 @@ function PatientAppointment({ id }: { id: string }) {
                 </p>
                 <p className="muted">
                   {t(
-                    "The live workspace must recheck current server authority before clinical reads and writes. It remains unavailable until that integration is approved.",
+                    "This is a separate Demo consultation. Use your Live account for connected care.",
                   )}
                 </p>
               </Card>
@@ -337,7 +338,7 @@ function PatientAppointment({ id }: { id: string }) {
   );
 }
 function Workspace({ id }: { id: string }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   const { api, preview, refresh } = useApp();
   const data = useResource(
@@ -365,7 +366,7 @@ function Workspace({ id }: { id: string }) {
                 <h2>{p.displayName}</h2>
                 <p className="muted">
                   {p.dateOfBirth
-                    ? t("Born {date}", { date: date(p.dateOfBirth) })
+                    ? t("Born {date}", { date: date(p.dateOfBirth, undefined, locale) })
                     : t("Date of birth not recorded")}{" "}
                   {t("·")}
                   {p.sex ?? "Sex not recorded"}
