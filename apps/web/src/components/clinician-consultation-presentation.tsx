@@ -3,7 +3,7 @@ import Link from "next/link";
 import { createContext, useEffect, useRef, useState } from "react";
 import { useLocale } from "../lib/i18n/context";
 import { clinicianConsultationCopy } from "../lib/clinician-consultation-copy";
-import { presentationName, timeZoneLabel } from "../lib/presentation";
+import { presentationName, timeZoneLabel, repeatedTimeOffset } from "../lib/presentation";
 import { careDate, careTime, careOffset } from "../lib/patient-my-care";
 import type {
   DocumentationWorkspace,
@@ -31,6 +31,7 @@ export function ConsultationIdentity({
   bookingId: string;
 }) {
   const { t } = useLocale();
+  const offset = repeatedTimeOffset(startAt, timeZone);
   const name = presentationName(patientName, t);
   const initials = name
     .trim()
@@ -66,6 +67,7 @@ export function ConsultationIdentity({
         <ClinicalTimestamp value={startAt} zone={timeZone} />
         <small>
           <bdi>{timeZoneLabel(timeZone, t)}</bdi>
+          {offset && <> · <bdi dir="ltr">{offset}</bdi></>}
         </small>
       </div>
       <span className="master-consultation-state" data-state={state}>

@@ -25,6 +25,35 @@ export const directoryLabel = (value: string, translate: (value: string) => stri
   directoryLabels.has(value) ? translate(value) : presentationName(value, translate);
 export const timeZoneLabel = (zone: string, translate: (value: string) => string = value => value): string =>
   zone === 'Africa/Cairo' ? translate('Cairo time') : zone === 'UTC' ? translate('Coordinated Universal Time') : zone;
+
+/** Distinguish both occurrences of a repeated wall-clock time without fixing a zone's offset. */
+export function repeatedTimeOffset(value: string, zone: string): string | null {
+  const instant = Date.parse(value);
+  const formatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: zone, year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23',
+    timeZoneName: 'longOffset',
+  });
+  const describe = (at: number) => {
+    const parts = formatter.formatToParts(new Date(at));
+    const offset = parts.find(part => part.type === 'timeZoneName')!.value;
+    const [hours = 0, minutes = 0, seconds = 0] = offset.slice(4).split(':').map(Number);
+    return {
+      clock: parts.filter(part => part.type !== 'timeZoneName').map(part => part.value).join(''),
+      offset,
+      milliseconds: (offset[3] === '-' ? -1 : 1) * (hours * 3600 + minutes * 60 + seconds) * 1000,
+    };
+  };
+  const current = describe(instant);
+  // Nearby offsets supply possible alternate instants, including non-hour DST changes.
+  for (const distance of [-86_400_000, 86_400_000]) {
+    const nearby = describe(instant + distance);
+    const alternate = instant + current.milliseconds - nearby.milliseconds;
+    if (alternate !== instant && describe(alternate).clock === current.clock)
+      return current.offset.replace('GMT', 'UTC');
+  }
+  return null;
+}
 export const accountName = (session: Session, translate?: (value: string) => string): string =>
   session.mode === 'live' ? presentationName(session.name, translate) : session.name;
 

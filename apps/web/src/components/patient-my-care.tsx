@@ -9,7 +9,7 @@ import {
 } from "react";
 import type { Appointment, Role } from "../lib/api/contracts";
 import type { LiveBooking } from "../lib/api/live-booking";
-import { accountName, presentationName, directoryLabel, timeZoneLabel } from "../lib/presentation";
+import { accountName, presentationName, directoryLabel, timeZoneLabel, repeatedTimeOffset } from "../lib/presentation";
 import {
   appointmentActivity,
   careDate,
@@ -335,6 +335,7 @@ function AppointmentAnchor({
   retry: () => void;
   translate: (value: string) => string;
 }) {
+  const offset = a ? repeatedTimeOffset(a.startAt, a.timeZone) : null;
   return (
     <section
       className={styles.appointment}
@@ -393,6 +394,7 @@ function AppointmentAnchor({
               </p>
               <p className={styles.eventZone}>
                 <bdi>{timeZoneLabel(a.timeZone, translate)}</bdi>
+                {offset && <> · <bdi dir="ltr">{offset}</bdi></>}
               </p>
               <p>
                 <bdi>

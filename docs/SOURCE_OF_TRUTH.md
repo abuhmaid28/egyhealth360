@@ -44,7 +44,7 @@ All tracked documentation Markdown paths are classified below. Research files ar
 
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |
-| [STAGING_UI_POLISH.md](STAGING_UI_POLISH.md) | Current bounded fix inventory, deployed candidate attribution, validation, remaining issues and source alignment recommendation; no release/merge approval. |
+| [STAGING_UI_POLISH.md](STAGING_UI_POLISH.md) | Current bounded fix inventory, deployed candidate attribution, validation, time-display review corrections, remaining issues and source alignment recommendation; original captures retain their point-in-time provenance. No release/merge approval or Final V2 design acceptance. |
 
 | Clinician master implementation reference | Responsibility / limits |
 | --- | --- |

@@ -131,9 +131,9 @@ export function BookingTime({
   const { locale, t } = useLocale();
   return (
     <div className="booking-time">
-      <bdi>
-        {date(b.startAt, b.timeZone, locale)} · {time(b.startAt, b.timeZone, locale)} –{" "}
-        {date(b.startAt, b.timeZone, locale) !== date(b.endAt, b.timeZone, locale) && <>{date(b.endAt, b.timeZone, locale)} · </>}{time(b.endAt, b.timeZone, locale)}
+      <bdi dir="ltr">
+        <bdi>{date(b.startAt, b.timeZone, locale)}</bdi> · <bdi dir="ltr">{time(b.startAt, b.timeZone, locale)}</bdi> –{" "}
+        {date(b.startAt, b.timeZone, locale) !== date(b.endAt, b.timeZone, locale) && <><bdi>{date(b.endAt, b.timeZone, locale)}</bdi> · </>}<bdi dir="ltr">{time(b.endAt, b.timeZone, locale)}</bdi>
       </bdi>
       <small>
         <bdi>{timeZoneLabel(b.timeZone, t)}</bdi>

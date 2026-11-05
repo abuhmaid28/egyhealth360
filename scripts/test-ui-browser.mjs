@@ -1,4 +1,5 @@
 import { testR1Mode } from "./support/ui-r1-mode-browser.mjs";
+import { testStagingTime } from "./support/ui-staging-time-browser.mjs";
 import {
   testPatientMyCare,
   openDemoUtility,
@@ -68,6 +69,7 @@ try {
       : {}),
   });
   await testR1Mode(browser, origin);
+  await testStagingTime(browser, origin, shots);
   const page = await browser.newPage({
     viewport: { width: 1440, height: 1100 },
     reducedMotion: "reduce",
