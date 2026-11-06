@@ -1,5 +1,5 @@
 "use client";
-import { presentationName } from "../lib/presentation";
+import { presentationName, directoryLabel, timeZoneLabel } from "../lib/presentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import { useRef, useState } from "react";
@@ -69,7 +69,7 @@ export function PublicAvailability({
   setReason: (value: string) => void;
   onReview: (slot: Availability) => void;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   const { api, preview, refresh } = useApp();
   const [page, setPage] = useState(1);
@@ -137,20 +137,20 @@ export function PublicAvailability({
                         className={valid?.id === s.id ? "selected" : ""}
                         onClick={() => setSelected(s)}
                       >
-                        <small>{date(s.startAt, s.timeZone)}</small>
+                        <small>{date(s.startAt, s.timeZone, locale)}</small>
                         <strong>
-                          {time(s.startAt, s.timeZone)}
+                          {time(s.startAt, s.timeZone, locale)}
                           {t("–")}
-                          {time(s.endAt, s.timeZone)}
+                          {time(s.endAt, s.timeZone, locale)}
                         </strong>
                         <small>
-                          <bdi>{s.timeZone}</bdi>
+                          <bdi>{timeZoneLabel(s.timeZone, t)}</bdi>
                         </small>
-                        {date(s.startAt, s.timeZone) !==
-                          date(s.endAt, s.timeZone) && (
+                        {date(s.startAt, s.timeZone, locale) !==
+                          date(s.endAt, s.timeZone, locale) && (
                           <small>
                             {t("Ends")}
-                            {date(s.endAt, s.timeZone)}
+                            {date(s.endAt, s.timeZone, locale)}
                           </small>
                         )}
                         <small>
@@ -223,7 +223,7 @@ export function PublicAvailability({
   );
 }
 export function DoctorAvailability() {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   const { api, preview, refresh, changed, notify } = useApp();
   const [page, setPage] = useState(1);
@@ -260,12 +260,12 @@ export function DoctorAvailability() {
                     {result.data.map((s) => (
                       <article className="own-slot" key={s.id}>
                         <div>
-                          <strong>{date(s.startAt, s.timeZone)}</strong>
+                          <strong>{date(s.startAt, s.timeZone, locale)}</strong>
                           <p>
-                            {time(s.startAt, s.timeZone)}
+                            <bdi dir="ltr">{time(s.startAt, s.timeZone, locale)}
                             {t("–")}
-                            {time(s.endAt, s.timeZone)} {t("·")}
-                            {s.timeZone}
+                            {time(s.endAt, s.timeZone, locale)}</bdi> {t("·")}
+                            {timeZoneLabel(s.timeZone, t)}
                           </p>
                           <small className="muted">
                             {presentationName(clinics.data?.find((c) => c.id === s.clinicId)
@@ -371,7 +371,7 @@ export function DoctorAvailability() {
                   <Field
                     label={t("Publication clinic")}
                     hint={t(
-                      "The server checks your current clinic membership and publication scope.",
+                      "Choose a clinic where you can publish appointments.",
                     )}
                   >
                     <select
@@ -383,7 +383,7 @@ export function DoctorAvailability() {
                       {options.map((c) => (
                         <option key={c.id} value={c.id}>
                           {presentationName(c.displayName, t)} {t("·")}
-                          {presentationName(c.city, t)}
+                          {directoryLabel(c.city, t)}
                         </option>
                       ))}
                     </select>
@@ -391,7 +391,7 @@ export function DoctorAvailability() {
                   <Field
                     label={t("Starts at")}
                     hint={t(
-                      "ISO date/time with an explicit offset matching the configured clinic timezone.",
+                      "Use the format shown, including the clinic’s time difference.",
                     )}
                   >
                     <input
@@ -435,13 +435,13 @@ export function DoctorAvailability() {
           </Resource>
           <p className="small muted">
             {t(
-              "Clinic scheduling settings remain server-owned. Exact duration, timezone offsets, lead time and horizon are validated by the backend. No recurrence or configuration editing is provided.",
+              "Appointments follow the clinic’s scheduling rules. Publish each interval separately.",
             )}
           </p>
           {api.mode === "demo" && (
             <p className="small muted">
               {t(
-                "Demo fixture: Nile Care Clinic · Africa/Cairo · 28–29 October 2026 use +03:00.",
+                "Demo appointments are shown in Cairo time.",
               )}
             </p>
           )}

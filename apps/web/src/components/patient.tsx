@@ -1,5 +1,5 @@
 "use client";
-import { presentationName } from "../lib/presentation";
+import { presentationName, directoryLabel, timeZoneLabel } from "../lib/presentation";
 import { LivePatientHome } from "./live-home";
 import { PatientFollowUps } from "./follow-up-intents";
 import { ReleasedSummariesScreen } from "./documentation";
@@ -127,7 +127,7 @@ export function PatientScreen({ path }: { path: string }) {
   );
 }
 function Dashboard() {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   const { api, booking, session, preview, refresh } = useApp();
   const overview = useResource(
@@ -242,7 +242,7 @@ function Dashboard() {
                 }
                 note={
                   record.measurements[0]
-                    ? `mmHg · ${date(record.measurements[0].measuredAt)}`
+                    ? `mmHg · ${date(record.measurements[0].measuredAt, undefined, locale)}`
                     : "No measurements recorded"
                 }
               />
@@ -455,7 +455,7 @@ export function ProviderCard({ provider }: { provider: Provider }) {
       <div className="provider-top">
         <Avatar name={presentationName(provider.displayName, t)} large />
         <Badge tone="soft">
-          <bdi>{presentationName(provider.specialty.displayName, t)}</bdi>
+          <bdi>{directoryLabel(provider.specialty.displayName, t)}</bdi>
         </Badge>
       </div>
       <h3>
@@ -464,13 +464,13 @@ export function ProviderCard({ provider }: { provider: Provider }) {
         </Link>
       </h3>
       <p className="muted">
-        {presentationName(provider.specialty.displayName, t)}
+        {directoryLabel(provider.specialty.displayName, t)}
       </p>
       <div className="provider-clinic">
         <Icon name="pin" size={16} />
         <span>
-          {presentationName(provider.clinics[0]?.displayName ?? "", t)} {t("·")}
-          {presentationName(provider.clinics[0]?.city ?? "", t)}
+          <bdi>{presentationName(provider.clinics[0]?.displayName ?? "", t)}</bdi>{" · "}
+          <bdi>{directoryLabel(provider.clinics[0]?.city ?? "", t)}</bdi>
         </span>
       </div>
       <Link
@@ -535,7 +535,7 @@ function Discovery() {
                   <option value="">{t("All specialties")}</option>
                   {specialties.map((s) => (
                     <option value={s.key} key={s.key}>
-                      {presentationName(s.displayName, t)}
+                      {directoryLabel(s.displayName, t)}
                     </option>
                   ))}
                 </select>
@@ -567,6 +567,7 @@ function Discovery() {
               <div className="filter-chips">
                 <button
                   className={!specialty ? "selected" : ""}
+                  aria-pressed={!specialty}
                   onClick={() => setSpecialty("")}
                 >
                   {t("All specialties")}
@@ -575,15 +576,16 @@ function Discovery() {
                   <button
                     key={s.key}
                     className={specialty === s.key ? "selected" : ""}
+                    aria-pressed={specialty === s.key}
                     onClick={() => setSpecialty(s.key)}
                   >
-                    {presentationName(s.displayName, t)}
+                    {directoryLabel(s.displayName, t)}
                   </button>
                 ))}
               </div>
               <div className="section-heading">
                 <p className="muted">
-                  {filtered.length} {t("doctors in this directory view")}
+                  {t("Doctors in this view: {count}", { count: String(filtered.length) })}
                 </p>
                 <span className="muted small">
                   {t("Curated public profiles")}
@@ -653,12 +655,12 @@ function DoctorProfile({ id }: { id: string }) {
               <Avatar name={presentationName(p.displayName, t)} large />
               <div>
                 <Badge tone="soft">
-                  <bdi>{presentationName(p.specialty.displayName, t)}</bdi>
+                  <bdi>{directoryLabel(p.specialty.displayName, t)}</bdi>
                 </Badge>
                 <h1>{presentationName(p.displayName, t)}</h1>
                 <p className="muted">
-                  {presentationName(p.specialty.displayName, t)} {t("·")}{" "}
-                  {p.clinics.map((c) => presentationName(c.city, t)).join(", ")}
+                  {directoryLabel(p.specialty.displayName, t)} {t("·")}{" "}
+                  {p.clinics.map((c) => directoryLabel(c.city, t)).join(", ")}
                 </p>
                 <div className="inline muted">
                   <Icon name="building" size={17} />
@@ -683,7 +685,7 @@ function DoctorProfile({ id }: { id: string }) {
                       "Explore appointments with {name} in {specialty}. Select a published time for an in-person visit.",
                       {
                         name: presentationName(p.displayName, t),
-                        specialty: presentationName(p.specialty.displayName, t),
+                        specialty: directoryLabel(p.specialty.displayName, t),
                       },
                     )}
                   </p>
@@ -699,7 +701,7 @@ function DoctorProfile({ id }: { id: string }) {
                     <div key={c.id} className="clinic-detail">
                       <Detail
                         icon="pin"
-                        title={<bdi>{presentationName(c.city, t)}</bdi>}
+                        title={<bdi>{directoryLabel(c.city, t)}</bdi>}
                       >
                         <Link
                           className="text-link"
@@ -804,7 +806,7 @@ function BookingDialog({
   busy: boolean;
   error: string;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   // Native modal provides focus containment, Escape handling and focus restoration.
   return (
@@ -863,11 +865,11 @@ function BookingDialog({
           {presentationName(provider.displayName, t)}
         </Detail>
         <Detail icon="calendar" title={t("Date & time")}>
-          {date(slot.startAt, slot.timeZone)} {t("·")}{" "}
-          {time(slot.startAt, slot.timeZone)} {t("–")}{" "}
-          {date(slot.endAt, slot.timeZone)} {t("·")}
-          {time(slot.endAt, slot.timeZone)}
-          <small className="muted">{slot.timeZone}</small>
+          {date(slot.startAt, slot.timeZone, locale)} {t("·")}{" "}
+          {time(slot.startAt, slot.timeZone, locale)} {t("–")}{" "}
+          {date(slot.endAt, slot.timeZone, locale)} {t("·")}
+          {time(slot.endAt, slot.timeZone, locale)}
+          <small className="muted">{timeZoneLabel(slot.timeZone, t)}</small>
         </Detail>
         <Detail icon="pin" title={t("Clinic")}>
           {provider.clinics.find((c) => c.id === slot.clinicId)?.displayName}
@@ -922,7 +924,7 @@ function ClinicScreen({ id }: { id: string }) {
               <Heading
                 eyebrow={t("Your local care")}
                 title={<bdi>{presentationName(c.displayName, t)}</bdi>}
-                description={`${presentationName(c.address, t)} · ${presentationName(c.city, t)}`}
+                description={`${presentationName(c.address, t)} · ${directoryLabel(c.city, t)}`}
               />
               <Card className="map-art large-map">
                 <Icon name="pin" size={40} />
@@ -955,19 +957,19 @@ export function AppointmentRow({
   appointment: Appointment;
   doctor?: boolean;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   return (
     <div className="appointment-row">
       <div className="appointment-date">
         <strong>
-          {new Intl.DateTimeFormat("en", {
+          {new Intl.DateTimeFormat(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", {
             day: "numeric",
             timeZone: a.slot.timeZone,
           }).format(new Date(a.slot.startAt))}
         </strong>
         <span>
-          {new Date(a.slot.startAt).toLocaleString("en", {
+          {new Date(a.slot.startAt).toLocaleString(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", {
             month: "short",
             timeZone: a.slot.timeZone,
           })}
@@ -979,13 +981,13 @@ export function AppointmentRow({
         </Badge>
         <h3>{doctor ? a.patientName : a.provider.displayName}</h3>
         <p>
-          {a.provider.specialty.displayName} {t("·")}{" "}
-          {time(a.slot.startAt, a.slot.timeZone)}
+          {directoryLabel(a.provider.specialty.displayName, t)} {t("·")}{" "}
+          {time(a.slot.startAt, a.slot.timeZone, locale)}
           {t("–")}
-          {time(a.slot.endAt, a.slot.timeZone)}
+          {time(a.slot.endAt, a.slot.timeZone, locale)}
         </p>
         <small className="appointment-zone">
-          <bdi>{a.slot.timeZone}</bdi>
+          <bdi>{timeZoneLabel(a.slot.timeZone, t)}</bdi>
         </small>
         <small>
           <Icon name="pin" size={13} />
@@ -1010,7 +1012,7 @@ export function AppointmentRow({
   );
 }
 function Appointments({ id }: { id?: string }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   const { booking, preview, refresh } = useApp();
   const [tab, setTab] = useState("Upcoming");
@@ -1077,19 +1079,19 @@ function Appointments({ id }: { id?: string }) {
                       <div>
                         <h2>{a.provider.displayName}</h2>
                         <p className="muted">
-                          {a.provider.specialty.displayName}
+                          {directoryLabel(a.provider.specialty.displayName, t)}
                         </p>
                       </div>
                     </div>
                     <div className="confirmation-details">
                       <Detail icon="calendar" title={t("Date")}>
-                        {date(a.slot.startAt, a.slot.timeZone)}
+                        {date(a.slot.startAt, a.slot.timeZone, locale)}
                       </Detail>
                       <Detail icon="clock" title={t("Time")}>
-                        {time(a.slot.startAt, a.slot.timeZone)}
+                        {time(a.slot.startAt, a.slot.timeZone, locale)}
                         {t("–")}
-                        {time(a.slot.endAt, a.slot.timeZone)} {t("·")}{" "}
-                        {a.slot.timeZone}
+                        {time(a.slot.endAt, a.slot.timeZone, locale)} {t("·")}{" "}
+                        {timeZoneLabel(a.slot.timeZone, t)}
                       </Detail>
                       <Detail icon="pin" title={t("Location")}>
                         {
@@ -1184,7 +1186,7 @@ function Appointments({ id }: { id?: string }) {
   );
 }
 function RecordScreen({ section }: { section: string }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   const { api, preview, refresh } = useApp();
   const record = useResource(() => api.record(), [api, refresh]);
@@ -1258,7 +1260,7 @@ function RecordScreen({ section }: { section: string }) {
                         icon="record"
                         title={t("HTN BP follow-up encounter")}
                       >
-                        {date(e.occurredAt)}
+                        {date(e.occurredAt, undefined, locale)}
                       </Detail>
                     ))}
                   </Card>
@@ -1271,8 +1273,8 @@ function RecordScreen({ section }: { section: string }) {
                     />
                     {r.legacyFollowUps.map((f) => (
                       <Detail key={f.id} icon="calendar" title={f.status}>
-                        {date(f.scheduledAt)} {t("·")}
-                        {time(f.scheduledAt)}
+                        {date(f.scheduledAt, undefined, locale)} {t("·")}
+                        {time(f.scheduledAt, undefined, locale)}
                       </Detail>
                     ))}
                     <p className="small muted">
@@ -1312,7 +1314,7 @@ function RecordScreen({ section }: { section: string }) {
                               {t("/")}
                               {m.diastolic} <span>{t("mmHg")}</span>
                             </strong>
-                            <small>{date(m.measuredAt)}</small>
+                            <small>{date(m.measuredAt, undefined, locale)}</small>
                           </div>
                         </div>
                       ))
@@ -1621,7 +1623,7 @@ function ProfileForm({
         </Detail>
         <p className="muted small">
           {t(
-            "Presentation fixtures are synthetic. Profile edits in demo mode stay in this browser.",
+            "Demo profile changes stay in this browser.",
           )}
         </p>
       </Card>

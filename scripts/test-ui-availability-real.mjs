@@ -253,9 +253,15 @@ try {
       await page.getByRole("button", { name: "العربية", exact: true }).click();
       await page.locator(".live-slots button").first().waitFor();
       await r1Capture(page, "provider-live-ar");
-      assert.ok(
-        (await page.locator(".live-slots").innerText()).includes("UTC"),
-      );
+      const slotText = await page.locator(".live-slots button").first().innerText();
+      assert.ok(slotText.includes("بالتوقيت العالمي"));
+      // The human label still describes the real fixture zone; localize presentation only.
+      assert.ok(slotText.includes(new Intl.DateTimeFormat("en-GB", {
+        timeZone: f.settings.timeZone, hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+      }).format(new Date(adjacent.startAt))));
+      assert.ok(slotText.includes(new Intl.DateTimeFormat("ar-EG-u-nu-latn", {
+        timeZone: f.settings.timeZone, day: "numeric", month: "short", year: "numeric",
+      }).format(new Date(adjacent.startAt))));
       const before = (await f.availability.history(f.actors.clinician, {}))
         .data;
       const { attended } = await testRealBooking(page, f);

@@ -309,7 +309,7 @@ function DocumentationEditor({
   reload: (message?: string) => void;
   professional?: boolean;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const [view, setView] = useState(initialView);
   const live = service.mode === "live";
   const [factTarget, setFactTarget] = useState<
@@ -447,8 +447,8 @@ function DocumentationEditor({
           {(view.providerName || view.clinicName) && <p><bdi>{[view.providerName, view.clinicName].filter(Boolean).map(name=>presentationName(name!, t)).join(" · ")}</bdi></p>}
           <small>
             <bdi>
-              {date(view.openedAt, view.timeZone)} ·{" "}
-              {time(view.openedAt, view.timeZone)} · {view.timeZone}
+              {date(view.openedAt, view.timeZone, locale)} ·{" "}
+              {time(view.openedAt, view.timeZone, locale)} · {view.timeZone}
             </bdi>
           </small>
         </div>
@@ -749,7 +749,7 @@ function DocumentationEditor({
                   </div>
                   <p className="small muted">
                     <bdi>
-                      {professional ? <ClinicalTimestamp value={version.signedAt!} zone={view.timeZone} /> : <>{date(version.signedAt!, view.timeZone)} ·{" "}{time(version.signedAt!, view.timeZone)}</>}
+                      {professional ? <ClinicalTimestamp value={version.signedAt!} zone={view.timeZone} /> : <>{date(version.signedAt!, view.timeZone, locale)} ·{" "}{time(version.signedAt!, view.timeZone, locale)}</>}
                     </bdi>
                   </p>
                   <p className="documentation-narrative" dir="auto">
@@ -1172,7 +1172,7 @@ function RestrictionDialog({
                 String(index + 1),
               )}{" "}
               · {t(labels[v.kind])} · {t(labels[v.state])} ·{" "}
-              {displayTimeZone ? `${careDate(v.recordedAt, displayTimeZone, locale)} ${careTime(v.recordedAt, displayTimeZone)}` : `${date(v.recordedAt)} ${time(v.recordedAt)}`} · {t(labels[v.change])}
+              {displayTimeZone ? `${careDate(v.recordedAt, displayTimeZone, locale)} ${careTime(v.recordedAt, displayTimeZone)}` : `${date(v.recordedAt, undefined, locale)} ${time(v.recordedAt, undefined, locale)}`} · {t(labels[v.change])}
             </option>
           ))}
         </select>
@@ -1268,7 +1268,7 @@ export function ReleasedSummariesScreen({
   return <ReleasedScope key={stamp} service={service} />;
 }
 function ReleasedScope({ service }: { service: DocumentationApi }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const [page, setPage] = useState(1),
     [historyPage, setHistoryPage] = useState(1);
   const [revision, setRevision] = useState(0);
@@ -1322,7 +1322,7 @@ function ReleasedScope({ service }: { service: DocumentationApi }) {
                     )}
                     <p className="small muted">
                       <bdi>
-                        {date(v.releasedAt)} · {time(v.releasedAt)}
+                        {date(v.releasedAt, undefined, locale)} · {time(v.releasedAt, undefined, locale)}
                       </bdi>
                     </p>
                     {v.facts && <FactsRead facts={v.facts} />}

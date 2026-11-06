@@ -1,4 +1,5 @@
 import { testR1Mode } from "./support/ui-r1-mode-browser.mjs";
+import { testStagingTime } from "./support/ui-staging-time-browser.mjs";
 import {
   testPatientMyCare,
   openDemoUtility,
@@ -68,6 +69,7 @@ try {
       : {}),
   });
   await testR1Mode(browser, origin);
+  await testStagingTime(browser, origin, shots);
   const page = await browser.newPage({
     viewport: { width: 1440, height: 1100 },
     reducedMotion: "reduce",
@@ -111,7 +113,7 @@ try {
     .getByRole("link", { name: "Find care", exact: true })
     .click();
   await page.getByPlaceholder("Search by doctor’s name").fill("Mariam");
-  await visible("1 doctors in this directory view");
+  await visible("Doctors in this view: 1");
   await snapshot("03-discovery");
   await page.getByRole("link", { name: "View profile & availability" }).click();
   await visible("Choose your appointment");

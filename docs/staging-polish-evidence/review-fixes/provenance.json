@@ -1,0 +1,38 @@
+{
+  "recordedAt": "2026-11-05T12:57:25.025752+00:00",
+  "reviewedHead": "d11fb5fbc4a7798fdfb6d24c21d3d1a0a216823b",
+  "stackBase": "1b5c5c643f56cff74b3db32543df41845965bdb6",
+  "sourceSha256": {
+    "apps/web/src/components/clinician-consultation-presentation.tsx": "8f7f12f5395ad41e86ca0c25c7368484be1e3183f208317b22a11684ad7c2e9e",
+    "apps/web/src/components/live-booking.tsx": "08879d14a952902e2fbbb5c8e2a2b98f103e20b9faf115311b59224d55be864e",
+    "apps/web/src/components/patient-my-care.tsx": "44d57cc73e5bb4faefa7df0432f523209a3a2f271b0addb74c46475383c36ac3",
+    "apps/web/src/lib/presentation.ts": "c79be98393938303eb18e9bed2c560b0b74ae3708f6e8ddf7b31168c2b49b713",
+    "scripts/support/ui-clinician-master-browser.mjs": "2b09a03553f6dca6dbf88ea3f354af3a7568ad548aec84758644ea5bf7a5f648",
+    "scripts/support/ui-staging-time-browser.mjs": "dd8ba6e8432f5ab83b660cfa8187b0b1c4f86498f81f7fc3ea87533e00b7ff4e",
+    "scripts/test-ui-browser.mjs": "b40b8bf6689a7ed31b4df55696eb35ed893b0a483a86207eafbb83d58b93cae5",
+    "tests/ui-presentation.test.mjs": "92cf69d68b40604f0b21968fda46ddbdca21ad38ac31966286dc7a24908aa040"
+  },
+  "images": {
+    "time-booking-cross-midnight-ar-1440.png": "fffb7dcb459d1d3ce35a1e9fbeb732705b0692b3f072af6e6eee270d30f48260",
+    "time-booking-cross-midnight-ar-390.png": "7572bd59a11c7d7e8765d20d1a8b4236aad76d798c217c03a0d6cf8e61c56fcc",
+    "time-booking-same-day-ar-1440.png": "819cb63f60de2701f9115797151390c5cff90790578874f93a1a8bc3988dc365",
+    "time-booking-same-day-ar-390.png": "eb132b9eb514efbee9583c1bb87c16825f5a447109afa04dd62c39131676c9c2",
+    "time-clinician-first-ar-mobile.png": "4c4390dae5d824d06ed9637c52f87f911cf751db747fccf2cac112e1b8a8e517",
+    "time-clinician-second-ar-mobile.png": "60f61149daadcbefc58059c06ecb3d645680c69dde5d08c52f0ce7119a75ebd0",
+    "time-patient-first-ar-mobile.png": "aebbb833d18b8234dccb883a9c6b06fe4dd428547b8dde80f26787e2e3c3353d",
+    "time-patient-second-ar-mobile.png": "9e0ef7ad0bf1bea3eb7e981fb2d0442466f17f27be858fedff0d7a6e4f381539"
+  },
+  "source": "Local immutable production build; controlled synthetic HTTP fixtures, read-only Live presentation. Not hosted acceptance or a deployment.",
+  "validation": {
+    "focusedPresentationTests": "4/4 PASS",
+    "focusedProductionBrowser": "PASS EN/AR, 1440/390/320px, repeated Cairo hours, same-day and cross-midnight range geometry, zero writes",
+    "buildAndTypecheck": "PASS UI/web",
+    "repositoryEslint": "PASS",
+    "node": "24.21.0",
+    "pnpm": "10.34.6",
+    "completeLocalUiTests": "166/166 PASS with external Windows tsc-launcher adapter; exact compiler and arguments, repository assertions unchanged. Stock Linux CI still required.",
+    "ciPolicy": "30/30 PASS after LF materialization in isolated checkout; CI/workflows unchanged",
+    "docsCheck": "Existing checker assumes POSIX path separators; unmodified Linux CI required"
+  },
+  "release": "OPEN / UNMERGED. No deployment, alias, R1, main or protected-final-domain mutation."
+}

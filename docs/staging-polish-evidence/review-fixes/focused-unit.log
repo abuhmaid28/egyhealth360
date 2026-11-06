@@ -1,0 +1,12 @@
+✔ presentation aliases only approved synthetic metadata and leaves session identity untouched (1.6771ms)
+✔ directory taxonomy localizes without translating recorded names or changing timezones (0.2697ms)
+✔ visit priority preserves source states and chronology without inferring terminal status (0.2834ms)
+✔ repeated local times retain each actual offset; ordinary times keep the concise zone label (23.417ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 429.0527

@@ -991,25 +991,35 @@ textarea:focus {
   padding: 8px 10px;
 }
 .empty {
-  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  min-inline-size: 0;
+  gap: 12px;
+  padding: 32px 20px;
   text-align: center;
   max-width: 530px;
   margin: auto;
 }
 .empty > .icon-tile {
-  margin-bottom: 14px;
+  margin: 0;
   width: 50px;
   height: 50px;
   background: #f0f7f5;
 }
 .empty h3 {
-  font-size: 14px;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
 }
 .empty p {
-  font-size: 12px;
+  font-size: 14px;
+  line-height: 1.8;
   color: var(--muted);
   max-width: 340px;
-  margin: 0 auto 16px;
+  margin: 0;
 }
 .empty .button {
   font-size: 11px;
@@ -3084,7 +3094,6 @@ textarea {
 }
 .appointment-zone {
   color: var(--muted);
-  direction: ltr;
   text-align: start;
 }
 .search-empty {

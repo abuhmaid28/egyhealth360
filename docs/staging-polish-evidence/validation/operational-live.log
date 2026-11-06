@@ -1,0 +1,2 @@
+PASS controlled operational Live portals: all Pharmacy/Laboratory/Admin destinations, truthful limits, no Demo or clinical reads, EN/AR RTL/LTR, 1440/390/320px.
+PASS R1 mode: configured Live default, storage denial, failed Live reads, authenticated deep link, reload, wrong-role boundary, EN/AR, logout; no unintended Demo transition.

@@ -1,4 +1,5 @@
 "use client";
+import { directoryLabel, timeZoneLabel } from "../lib/presentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
@@ -97,8 +98,8 @@ export function OperationsScreen({ path }: { path: string }) {
             icon="shield"
             title={t(
               session.role === "ADMIN"
-                ? "No clinical entitlement"
-                : "Artifact-scoped workspace",
+                ? "Patient records are not available"
+                : "Assigned requests only",
             )}
           >
             {t(
@@ -480,7 +481,7 @@ function Admin({ path }: { path: string }) {
                       <CardTitle title={t("Administration, with boundaries")} />
                       <Detail
                         icon="shield"
-                        title={t("No clinical entitlement")}
+                        title={t("Patient records are not available")}
                       >
                         {t(
                           "Admin has no patient-record, consultation, prescription, or lab-result access.",
@@ -588,7 +589,7 @@ function Admin({ path }: { path: string }) {
                         .map((v) => (
                           <tr key={v.name}>
                             <td>{v.name}</td>
-                            <td>{t("Africa/Cairo")}</td>
+                            <td>{timeZoneLabel("Africa/Cairo", t)}</td>
                             <td>
                               <Badge tone="soft">{t("Finite intervals")}</Badge>
                             </td>
@@ -599,7 +600,7 @@ function Admin({ path }: { path: string }) {
                 </div>
                 <p className="muted">
                   {t(
-                    "Read-only UI overview. No configuration mutation endpoint exists on main. Lead-time and horizon values will come from the approved backend integration.",
+                    "These settings are for viewing only. Changes are not available here yet.",
                   )}
                 </p>
               </Card>
@@ -641,7 +642,7 @@ function DirectoryOverview() {
                 {rows.map((p) => (
                   <tr key={p.id}>
                     <td>{p.displayName}</td>
-                    <td>{p.specialty.displayName}</td>
+                    <td>{directoryLabel(p.specialty.displayName, t)}</td>
                     <td>{p.clinics.map((c) => c.displayName).join(", ")}</td>
                   </tr>
                 ))}

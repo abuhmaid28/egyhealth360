@@ -15,10 +15,21 @@ test('presentation aliases only approved synthetic metadata and leaves session i
   const translated = [];
   const translate = key => { translated.push(key); return 'ترجمة توضيحية'; };
   assert.equal(presentation.presentationName('Synthetic Demo Patient A', translate), 'ترجمة توضيحية');
-  for (const value of ['Real authored name', 'PRIVATE_CLINICAL_CANARY', 'Released', 'constructor', '__proto__']) {
+  for (const value of ['Real authored name', 'PRIVATE_CLINICAL_CANARY', 'Released', 'constructor', '__proto__', 'Cairo', 'Cardiology']) {
     assert.equal(presentation.presentationName(value, translate), value);
   }
   assert.deepEqual(translated, ['Demo patient A']);
+});
+
+test('directory taxonomy localizes without translating recorded names or changing timezones', () => {
+  const labels = { 'Internal medicine': 'الباطنة', Cardiology: 'القلب', Dermatology: 'الجلدية', Cairo: 'القاهرة', 'New Cairo': 'القاهرة الجديدة', 'Cairo time': 'بتوقيت القاهرة' };
+  const translate = key => labels[key] ?? key;
+  for (const key of ['Internal medicine', 'Cardiology', 'Dermatology', 'Cairo', 'New Cairo'])
+    assert.equal(presentation.directoryLabel(key, translate), labels[key]);
+  for (const name of ['Dr. Mariam Hassan', 'Nile Care Clinic', 'Recorded instruction: Cardiology'])
+    assert.equal(presentation.presentationName(name, translate), name);
+  assert.equal(presentation.timeZoneLabel('Africa/Cairo', translate), 'بتوقيت القاهرة');
+  assert.equal(presentation.timeZoneLabel('Europe/Paris', translate), 'Europe/Paris');
 });
 
 test('visit priority preserves source states and chronology without inferring terminal status', () => {
@@ -33,4 +44,23 @@ test('visit priority preserves source states and chronology without inferring te
   assert.deepEqual(rows, original);
   assert.deepEqual(ordered.map(row => row.state), ['IN_CONSULTATION', 'BOOKED', 'BOOKED', 'CONSULTED']);
   assert.equal(ordered[1], rows[1], 'past BOOKED remains BOOKED; time does not invent no-show/close');
+});
+
+test('repeated local times retain each actual offset; ordinary times keep the concise zone label', () => {
+  for (const [zone, first, second, firstOffset, secondOffset] of [
+    ['Africa/Cairo', '2026-10-29T20:30:00Z', '2026-10-29T21:30:00Z', 'UTC+03:00', 'UTC+02:00'],
+    ['America/New_York', '2026-11-01T05:30:00Z', '2026-11-01T06:30:00Z', 'UTC-04:00', 'UTC-05:00'],
+    ['Australia/Lord_Howe', '2026-04-04T14:45:00Z', '2026-04-04T15:15:00Z', 'UTC+11:00', 'UTC+10:30'],
+  ]) {
+    assert.equal(presentation.repeatedTimeOffset(first, zone), firstOffset);
+    assert.equal(presentation.repeatedTimeOffset(second, zone), secondOffset);
+    for (const instant of [Date.parse(first) - 3_600_000, Date.parse(second) + 3_600_000])
+      assert.equal(presentation.repeatedTimeOffset(new Date(instant).toISOString(), zone), null);
+  }
+  for (const [value, zone] of [
+    ['2026-11-05T12:00:00Z', 'Africa/Cairo'],
+    ['2026-03-08T07:30:00Z', 'America/New_York'],
+    ['2026-10-29T20:30:00Z', 'UTC'],
+    ['2026-10-29T20:30:00Z', 'Asia/Kathmandu'],
+  ]) assert.equal(presentation.repeatedTimeOffset(value, zone), null);
 });

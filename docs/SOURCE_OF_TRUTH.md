@@ -1,11 +1,12 @@
 # Source of truth and document index
 
-Current session: the Product Owner authorized the bounded [R1 UX integration repair](R1_UX_INTEGRATION_REPAIR.md) from frozen real source `6fbd247a09d774fa42d9712068699753a88e10e6`. This candidate extends shared presentation across existing role screens, preserves Live/clinical/security scope, and keeps release, final brand/Design System and stable staging changes gated. Older paused-scope wording below does not block this explicitly authorized repair.
+Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
+
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
 
 ## Fast reading order
 
-**Current bounded reference:** [PR #80 owner direction 6604240346](https://github.com/abuhmaid28/egyhealth360/pull/80#issuecomment-6604240346) and the [Patient-DNA premium visual pass](ui-reference/CLINICIAN_PATIENT_DNA_PREMIUM.md), refining the [approved Clinician master](https://github.com/abuhmaid28/egyhealth360/pull/80#issuecomment-6603761429). Original scope: [Issue #72 / authorization 6594105174](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6594105174) and the [Clinician controlling master](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_MASTER_SPEC.md) → [execution contract](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_CODEX_PROMPT.md) → [implementation/evidence](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_IMPLEMENTATION.md). Scope is the existing Live clinician documentation route family only. No new clinical integration, backend/security change, final identity freeze, merge or deployment.
+**Preserved Clinician reference:** [PR #80 owner direction 6604240346](https://github.com/abuhmaid28/egyhealth360/pull/80#issuecomment-6604240346) and the [Patient-DNA premium visual pass](ui-reference/CLINICIAN_PATIENT_DNA_PREMIUM.md), refining the [approved Clinician master](https://github.com/abuhmaid28/egyhealth360/pull/80#issuecomment-6603761429). Original scope: [Issue #72 / authorization 6594105174](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6594105174) and the [Clinician controlling master](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_MASTER_SPEC.md) → [execution contract](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_CODEX_PROMPT.md) → [implementation/evidence](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_IMPLEMENTATION.md). Scope is the existing Live clinician documentation route family only. No new clinical integration, backend/security change, final identity freeze, merge or deployment.
 
 **Preserved Patient visual foundation:** My Care final baseline `f0d94e7e2579dc9bd1e2ef87ba493172b0f4cfb0`, with [final optical evidence](ui-reference/PATIENT_MY_CARE_POLISH.md), follows the original [owner gate 6574268901](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6574268901). Earlier implementation/refinement/composition reports retain their point-in-time evidence. Patient PR #79 and its source/assets/evidence remain unchanged; no wider rollout is authorized.
 
@@ -40,6 +41,10 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| Current staging polish reference | Responsibility / limits |
+| --- | --- |
+| [STAGING_UI_POLISH.md](STAGING_UI_POLISH.md) | Current bounded fix inventory, deployed candidate attribution, validation, time-display review corrections, remaining issues and source alignment recommendation; original captures retain their point-in-time provenance. No release/merge approval or Final V2 design acceptance. |
 
 | Clinician master implementation reference | Responsibility / limits |
 | --- | --- |

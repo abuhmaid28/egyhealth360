@@ -9,11 +9,10 @@ import {
 } from "react";
 import type { Appointment, Role } from "../lib/api/contracts";
 import type { LiveBooking } from "../lib/api/live-booking";
-import { accountName, presentationName } from "../lib/presentation";
+import { accountName, presentationName, directoryLabel, timeZoneLabel, repeatedTimeOffset } from "../lib/presentation";
 import {
   appointmentActivity,
   careDate,
-  careOffset,
   careTime,
   nextCareAppointment,
   ownDemoAppointment,
@@ -336,6 +335,7 @@ function AppointmentAnchor({
   retry: () => void;
   translate: (value: string) => string;
 }) {
+  const offset = a ? repeatedTimeOffset(a.startAt, a.timeZone) : null;
   return (
     <section
       className={styles.appointment}
@@ -376,7 +376,7 @@ function AppointmentAnchor({
             </span>
             <div className={styles.doctorInfo}>
               <h3>
-                {a.specialty ? translate(a.specialty) : c.specialtyUnavailable}
+                {a.specialty ? directoryLabel(a.specialty, translate) : c.specialtyUnavailable}
               </h3>
               <p>
                 <bdi>
@@ -393,9 +393,8 @@ function AppointmentAnchor({
                 <bdi dir="ltr">{careTime(a.startAt, a.timeZone)}</bdi>
               </p>
               <p className={styles.eventZone}>
-                <bdi dir="ltr">
-                  {a.timeZone} · {careOffset(a.startAt, a.timeZone)}
-                </bdi>
+                <bdi>{timeZoneLabel(a.timeZone, translate)}</bdi>
+                {offset && <> · <bdi dir="ltr">{offset}</bdi></>}
               </p>
               <p>
                 <bdi>
@@ -602,9 +601,7 @@ function RecentCare({
               {item.occurredAt ? (
                 <time dateTime={item.occurredAt}>
                   <bdi>{careDate(item.occurredAt, item.timeZone, locale)}</bdi>{" "}
-                  <bdi dir="ltr">
-                    {careOffset(item.occurredAt, item.timeZone)}
-                  </bdi>
+                  <bdi>{timeZoneLabel(item.timeZone, translate)}</bdi>
                 </time>
               ) : null}
             </p>

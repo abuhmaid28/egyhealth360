@@ -1,7 +1,7 @@
 export const ar: Record<string, string> = {
-  "Check your doctor, clinic and appointment time before confirming your booking.": "راجع الطبيب والعيادة وموعد الزيارة قبل تأكيد الحجز.",
+  "Check your doctor, clinic and appointment time before confirming your booking.": "راجع الدكتور والعيادة والميعاد قبل تأكيد الحجز.",
   "Available appointments · clinic time": "المواعيد المتاحة · بتوقيت العيادة",
-  "Choose an available time": "اختر موعدًا متاحًا",
+  "Choose an available time": "اختار ميعاد متاح",
 
   "Closed visit": "الاستشارة مغلقة",
   "Confirm the patient and your current care relationship before opening. An appointment alone does not give access to medical information.": "تأكد من هوية المريض ووجود علاقة رعاية حالية قبل فتح الاستشارة. الحجز وحده لا يمنح صلاحية الاطّلاع على المعلومات الطبية.",
@@ -24,9 +24,9 @@ export const ar: Record<string, string> = {
   "Live care account": "حساب رعاية متصل",
   "Synthetic demonstration account": "حساب توضيحي ببيانات افتراضية",
   "Your personal care space": "مساحتك الشخصية للرعاية",
-  "Your appointment history will appear here after your first booking.": "سيظهر سجل مواعيدك هنا بعد حجز زيارتك الأولى.",
+  "Your appointment history will appear here after your first booking.": "سجل مواعيدك هيظهر هنا بعد أول حجز.",
   "Recent appointments": "المواعيد الأخيرة",
-  "Find a doctor and choose an available time. Your confirmed appointment will appear here.": "ابحث عن طبيب واختر وقتًا متاحًا. سيظهر موعدك المؤكد هنا.",
+  "Find a doctor and choose an available time. Your confirmed appointment will appear here.": "دور على دكتور واختار ميعاد متاح. الميعاد هيظهر هنا بعد تأكيد الحجز.",
   "Make room for your next visit": "خطّط لزيارتك القادمة",
   "View appointment": "عرض الموعد",
   "Open your appointment for its current status and visit details.": "افتح الموعد للاطّلاع على حالته الحالية وتفاصيل الزيارة.",
@@ -38,7 +38,7 @@ export const ar: Record<string, string> = {
   "Your next step": "خطوتك التالية",
   "Your visits and shared care information, together.": "مواعيدك وما يشاركه طبيبك معك، في مكان واحد.",
   "Your care, at a glance": "رعايتك بنظرة واحدة",
-  "Doctor portal": "بوابة الطبيب",
+  "Doctor portal": "بوابة الدكتور",
   "Patient portal": "بوابة المريض",
   "Demo clinic location": "عنوان العيادة التوضيحية",
   "Demonstration location": "موقع توضيحي",
@@ -217,7 +217,7 @@ export const ar: Record<string, string> = {
   "Check the current care relationship.": "تحقق من علاقة الرعاية الحالية.",
   "Choose a published clinic": "اختر عيادة منشورة",
   "Choose a published interval": "اختر فترة متاحة منشورة",
-  "Choose your appointment": "اختر موعدك",
+  "Choose your appointment": "اختار ميعادك",
   "Choose your workspace": "اختر مساحة العمل",
   Clinic: "العيادة",
   "Clinic & location": "العيادة والموقع",
@@ -300,11 +300,11 @@ export const ar: Record<string, string> = {
   "Explore doctors in our curated directory.":
     "تعرّف على الأطباء في دليلنا المنتقى.",
   "Explore specialties, get to know your doctor, and plan your visit.":
-    "استكشف التخصصات وتعرّف على طبيبك وخطّط لزيارتك.",
+    "شوف التخصصات واتعرف على الدكتور قبل ما تحجز ميعادك.",
   "Explore the patient demo": "استكشف تجربة المريض",
   "Find a doctor and choose a time that works for you.":
     "اختر طبيبًا ووقتًا يناسبك.",
-  "Find your care partner": "ابحث عن شريك رعايتك",
+  "Find your care partner": "اختار دكتور لمتابعتك",
   "Find your care team": "اعثر على فريق رعايتك",
   "Find your doctor": "ابحث عن طبيبك",
   "Find your doctor, plan your visit, and keep every":
@@ -358,7 +358,7 @@ export const ar: Record<string, string> = {
   "Live-slot preview · synthetic clinical continuation":
     "عرض فترة فعلية · استكمال طبي افتراضي",
   Loading: "جارٍ التحميل",
-  "Loading your workspace…": "جارٍ تحميل مساحة العمل…",
+  "Loading your workspace…": "بنجهّز مساحة العمل…",
   Location: "الموقع",
   "Main navigation": "التنقل الرئيسي",
   "Make it yours": "بياناتك وتفضيلاتك",
@@ -379,7 +379,7 @@ export const ar: Record<string, string> = {
     "لم يُنشأ حجز على الخادم أو علاقة رعاية مع الطبيب الفعلي. يستكمل عرض الطبيب علاقة أحمد ومريم الافتراضية المستقلة. قد تتغير الفترة العامة أو تُسحب بشكل مستقل.",
   "No clinical entitlement": "لا صلاحية للاطلاع الطبي",
   "No consultation summaries yet": "لا توجد ملخصات استشارات بعد",
-  "No doctors match your search": "لا يوجد أطباء مطابقون للبحث",
+  "No doctors match your search": "مفيش دكاترة مطابقين للبحث",
   "No follow-up intentions shared": "لم تُشارك خطط متابعة",
   "No laboratory requests yet": "لا توجد طلبات تحاليل بعد",
   "No measurements recorded": "لا توجد قياسات مسجلة",
@@ -397,7 +397,7 @@ export const ar: Record<string, string> = {
   "Not recorded": "غير مسجل",
   "Not specified": "غير محدد",
   "Not yet reviewed": "لم تُراجع بعد",
-  "Nothing here yet": "لا توجد بيانات هنا بعد",
+  "Nothing here yet": "لسه مفيش بيانات هنا",
   "One connected": "في تجربة واحدة",
   "One place for every step of your health journey.":
     "مكان واحد لكل خطوة في رحلتك الصحية.",
@@ -498,7 +498,7 @@ export const ar: Record<string, string> = {
   "Review the personal details shared with your care experience.":
     "راجع بياناتك الشخصية المرتبطة بتجربة الرعاية.",
   "Review users": "مراجعة المستخدمين",
-  "Review your appointment details below.": "راجع تفاصيل الموعد أدناه.",
+  "Review your appointment details below.": "راجع تفاصيل ميعادك.",
   "Review your upcoming visits and pick up where your care team left off.":
     "راجع زياراتك القادمة واستكمل خطوات فريق الرعاية.",
   Role: "الدور",
@@ -509,8 +509,8 @@ export const ar: Record<string, string> = {
   "Scheduling overview": "نظرة على إعدادات المواعيد",
   "Scheduling scope": "نطاق تنظيم المواعيد",
   "Screen state": "حالة الشاشة",
-  "Search by doctor’s name": "ابحث باسم الطبيب",
-  "Search doctors": "البحث عن الأطباء",
+  "Search by doctor’s name": "دور باسم الدكتور",
+  "Search doctors": "البحث عن دكتور",
   "Separate relationship check": "تحقق مستقل من علاقة الرعاية",
   Sex: "الجنس",
   "Share clear instructions and next steps.":
@@ -553,7 +553,7 @@ export const ar: Record<string, string> = {
     "يجب أن تتحقق المساحة الفعلية من صلاحيات الخادم الحالية قبل قراءة المعلومات الطبية أو تعديلها. تبقى غير متاحة حتى اعتماد الربط.",
   "The patient and this clinician have a pre-existing active demo care relationship.":
     "للمريض وهذا الطبيب علاقة رعاية افتراضية نشطة سابقة للحجز.",
-  "The right doctor. A better next step.": "الطبيب المناسب. خطوة أفضل لصحتك.",
+  "The right doctor. A better next step.": "اختار دكتور وخطّط لزيارتك.",
   "The schedule provides logistics only. A booking does not establish patient authorization or clinician acceptance.":
     "يوفر الجدول معلومات تنظيمية فقط. لا يُنشئ الحجز موافقة المريض أو قبول الطبيب لعلاقة رعاية.",
   "The server checks your current clinic membership and publication scope.":
@@ -561,7 +561,7 @@ export const ar: Record<string, string> = {
   "The slot is published by the backend. Booking is a synthetic preview only; it will not reserve the live slot or create a care relationship.":
     "الفترة منشورة من الخادم. الحجز عرض افتراضي فقط؛ لا يحجز الفترة الفعلية ولا يُنشئ علاقة رعاية.",
   "There are no published bookable intervals for this view. Try another clinic or return later.":
-    "لا توجد فترات منشورة قابلة للحجز هنا. جرّب عيادة أخرى أو عُد لاحقًا.",
+    "مفيش مواعيد متاحة للحجز هنا. جرّب عيادة تانية أو ارجع بعدين.",
   "This is an intention from your visit, not an appointment or completed action.":
     "هذه خطة ناتجة عن الزيارة، وليست موعدًا محجوزًا أو إجراءً مكتملًا.",
   "This is not the live provider’s schedule. Synthetic Dr. Mariam simulates the continuation with Ahmed through their pre-existing demo relationship. No live booking or clinical authority was created.":
@@ -573,21 +573,21 @@ export const ar: Record<string, string> = {
   Time: "الوقت",
   "Time zone": "المنطقة الزمنية",
   "Try a different name, specialty, or clinic.":
-    "جرّب اسمًا أو تخصصًا أو عيادة أخرى.",
-  "Try again": "حاول مجددًا",
+    "جرّب اسم أو تخصص أو عيادة تانية.",
+  "Try again": "حاول تاني",
   Unavailable: "غير متاح",
   "Unknown — patient unable to confirm": "غير معروف — لا يستطيع المريض التأكيد",
   "Unsaved form · browser-only demo": "نموذج غير محفوظ · عرض داخل المتصفح فقط",
-  "Upcoming appointments": "المواعيد القادمة",
+  "Upcoming appointments": "المواعيد الجاية",
   "View consultation": "عرض الاستشارة",
   "View details": "عرض التفاصيل",
-  "View profile & availability": "عرض الملف والأوقات المتاحة",
+  "View profile & availability": "شوف الملف والمواعيد المتاحة",
   "Visit summaries": "ملخصات الزيارات",
   "Visit summary": "ملخص الزيارة",
   "Visit time": "وقت الزيارة",
-  "We couldn’t load this view": "تعذر تحميل هذه الشاشة",
+  "We couldn’t load this view": "مش قادرين نعرض الصفحة دلوقتي",
   "Welcome to EgyHealth 360": "مرحبًا بك في EgyHealth 360",
-  "What brings you in?": "ما سبب الزيارة؟",
+  "What brings you in?": "إيه سبب الزيارة؟",
   "What would you like to do?": "ماذا تود أن تفعل؟",
   "Withdraw interval": "سحب الفترة",
   "Withdrawing…": "جارٍ السحب…",
@@ -597,9 +597,9 @@ export const ar: Record<string, string> = {
   "Write down the questions that matter to you.": "دوّن الأسئلة التي تهمك.",
   "YOUR CONNECTED HEALTH JOURNEY": "رحلتك الصحية المترابطة",
   "Your appointment is saved. You can find it here anytime.":
-    "تم حفظ موعدك. يمكنك الرجوع إليه هنا في أي وقت.",
+    "ميعادك اتسجل. تقدر ترجع لتفاصيله هنا في أي وقت.",
   "Your appointments will appear here as your journey continues.":
-    "تظهر مواعيدك هنا مع تقدم رحلتك الصحية.",
+    "مواعيدك هتظهر هنا بعد تأكيد الحجز.",
   "Your care timeline": "الخط الزمني لرعايتك",
   "Your care, connected.": "رعايتك، مترابطة.",
   "Your clinician workspace is separate from patient self-service.":
@@ -607,7 +607,7 @@ export const ar: Record<string, string> = {
   "Your consultation is a space to discuss your concerns and decide the next steps together.":
     "الاستشارة فرصة لمناقشة مخاوفك والاتفاق على الخطوات التالية معًا.",
   "Your current account opens the": "حسابك الحالي يتيح مساحة",
-  "Your doctor": "طبيبك",
+  "Your doctor": "الدكتور المتابع ليك",
   "Your doctor has shared the next steps in your medical record.":
     "شارك الطبيب الخطوات التالية في سجلك الطبي.",
   "Your health story": "رحلتك الصحية",
@@ -656,9 +656,9 @@ export const ar: Record<string, string> = {
   "← Back to schedule": "→ العودة إلى الجدول",
   Overview: "الرئيسية",
   Patient: "المريض",
-  Doctor: "الطبيب",
+  Doctor: "دكتور",
   Pharmacy: "الصيدلية",
-  Laboratory: "المختبر",
+  Laboratory: "المعمل",
   Admin: "الإدارة",
   Operations: "العمليات",
   All: "الكل",
@@ -673,7 +673,7 @@ export const ar: Record<string, string> = {
   SCHEDULED: "مجدول",
   CANCELLED: "ملغى",
   Appointments: "المواعيد",
-  "Find a doctor": "ابحث عن طبيب",
+  "Find a doctor": "دور على دكتور",
   "Find a specialist": "ابحث عن متخصص",
   "Care that fits your needs": "رعاية تناسب احتياجاتك",
   "View medications": "عرض الأدوية",
@@ -728,9 +728,9 @@ export const ar: Record<string, string> = {
   "No completed visits yet": "لا توجد زيارات مكتملة بعد",
   "Your next visit starts here": "زيارتك التالية تبدأ هنا",
   "Clinic unavailable": "العيادة غير متاحة",
-  "A fresh start": "بداية جديدة",
+  "A fresh start": "لسه مفيش بيانات هنا",
   "Your information will appear here as your care journey continues.":
-    "تظهر معلوماتك هنا مع تقدم رحلة رعايتك.",
+    "معلوماتك هتظهر هنا مع متابعة خطوات الرعاية.",
   "View all": "عرض الكل",
   "Please try again.": "حاول مجددًا.",
   "Demo error preview. Choose “Populated” to restore the view.":
@@ -808,11 +808,11 @@ export const ar: Record<string, string> = {
   "Choose a provider to view public availability.":
     "اختر طبيبًا لعرض الأوقات العامة المتاحة.",
   "{role} workspace": "مساحة عمل {role}",
-  Clinician: "الطبيب",
-  "Lab staff": "فريق المختبر",
+  Clinician: "الدكتور",
+  "Lab staff": "فريق المعمل",
   "Pharmacy staff": "فريق الصيدلية",
   "English and Arabic interfaces available": "العربية والإنجليزية متاحتان",
-  "Doctor profile": "ملف الطبيب",
+  "Doctor profile": "ملف الدكتور",
   "Live booking is not connected": "الحجز الفعلي غير متصل بعد",
   "Published availability is live. Booking and visit workflows are available in the graduation demo only.":
     "الأوقات المنشورة فعلية. تتوفر خطوات الحجز والزيارة في العرض التجريبي لمشروع التخرج فقط.",
@@ -825,7 +825,7 @@ export const ar: Record<string, string> = {
   "Continue to pharmacy": "تابع إلى الصيدلية",
   "Continue to laboratory": "تابع إلى المختبر",
   "See the patient record": "اعرض سجل المريض",
-  "Clear search & filters": "مسح البحث والفلاتر",
+  "Clear search & filters": "امسح البحث والفلاتر",
   "Booking progress": "خطوات الحجز",
   "Choose a time": "اختيار الموعد",
   "Review details": "مراجعة التفاصيل",
@@ -1297,4 +1297,21 @@ export const ar: Record<string, string> = {
   "The consultation changed or is already closed. Refresh its current state before continuing.": "تغيرت الاستشارة أو أُغلقت بالفعل. حدّث حالتها الحالية قبل المتابعة.",
   "The close outcome is uncertain. Retry the unchanged close explicitly to check the result. Live mode remains active.": "نتيجة الإغلاق غير مؤكدة. أعد محاولة الإغلاق نفسه بقرار صريح للتحقق من النتيجة. يظل الوضع المباشر نشطًا.",
   "Consultation context could not be refreshed. Check your current access and try again.": "تعذر تحديث سياق الاستشارة. تحقق من صلاحية وصولك الحالية وأعد المحاولة.",
+  "Demo appointments are shown in Cairo time.": "مواعيد العرض التجريبي بتوقيت القاهرة.",
+  "Appointments follow the clinic’s scheduling rules. Publish each interval separately.": "المواعيد بتتحدد حسب قواعد العيادة. انشر كل فترة بشكل منفصل.",
+  "Choose a clinic where you can publish appointments.": "اختار عيادة عندك صلاحية تنشر مواعيد فيها.",
+  "Use the format shown, including the clinic’s time difference.": "اكتب التاريخ والوقت بنفس الشكل الموضّح، مع فرق التوقيت الخاص بالعيادة.",
+  "Account and organization settings are not available here yet.": "إعدادات الحساب والعضوية في الجهات مش متاحة هنا حاليًا.",
+  "This is a separate Demo consultation. Use your Live account for connected care.": "دي استشارة تجريبية منفصلة. استخدم حسابك المتصل لمتابعة الرعاية المتصلة.",
+  "Demo appointments appear here after booking from the Patient workspace.": "المواعيد التجريبية هتظهر هنا بعد الحجز من مساحة المريض.",
+  "Demo profile changes stay in this browser.": "تعديلات الملف التجريبي بتفضل في المتصفح ده.",
+  "These settings are for viewing only. Changes are not available here yet.": "الإعدادات دي للعرض فقط. تعديلها مش متاح هنا حاليًا.",
+  "Assigned requests only": "الطلبات المسندة ليك فقط",
+  "Patient records are not available": "السجلات الطبية مش متاحة",
+  "Cairo time": "بتوقيت القاهرة",
+  "Coordinated Universal Time": "بالتوقيت العالمي",
+  "Demo schedule · Cairo time": "مواعيد تجريبية · بتوقيت القاهرة",
+  "Cairo": "القاهرة",
+  "New Cairo": "القاهرة الجديدة",
+  "Doctors in this view: {count}": "عدد الدكاترة المعروضين: {count}",
 };

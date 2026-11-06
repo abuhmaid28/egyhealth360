@@ -85,7 +85,7 @@ export async function testArabic(browser, origin, shots) {
     .click();
   await snap("22-ar-discovery");
   await page
-    .getByRole("link", { name: "عرض الملف والأوقات المتاحة" })
+    .getByRole("link", { name: "شوف الملف والمواعيد المتاحة" })
     .first()
     .click();
   await page.locator(".slots button").first().click();

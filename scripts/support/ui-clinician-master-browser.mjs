@@ -34,7 +34,7 @@ export async function clinicianMasterPage(
   locale,
   kind = "draft",
 ) {
-  const state = { kind, writes: [], calls: [], errors: [], release: () => {} };
+  const state = { kind, startAt: masterFixture.startAt, writes: [], calls: [], errors: [], release: () => {} };
   let authEntered;
   state.authReady = new Promise((done) => {
     authEntered = done;
@@ -152,8 +152,8 @@ export async function clinicianMasterPage(
         providerId: masterId(4),
         clinicId: masterId(5),
         patientDisplayName: masterFixture.patient,
-        startAt: masterFixture.startAt,
-        endAt: "2026-10-31T10:30:00Z",
+        startAt: state.startAt,
+        endAt: new Date(Date.parse(state.startAt) + 1_800_000).toISOString(),
         timeZone: masterFixture.timeZone,
         state: state.kind === "closed" ? "CONSULTED" : "IN_CONSULTATION",
         version: state.kind === "closed" ? 3 : 2,
