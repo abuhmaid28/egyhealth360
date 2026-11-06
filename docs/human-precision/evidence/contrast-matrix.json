@@ -1,0 +1,93 @@
+[
+  {
+    "role": "Primary text / surface",
+    "foreground": "#102A38",
+    "background": "#FFFFFF",
+    "ratio": 14.89,
+    "threshold": 4.5
+  },
+  {
+    "role": "Muted text / canvas",
+    "foreground": "#4E626B",
+    "background": "#F5F7F7",
+    "ratio": 5.95,
+    "threshold": 4.5
+  },
+  {
+    "role": "Muted text / subtle",
+    "foreground": "#4E626B",
+    "background": "#EAF0F1",
+    "ratio": 5.55,
+    "threshold": 4.5
+  },
+  {
+    "role": "Action / white",
+    "foreground": "#155E63",
+    "background": "#FFFFFF",
+    "ratio": 7.46,
+    "threshold": 4.5
+  },
+  {
+    "role": "White / H anchor",
+    "foreground": "#FFFFFF",
+    "background": "#153F47",
+    "ratio": 11.45,
+    "threshold": 4.5
+  },
+  {
+    "role": "White / P action",
+    "foreground": "#FFFFFF",
+    "background": "#145C78",
+    "ratio": 7.42,
+    "threshold": 4.5
+  },
+  {
+    "role": "P text / source wash",
+    "foreground": "#193E52",
+    "background": "#EAF1F4",
+    "ratio": 9.93,
+    "threshold": 4.5
+  },
+  {
+    "role": "Warning / warning wash",
+    "foreground": "#765000",
+    "background": "#FFF4D8",
+    "ratio": 6.57,
+    "threshold": 4.5
+  },
+  {
+    "role": "Success / success wash",
+    "foreground": "#235D45",
+    "background": "#E9F4ED",
+    "ratio": 6.84,
+    "threshold": 4.5
+  },
+  {
+    "role": "Error / canvas",
+    "foreground": "#AF2F38",
+    "background": "#F5F7F7",
+    "ratio": 5.94,
+    "threshold": 4.5
+  },
+  {
+    "role": "Control border / white",
+    "foreground": "#71858D",
+    "background": "#FFFFFF",
+    "ratio": 3.86,
+    "threshold": 3
+  },
+  {
+    "role": "Focus / white separation",
+    "foreground": "#102A38",
+    "background": "#FFFFFF",
+    "ratio": 14.89,
+    "threshold": 3
+  },
+  {
+    "role": "White focus separation / H anchor",
+    "foreground": "#FFFFFF",
+    "background": "#153F47",
+    "ratio": 11.45,
+    "threshold": 3
+  }
+]

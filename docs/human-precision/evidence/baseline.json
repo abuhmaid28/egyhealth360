@@ -1,0 +1,22 @@
+{
+  "verified_date": "2026-11-06",
+  "repository": "abuhmaid28/egyhealth360",
+  "main": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "branch": "design/72-human-precision-review",
+  "issue": "https://github.com/abuhmaid28/egyhealth360/issues/72",
+  "merged_pull_requests": [
+    79,
+    80,
+    84,
+    85
+  ],
+  "owner_authorization": "Current direct brief, preserved in owner-request.txt; isolated exploration only",
+  "accepted_inputs": [
+    "UXD10–UXD16",
+    "IA01–IA05",
+    "CD01–CD07",
+    "BR01–BR08"
+  ],
+  "earlier_candidates": "A/B/C rejected; D/E/F unselected",
+  "current_task": "H/P finalist review and provisional system foundation; no final selection, adoption, backend or deployment"
+}

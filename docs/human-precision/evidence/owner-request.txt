@@ -1,0 +1,110 @@
+# EgyHealth 360 — World-Class Design System V2
+## Design Direction Synthesis & System Foundation
+
+**Role:** Act as a Principal Product Designer, Healthcare UX Architect, Brand Identity Director, Design Systems Architect, Accessibility Specialist, and Design Engineer.
+
+Repository: `abuhmaid28/egyhealth360`
+
+**Mission:** Establish an exceptional, distinctive, cohesive, Arabic-first healthcare product design foundation that can evolve into the approved, production-ready EgyHealth 360 Design System V2.
+
+The quality target is a credible, sophisticated healthcare SaaS product, not a generic dashboard, student-project template, or superficial visual refresh.
+
+## Source of truth
+
+Read the current repository baseline, approved Foundation Charter, UX, Information Architecture, Content System, Brand Research, Visual Directions V2, current component architecture, and existing Patient/Clinician visual evidence.
+
+Verify current GitHub state first. Preserve all accepted clinical, privacy, security, domain and implementation contracts.
+
+The original A/B/C visual directions were rejected. D — Precision Health, E — Human Clinical and F — Next-Gen Health OS exist as exploratory candidates. None is an approved final identity.
+
+Do not restart completed research or reuse generic image-search mockups instead of inspecting the actual committed designs.
+
+## Creative thesis to investigate
+
+Explore **Human Precision**: the emotional warmth and approachability of excellent patient experiences combined with the clinical precision, clarity and workflow efficiency of professional healthcare software.
+
+Evaluate whether a coherent synthesis of E and D, with selective functional strengths from F, delivers a stronger outcome than any existing direction alone.
+
+This is a hypothesis, not a predetermined winner. Challenge it with visual and product evidence.
+
+Avoid generic healthcare clichés, decorative medical crosses, excessive gradients, arbitrary glassmorphism, AI sparkle branding, repetitive dashboard cards, and indiscriminate use of dark UI.
+
+Make the product recognizable, calm, premium, accessible and operationally useful.
+
+## Required design investigation
+
+Evaluate the actual D/E/F work across brand personality, distinctive identity, typography, hierarchy, navigation, spacing, information density, clinical task efficiency, Arabic/RTL, responsiveness, accessibility and implementation scalability.
+
+Identify what is worth retaining, improving or rejecting. Do not produce three shallow recolors.
+
+Prepare coherent visual finalists for Product Owner comparison. Any proposed hybrid must use one unified visual grammar, not an inconsistent collection of favorite components.
+
+## System architecture
+
+Define a proposed layered Design System with foundational, semantic and component tokens following a vendor-neutral DTCG-compatible structure.
+
+Cover typography, colors, surfaces, spacing, radii, grids, borders, focus, elevation, density, responsive behavior, motion and status semantics.
+
+Establish a shared identity with distinct usage modes for patient-facing, clinician-facing and operational workspaces. Density may vary without creating unrelated design systems.
+
+Define Arabic-first typography and bilingual layout rules. Preserve recorded names, medical text, time zones, chronology and clinical authority boundaries.
+
+Do not invent or finalize brand colors, typography, logos or component APIs without design evidence and the required owner selection.
+
+## Healthcare UX specification
+
+Design reusable patterns for appointments, identity and care relationships, clinical context, documentation, prescriptions, pharmacy operations, laboratory orders/results, status histories, source provenance, warnings, authorization and signing/release.
+
+Make private versus released information, unavailable versus unauthorized capabilities, and Demo versus Live unmistakable.
+
+Do not invent working backend functionality for future Laboratory, Pharmacy, Admin, AI or EACCE milestones.
+
+## Required visual outputs
+
+Produce an actual reviewable design artifact, not only Markdown descriptions.
+
+Show visually comparable high-fidelity Patient and Clinician screens in Arabic and English, including desktop and mobile.
+
+Also demonstrate how the system scales to Pharmacy, Laboratory and Admin, using approved scope and honest placeholder states where functionality remains incomplete.
+
+Include a coherent component-gallery specimen with meaningful interaction states; an Arabic/Latin typography comparison; light-surface and compact-workspace examples; and small-size, monochrome and inverse logo studies.
+
+Use realistic synthetic healthcare content with no personal patient data.
+
+Make the outputs navigable and visually inspectable. Provide clearly named screenshots and/or an isolated interactive gallery. Do not claim untested visual, usability or accessibility quality.
+
+## Quality standards
+
+Target WCAG 2.2 AA accessibility, keyboard operability, readable focus indicators, non-color-only status communication, useful screen-reader semantics, safe zoom/reflow, genuine RTL layout and a documented contrast matrix.
+
+Inspect the designs at desktop, tablet, 390px mobile and 320px narrow widths, including long Arabic content and 200% text enlargement.
+
+Test critical states: loading, empty, success, field errors, access denied, unavailable operations, potentially ambiguous dates/times, uncertain operation outcomes and safe recovery.
+
+Evaluate design tradeoffs rather than choosing aesthetics alone.
+
+Maintain performance discipline and avoid unnecessary paid tools or runtime dependencies.
+
+## Deliverables and approval
+
+Deliver a concise visual direction rationale, a comparative scorecard, coherent recommended direction(s), high-fidelity preview boards, logo and typography explorations, provisional token architecture, component taxonomy, healthcare interaction patterns, accessibility evidence and a sequenced implementation plan.
+
+Recommend one preferred design direction with clear reasoning, while allowing the Product Owner to approve, reject or request a named hybrid.
+
+This sprint must not silently freeze Final Brand V2, the final logo, Design System V2 or high-fidelity product decisions.
+
+After the Product Owner selects the visual DNA, the next execution phase should produce the complete versioned Design System, documented coded primitives and components, visual regression tests and an incremental frontend adoption plan.
+
+Do not modify backend, API, database, security, clinical contracts, canonical deployment aliases or the protected final domain.
+
+## Autonomous execution
+
+Resolve ordinary design tooling, rendering, browser and validation blockers independently within scope.
+
+Do not stop at a generic BLOCKED status or repeatedly request approval for implementation details.
+
+Use focused verification and preserve existing project assets and evidence.
+
+Return a polished visual review package and a specific final design recommendation — not another investigation report.
+
+**Model recommendation: GPT-6 High / Extra High reasoning, when available.**
