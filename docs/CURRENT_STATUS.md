@@ -1,5 +1,6 @@
 # Current status
 
+Current session: the Product Owner authorized the bounded [R1 UX integration repair](R1_UX_INTEGRATION_REPAIR.md) from frozen real source `6fbd247a09d774fa42d9712068699753a88e10e6`. This candidate extends shared presentation across existing role screens, preserves Live/clinical/security scope, and keeps release, final brand/Design System and stable staging changes gated. Older paused-scope wording below does not block this explicitly authorized repair.
 CURRENT AUTHORITATIVE delivery snapshot. Foundation Reboot V2 Stage 0+1 is complete/accepted after independent review PASS and PR #73 merge at `2fb940c2759056d63d3a22b640d67a587abccf07`; [acceptance and exact-main CI](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564358810). Audited baseline main: **`eb61da263ce44db5ca71ffdfea6a87309c8e17ef`** (PR #71). This is a pinned implementation baseline, not a claim that main never advances. Recheck the remote at task start; the docs PR's eventual merge changes main without changing this runtime baseline.
 
 ## Product and accepted implementation

@@ -6,10 +6,12 @@ import {
   useRef,
   type ReactNode,
 } from "react";
-import type { HealthcareAdapter } from "../lib/api/contracts";
+import type { HealthcareAdapter, Mode } from "../lib/api/contracts";
 import { createLiveAdapter } from "../lib/api/live";
 import { createDemoAdapter } from "../lib/mock/adapter";
 type LiveSession = {
+  mode: (liveConfigured: boolean) => Mode;
+  selectMode: (mode: Mode) => void;
   adapter: () => HealthcareAdapter;
   demo: () => ReturnType<typeof createDemoAdapter>;
   clear: () => void;
@@ -19,12 +21,38 @@ const Context = createContext<LiveSession | null>(null);
  * Each page still resolves /auth/me; all reads/writes recheck on the server.
  * Live identity never enters browser storage or the separate explicit Demo adapter. */
 export function LiveSessionProvider({ children }: { children: ReactNode }) {
+  const selectedMode = useRef<Mode | undefined>(undefined);
   const current = useRef<HealthcareAdapter | undefined>(undefined);
   const demo = useRef<ReturnType<typeof createDemoAdapter> | undefined>(
     undefined,
   );
   const value = useMemo<LiveSession>(
     () => ({
+      mode: (liveConfigured) => {
+        if (!selectedMode.current) {
+          let stored: string | null = null;
+          try {
+            stored = window.localStorage.getItem("eh360-ui-mode");
+          } catch {
+            /* Use configured mode. */
+          }
+          selectedMode.current =
+            stored === "demo"
+              ? "demo"
+              : stored === "live" || liveConfigured
+                ? "live"
+                : "demo";
+        }
+        return selectedMode.current;
+      },
+      selectMode: (mode) => {
+        selectedMode.current = mode;
+        try {
+          window.localStorage.setItem("eh360-ui-mode", mode);
+        } catch {
+          /* Provider retains the explicit selection. */
+        }
+      },
       adapter: () => (current.current ??= createLiveAdapter()),
       demo: () => {
         if (!demo.current) {

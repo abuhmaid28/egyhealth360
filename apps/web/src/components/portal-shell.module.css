@@ -1,0 +1,228 @@
+/* Bounded R1 presentation adaptation of the accepted Patient/Clinician family. */
+.root,
+.login {
+  --navy: var(--care-navy);
+  --blue: var(--care-blue);
+  --blue-dark: var(--care-navy);
+  --blue-soft: var(--care-info-surface);
+  --teal: var(--care-teal);
+  --teal-dark: var(--care-teal-dark);
+  --teal-soft: #eaf6f8;
+  --ink: var(--care-ink);
+  --muted: var(--care-muted);
+  --line: var(--care-border);
+  --canvas: var(--care-canvas);
+  --white: var(--care-surface);
+  --radius: 12px;
+  --shadow: var(--care-shadow);
+}
+.root {
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.primary {
+  flex-wrap: wrap;
+}
+.utilities {
+  margin-inline-start: auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.mode {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--care-teal);
+  white-space: nowrap;
+}
+.unavailable {
+  font-size: 13px;
+  color: var(--care-muted);
+  padding-inline: 12px;
+}
+.secondary {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 40px;
+  max-inline-size: 1440px;
+  inline-size: 100%;
+  margin-inline: auto;
+  border-block-start: 1px solid var(--care-border);
+}
+.secondary a {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  min-block-size: 44px;
+  display: flex;
+  align-items: center;
+}
+.secondary a[aria-current="page"] {
+  color: var(--care-teal);
+  background: #eaf6f8;
+  font-weight: 600;
+}
+.account {
+  position: relative;
+}
+.account summary {
+  cursor: pointer;
+  list-style: none;
+  min-inline-size: 44px;
+  min-block-size: 44px;
+}
+.account summary::-webkit-details-marker {
+  display: none;
+}
+.account > div {
+  position: absolute;
+  z-index: 35;
+  inset-inline-end: 0;
+  inset-block-start: calc(100% + 8px);
+  min-inline-size: 240px;
+  max-inline-size: calc(100vw - 32px);
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+  background: white;
+  border: 1px solid var(--care-border);
+  border-radius: 12px;
+  box-shadow: var(--care-shadow);
+  overflow-wrap: anywhere;
+}
+.account a,
+.account button {
+  min-block-size: 44px;
+  padding: 8px;
+  text-align: start;
+  border: 0;
+  background: var(--care-alt);
+  border-radius: 8px;
+}
+.content {
+  inline-size: 100%;
+  max-inline-size: 1440px;
+  margin-inline: auto;
+  padding: 32px 40px 48px;
+  flex: 1;
+}
+.content :global(.page-heading) {
+  margin-block-end: 28px;
+}
+.content :global(.page-heading h1) {
+  font-size: 30px;
+  line-height: 1.35;
+}
+.content :global(.page-heading p) {
+  margin-block-start: 8px;
+}
+.content :global(.card) {
+  border-color: var(--care-border);
+  border-radius: 16px;
+  box-shadow: var(--care-shadow);
+}
+.content :global(.card h2) {
+  font-size: 20px;
+}
+.content :global(.card p) {
+  margin-block-start: 8px;
+}
+.root :global(.button) {
+  border-radius: 8px;
+  min-block-size: 44px;
+}
+.root :global(.button.primary) {
+  background: var(--care-teal);
+  border-color: var(--care-teal);
+  color: white;
+}
+.root :global(.button.primary:hover) {
+  background: var(--care-teal-dark);
+}
+.root :global(input),
+.root :global(textarea),
+.root :global(select) {
+  font: inherit;
+  border-color: var(--care-border-strong);
+  border-radius: 8px;
+}
+.root :global(.scoped-consultation) {
+  --consultation-offset: 0px;
+}
+.login :global(.logo) {
+  color: var(--care-navy);
+}
+.login :global(.login-story) {
+  background: linear-gradient(120deg, var(--care-navy), var(--care-teal-dark));
+}
+.login :global(.login-story) > bdi {
+  color: white;
+}
+@media (max-width: 900px) {
+  .header {
+    gap: 12px;
+    padding-block: 12px;
+    padding-inline: 24px;
+  }
+  .primary {
+    order: 3;
+    flex-basis: 100%;
+  }
+  .secondary {
+    padding-inline: 24px;
+  }
+  .content {
+    padding: 24px;
+  }
+}
+@media (max-width: 600px) {
+  .header {
+    padding-inline: 16px;
+  }
+  .header > a {
+    font-size: 14px;
+  }
+  .utilities {
+    gap: 8px;
+  }
+  .mode {
+    font-size: 11px;
+  }
+  .secondary {
+    padding-inline: 12px;
+    gap: 0;
+  }
+  .content {
+    padding: 24px 16px 40px;
+  }
+  .content :global(.page-heading h1) {
+    font-size: 25px;
+  }
+  .root {
+    padding-block-end: env(safe-area-inset-bottom);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .root *,
+  .root *::before,
+  .root *::after {
+    scroll-behavior: auto;
+    animation-duration: 0.01ms;
+    transition-duration: 0.01ms;
+  }
+}
+.root > main {
+  inline-size: 100%;
+}
+.root[data-portal-shell="CLINICIAN"] {
+  font-size: 14px;
+}
+@media (max-width: 760px) {
+  .root:not([data-portal-shell="PATIENT"]) .primary {
+    display: flex;
+  }
+}

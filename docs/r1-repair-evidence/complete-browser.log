@@ -1,0 +1,19 @@
+PASS R1 mode: configured Live default, storage denial, failed Live reads, authenticated deep link, reload, wrong-role boundary, EN/AR, logout; no unintended Demo transition.
+PASS: live availability browser contracts (success/empty/error/loading/non-bookable, pagination, clinic timezone under Tokyo browser, responsive long names), real Booking review boundary with no clinical continuation, clinician publish/withdraw and stable retry keys.
+PASS: My Care reference composition, EN/AR 1600/390, 320 reflow, 200% text, focus, states and read-only Live/Demo isolation.
+PASS: Clinician master exact route, inherited family, three planes, EN/AR reflow to 320px, anchor/focus clearance, private/summary separation, explicit unchanged retry and source-rail redaction.
+PASS Arabic/RTL: instant switch both ways, persistence, preference isolation, Golden Demo, entered clinical text unchanged, dialog Escape/release, role navigation, 1440/834/390 overflow.
+Phase 3 en: navigation and search
+Phase 3 en: booking review and confirmation
+Phase 3 en: consultation review and handoffs
+Phase 3 ar: navigation and search
+Phase 3 ar: booking review and confirmation
+Phase 3 ar: consultation review and handoffs
+PASS: Phase 3 EN/AR continuity, booking service boundaries, complete release review, private-note exclusion, search recovery, account-menu keyboard/focus, dialog Escape and responsive matrix at 1440/834/390.
+PASS: Live patient journey, EN/AR responsive summary entry, independent recovery and storage-denied demo.
+PASS controlled Slice6 patient UI: loading/empty/released/failure/expiry, EN/AR/RTL responsive, no draft editor or raw payload, Live failure remains Live.
+PASS live Booking browser EN/AR/RTL: real-contract create/retry/history/detail/pagination/cancel/reschedule/conflicts, same clinician/clinic, schedule/attendance/correction history, safe 401/404/503, no Demo fallback or clinical authority, loading/empty and 1440/834/390 layouts.
+PASS Consultation Opening controlled EN/AR/RTL 1440/834/390: eligible/early/terminal/opened states, scoped access errors, pending/retry, metadata shell, focus restoration and privacy. Real persistence proof is separate.
+PASS Phase 5 Stage A EN/AR/RTL controlled documentation: normal build rejects forged opening context/fixture flags; findings/allergy uncertainty, private boundaries, saved drafts, explicit release/uncertain retry, patient/other-clinician/ADMIN privacy, immutable amendments, wrong-patient masking, session/access denial, memory-only state, keyboard focus and 1440/834/390. NOT backend persistence proof.
+PASS controlled Close EN/AR/RTL: pending dismissal guard, 400/401/403/404/409/503, authority editor clearing, manual same-key retry, stale/already-closed reconciliation, Live separation and mobile overflow.
+PASS: browser Golden Demo, role boundaries, patient privacy, reload continuity, 23 route state variants + live HTTP contract probe, desktop/tablet/mobile navigation and overflow; no browser exceptions.

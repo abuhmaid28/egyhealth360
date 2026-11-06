@@ -1,3 +1,4 @@
+import { r1EvidencePath } from "./ui-r1-evidence.mjs";
 /** Actual Browser → Next → Nest → PostgreSQL close. No HTTP mocks. */
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
@@ -6,6 +7,9 @@ import { pastBooking } from "../../tests/support/bookings.mjs";
 
 export async function testRealClose(browser, page, f, fault, login) {
   const origin = "http://localhost:3000";
+  if (process.env.UI_R1_EVIDENCE_DIR) {
+    for (const folder of ["", "follow-up", "closeout"]) await mkdir(r1EvidencePath("docs/ui-screenshots/" + folder), { recursive: true });
+  }
   // Re-establish current authority through the approved bilateral HTTP workflow
   // after the preceding privacy proof ended its relationship and patient sessions.
   const patientContext = await browser.newContext({
@@ -212,7 +216,7 @@ export async function testRealClose(browser, page, f, fault, login) {
         locale === "ar" ? "rtl" : "ltr",
       );
       await page.screenshot({
-        path: `docs/ui-screenshots/closeout/${locale}-${width}-review.png`,
+        path: r1EvidencePath(`docs/ui-screenshots/closeout/${locale}-${width}-review.png`),
       });
     }
   }

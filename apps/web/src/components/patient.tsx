@@ -1,6 +1,6 @@
 "use client";
 import { presentationName } from "../lib/presentation";
-import { LivePatientHome } from './live-home';
+import { LivePatientHome } from "./live-home";
 import { PatientFollowUps } from "./follow-up-intents";
 import { ReleasedSummariesScreen } from "./documentation";
 import { createUnavailableDocumentation } from "../lib/clinical/documentation";
@@ -40,9 +40,43 @@ import {
   useResource,
 } from "./ui";
 export function PatientScreen({ path }: { path: string }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
 
   const { api } = useApp();
+  if (
+    api.mode === "live" &&
+    ["/patient/medications", "/patient/laboratory"].includes(path)
+  )
+    return (
+      <>
+        <Heading
+          title={t(path.endsWith("medications") ? "Medications" : "Laboratory")}
+          description={
+            locale === "ar"
+              ? "حسابك لسه في وضع الرعاية المتصلة."
+              : "Your account remains in Live mode."
+          }
+        />
+        <Card>
+          <CardTitle
+            title={
+              locale === "ar"
+                ? "الإمكانية دي مش متاحة في الواجهة الحالية"
+                : "Unavailable in the current Live interface"
+            }
+          />
+          <p>
+            {locale === "ar"
+              ? "الصفحة دي مش متوصلة بخدمة فعلية. تقدر ترجع لمتابعتك من غير تغيير وضع الحساب."
+              : "This screen has no Live integration. You can return to My care while keeping your Live session."}
+          </p>
+          <Link className="button secondary" href="/patient">
+            {locale === "ar" ? "متابعتي" : "My care"}
+          </Link>
+        </Card>
+      </>
+    );
+
   if (
     api.mode === "live" &&
     (path === "/patient/appointments" ||
@@ -429,12 +463,14 @@ export function ProviderCard({ provider }: { provider: Provider }) {
           {presentationName(provider.displayName, t)}
         </Link>
       </h3>
-      <p className="muted">{presentationName(provider.specialty.displayName, t)}</p>
+      <p className="muted">
+        {presentationName(provider.specialty.displayName, t)}
+      </p>
       <div className="provider-clinic">
         <Icon name="pin" size={16} />
         <span>
-          {presentationName(provider.clinics[0]?.displayName ?? '', t)} {t("·")}
-          {presentationName(provider.clinics[0]?.city ?? '', t)}
+          {presentationName(provider.clinics[0]?.displayName ?? "", t)} {t("·")}
+          {presentationName(provider.clinics[0]?.city ?? "", t)}
         </span>
       </div>
       <Link
@@ -472,7 +508,10 @@ function Discovery() {
           const filtered = providers.filter(
             (p) =>
               (!query ||
-                (p.displayName.toLowerCase().includes(query.toLowerCase()) || presentationName(p.displayName, t).toLowerCase().includes(query.toLowerCase()))) &&
+                p.displayName.toLowerCase().includes(query.toLowerCase()) ||
+                presentationName(p.displayName, t)
+                  .toLowerCase()
+                  .includes(query.toLowerCase())) &&
               (!specialty || p.specialty.key === specialty) &&
               (!clinic || p.clinics.some((c) => c.id === clinic)),
           );
@@ -623,7 +662,7 @@ function DoctorProfile({ id }: { id: string }) {
                 </p>
                 <div className="inline muted">
                   <Icon name="building" size={17} />
-                  {presentationName(p.clinics[0]?.displayName ?? '', t)}
+                  {presentationName(p.clinics[0]?.displayName ?? "", t)}
                 </div>
               </div>
               <div className="profile-seal">
@@ -658,7 +697,10 @@ function DoctorProfile({ id }: { id: string }) {
                   <CardTitle title={t("Clinic & location")} />
                   {p.clinics.map((c) => (
                     <div key={c.id} className="clinic-detail">
-                      <Detail icon="pin" title={<bdi>{presentationName(c.city, t)}</bdi>}>
+                      <Detail
+                        icon="pin"
+                        title={<bdi>{presentationName(c.city, t)}</bdi>}
+                      >
                         <Link
                           className="text-link"
                           href={`/patient/clinics/${c.id}`}

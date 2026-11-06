@@ -54,56 +54,20 @@ export async function testPolish(browser, origin, shots) {
     await button("Explore the patient demo").click();
     await ready();
     await responsive("dashboard");
-    // The authorized My Care slice has bottom navigation. Keep the legacy drawer
-    // regression on the unchanged Appointments surface instead of requiring it on My Care.
     await page.locator('[data-my-care] a[href="/patient/appointments"]').last().click();
     await page.waitForURL("**/patient/appointments");
-    // Wait for the media-query effect, not only browser viewport metrics.
-    await page.locator(".sidebar[inert]").waitFor({ state: "attached" });
-    // Closed mobile navigation is absent from keyboard/accessibility traversal.
-    assert.equal(
-      await page.locator(".sidebar").evaluate((el) => el.inert),
-      true,
-    );
-    await button("Open navigation").click();
-    await page.locator(".sidebar.open").waitFor();
-    assert.equal(
-      await page.locator(".app-body").evaluate((el) => el.inert),
-      true,
-    );
-    const first = page.locator(".sidebar button").first();
-    await first.focus();
-    await page.keyboard.press("Shift+Tab");
-    assert.equal(
-      await page
-        .locator(".sidebar")
-        .evaluate((el) => el.contains(globalThis.document.activeElement)),
-      true,
-    );
+    assert.equal(await page.locator(".sidebar").count(), 0);
+    const account = page.locator("header details");
+    await account.locator("summary").click();
+    assert.equal(await account.evaluate(el => el.open), true);
     await page.keyboard.press("Escape");
-    await button("Open navigation").waitFor();
-    assert.equal(
-      await button("Open navigation").evaluate(
-        (el) => el === globalThis.document.activeElement,
-      ),
-      true,
-    );
-    assert.equal(
-      await page.evaluate(() => globalThis.document.body.style.overflow),
-      "",
-    );
-    await button("Open navigation").click();
-    await page
-      .getByRole("navigation")
-      .getByRole("link", { name: t("Find a doctor"), exact: true })
-      .click();
+    assert.equal(await account.evaluate(el => el.open), false);
+    assert.equal(await account.locator("summary").evaluate(el => el === globalThis.document.activeElement), true);
+    assert.equal(await page.evaluate(() => globalThis.document.body.style.overflow), "");
+    await page.locator('[data-bottom-navigation] a[href="/patient/discover"]').click();
     await page.waitForURL("**/patient/discover");
-    await page.locator(".sidebar[inert]").waitFor({ state: "attached" });
     await ready();
-    assert.equal(
-      await page.locator(".sidebar").evaluate((el) => el.inert),
-      true,
-    );
+    assert.equal(await page.locator('[data-portal-shell="PATIENT"]').count(), 1);
     await page
       .getByLabel(t("Search doctors"), { exact: true })
       .fill("no-match-synthetic");
@@ -258,7 +222,7 @@ export async function testPolish(browser, origin, shots) {
       .waitFor();
     await responsive("patient record");
     assert.deepEqual(
-      requests,
+      requests.filter(url => new URL(url).pathname !== "/api/v1/auth/me"),
       [],
       "Demo continuation must never issue Booking or clinical HTTP requests",
     );
@@ -306,6 +270,6 @@ export async function testPolish(browser, origin, shots) {
     await page.close();
   }
   console.log(
-    "PASS: Phase 3 EN/AR continuity, booking service boundaries, complete release review, private-note exclusion, search recovery, drawer keyboard/focus, dialog Escape and responsive matrix at 1440/834/390.",
+    "PASS: Phase 3 EN/AR continuity, booking service boundaries, complete release review, private-note exclusion, search recovery, account-menu keyboard/focus, dialog Escape and responsive matrix at 1440/834/390.",
   );
 }

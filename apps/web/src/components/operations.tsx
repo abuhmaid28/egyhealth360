@@ -21,28 +21,96 @@ import {
   useResource,
 } from "./ui";
 export function OperationsScreen({ path }: { path: string }) {
-  const { t } = useLocale();
-
-  const { session } = useApp();
-  if (session.role === "ADMIN") return <Admin path={path} />;
+  const { t, locale } = useLocale();
+  const { session, api } = useApp();
+  const admin = session.role === "ADMIN";
+  const lab = session.role === "LAB_STAFF";
+  if (api.mode === "live" && !path.endsWith("/settings")) {
+    const message =
+      locale === "ar"
+        ? admin
+          ? "إدارة المستخدمين والمؤسسات مش متاحة في الواجهة دي. تقدر تستعرض الدليل العام."
+          : lab
+            ? "طلبات ونتائج المعمل مش متاحة في وضع الرعاية المتصلة."
+            : "متابعة وصرف الوصفات الطبية مش متاحين في الواجهة دي حاليًا."
+        : admin
+          ? "People and organization management are unavailable in this interface. You can browse the public directory."
+          : lab
+            ? "Laboratory orders and results are unavailable in Live mode."
+            : "Prescription fulfillment is not available in this interface yet.";
+    return (
+      <>
+        <Heading
+          eyebrow={t("Operational workspace")}
+          title={t(
+            admin
+              ? "Operations overview"
+              : lab
+                ? "Request inbox"
+                : "Prescription inbox",
+          )}
+          description={t(
+            admin
+              ? "Coordinate the platform without access to patient clinical records."
+              : "Your operational scope follows your current organization membership.",
+          )}
+        />
+        <Card>
+          <CardTitle
+            title={
+              locale === "ar"
+                ? "الإمكانية دي مش متاحة في الواجهة الحالية"
+                : "Unavailable in the current Live interface"
+            }
+          />
+          <p>{message}</p>
+          <p className="muted">
+            {t(
+              admin
+                ? "Admin has no patient-record, consultation, prescription, or lab-result access."
+                : "Only routed prescriptions or laboratory requests belong in this workspace. No patient record browsing is provided.",
+            )}
+          </p>
+          {admin && path !== "/admin/directory" && (
+            <Link className="button secondary" href="/admin/directory">
+              {t("Directory")}
+            </Link>
+          )}
+        </Card>
+        {admin && path === "/admin/directory" && <DirectoryOverview />}
+      </>
+    );
+  }
   if (path.endsWith("/settings"))
     return (
       <>
         <Heading
           title={t("Workspace settings")}
           description={t(
-            "Your operational scope follows your current organization membership.",
+            admin
+              ? "Coordinate the platform without access to patient clinical records."
+              : "Your operational scope follows your current organization membership.",
           )}
         />
         <Card>
-          <Detail icon="shield" title={t("Artifact-scoped workspace")}>
+          <Detail
+            icon="shield"
+            title={t(
+              session.role === "ADMIN"
+                ? "No clinical entitlement"
+                : "Artifact-scoped workspace",
+            )}
+          >
             {t(
-              "Only routed prescriptions or laboratory requests belong in this workspace. No patient record browsing is provided.",
+              session.role === "ADMIN"
+                ? "Admin has no patient-record, consultation, prescription, or lab-result access."
+                : "Only routed prescriptions or laboratory requests belong in this workspace. No patient record browsing is provided.",
             )}
           </Detail>
         </Card>
       </>
     );
+  if (session.role === "ADMIN") return <Admin path={path} />;
   return <FulfillmentInbox lab={session.role === "LAB_STAFF"} />;
 }
 function FulfillmentInbox({ lab }: { lab: boolean }) {

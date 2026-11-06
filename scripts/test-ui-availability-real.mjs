@@ -1,3 +1,5 @@
+import { testR1OperationalPortals } from "./support/ui-r1-portals-real.mjs";
+import { r1Capture } from "./support/ui-r1-evidence.mjs";
 /** Opt-in synthetic PostgreSQL/browser proof using existing approved Slice 2 test fixtures. */
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
@@ -6,10 +8,17 @@ import { chromium } from "playwright";
 import { isolatedBookings } from "../tests/support/bookings.mjs";
 import {
   createDatabase,
+  createAuthorizationPersistence,
+  createBloodPressureMeasurementPersistence,
+  createFollowUpAppointmentPersistence,
+  createClinicalEncounterPersistence,
+  createPatientEntryPersistence,
+  createPrescriptionPersistence,
   createRelationshipPersistence,
   createDocumentationPersistence,
   createFollowUpIntentPersistence,
 } from "../packages/db/dist/index.js";
+import { patientEntryRuntime } from "../apps/api/dist/patient-entry.js";
 import { createApp } from "../apps/api/dist/app.js";
 import { createPasswordVerifier } from "../apps/api/dist/password.js";
 import { testRealConsultation } from "./support/ui-consultation-opening-real.mjs";
@@ -34,6 +43,14 @@ try {
     const relationships = createRelationshipPersistence(f.url);
     const documentation = createDocumentationPersistence(f.url);
     const intents = createFollowUpIntentPersistence(f.url);
+    // Same optional modules as the actual API entrypoint, including own profile/record
+    // readers. Missing test wiring must not masquerade as a product availability limit.
+    const authorization = createAuthorizationPersistence(f.url);
+    const bloodPressure = createBloodPressureMeasurementPersistence(f.url);
+    const appointments = createFollowUpAppointmentPersistence(f.url);
+    const encounters = createClinicalEncounterPersistence(f.url);
+    const patientEntry = createPatientEntryPersistence(f.url);
+    const prescriptions = createPrescriptionPersistence(f.url);
     const api = await createApp(
       database,
       {
@@ -41,10 +58,10 @@ try {
         store: f.auth,
         passwords: await createPasswordVerifier(),
       },
-      undefined,
-      undefined,
-      undefined,
-      undefined,
+      authorization,
+      bloodPressure,
+      { appointments, encounters },
+      patientEntryRuntime(patientEntry),
       f.directory,
       relationships,
       f.availability,
@@ -52,6 +69,7 @@ try {
       f.consultations,
       documentation,
       intents,
+      prescriptions,
     );
     await api.listen(0, "127.0.0.1");
     const backend = await api.getUrl();
@@ -222,11 +240,19 @@ try {
         .getByRole("button", { name: "Explore the patient demo" })
         .waitFor();
       await login("patient");
-      await page.goto(
-        `http://localhost:3000/patient/doctors/${f.provider.publicId}`,
-      );
+      await r1Capture(page, "my-care-live-en");
+      await page.locator('header a[href="/patient/discover"]').click();
+      await page.locator(`a[href="/patient/doctors/${f.provider.publicId}"]`).last().click();
+      await page.locator(".live-slots button").first().waitFor();
+      await r1Capture(page, "provider-live-en");
+      await page.goBack();
+      await page.locator(".provider-grid").waitFor();
+      await r1Capture(page, "discovery-live-en");
+      await page.goForward();
+      await page.locator(".live-slots button").first().waitFor();
       await page.getByRole("button", { name: "العربية", exact: true }).click();
       await page.locator(".live-slots button").first().waitFor();
+      await r1Capture(page, "provider-live-ar");
       assert.ok(
         (await page.locator(".live-slots").innerText()).includes("UTC"),
       );
@@ -240,6 +266,7 @@ try {
         { ...f, intents },
         networkFault,
       );
+      await testR1OperationalPortals(browser, f);
       assert.deepEqual(
         (await f.availability.history(f.actors.clinician, {})).data.filter(
           (s) => before.some((v) => v.id === s.id),
@@ -261,6 +288,12 @@ try {
       await intents.close();
       await relationships.close();
       await database.close();
+      await authorization.close();
+      await bloodPressure.close();
+      await appointments.close();
+      await encounters.close();
+      await patientEntry.close();
+      await prescriptions.close();
     }
   });
 } finally {
