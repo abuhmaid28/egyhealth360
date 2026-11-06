@@ -25,6 +25,7 @@ import {
   type Preview,
 } from "./ui";
 import { PatientScreen } from "./patient";
+import { PatientMyCare } from "./patient-my-care";
 import { DoctorScreen } from "./doctor";
 import { OperationsScreen } from "./operations";
 export const homes: Record<Role, string> = {
@@ -212,6 +213,12 @@ export function Application({
       />
     );
   const userLabel = accountName(session, t);
+  if (session.role === "PATIENT" && pathname === "/patient")
+    return (
+      <Context.Provider value={{ api, booking, session, preview, refresh, notify: setToast, changed: () => setRefresh(v => v + 1), openDemoWorkspace: enter }}>
+        <PatientMyCare onLogout={logout} onRoleChange={enter} toast={toast} onDismiss={() => setToast("")} />
+      </Context.Provider>
+    );
   const allowed =
     pathname === homes[session.role] ||
     pathname.startsWith(`${homes[session.role]}/`);

@@ -4,9 +4,15 @@ CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutab
 
 ## Fast reading order
 
-Read [AGENTS](../AGENTS.md) → current issue/latest applicable explicit authorization → [CURRENT_STATUS](CURRENT_STATUS.md) → [FOUNDATION_CHARTER](FOUNDATION_CHARTER.md) + this index → task-relevant contracts/references → implementation/tests. PROJECT/history is optional context, not mandatory archaeology. Current Brand Research-only scope and accepted CD01–CD07 follow [issue #72 comment 6568210676](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568210676). Content/Arabic is accepted/merged at `80cb2bc27d9439f0e57e5bec320ac9bde0121e87`; older pending language is adoption-time context. [Stage 3 acceptance 6567526978](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567526978) accepts IA01–IA05, Patient B and Clinician B at main `86cc044314c865404a114903bbe417fde00e10ec`; old IA pending-gate language is adoption-time context, not a reopened decision. [Stage 2 acceptance 6565530772](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565530772) supersedes adoption-time pending language for accepted UXD10–UXD16 and role/task/journey foundations; UXD19 remains planning only. Earlier 6563757904 established Stage 0+1/charter and superseded 6563631251; it is not today's task scope.
+**Latest bounded direction:** the Product Owner accepts the current My Care composition in the latest chat and authorizes final optical polish only. [Final optical report](ui-reference/PATIENT_MY_CARE_POLISH.md) preserves that structure, type/palette and all behavior; final visual sign-off remains pending.
 
-Product/design reading path: [UX_FOUNDATION](UX_FOUNDATION.md) → [USER_JOURNEYS](USER_JOURNEYS.md) → [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md), with [PRODUCT_UX_INVENTORY](PRODUCT_UX_INVENTORY.md) as evidence and [PRODUCT_UX_VALIDATION](PRODUCT_UX_VALIDATION.md) as the point-in-time validation record. Then read [INFORMATION_ARCHITECTURE](INFORMATION_ARCHITECTURE.md) → [IA_SITEMAPS](IA_SITEMAPS.md) → [IA_DECISION_REGISTER](IA_DECISION_REGISTER.md) → [IA_VALIDATION](IA_VALIDATION.md). Then read [CONTENT_SYSTEM](CONTENT_SYSTEM.md) → [ARABIC_UX](ARABIC_UX.md) → [TERMINOLOGY_GLOSSARY](TERMINOLOGY_GLOSSARY.md) → [CONTENT_DECISION_REGISTER](CONTENT_DECISION_REGISTER.md) → [CONTENT_VALIDATION](CONTENT_VALIDATION.md). Stage 3 IA and CD01–CD07 content choices are accepted. Then read [Brand research](BRAND_RESEARCH.md) → [reference map](BRAND_REFERENCE_MAP.md) → [strategy](BRAND_STRATEGY.md) → [future brief](BRAND_EXPLORATION_BRIEF.md) → [brand decisions](BRAND_DECISION_REGISTER.md) → [validation](BRAND_RESEARCH_VALIDATION.md). Brand strategy is proposed; no final visual choice is accepted. CURRENT_STATUS records current acceptance. Mutable task sentences in older product/contract/audit snapshots never override CURRENT_STATUS or newer explicit authorization; in particular PRODUCT.md's Stage 0+1 opening sentence is retained historical task context, not a current task blocker.
+**Accepted composition baseline:** the Product Owner's second My Care composition instruction in the current chat explicitly supersedes the previous left-column layout. [Current composition report](ui-reference/PATIENT_MY_CARE_COMPOSITION.md) records the new centered/full-width treatment and preservation of data, time, authority/privacy and Demo/Live semantics. Earlier implementation/refinement reports remain historical evidence of their reviewed heads.
+
+**Implementation foundation:** [Issue #72 / owner gate 6574268901](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6574268901) authorizes **Patient My Care only**. The [handoff](ui-reference/README_START_HERE.md), [specification](ui-reference/PREMIUM_SYNTHESIS_SPEC.md), [execution prompt](ui-reference/CODEX_PROMPT.md), original SVG, [initial evidence](ui-reference/PATIENT_MY_CARE_IMPLEMENTATION.md) and [first refinement](ui-reference/PATIENT_MY_CARE_REFINEMENT.md) remain the preserved foundation. The latest owner composition instruction above now governs the centered/full-width layout and utilities. Preserve accepted data, IA, clinical/security semantics and unchanged fonts/palette. No broad rollout or final identity is approved.
+
+Read [AGENTS](../AGENTS.md) → current issue/latest applicable explicit authorization → [CURRENT_STATUS](CURRENT_STATUS.md) → [FOUNDATION_CHARTER](FOUNDATION_CHARTER.md) + this index → task-relevant contracts/references → implementation/tests. PROJECT/history is optional context, not mandatory archaeology. Earlier V2 D/E/F exploration followed the [explicit owner re-exploration request](visual-directions-v2/evidence/owner-request.txt), superseding A/B/C as candidates. Accepted BR01–BR08 and preserved scope/gates follow [issue #72 comment 6568574368](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568574368). Brand Research is accepted/merged at `0a0e9c2038ecad420e95c2c67ae367129e195839`; no logo, palette, font or winning direction is accepted. Accepted CD01–CD07 follow comment 6568210676. Content/Arabic is accepted/merged at `80cb2bc27d9439f0e57e5bec320ac9bde0121e87`; older pending language is adoption-time context. [Stage 3 acceptance 6567526978](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567526978) accepts IA01–IA05, Patient B and Clinician B at main `86cc044314c865404a114903bbe417fde00e10ec`; old IA pending-gate language is adoption-time context, not a reopened decision. [Stage 2 acceptance 6565530772](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565530772) supersedes adoption-time pending language for accepted UXD10–UXD16 and role/task/journey foundations; UXD19 remains planning only. Earlier 6563757904 established Stage 0+1/charter and superseded 6563631251; it is not today's task scope.
+
+Product/design reading path: [UX_FOUNDATION](UX_FOUNDATION.md) → [USER_JOURNEYS](USER_JOURNEYS.md) → [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md), with [PRODUCT_UX_INVENTORY](PRODUCT_UX_INVENTORY.md) as evidence and [PRODUCT_UX_VALIDATION](PRODUCT_UX_VALIDATION.md) as the point-in-time validation record. Then read [INFORMATION_ARCHITECTURE](INFORMATION_ARCHITECTURE.md) → [IA_SITEMAPS](IA_SITEMAPS.md) → [IA_DECISION_REGISTER](IA_DECISION_REGISTER.md) → [IA_VALIDATION](IA_VALIDATION.md). Then read [CONTENT_SYSTEM](CONTENT_SYSTEM.md) → [ARABIC_UX](ARABIC_UX.md) → [TERMINOLOGY_GLOSSARY](TERMINOLOGY_GLOSSARY.md) → [CONTENT_DECISION_REGISTER](CONTENT_DECISION_REGISTER.md) → [CONTENT_VALIDATION](CONTENT_VALIDATION.md). Stage 3 IA and CD01–CD07 content choices are accepted. Then read [Brand research](BRAND_RESEARCH.md) → [reference map](BRAND_REFERENCE_MAP.md) → [strategy](BRAND_STRATEGY.md) → [future brief](BRAND_EXPLORATION_BRIEF.md) → [brand decisions](BRAND_DECISION_REGISTER.md) → [validation](BRAND_RESEARCH_VALIDATION.md). BR01–BR08 strategy is accepted; older pending wording records adoption-time context. Retain the [three earlier V2 directions](visual-directions-v2/README.md), [unranked comparison](visual-directions-v2/COMPARISON.md), [six new logo proofs](visual-directions-v2/logos.html) and [validation](visual-directions-v2/VALIDATION.md). A/B/C are rejected visual history; no final visual choice is accepted. CURRENT_STATUS records current acceptance. Mutable task sentences in older product/contract/audit snapshots never override CURRENT_STATUS or newer explicit authorization; in particular PRODUCT.md's Stage 0+1 opening sentence is retained historical task context, not a current task blocker.
 
 ## Priority and classification rules
 
@@ -35,6 +41,25 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| My Care implementation reference | Responsibility / limits |
+| --- | --- |
+| [ui-reference/README_START_HERE.md](ui-reference/README_START_HERE.md) | Current owner handoff and precedence for the Patient My Care implementation gate only. |
+| [ui-reference/PREMIUM_SYNTHESIS_SPEC.md](ui-reference/PREMIUM_SYNTHESIS_SPEC.md) | Owner tokens, composition, responsive/RTL/accessibility and engineering contract; Clinician content is reference-only. No final Brand/Design System freeze. |
+| [ui-reference/CODEX_PROMPT.md](ui-reference/CODEX_PROMPT.md) | Explicit implementation task, checks, preservation and required review handoff. |
+| [ui-reference/PATIENT_MY_CARE_IMPLEMENTATION.md](ui-reference/PATIENT_MY_CARE_IMPLEMENTATION.md) | Exact implementation base, intentional deviations, screenshots, validation and limitations. |
+| [ui-reference/PATIENT_MY_CARE_REFINEMENT.md](ui-reference/PATIENT_MY_CARE_REFINEMENT.md) | Preserved first refinement at b1421ec: neutral greeting, density, shortcuts, initials and contrast; before baseline for the current composition pass. |
+| [ui-reference/PATIENT_MY_CARE_POLISH.md](ui-reference/PATIENT_MY_CARE_POLISH.md) | Final owner-directed optical pass only, with fresh EN/AR mobile/desktop/reflow/text evidence and scope preservation. |
+| [ui-reference/PATIENT_MY_CARE_COMPOSITION.md](ui-reference/PATIENT_MY_CARE_COMPOSITION.md) | Current owner-directed premium composition pass: centered container, full-width connected quick access/recent care, truthful metadata omission, collapsed Demo utility and scoped mobile/RTL polish. |
+| `ui-reference/reference/patient-my-care-reference.svg` | Original owner visual reference, preserved byte-for-byte. |
+
+
+| Retained V2 visual history | Responsibility / limits |
+| --- | --- |
+| [visual-directions-v2/README.md](visual-directions-v2/README.md) | Historical unselected D/E/F review entry, artifact inventory and boundaries; no winner. |
+| [visual-directions-v2/COMPARISON.md](visual-directions-v2/COMPARISON.md) | Equivalent-content comparison, materially different layout/type/surfaces and role fit; no ranking. |
+| [visual-directions-v2/VALIDATION.md](visual-directions-v2/VALIDATION.md) | Actual visual/static validation, preservation, health review and explicit limits. |
+| [visual-directions-v2/REFERENCE_STUDY.md](visual-directions-v2/REFERENCE_STUDY.md) | Dated public reference observations and applied principles; no copied assets or authenticated app claims. |
 
 | Document | Responsibility / limits |
 | --- | --- |
@@ -107,6 +132,21 @@ All tracked documentation Markdown paths are classified below. Research files ar
 | [V3_I3_CONTRACT.md](V3_I3_CONTRACT.md) | Accepted I3 behavior, with only Slices 1/2 implemented; Lab remains paused. |
 | [V3_I3_SLICE1.md](V3_I3_SLICE1.md) | Accepted implemented I3 slice behavior; merged checkpoint, not Live deployment proof. |
 | [V3_I3_SLICE2.md](V3_I3_SLICE2.md) | Accepted implemented I3 slice behavior; merged checkpoint, not Live deployment proof. |
+
+## VISUAL EXPLORATION — OWNER DECISION REQUIRED
+
+The table below classifies **HISTORICAL EVIDENCE — REJECTED VISUAL CANDIDATES**, preserved at existing paths. A/B/C are rejected as current final-direction candidates. The current D/E/F package is indexed above; neither package constitutes final identity, Design System or implementation approval.
+
+| Document / artifact | Responsibility / limits |
+| --- | --- |
+| [visual-directions/README.md](visual-directions/README.md) | REJECTED VISUAL HISTORY; superseded by D/E/F.  Owner entry, visual previews, artifact inventory and reproduction instructions; exactly A/B/C. |
+| [visual-directions/direction-a/README.md](visual-directions/direction-a/README.md) | A — Care Journal overview and tradeoffs; exploratory. |
+| [visual-directions/direction-b/README.md](visual-directions/direction-b/README.md) | B — Clear Instrument overview and tradeoffs; exploratory. |
+| [visual-directions/direction-c/README.md](visual-directions/direction-c/README.md) | C — Care Thread overview and tradeoffs; exploratory. |
+| [visual-directions/comparison/MATRIX.md](visual-directions/comparison/MATRIX.md) | Unranked comparison across material differences and functional fit; no scores. |
+| [visual-directions/logos/REVIEW.md](visual-directions/logos/REVIEW.md) | Six independent logo concepts, preliminary cliché/similarity screening and limits. |
+| [visual-directions/evidence/VALIDATION.md](visual-directions/evidence/VALIDATION.md) | Point-in-time browser/accessibility/semantic/scope checks and whole-project health limits. |
+| `visual-directions/**/*.html`, CSS, SVG, PNG, JSON, Python/MJS | Static review, 42 screen exports, three overview boards, vector proofs, shared synthetic fixture, render/check tools and evidence; no production imports. Existing repository fonts are referenced, never redistributed. |
 
 ## HISTORICAL EVIDENCE
 

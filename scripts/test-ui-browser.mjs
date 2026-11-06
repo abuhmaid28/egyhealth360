@@ -1,3 +1,8 @@
+import {
+  testPatientMyCare,
+  openDemoUtility,
+  toggleDemoControls,
+} from "./support/ui-my-care-browser.mjs";
 import { testConsultationClose } from "./support/ui-consultation-close-browser.mjs";
 import { testFollowUpPresentation } from "./support/ui-follow-up-intents-browser.mjs";
 /** Real-browser Golden Demo regression. Built Next app; no API or database required. */
@@ -82,6 +87,7 @@ try {
       .waitFor({ state: "visible" });
   };
   const switchRole = async (role) => {
+    await openDemoUtility(page);
     await page.getByLabel("Demo workspace").selectOption(role);
     await page.waitForURL(
       `**/${{ PATIENT: "patient", CLINICIAN: "doctor", PHARMACY_STAFF: "pharmacy", LAB_STAFF: "laboratory", ADMIN: "admin" }[role]}`,
@@ -94,12 +100,12 @@ try {
     .waitFor();
   await snapshot("01-login");
   await page.getByRole("button", { name: "Explore the patient demo" }).click();
-  await visible("Good morning, Ahmed.");
-  await visible("Meet your next care partner");
+  await visible("Welcome back, Ahmed");
+  await visible("Your care at a glance");
   await snapshot("02-patient-dashboard");
   await page
     .getByRole("navigation")
-    .getByRole("link", { name: "Find a doctor" })
+    .getByRole("link", { name: "Find care", exact: true })
     .click();
   await page.getByPlaceholder("Search by doctor’s name").fill("Mariam");
   await visible("1 doctors in this directory view");
@@ -174,8 +180,8 @@ try {
   await snapshot("10-laboratory");
   await switchRole("PATIENT");
   await page
-    .getByRole("navigation")
-    .getByRole("link", { name: "Medical record" })
+    .locator('[data-my-care] a[href="/patient/record"]')
+    .first()
     .click();
   await visible("Synthetic follow-up review");
   assert.ok(
@@ -226,19 +232,32 @@ try {
     await page.goto(origin + route);
     await page.locator("#main").waitFor();
     await page.locator("#main .loading").first().waitFor({ state: "hidden" });
-    await page.getByText("Demo controls", { exact: true }).click();
+    await toggleDemoControls(page);
     for (const state of ["loading", "empty", "error", "ready"]) {
       await page.getByLabel("Screen state").selectOption(state);
       if (state === "loading")
         assert.ok(
           await page
-            .getByRole("status", { name: "Loading", exact: true })
+            .getByRole("status", {
+              name: route === "/patient" ? "Loading your care" : "Loading",
+              exact: true,
+            })
             .count(),
         );
-      if (state === "empty") await visible("Nothing here yet");
-      if (state === "error") await visible("We couldn’t load this view");
+      if (state === "empty")
+        await visible(
+          route === "/patient"
+            ? "No upcoming appointments"
+            : "Nothing here yet",
+        );
+      if (state === "error")
+        await visible(
+          route === "/patient"
+            ? "Appointments could not load"
+            : "We couldn’t load this view",
+        );
     }
-    await page.getByText("Demo controls", { exact: true }).click();
+    await toggleDemoControls(page);
   }
 
   const workspaceRoutes = [
@@ -271,13 +290,23 @@ try {
       await page.goto(origin + route);
       await page.locator("#main").waitFor();
       await page.locator("#main .loading").first().waitFor({ state: "hidden" });
-      await page.getByText("Demo controls", { exact: true }).click();
+      await toggleDemoControls(page);
       for (const state of ["loading", "empty", "error", "ready"]) {
         await page.getByLabel("Screen state").selectOption(state);
-        if (state === "empty") await visible("Nothing here yet");
-        if (state === "error") await visible("We couldn’t load this view");
+        if (state === "empty")
+          await visible(
+            route === "/patient"
+              ? "No upcoming appointments"
+              : "Nothing here yet",
+          );
+        if (state === "error")
+          await visible(
+            route === "/patient"
+              ? "Appointments could not load"
+              : "We couldn’t load this view",
+          );
       }
-      await page.getByText("Demo controls", { exact: true }).click();
+      await toggleDemoControls(page);
     }
   }
   await switchRole("PATIENT");
@@ -314,7 +343,7 @@ try {
   await snapshot("14-mobile-discovery");
   await page.setViewportSize({ width: 834, height: 1112 });
   await page.goto(`${origin}/patient`);
-  await visible("Good morning, Ahmed.");
+  await visible("Welcome back, Ahmed");
   assert.ok(
     await page.evaluate(
       () =>
@@ -402,6 +431,7 @@ try {
   );
   await live.close();
   await testLiveAvailability(browser, origin, shots);
+  await testPatientMyCare(browser, origin, shots);
   await testArabic(browser, origin, shots);
   await testPolish(browser, origin, shots);
   await testLiveJourney(browser, origin, shots);

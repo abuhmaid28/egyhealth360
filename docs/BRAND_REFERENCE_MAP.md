@@ -1,5 +1,7 @@
 # Brand reference map
 
+> **Current V2 override — 2 November 2026:** Product Owner rejected A/B/C as current final-direction candidates and authorized exactly D — Precision Health, E — Human Clinical, F — Next-Gen Health OS. [V2 review](visual-directions-v2/README.md) and [verbatim owner request](visual-directions-v2/evidence/owner-request.txt) supersede the older A/B/C labels and visual-quality expectations below. BR01–BR08, accepted UX/IA/content, and approval/implementation boundaries remain binding. No logo, palette, font, UI treatment or direction is selected.
+
 Research evidence, accessed **2 November 2026**. Read with [research](BRAND_RESEARCH.md), [strategy](BRAND_STRATEGY.md) and [validation limits](BRAND_RESEARCH_VALIDATION.md). No competitor asset is stored in the repository. Links identify public pages, not templates to reproduce.
 
 ## Method and evidence strength

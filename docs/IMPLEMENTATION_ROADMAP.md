@@ -18,7 +18,7 @@ CURRENT AUTHORITATIVE sequencing; execution still requires a separately scoped P
 
 Pre-final I2 Live UI/hosting and UI polish are implemented/evidenced; they are not acceptance of final V2 design. [Hosted evidence](PRE_FINAL_DOCTOR_DEMO_UI.md). **Overall I3 is incomplete.**
 
-## Foundation acceptance and active Brand Research
+## Foundation acceptance and active Visual Directions
 
 Foundation Reboot V2 Stage 0+1 is complete/accepted: [independent review PASS and PR #73 merge](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6564358810). Verdict B — healthy with non-blocking debt; Stage 1.5 is NOT REQUIRED on reviewed evidence. A newly established P0/P1 defect would require separate triage/remediation authorization, not an automatic fix in Product UX work.
 
@@ -28,14 +28,14 @@ Stage 3 IA is accepted/merged at `86cc044314c865404a114903bbe417fde00e10ec` thro
 
 Content System + Egyptian Arabic UX is accepted/merged at `80cb2bc27d9439f0e57e5bec320ac9bde0121e87` through [PR #77 / owner acceptance 6568210676](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568210676), accepting CD01–CD07. Exact-main CI 41382337698 SUCCESS. Older pending content wording is adoption-time context.
 
-Current task: **Brand Research only**, under the same explicit authorization and owner brief. [Research](BRAND_RESEARCH.md), [references](BRAND_REFERENCE_MAP.md), [strategy](BRAND_STRATEGY.md), [future exploration brief](BRAND_EXPLORATION_BRIEF.md), [decisions](BRAND_DECISION_REGISTER.md), [validation](BRAND_RESEARCH_VALIDATION.md). Independent research review, explicit owner strategic disposition/acceptance and whole-project health review precede separately authorized visual directions. One open/unmerged PR, auto-merge OFF; no implementation or merge permission.
+Brand Research BR01–BR08 is accepted/merged through PR #78 at `0a0e9c2038ecad420e95c2c67ae367129e195839`. A/B/C were rejected; D/E/F and their six logo concepts remain unselected exploration history. The latest [Product Owner authorization](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6574268901) permits exactly one real-frontend implementation gate: **Premium Synthesis — Patient My Care**. Follow the [committed handoff/specification](ui-reference/README_START_HERE.md), not prior visual-direction memory. Scope includes desktop/mobile EN/AR, relevant states, local primitives/tokens and QA evidence. [Implementation review](ui-reference/PATIENT_MY_CARE_IMPLEMENTATION.md). PR #79 remains open/unmerged/auto-merge off. No backend/API/database/security change, wider rollout, final Brand/Design System freeze or production promotion is authorized.
 
 ## Product/Design sequence — future authorizations
 
 1. **Stage 2 — Product UX Foundation** accepted; **Stage 3 — Information Architecture** accepted (IA01–IA05, Patient B, Clinician B). CD01–CD07 material terminology is now accepted; later material changes remain owner-gated.
 2. Content System and Egyptian Arabic UX accepted/merged (CD01–CD07); no runtime implementation implied.
-3. Brand Research currently authorized as evidence/strategy only; acceptance and separate start instruction precede **exactly three meaningfully distinct visual/brand directions**, each with at least two materially different logo concepts (**minimum six total**), rationales and comparable Patient + Doctor UI.
-4. **Owner selection/rejection/hybrid approval**; Codex cannot choose the winner.
+3. Brand Research BR01–BR08 accepted. **Earlier visual exploration** presented three distinct directions: at least two materially different logo concepts each (**minimum six total**), rationales and comparable Patient + Doctor UI. [V2 review artifacts](visual-directions-v2/README.md) remain exploratory and unselected.
+4. **Current bounded exception:** Patient My Care only. The newer owner chat instruction now supersedes the old left-column-only composition: centered grid, connected full-width quick access/recent care, collapsed Demo utility and mobile/RTL polish; [composition evidence](ui-reference/PATIENT_MY_CARE_COMPOSITION.md). Earlier [refinement evidence](ui-reference/PATIENT_MY_CARE_REFINEMENT.md) remains preserved. The owner now accepts that composition and authorizes final optical polish only; [final evidence](ui-reference/PATIENT_MY_CARE_POLISH.md). Final visual sign-off remains the next gate. No wider work or global winner selection is authorized.
 5. Refinement after direction choice, then a separate **Final Brand V2 approval gate** for final logo/palette/typography; Design System V2 follows approved final choices.
 6. High-fidelity Patient + Clinician prototypes; **owner final visual approval**.
 7. Frontend Architecture V2, then Frontend V2 implementation.

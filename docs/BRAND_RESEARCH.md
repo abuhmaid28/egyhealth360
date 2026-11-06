@@ -1,5 +1,7 @@
 # Brand research — Foundation Reboot V2
 
+> **Current V2 override — 2 November 2026:** Product Owner rejected A/B/C as current final-direction candidates and authorized exactly D — Precision Health, E — Human Clinical, F — Next-Gen Health OS. [V2 review](visual-directions-v2/README.md) and [verbatim owner request](visual-directions-v2/evidence/owner-request.txt) supersede the older A/B/C labels and visual-quality expectations below. BR01–BR08, accepted UX/IA/content, and approval/implementation boundaries remain binding. No logo, palette, font, UI treatment or direction is selected.
+
 **RESEARCH / POSITIONING / CREATIVE STRATEGY ONLY.** Based on main `80cb2bc27d9439f0e57e5bec320ac9bde0121e87`, checked 2 November 2026, under [owner authorization 6568210676](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568210676) and the owner-provided Brand Research brief. No final logo, palette, primary color, font, visual direction or product appearance is chosen. No visual assets, mockups, components or implementation are created.
 
 Read this → [reference map](BRAND_REFERENCE_MAP.md) → [strategy](BRAND_STRATEGY.md) → [future exploration brief](BRAND_EXPLORATION_BRIEF.md) → [decisions](BRAND_DECISION_REGISTER.md) → [validation](BRAND_RESEARCH_VALIDATION.md). Research territories below are unranked hypotheses, not the future A/B/C designs.

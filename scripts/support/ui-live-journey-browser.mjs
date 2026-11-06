@@ -1,3 +1,4 @@
+import { myCareCopy, openDemoUtility } from "./ui-my-care-browser.mjs";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
@@ -18,6 +19,7 @@ export async function testLiveJourney(browser, origin, shots) {
     const page = await browser.newPage({
       viewport: { width: 1440, height: 1000 },
     });
+    const c = myCareCopy[locale];
     const calls = [],
       errors = [];
     let failProfile = false;
@@ -57,14 +59,16 @@ export async function testLiveJourney(browser, origin, shots) {
     });
     await page.goto(origin + "/patient");
     await page
-      .getByText(t("Your released care, ready to read"), { exact: true })
+      .getByRole("heading", { name: c.recentCare, exact: true })
       .waitFor();
     const summaryStat = page
       .locator(".stat")
       .filter({ hasText: t("Visit summaries") });
     // Home offers the existing released readers without fabricated global counts.
     assert.equal(await summaryStat.count(), 0);
-    await page.getByText(t("Your released care, ready to read"), { exact: true }).waitFor();
+    await page
+      .getByRole("heading", { name: c.yourCare, exact: true })
+      .waitFor();
     assert.equal(
       await page
         .locator('.quick-actions a[href="/patient/medications"]')
@@ -75,7 +79,9 @@ export async function testLiveJourney(browser, origin, shots) {
       await page.setViewportSize({ width, height: 1000 });
       assert.ok(
         await page.evaluate(
-          () => globalThis.document.documentElement.scrollWidth <= globalThis.innerWidth + 1,
+          () =>
+            globalThis.document.documentElement.scrollWidth <=
+            globalThis.innerWidth + 1,
         ),
       );
     }
@@ -86,7 +92,10 @@ export async function testLiveJourney(browser, origin, shots) {
         fullPage: true,
       });
     }
-    await page.locator('.patient-journey a[href="/patient/summaries"]').click();
+    await page
+      .getByRole("link", { name: new RegExp(c.summaries) })
+      .first()
+      .click();
     await page
       .getByRole("heading", {
         name: t("Released visit summaries"),
@@ -110,23 +119,42 @@ export async function testLiveJourney(browser, origin, shots) {
     calls.length = 0;
     failProfile = true;
     await page.goto(origin + "/patient");
-    await page.locator(".patient-identity-card").getByRole("alert").waitFor();
-    await page.getByRole("heading", { name: t("Make room for your next visit"), exact: true }).waitFor();
+    await page.locator("[data-profile-error]").waitFor();
+    await page.getByRole("heading", { name: c.empty, exact: true }).waitFor();
     assert.ok(calls.includes("/api/v1/me/bookings"));
-    assert.ok(!calls.some(path => /blood-pressure|clinical-encounters|follow-up-appointments/.test(path)));
+    assert.ok(
+      !calls.some((path) =>
+        /blood-pressure|clinical-encounters|follow-up-appointments/.test(path),
+      ),
+    );
     await page.evaluate(() => globalThis.document.fonts.ready);
-    assert.ok(await page.evaluate(locale => globalThis.document.fonts.check(locale === "ar" ? '16px "Noto Sans Arabic"' : '16px Inter'), locale));
+    assert.ok(
+      await page.evaluate(
+        (locale) =>
+          globalThis.document.fonts.check(
+            locale === "ar"
+              ? '16px "EH My Care Arabic"'
+              : '16px "EH My Care Manrope"',
+          ),
+        locale,
+      ),
+    );
     for (const control of await page.locator(".language-switch button").all()) {
       const rect = await control.boundingBox();
       assert.ok(rect && rect.width >= 44 && rect.height >= 44);
     }
     // A profile failure cannot hide the independent appointment read or shared readers.
-    await page.locator('.patient-journey a[href="/patient/summaries"]').click();
+    await page
+      .getByRole("link", { name: new RegExp(c.summaries) })
+      .first()
+      .click();
     await page
       .getByText(t("No visible released summaries"), { exact: true })
       .waitFor();
     assert.equal(
-      await page.evaluate(() => globalThis.localStorage.getItem("eh360-ui-demo-v1")),
+      await page.evaluate(() =>
+        globalThis.localStorage.getItem("eh360-ui-demo-v1"),
+      ),
       null,
     );
     assert.deepEqual(errors, []);
@@ -145,11 +173,16 @@ export async function testLiveJourney(browser, origin, shots) {
   await page
     .getByRole("button", { name: "Explore the patient demo", exact: true })
     .click();
+  await page.waitForURL("**/patient");
+  await page.locator("[data-my-care]").waitFor();
+  await openDemoUtility(page);
   await page.getByLabel("Demo workspace").selectOption("CLINICIAN");
   await page.waitForURL("**/doctor");
+  await page.locator("[data-my-care]").waitFor({ state: "detached" });
+  await openDemoUtility(page);
   await page.getByLabel("Demo workspace").selectOption("PATIENT");
   await page.waitForURL("**/patient");
-  await page.getByText("Good morning, Ahmed.", { exact: true }).waitFor();
+  await page.getByText("Welcome back, Ahmed", { exact: true }).waitFor();
   await page.close();
   console.log(
     "PASS: Live patient journey, EN/AR responsive summary entry, independent recovery and storage-denied demo.",

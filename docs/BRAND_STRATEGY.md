@@ -1,5 +1,9 @@
 # Brand strategy proposal
 
+> **Current V2 override — 2 November 2026:** Product Owner rejected A/B/C as current final-direction candidates and authorized exactly D — Precision Health, E — Human Clinical, F — Next-Gen Health OS. [V2 review](visual-directions-v2/README.md) and [verbatim owner request](visual-directions-v2/evidence/owner-request.txt) supersede the older A/B/C labels and visual-quality expectations below. BR01–BR08, accepted UX/IA/content, and approval/implementation boundaries remain binding. No logo, palette, font, UI treatment or direction is selected.
+
+> Current disposition: BR01–BR08 and Brand Research are **ACCEPTED / MERGED** at `0a0e9c2038ecad420e95c2c67ae367129e195839` under [owner acceptance / visual authorization 6568574368](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568574368). Exactly three isolated [Visual Directions](visual-directions/README.md) are now authorized. Earlier pending/not-started wording below records the research-stage adoption context. No final logo, palette, font, winning direction, Brand V2 or Design System is approved.
+
 **RECOMMENDATION — NOT OWNER-ACCEPTED BRAND.** Authority: [Issue #72 / 6568210676](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568210676). Research baseline: `80cb2bc27d9439f0e57e5bec320ac9bde0121e87`. [Decision register](BRAND_DECISION_REGISTER.md) separates accepted foundations, findings and owner choices. No final logo, palette, font or visual direction has been selected.
 
 ## Product truth before positioning

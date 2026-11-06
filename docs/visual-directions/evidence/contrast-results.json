@@ -1,0 +1,302 @@
+{
+  "method": "WCAG sRGB relative luminance; explicit rendered role pairs, normal text 4.5, necessary boundaries/focus 3.0",
+  "min_text": 5.1,
+  "pairs": [
+    {
+      "direction": "A",
+      "role": "Body",
+      "foreground": "#202D27",
+      "background": "#F6F2E8",
+      "ratio": 12.81,
+      "target": 4.5
+    },
+    {
+      "direction": "A",
+      "role": "Body on surface",
+      "foreground": "#202D27",
+      "background": "#FBF9F3",
+      "ratio": 13.61,
+      "target": 4.5
+    },
+    {
+      "direction": "A",
+      "role": "Secondary",
+      "foreground": "#56665B",
+      "background": "#F6F2E8",
+      "ratio": 5.45,
+      "target": 4.5
+    },
+    {
+      "direction": "A",
+      "role": "Secondary on surface",
+      "foreground": "#56665B",
+      "background": "#FBF9F3",
+      "ratio": 5.79,
+      "target": 4.5
+    },
+    {
+      "direction": "A",
+      "role": "Primary action",
+      "foreground": "#FFFFFF",
+      "background": "#254B3E",
+      "ratio": 9.75,
+      "target": 4.5
+    },
+    {
+      "direction": "A",
+      "role": "Primary on soft",
+      "foreground": "#254B3E",
+      "background": "#E6EBDF",
+      "ratio": 8.04,
+      "target": 4.5
+    },
+    {
+      "direction": "A",
+      "role": "Support",
+      "foreground": "#965442",
+      "background": "#F6F2E8",
+      "ratio": 5.16,
+      "target": 4.5
+    },
+    {
+      "direction": "A",
+      "role": "Field boundary",
+      "foreground": "#56665B",
+      "background": "#FBF9F3",
+      "ratio": 5.79,
+      "target": 3
+    },
+    {
+      "direction": "A",
+      "role": "Focus ring",
+      "foreground": "#254B3E",
+      "background": "#F6F2E8",
+      "ratio": 8.72,
+      "target": 3
+    },
+    {
+      "direction": "B",
+      "role": "Body",
+      "foreground": "#172C3B",
+      "background": "#EDF2F5",
+      "ratio": 12.75,
+      "target": 4.5
+    },
+    {
+      "direction": "B",
+      "role": "Body on surface",
+      "foreground": "#172C3B",
+      "background": "#FFFFFF",
+      "ratio": 14.38,
+      "target": 4.5
+    },
+    {
+      "direction": "B",
+      "role": "Secondary",
+      "foreground": "#4C6171",
+      "background": "#EDF2F5",
+      "ratio": 5.72,
+      "target": 4.5
+    },
+    {
+      "direction": "B",
+      "role": "Secondary on surface",
+      "foreground": "#4C6171",
+      "background": "#FFFFFF",
+      "ratio": 6.45,
+      "target": 4.5
+    },
+    {
+      "direction": "B",
+      "role": "Primary action",
+      "foreground": "#FFFFFF",
+      "background": "#123B60",
+      "ratio": 11.54,
+      "target": 4.5
+    },
+    {
+      "direction": "B",
+      "role": "Primary on soft",
+      "foreground": "#123B60",
+      "background": "#DBE8F0",
+      "ratio": 9.24,
+      "target": 4.5
+    },
+    {
+      "direction": "B",
+      "role": "Support",
+      "foreground": "#006875",
+      "background": "#EDF2F5",
+      "ratio": 5.75,
+      "target": 4.5
+    },
+    {
+      "direction": "B",
+      "role": "Field boundary",
+      "foreground": "#4C6171",
+      "background": "#FFFFFF",
+      "ratio": 6.45,
+      "target": 3
+    },
+    {
+      "direction": "B",
+      "role": "Focus ring",
+      "foreground": "#123B60",
+      "background": "#EDF2F5",
+      "ratio": 10.23,
+      "target": 3
+    },
+    {
+      "direction": "C",
+      "role": "Body",
+      "foreground": "#29243A",
+      "background": "#F5F3FA",
+      "ratio": 13.56,
+      "target": 4.5
+    },
+    {
+      "direction": "C",
+      "role": "Body on surface",
+      "foreground": "#29243A",
+      "background": "#FFFFFF",
+      "ratio": 14.92,
+      "target": 4.5
+    },
+    {
+      "direction": "C",
+      "role": "Secondary",
+      "foreground": "#635B72",
+      "background": "#F5F3FA",
+      "ratio": 5.84,
+      "target": 4.5
+    },
+    {
+      "direction": "C",
+      "role": "Secondary on surface",
+      "foreground": "#635B72",
+      "background": "#FFFFFF",
+      "ratio": 6.42,
+      "target": 4.5
+    },
+    {
+      "direction": "C",
+      "role": "Primary action",
+      "foreground": "#FFFFFF",
+      "background": "#473477",
+      "ratio": 10.37,
+      "target": 4.5
+    },
+    {
+      "direction": "C",
+      "role": "Primary on soft",
+      "foreground": "#473477",
+      "background": "#E8E1F2",
+      "ratio": 8.14,
+      "target": 4.5
+    },
+    {
+      "direction": "C",
+      "role": "Support",
+      "foreground": "#725333",
+      "background": "#F5F3FA",
+      "ratio": 6.36,
+      "target": 4.5
+    },
+    {
+      "direction": "C",
+      "role": "Field boundary",
+      "foreground": "#635B72",
+      "background": "#FFFFFF",
+      "ratio": 6.42,
+      "target": 3
+    },
+    {
+      "direction": "C",
+      "role": "Focus ring",
+      "foreground": "#473477",
+      "background": "#F5F3FA",
+      "ratio": 9.42,
+      "target": 3
+    },
+    {
+      "direction": "shared",
+      "role": "Success",
+      "foreground": "#256045",
+      "background": "#EAF4ED",
+      "ratio": 6.58,
+      "target": 4.5
+    },
+    {
+      "direction": "shared",
+      "role": "Warning",
+      "foreground": "#775008",
+      "background": "#FFF3D5",
+      "ratio": 6.48,
+      "target": 4.5
+    },
+    {
+      "direction": "shared",
+      "role": "Error",
+      "foreground": "#912E35",
+      "background": "#FCEDEF",
+      "ratio": 6.99,
+      "target": 4.5
+    },
+    {
+      "direction": "shared",
+      "role": "Information",
+      "foreground": "#254F78",
+      "background": "#E9F1FA",
+      "ratio": 7.47,
+      "target": 4.5
+    },
+    {
+      "direction": "shared",
+      "role": "Uncertain",
+      "foreground": "#654308",
+      "background": "#FFF3D5",
+      "ratio": 8.07,
+      "target": 4.5
+    },
+    {
+      "direction": "shared",
+      "role": "Unavailable",
+      "foreground": "#4C4D58",
+      "background": "#ECECF1",
+      "ratio": 7.11,
+      "target": 4.5
+    },
+    {
+      "direction": "B",
+      "role": "B secondary on context",
+      "foreground": "#4C6171",
+      "background": "#DDE6ED",
+      "ratio": 5.1,
+      "target": 4.5
+    },
+    {
+      "direction": "B",
+      "role": "B rail labels",
+      "foreground": "#D4E3EE",
+      "background": "#123B60",
+      "ratio": 8.8,
+      "target": 4.5
+    },
+    {
+      "direction": "C",
+      "role": "C masthead labels",
+      "foreground": "#E9E2F5",
+      "background": "#473477",
+      "ratio": 8.23,
+      "target": 4.5
+    },
+    {
+      "direction": "C",
+      "role": "C nav marker",
+      "foreground": "#D5C9ED",
+      "background": "#473477",
+      "ratio": 6.62,
+      "target": 3
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # Brand Research validation
 
+> **Current V2 override — 2 November 2026:** Product Owner rejected A/B/C as current final-direction candidates and authorized exactly D — Precision Health, E — Human Clinical, F — Next-Gen Health OS. [V2 review](visual-directions-v2/README.md) and [verbatim owner request](visual-directions-v2/evidence/owner-request.txt) supersede the older A/B/C labels and visual-quality expectations below. BR01–BR08, accepted UX/IA/content, and approval/implementation boundaries remain binding. No logo, palette, font, UI treatment or direction is selected.
+
 Point-in-time documentation/research evidence, **2 November 2026**. Base: `80cb2bc27d9439f0e57e5bec320ac9bde0121e87`. Authority: [Issue #72 / 6568210676](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568210676), checked against the issue and latest applicable owner comments, plus the current explicit Brand Research brief. Six research documents and only necessary status/source/roadmap references form this candidate. No visual design or implementation is authorized.
 
 ## Evidence provenance and limits
