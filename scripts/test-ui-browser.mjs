@@ -4,6 +4,7 @@ import {
   toggleDemoControls,
 } from "./support/ui-my-care-browser.mjs";
 import { testConsultationClose } from "./support/ui-consultation-close-browser.mjs";
+import { testClinicianMaster } from "./support/ui-clinician-master-browser.mjs";
 import { testFollowUpPresentation } from "./support/ui-follow-up-intents-browser.mjs";
 /** Real-browser Golden Demo regression. Built Next app; no API or database required. */
 import { testDocumentation } from "./support/ui-documentation-browser.mjs";
@@ -432,6 +433,7 @@ try {
   await live.close();
   await testLiveAvailability(browser, origin, shots);
   await testPatientMyCare(browser, origin, shots);
+  await testClinicianMaster(browser, origin);
   await testArabic(browser, origin, shots);
   await testPolish(browser, origin, shots);
   await testLiveJourney(browser, origin, shots);

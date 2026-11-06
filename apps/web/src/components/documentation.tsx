@@ -1,5 +1,7 @@
 "use client";
 import { presentationName } from '../lib/presentation';
+import { careDate, careTime } from "../lib/patient-my-care";
+import { ClinicalTimestamp, ClinicianSourceRail, SourcePurpose } from "./clinician-consultation-presentation";
 import {
   useId,
   useState,
@@ -96,8 +98,10 @@ const labels = {
 } as const;
 export function DocumentationWorkspaceScreen({
   service,
+  professional = false,
 }: {
   service: DocumentationApi;
+  professional?: boolean;
 }) {
   // Remount all transient editor state synchronously when viewer/scope changes.
   // No stale author response can flash into a patient/admin presentation.
@@ -107,9 +111,9 @@ export function DocumentationWorkspaceScreen({
     service.scopeStamp,
     service.scopeStamp,
   );
-  return <WorkspaceScope key={stamp} service={service} />;
+  return <WorkspaceScope key={stamp} service={service} professional={professional} />;
 }
-function WorkspaceScope({ service }: { service: DocumentationApi }) {
+function WorkspaceScope({ service, professional = false }: { service: DocumentationApi; professional?: boolean }) {
   const { t } = useLocale();
   const [revision, setRevision] = useState(0);
   const [page, setPage] = useState(1),
@@ -127,13 +131,13 @@ function WorkspaceScope({ service }: { service: DocumentationApi }) {
   if (service.mode === "unavailable") return <DocumentationUnavailable />;
   return (
     <>
-      <Heading
+      {!professional && <Heading
         eyebrow={t("Clinical consultation")}
         title={t("Consultation documentation")}
         description={t(
           "Human-entered documentation for this opened consultation. Current clinical authority is always required.",
         )}
-      />
+      />}
       {notice && (
         <p className="documentation-warning" role="status">
           {t(notice)}
@@ -149,6 +153,7 @@ function WorkspaceScope({ service }: { service: DocumentationApi }) {
               key={`${result.view.scopeStamp}:${revision}:${page}:${historyPage}`}
               service={service}
               view={result.view}
+              professional={professional}
               reload={(message) => {
                 setNotice(message ?? "");
                 setRevision((value) => value + 1);
@@ -297,10 +302,12 @@ function DocumentationEditor({
   service,
   view: initialView,
   reload,
+  professional = false,
 }: {
   service: DocumentationApi;
   view: DocumentationWorkspace;
   reload: (message?: string) => void;
+  professional?: boolean;
 }) {
   const { t } = useLocale();
   const [view, setView] = useState(initialView);
@@ -453,9 +460,9 @@ function DocumentationEditor({
           aria-label={t("Documentation sections")}
         >
           <a href="#doc-facts">{t("Complaint and findings")}</a>
-          <a href="#doc-allergy">{t("Allergy review")}</a>
-          <a href="#doc-private">{t("Private note")}</a>
-          <a href="#doc-summary">{t("Patient summary and instructions")}</a>
+          <a href={professional ? "#master-doc-allergy" : "#doc-allergy"}>{t("Allergy review")}</a>
+          <a href="#doc-private"><span>{t("Private note")}</span>{professional && <SourcePurpose kind="private" />}</a>
+          <a href="#doc-summary"><span>{t("Patient summary and instructions")}</span>{professional && <SourcePurpose kind="summary" />}</a>
           <a href="#doc-history">{t("Signed history")}</a>
         </nav>
         <div className="documentation-content">
@@ -513,6 +520,7 @@ function DocumentationEditor({
               <FactsFields
                 facts={facts}
                 setFacts={setFacts}
+                professional={professional}
                 locked={
                   locked ||
                   (live &&
@@ -741,8 +749,7 @@ function DocumentationEditor({
                   </div>
                   <p className="small muted">
                     <bdi>
-                      {date(version.signedAt!, view.timeZone)} ·{" "}
-                      {time(version.signedAt!, view.timeZone)}
+                      {professional ? <ClinicalTimestamp value={version.signedAt!} zone={view.timeZone} /> : <>{date(version.signedAt!, view.timeZone)} ·{" "}{time(version.signedAt!, view.timeZone)}</>}
                     </bdi>
                   </p>
                   <p className="documentation-narrative" dir="auto">
@@ -799,6 +806,7 @@ function DocumentationEditor({
             )}
           </Card>
         </div>
+        {professional && <ClinicianSourceRail view={view} factTarget={factTarget} />}
       </div>
       {confirmation && (
         <Modal
@@ -920,6 +928,7 @@ function DocumentationEditor({
       {restrict && (
         <RestrictionDialog
           versions={view.history}
+          displayTimeZone={professional ? view.timeZone : undefined}
           service={service}
           close={() => setRestrict(false)}
           done={(message) => {
@@ -1107,13 +1116,15 @@ function RestrictionDialog({
   service,
   close,
   done,
+  displayTimeZone,
 }: {
   versions: DocumentationVersion[];
   service: DocumentationApi;
   close: () => void;
   done: (message?: string) => void;
+  displayTimeZone?: string;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const [selected, setSelected] = useState(""),
     [reason, setReason] = useState(""),
     [ack, setAck] = useState(false),
@@ -1161,7 +1172,7 @@ function RestrictionDialog({
                 String(index + 1),
               )}{" "}
               · {t(labels[v.kind])} · {t(labels[v.state])} ·{" "}
-              {date(v.recordedAt)} {time(v.recordedAt)} · {t(labels[v.change])}
+              {displayTimeZone ? `${careDate(v.recordedAt, displayTimeZone, locale)} ${careTime(v.recordedAt, displayTimeZone)}` : `${date(v.recordedAt)} ${time(v.recordedAt)}`} · {t(labels[v.change])}
             </option>
           ))}
         </select>
@@ -1369,10 +1380,12 @@ function FactsFields({
   facts,
   setFacts,
   locked,
+  professional = false,
 }: {
   facts: FactsDraft;
   setFacts: (value: FactsDraft) => void;
   locked: boolean;
+  professional?: boolean;
 }) {
   const { t } = useLocale();
   return (
@@ -1398,7 +1411,7 @@ function FactsFields({
         change={(diagnoses) => setFacts({ ...facts, diagnoses })}
         disabled={locked}
       />
-      <div className="documentation-review">
+      <div className="documentation-review" id={professional ? "master-doc-allergy" : undefined}>
         <h3>{t("Allergy / intolerance review")}</h3>
         <Field
           label={t("Review state")}

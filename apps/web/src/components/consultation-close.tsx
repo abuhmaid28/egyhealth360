@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { presentationName } from '../lib/presentation';
+import { ClinicalTimestamp } from "./clinician-consultation-presentation";
 import { useEffect, useRef, useState } from "react";
 import {
   CloseUiError,
@@ -40,10 +41,12 @@ export function ConsultationCloseCard({
   context,
   documentation,
   update,
+  professional = false,
 }: {
   context: ConsultationContext;
   documentation: DocumentationContext;
   update: (next: ConsultationContext) => void;
+  professional?: boolean;
 }) {
   const { t } = useLocale();
   const [review, setReview] = useState(false);
@@ -76,8 +79,7 @@ export function ConsultationCloseCard({
           {context.closedAt && (
             <p>
               <bdi>
-                {date(context.closedAt, documentation.timeZone)} ·{" "}
-                {time(context.closedAt, documentation.timeZone)}
+                {professional ? <ClinicalTimestamp value={context.closedAt} zone={documentation.timeZone} /> : <>{date(context.closedAt, documentation.timeZone)} ·{" "}{time(context.closedAt, documentation.timeZone)}</>}
               </bdi>
             </p>
           )}
@@ -114,6 +116,7 @@ export function ConsultationCloseCard({
         <ReviewCloseDialog
           context={context}
           documentation={documentation}
+          professional={professional}
           cancel={() => setReview(false)}
           update={(next) => {
             focusResult.current = true;
@@ -130,11 +133,13 @@ function ReviewCloseDialog({
   documentation,
   cancel,
   update,
+  professional = false,
 }: {
   context: ConsultationContext;
   documentation: DocumentationContext;
   cancel: () => void;
   update: (next: ConsultationContext) => void;
+  professional?: boolean;
 }) {
   const { t, locale } = useLocale();
   const { api, changed } = useApp();
@@ -236,7 +241,7 @@ function ReviewCloseDialog({
                     <bdi>{presentationName(documentation.providerName ?? '', t)}</bdi> ·{" "}
                     <bdi>{presentationName(documentation.clinicName ?? '', t)}</bdi>
                   </p>
-                  <p className="review-visit-time"><Icon name="calendar" size={16}/><bdi>{date(current.openedAt, documentation.timeZone, locale)} · {time(current.openedAt, documentation.timeZone, locale)} · {documentation.timeZone}</bdi></p>
+                  <p className="review-visit-time"><Icon name="calendar" size={16}/><bdi>{professional ? <ClinicalTimestamp value={current.openedAt} zone={documentation.timeZone} /> : <>{date(current.openedAt, documentation.timeZone, locale)} · {time(current.openedAt, documentation.timeZone, locale)}</>} · <bdi dir="ltr">{documentation.timeZone}</bdi></bdi></p>
                   <Badge tone="blue">{t('Consultation open')}</Badge>
                 </div>
                 <h3>{t("Recent saved documentation")}</h3>
