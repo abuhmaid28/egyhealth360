@@ -1,0 +1,20 @@
+{
+  "patient_en": "Omar Abdelrahman",
+  "patient_ar": "عمر عبدالرحمن",
+  "reference": "EH-DEMO-204",
+  "doctor_en": "Dr Mariam Hassan",
+  "doctor_ar": "د. مريم حسن",
+  "clinic": "Dokki Clinic",
+  "appointment": "2026-11-02T14:30:00+02:00",
+  "timezone": "Africa/Cairo",
+  "medicine": "Amoxicillin",
+  "quantity": "1.25 mL",
+  "quantity_meaning": "Synthetic display quantity, not dosage",
+  "bp": "128/82 mmHg",
+  "pulse": "72 bpm",
+  "clinical_access": "Current assignment in consultation examples; booking grants zero authority",
+  "summary": "Explicitly signed and shared",
+  "note": "Private saved draft; signing remains private",
+  "pharmacy": "Accepted responsibility; no dispense recorded; stock/readiness not confirmed",
+  "followup": "Shared recommendation; no booking linked"
+}
