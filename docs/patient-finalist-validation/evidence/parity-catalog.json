@@ -1,0 +1,185 @@
+{
+  "scope": "Equivalent UI labels for one candidate, not a final terminology or system freeze.",
+  "labels": [
+    {
+      "ar": "معاينة تصميم · بيانات للتجربة",
+      "en": "Design preview · synthetic data"
+    },
+    {
+      "ar": "معاينة بس · مفيش خدمات شغّالة",
+      "en": "Preview only · no connected services"
+    },
+    {
+      "ar": "ميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "en": "Your next appointment and what your doctor shared."
+    },
+    {
+      "ar": "الحجز لوحده مش بيشارك معلوماتك الطبية.",
+      "en": "Booking alone does not share your medical information."
+    },
+    {
+      "ar": "لسه مفيش ميعاد مربوط بالمتابعة دي هنا.",
+      "en": "No appointment is linked to this recommendation here."
+    },
+    {
+      "ar": "تقدر تقرا الملخص اللي الدكتور شاركه معاك.",
+      "en": "Read the visit summary your doctor shared with you."
+    },
+    {
+      "ar": "دي توصية من الدكتور، مش ميعاد محجوز.",
+      "en": "This is a recommendation, not a booked appointment."
+    },
+    {
+      "ar": "اللي الدكتور شاركه معاك",
+      "en": "What your doctor shared"
+    },
+    {
+      "ar": "الدكتور رشّح لك متابعة",
+      "en": "Your doctor recommended follow-up"
+    },
+    {
+      "ar": "الدكتور شارك الملخص معاك",
+      "en": "Your doctor shared a visit summary"
+    },
+    {
+      "ar": "مش متاحة في المعاينة دي",
+      "en": "Unavailable in this preview"
+    },
+    {
+      "ar": "الملخصات والمتابعة",
+      "en": "Summaries and follow-up"
+    },
+    {
+      "ar": "شوف تفاصيل الميعاد",
+      "en": "View appointment details"
+    },
+    {
+      "ar": "اقرا ملخص الزيارة",
+      "en": "Read visit summary"
+    },
+    {
+      "ar": "ارجع للي محتاجه",
+      "en": "Find what you need"
+    },
+    {
+      "ar": "روح للمحتوى",
+      "en": "Skip to content"
+    },
+    {
+      "ar": "القائمة الرئيسية",
+      "en": "Primary navigation"
+    },
+    {
+      "ar": "أهلاً يا سلمى",
+      "en": "Hi, Salma"
+    },
+    {
+      "ar": "سلمى حسن",
+      "en": "Salma Hassan"
+    },
+    {
+      "ar": "د. عمر علي",
+      "en": "Dr Omar Ali"
+    },
+    {
+      "ar": "متابعتي",
+      "en": "My care"
+    },
+    {
+      "ar": "دور على دكتور",
+      "en": "Find care"
+    },
+    {
+      "ar": "ميعادك الجاي",
+      "en": "Your next appointment"
+    },
+    {
+      "ar": "الحجز اتأكد",
+      "en": "Appointment confirmed"
+    },
+    {
+      "ar": "الخميس،",
+      "en": "Thursday,"
+    },
+    {
+      "ar": "نوفمبر",
+      "en": "November"
+    },
+    {
+      "ar": "مساءً",
+      "en": "PM"
+    },
+    {
+      "ar": "لحد ",
+      "en": "to "
+    },
+    {
+      "ar": "متابعة مقترحة",
+      "en": "Follow-up recommendation"
+    },
+    {
+      "ar": "اتشاركت معاك",
+      "en": "Shared with you"
+    },
+    {
+      "ar": "ملخص الزيارة",
+      "en": "Visit summary"
+    },
+    {
+      "ar": "متاح ليك",
+      "en": "Available to you"
+    },
+    {
+      "ar": "دور على ميعاد",
+      "en": "Find an appointment"
+    },
+    {
+      "ar": "وصول سريع",
+      "en": "Quick access"
+    },
+    {
+      "ar": "مواعيدك",
+      "en": "Appointments"
+    },
+    {
+      "ar": "الجاية والسابقة",
+      "en": "Upcoming and past"
+    },
+    {
+      "ar": "السجل المتاح",
+      "en": "Available history"
+    },
+    {
+      "ar": "اللي متاح ليك هنا بس",
+      "en": "Only information available to you here"
+    },
+    {
+      "ar": "روشتاتك",
+      "en": "Prescriptions"
+    },
+    {
+      "ar": "معاينة بس",
+      "en": "Preview only"
+    },
+    {
+      "ar": "معاينة التصميم",
+      "en": "Design preview"
+    },
+    {
+      "ar": "ارجع للمعاينة",
+      "en": "Back to preview"
+    },
+    {
+      "ar": "تحقق من التصميم للمراجعة",
+      "en": "Candidate validation preview"
+    },
+    {
+      "ar": "بنجهّز معاينة التصميم.",
+      "en": "Preparing the design preview."
+    },
+    {
+      "ar": "المعاينة التفاعلية محتاجة جافاسكريبت. تقدر تراجع الصور المسجلة.",
+      "en": "This interactive preview needs JavaScript. You can review the supplied screenshots."
+    }
+  ]
+}

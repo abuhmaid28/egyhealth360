@@ -1,0 +1,40 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "soleCandidate": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+  "result": "PASS",
+  "preExistingFiles": 1423,
+  "explicitGovernanceExceptions": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md",
+    "docs/IMPLEMENTATION_ROADMAP.md"
+  ],
+  "byteIdenticalFiles": 1420,
+  "proofInventorySHA256": "c26f0798eb5f69c7e92bb26f9b1d559926268b12cf73d6a406edc65c4339f519",
+  "copiedCandidateBytes": [
+    {
+      "path": "nova.css",
+      "sha256": "4d370bfd45eecf725db30a22099c8be1a903da82fda300e8344815e4b934b35a"
+    },
+    {
+      "path": "assets/manrope.ttf",
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+    },
+    {
+      "path": "assets/manrope-OFL.txt",
+      "sha256": "d6a309fcfb963d329a93baf9df66fa5f3c23a4be2b5f67edf24d6cafecde12ac"
+    },
+    {
+      "path": "assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "path": "assets/plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "path": "assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    }
+  ],
+  "scope": "All pre-existing tracked bytes except the three governance summaries are identical: includes production frontend/backend, auth/security, contracts, APIs, schema/migrations, CI, dependencies and all historical evidence. New files confined to isolated validation folder. No deployment proof is inferred."
+}
