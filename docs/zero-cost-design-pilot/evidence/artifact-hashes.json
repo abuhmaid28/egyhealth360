@@ -1,0 +1,492 @@
+[
+  {
+    "path": "AUDIT.md",
+    "sha256": "b57049cf1681662084e6a85639e3e200348b2f0dcce6ced8552a2ecf370266da",
+    "bytes": 8220
+  },
+  {
+    "path": "BASELINE.md",
+    "sha256": "4c8e136647a40c953b1ee249d7f4fa661d2fad562668486a472abe429ee8a4ef",
+    "bytes": 6051
+  },
+  {
+    "path": "DESIGN_SPEC.md",
+    "sha256": "6821e2fa4e8b17aa4b5b42383f6db9b42fbb606cd53c4ecfaf5288bf0561e02d",
+    "bytes": 18312
+  },
+  {
+    "path": "INDEPENDENT_REVIEW.md",
+    "sha256": "39fe19da50016ed43c822ee8f69a8d6a8a3fbed4bc32a00c952c17fc345e1319",
+    "bytes": 16360
+  },
+  {
+    "path": "PLAYBOOK.md",
+    "sha256": "c6e33163ee61345ad528533f71c42c31dd2c21d7214cd5bf784654b1ff87cb52",
+    "bytes": 3341
+  },
+  {
+    "path": "README.md",
+    "sha256": "646954aba74e8fc2c371fc90198666f3a3a65ef70a139608e09c5827364e24c6",
+    "bytes": 5112
+  },
+  {
+    "path": "VALIDATION.md",
+    "sha256": "e73fff6da525786b3238c38a53b41cb1596822603e0522cee9ed661845022907",
+    "bytes": 8550
+  },
+  {
+    "path": "evidence/activation.json",
+    "sha256": "4a3625569e37fa92a58a09ced52760c6c56ca520398ba3b0c95a4db0bbb6ecb4",
+    "bytes": 1221
+  },
+  {
+    "path": "evidence/before-revision/initial-measurements.json",
+    "sha256": "14a622d84beb8bab4b05a0d5834ec4c51f5bca61e776fb3b30d09347b1604c47",
+    "bytes": 21169
+  },
+  {
+    "path": "evidence/before-revision/interval-clinician-ar-390-full.png",
+    "sha256": "72e41ee2a7b1cb4048c263420f035c22c46ec30b47c998f4e0edfe2c45dc3845",
+    "bytes": 149095
+  },
+  {
+    "path": "evidence/before-revision/interval-patient-ar-390-full.png",
+    "sha256": "208d8502c468c2117e1590b5fe93769eb29bd103b744cfb5b3b17cb78ad36080",
+    "bytes": 84426
+  },
+  {
+    "path": "evidence/before-revision/relay-clinician-en-320-text200-full.png",
+    "sha256": "e141a975b89a0f3db021329027a427b279298ffeffd96dbf055778d8ae049cb1",
+    "bytes": 393072
+  },
+  {
+    "path": "evidence/before-revision/relay-patient-en-320-text200-full.png",
+    "sha256": "cf1e85636f61314c25c74b8a3b5844f4401eb35bcd0645344ad489207dfa85e6",
+    "bytes": 246764
+  },
+  {
+    "path": "evidence/board-desktop-ar.html",
+    "sha256": "78c4664cc80588a4d5f5c362b217f4febc9cf3543e12bacfb9388536c51ca2ae",
+    "bytes": 3127
+  },
+  {
+    "path": "evidence/board-desktop-ar.png",
+    "sha256": "92860e44741667a5b06274899fc4ee3100c7c2269af149f6ef91b600b01e62a1",
+    "bytes": 235976
+  },
+  {
+    "path": "evidence/board-desktop-en.html",
+    "sha256": "ad4e28444301ea7c836d201ea39a3fd21623d04384803646093a3860ddebe147",
+    "bytes": 2991
+  },
+  {
+    "path": "evidence/board-desktop-en.png",
+    "sha256": "4e81da05cb25c6c457cc1c6280683d83b92b458bfb7ed41610f69533baa230da",
+    "bytes": 299040
+  },
+  {
+    "path": "evidence/board-mobile-ar.html",
+    "sha256": "e53a0940bbe8b7a635fee9af190bee194867defbff9faaa0ae7979eb4600261c",
+    "bytes": 3105
+  },
+  {
+    "path": "evidence/board-mobile-ar.png",
+    "sha256": "a64fadb24acea92f2d93485c808ed955127a1c879298cca10542e9975e0f7eac",
+    "bytes": 271325
+  },
+  {
+    "path": "evidence/board-mobile-en.html",
+    "sha256": "51bcba4fbd19da9962fd93e6bcdc582011ac948078a46507b7d0a8cdc200d7d5",
+    "bytes": 2969
+  },
+  {
+    "path": "evidence/board-mobile-en.png",
+    "sha256": "20fd53b6ae3c0d360c7bc3336e974e765b5e04225c7352b6b94a16c900fef55b",
+    "bytes": 315461
+  },
+  {
+    "path": "evidence/browser-measurements.json",
+    "sha256": "61791d5200add3c21bf3c51187811b4a02c3c7c931e32ea9cf31fba282c6a332",
+    "bytes": 1367118
+  },
+  {
+    "path": "evidence/interval-clinician-ar-1440-full.png",
+    "sha256": "7c5a909cdcc82e493ea85b9134cc909612f4217b7037d0dee3862df6585bf285",
+    "bytes": 224048
+  },
+  {
+    "path": "evidence/interval-clinician-ar-1440-viewport.png",
+    "sha256": "e41f689c6bfe3c48d3b8488c27dcb86ac36f23e1caf78b643fae82cd9e68af55",
+    "bytes": 130430
+  },
+  {
+    "path": "evidence/interval-clinician-ar-320-text200-full.png",
+    "sha256": "0ec40ab1e419f00c94a9a03438547097eff6251a43818b9c5c46c9c36899a026",
+    "bytes": 468757
+  },
+  {
+    "path": "evidence/interval-clinician-ar-390-focus-close.png",
+    "sha256": "f319f436414454a2fcd18a849d11b13c91ef10799b2f0b5ad664ef4dd8bac323",
+    "bytes": 45687
+  },
+  {
+    "path": "evidence/interval-clinician-ar-390-focus-summary.png",
+    "sha256": "b6984ea8738f91d74181ab5a8049be0df5e8a3c4506dc74869ec7f7ed940fa90",
+    "bytes": 48329
+  },
+  {
+    "path": "evidence/interval-clinician-ar-390-full.png",
+    "sha256": "7584bab43c7186d79a9974b4d7c7ec0fd9700ddf719707bb99c5bd037facf7c3",
+    "bytes": 201882
+  },
+  {
+    "path": "evidence/interval-clinician-ar-390-viewport.png",
+    "sha256": "ffa91142161e559cc63f7e4c3d3504f0e04aa58a553abdc080581984a22c8a3c",
+    "bytes": 54363
+  },
+  {
+    "path": "evidence/interval-clinician-ar-access-redacted-390-full.png",
+    "sha256": "0ff29c6a90362d78b99051c7629d82733b346234f5180ba36ee3496ab907351a",
+    "bytes": 29910
+  },
+  {
+    "path": "evidence/interval-clinician-ar-uncertain-write-390-full.png",
+    "sha256": "eaa16f70073c3b9726d2a6841c09cf56be83d2194671ab86b0dfce3f80454cbe",
+    "bytes": 62288
+  },
+  {
+    "path": "evidence/interval-clinician-en-1440-full.png",
+    "sha256": "99e066739af60e12c26adf4f6e1b5abceb0db393415a699d9ee76440e3154c00",
+    "bytes": 254846
+  },
+  {
+    "path": "evidence/interval-clinician-en-1440-viewport.png",
+    "sha256": "56a62ac4bca8fa25911d3970d1bef7672ac21b4cf78d2d0bde00ef02c40f080c",
+    "bytes": 159099
+  },
+  {
+    "path": "evidence/interval-clinician-en-320-text200-full.png",
+    "sha256": "fac175db5ba8269bb6ac7c1119b28f1dd841deedc03390c68d3c383cd5ce1c1e",
+    "bytes": 559296
+  },
+  {
+    "path": "evidence/interval-clinician-en-390-focus-close.png",
+    "sha256": "87c1eedff24265bdfbf37e4798bdeee17e404db2b9fc33fc9929f6488b5d7680",
+    "bytes": 50365
+  },
+  {
+    "path": "evidence/interval-clinician-en-390-focus-summary.png",
+    "sha256": "9316371e2b1f42b76542b8c25682b28a1a2af61d2b01b33f97d1daa1effbd1fd",
+    "bytes": 53142
+  },
+  {
+    "path": "evidence/interval-clinician-en-390-full.png",
+    "sha256": "39cb0d23dcf25a81ddc4331186d0f703ec961944142ea6f0b9eb4e920c1e9327",
+    "bytes": 226380
+  },
+  {
+    "path": "evidence/interval-clinician-en-390-viewport.png",
+    "sha256": "736e83eadb611fb248c939cf7fdfd26b3574053882223c846ae319a5f2be20ca",
+    "bytes": 58734
+  },
+  {
+    "path": "evidence/interval-clinician-en-access-redacted-390-full.png",
+    "sha256": "4ed003d5a55a93f877a86ae8aaa8d80ac471caefaac7e4d89bc2d1c477ae6f98",
+    "bytes": 37797
+  },
+  {
+    "path": "evidence/interval-clinician-en-uncertain-write-390-full.png",
+    "sha256": "acbcf58387ea046ee700f285ce40b12a4feaa9c6b05b1cfb2934945fd17d2a51",
+    "bytes": 76121
+  },
+  {
+    "path": "evidence/interval-patient-ar-1440-full.png",
+    "sha256": "6d8c1e9bedb422bfab44948a9492171560d6e6cd875652cdd21c24f520fd85ab",
+    "bytes": 115160
+  },
+  {
+    "path": "evidence/interval-patient-ar-1440-viewport.png",
+    "sha256": "6b887a39df1d6e2e5036fd424235abdb7b2360834067f95ae1e50fd849e01287",
+    "bytes": 93869
+  },
+  {
+    "path": "evidence/interval-patient-ar-320-text200-full.png",
+    "sha256": "8f4ec10f3210f7e7470c417b5de1906e58c31889b360bce238f963e541f5eb9e",
+    "bytes": 208906
+  },
+  {
+    "path": "evidence/interval-patient-ar-390-full.png",
+    "sha256": "73fadac128bfdba879910de69a2e67040de8ced2fc552291f5c85d1039dcdb6f",
+    "bytes": 96348
+  },
+  {
+    "path": "evidence/interval-patient-ar-390-viewport.png",
+    "sha256": "5c5a1fad21bb347d67057f87dc69f9b3cd7b4036f4927cdc9a60552e66087ea7",
+    "bytes": 52891
+  },
+  {
+    "path": "evidence/interval-patient-ar-read-error-390-full.png",
+    "sha256": "1d84e02965be6fc005533f25c76504a92d5cc3565261e4c3beca23b47162a481",
+    "bytes": 94913
+  },
+  {
+    "path": "evidence/interval-patient-en-1440-full.png",
+    "sha256": "b9bf0f2187df5716346c8dbecd77d74151d60f91a0ef70f855adf35a3088abb4",
+    "bytes": 137316
+  },
+  {
+    "path": "evidence/interval-patient-en-1440-viewport.png",
+    "sha256": "820aca730a812fe9806cfa44e27a88642945f609683aa4f03b17d8d4758c9aa1",
+    "bytes": 117268
+  },
+  {
+    "path": "evidence/interval-patient-en-320-text200-full.png",
+    "sha256": "ae6becb7b1da0d729dbd89c9ad02bb7cbfa3e78b2a271ee26e55ff94939921a6",
+    "bytes": 270161
+  },
+  {
+    "path": "evidence/interval-patient-en-390-full.png",
+    "sha256": "f280414b9551aaeef62ffd3e452f6426141d107627af7f0c83fc8f6118096017",
+    "bytes": 118377
+  },
+  {
+    "path": "evidence/interval-patient-en-390-viewport.png",
+    "sha256": "7f13778eadc8c05325ee1a8cbd2a6bfebe3acf75a56b8dfb5b938597a6e9b00c",
+    "bytes": 56402
+  },
+  {
+    "path": "evidence/interval-patient-en-read-error-390-full.png",
+    "sha256": "490ff021a38ea5468723a122d1addfdc505998030b71e442f622fa87f09645d8",
+    "bytes": 119697
+  },
+  {
+    "path": "evidence/owner-review.html",
+    "sha256": "31676cf35fc7b50d13ccc2ca5f0f1c00a63c73c36ebea6b235d218d59a224e5c",
+    "bytes": 7932
+  },
+  {
+    "path": "evidence/owner-review.pdf",
+    "sha256": "d941308e5576d449f50e24d7bcc840f5b8772f17b12c822301f3fb77a6a8189d",
+    "bytes": 1288943
+  },
+  {
+    "path": "evidence/preservation.json",
+    "sha256": "0ee1d880aba2058d9219fe0e28c5bc3f128105bee72055828bb986008cb6fb17",
+    "bytes": 8052
+  },
+  {
+    "path": "evidence/relay-clinician-ar-1440-full.png",
+    "sha256": "ba780ef79a2d0eeaad11179ae9bafac7c08d9408cf712008fed8a5ed677e8b89",
+    "bytes": 235098
+  },
+  {
+    "path": "evidence/relay-clinician-ar-1440-viewport.png",
+    "sha256": "7fcadf70e04bfa11047dad843d2d38f58167917b5f2ea2b07a3e8b206562823b",
+    "bytes": 116734
+  },
+  {
+    "path": "evidence/relay-clinician-ar-320-text200-full.png",
+    "sha256": "067533394b777f028a7c4a8768b70c7a3d484170040b3166a1ee511b0ea2c162",
+    "bytes": 476481
+  },
+  {
+    "path": "evidence/relay-clinician-ar-390-focus-close.png",
+    "sha256": "a14ff37c84b764ac5599cb9922cdfd0d5bffefe4cebeadedfed3a83b584eba00",
+    "bytes": 45565
+  },
+  {
+    "path": "evidence/relay-clinician-ar-390-focus-summary.png",
+    "sha256": "06347fa20aa1fe906a3ed55951bee5c867f11f36dc2e6a9a429cb22f2e032b93",
+    "bytes": 49867
+  },
+  {
+    "path": "evidence/relay-clinician-ar-390-full.png",
+    "sha256": "d14976ed6a8cdcbbad1db8981347df442a56c7a67e1669d720f72653bdf550fe",
+    "bytes": 206910
+  },
+  {
+    "path": "evidence/relay-clinician-ar-390-viewport.png",
+    "sha256": "af2f61929f5e1563d80c528d71b7abdb42b37add1260d83ea231dcce06e5115b",
+    "bytes": 55086
+  },
+  {
+    "path": "evidence/relay-clinician-ar-access-redacted-390-full.png",
+    "sha256": "e31851d870dc115b6b016c2facaf53ea5c658589e66af808936a8c5a01389e18",
+    "bytes": 30266
+  },
+  {
+    "path": "evidence/relay-clinician-ar-uncertain-write-390-full.png",
+    "sha256": "59593d690870ae2bf6e41578eee10310fbf6fee278338e134ea3d816011aad90",
+    "bytes": 63241
+  },
+  {
+    "path": "evidence/relay-clinician-en-1440-full.png",
+    "sha256": "d044ef1e9995f694dacdd24607513a5b44eff5c2e70bec5091b1187b8508bede",
+    "bytes": 264890
+  },
+  {
+    "path": "evidence/relay-clinician-en-1440-viewport.png",
+    "sha256": "1ea87ad6bea16461dbc8c6197ef8d40cd755d8e7ddc95df05ccf63d6fadeb924",
+    "bytes": 137013
+  },
+  {
+    "path": "evidence/relay-clinician-en-320-text200-full.png",
+    "sha256": "48e3708147d3a4af276306e26745fbb26ffe9e55c15f58c660d0453ea211fa61",
+    "bytes": 565407
+  },
+  {
+    "path": "evidence/relay-clinician-en-390-focus-close.png",
+    "sha256": "19a7c7f0e6f48489630c9f6a0e3c663ba1736a80696f862fb19d7c467b8bddf9",
+    "bytes": 49978
+  },
+  {
+    "path": "evidence/relay-clinician-en-390-focus-summary.png",
+    "sha256": "f859045dfa00c5c197ca9516e5783b2b1a3ff27664f65991be98381855b8e599",
+    "bytes": 53152
+  },
+  {
+    "path": "evidence/relay-clinician-en-390-full.png",
+    "sha256": "6e9ae9b4d006f3f1d37bdfaf62f2896b01d322aef77fbbfa53fef59bf0ab1aee",
+    "bytes": 231759
+  },
+  {
+    "path": "evidence/relay-clinician-en-390-viewport.png",
+    "sha256": "085645bd2f6e0923374f5ed9f7015f3df6d562bde1eb986ca6a31b3902a44fea",
+    "bytes": 58460
+  },
+  {
+    "path": "evidence/relay-clinician-en-access-redacted-390-full.png",
+    "sha256": "8147144b3770c1eea86a853cd0ea02f39f1cdd606a75b27d3ad46fc17d6f6dae",
+    "bytes": 38301
+  },
+  {
+    "path": "evidence/relay-clinician-en-uncertain-write-390-full.png",
+    "sha256": "acd77ea6c51942cfb89c255ff5f9d6f1b7037575a82bd6b8d59112c6f6deaa0a",
+    "bytes": 77165
+  },
+  {
+    "path": "evidence/relay-patient-ar-1440-full.png",
+    "sha256": "fd5b7f6c7dbf2b6671e141faac86c9dcb49eeb566d1266eaf0aa8fbee04afa58",
+    "bytes": 128164
+  },
+  {
+    "path": "evidence/relay-patient-ar-1440-viewport.png",
+    "sha256": "0f32a544cf8f705ec6d9e5e9b7bae4d91cb0400735a1c65e9041fc4f76fc4ccf",
+    "bytes": 103416
+  },
+  {
+    "path": "evidence/relay-patient-ar-320-text200-full.png",
+    "sha256": "34b453478a8224505d9a4f18c20f0b09b5693fd75f68c157b28d7d25c9749cc0",
+    "bytes": 237134
+  },
+  {
+    "path": "evidence/relay-patient-ar-390-full.png",
+    "sha256": "917b2985e105fd361c0f3987874c38ea95ab526ed96c23ab661e1a98dd7094e3",
+    "bytes": 107175
+  },
+  {
+    "path": "evidence/relay-patient-ar-390-viewport.png",
+    "sha256": "1e46d61ae4b0099d3511f0b8d09bb3b46b12dbee8bf427f053164c28ea138349",
+    "bytes": 46586
+  },
+  {
+    "path": "evidence/relay-patient-ar-read-error-390-full.png",
+    "sha256": "16ddbdaea3272a7125cfe35cecf3901cd04442af99d13902e1672418bf2c259d",
+    "bytes": 107469
+  },
+  {
+    "path": "evidence/relay-patient-en-1440-full.png",
+    "sha256": "e3eb5e2fa308e7f63ce7128c14d7e8a4cecba53afdc44e69cc06fdabc2aa31b0",
+    "bytes": 152876
+  },
+  {
+    "path": "evidence/relay-patient-en-1440-viewport.png",
+    "sha256": "beec3923d0b5487334df5752df253ba5f0cc0104be03a2f632fb237a5f0c31db",
+    "bytes": 122012
+  },
+  {
+    "path": "evidence/relay-patient-en-320-text200-full.png",
+    "sha256": "4c99d4dcaa3499004a020ede2957ff37fc96490ab0a834ca0c243ec8ee4baf5b",
+    "bytes": 305383
+  },
+  {
+    "path": "evidence/relay-patient-en-390-full.png",
+    "sha256": "5b486007488996de20dfa70bdad00563a3ff6c323e5ab07e66db559a06cf457f",
+    "bytes": 129293
+  },
+  {
+    "path": "evidence/relay-patient-en-390-viewport.png",
+    "sha256": "83032e2ed34ec9483aa1bcc34fc10b9a42550d1eca59f7d4634d5c2d3bc61bab",
+    "bytes": 52458
+  },
+  {
+    "path": "evidence/relay-patient-en-read-error-390-full.png",
+    "sha256": "1db7f5db379d4813a7b3f79e6f613c2d2adc899b74fb63790c535d930c907e18",
+    "bytes": 133542
+  },
+  {
+    "path": "evidence/remote-baseline.json",
+    "sha256": "ff259db734cafa1e9629ebbc56027cf4dea5546d4b1e372fb2ac1f07306d5e5e",
+    "bytes": 1080
+  },
+  {
+    "path": "evidence/states-and-focus.json",
+    "sha256": "7ae3fd9b866969d62767a0843f323276c32266daa92d411368a22a0f9885ca68",
+    "bytes": 39745
+  },
+  {
+    "path": "index.html",
+    "sha256": "7a7b146685756fa8a56ca3b4ad9abb4a8530898bf704045c0bd299550892a279",
+    "bytes": 11427
+  },
+  {
+    "path": "specimen/index.html",
+    "sha256": "6ae202bc0064e79e8d7a6fee936e35524cdff6c0749dbbffcea392a958c405dd",
+    "bytes": 486
+  },
+  {
+    "path": "specimen/specimen.css",
+    "sha256": "9deb9e123f029d4cdc457e9c95ccb0886b9c647563684861f95363eee8eb9178",
+    "bytes": 59327
+  },
+  {
+    "path": "specimen/specimen.js",
+    "sha256": "202234e96c306dcf261537fb35d8cc56f51600d7db37de36651ac7e437ecec80",
+    "bytes": 27585
+  },
+  {
+    "path": "tools/boards.mjs",
+    "sha256": "86c3d1aea5060257d41dfd5dfd955574da322b2d20e17b32062dc03358023dbc",
+    "bytes": 4744
+  },
+  {
+    "path": "tools/render.mjs",
+    "sha256": "1b1a9a8481733e3dad248150e65b2bac962ceb7b0b67c9919cdbedbb309a26a3",
+    "bytes": 8461
+  },
+  {
+    "path": "tools/scope.py",
+    "sha256": "0f1633cb9ae0d63914976ab0cc552840ce509614b07dcfe82f17d51731622d92",
+    "bytes": 2532
+  },
+  {
+    "path": "tools/states.mjs",
+    "sha256": "7e2ed8d2c40c0c2f2778cac68b4985a82037fb32775da4702220846a413dd95c",
+    "bytes": 4541
+  },
+  {
+    "path": "vendor/LICENSE",
+    "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014",
+    "bytes": 1075
+  },
+  {
+    "path": "vendor/basic-ux-excerpts.json",
+    "sha256": "f54216357069593405470e09cffe4d34169c83c92f2d0e067ca34e5ef4a871c5",
+    "bytes": 13053
+  },
+  {
+    "path": "vendor/upstream-lock.json",
+    "sha256": "a2d399a0f43b6bb6f90cf9908435f2f4c7be1c3b6b67c829299bf35c749f69df",
+    "bytes": 3162
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "verified_on": "2026-11-07",
+  "repository": "abuhmaid28/egyhealth360",
+  "visibility": "public",
+  "base_main": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "branch": "design/72-zero-cost-skill-pilot",
+  "preserved_remote_proposals": [
+    {
+      "pr": 86,
+      "head": "7bd1d03195185b19b6ed869fb2e5ced51b4cb9b3",
+      "state": "OPEN",
+      "merged": false
+    },
+    {
+      "pr": 87,
+      "head": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "state": "OPEN",
+      "merged": false
+    }
+  ],
+  "issue88": {
+    "state": "OPEN",
+    "comments": 0,
+    "scope": "tracking only; separate owner authorization required for product fix"
+  },
+  "native_check_evidence": "activation.json",
+  "owner_scope_source": "Current conversation brief; author-written summary in BASELINE.md, not an invented GitHub owner comment",
+  "selected_github_runner": "ubuntu-24.04 standard hosted",
+  "base_main_ci": {
+    "run_id": 42165554605,
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3"
+  }
+}

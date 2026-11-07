@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-07",
+  "host_native_availability_checks": 1,
+  "tool": "skills.list",
+  "arguments": {
+    "authority": {
+      "kind": "executor"
+    }
+  },
+  "actual_result": {
+    "skills": [],
+    "warnings": [],
+    "next_cursor": null
+  },
+  "session_catalog_candidate_present": false,
+  "native_selection_verified": false,
+  "native_instruction_loading_verified": false,
+  "used_mode": "EXPLICIT_AUDITED_PLAYBOOK_ONLY",
+  "native_activation_claim": "NOT_VERIFIED",
+  "local_repository_discovery_is_host_activation": false,
+  "s1_modified": false,
+  "s1_behavioral_cases_executed_by_this_pilot": 0,
+  "explicit_loading_evidence": {
+    "source": "Separate design-agent report, not host activation telemetry",
+    "playbook_read_before_authoring": true,
+    "playbook_sha256": "c6e33163ee61345ad528533f71c42c31dd2c21d7214cd5bf784654b1ff87cb52",
+    "basic_excerpt_json_separately_read_before_authoring": false,
+    "basic_excerpts_before_authoring": "Upstream selected rows in inherited context; applied row guidance in explicitly read playbook",
+    "basic_excerpt_json_read_in_evidence_followup": true,
+    "basic_excerpt_json_sha256": "f54216357069593405470e09cffe4d34169c83c92f2d0e067ca34e5ef4a871c5"
+  }
+}
