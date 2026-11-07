@@ -1,0 +1,95 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "sole_candidate": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+  "mode": "EXPLICIT_AUDITED_PLAYBOOK_LOADING",
+  "native_activation_verified": false,
+  "s1": "Unchanged; no native discovery/efficacy claim",
+  "owner_brief_sha256": "21bd27ea0be4c9ca2111f31e28066b5e511d773d6df17159c55cf140581bad56",
+  "resources": [
+    {
+      "commit": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+      "path": "docs/nova-evolution-refinement-04/index.html",
+      "sha256": "445cf3100b8bd4a509a83ee5c5e3fe653d488102bd501d713a6a25fe3557e334"
+    },
+    {
+      "commit": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+      "path": "docs/nova-evolution-refinement-04/nova.css",
+      "sha256": "4d370bfd45eecf725db30a22099c8be1a903da82fda300e8344815e4b934b35a"
+    },
+    {
+      "commit": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+      "path": "docs/nova-evolution-refinement-04/specimen.js",
+      "sha256": "cb86b1d56cebad63f6b1506e96ff2ec889247b36077024ddf2aad90af63ce195"
+    },
+    {
+      "commit": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+      "path": "docs/nova-evolution-refinement-04/README.md",
+      "sha256": "8e73e36c7f7bd1b2e68b804c6cbd888bf717890f0d67587d43c355b574721ad6"
+    },
+    {
+      "commit": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+      "path": "docs/nova-evolution-refinement-04/VALIDATION.md",
+      "sha256": "97fbc7146bfe9cf44fb3efea4a56daad0620cc17f70ded7a3bbd0202068a4523"
+    },
+    {
+      "commit": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+      "path": "docs/nova-evolution-refinement-04/INDEPENDENT_REVIEW.md",
+      "sha256": "0790930f8a161083792145d8363c414490a2d386ee2a44f55b1bf5ce9d31af4e"
+    },
+    {
+      "commit": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+      "path": "docs/nova-evolution-refinement-04/EGYPTIAN_ARABIC_UI_WRITING_NOTE.md",
+      "sha256": "45908614a3d9f8621f41c9ab8f1e2b638d594e4c9a10247049bbd100fe2749d6"
+    },
+    {
+      "commit": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+      "path": "docs/nova-evolution-refinement-04/evidence/refined-ar-390-full.png",
+      "sha256": "07a19d005361088e3263f34fc498af62e1f2de4e2463b494294f6b8bfa10bb89"
+    },
+    {
+      "commit": "459037baa0d7c2e67fd95715bfca7999592dfd45",
+      "path": "docs/nova-evolution-refinement-04/evidence/refined-ar-1440-full.png",
+      "sha256": "a564a11cc03211228e6387622e5f1658d658b092271b1fe6991211120c5077b9"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/PLAYBOOK.md",
+      "sha256": "c6e33163ee61345ad528533f71c42c31dd2c21d7214cd5bf784654b1ff87cb52"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/AUDIT.md",
+      "sha256": "b57049cf1681662084e6a85639e3e200348b2f0dcce6ced8552a2ecf370266da"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/basic-ux-excerpts.json",
+      "sha256": "f54216357069593405470e09cffe4d34169c83c92f2d0e067ca34e5ef4a871c5"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/upstream-lock.json",
+      "sha256": "a2d399a0f43b6bb6f90cf9908435f2f4c7be1c3b6b67c829299bf35c749f69df"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/LICENSE",
+      "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014"
+    },
+    {
+      "commit": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": ".agents/skills/eh360-visual-exploration/SKILL.md",
+      "sha256": "63cc0b2c92a94b8bb7ad7a6ebd616113113a4d4319db571de5b3a6387294a6df"
+    },
+    {
+      "commit": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": ".agents/skills/eh360-visual-qa/SKILL.md",
+      "sha256": "d204ed472c7467bbfb73f8b220b9008569a5d233a56699ef2e794e55d47d1160"
+    },
+    {
+      "commit": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": "docs/skills-pilot/REFERENCE_MAP.md",
+      "sha256": "504d8827e3d0e1081f9714f00bd165b068ba50d65eb52a457acbe9038381fd6e"
+    }
+  ]
+}
