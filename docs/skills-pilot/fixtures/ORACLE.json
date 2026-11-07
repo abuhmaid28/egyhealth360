@@ -1,0 +1,14 @@
+{
+  "provenance": "S1 deliberately planted defects; evaluator-only ground truth, never model task input",
+  "target": "docs/skills-pilot/fixtures/ui-candidate.html",
+  "expected_defects": [
+    {"id": "F01", "selector": "#wide-row", "fact": "720px row overflows narrow content; RTL may overflow left even when document scrollWidth misses it", "dimension": "responsive", "suggested_severity": "P1"},
+    {"id": "F02", "selector": "#clipped", "fact": "Next-step text clipped by width/height and white-space at both text scales", "dimension": "text/recovery", "suggested_severity": "P2"},
+    {"id": "F03", "selector": "#unlabelled", "fact": "Input has placeholder only, no persistent label or explicit accessible name", "dimension": "forms/accessibility", "suggested_severity": "P2"},
+    {"id": "F04", "selector": "#details", "fact": "Keyboard focus explicitly removes outline and shadow with no replacement", "dimension": "focus", "suggested_severity": "P1"},
+    {"id": "F05", "selector": "#fake-disabled", "fact": "Unavailable appearance has neither native disabled nor aria-disabled semantics", "dimension": "semantic states", "suggested_severity": "P2"},
+    {"id": "F06", "selector": "#feedback", "fact": "Dynamic error has no status/live region or recovery action", "dimension": "feedback/recovery", "suggested_severity": "P2"}
+  ],
+  "not_defects": ["Allergy state is explicitly unknown; never replace it with a clinical assertion", "Generic system font is allowed for this fixture; it is not an accepted product typography sample", "Fixture colors/layout are not proposed product tokens"],
+  "scoring": "Require evidence for each claimed match; extra supported findings are not automatically false positives. Blind expert adjudication decides severity and disputed findings."
+}
