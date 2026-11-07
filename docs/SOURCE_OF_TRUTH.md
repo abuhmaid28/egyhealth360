@@ -48,7 +48,7 @@ All tracked documentation Markdown paths are classified below. Research files ar
 | [skills-pilot/AUTHORIZATION.md](skills-pilot/AUTHORIZATION.md) | Submitted S1 owner scope summary, exact base and R0/duplicate-work search provenance; not an invented GitHub authorization. |
 | [skills-pilot/REFERENCE_MAP.md](skills-pilot/REFERENCE_MAP.md) | Progressive task-specific map to accepted references; no new policy authority. |
 | [skills-pilot/EVALUATION_METHOD.md](skills-pilot/EVALUATION_METHOD.md) | Reconstructed 42-case protocol, real hosted evidence requirements and scoring boundaries. |
-| [skills-pilot/EVALUATION_RESULTS.md](skills-pilot/EVALUATION_RESULTS.md) | Actual static/local-browser evidence and blocked model evaluations; CLOUD_DISCOVERY_UNVERIFIED, no activation/efficacy claim. |
+| [skills-pilot/EVALUATION_RESULTS.md](skills-pilot/EVALUATION_RESULTS.md) | Actual static/local-catalog/local-browser evidence and blocked model evaluations; CLOUD_DISCOVERY_UNVERIFIED, no activation/efficacy claim. |
 | [skills-pilot/BASELINE_COMPARISON.md](skills-pilot/BASELINE_COMPARISON.md) | Clean instruction-isolation protocol; 0/6 paired arms executed, no measured gain. |
 | [skills-pilot/PILOT_DECISION.md](skills-pilot/PILOT_DECISION.md) | Author candidate disposition and bounded health/independent-review limits; no Skills/design acceptance. |
 

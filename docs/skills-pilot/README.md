@@ -27,6 +27,11 @@ Zero of 42 behavioral cases and zero of three paired samples have run. No
 activation/quality/token scores are reported. Actual local Chromium fixture
 measurements are available and clearly separate from Skill execution.
 
+An actual **local Codex catalog** scan independently returns all three Skills as
+enabled with `scope: repo` and no repository errors. [Sanitized RPC evidence](evidence/local-discovery.json).
+This validates local automatic catalog discovery, not a fresh hosted session,
+explicit/implicit model invocation or reference loading.
+
 Read [method](EVALUATION_METHOD.md), [42 structured cases](EVALUATION_CASES.json),
 [results](EVALUATION_RESULTS.md), [paired comparison](BASELINE_COMPARISON.md),
 and [pilot decision](PILOT_DECISION.md). [Evidence](evidence/) contains sanitized
@@ -40,6 +45,7 @@ Run from the repository root:
 
 ```sh
 python docs/skills-pilot/scripts/validate.py
+python docs/skills-pilot/scripts/probe_local_discovery.py
 node --test tests/ci/*.test.mjs
 node scripts/ci/check-docs.mjs
 git diff --check 5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3
@@ -51,6 +57,10 @@ complete changed-file allowlist. It does not emulate Codex selection or assess
 model behavior. PyYAML was also used for an actual local YAML parse without
 adding a repository dependency. The repository checker additionally validates
 current/changed Markdown anchors and source-index classification.
+The catalog probe uses a new local Codex app-server process and its real
+`initialize` / `skills/list` RPCs with `forceReload: true`; it does not read the
+Skill bodies into a model prompt. It requires the installed Codex CLI, not an
+authenticated model turn. Output excludes unrelated user/plugin catalog data.
 
 For real fixture rendering with an **existing** Python Playwright installation
 and Chromium:

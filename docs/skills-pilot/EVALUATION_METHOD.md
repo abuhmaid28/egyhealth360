@@ -13,7 +13,9 @@ Keep these labels separate in every result:
 4. **ACTUAL_CODEX_CLOUD:** a fresh hosted task, verified checkout, real skill
    catalog/loading/tool trace and output. None was achieved in this environment.
 5. **ACTUAL_LOCAL_CODEX:** a separate fallback category; never substitute it for
-   hosted discovery. The local capability probe also failed before model output.
+   hosted discovery. The local model capability probe failed before model output.
+   A separate fresh app-server catalog probe did succeed: three enabled repo
+   entries. Catalog scanning alone supplies no model behavior or loading score.
 
 Record OS/runtime, model ID, reasoning effort, tool set, settings, repository
 SHA, candidate Skill hashes, locale/viewports and timestamps. Never guess model,

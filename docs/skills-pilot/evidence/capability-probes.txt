@@ -24,3 +24,6 @@ $ git ls-remote origin refs/heads/main
 
 $ workspace R0/Skills filename/content search before authoring
 No R0 package, evaluation fixtures or existing Skills found.
+
+$ python docs/skills-pilot/scripts/probe_local_discovery.py
+Actual fresh local app-server initialize / skills/list (forceReload true): 3/3 pilot entries; scope repo; enabled true; zero repository errors. See local-discovery.json. Catalog only, not hosted or model invocation.

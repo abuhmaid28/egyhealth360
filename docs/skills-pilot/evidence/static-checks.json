@@ -23,7 +23,7 @@
       "adversarial_boundary": 3
     }
   },
-  "local_links_checked": 71,
+  "local_links_checked": 74,
   "changed_paths": [
     ".agents/skills/eh360-ux-review/SKILL.md",
     ".agents/skills/eh360-visual-exploration/SKILL.md",
@@ -62,10 +62,12 @@
     "docs/skills-pilot/evidence/environment.json",
     "docs/skills-pilot/evidence/focused-checks.txt",
     "docs/skills-pilot/evidence/input-hashes.json",
+    "docs/skills-pilot/evidence/local-discovery.json",
     "docs/skills-pilot/evidence/static-checks.json",
     "docs/skills-pilot/fixtures/ORACLE.json",
     "docs/skills-pilot/fixtures/ui-candidate.html",
     "docs/skills-pilot/scripts/capture_fixture.py",
+    "docs/skills-pilot/scripts/probe_local_discovery.py",
     "docs/skills-pilot/scripts/validate.py"
   ],
   "baseline_files_unchanged": 1421,

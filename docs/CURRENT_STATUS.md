@@ -10,7 +10,9 @@ clinical/security contracts. [Pilot entry and evidence](skills-pilot/README.md),
 [scope/provenance](skills-pilot/AUTHORIZATION.md), [results](skills-pilot/EVALUATION_RESULTS.md)
 and [candidate disposition](skills-pilot/PILOT_DECISION.md). No R0 package was
 found; the 42 cases are reconstructed S1. **CLOUD_DISCOVERY_UNVERIFIED**: hosted
-authentication failed; no behavioral/paired success is claimed. Exact final
+authentication failed; no behavioral/paired success is claimed.
+Local Codex catalog scanning recognizes all three enabled repository Skills;
+this does not establish hosted or model invocation. Exact final
 head and required remote CI belong in the pilot PR handoff. PR #86 remains
 OPEN / UNMERGED; H — Human Precision and P — Precision, Open are unselected
 proposals and supply no accepted tokens, typography or Design System authority.

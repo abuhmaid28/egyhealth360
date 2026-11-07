@@ -62,10 +62,12 @@
     "Unmapped path: docs/skills-pilot/evidence/environment.json",
     "Unmapped path: docs/skills-pilot/evidence/focused-checks.txt",
     "Unmapped path: docs/skills-pilot/evidence/input-hashes.json",
+    "Unmapped path: docs/skills-pilot/evidence/local-discovery.json",
     "Unmapped path: docs/skills-pilot/evidence/static-checks.json",
     "Unmapped path: docs/skills-pilot/fixtures/ORACLE.json",
     "Unmapped path: docs/skills-pilot/fixtures/ui-candidate.html",
     "Unmapped path: docs/skills-pilot/scripts/capture_fixture.py",
+    "Unmapped path: docs/skills-pilot/scripts/probe_local_discovery.py",
     "Unmapped path: docs/skills-pilot/scripts/validate.py"
   ]
 }

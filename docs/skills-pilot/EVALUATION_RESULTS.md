@@ -10,6 +10,7 @@ real local fixture rendering are distinct evidence streams.
 | Current Codex conventions review | Yes | Official documentation checked; [environment/source hash](evidence/environment.json) |
 | Manifest syntax and exact three-candidate inventory | Yes | Restricted valid YAML + actual PyYAML parse; [focused checks](evidence/focused-checks.txt) |
 | Descriptions/collision boundary review | Static only | Distinct descriptions and 42 declared target decisions; no empirical selection precision/recall |
+| Actual local Codex automatic catalog discovery | Yes, 3/3 | New app-server `skills/list` scan: all three enabled, `scope: repo`, zero repository errors; [RPC evidence](evidence/local-discovery.json). Local discovery only |
 | Reference paths, fixture structure/count and full scope allowlist | Yes | [Static output](evidence/static-checks.json); deterministic checks only |
 | Author instruction/accepted-contract review | Yes | [Reference map](REFERENCE_MAP.md), preservation rules in all three bodies; author review, not independent certification |
 | Repository documentation/policy checks | Yes | Actual local output retained in focused-checks.txt; final remote gates recorded in PR |
@@ -21,7 +22,16 @@ real local fixture rendering are distinct evidence streams.
 | Simulated model evaluations | **0** | No simulated PASS or score substituted |
 | Final required remote CI | PR handoff | Actual final SHA/run/job results must be recorded on the PR; previous SHA success is insufficient |
 
-## Actual rendered fixture evidence
+## Actual local catalog and rendered fixture evidence
+
+Separately, [the local catalog probe](scripts/probe_local_discovery.py) uses the
+installed Codex 0.159.2 app-server and generated protocol schema, then a fresh
+`initialize` / `skills/list` request with `forceReload: true`. It returns all
+three repository Skills enabled without any repository parse errors. This is
+actual local automatic discovery, not manual file-reading. The trace pins the
+three manifest hashes and checkout at observation; those Skill bytes are
+unchanged in the final candidate. It does not require a model turn and does not
+establish explicit/implicit invocation, reference loading or hosted discovery.
 
 The [capture script](scripts/capture_fixture.py) serves only the synthetic fixture
 over loopback HTTP using installed Playwright/Chromium. File navigation was

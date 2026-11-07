@@ -18,6 +18,7 @@ outcomes. [Results](EVALUATION_RESULTS.md) explicitly report
 | Is the package bounded to the authorized three Skills? | Exact inventory, path allowlist and accepted-reference mapping | Review candidate |
 | Is the original R0 suite recovered? | No package found in available workspace/remotes | Reconstructed S1 only; no false provenance |
 | Are trigger boundaries plausible? | Concise distinct metadata and explicit/implicit/adjacent/adversarial fixtures | Static author assessment only; empirical selection pending |
+| Does the local Codex catalog recognize the Skills? | Real fresh app-server scan returns all three enabled in repo scope, no repository errors | Local discovery verified; hosted discovery/invocation still unverified |
 | Are the synthetic visual fixtures observable? | Actual local Chromium captures/measurements of six planted defect classes | Fixture evidence available; no model finding score |
 | Is actual hosted discovery/use verified? | Authentication failed before model output/task creation | CLOUD_DISCOVERY_UNVERIFIED |
 | Do Skills improve over a clean baseline? | Six paired arms not executed | No efficacy conclusion |

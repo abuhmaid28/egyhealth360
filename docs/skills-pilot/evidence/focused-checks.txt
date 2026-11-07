@@ -74,3 +74,8 @@ Author viewed EN/AR 320px 200% full-page screenshots with view_image; synthetic 
 Final staged-package recheck:
 Repository sanity, document classification and 987 local references in 60 current/changed Markdown files: PASS
 Static validator PASS; complete scope remains within allowlist.
+
+Additional actual catalog validation:
+$ python docs/skills-pilot/scripts/probe_local_discovery.py
+3/3 enabled repo Skills, zero repository errors. Local automatic discovery only; no model behavior.
+Repository sanity, document classification and 990 local references in 60 current/changed Markdown files: PASS
