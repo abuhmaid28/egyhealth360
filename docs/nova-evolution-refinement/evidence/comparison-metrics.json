@@ -1,0 +1,112 @@
+{
+  "browser": "154.0.8037.57",
+  "source": "5aad95092a74e5818214c71d4263451b9d28eb86",
+  "method": "Actual browser geometry of pinned original HTML/CSS/fonts fulfilled from Git; screenshots copied byte-identically from that commit. These are layout measurements, not user-research metrics.",
+  "comparison": [
+    {
+      "width": 390,
+      "before": {
+        "appointment": {
+          "top": 328.984375,
+          "bottom": 817.453125,
+          "height": 488.46875
+        },
+        "action": {
+          "top": 742.453125,
+          "bottom": 794.453125,
+          "height": 52
+        },
+        "source": {
+          "top": 839.453125,
+          "bottom": 1126.71875,
+          "height": 287.265625
+        },
+        "followupTitle": {
+          "top": 907.84375,
+          "bottom": 939.734375,
+          "height": 31.890625
+        },
+        "documentHeight": 1973
+      },
+      "after": {
+        "appointment": {
+          "top": 266.75,
+          "bottom": 593.09375,
+          "height": 326.34375
+        },
+        "action": {
+          "top": 520.09375,
+          "bottom": 572.09375,
+          "height": 52
+        },
+        "source": {
+          "top": 737.15625,
+          "bottom": 1041.078125,
+          "height": 303.921875
+        },
+        "followupTitle": {
+          "top": 797.15625,
+          "bottom": 831.34375,
+          "height": 34.1875
+        },
+        "documentHeight": 1781
+      },
+      "appointmentReductionPercent": 33.2,
+      "primaryActionEarlierPixels": 222.4,
+      "followupTitleEarlierPixels": 110.7
+    },
+    {
+      "width": 1440,
+      "before": {
+        "appointment": {
+          "top": 332.96875,
+          "bottom": 663.0625,
+          "height": 330.09375
+        },
+        "action": {
+          "top": 582.0625,
+          "bottom": 634.0625,
+          "height": 52
+        },
+        "source": {
+          "top": 691.0625,
+          "bottom": 983.9375,
+          "height": 292.875
+        },
+        "followupTitle": {
+          "top": 761.453125,
+          "bottom": 796.25,
+          "height": 34.796875
+        },
+        "documentHeight": 1301
+      },
+      "after": {
+        "appointment": {
+          "top": 285.4375,
+          "bottom": 548.1875,
+          "height": 262.75
+        },
+        "action": {
+          "top": 466.046875,
+          "bottom": 518.046875,
+          "height": 52
+        },
+        "source": {
+          "top": 689.9375,
+          "bottom": 970.375,
+          "height": 280.4375
+        },
+        "followupTitle": {
+          "top": 743.6875,
+          "bottom": 781.078125,
+          "height": 37.390625
+        },
+        "documentHeight": 1222
+      },
+      "appointmentReductionPercent": 20.4,
+      "primaryActionEarlierPixels": 116,
+      "followupTitleEarlierPixels": 17.8
+    }
+  ],
+  "renderCases": 5
+}
