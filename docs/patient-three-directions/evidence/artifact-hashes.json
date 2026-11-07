@@ -1,0 +1,160 @@
+{
+  "files": [
+    {
+      "path": "docs/patient-three-directions/INDEPENDENT_REVIEW.md",
+      "sha256": "3acbb8b131a73ae9a5892db2124041190b782e45825614d88e5f5b6ea53367eb"
+    },
+    {
+      "path": "docs/patient-three-directions/README.md",
+      "sha256": "f12655971db104ef1f6aff45d637ae8445e9296c67286dd745c09382b7a32bde"
+    },
+    {
+      "path": "docs/patient-three-directions/VALIDATION.md",
+      "sha256": "082e4f50d77127868813a648be66f2aac5941d3c1e5f3a064218abdddc1b059f"
+    },
+    {
+      "path": "docs/patient-three-directions/a.css",
+      "sha256": "55266bf9bc9f04238fc6f0841330ba78fc9229a50c8314e754406d991d1fb262"
+    },
+    {
+      "path": "docs/patient-three-directions/a.html",
+      "sha256": "d6cafc7da427f15444ebfa1762e82c67fae76ffaf2876ff7c1131f2948e1a668"
+    },
+    {
+      "path": "docs/patient-three-directions/assets/Noto-Sans-Arabic-OFL.txt",
+      "sha256": "df5143cdf3380169f2d03bf6d2cd243e85621fd097e608c3607cf7f9c9884ae6"
+    },
+    {
+      "path": "docs/patient-three-directions/assets/manrope-OFL.txt",
+      "sha256": "d6a309fcfb963d329a93baf9df66fa5f3c23a4be2b5f67edf24d6cafecde12ac"
+    },
+    {
+      "path": "docs/patient-three-directions/assets/manrope.ttf",
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+    },
+    {
+      "path": "docs/patient-three-directions/assets/noto-sans-arabic-variable.woff2",
+      "sha256": "ce85091f020920b65762b387b194ef59457ea5b25b760f2dcc35240a94bb8669"
+    },
+    {
+      "path": "docs/patient-three-directions/assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    },
+    {
+      "path": "docs/patient-three-directions/assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "path": "docs/patient-three-directions/assets/plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "path": "docs/patient-three-directions/b.css",
+      "sha256": "ed163c0ad1cb597c79bc6e06d7625eee657ffbb61e7686958208abe0538c9703"
+    },
+    {
+      "path": "docs/patient-three-directions/b.html",
+      "sha256": "2e47c11d59fb2dabd54cd65cb611524da97e6d1cf45db5eb03ddea9138cb36be"
+    },
+    {
+      "path": "docs/patient-three-directions/c.css",
+      "sha256": "62a1fcfb83df428eabf746f041ade3b1240e6ec88863ed45942c548ec4204c8b"
+    },
+    {
+      "path": "docs/patient-three-directions/c.html",
+      "sha256": "7efe06de99d657fa1976627d10a548fd4debb77d7fffd6e0f00f2c0832062a46"
+    },
+    {
+      "path": "docs/patient-three-directions/common.css",
+      "sha256": "c2736a164d532e708cb59c2a2116a8f6c5f6b33a2c1647b2f92e7cff644df794"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/a-ar-1440-full.png",
+      "sha256": "22db9a9ab681083094ead4682a835e2a24cc59ad2cc018e4a5d9bced5697210d"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/a-ar-390-full.png",
+      "sha256": "4cda24560c336af0f647f1df043b8ce3a6fbccf146c6306746857f8ed158bde2"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/b-ar-1440-full.png",
+      "sha256": "2043d223a06c0a2036b3c3891fd369c1d6319eee81c4f687f8d977b0f95a5c15"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/b-ar-390-full.png",
+      "sha256": "b15f4920136b2c963eee9f26c8812a223eab91fece74578aa1e2dbc62196c098"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/board-desktop-ar.html",
+      "sha256": "d68f848debd575dc7582bd4fff0f5e4908887ef062efca7808d56d64ea463b56"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/board-desktop-ar.png",
+      "sha256": "9c8e7b4be4d4257b68997529dc973495a3f32faa58c7f4a761579cf38a3ee525"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/board-mobile-ar.html",
+      "sha256": "6525f2010e65667cfb5b574f706cfebb7c65916063013d7a2fd18abffd270cdd"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/board-mobile-ar.png",
+      "sha256": "a3a77f38de722acd1d1df843aaceb1b76c325c53c08b379c80612acd87d190dc"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/bootstrap.json",
+      "sha256": "d79b5d412b91f651223ee9d954061ec8b8256e438179223ef420086fd9db817e"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/browser-results.json",
+      "sha256": "fe04ce59a73275b38c6ef7ff95f51375e5af87e6101b5a558633d7ffed2210a8"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/c-ar-1440-full.png",
+      "sha256": "d07a72c940a218a6fc3e8f1af3db0fbbf2d41ac9ae8e73330f951af965809402"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/c-ar-390-full.png",
+      "sha256": "edf5d32fc7e5098743b00fd3d4c3b3a0ce1572245300f89a1e23c882b70d7b4c"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/contrast.json",
+      "sha256": "c9bf445d8fe9eb87806b3186eabe9eacea1d8ba31831d5b5230762f46f59377b"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/grayscale-desktop.png",
+      "sha256": "cfcbdf8142bdfc1a59d650b9aede67435a6c1d0250ae571296a09da0785f5a9f"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/grayscale-mobile.png",
+      "sha256": "3089475a46c7387e45d0f39f4bec9e81e01cafb29602dc4bf7e4016a235aca24"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/initial-measurements.json",
+      "sha256": "be7efb817fb84b55d33880ef5870f9b9df02fba9367bf6fbe4f6d3415ed823e6"
+    },
+    {
+      "path": "docs/patient-three-directions/evidence/preservation.json",
+      "sha256": "50a19ad23624a926c0793712b269fb4151bb2ea320fddb325aef83cb0e6a08d2"
+    },
+    {
+      "path": "docs/patient-three-directions/specimen.js",
+      "sha256": "a1fbcd8c8dc576a2fdce92e5aa5e9795221b69c6575048f2e741d5d26388a0ef"
+    },
+    {
+      "path": "docs/patient-three-directions/tools/boards.mjs",
+      "sha256": "b9299c5db440947b345f9db86499ca11af4a3f2f6948fd21ed2044ec5d4d2bea"
+    },
+    {
+      "path": "docs/patient-three-directions/tools/contrast.mjs",
+      "sha256": "715134fe039d8b0d4b09bc7d76ca51c245af199ca955d71129aae2a1b9511f73"
+    },
+    {
+      "path": "docs/patient-three-directions/tools/render.mjs",
+      "sha256": "70b8d198def1b3f03489c97523874bd7bf4e25a223b2e55842be8a411841a3a0"
+    },
+    {
+      "path": "docs/patient-three-directions/tools/verify.mjs",
+      "sha256": "a357b8ae77be6765bb2e49f90753657c32f49cf48338fdb9808e8bdf04b679af"
+    }
+  ]
+}
