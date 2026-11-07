@@ -1,0 +1,66 @@
+{
+  "mode": "EXPLICIT_AUDITED_PLAYBOOK_LOADING",
+  "native_activation_verified": false,
+  "availability_check": "One skills.list authority cloud check; project-specific and upstream design skills not present. No repeated discovery.",
+  "s1": "Unchanged; no native activation or efficacy claim",
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "sources": [
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/PLAYBOOK.md",
+      "sha256": "c6e33163ee61345ad528533f71c42c31dd2c21d7214cd5bf784654b1ff87cb52",
+      "loading": "explicit Git file reading before design"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/AUDIT.md",
+      "sha256": "b57049cf1681662084e6a85639e3e200348b2f0dcce6ced8552a2ecf370266da",
+      "loading": "explicit Git file reading before design"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/basic-ux-excerpts.json",
+      "sha256": "f54216357069593405470e09cffe4d34169c83c92f2d0e067ca34e5ef4a871c5",
+      "loading": "explicit Git file reading before design"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/upstream-lock.json",
+      "sha256": "a2d399a0f43b6bb6f90cf9908435f2f4c7be1c3b6b67c829299bf35c749f69df",
+      "loading": "explicit Git file reading before design"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/LICENSE",
+      "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014",
+      "loading": "explicit Git file reading before design"
+    },
+    {
+      "commit": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": ".agents/skills/eh360-visual-exploration/SKILL.md",
+      "sha256": "63cc0b2c92a94b8bb7ad7a6ebd616113113a4d4319db571de5b3a6387294a6df",
+      "loading": "explicit Git file reading before design"
+    },
+    {
+      "commit": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": ".agents/skills/eh360-visual-qa/SKILL.md",
+      "sha256": "d204ed472c7467bbfb73f8b220b9008569a5d233a56699ef2e794e55d47d1160",
+      "loading": "explicit Git file reading before design"
+    },
+    {
+      "commit": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": "docs/skills-pilot/REFERENCE_MAP.md",
+      "sha256": "504d8827e3d0e1081f9714f00bd165b068ba50d65eb52a457acbe9038381fd6e",
+      "loading": "explicit Git file reading before design"
+    }
+  ],
+  "source_brief_sha256": "b60035f4f044053011f8491caea6392650ddd8e3117f20c881b85998f8d1c65c",
+  "novel_scope": "Direct owner brief: exactly three Patient My Care static design directions; supersedes earlier candidate/role/language counts, no production edits.",
+  "references": {
+    "86": "OPEN / UNMERGED, 7bd1d03195185b19b6ed869fb2e5ced51b4cb9b3",
+    "87": "OPEN / UNMERGED, b3eb9543a58d571968a16168d3492bf817792cb4",
+    "89": "DRAFT / OPEN / UNMERGED, 0886788bd6b395bb7cace8653ffe280da68af4b8",
+    "88": "OPEN tracking only; no fix"
+  },
+  "NOVA": "Not recovered in main text, pinned reference map or current GitHub code search. New interpretation, no reconstructed historical identity."
+}
