@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "e760ed4332ffca876702b32f6ffd4b1787d20783",
+  "method": "Complete original screenshot bytes composed by Chromium, no cropping; desktop 50%, phone 100%.",
+  "fingerprints": [
+    {
+      "width": 390,
+      "sourceCommit": "e760ed4332ffca876702b32f6ffd4b1787d20783",
+      "sourcePath": "docs/nova-evolution-refinement/evidence/refined-ar-390-full.png",
+      "beforeSha256": "bfe0a35a45d424ee5add3804c69501919cee7a707ddc5eba4c97da4b53e09589",
+      "afterSha256": "89700ac70a49ba964227843f8e1f36994c7e176cd92a7540ebdd513f450318e0"
+    },
+    {
+      "width": 1440,
+      "sourceCommit": "e760ed4332ffca876702b32f6ffd4b1787d20783",
+      "sourcePath": "docs/nova-evolution-refinement/evidence/refined-ar-1440-full.png",
+      "beforeSha256": "8c979ecb91e5855670bee0fcec97c0441bf148425e2635a868557f81d2f97b1b",
+      "afterSha256": "58c41e9ebe1dcdc4ae0191f24237dd5852d67b754db216ad7dbabf0966d049dc"
+    }
+  ]
+}
