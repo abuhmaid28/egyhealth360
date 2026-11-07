@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+Current bounded design reference: [NOVA refinement 03 rationale/visual-language note](nova-evolution-refinement-03/README.md), [independent critique](nova-evolution-refinement-03/INDEPENDENT_REVIEW.md), [technical validation](nova-evolution-refinement-03/VALIDATION.md). Classification: **VISUAL PROPOSAL — OWNER DECISION REQUIRED**, one Arabic Patient My Care specimen refining preserved PR #91; not final brand/system or implementation approval. CURRENT_STATUS owns mutable task scope; pinned playbooks are explicitly loaded, with hashes in the new package.
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.

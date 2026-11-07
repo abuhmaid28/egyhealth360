@@ -1,0 +1,2120 @@
+{
+  "method": "WCAG sRGB text ratios from visible direct text and nearest opaque CSS ancestor; explicit radial-gradient endpoint and actual canvas/appointment/source/dialog focus pairs. Sampling is not WCAG certification.",
+  "observations": 122,
+  "minimum": 6.9,
+  "failures": [],
+  "focusPairs": [
+    {
+      "surface": "canvas",
+      "fg": [
+        229,
+        255,
+        156
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.17,
+      "threshold": 3
+    },
+    {
+      "surface": "appointment lightest gradient",
+      "fg": [
+        229,
+        255,
+        156
+      ],
+      "bg": [
+        75,
+        53,
+        95
+      ],
+      "ratio": 9.69,
+      "threshold": 3
+    },
+    {
+      "surface": "followup and dialog",
+      "fg": [
+        229,
+        255,
+        156
+      ],
+      "bg": [
+        48,
+        38,
+        63
+      ],
+      "ratio": 12.96,
+      "threshold": 3
+    },
+    {
+      "surface": "summary",
+      "fg": [
+        229,
+        255,
+        156
+      ],
+      "bg": [
+        40,
+        36,
+        53
+      ],
+      "ratio": 13.71,
+      "threshold": 3
+    }
+  ],
+  "results": [
+    {
+      "candidate": "refined-390",
+      "selector": "A.skip",
+      "foreground": [
+        32,
+        21,
+        46
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": "انتقل للمحتوى",
+      "ratio": 17.38,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        24,
+        21,
+        37
+      ],
+      "text": "نموذج تصميم · بيانات تجريبية · غير متصل",
+      "ratio": 10.07,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "BDI.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        24,
+        21,
+        37
+      ],
+      "text": "NOVA / REFINEMENT 03",
+      "ratio": 10.07,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "DIV.brand",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "EgyHealth 360",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        220,
+        250,
+        148
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "360",
+      "ratio": 16.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        40,
+        30,
+        56
+      ],
+      "background": [
+        217,
+        203,
+        238
+      ],
+      "text": "متابعتي",
+      "ratio": 10.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        43,
+        36,
+        61
+      ],
+      "text": "دور على دكتور",
+      "ratio": 14.02,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        221,
+        212,
+        233
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "سلمى حسن",
+      "ratio": 13.18,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "P.greeting",
+      "foreground": [
+        221,
+        214,
+        230
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "أهلاً يا سلمى.",
+      "ratio": 13.33,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "H1.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "متابعتي",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "P.intro",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "ميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.eyebrow",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "ميعادك الجاي",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.status",
+      "foreground": [
+        225,
+        246,
+        192
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "الحجز اتأكد",
+      "ratio": 16.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "H2.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "د. عمر علي",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "BDI.",
+      "foreground": [
+        217,
+        206,
+        230
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "Nile Care Clinic",
+      "ratio": 12.51,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "TIME.",
+      "foreground": [
+        231,
+        223,
+        239
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "الخميس، 12 نوفمبر 2026",
+      "ratio": 14.55,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "BDI.",
+      "foreground": [
+        231,
+        223,
+        239
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "12",
+      "ratio": 14.55,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "BDI.",
+      "foreground": [
+        231,
+        223,
+        239
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "2026",
+      "ratio": 14.55,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "BDI.",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "14:30–15:00",
+      "ratio": 18.87,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "P.timezone",
+      "foreground": [
+        215,
+        204,
+        226
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "بتوقيت القاهرة UTC+02:00",
+      "ratio": 12.24,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "BDI.",
+      "foreground": [
+        215,
+        204,
+        226
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "UTC+02:00",
+      "ratio": 12.24,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        32,
+        34,
+        42
+      ],
+      "background": [
+        220,
+        250,
+        148
+      ],
+      "text": "شوف تفاصيل الميعاد",
+      "ratio": 13.71,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "P.",
+      "foreground": [
+        206,
+        196,
+        222
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "الحجز لوحده مش بيدي الدكتور صلاحية يشوف معلوماتك الطبية. طلب الرعاية الجديد محتا",
+      "ratio": 11.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "H2.",
+      "foreground": [
+        233,
+        223,
+        242
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "اللي الدكتور شاركه معاك",
+      "ratio": 14.65,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.source-label",
+      "foreground": [
+        226,
+        202,
+        239
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "توصية متابعة",
+      "ratio": 9.44,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.source-state",
+      "foreground": [
+        213,
+        201,
+        226
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "اتشاركت معاك",
+      "ratio": 9.01,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "H3.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "متابعة الدكتور رشّحها ليك",
+      "ratio": 13.52,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "P.source-copy",
+      "foreground": [
+        238,
+        228,
+        245
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "الدكتور رشّح لك متابعة. التوصية دي مش حجز ميعاد.",
+      "ratio": 11.56,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        227,
+        209,
+        239
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "د. عمر علي",
+      "ratio": 9.92,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "TIME.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "5 نوفمبر 2026",
+      "ratio": 9.06,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "BDI.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "5",
+      "ratio": 9.06,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "BDI.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "2026",
+      "ratio": 9.06,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "P.unlinked",
+      "foreground": [
+        219,
+        206,
+        230
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "لسه مفيش ميعاد مرتبط بالتوصية هنا.",
+      "ratio": 9.48,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        45,
+        33,
+        61
+      ],
+      "background": [
+        217,
+        203,
+        238
+      ],
+      "text": "دور على ميعاد",
+      "ratio": 9.83,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.source-label",
+      "foreground": [
+        226,
+        202,
+        239
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "ملخص الزيارة",
+      "ratio": 9.99,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.source-state",
+      "foreground": [
+        213,
+        201,
+        226
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "متاح ليك",
+      "ratio": 9.53,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "H3.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "الدكتور شارك الملخص معاك",
+      "ratio": 14.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "P.source-copy",
+      "foreground": [
+        238,
+        228,
+        245
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "ملخص الزيارة متاح للقراءة من المصدر اللي الدكتور شاركه معاك.",
+      "ratio": 12.23,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        227,
+        209,
+        239
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "د. عمر علي",
+      "ratio": 10.5,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "TIME.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "5 نوفمبر 2026",
+      "ratio": 9.59,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "BDI.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "5",
+      "ratio": 9.59,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "BDI.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "2026",
+      "ratio": 9.59,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        45,
+        33,
+        61
+      ],
+      "background": [
+        191,
+        176,
+        213
+      ],
+      "text": "اقرأ ملخص الزيارة",
+      "ratio": 7.44,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "H2.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "ارجع للي تحتاجه",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "وصول سريع",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "STRONG.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "مواعيدك",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SMALL.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "الجاية والسابقة",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "STRONG.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "الملخصات والمتابعة",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SMALL.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "اللي الدكتور شاركه معاك",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "STRONG.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "السجل المتاح",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SMALL.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "المصادر المتاحة ليك بس",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "STRONG.",
+      "foreground": [
+        221,
+        214,
+        230
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "روشتاتك",
+      "ratio": 13.33,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SMALL.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "مش متاحة في النموذج ده",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.unavailable-label",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "غير متصلة",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "EgyHealth 360",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "اقتراح للمراجعة · مفيش خدمات متصلة",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": "SPAN.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "NOVA EVOLUTION / REFINEMENT 03",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-390",
+      "selector": ".dialog-close",
+      "foreground": "rgb(40, 30, 56)",
+      "background": "rgb(217, 203, 238)",
+      "ratio": 10.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "A.skip",
+      "foreground": [
+        32,
+        21,
+        46
+      ],
+      "background": [
+        255,
+        255,
+        255
+      ],
+      "text": "انتقل للمحتوى",
+      "ratio": 17.38,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        24,
+        21,
+        37
+      ],
+      "text": "نموذج تصميم · بيانات تجريبية · غير متصل",
+      "ratio": 10.07,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "BDI.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        24,
+        21,
+        37
+      ],
+      "text": "NOVA / REFINEMENT 03",
+      "ratio": 10.07,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "DIV.brand",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "EgyHealth 360",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        220,
+        250,
+        148
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "360",
+      "ratio": 16.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        40,
+        30,
+        56
+      ],
+      "background": [
+        217,
+        203,
+        238
+      ],
+      "text": "متابعتي",
+      "ratio": 10.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        43,
+        36,
+        61
+      ],
+      "text": "دور على دكتور",
+      "ratio": 14.02,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        221,
+        212,
+        233
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "سلمى حسن",
+      "ratio": 13.18,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "P.greeting",
+      "foreground": [
+        221,
+        214,
+        230
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "أهلاً يا سلمى.",
+      "ratio": 13.33,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "H1.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "متابعتي",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "P.intro",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "ميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.eyebrow",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "ميعادك الجاي",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.status",
+      "foreground": [
+        225,
+        246,
+        192
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "الحجز اتأكد",
+      "ratio": 16.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "H2.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "د. عمر علي",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "BDI.",
+      "foreground": [
+        217,
+        206,
+        230
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "Nile Care Clinic",
+      "ratio": 12.51,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "TIME.",
+      "foreground": [
+        231,
+        223,
+        239
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "الخميس، 12 نوفمبر 2026",
+      "ratio": 14.55,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "BDI.",
+      "foreground": [
+        231,
+        223,
+        239
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "12",
+      "ratio": 14.55,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "BDI.",
+      "foreground": [
+        231,
+        223,
+        239
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "2026",
+      "ratio": 14.55,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "BDI.",
+      "foreground": [
+        255,
+        255,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "14:30–15:00",
+      "ratio": 18.87,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "P.timezone",
+      "foreground": [
+        215,
+        204,
+        226
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "بتوقيت القاهرة UTC+02:00",
+      "ratio": 12.24,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "BDI.",
+      "foreground": [
+        215,
+        204,
+        226
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "UTC+02:00",
+      "ratio": 12.24,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        32,
+        34,
+        42
+      ],
+      "background": [
+        220,
+        250,
+        148
+      ],
+      "text": "شوف تفاصيل الميعاد",
+      "ratio": 13.71,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "P.",
+      "foreground": [
+        206,
+        196,
+        222
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "الحجز لوحده مش بيدي الدكتور صلاحية يشوف معلوماتك الطبية. طلب الرعاية الجديد محتا",
+      "ratio": 11.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "H2.",
+      "foreground": [
+        233,
+        223,
+        242
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "اللي الدكتور شاركه معاك",
+      "ratio": 14.65,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.source-label",
+      "foreground": [
+        226,
+        202,
+        239
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "توصية متابعة",
+      "ratio": 9.44,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.source-state",
+      "foreground": [
+        213,
+        201,
+        226
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "اتشاركت معاك",
+      "ratio": 9.01,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "H3.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "متابعة الدكتور رشّحها ليك",
+      "ratio": 13.52,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "P.source-copy",
+      "foreground": [
+        238,
+        228,
+        245
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "الدكتور رشّح لك متابعة. التوصية دي مش حجز ميعاد.",
+      "ratio": 11.56,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        227,
+        209,
+        239
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "د. عمر علي",
+      "ratio": 9.92,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "TIME.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "5 نوفمبر 2026",
+      "ratio": 9.06,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "BDI.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "5",
+      "ratio": 9.06,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "BDI.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "2026",
+      "ratio": 9.06,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "P.unlinked",
+      "foreground": [
+        219,
+        206,
+        230
+      ],
+      "background": [
+        48,
+        38,
+        63
+      ],
+      "text": "لسه مفيش ميعاد مرتبط بالتوصية هنا.",
+      "ratio": 9.48,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        45,
+        33,
+        61
+      ],
+      "background": [
+        217,
+        203,
+        238
+      ],
+      "text": "دور على ميعاد",
+      "ratio": 9.83,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.source-label",
+      "foreground": [
+        226,
+        202,
+        239
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "ملخص الزيارة",
+      "ratio": 9.99,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.source-state",
+      "foreground": [
+        213,
+        201,
+        226
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "متاح ليك",
+      "ratio": 9.53,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "H3.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "الدكتور شارك الملخص معاك",
+      "ratio": 14.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "P.source-copy",
+      "foreground": [
+        238,
+        228,
+        245
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "ملخص الزيارة متاح للقراءة من المصدر اللي الدكتور شاركه معاك.",
+      "ratio": 12.23,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        227,
+        209,
+        239
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "د. عمر علي",
+      "ratio": 10.5,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "TIME.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "5 نوفمبر 2026",
+      "ratio": 9.59,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "BDI.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "5",
+      "ratio": 9.59,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "BDI.",
+      "foreground": [
+        215,
+        201,
+        228
+      ],
+      "background": [
+        40,
+        36,
+        53
+      ],
+      "text": "2026",
+      "ratio": 9.59,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        45,
+        33,
+        61
+      ],
+      "background": [
+        191,
+        176,
+        213
+      ],
+      "text": "اقرأ ملخص الزيارة",
+      "ratio": 7.44,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "H2.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "ارجع للي تحتاجه",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "وصول سريع",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "STRONG.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "مواعيدك",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SMALL.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "الجاية والسابقة",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "STRONG.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "الملخصات والمتابعة",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SMALL.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "اللي الدكتور شاركه معاك",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "STRONG.",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "السجل المتاح",
+      "ratio": 17.91,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SMALL.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "المصادر المتاحة ليك بس",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "STRONG.",
+      "foreground": [
+        221,
+        214,
+        230
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "روشتاتك",
+      "ratio": 13.33,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SMALL.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "مش متاحة في النموذج ده",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.unavailable-label",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "غير متصلة",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "EgyHealth 360",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "اقتراح للمراجعة · مفيش خدمات متصلة",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": "SPAN.",
+      "foreground": [
+        200,
+        190,
+        216
+      ],
+      "background": [
+        17,
+        15,
+        32
+      ],
+      "text": "NOVA EVOLUTION / REFINEMENT 03",
+      "ratio": 10.61,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined-1440",
+      "selector": ".dialog-close",
+      "foreground": "rgb(40, 30, 56)",
+      "background": "rgb(217, 203, 238)",
+      "ratio": 10.3,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined",
+      "selector": "appointment gradient light endpoint",
+      "foreground": [
+        250,
+        248,
+        255
+      ],
+      "background": [
+        75,
+        53,
+        95
+      ],
+      "ratio": 10.1,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined",
+      "selector": "appointment gradient light endpoint",
+      "foreground": [
+        231,
+        223,
+        239
+      ],
+      "background": [
+        75,
+        53,
+        95
+      ],
+      "ratio": 8.21,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined",
+      "selector": "appointment gradient light endpoint",
+      "foreground": [
+        215,
+        204,
+        226
+      ],
+      "background": [
+        75,
+        53,
+        95
+      ],
+      "ratio": 6.9,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined",
+      "selector": "appointment gradient light endpoint",
+      "foreground": [
+        220,
+        250,
+        148
+      ],
+      "background": [
+        75,
+        53,
+        95
+      ],
+      "ratio": 9.19,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined",
+      "selector": "appointment gradient light endpoint",
+      "foreground": [
+        225,
+        246,
+        192
+      ],
+      "background": [
+        75,
+        53,
+        95
+      ],
+      "ratio": 9.19,
+      "threshold": 4.5
+    },
+    {
+      "candidate": "refined",
+      "selector": "appointment gradient light endpoint",
+      "foreground": [
+        217,
+        206,
+        230
+      ],
+      "background": [
+        75,
+        53,
+        95
+      ],
+      "ratio": 7.05,
+      "threshold": 4.5
+    }
+  ]
+}
