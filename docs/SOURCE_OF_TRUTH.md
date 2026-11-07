@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+Current bounded reference: [NOVA refinement 04 rationale/visuals](nova-evolution-refinement-04/README.md), [independent V/C/T review](nova-evolution-refinement-04/INDEPENDENT_REVIEW.md), [technical validation](nova-evolution-refinement-04/VALIDATION.md), and [Egyptian Arabic UI Writing Note](nova-evolution-refinement-04/EGYPTIAN_ARABIC_UI_WRITING_NOTE.md). The specimen/examples are **VISUAL/CONTENT PROPOSAL — OWNER REVIEW REQUIRED**; the note records the latest **OWNER-DIRECTED CONTENT PRINCIPLE** for future authorized work. It confirms professional Egyptian Arabic and documents the scoped patient time-display amendment to older CD07 examples, without changing stored time, clinical/security policy or production. CURRENT_STATUS owns mutable task scope; PR #92 remains preserved.
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
