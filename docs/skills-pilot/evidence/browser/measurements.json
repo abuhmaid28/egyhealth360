@@ -1,0 +1,585 @@
+{
+  "kind": "ACTUAL_LOCAL_CHROMIUM_FIXTURE_CHECK_NOT_SKILL_EXECUTION",
+  "browser": "154.0.8037.57",
+  "python": "3.12.14",
+  "fixture_sha256": "1b2d0f27b4d836f3a4c722494fd30b5e9b6db962fe5faf6797ab14ac59e0cc2a",
+  "text_method": "body font size 16px to 32px; not browser zoom or native-device evidence",
+  "records": [
+    {
+      "locale": "en",
+      "viewport": [
+        320,
+        900
+      ],
+      "text_percent": 100,
+      "screenshot": "en-320-text-100.png",
+      "sha256": "8a22dec36e2538bea78686a18eebcc07fcfc885d7ce3a873b7b682f8de73a8b6",
+      "measurements": {
+        "direction": "ltr",
+        "documentWidth": 752,
+        "viewportWidth": 320,
+        "wideBounds": {
+          "left": 32,
+          "right": 752,
+          "width": 720
+        },
+        "outsideViewport": true,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 584,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "Synthetic error without recovery"
+      }
+    },
+    {
+      "locale": "en",
+      "viewport": [
+        320,
+        900
+      ],
+      "text_percent": 200,
+      "screenshot": "en-320-text-200.png",
+      "sha256": "93697b1925db1d305c355baa66a83b94b8fba26b4142c08df98ef7685d5e5ce9",
+      "measurements": {
+        "direction": "ltr",
+        "documentWidth": 752,
+        "viewportWidth": 320,
+        "wideBounds": {
+          "left": 32,
+          "right": 752,
+          "width": 720
+        },
+        "outsideViewport": true,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 1169,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "Synthetic error without recovery"
+      }
+    },
+    {
+      "locale": "en",
+      "viewport": [
+        390,
+        900
+      ],
+      "text_percent": 100,
+      "screenshot": "en-390-text-100.png",
+      "sha256": "9b875209d9cbaa325bbb4b4f20c04b3fefa81c820d044a9ac576cd17844c5bc4",
+      "measurements": {
+        "direction": "ltr",
+        "documentWidth": 752,
+        "viewportWidth": 390,
+        "wideBounds": {
+          "left": 32,
+          "right": 752,
+          "width": 720
+        },
+        "outsideViewport": true,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 584,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "Synthetic error without recovery"
+      }
+    },
+    {
+      "locale": "en",
+      "viewport": [
+        390,
+        900
+      ],
+      "text_percent": 200,
+      "screenshot": "en-390-text-200.png",
+      "sha256": "df9cc9d414db1fb43427945a2ea4b5f5f69a33ba35589add12eaeefab72054c5",
+      "measurements": {
+        "direction": "ltr",
+        "documentWidth": 752,
+        "viewportWidth": 390,
+        "wideBounds": {
+          "left": 32,
+          "right": 752,
+          "width": 720
+        },
+        "outsideViewport": true,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 1169,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "Synthetic error without recovery"
+      }
+    },
+    {
+      "locale": "en",
+      "viewport": [
+        768,
+        900
+      ],
+      "text_percent": 100,
+      "screenshot": "en-768-text-100.png",
+      "sha256": "b74f5f2e8868587a5d83dcf4c2ec0f2b509f205996d871af9c408c8226af49d2",
+      "measurements": {
+        "direction": "ltr",
+        "documentWidth": 768,
+        "viewportWidth": 768,
+        "wideBounds": {
+          "left": 32,
+          "right": 752,
+          "width": 720
+        },
+        "outsideViewport": false,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 584,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "Synthetic error without recovery"
+      }
+    },
+    {
+      "locale": "en",
+      "viewport": [
+        768,
+        900
+      ],
+      "text_percent": 200,
+      "screenshot": "en-768-text-200.png",
+      "sha256": "ad694fac2d636b2a0c629bdcf3231be3113b7b8c80de7c0663aef4b7c7bb3c75",
+      "measurements": {
+        "direction": "ltr",
+        "documentWidth": 768,
+        "viewportWidth": 768,
+        "wideBounds": {
+          "left": 32,
+          "right": 752,
+          "width": 720
+        },
+        "outsideViewport": false,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 1169,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "Synthetic error without recovery"
+      }
+    },
+    {
+      "locale": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "text_percent": 100,
+      "screenshot": "en-1440-text-100.png",
+      "sha256": "84b44aa1079dfa2b6ba75bc3d014f3c314735a20349f3b1ba95732f93cbf26b1",
+      "measurements": {
+        "direction": "ltr",
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "wideBounds": {
+          "left": 32,
+          "right": 752,
+          "width": 720
+        },
+        "outsideViewport": false,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 584,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "Synthetic error without recovery"
+      }
+    },
+    {
+      "locale": "en",
+      "viewport": [
+        1440,
+        900
+      ],
+      "text_percent": 200,
+      "screenshot": "en-1440-text-200.png",
+      "sha256": "ce5ab5820e2fcc3de281476c6d1f8d1dd433a10d62db5c9fc42593d0b352900b",
+      "measurements": {
+        "direction": "ltr",
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "wideBounds": {
+          "left": 32,
+          "right": 752,
+          "width": 720
+        },
+        "outsideViewport": false,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 1169,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "Synthetic error without recovery"
+      }
+    },
+    {
+      "locale": "ar",
+      "viewport": [
+        320,
+        900
+      ],
+      "text_percent": 100,
+      "screenshot": "ar-320-text-100.png",
+      "sha256": "1bc0ace639a891eb247084750879872e56e618c7dfc879345646fdbaf60debd5",
+      "measurements": {
+        "direction": "rtl",
+        "documentWidth": 752,
+        "viewportWidth": 320,
+        "wideBounds": {
+          "left": -432,
+          "right": 288,
+          "width": 720
+        },
+        "outsideViewport": true,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 465,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "خطأ افتراضي من غير طريقة استرجاع"
+      }
+    },
+    {
+      "locale": "ar",
+      "viewport": [
+        320,
+        900
+      ],
+      "text_percent": 200,
+      "screenshot": "ar-320-text-200.png",
+      "sha256": "dcd2bae0438cd93c9d9fca99524173e04125131a4238c93107285c6667e30f2a",
+      "measurements": {
+        "direction": "rtl",
+        "documentWidth": 752,
+        "viewportWidth": 320,
+        "wideBounds": {
+          "left": -432,
+          "right": 288,
+          "width": 720
+        },
+        "outsideViewport": true,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 931,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "خطأ افتراضي من غير طريقة استرجاع"
+      }
+    },
+    {
+      "locale": "ar",
+      "viewport": [
+        390,
+        900
+      ],
+      "text_percent": 100,
+      "screenshot": "ar-390-text-100.png",
+      "sha256": "462a8d975719f92913ba6127593223d212009479f00c02b709565666c101ef51",
+      "measurements": {
+        "direction": "rtl",
+        "documentWidth": 752,
+        "viewportWidth": 390,
+        "wideBounds": {
+          "left": -362,
+          "right": 358,
+          "width": 720
+        },
+        "outsideViewport": true,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 465,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "خطأ افتراضي من غير طريقة استرجاع"
+      }
+    },
+    {
+      "locale": "ar",
+      "viewport": [
+        390,
+        900
+      ],
+      "text_percent": 200,
+      "screenshot": "ar-390-text-200.png",
+      "sha256": "4900cc6197ccaef67bab3ad706d53c9d75787614d87b5c6767209175fd9663f7",
+      "measurements": {
+        "direction": "rtl",
+        "documentWidth": 752,
+        "viewportWidth": 390,
+        "wideBounds": {
+          "left": -362,
+          "right": 358,
+          "width": 720
+        },
+        "outsideViewport": true,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 931,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "خطأ افتراضي من غير طريقة استرجاع"
+      }
+    },
+    {
+      "locale": "ar",
+      "viewport": [
+        768,
+        900
+      ],
+      "text_percent": 100,
+      "screenshot": "ar-768-text-100.png",
+      "sha256": "dd583a68c5df4ef88c02e5b0fec7a12ca987bb18d62a64684599618cbbd2402b",
+      "measurements": {
+        "direction": "rtl",
+        "documentWidth": 768,
+        "viewportWidth": 768,
+        "wideBounds": {
+          "left": 16,
+          "right": 736,
+          "width": 720
+        },
+        "outsideViewport": false,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 465,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "خطأ افتراضي من غير طريقة استرجاع"
+      }
+    },
+    {
+      "locale": "ar",
+      "viewport": [
+        768,
+        900
+      ],
+      "text_percent": 200,
+      "screenshot": "ar-768-text-200.png",
+      "sha256": "e62ffefefe436257356e18fc103faf8f40d67b8ba2715bba3a5b09751f0af196",
+      "measurements": {
+        "direction": "rtl",
+        "documentWidth": 768,
+        "viewportWidth": 768,
+        "wideBounds": {
+          "left": 16,
+          "right": 736,
+          "width": 720
+        },
+        "outsideViewport": false,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 931,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "خطأ افتراضي من غير طريقة استرجاع"
+      }
+    },
+    {
+      "locale": "ar",
+      "viewport": [
+        1440,
+        900
+      ],
+      "text_percent": 100,
+      "screenshot": "ar-1440-text-100.png",
+      "sha256": "1b67c7b9bbc436a987b73103df97b7b9fc52ddbbb069b25253627b373ba32c1c",
+      "measurements": {
+        "direction": "rtl",
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "wideBounds": {
+          "left": 688,
+          "right": 1408,
+          "width": 720
+        },
+        "outsideViewport": false,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 465,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "خطأ افتراضي من غير طريقة استرجاع"
+      }
+    },
+    {
+      "locale": "ar",
+      "viewport": [
+        1440,
+        900
+      ],
+      "text_percent": 200,
+      "screenshot": "ar-1440-text-200.png",
+      "sha256": "7d7b6c96306b8fa81e27c8b8289bc549ce2bd60c80e6f7d8bbf804f88c89b087",
+      "measurements": {
+        "direction": "rtl",
+        "documentWidth": 1440,
+        "viewportWidth": 1440,
+        "wideBounds": {
+          "left": 688,
+          "right": 1408,
+          "width": 720
+        },
+        "outsideViewport": false,
+        "clipped": true,
+        "clippedWidth": {
+          "scroll": 931,
+          "client": 180
+        },
+        "focusedId": "details",
+        "focusOutline": "none",
+        "focusShadow": "none",
+        "inputLabelCount": 0,
+        "inputAriaLabel": null,
+        "disabled": false,
+        "ariaDisabled": null,
+        "feedbackRole": null,
+        "feedbackLive": null,
+        "feedbackAfterEnter": "خطأ افتراضي من غير طريقة استرجاع"
+      }
+    }
+  ]
+}

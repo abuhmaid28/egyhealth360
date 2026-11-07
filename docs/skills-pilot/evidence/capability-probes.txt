@@ -1,0 +1,29 @@
+2026-11-07 UTC; author-run read-only capability probes
+
+$ codex --version
+codex-cli 0.159.2
+
+$ codex login status
+Logged in using ChatGPT (local configuration only; not successful runtime auth)
+
+$ codex cloud list --json
+Exit 1: HTTP 401 Unauthorized; Could not parse your authentication token. Please try signing in again.
+No fresh hosted task created; no environment/task ID established.
+
+$ codex exec --ephemeral --json --sandbox read-only --ignore-user-config <capability prompt>
+Prompt: Read-only capability probe for an authorized repository Skills evaluation. Reply PROBE_OK only. Do not read files, call tools, or modify anything.
+Exit 1: token refresh failed; see codex-exec-probe.jsonl.
+No model output or task tool calls occurred.
+
+$ GitHub connector GET branches/main/protection
+403 Resource not accessible by integration.
+Live branch-protection settings cannot be independently read; CI_POLICY.md and unchanged workflow identify validate as required.
+
+$ git ls-remote origin refs/heads/main
+5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3 refs/heads/main
+
+$ workspace R0/Skills filename/content search before authoring
+No R0 package, evaluation fixtures or existing Skills found.
+
+$ python docs/skills-pilot/scripts/probe_local_discovery.py
+Actual fresh local app-server initialize / skills/list (forceReload true): 3/3 pilot entries; scope repo; enabled true; zero repository errors. See local-discovery.json. Catalog only, not hosted or model invocation.

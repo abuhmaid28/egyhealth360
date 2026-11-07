@@ -1,5 +1,26 @@
 # Current status
 
+**Current bounded task — 7 November 2026: S1 repository-scoped Skills pilot.**
+The Product Owner's submitted S1 prompt authorizes exactly three evaluation
+candidates, their evaluation package, one isolated branch/PR and required CI;
+no merge, deployment, production rollout or final design decision. Fresh remote
+main is `5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3` (#79/#80/#84/#85 merged).
+Branch `docs/72-s1-skills-pilot` preserves accepted Patient/Clinician and all
+clinical/security contracts. [Pilot entry and evidence](skills-pilot/README.md),
+[scope/provenance](skills-pilot/AUTHORIZATION.md), [results](skills-pilot/EVALUATION_RESULTS.md)
+and [candidate disposition](skills-pilot/PILOT_DECISION.md). No R0 package was
+found; the 42 cases are reconstructed S1. **CLOUD_DISCOVERY_UNVERIFIED**: hosted
+authentication failed; no behavioral/paired success is claimed.
+Local Codex catalog scanning recognizes all three enabled repository Skills;
+this does not establish hosted or model invocation. Exact final
+head and required remote CI belong in the pilot PR handoff. PR #86 remains
+OPEN / UNMERGED; H — Human Precision and P — Precision, Open are unselected
+proposals and supply no accepted tokens, typography or Design System authority.
+
+The earlier active-task/main/open-PR snapshots below are retained history where
+superseded by this narrowly scoped S1 verification; they do not undo accepted
+merges, authorize another milestone or reopen a completed design decision.
+
 **Independent-review correction follow-up — 5 November 2026:** the owner authorized fixing the two time-display findings on existing PR #85, from reviewed head `d11fb5fbc4a7798fdfb6d24c21d3d1a0a216823b`. The candidate restores actual offsets only for repeated local times in My Care / clinician visit context and isolates Live booking ranges chronologically. [Correction evidence and limits](STAGING_UI_POLISH.md#independent-review-time-display-corrections). The new exact-head CI result belongs in the PR handoff; the older green run does not validate this correction. No merge, deployment, alias, R1 or final-domain change is authorized. Future Final V2 remains a separate higher-quality UX/UI, Logo, Brand and Design System path requiring its own owner decisions.
 
 **Current bounded task — 5 November 2026:** the Product Owner authorized polishing the current pre-final staging UI and preparing source alignment. [Current polish report](STAGING_UI_POLISH.md) records the exact deployed frontend/API candidate, fixes, evidence, remaining issues and safe PR sequence. Fresh platform metadata attributes both READY pre-final deployments to PR #84 head `1b5c5c643f56cff74b3db32543df41845965bdb6`; branch `fix/pre-final-staging-ui-polish` starts at that exact commit. Main remains `0a0e9c2038ecad420e95c2c67ae367129e195839`. The polish is a narrow follow-up to #84; no merge, R1 change, stable alias refresh or protected final-domain change is claimed. Older active-task, release-blocker and missing-SHA statements below are historical within this newly verified scope; they do not reopen credential recovery or authorize other milestones.

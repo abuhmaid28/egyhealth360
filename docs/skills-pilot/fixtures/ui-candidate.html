@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S1 synthetic evaluation fixture — intentionally defective</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; color: #162c3a; background: #f4f6f8; font: 16px/1.5 sans-serif; }
+  main { width: calc(100% - 32px); margin: 16px; padding: 16px; background: white; }
+  h1 { font-size: 1.5em; }
+  .notice { border: 2px solid #162c3a; padding: 12px; }
+  #wide-row { width: 720px; padding: 12px; background: #e0ecf0; }
+  #clipped { width: 180px; height: 24px; overflow: hidden; white-space: nowrap; }
+  label, input, button { display: block; margin-block: 12px; }
+  input, button { font: inherit; max-width: 100%; }
+  #details:focus { outline: none; box-shadow: none; }
+  #fake-disabled { color: #607080; background: #eee; }
+  #feedback { padding: 12px; border: 1px solid #162c3a; }
+</style>
+<main>
+  <p class="notice">SYNTHETIC TEST FIXTURE. Intentionally defective. No real patient, clinical action, product proposal or approved design.</p>
+  <h1 id="heading">My care — fixture</h1>
+  <p id="wide-row">Synthetic appointment logistics · 7 Nov 2026 · 14:30 · Africa/Cairo</p>
+  <p id="clipped">Long synthetic next-step explanation that is intentionally clipped by this test fixture.</p>
+  <input id="unlabelled" placeholder="Synthetic search">
+  <button id="details" type="button">View details</button>
+  <button id="fake-disabled" type="button">Unavailable — visually styled only</button>
+  <p id="feedback">Waiting for synthetic action</p>
+  <p id="unknown">Allergy review: unknown (synthetic state; no inference)</p>
+</main>
+<script>
+  const ar = new URLSearchParams(location.search).get('lang') === 'ar';
+  if (ar) {
+    document.documentElement.lang = 'ar';
+    document.documentElement.dir = 'rtl';
+    document.querySelector('#heading').textContent = 'متابعتي — مثال اختباري';
+    document.querySelector('#wide-row').textContent = 'موعد افتراضي · 7 نوفمبر 2026 · 14:30 · Africa/Cairo';
+    document.querySelector('#clipped').textContent = 'شرح افتراضي طويل للخطوة الجاية متقصوص عمدًا في المثال الاختباري ده';
+    document.querySelector('#unlabelled').placeholder = 'بحث افتراضي';
+    document.querySelector('#details').textContent = 'تفاصيل الموعد';
+    document.querySelector('#fake-disabled').textContent = 'مش متاح — الشكل بس';
+    document.querySelector('#feedback').textContent = 'في انتظار إجراء افتراضي';
+    document.querySelector('#unknown').textContent = 'مراجعة الحساسية: مش معروف — مثال افتراضي';
+  }
+  document.querySelector('#details').addEventListener('click', () => {
+    document.querySelector('#feedback').textContent = ar ? 'خطأ افتراضي من غير طريقة استرجاع' : 'Synthetic error without recovery';
+  });
+</script>
+</html>

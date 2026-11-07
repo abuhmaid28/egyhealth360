@@ -1,0 +1,9 @@
+{
+  ".agents/skills/eh360-ux-review/SKILL.md": "08f1b0aa78074bfd48a851f8e5c169db3ea689750cee806bb6d3ca895c9bf327",
+  ".agents/skills/eh360-visual-exploration/SKILL.md": "63cc0b2c92a94b8bb7ad7a6ebd616113113a4d4319db571de5b3a6387294a6df",
+  ".agents/skills/eh360-visual-qa/SKILL.md": "d204ed472c7467bbfb73f8b220b9008569a5d233a56699ef2e794e55d47d1160",
+  "docs/skills-pilot/REFERENCE_MAP.md": "504d8827e3d0e1081f9714f00bd165b068ba50d65eb52a457acbe9038381fd6e",
+  "docs/skills-pilot/EVALUATION_CASES.json": "ea8c36af33430e6d8a00b98f666ddb1747b98fc089c001b9c2fae985bc38670f",
+  "docs/skills-pilot/fixtures/ui-candidate.html": "1b2d0f27b4d836f3a4c722494fd30b5e9b6db962fe5faf6797ab14ac59e0cc2a",
+  "docs/skills-pilot/fixtures/ORACLE.json": "8475d10d9b15d7e41cfdddafd72fc3b947a660b3727e386e0cf028ca60ac6f90"
+}
