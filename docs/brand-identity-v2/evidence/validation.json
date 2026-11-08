@@ -1,0 +1,539 @@
+{
+  "browser": "154.0.8037.57",
+  "cases": [
+    {
+      "mode": "full",
+      "width": 1440,
+      "textMultiplier": 1,
+      "initialH1": 50,
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 50,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "full",
+      "width": 1440,
+      "textMultiplier": 2,
+      "initialH1": 50,
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 100,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "full",
+      "width": 768,
+      "textMultiplier": 1,
+      "initialH1": 50,
+      "viewport": 768,
+      "documentWidth": 768,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 50,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "full",
+      "width": 768,
+      "textMultiplier": 2,
+      "initialH1": 50,
+      "viewport": 768,
+      "documentWidth": 768,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 100,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "textMultiplier": 1,
+      "initialH1": 34,
+      "viewport": 390,
+      "documentWidth": 390,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 34,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "full",
+      "width": 390,
+      "textMultiplier": 2,
+      "initialH1": 34,
+      "viewport": 390,
+      "documentWidth": 390,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 68,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "textMultiplier": 1,
+      "initialH1": 34,
+      "viewport": 320,
+      "documentWidth": 320,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 34,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "full",
+      "width": 320,
+      "textMultiplier": 2,
+      "initialH1": 34,
+      "viewport": 320,
+      "documentWidth": 320,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 68,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "board",
+      "width": 1440,
+      "textMultiplier": 1,
+      "initialH1": 38,
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 38,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "board",
+      "width": 1440,
+      "textMultiplier": 2,
+      "initialH1": 38,
+      "viewport": 1440,
+      "documentWidth": 1440,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 76,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "board",
+      "width": 768,
+      "textMultiplier": 1,
+      "initialH1": 38,
+      "viewport": 768,
+      "documentWidth": 768,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 38,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "board",
+      "width": 768,
+      "textMultiplier": 2,
+      "initialH1": 38,
+      "viewport": 768,
+      "documentWidth": 768,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 76,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "board",
+      "width": 390,
+      "textMultiplier": 1,
+      "initialH1": 20,
+      "viewport": 390,
+      "documentWidth": 390,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 20,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "board",
+      "width": 390,
+      "textMultiplier": 2,
+      "initialH1": 20,
+      "viewport": 390,
+      "documentWidth": 390,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 40,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "board",
+      "width": 320,
+      "textMultiplier": 1,
+      "initialH1": 20,
+      "viewport": 320,
+      "documentWidth": 320,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 20,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    },
+    {
+      "mode": "board",
+      "width": 320,
+      "textMultiplier": 2,
+      "initialH1": 20,
+      "viewport": 320,
+      "documentWidth": 320,
+      "main": 1,
+      "h1": 1,
+      "h1Size": 40,
+      "brokenImages": [],
+      "imageCount": 8,
+      "clipped": [],
+      "faviconSizes": [
+        {
+          "native": 32,
+          "css": 32
+        },
+        {
+          "native": 24,
+          "css": 24
+        },
+        {
+          "native": 16,
+          "css": 16
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "outline": "solid"
+      },
+      "result": "PASS"
+    }
+  ],
+  "errors": [],
+  "external": [],
+  "badResponses": [],
+  "palettePairsChecked": 8,
+  "textMethod": "Explicitly doubled computed text sizes; not native browser zoom",
+  "scope": "Static documentation board only; not production header usability"
+}

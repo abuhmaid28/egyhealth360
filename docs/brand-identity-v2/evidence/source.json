@@ -1,0 +1,120 @@
+{
+  "sourcePR": 96,
+  "sourceHead": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+  "sourceStatusAtStart": "Draft / Open / Unmerged",
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "originalBoardSHA256": "0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417",
+  "copiedArtifacts": [
+    {
+      "path": "assets/symbol-primary.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/symbol-primary.svg",
+      "sha256": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b"
+    },
+    {
+      "path": "assets/lockup-dark.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/lockup-dark.svg",
+      "sha256": "98818e104ae837379b13294760b76025a622d179499d3d586292859d520910ae"
+    },
+    {
+      "path": "assets/lockup-light.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/lockup-light.svg",
+      "sha256": "7e2c326dbc3215d961dfc2472e96589bb5581a50c3272f915607a221bbccef48"
+    },
+    {
+      "path": "assets/lockup-mono.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/lockup-mono.svg",
+      "sha256": "bbc7dd3d20baefd66274acfc302671402a7fdb87c36bd8a6d5ecf92079b17fd4"
+    },
+    {
+      "path": "assets/icon-dark.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/icon-dark.svg",
+      "sha256": "a4d6571f49133222a49a02204d833876507774885d13100b3dc0fbf936d13930"
+    },
+    {
+      "path": "assets/icon-light.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/icon-light.svg",
+      "sha256": "689c64891b29b88240d1b544daff6a536d2cce33ef65eb2f58424b25db6adc89"
+    },
+    {
+      "path": "assets/icon-mono.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/icon-mono.svg",
+      "sha256": "a056363f72493df4674d98e24440e61708d58766af3961b4eb5eaa9d759bfce9"
+    },
+    {
+      "path": "assets/app-icon-512.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/app-icon-512.svg",
+      "sha256": "a701c284cf437ef6d59f3f4ecd38f133bddaed2b2231333f12453671c767dbc4"
+    },
+    {
+      "path": "assets/favicon-32.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/favicon-32.svg",
+      "sha256": "79adf7b756a330d38a092f776a8506b73b3c6c8bdeeacf0ecab15ce84d82a35d"
+    },
+    {
+      "path": "assets/favicon-24.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/favicon-24.svg",
+      "sha256": "54c4974212deee86056578be0bf2ef38912b37a34443cfa24157b3932339a8ac"
+    },
+    {
+      "path": "assets/favicon-16.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/favicon-16.svg",
+      "sha256": "76e1ba8d16b229d70893a31336fc1e7af9ff3f81e91c8eac8481e1650a2694cb"
+    },
+    {
+      "path": "assets/nova-header-ar.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/nova-header-ar.svg",
+      "sha256": "62413eaf8a1230b84ba6859fa77b5c0019365fcd5ca50150c63721765738d640"
+    },
+    {
+      "path": "assets/nova-header-en.svg",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/nova-header-en.svg",
+      "sha256": "ae7aeac28fdc9760edd2c1d3486636a3411c29999db8d1d84f3e5e0f3aaad8dd"
+    },
+    {
+      "path": "assets/inter.woff2",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/inter.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "path": "assets/Inter-OFL.txt",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/Inter-OFL.txt",
+      "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39"
+    },
+    {
+      "path": "assets/plex-arabic-regular.ttf",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "path": "assets/plex-arabic-semibold.ttf",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "path": "assets/plex-arabic-OFL.txt",
+      "sourcePath": "docs/brand-identity-reconstruction/assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    },
+    {
+      "path": "evidence/favicon-16.png",
+      "sourcePath": "docs/brand-identity-reconstruction/evidence/favicon-16.png",
+      "sha256": "67b3f538c263574bd9a90e09510b86e48680538c46e5d563ddfb75a19d8df269"
+    },
+    {
+      "path": "evidence/favicon-24.png",
+      "sourcePath": "docs/brand-identity-reconstruction/evidence/favicon-24.png",
+      "sha256": "da6b2ec72e6f88bc69ee82673c0435d596e4ebb74dea9a3e8a733c985e7e773c"
+    },
+    {
+      "path": "evidence/favicon-32.png",
+      "sourcePath": "docs/brand-identity-reconstruction/evidence/favicon-32.png",
+      "sha256": "4568a76ffedd555b41437ce52022074fd3f27b183a68b51b560bcbe4eeb35b2b"
+    },
+    {
+      "path": "evidence/app-icon-512.png",
+      "sourcePath": "docs/brand-identity-reconstruction/evidence/app-icon-512.png",
+      "sha256": "38cb2515eb6b7e938afd1b3f511db8e44bf4d400f9025a5539a555af8116d601"
+    }
+  ],
+  "nativeDesignSkillActivationClaimed": false
+}

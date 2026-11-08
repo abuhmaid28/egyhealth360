@@ -2,6 +2,14 @@
 
 CURRENT AUTHORITATIVE sequencing; execution still requires a separately scoped Product Owner authorization. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. [Charter](FOUNDATION_CHARTER.md) owns decision and milestone health gates. No dates or completion weights are inferred.
 
+## Current bounded Brand Identity V2 Foundation gate
+
+The latest owner brief accepts the selected **symbol direction** from [PR #96](https://github.com/abuhmaid28/egyhealth360/pull/96), head `cb3fd9112f15e17b3d500d7a9dd085dd6e412525`, still Draft/open/unmerged when checked. The [foundation package](brand-identity-v2/BRAND_IDENTITY_V2.md) documents identity, palette, bilingual type, unchanged logo specimens and NOVA application guidance. No new concepts or symbol redesign. Older unselected-direction and prior active-task wording below is preserved history within this newly authorized scope.
+
+DP01 Arabic wordmark ya-dot collision and DP02 natural Egyptian Arabic tagline rewrite are intentionally **deferred, non-blocking foundation polish**. Current Arabic tagline is reference-only, not immutable approved copy. [Register](brand-identity-v2/DEFERRED_POLISH.md) separates foundation progress from the later final-approval prerequisites.
+
+Next gate: owner accepts this foundation as a working basis, requests refinement, or rejects recommendations. Explicit final Brand V2 approval still requires disposition of copy/type/fidelity/usage concerns. Design System V2 and prototype/implementation gates remain separate; no complete freeze, production implementation, merge, deployment or multi-portal rollout is authorized. Technical Green cannot supply these decisions.
+
 ## Accepted complete
 
 | Milestone | Accepted boundary / evidence |

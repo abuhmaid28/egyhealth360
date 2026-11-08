@@ -1,5 +1,18 @@
 # Source of truth and document index
 
+Current scoped reference: [Brand Identity V2 Foundation](brand-identity-v2/BRAND_IDENTITY_V2.md). The owner accepts the PR #96 symbol direction; final Brand V2 remains pending. Older unselected-logo statements describe historical stages and do not override this scoped acceptance. DP01 Arabic wordmark fit and DP02 Egyptian Arabic tagline rewrite are deferred, non-blocking for foundation delivery. CURRENT_STATUS owns current state.
+
+| Foundation document | Classification / scope |
+| --- | --- |
+| [brand-identity-v2/BRAND_IDENTITY_V2.md](brand-identity-v2/BRAND_IDENTITY_V2.md) | CURRENT SCOPED RECOMMENDATION: symbol direction, naming/copy status, personality, usage/misuse, owner gate; not final brand approval |
+| [brand-identity-v2/PALETTE.md](brand-identity-v2/PALETTE.md) | FOUNDATION PROPOSAL: board-labelled values, reconstruction approximations, proposed neutral roles and measured pair contrast |
+| [brand-identity-v2/TYPOGRAPHY.md](brand-identity-v2/TYPOGRAPHY.md) | FOUNDATION PROPOSAL: bilingual families/hierarchy, approximation and deferred fit limits |
+| [brand-identity-v2/LOGO_USAGE.md](brand-identity-v2/LOGO_USAGE.md) | FOUNDATION PROPOSAL: unchanged PR #96 specimens, minimum sizes, clear space and background guidance |
+| [brand-identity-v2/HEADER_GUIDANCE.md](brand-identity-v2/HEADER_GUIDANCE.md) | FOUNDATION PROPOSAL: static NOVA AR/EN references, later desktop/mobile behavior constraints; no runtime implementation |
+| [brand-identity-v2/DEFERRED_POLISH.md](brand-identity-v2/DEFERRED_POLISH.md) | CURRENT SCOPED REGISTER: non-blocking DP01/DP02, approximation concerns, final approval prerequisites |
+| [brand-identity-v2/INDEPENDENT_REVIEW.md](brand-identity-v2/INDEPENDENT_REVIEW.md) | EVIDENCE: separate documentation/board reviewer, findings and boundaries; no owner self-approval |
+| [brand-identity-v2/VALIDATION.md](brand-identity-v2/VALIDATION.md) | EVIDENCE: actual local checks and preservation; exact-head remote CI in Draft PR handoff |
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
