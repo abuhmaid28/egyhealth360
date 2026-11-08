@@ -1,0 +1,24 @@
+{
+  "result": "PASS",
+  "cases": 96,
+  "keyboardCases": 18,
+  "keyboardActions": 86,
+  "minimumTarget": 48,
+  "textScale": "All visible direct-text samples measured exactly 2× at 200% root text; not native browser zoom.",
+  "time": {
+    "startUTC": "2026-11-12T12:30:00.000Z",
+    "endUTC": "2026-11-12T13:00:00.000Z",
+    "zone": "Africa/Cairo",
+    "durationMinutes": 30
+  },
+  "assertions": [
+    "96 layouts without horizontal overflow or essential text clipping",
+    "named AX controls, valid ID references, single main and h1, correct language/direction",
+    "44px target floor, skip link, 3px focus, modal trapping, Escape/focus return",
+    "identical synthetic facts and exact instants; local 12-hour presentation",
+    "loading/empty/error exclude stale appointment facts; sources remain independent",
+    "unavailable/no-shared rendered regions contain no source provenance or counts",
+    "no browser errors, failed responses or external requests"
+  ],
+  "privacyBoundary": "Rendered synthetic specimen projections only. Raw HTML/JS includes synthetic fixtures; this is not server authorization or protected-payload redaction evidence."
+}

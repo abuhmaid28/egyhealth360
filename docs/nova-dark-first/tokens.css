@@ -1,0 +1,10 @@
+/* Dark-first proposal within the single #97/#98 brand family. No logo changes. */
+:root{
+ --brand-nile:#0B3D4A;--brand-turquoise:#0FB5A8;--brand-gold:#E3B45C;--brand-light:#F7F9FA;
+ --canvas:#072B36;--surface:var(--brand-nile);--surface-elevated:#144D5B;--surface-inset:#09323F;--surface-hover:#1B5664;
+ --ink:#F7F9FA;--muted:#BBD3D9;--muted-strong:#D7E7EA;--rule:#466D78;--control-border:#85AAB3;
+ --accent:var(--brand-turquoise);--action:#48D5C7;--action-hover:#8BE8DD;--action-ink:#062E37;
+ --selected:#174E5C;--focus:#F3CD82;--focus-gap:var(--canvas);--success:#B5E5C5;
+ --error:#FFB9C1;--error-surface:#4A2432;--warning:#F0CD8A;--warning-surface:#463820;--info:#B5DBF7;--restricted:#CDD5DC;
+ --r-control:14px;--r-panel:28px;--depth:0 18px 36px -24px #00172099;
+}

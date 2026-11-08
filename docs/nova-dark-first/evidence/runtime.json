@@ -1,0 +1,194 @@
+{
+  "browser": "System Chromium154",
+  "initialRender": [
+    {
+      "locale": "ar",
+      "state": "loading",
+      "stalledScript": {
+        "visibility": "hidden",
+        "inert": true
+      },
+      "afterReady": "requested state visible, shell interactive"
+    },
+    {
+      "locale": "ar",
+      "state": "error",
+      "stalledScript": {
+        "visibility": "hidden",
+        "inert": true
+      },
+      "afterReady": "requested state visible, shell interactive"
+    },
+    {
+      "locale": "ar",
+      "state": "no-sources",
+      "stalledScript": {
+        "visibility": "hidden",
+        "inert": true
+      },
+      "afterReady": "requested state visible, shell interactive"
+    },
+    {
+      "locale": "ar",
+      "state": "unavailable",
+      "stalledScript": {
+        "visibility": "hidden",
+        "inert": true
+      },
+      "afterReady": "requested state visible, shell interactive"
+    },
+    {
+      "locale": "ar",
+      "javaScriptDisabled": "safe localized fallback; no visible normal-state facts"
+    },
+    {
+      "locale": "en",
+      "state": "loading",
+      "stalledScript": {
+        "visibility": "hidden",
+        "inert": true
+      },
+      "afterReady": "requested state visible, shell interactive"
+    },
+    {
+      "locale": "en",
+      "state": "error",
+      "stalledScript": {
+        "visibility": "hidden",
+        "inert": true
+      },
+      "afterReady": "requested state visible, shell interactive"
+    },
+    {
+      "locale": "en",
+      "state": "no-sources",
+      "stalledScript": {
+        "visibility": "hidden",
+        "inert": true
+      },
+      "afterReady": "requested state visible, shell interactive"
+    },
+    {
+      "locale": "en",
+      "state": "unavailable",
+      "stalledScript": {
+        "visibility": "hidden",
+        "inert": true
+      },
+      "afterReady": "requested state visible, shell interactive"
+    },
+    {
+      "locale": "en",
+      "javaScriptDisabled": "safe localized fallback; no visible normal-state facts"
+    }
+  ],
+  "motion": [
+    {
+      "locale": "ar",
+      "reducedMotion": "no-preference",
+      "scroll": "smooth",
+      "button": "0.14s, 0.14s, 0.14s",
+      "arrow": "0.14s",
+      "skeleton": [
+        {
+          "animation": "none",
+          "transition": "0s"
+        },
+        {
+          "animation": "none",
+          "transition": "0s"
+        },
+        {
+          "animation": "none",
+          "transition": "0s"
+        }
+      ]
+    },
+    {
+      "locale": "ar",
+      "reducedMotion": "reduce",
+      "scroll": "auto",
+      "button": "0s",
+      "arrow": "0s",
+      "skeleton": [
+        {
+          "animation": "none",
+          "transition": "0s"
+        },
+        {
+          "animation": "none",
+          "transition": "0s"
+        },
+        {
+          "animation": "none",
+          "transition": "0s"
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "reducedMotion": "no-preference",
+      "scroll": "smooth",
+      "button": "0.14s, 0.14s, 0.14s",
+      "arrow": "0.14s",
+      "skeleton": [
+        {
+          "animation": "none",
+          "transition": "0s"
+        },
+        {
+          "animation": "none",
+          "transition": "0s"
+        },
+        {
+          "animation": "none",
+          "transition": "0s"
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "reducedMotion": "reduce",
+      "scroll": "auto",
+      "button": "0s",
+      "arrow": "0s",
+      "skeleton": [
+        {
+          "animation": "none",
+          "transition": "0s"
+        },
+        {
+          "animation": "none",
+          "transition": "0s"
+        },
+        {
+          "animation": "none",
+          "transition": "0s"
+        }
+      ]
+    }
+  ],
+  "nativeZoom": {
+    "status": "NOT TESTED",
+    "shortcutProbe": {
+      "before": {
+        "innerWidth": 1440,
+        "devicePixelRatio": 1,
+        "visualViewportScale": 1
+      },
+      "after": {
+        "innerWidth": 1440,
+        "devicePixelRatio": 1,
+        "visualViewportScale": 1
+      }
+    },
+    "reason": "The headless keyboard shortcut did not change browser metrics. This run did not establish native browser zoom; measured computed 200% text is reported separately. No extension or desktop zoom probe is claimed."
+  },
+  "unavailable": {
+    "Firefox": false,
+    "WebKit": false,
+    "realScreenReader": "NOT TESTED: no real assistive-technology session performed",
+    "physicalDevices": "NOT TESTED",
+    "nativeEgyptianEditorialOrParticipants": "NOT TESTED"
+  }
+}

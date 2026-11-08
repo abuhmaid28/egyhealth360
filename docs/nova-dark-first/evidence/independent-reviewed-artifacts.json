@@ -1,0 +1,28 @@
+{
+  "reviewed_artifacts": {
+    "ar.html": "bf691b5a101008c3119ada1a9c2873f12f937beeb189d833dbe9fe150d58da4b",
+    "en.html": "896c33fb13f43100c38ff07cc59049129685b23062229f096b0169111f66fd33",
+    "dark.css": "7c16e0714cffd1165e1cddc97e3bed5efd9d6a03c865ab413b7b1d0a019b7845",
+    "tokens.css": "1ccfa43a3c8e80ab03fa9332b5109665f796c381639129e4aae9f91e30743834",
+    "specimen.js": "62e9ef51a0fc6480ccd66fd139bcaca01dffb863a9fdd847aaf216ade0cb5609",
+    "comparison.html": "8ec22672aa9fb876429071290f588508d49e94b5486011b1530b757c8e532ecb",
+    "comparison.css": "6b739bc64d59a2d329db6ab2967ca1ade60a3768fe851928a499b0e59d3815dc",
+    "ASSESSMENT.md": "be7e5b86632b165a9c95ab2e87f12b2d6c40ee6b8c501226d9c2ec1b0241a86c",
+    "assets/symbol-primary.svg": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b",
+    "evidence/normal-ar-390-full.png": "dc0abb771740bee2e0faf25e07bd130c4e6b512e3620a4c361e107a8443dd842",
+    "evidence/normal-ar-1440-full.png": "35ada933507bcb6d6ba36ae4a8e6e1cf9ccd8976a77d9d85729a7ba2973ed8ae",
+    "evidence/normal-en-390-full.png": "dbd1341beca404c4e48b28b0b9e1603a8a4ff1c0cb3aeabedaadab81524cbc88",
+    "evidence/normal-en-1440-full.png": "f063a3d698e727be27caa0f308e705c31fc56b97e6d417e3ab9b325269a41fe1",
+    "evidence/comparison.png": "c7d9283c2c0732c1107aa935417236134b2e91f0c1f1f62e4480e98e2cc5ca86"
+  },
+  "source_reference": "PR98 732b377ca69ba964498c2153c97fbca664cc538e",
+  "mode": "Separate reviewer; explicit pinned reference loading; static synthetic disconnected prototype",
+  "independent_commands": [
+    "node docs/nova-dark-first/evidence/independent-browser.mjs",
+    "node docs/nova-dark-first/evidence/independent-followup.mjs"
+  ],
+  "server_commands": [
+    "python3 -m http.server 8765 --bind 127.0.0.1 --directory /workspace/egyhealth360",
+    "python3 -m http.server 8766 --bind 127.0.0.1 --directory /workspace/alignment-references"
+  ]
+}

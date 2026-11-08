@@ -1,0 +1,134 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "refs": {
+    "patient": "9e5fca14c7f931a49e94dd88915f8c9fa24a45da",
+    "logo": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+    "foundation": "e1abedc3d1c8811912f0fe6576e4b4f3459210ce",
+    "playbook": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+    "skills": "b3eb9543a58d571968a16168d3492bf817792cb4",
+    "light": "732b377ca69ba964498c2153c97fbca664cc538e"
+  },
+  "mode": "EXPLICIT_AUDITED_PLAYBOOK_LOADING",
+  "nativeActivationVerified": false,
+  "upstream": "nextlevelbuilder/ui-ux-pro-max-skill@b7d5353e0130feb8c5574ef1251f8a1db1873ccb",
+  "boardSHA": "0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417",
+  "entries": [
+    {
+      "ref": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/PLAYBOOK.md",
+      "sha256": "c6e33163ee61345ad528533f71c42c31dd2c21d7214cd5bf784654b1ff87cb52",
+      "mode": "explicit reference file loaded; not native activation"
+    },
+    {
+      "ref": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/AUDIT.md",
+      "sha256": "b57049cf1681662084e6a85639e3e200348b2f0dcce6ced8552a2ecf370266da",
+      "mode": "explicit reference file loaded; not native activation"
+    },
+    {
+      "ref": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/basic-ux-excerpts.json",
+      "sha256": "f54216357069593405470e09cffe4d34169c83c92f2d0e067ca34e5ef4a871c5",
+      "mode": "explicit reference file loaded; not native activation"
+    },
+    {
+      "ref": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/upstream-lock.json",
+      "sha256": "a2d399a0f43b6bb6f90cf9908435f2f4c7be1c3b6b67c829299bf35c749f69df",
+      "mode": "explicit reference file loaded; not native activation"
+    },
+    {
+      "ref": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/LICENSE",
+      "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014",
+      "mode": "explicit reference file loaded; not native activation"
+    },
+    {
+      "ref": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": ".agents/skills/eh360-visual-exploration/SKILL.md",
+      "sha256": "63cc0b2c92a94b8bb7ad7a6ebd616113113a4d4319db571de5b3a6387294a6df",
+      "mode": "explicit reference file loaded; not native activation"
+    },
+    {
+      "ref": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": ".agents/skills/eh360-visual-qa/SKILL.md",
+      "sha256": "d204ed472c7467bbfb73f8b220b9008569a5d233a56699ef2e794e55d47d1160",
+      "mode": "explicit reference file loaded; not native activation"
+    },
+    {
+      "ref": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": "docs/skills-pilot/REFERENCE_MAP.md",
+      "sha256": "504d8827e3d0e1081f9714f00bd165b068ba50d65eb52a457acbe9038381fd6e",
+      "mode": "explicit reference file loaded; not native activation"
+    }
+  ],
+  "copies": [
+    {
+      "destination": "assets/symbol-primary.svg",
+      "ref": "e1abedc3d1c8811912f0fe6576e4b4f3459210ce",
+      "path": "docs/brand-identity-v2/assets/symbol-primary.svg",
+      "sha256": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b"
+    },
+    {
+      "destination": "assets/inter.woff2",
+      "ref": "e1abedc3d1c8811912f0fe6576e4b4f3459210ce",
+      "path": "docs/brand-identity-v2/assets/inter.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "destination": "assets/Inter-OFL.txt",
+      "ref": "e1abedc3d1c8811912f0fe6576e4b4f3459210ce",
+      "path": "docs/brand-identity-v2/assets/Inter-OFL.txt",
+      "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39"
+    },
+    {
+      "destination": "assets/plex-arabic-regular.ttf",
+      "ref": "e1abedc3d1c8811912f0fe6576e4b4f3459210ce",
+      "path": "docs/brand-identity-v2/assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "destination": "assets/plex-arabic-semibold.ttf",
+      "ref": "e1abedc3d1c8811912f0fe6576e4b4f3459210ce",
+      "path": "docs/brand-identity-v2/assets/plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "destination": "assets/plex-arabic-OFL.txt",
+      "ref": "e1abedc3d1c8811912f0fe6576e4b4f3459210ce",
+      "path": "docs/brand-identity-v2/assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    },
+    {
+      "destination": "evidence/light-ar-390-full.png",
+      "ref": "732b377ca69ba964498c2153c97fbca664cc538e",
+      "path": "docs/brand-nova-alignment/evidence/normal-ar-390-full.png",
+      "sha256": "491e735d1c3c8562d37d0d3c2469be6cd66d10020c2f205a5fe205b1f76cd41d"
+    },
+    {
+      "destination": "evidence/light-ar-1440-full.png",
+      "ref": "732b377ca69ba964498c2153c97fbca664cc538e",
+      "path": "docs/brand-nova-alignment/evidence/normal-ar-1440-full.png",
+      "sha256": "f5ac597e27616409cc21ab6e8b82b76ebf78c8db45f91090479f43c793588f75"
+    },
+    {
+      "destination": "evidence/light-en-390-full.png",
+      "ref": "732b377ca69ba964498c2153c97fbca664cc538e",
+      "path": "docs/brand-nova-alignment/evidence/normal-en-390-full.png",
+      "sha256": "a29b00934f3299e490f701825a3bc4bb69d161ea391bf0c9a5ad9f1936035a35"
+    },
+    {
+      "destination": "evidence/light-en-1440-full.png",
+      "ref": "732b377ca69ba964498c2153c97fbca664cc538e",
+      "path": "docs/brand-nova-alignment/evidence/normal-en-1440-full.png",
+      "sha256": "59270f2b8ddbd472e2bb54fef2a214189562c33eea3b16b8a73d1168bb9fb5d7"
+    },
+    {
+      "destination": "specimen.js",
+      "ref": "9e5fca14c7f931a49e94dd88915f8c9fa24a45da",
+      "path": "docs/patient-finalist-validation/specimen.js",
+      "sha256": "62e9ef51a0fc6480ccd66fd139bcaca01dffb863a9fdd847aaf216ade0cb5609"
+    }
+  ],
+  "ownerAuthority": "Current Product Owner explicit APPROVED — BOUNDED DARK-FIRST DESIGN STUDY ONLY message under #72. Author-recorded authorization source, not a fabricated GitHub comment."
+}
