@@ -1,5 +1,9 @@
 # Current implementation roadmap
 
+## Current unified-brand gate
+
+The 8 November 2026 current owner brief authorizes only the [Patient Brand-to-NOVA alignment study](brand-nova-alignment/README.md). Sequence: selected symbol + working Brand Foundation + NOVA Patient semantics → four unified-direction specimens and independent review → Product Owner disposition → separately authorized polish/final Brand/system work → separately approved five-portal design/implementation. DP01/DP02 remain mandatory before final brand approval. This gate does not merge #94/#96/#97, finalize Brand V2, freeze Design System V2 or start four other portals. Older current-task gates below retain historical context and do not override this explicit scope.
+
 CURRENT AUTHORITATIVE sequencing; execution still requires a separately scoped Product Owner authorization. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. [Charter](FOUNDATION_CHARTER.md) owns decision and milestone health gates. No dates or completion weights are inferred.
 
 ## Accepted complete
