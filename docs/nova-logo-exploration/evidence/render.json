@@ -1,0 +1,32 @@
+{
+  "browser": "154.0.8037.57",
+  "observations": [
+    {
+      "name": "index",
+      "width": 1280,
+      "height": 1348
+    },
+    {
+      "name": "index",
+      "width": 390,
+      "height": 3202
+    },
+    {
+      "name": "a-proof",
+      "width": 1000,
+      "height": 1768
+    },
+    {
+      "name": "b-proof",
+      "width": 1000,
+      "height": 1768
+    },
+    {
+      "name": "c-proof",
+      "width": 1000,
+      "height": 1768
+    }
+  ],
+  "errors": [],
+  "external": []
+}
