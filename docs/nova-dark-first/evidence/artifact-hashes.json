@@ -1,0 +1,225 @@
+{
+  "method": "SHA-256 of every package artifact except this self-referential manifest; run after final rendering/review.",
+  "files": [
+    {
+      "path": "docs/nova-dark-first/ASSESSMENT.md",
+      "sha256": "be7e5b86632b165a9c95ab2e87f12b2d6c40ee6b8c501226d9c2ec1b0241a86c"
+    },
+    {
+      "path": "docs/nova-dark-first/INDEPENDENT_REVIEW.md",
+      "sha256": "eac4750d10ab250a7455f9f8abf95e81e8e09fb5ab3408f1dc4878794bba56cf"
+    },
+    {
+      "path": "docs/nova-dark-first/README.md",
+      "sha256": "86384a7aba2092bae059c46946d93b67264a86ce9fba888a90c38d36141a771f"
+    },
+    {
+      "path": "docs/nova-dark-first/VALIDATION.md",
+      "sha256": "7e29518096ee9aa8367ff75fca9f5a7b5cf42e529195ae553f6ba7720d681da0"
+    },
+    {
+      "path": "docs/nova-dark-first/ar.html",
+      "sha256": "bf691b5a101008c3119ada1a9c2873f12f937beeb189d833dbe9fe150d58da4b"
+    },
+    {
+      "path": "docs/nova-dark-first/assets/Inter-OFL.txt",
+      "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39"
+    },
+    {
+      "path": "docs/nova-dark-first/assets/inter.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "path": "docs/nova-dark-first/assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    },
+    {
+      "path": "docs/nova-dark-first/assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "path": "docs/nova-dark-first/assets/plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "path": "docs/nova-dark-first/assets/symbol-primary.svg",
+      "sha256": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b"
+    },
+    {
+      "path": "docs/nova-dark-first/comparison.css",
+      "sha256": "6b739bc64d59a2d329db6ab2967ca1ade60a3768fe851928a499b0e59d3815dc"
+    },
+    {
+      "path": "docs/nova-dark-first/comparison.html",
+      "sha256": "8ec22672aa9fb876429071290f588508d49e94b5486011b1530b757c8e532ecb"
+    },
+    {
+      "path": "docs/nova-dark-first/dark.css",
+      "sha256": "7c16e0714cffd1165e1cddc97e3bed5efd9d6a03c865ab413b7b1d0a019b7845"
+    },
+    {
+      "path": "docs/nova-dark-first/en.html",
+      "sha256": "896c33fb13f43100c38ff07cc59049129685b23062229f096b0169111f66fd33"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/assessment.json",
+      "sha256": "23344adc7621ceace984686b8470858fe7f39223a961d0ed37a90e96b43a688f"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/board-results.json",
+      "sha256": "0e6800970486cab0b5edac6eaa101c894ef38b6455b4fc40a4868c4d77f03ba1"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/browser-results.json",
+      "sha256": "5cedf97d98c581292457f045386c3243d1bc5bebfe8e04ed8ef27dadbfd0b614"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/comparison.png",
+      "sha256": "c7d9283c2c0732c1107aa935417236134b2e91f0c1f1f62e4480e98e2cc5ca86"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/contrast.json",
+      "sha256": "799375e3951fac2462f09185bf43c0133e8f32c078e68e24f0bb02531aaa012f"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/focus-ar-390.png",
+      "sha256": "c3fd873432db6777d4e2919db46b673411d79fbc057cb33fa62fbbcf873c2d66"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/focus-en-390.png",
+      "sha256": "225df747f213ae155ce415270694f8a0b5311cdd16300557f2a37be2ad20b1ec"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-ar-320-text200.png",
+      "sha256": "f9cda78e94fedb363dfc9b8009f89e70f3b6dad1a2c2a21c8cf2eb875c23dd5e"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-browser.json",
+      "sha256": "408afc9db150b6ab4a346910d11fe1602eb79d63f09545f2345dd17e26327488"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-browser.mjs",
+      "sha256": "5703e29a464dbd39bfd3766150c7a8a689730d25a33aa3aa9644977faba00f09"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-en-320-text200.png",
+      "sha256": "2f691f43e5b9752794636bea8baa1c72ed79d8b3bd9695bb0efe6fbe7eba842e"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-focus-ar-390.png",
+      "sha256": "56b5558aa91e30aee9ebd06d90bb66ef6b28d56b02f7d3d59e78fbf673ff21db"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-focus-en-390.png",
+      "sha256": "76d08221d4c6aba33ae9134a8eb83ad0be1f324fef3f215c61b7090b6b94fc9a"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-followup.json",
+      "sha256": "33222063660f8c45130587eb0356ca2a16c7f3af6b0e7f45e771c4b464fa2a22"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-followup.mjs",
+      "sha256": "88c97e8405e7500ca60c7a1f0a15810b635f9da752276ae9c0f7802567855dd0"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-light-ar-320-text200.png",
+      "sha256": "f17f717ddf1033cf330a8b2858da26fee8e79749c65b10cde9edef7665644ade"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-light-en-320-text200.png",
+      "sha256": "36ede8ec5192996c28de7270a0e66714e634ec25795547c5ecd820af67055082"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/independent-reviewed-artifacts.json",
+      "sha256": "164a21974746ebc4a7ea9d2d88500c90257dbc31de9928c1be5a2af8625b0c89"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/light-ar-1440-full.png",
+      "sha256": "f5ac597e27616409cc21ab6e8b82b76ebf78c8db45f91090479f43c793588f75"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/light-ar-390-full.png",
+      "sha256": "491e735d1c3c8562d37d0d3c2469be6cd66d10020c2f205a5fe205b1f76cd41d"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/light-en-1440-full.png",
+      "sha256": "59270f2b8ddbd472e2bb54fef2a214189562c33eea3b16b8a73d1168bb9fb5d7"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/light-en-390-full.png",
+      "sha256": "a29b00934f3299e490f701825a3bc4bb69d161ea391bf0c9a5ad9f1936035a35"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/normal-ar-1440-full.png",
+      "sha256": "35ada933507bcb6d6ba36ae4a8e6e1cf9ccd8976a77d9d85729a7ba2973ed8ae"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/normal-ar-390-full.png",
+      "sha256": "dc0abb771740bee2e0faf25e07bd130c4e6b512e3620a4c361e107a8443dd842"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/normal-en-1440-full.png",
+      "sha256": "f063a3d698e727be27caa0f308e705c31fc56b97e6d417e3ab9b325269a41fe1"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/normal-en-390-full.png",
+      "sha256": "dbd1341beca404c4e48b28b0b9e1603a8a4ff1c0cb3aeabedaadab81524cbc88"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/preservation.json",
+      "sha256": "210f216c06ecec87f5cf355da21aabd8a7e0e38cce748e1e398c4a700cdf6661"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/provenance.json",
+      "sha256": "7d9144bbc6f1b36e9902989046da3e5c6a0cd2aadbd9812af805f8059c3976ff"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/runtime.json",
+      "sha256": "3824f6b45fcbdd9ade2f48dd5df6295b6ee7711fb7d93e8a5ddfc66a9fd016fc"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/text200-ar-320.png",
+      "sha256": "f9cda78e94fedb363dfc9b8009f89e70f3b6dad1a2c2a21c8cf2eb875c23dd5e"
+    },
+    {
+      "path": "docs/nova-dark-first/evidence/text200-en-320.png",
+      "sha256": "2f691f43e5b9752794636bea8baa1c72ed79d8b3bd9695bb0efe6fbe7eba842e"
+    },
+    {
+      "path": "docs/nova-dark-first/specimen.js",
+      "sha256": "62e9ef51a0fc6480ccd66fd139bcaca01dffb863a9fdd847aaf216ade0cb5609"
+    },
+    {
+      "path": "docs/nova-dark-first/tokens.css",
+      "sha256": "1ccfa43a3c8e80ab03fa9332b5109665f796c381639129e4aae9f91e30743834"
+    },
+    {
+      "path": "docs/nova-dark-first/tools/assess.mjs",
+      "sha256": "52380111d65a24a119ace588e1b7b92fc76caa9be2de2d2673d489c227fab010"
+    },
+    {
+      "path": "docs/nova-dark-first/tools/boards.mjs",
+      "sha256": "a794d3cbd3c1b418c420a228984a71de98797db71a7277d790e35c430605c809"
+    },
+    {
+      "path": "docs/nova-dark-first/tools/contrast.mjs",
+      "sha256": "29ac522d196bb664b1f7f8f8cfb8b2a7590894443a8f6e2801062223a5ef2e7e"
+    },
+    {
+      "path": "docs/nova-dark-first/tools/preserve.mjs",
+      "sha256": "0866105c2edc93139dbfb255d166893504b2b4632f439da84eebf64e9bf78d9c"
+    },
+    {
+      "path": "docs/nova-dark-first/tools/report.mjs",
+      "sha256": "0c13502502fa2256594976cffc00517d57c20281cb6b8d881c4b141dbe2c8ed0"
+    },
+    {
+      "path": "docs/nova-dark-first/tools/runtime.mjs",
+      "sha256": "e22dcc8950ab2b189ded1c96526e0f54c53f2a9b479cb16e62931633c8a9d9fd"
+    },
+    {
+      "path": "docs/nova-dark-first/tools/validate.mjs",
+      "sha256": "ea8c79e4975524601c3d297d64bd5db316fddab0ff5d11f540f332c1b707b7ca"
+    }
+  ]
+}
