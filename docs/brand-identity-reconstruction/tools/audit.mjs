@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile,readdir} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+const dir='docs/brand-identity-reconstruction',base='5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3';
+const hash=b=>createHash('sha256').update(b).digest('hex');const git=args=>execFileSync('git',args,{maxBuffer:32*1024*1024});
+const sourceHash=hash(await readFile(`${dir}/source/approved-board.png`));assert.equal(sourceHash,'0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417');
+const v=JSON.parse(await readFile(`${dir}/evidence/validation.json`,'utf8'));assert.equal(v.cases.length,16);assert.equal(v.vectors.length,13);for(const k of ['errors','external','failed','failures'])assert.deepEqual(v[k],[]);
+for(const name of ['dark','light','mono']){const s=await readFile(`${dir}/assets/lockup-${name}.svg`,'utf8');for(const text of ['EgyHealth 360','إيجي هيلث 360','رعاية متكاملة حولك','Integrated care around you'])assert.ok(s.includes(text),text);}
+const fonts=[];for(const [file,original] of [['inter.woff2','apps/web/public/fonts/inter-latin-variable.woff2'],['Inter-OFL.txt','apps/web/public/fonts/Inter-OFL.txt'],['plex-arabic-regular.ttf','apps/web/public/fonts/my-care/plex-arabic-regular.ttf'],['plex-arabic-semibold.ttf','apps/web/public/fonts/my-care/plex-arabic-semibold.ttf'],['plex-arabic-OFL.txt','apps/web/public/fonts/my-care/plex-arabic-OFL.txt']]){const b=await readFile(`${dir}/assets/${file}`);assert.ok(b.equals(git(['show',`${base}:${original}`])));fonts.push({file,original,sha256:hash(b)});}
+await writeFile(`${dir}/evidence/audit.json`,JSON.stringify({result:'PASS',sourceHash,pages:16,selfContainedSVGs:13,nativePNGs:v.dimensions,exactApprovedStrings:true,fonts,scope:'Graphics and source fidelity evidence only; no overall fidelity score, pixel-perfect claim or WCAG certification.'},null,2)+'\n');
+const exceptions=['docs/CURRENT_STATUS.md','docs/SOURCE_OF_TRUTH.md','docs/IMPLEMENTATION_ROADMAP.md'];const paths=git(['ls-tree','-r','--name-only',base]).toString().trim().split('\n');let count=0;for(const p of paths.filter(p=>!exceptions.includes(p))){assert.ok((await readFile(p)).equals(git(['show',`${base}:${p}`])),p);count++;}
+const changed=git(['diff','--name-only',base]).toString().trim().split('\n').filter(Boolean);assert.ok(changed.every(p=>exceptions.includes(p)||p.startsWith(dir+'/')));
+await writeFile(`${dir}/evidence/preservation.json`,JSON.stringify({base,baselineFiles:paths.length,byteIdenticalFiles:count,exceptions,sourceHash,historicalCandidates:'Unchanged; not visual references for this reconstruction',noProductionChanges:true},null,2)+'\n');
+const files=[];async function visit(p){for(const e of (await readdir(p,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))){const f=p+'/'+e.name;if(e.isDirectory())await visit(f);else if(e.name!=='artifact-hashes.json')files.push({path:f.slice(dir.length+1),sha256:hash(await readFile(f))});}}await visit(dir);await writeFile(`${dir}/evidence/artifact-hashes.json`,JSON.stringify({algorithm:'SHA256',excludes:'this manifest',files},null,2)+'\n');
+console.log(JSON.stringify({result:'PASS',sourceHash,svgCount:13,cases:16,preserved:count,artifacts:files.length}));

@@ -9,6 +9,7 @@ from fontTools.ttLib import TTFont
 from fontTools.varLib.instancer import instantiateVariableFont
 from fontTools.pens.svgPathPen import SVGPathPen
 from xml.sax.saxutils import escape
+sys.dont_write_bytecode=True
 from trace import source_contours
 
 ROOT=Path('docs/brand-identity-reconstruction')
@@ -55,7 +56,7 @@ def mark(prefix='m',mono=None):
  </g>'''
 
 def svg(content,viewbox,title):
- return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{viewbox}" role="img" aria-labelledby="title"><title id="title">{escape(title)}</title>{content}</svg>\n'
+ return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{viewbox}" role="img" aria-labelledby="title"><title id="title">{escape(title)}</title>{content}</svg>\n'.replace(' \n','\n')
 
 # Shape Arabic with the installed HarfBuzz system library, then outline its glyphs.
 hb=C.CDLL('libharfbuzz.so.0')
