@@ -1,0 +1,193 @@
+{
+  "method": "SHA-256 of every package artifact except this self-referential manifest; run after final rendering/review.",
+  "files": [
+    {
+      "path": "docs/brand-nova-alignment/FOUNDATION_PROPOSAL.md",
+      "sha256": "54181eedebb04827782eb223d267891fc5c8e7588b852a4c6bbe563dddacc34a"
+    },
+    {
+      "path": "docs/brand-nova-alignment/INDEPENDENT_REVIEW.md",
+      "sha256": "c347b943e0f8b73da5a6c8063d759b93a0402b470e7fc7cb144c3e4fbb5664db"
+    },
+    {
+      "path": "docs/brand-nova-alignment/README.md",
+      "sha256": "35742967fb7b4453ab4bb2a9ce7181dace042a44b0c015206921e3dcaf6904c9"
+    },
+    {
+      "path": "docs/brand-nova-alignment/VALIDATION.md",
+      "sha256": "e3595b0bba384e641fbfc529c6f211da4b1cd4cbc3dd75060e38b9ee73303032"
+    },
+    {
+      "path": "docs/brand-nova-alignment/alignment.css",
+      "sha256": "39f874c5139c622a5ef6e95ae191c682ade938cd45d4aeb142c22a41e1bba784"
+    },
+    {
+      "path": "docs/brand-nova-alignment/ar.html",
+      "sha256": "24ab851c6724d6d1a486d223e944966457fd0cd0527dcfa3f32e1589e3109b82"
+    },
+    {
+      "path": "docs/brand-nova-alignment/assets/Inter-OFL.txt",
+      "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39"
+    },
+    {
+      "path": "docs/brand-nova-alignment/assets/inter.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "path": "docs/brand-nova-alignment/assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    },
+    {
+      "path": "docs/brand-nova-alignment/assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "path": "docs/brand-nova-alignment/assets/plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "path": "docs/brand-nova-alignment/assets/symbol-primary.svg",
+      "sha256": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b"
+    },
+    {
+      "path": "docs/brand-nova-alignment/board.css",
+      "sha256": "8b8cf659c9380367e40595845e341563ee3e4bccb58a241fbb17597f511b51a8"
+    },
+    {
+      "path": "docs/brand-nova-alignment/comparison.html",
+      "sha256": "34938ddd166ae11a0ff71ecd0952b8a64a1590c12a42c39b52d20efc88fbb2c5"
+    },
+    {
+      "path": "docs/brand-nova-alignment/en.html",
+      "sha256": "5c75ccfe8ce230b0075db86eee443198361427ea374d7cac867152d937d12ed2"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/assessment.json",
+      "sha256": "23344adc7621ceace984686b8470858fe7f39223a961d0ed37a90e96b43a688f"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/browser-results.json",
+      "sha256": "4b3a3c4606007d84c80a747d8f09d9b11f673e5acc3f48b5c53d745fd7b73e3c"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/comparison.png",
+      "sha256": "2bbd8dc5329e197c893716a3a2e8c1b1828a6ea2705ecfeeab0a1c4db1c7ace3"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/contrast.json",
+      "sha256": "130769d2e58b696468e62865322a7cdd653e196338718f223a04f6ba455d1afe"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/focus-ar-390.png",
+      "sha256": "988ae420796ad1f42a6a54b6083501ba856b74b6770c5e9ac5e09e8e41d800bc"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/focus-en-390.png",
+      "sha256": "9cd21c521e8df88d598bb0b984c1f5c6bd1b555b05e1bc993bc45951168c4cc2"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/independent-ar-320-text200.png",
+      "sha256": "f17f717ddf1033cf330a8b2858da26fee8e79749c65b10cde9edef7665644ade"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/independent-browser.json",
+      "sha256": "748de0a7ab0657f961451c0a0f51409bd5603e23499f969892db9adb0f492952"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/independent-en-320-text200.png",
+      "sha256": "36ede8ec5192996c28de7270a0e66714e634ec25795547c5ecd820af67055082"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/independent-runtime.json",
+      "sha256": "2a49f38367dd02fba577e0b596caed1add530e1fe449aa46459696f1e844f208"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/normal-ar-1440-full.png",
+      "sha256": "f5ac597e27616409cc21ab6e8b82b76ebf78c8db45f91090479f43c793588f75"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/normal-ar-390-full.png",
+      "sha256": "491e735d1c3c8562d37d0d3c2469be6cd66d10020c2f205a5fe205b1f76cd41d"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/normal-en-1440-full.png",
+      "sha256": "59270f2b8ddbd472e2bb54fef2a214189562c33eea3b16b8a73d1168bb9fb5d7"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/normal-en-390-full.png",
+      "sha256": "a29b00934f3299e490f701825a3bc4bb69d161ea391bf0c9a5ad9f1936035a35"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/preservation.json",
+      "sha256": "80e149346f318fa0fa5ba2fdbedb125195872c9e1d3b7100992c79aabd58470f"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/prior-nova-ar-1440.png",
+      "sha256": "a564a11cc03211228e6387622e5f1658d658b092271b1fe6991211120c5077b9"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/prior-nova-ar-390.png",
+      "sha256": "07a19d005361088e3263f34fc498af62e1f2de4e2463b494294f6b8bfa10bb89"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/provenance.json",
+      "sha256": "9fc42db9fe10478b355caeec5a9d851caddcc96bac99556da82070097ca74593"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/runtime.json",
+      "sha256": "3824f6b45fcbdd9ade2f48dd5df6295b6ee7711fb7d93e8a5ddfc66a9fd016fc"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/text200-ar-320.png",
+      "sha256": "f17f717ddf1033cf330a8b2858da26fee8e79749c65b10cde9edef7665644ade"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/text200-en-320.png",
+      "sha256": "36ede8ec5192996c28de7270a0e66714e634ec25795547c5ecd820af67055082"
+    },
+    {
+      "path": "docs/brand-nova-alignment/evidence/visual-language.png",
+      "sha256": "ad35616d0a15d00259c2cb0dde4baf5fe21299a7b91b60d1be836ca7f577efca"
+    },
+    {
+      "path": "docs/brand-nova-alignment/language.html",
+      "sha256": "b8c5ce8578c2de1d367c1c6a6bc95e57b5ea1d6d308dc3ae15b8e14cb4e006f7"
+    },
+    {
+      "path": "docs/brand-nova-alignment/specimen.js",
+      "sha256": "62e9ef51a0fc6480ccd66fd139bcaca01dffb863a9fdd847aaf216ade0cb5609"
+    },
+    {
+      "path": "docs/brand-nova-alignment/tokens.css",
+      "sha256": "9d48fbe4eea3b493bc753f2562e2eaa77c2c690cc0c7735c7714674e3f0f4266"
+    },
+    {
+      "path": "docs/brand-nova-alignment/tools/assess.mjs",
+      "sha256": "51a2c8ae819b78ba8b78a522555a469dc08ea12deac71de1ae35436364ab1579"
+    },
+    {
+      "path": "docs/brand-nova-alignment/tools/boards.mjs",
+      "sha256": "90d47f2a083f3aae564068acb65832032ca57b26235adcc2a5ba0e295c5d58c8"
+    },
+    {
+      "path": "docs/brand-nova-alignment/tools/contrast.mjs",
+      "sha256": "68788294d550139da5fe11af289c6b73e21dc2cd301e8f7e806fbce23fb02b22"
+    },
+    {
+      "path": "docs/brand-nova-alignment/tools/preserve.mjs",
+      "sha256": "6dfc8a917934f2a71719bcefd562d89a9d98590aff773f9a21dbf8ce9694bd1d"
+    },
+    {
+      "path": "docs/brand-nova-alignment/tools/report.mjs",
+      "sha256": "0c13502502fa2256594976cffc00517d57c20281cb6b8d881c4b141dbe2c8ed0"
+    },
+    {
+      "path": "docs/brand-nova-alignment/tools/runtime.mjs",
+      "sha256": "62be1b8fa041f65fc35b2deddef9a9276dbf7a18893031704de2c535d68eb877"
+    },
+    {
+      "path": "docs/brand-nova-alignment/tools/validate.mjs",
+      "sha256": "7d8f7f2aa57bfb88f7b756f1ba76851d37b8291046c6c157cdf8cbc0da6a11a3"
+    }
+  ]
+}

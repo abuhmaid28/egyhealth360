@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+Current authorized visual study: [brand-nova-alignment/README.md](brand-nova-alignment/README.md), with [brand-nova-alignment/FOUNDATION_PROPOSAL.md](brand-nova-alignment/FOUNDATION_PROPOSAL.md), [brand-nova-alignment/VALIDATION.md](brand-nova-alignment/VALIDATION.md) and [brand-nova-alignment/INDEPENDENT_REVIEW.md](brand-nova-alignment/INDEPENDENT_REVIEW.md). These are **PROPOSED / REVIEW EVIDENCE**, not accepted final Brand/Design System contracts. Current status and this owner's chat scope control; prior NOVA palette and old no-selected-symbol statements are historical within this bounded alignment. Pinned #94/#96/#97 and #89/#87 provenance is in the package; their artifacts remain unchanged.
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.

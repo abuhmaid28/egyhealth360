@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {readFile,writeFile,readdir} from 'node:fs/promises';
+const directory='docs/brand-nova-alignment',base='5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3';
+const sha=data=>createHash('sha256').update(data).digest('hex');
+const git=(...args)=>execFileSync('git',args,{maxBuffer:128*1024*1024});
+const refs={patient:'9e5fca14c7f931a49e94dd88915f8c9fa24a45da',logo:'cb3fd9112f15e17b3d500d7a9dd085dd6e412525',foundation:'e1abedc3d1c8811912f0fe6576e4b4f3459210ce',playbook:'0886788bd6b395bb7cace8653ffe280da68af4b8',skills:'b3eb9543a58d571968a16168d3492bf817792cb4'};
+const entries=[];
+for(const [ref,paths] of [[refs.playbook,['docs/zero-cost-design-pilot/PLAYBOOK.md','docs/zero-cost-design-pilot/AUDIT.md','docs/zero-cost-design-pilot/vendor/basic-ux-excerpts.json','docs/zero-cost-design-pilot/vendor/upstream-lock.json','docs/zero-cost-design-pilot/vendor/LICENSE']],[refs.skills,['.agents/skills/eh360-visual-exploration/SKILL.md','.agents/skills/eh360-visual-qa/SKILL.md','docs/skills-pilot/REFERENCE_MAP.md']]])for(const path of paths)entries.push({ref,path,sha256:sha(git('show',`${ref}:${path}`)),mode:'explicit reference file loaded; not native activation'});
+const copies=[];
+for(const name of ['symbol-primary.svg','inter.woff2','Inter-OFL.txt','plex-arabic-regular.ttf','plex-arabic-semibold.ttf','plex-arabic-OFL.txt'])copies.push({destination:`assets/${name}`,ref:refs.foundation,path:`docs/brand-identity-v2/assets/${name}`});
+for(const width of [390,1440])copies.push({destination:`evidence/prior-nova-ar-${width}.png`,ref:refs.patient,path:`docs/patient-finalist-validation/evidence/normal-ar-${width}-full.png`});
+copies.push({destination:'specimen.js',ref:refs.patient,path:'docs/patient-finalist-validation/specimen.js'});
+for(const c of copies){const source=git('show',`${c.ref}:${c.path}`),local=await readFile(`${directory}/${c.destination}`);assert.deepEqual(local,source,c.destination);c.sha256=sha(local);}
+assert.deepEqual(git('show',`${refs.logo}:docs/brand-identity-reconstruction/assets/symbol-primary.svg`),await readFile(`${directory}/assets/symbol-primary.svg`));
+const boardSHA=sha(git('show',`${refs.logo}:docs/brand-identity-reconstruction/source/approved-board.png`));assert.equal(boardSHA,'0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417');
+await writeFile(`${directory}/evidence/provenance.json`,JSON.stringify({base,refs,mode:'EXPLICIT_AUDITED_PLAYBOOK_LOADING',nativeActivationVerified:false,upstream:'nextlevelbuilder/ui-ux-pro-max-skill@b7d5353e0130feb8c5574ef1251f8a1db1873ccb',boardSHA,entries,copies,ownerAuthority:'Current conversation unified Brand-to-NOVA brief under #72, author-recorded scope; not fabricated GitHub owner comment'},null,2)+'\n');
+const baseline=git('ls-tree','-r','--name-only',base).toString().trim().split('\n');
+const exceptions=['docs/CURRENT_STATUS.md','docs/SOURCE_OF_TRUTH.md','docs/IMPLEMENTATION_ROADMAP.md'];
+for(const path of baseline.filter(p=>!exceptions.includes(p)))assert.deepEqual(await readFile(path),git('show',`${base}:${path}`),path);
+const changed=git('diff','--name-only',base).toString().trim().split('\n').filter(Boolean);
+assert.ok(changed.every(p=>exceptions.includes(p)||p.startsWith(directory+'/')),JSON.stringify(changed));
+const report={base,baselineFiles:baseline.length,byteIdentical:baseline.length-exceptions.length,exceptions,scope:'All other baseline files byte-identical, including production/backend/API/schema/migrations/clinical/privacy contracts/CI/dependencies/historical evidence. Pinned remote sources separately rechecked in final PR handoff.'};
+await writeFile(`${directory}/evidence/preservation.json`,JSON.stringify(report,null,2)+'\n');
+async function walk(dir){const paths=[];for(const e of await readdir(dir,{withFileTypes:true})){const p=`${dir}/${e.name}`;if(e.isDirectory())paths.push(...await walk(p));else paths.push(p);}return paths;}
+const paths=(await walk(directory)).filter(p=>!p.endsWith('/artifact-hashes.json')).sort();
+const hashes=[];for(const path of paths)hashes.push({path,sha256:sha(await readFile(path))});
+await writeFile(`${directory}/evidence/artifact-hashes.json`,JSON.stringify({method:'SHA-256 of every package artifact except this self-referential manifest; run after final rendering/review.',files:hashes},null,2)+'\n');
+console.log(JSON.stringify({...report,artifacts:hashes.length,verifiedCopies:copies.length}));
