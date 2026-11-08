@@ -1,0 +1,83 @@
+{
+  "captures": [
+    {
+      "name": "symbol-primary",
+      "width": 310,
+      "height": 320
+    },
+    {
+      "name": "lockup-dark",
+      "width": 1010,
+      "height": 350
+    },
+    {
+      "name": "lockup-light",
+      "width": 1010,
+      "height": 350
+    },
+    {
+      "name": "lockup-mono",
+      "width": 1010,
+      "height": 350
+    },
+    {
+      "name": "icon-dark",
+      "width": 330,
+      "height": 340
+    },
+    {
+      "name": "icon-light",
+      "width": 330,
+      "height": 340
+    },
+    {
+      "name": "icon-mono",
+      "width": 330,
+      "height": 340
+    },
+    {
+      "name": "app-icon-512",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "favicon-32",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "name": "favicon-24",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "name": "favicon-16",
+      "width": 16,
+      "height": 16
+    },
+    {
+      "name": "nova-header-ar",
+      "width": 1200,
+      "height": 140
+    },
+    {
+      "name": "nova-header-en",
+      "width": 1200,
+      "height": 140
+    },
+    {
+      "name": "fidelity",
+      "width": 1220
+    },
+    {
+      "name": "index",
+      "width": 1100
+    },
+    {
+      "name": "index",
+      "width": 390
+    }
+  ],
+  "errors": [],
+  "external": []
+}

@@ -30,18 +30,18 @@ Content System + Egyptian Arabic UX is accepted/merged at `80cb2bc27d9439f0e57e5
 
 Brand Research BR01–BR08 is accepted/merged through PR #78 at `0a0e9c2038ecad420e95c2c67ae367129e195839`. A/B/C were rejected; D/E/F and their six logo concepts remain unselected exploration history. The earlier [Patient implementation authorization](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6574268901) permitted one bounded gate: **Premium Synthesis — Patient My Care**. Follow the [committed handoff/specification](ui-reference/README_START_HERE.md), not prior visual-direction memory. Scope includes desktop/mobile EN/AR, relevant states, local primitives/tokens and QA evidence. [Implementation review](ui-reference/PATIENT_MY_CARE_IMPLEMENTATION.md). PR #79 remains open/unmerged/auto-merge off. No backend/API/database/security change, wider rollout, final Brand/Design System freeze or production promotion is authorized.
 
-## Product/Design sequence — future authorizations
+## Selected identity reconstruction and next gates
 
-1. **Stage 2 — Product UX Foundation** accepted; **Stage 3 — Information Architecture** accepted (IA01–IA05, Patient B, Clinician B). CD01–CD07 material terminology is now accepted; later material changes remain owner-gated.
-2. Content System and Egyptian Arabic UX accepted/merged (CD01–CD07); no runtime implementation implied.
-3. Brand Research BR01–BR08 accepted. **Earlier visual exploration** presented three distinct directions: at least two materially different logo concepts each (**minimum six total**), rationales and comparable Patient + Doctor UI. [V2 review artifacts](visual-directions-v2/README.md) remain exploratory and unselected.
-4. **Current bounded exception:** [PR #80 owner direction 6604240346](https://github.com/abuhmaid28/egyhealth360/pull/80#issuecomment-6604240346) authorizes one **Clinician Patient-DNA premium visual pass** on the [already approved master](https://github.com/abuhmaid28/egyhealth360/pull/80#issuecomment-6603761429). [Fresh evidence / exact scope](ui-reference/CLINICIAN_PATIENT_DNA_PREMIUM.md). Pass base `e28dbfb`; product change is scoped CSS only. Patient `f0d94e7` / PR #79, existing TS/TSX/MJS and all product/clinical/security behavior remain unchanged. No wider rollout, new capability, design freeze, deployment or merge. This pass's visual review is the next gate.
-5. Refinement after direction choice, then a separate **Final Brand V2 approval gate** for final logo/palette/typography; Design System V2 follows approved final choices.
-6. High-fidelity Patient + Clinician prototypes; **owner final visual approval**.
-7. Frontend Architecture V2, then Frontend V2 implementation.
-8. Visual QA against approved prototypes and preserved before/after evidence.
+Current owner direction selects the exact supplied turquoise-and-gold board as sole visual authority and authorizes [bounded editable reconstruction](brand-identity-reconstruction/README.md). [Source identity/hash](brand-identity-reconstruction/source/REFERENCE.json). This supersedes earlier logo concepts as current visual references, preserving all historical assets. No new logo exploration or production implementation is authorized.
 
-The [charter](FOUNDATION_CHARTER.md#future-productdesign-approval-process--document-only) defines required direction differences, minimum samples and approval rules. Do not finalize the Design System before direction approval or broadly implement React/frontend before owner visual approval. Current V1 screenshots remain byte-identical historical BEFORE evidence.
+1. Patient Candidate Validation — prior bounded evidence; no final product acceptance inferred.
+2. Logo/Brand direction — owner selected this supplied board; current work is exact reconstruction and independent fidelity review, not additional concepts. Explicit Arabic name/taglines are recorded in CURRENT_STATUS.
+3. Owner Brand V2 Decision — **BLOCKED pending review of actual reconstructed identity, typography/material approximations and full usage proposal.** Reference selection does not freeze the identity.
+4. Design System V2 — no freeze before Brand decision and separately scoped work.
+5. Final Design Acceptance — separate bilingual design/accessibility/visual owner gate; CI cannot substitute.
+6. Authorized Multi-Portal Design/Frontend Execution — future explicit authorization only. Retain accepted architecture and clinical/privacy/security contracts.
+
+No merge, deployment, alias/promotion or automatic next stage. [Earlier roadmap preserved](https://github.com/abuhmaid28/egyhealth360/blob/5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3/docs/IMPLEMENTATION_ROADMAP.md).
 
 ## Resume domain roadmap only after the reboot/design gates
 

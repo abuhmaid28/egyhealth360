@@ -1,5 +1,13 @@
 # Source of truth and document index
 
+Current scoped reference: [exact selected-board reconstruction](brand-identity-reconstruction/README.md). The owner's corrected source/hash supersedes older visual candidates as references, not their historical preservation. CURRENT_STATUS owns state; no production or Brand/System freeze is authorized.
+
+| Scoped reconstruction document | Classification |
+| --- | --- |
+| [brand-identity-reconstruction/README.md](brand-identity-reconstruction/README.md) | CURRENT owner fidelity package: sole verified source, assets, exact strings and approximations |
+| [brand-identity-reconstruction/VALIDATION.md](brand-identity-reconstruction/VALIDATION.md) | HISTORICAL EVIDENCE: actual measurements, scope preservation and limitations; final-head CI in Draft PR |
+| [brand-identity-reconstruction/INDEPENDENT_REVIEW.md](brand-identity-reconstruction/INDEPENDENT_REVIEW.md) | HISTORICAL EVIDENCE: separate source-fidelity assessment, findings and reservations, not owner acceptance |
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.

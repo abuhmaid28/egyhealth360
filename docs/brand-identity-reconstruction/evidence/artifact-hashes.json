@@ -1,0 +1,222 @@
+{
+  "algorithm": "SHA256",
+  "excludes": "this manifest",
+  "files": [
+    {
+      "path": "assets/app-icon-512.svg",
+      "sha256": "a701c284cf437ef6d59f3f4ecd38f133bddaed2b2231333f12453671c767dbc4"
+    },
+    {
+      "path": "assets/favicon-16.svg",
+      "sha256": "76e1ba8d16b229d70893a31336fc1e7af9ff3f81e91c8eac8481e1650a2694cb"
+    },
+    {
+      "path": "assets/favicon-24.svg",
+      "sha256": "54c4974212deee86056578be0bf2ef38912b37a34443cfa24157b3932339a8ac"
+    },
+    {
+      "path": "assets/favicon-32.svg",
+      "sha256": "79adf7b756a330d38a092f776a8506b73b3c6c8bdeeacf0ecab15ce84d82a35d"
+    },
+    {
+      "path": "assets/icon-dark.svg",
+      "sha256": "a4d6571f49133222a49a02204d833876507774885d13100b3dc0fbf936d13930"
+    },
+    {
+      "path": "assets/icon-light.svg",
+      "sha256": "689c64891b29b88240d1b544daff6a536d2cce33ef65eb2f58424b25db6adc89"
+    },
+    {
+      "path": "assets/icon-mono.svg",
+      "sha256": "a056363f72493df4674d98e24440e61708d58766af3961b4eb5eaa9d759bfce9"
+    },
+    {
+      "path": "assets/Inter-OFL.txt",
+      "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39"
+    },
+    {
+      "path": "assets/inter.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "path": "assets/lockup-dark.svg",
+      "sha256": "98818e104ae837379b13294760b76025a622d179499d3d586292859d520910ae"
+    },
+    {
+      "path": "assets/lockup-light.svg",
+      "sha256": "7e2c326dbc3215d961dfc2472e96589bb5581a50c3272f915607a221bbccef48"
+    },
+    {
+      "path": "assets/lockup-mono.svg",
+      "sha256": "bbc7dd3d20baefd66274acfc302671402a7fdb87c36bd8a6d5ecf92079b17fd4"
+    },
+    {
+      "path": "assets/nova-header-ar.svg",
+      "sha256": "62413eaf8a1230b84ba6859fa77b5c0019365fcd5ca50150c63721765738d640"
+    },
+    {
+      "path": "assets/nova-header-en.svg",
+      "sha256": "ae7aeac28fdc9760edd2c1d3486636a3411c29999db8d1d84f3e5e0f3aaad8dd"
+    },
+    {
+      "path": "assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    },
+    {
+      "path": "assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "path": "assets/plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "path": "assets/symbol-primary.svg",
+      "sha256": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b"
+    },
+    {
+      "path": "evidence/all-proofs.png",
+      "sha256": "c5ac1b1bd42dc9ede8084e3e476f5b2f7e9c2539d7406829f26e6e026ad89b81"
+    },
+    {
+      "path": "evidence/app-icon-512.png",
+      "sha256": "38cb2515eb6b7e938afd1b3f511db8e44bf4d400f9025a5539a555af8116d601"
+    },
+    {
+      "path": "evidence/audit.json",
+      "sha256": "63bd68c9c8fa3275554d6da0b2151dd4fbf5c8fd6a468f30f3753b8fdca53cbc"
+    },
+    {
+      "path": "evidence/color-region-comparison.json",
+      "sha256": "3b8546a3ad04cc67d70d41026dbb35859bb04f782c3c5239e033cad4c9123259"
+    },
+    {
+      "path": "evidence/favicon-16.png",
+      "sha256": "67b3f538c263574bd9a90e09510b86e48680538c46e5d563ddfb75a19d8df269"
+    },
+    {
+      "path": "evidence/favicon-24.png",
+      "sha256": "da6b2ec72e6f88bc69ee82673c0435d596e4ebb74dea9a3e8a733c985e7e773c"
+    },
+    {
+      "path": "evidence/favicon-32.png",
+      "sha256": "4568a76ffedd555b41437ce52022074fd3f27b183a68b51b560bcbe4eeb35b2b"
+    },
+    {
+      "path": "evidence/fidelity-board.png",
+      "sha256": "20b5b9594db5362107b13e81ece2f691eb3bd09d266ef7cbe245de94d49c0ae7"
+    },
+    {
+      "path": "evidence/icon-dark.png",
+      "sha256": "ea1f777cf25d66a77eba1c20d4287511fe549493f3da67aa0a6936373301e567"
+    },
+    {
+      "path": "evidence/icon-light.png",
+      "sha256": "310189df5a0c2219e955a84c53c002c281e185c14fed595a0443629198f73172"
+    },
+    {
+      "path": "evidence/icon-mono.png",
+      "sha256": "c6be92777df3bd736feda875898df9304a27b8a2f91713dea3e0f3d22e198966"
+    },
+    {
+      "path": "evidence/lockup-dark.png",
+      "sha256": "1eda5a84b38df1a4114a1ff4d29e5cb8b42e15264da9fcd47a8f9f04e9d336e4"
+    },
+    {
+      "path": "evidence/lockup-light.png",
+      "sha256": "7a4216892e64de7324cfde8f7756eb429de90152ccabf5696087059cb3f77eeb"
+    },
+    {
+      "path": "evidence/lockup-mono.png",
+      "sha256": "3c6da761ab485b69149859db4409f8d70d7de4b76dfcbfdd40c36a810421bfb7"
+    },
+    {
+      "path": "evidence/mobile-proofs.png",
+      "sha256": "03b6111606d8efea45d026e933b86031164574459e7739fc38234ea4105cf892"
+    },
+    {
+      "path": "evidence/nova-header-ar.png",
+      "sha256": "d18260662751aa41003094f5c4ad5b3dc219981951c80899fab6a616cc656c60"
+    },
+    {
+      "path": "evidence/nova-header-en.png",
+      "sha256": "d18260662751aa41003094f5c4ad5b3dc219981951c80899fab6a616cc656c60"
+    },
+    {
+      "path": "evidence/preservation.json",
+      "sha256": "7fbf031ebd8f6759e9ea1587fdde264c34e44d02ffa3916e57256d7bf910e545"
+    },
+    {
+      "path": "evidence/render.json",
+      "sha256": "80da34dd20e2bcf54ae2a57dc222e4f228c02be201c6afedf5d15bb55e98e58f"
+    },
+    {
+      "path": "evidence/symbol-primary.png",
+      "sha256": "4071ff200acb53a86bc08aeb83f4d13a4701fe0bdc6e60073bf3bcd2914d2ac7"
+    },
+    {
+      "path": "evidence/validation.json",
+      "sha256": "77d9da9d7d7538ec6a0dc4c4165253cf473260eff0b8b77e3b8c529fd5ddb1a0"
+    },
+    {
+      "path": "fidelity.html",
+      "sha256": "941b4ec4ae5de7509e10224521d0b8417fcf41707ffbd5d216e346e124831c98"
+    },
+    {
+      "path": "INDEPENDENT_REVIEW.md",
+      "sha256": "b53bd0872f532436c3f2a1fe48201ca01e0626c04b8fc255fe95be62fa3e1401"
+    },
+    {
+      "path": "index.html",
+      "sha256": "fb5f2265f27e08ce37c9e07330957a8523dd12db39fc47c8ffe8bd9ddc2a25f0"
+    },
+    {
+      "path": "proof.css",
+      "sha256": "74094a3b9f720acb36552b9ec98d28fbd911cd1cb51be6cebab5e4fd65c2717f"
+    },
+    {
+      "path": "README.md",
+      "sha256": "f384ded3e72c29c0f63cf3cbe66f9aa144b1dc32da392d77c53923476923b67c"
+    },
+    {
+      "path": "source/approved-board.png",
+      "sha256": "0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417"
+    },
+    {
+      "path": "source/REFERENCE.json",
+      "sha256": "522322825e46f04e3e3629fc17551dfbc03cb04828b696aecd04bcea562ab9df"
+    },
+    {
+      "path": "tools/audit.mjs",
+      "sha256": "7e57046bd58642a32746c11f2473f5eafe6ef3a56988aa9bdef8799ab2693972"
+    },
+    {
+      "path": "tools/compare.py",
+      "sha256": "69856992c6696dc6dce90b45acf7e3459976eb722f879a85dc67853f8046b4ef"
+    },
+    {
+      "path": "tools/generate.py",
+      "sha256": "e575f2929549466ebd2dc85c05b61c970e18f1c19268371bd5673b4d94059f70"
+    },
+    {
+      "path": "tools/pages.py",
+      "sha256": "5b7a2494083650645f24b383695e582623e5c60a61267900ee8d58559d475836"
+    },
+    {
+      "path": "tools/render.mjs",
+      "sha256": "d270c684b8e57be35584df5c339d5fc81638292bbe662c8258b88697209abbd8"
+    },
+    {
+      "path": "tools/trace.py",
+      "sha256": "a0b80c5aa3d06d28bf5ebb0563600035db8841b149f15e3beb1068ad77de2d5d"
+    },
+    {
+      "path": "tools/validate.mjs",
+      "sha256": "8dc41e65fe2b40c6a8f313a7a7f5e3cda194127378e37c5026d90d3a1b161ccd"
+    },
+    {
+      "path": "VALIDATION.md",
+      "sha256": "bf9a345035d3a11f3a426fbbc087deff8e3081e3d0fa74916c80b943c964d6b7"
+    }
+  ]
+}
