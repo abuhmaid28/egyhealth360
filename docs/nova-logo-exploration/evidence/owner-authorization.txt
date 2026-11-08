@@ -1,0 +1,35 @@
+# PRODUCT OWNER — EXPLICIT LOGO EXPLORATION AUTHORIZATION
+
+**APPROVED FOR BOUNDED DESIGN EXPLORATION ONLY.**
+
+I explicitly authorize execution of the **EgyHealth 360 — NOVA Brand & Logo Exploration Sprint**, as defined in the proposed brief and `NOVA_BRAND_LOGO_NEXT_GATE.md` from PR #94.
+
+I accept the bounded Patient Finalist Validation evidence as sufficient to proceed to logo exploration. This does not constitute final Patient UI, Brand V2, Design System V2, or production approval.
+
+## Authorized scope
+
+- Create exactly THREE original, materially distinct premium logo concepts for **EgyHealth 360**.
+- Maintain compatibility with NOVA Evolution and its modern digital healthcare identity.
+- Use the existing audited free design playbook and relevant repository Skills, explicitly loading them if native activation is unavailable.
+- Deliver editable SVG assets, full wordmarks, dark/light/monochrome versions, actual 16/24/32px proofs, favicon and app-icon studies.
+- Demonstrate each logo within the existing Arabic and English NOVA Patient header, without modifying production UI.
+- Include independent visual, originality, usability, licensing and similarity-risk assessments.
+- Create one isolated design-only Draft PR with mobile-friendly comparison images.
+- Run required validation and verify exact-final-HEAD CI.
+- Use zero additional paid subscriptions, APIs, assets or services.
+
+## Explicit restrictions
+
+Do NOT modify production frontend, backend, database, authentication, clinical contracts or deployment infrastructure.
+
+Do NOT merge existing PRs, deploy, finalize Brand V2, freeze Design System V2, or begin multi-portal implementation.
+
+Do NOT select the final logo on my behalf.
+
+All three concepts must be presented for my visual review.
+
+**Stop after the Logo Exploration package is delivered.**
+
+My next decision will be to select, refine, or reject the proposed logos.
+
+Proceed with this authorized sprint.

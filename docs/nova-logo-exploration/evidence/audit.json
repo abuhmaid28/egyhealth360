@@ -1,0 +1,2575 @@
+{
+  "result": "PASS",
+  "cases": 80,
+  "nativeSizeConfigurations": 36,
+  "safeSVGs": 30,
+  "fontParity": [
+    {
+      "file": "manrope.ttf",
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+    },
+    {
+      "file": "manrope-OFL.txt",
+      "sha256": "d6a309fcfb963d329a93baf9df66fa5f3c23a4be2b5f67edf24d6cafecde12ac"
+    },
+    {
+      "file": "plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "file": "plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "file": "plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    }
+  ],
+  "textContrastSamples": 168,
+  "textMinimum": 9.57,
+  "symbolPairs": [
+    {
+      "variant": "dark",
+      "ratio": 14.46
+    },
+    {
+      "variant": "light",
+      "ratio": 13.36
+    },
+    {
+      "variant": "mono",
+      "ratio": 17.93
+    },
+    {
+      "variant": "reverse",
+      "ratio": 18.34
+    },
+    {
+      "variant": "focus",
+      "ratio": 13.91
+    }
+  ],
+  "contrast": [
+    {
+      "name": "index",
+      "text": "Skip to concepts",
+      "fg": [
+        33,
+        26,
+        48
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 16.73
+    },
+    {
+      "name": "index",
+      "text": "EGYHEALTH 360 / NOVA / OWNER SELECTION P",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 11.48
+    },
+    {
+      "name": "index",
+      "text": "Three ideas. One name.",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "index",
+      "text": "Original proposals for visual review. Sa",
+      "fg": [
+        224,
+        214,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 13.07
+    },
+    {
+      "name": "index",
+      "text": "تلات مقترحات لشعار EgyHealth 360. الاختي",
+      "fg": [
+        223,
+        208,
+        238
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.57
+    },
+    {
+      "name": "index",
+      "text": "CONCEPT A",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 14.5
+    },
+    {
+      "name": "index",
+      "text": "Shared stem",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 14.5
+    },
+    {
+      "name": "index",
+      "text": "حروف مترابطة",
+      "fg": [
+        223,
+        208,
+        238
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 10.47
+    },
+    {
+      "name": "index",
+      "text": "A drawn e–h ligature: two initials share",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 14.5
+    },
+    {
+      "name": "index",
+      "text": "16px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 9.57
+    },
+    {
+      "name": "index",
+      "text": "24px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 9.57
+    },
+    {
+      "name": "index",
+      "text": "32px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 9.57
+    },
+    {
+      "name": "index",
+      "text": "The joined initials carry an explicit na",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 10.55
+    },
+    {
+      "name": "index",
+      "text": "Inspect proofs",
+      "fg": [
+        32,
+        34,
+        42
+      ],
+      "bg": [
+        220,
+        250,
+        148
+      ],
+      "ratio": 13.71
+    },
+    {
+      "name": "index",
+      "text": "SVG",
+      "fg": [
+        40,
+        30,
+        56
+      ],
+      "bg": [
+        217,
+        203,
+        238
+      ],
+      "ratio": 10.3
+    },
+    {
+      "name": "index",
+      "text": "CONCEPT B",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 14.5
+    },
+    {
+      "name": "index",
+      "text": "Changing course",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 14.5
+    },
+    {
+      "name": "index",
+      "text": "مسار مستمر",
+      "fg": [
+        223,
+        208,
+        238
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 10.47
+    },
+    {
+      "name": "index",
+      "text": "An open rising ribbon with two unequal l",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 14.5
+    },
+    {
+      "name": "index",
+      "text": "16px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 9.57
+    },
+    {
+      "name": "index",
+      "text": "24px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 9.57
+    },
+    {
+      "name": "index",
+      "text": "32px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 9.57
+    },
+    {
+      "name": "index",
+      "text": "A route or transport reading remains pos",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 10.55
+    },
+    {
+      "name": "index",
+      "text": "Inspect proofs",
+      "fg": [
+        32,
+        34,
+        42
+      ],
+      "bg": [
+        220,
+        250,
+        148
+      ],
+      "ratio": 13.71
+    },
+    {
+      "name": "index",
+      "text": "SVG",
+      "fg": [
+        40,
+        30,
+        56
+      ],
+      "bg": [
+        217,
+        203,
+        238
+      ],
+      "ratio": 10.3
+    },
+    {
+      "name": "index",
+      "text": "CONCEPT C",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 14.5
+    },
+    {
+      "name": "index",
+      "text": "Unequal facets",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 14.5
+    },
+    {
+      "name": "index",
+      "text": "أوجه متكاملة",
+      "fg": [
+        223,
+        208,
+        238
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 10.47
+    },
+    {
+      "name": "index",
+      "text": "Three unequal planes form a compact obli",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 14.5
+    },
+    {
+      "name": "index",
+      "text": "16px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 9.57
+    },
+    {
+      "name": "index",
+      "text": "24px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 9.57
+    },
+    {
+      "name": "index",
+      "text": "32px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 9.57
+    },
+    {
+      "name": "index",
+      "text": "Faceted systems are crowded in software,",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        41,
+        34,
+        53
+      ],
+      "ratio": 10.55
+    },
+    {
+      "name": "index",
+      "text": "Inspect proofs",
+      "fg": [
+        32,
+        34,
+        42
+      ],
+      "bg": [
+        220,
+        250,
+        148
+      ],
+      "ratio": 13.71
+    },
+    {
+      "name": "index",
+      "text": "SVG",
+      "fg": [
+        40,
+        30,
+        56
+      ],
+      "bg": [
+        217,
+        203,
+        238
+      ],
+      "ratio": 10.3
+    },
+    {
+      "name": "index",
+      "text": "Choose A, B or C for further refinement,",
+      "fg": [
+        223,
+        208,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.52
+    },
+    {
+      "name": "a-proof",
+      "text": "Skip to concepts",
+      "fg": [
+        33,
+        26,
+        48
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 16.73
+    },
+    {
+      "name": "a-proof",
+      "text": "EGYHEALTH 360 / NOVA / ORIGINAL LOGO EXP",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 11.48
+    },
+    {
+      "name": "a-proof",
+      "text": "CONCEPT A · PROPOSAL",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "a-proof",
+      "text": "Shared stem",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "a-proof",
+      "text": "A drawn e–h ligature: two initials share",
+      "fg": [
+        224,
+        214,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 13.07
+    },
+    {
+      "name": "a-proof",
+      "text": "Dark",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 15.88
+    },
+    {
+      "name": "a-proof",
+      "text": "Light",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        247,
+        244,
+        251
+      ],
+      "ratio": 13.36
+    },
+    {
+      "name": "a-proof",
+      "text": "Monochrome",
+      "fg": [
+        23,
+        23,
+        23
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.93
+    },
+    {
+      "name": "a-proof",
+      "text": "Actual CSS pixel sizes",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 15.88
+    },
+    {
+      "name": "a-proof",
+      "text": "Unscaled source sizes; no optical substi",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 11.55
+    },
+    {
+      "name": "a-proof",
+      "text": "16px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 10.48
+    },
+    {
+      "name": "a-proof",
+      "text": "24px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 10.48
+    },
+    {
+      "name": "a-proof",
+      "text": "32px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 10.48
+    },
+    {
+      "name": "a-proof",
+      "text": "16px",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 14.55
+    },
+    {
+      "name": "a-proof",
+      "text": "24px",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 14.55
+    },
+    {
+      "name": "a-proof",
+      "text": "32px",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 14.55
+    },
+    {
+      "name": "a-proof",
+      "text": "Compact applications",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 15.88
+    },
+    {
+      "name": "a-proof",
+      "text": "EgyHealth 360",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        48,
+        38,
+        63
+      ],
+      "ratio": 13.52
+    },
+    {
+      "name": "a-proof",
+      "text": "App mask and browser-tab studies, not a ",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 11.55
+    },
+    {
+      "name": "a-proof",
+      "text": "Pinned NOVA Patient header context",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "a-proof",
+      "text": "PR #94 at9e5fca14; original Arabic/Engli",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.67
+    },
+    {
+      "name": "a-proof",
+      "text": "The joined initials carry an explicit na",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.67
+    },
+    {
+      "name": "a-proof",
+      "text": "Editable symbol SVG",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "a-proof",
+      "text": "Outlined full wordmark SVG",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "a-proof",
+      "text": "All three concepts",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "a-proof",
+      "text": "All concepts unselected. No final Brand ",
+      "fg": [
+        223,
+        208,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.52
+    },
+    {
+      "name": "a-proof",
+      "text": "EgyHealth 360",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "a-proof",
+      "text": "360",
+      "fg": [
+        220,
+        250,
+        148
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 16.3
+    },
+    {
+      "name": "a-proof",
+      "text": "متابعتي",
+      "fg": [
+        40,
+        30,
+        56
+      ],
+      "bg": [
+        217,
+        203,
+        238
+      ],
+      "ratio": 10.3
+    },
+    {
+      "name": "a-proof",
+      "text": "دور على دكتور",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        43,
+        36,
+        61
+      ],
+      "ratio": 14.02
+    },
+    {
+      "name": "a-proof",
+      "text": "سلمى حسن",
+      "fg": [
+        221,
+        212,
+        233
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.18
+    },
+    {
+      "name": "a-proof",
+      "text": "أهلاً يا سلمى",
+      "fg": [
+        221,
+        214,
+        230
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.33
+    },
+    {
+      "name": "a-proof",
+      "text": "متابعتي",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "a-proof",
+      "text": "ميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "a-proof",
+      "text": "دراسة مكان الشعار · القايمة مش متصلة بخد",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "a-proof",
+      "text": "EgyHealth 360",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "a-proof",
+      "text": "360",
+      "fg": [
+        220,
+        250,
+        148
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 16.3
+    },
+    {
+      "name": "a-proof",
+      "text": "My care",
+      "fg": [
+        40,
+        30,
+        56
+      ],
+      "bg": [
+        217,
+        203,
+        238
+      ],
+      "ratio": 10.3
+    },
+    {
+      "name": "a-proof",
+      "text": "Find care",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        43,
+        36,
+        61
+      ],
+      "ratio": 14.02
+    },
+    {
+      "name": "a-proof",
+      "text": "Salma Hassan",
+      "fg": [
+        221,
+        212,
+        233
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.18
+    },
+    {
+      "name": "a-proof",
+      "text": "Hi, Salma",
+      "fg": [
+        221,
+        214,
+        230
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.33
+    },
+    {
+      "name": "a-proof",
+      "text": "My care",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "a-proof",
+      "text": "Your next appointment and what your doct",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "a-proof",
+      "text": "Logo placement study · navigation is not",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "b-proof",
+      "text": "Skip to concepts",
+      "fg": [
+        33,
+        26,
+        48
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 16.73
+    },
+    {
+      "name": "b-proof",
+      "text": "EGYHEALTH 360 / NOVA / ORIGINAL LOGO EXP",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 11.48
+    },
+    {
+      "name": "b-proof",
+      "text": "CONCEPT B · PROPOSAL",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "b-proof",
+      "text": "Changing course",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "b-proof",
+      "text": "An open rising ribbon with two unequal l",
+      "fg": [
+        224,
+        214,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 13.07
+    },
+    {
+      "name": "b-proof",
+      "text": "Dark",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 15.88
+    },
+    {
+      "name": "b-proof",
+      "text": "Light",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        247,
+        244,
+        251
+      ],
+      "ratio": 13.36
+    },
+    {
+      "name": "b-proof",
+      "text": "Monochrome",
+      "fg": [
+        23,
+        23,
+        23
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.93
+    },
+    {
+      "name": "b-proof",
+      "text": "Actual CSS pixel sizes",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 15.88
+    },
+    {
+      "name": "b-proof",
+      "text": "Unscaled source sizes; no optical substi",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 11.55
+    },
+    {
+      "name": "b-proof",
+      "text": "16px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 10.48
+    },
+    {
+      "name": "b-proof",
+      "text": "24px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 10.48
+    },
+    {
+      "name": "b-proof",
+      "text": "32px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 10.48
+    },
+    {
+      "name": "b-proof",
+      "text": "16px",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 14.55
+    },
+    {
+      "name": "b-proof",
+      "text": "24px",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 14.55
+    },
+    {
+      "name": "b-proof",
+      "text": "32px",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 14.55
+    },
+    {
+      "name": "b-proof",
+      "text": "Compact applications",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 15.88
+    },
+    {
+      "name": "b-proof",
+      "text": "EgyHealth 360",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        48,
+        38,
+        63
+      ],
+      "ratio": 13.52
+    },
+    {
+      "name": "b-proof",
+      "text": "App mask and browser-tab studies, not a ",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 11.55
+    },
+    {
+      "name": "b-proof",
+      "text": "Pinned NOVA Patient header context",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "b-proof",
+      "text": "PR #94 at9e5fca14; original Arabic/Engli",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.67
+    },
+    {
+      "name": "b-proof",
+      "text": "A route or transport reading remains pos",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.67
+    },
+    {
+      "name": "b-proof",
+      "text": "Editable symbol SVG",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "b-proof",
+      "text": "Outlined full wordmark SVG",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "b-proof",
+      "text": "All three concepts",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "b-proof",
+      "text": "All concepts unselected. No final Brand ",
+      "fg": [
+        223,
+        208,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.52
+    },
+    {
+      "name": "b-proof",
+      "text": "EgyHealth 360",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "b-proof",
+      "text": "360",
+      "fg": [
+        220,
+        250,
+        148
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 16.3
+    },
+    {
+      "name": "b-proof",
+      "text": "متابعتي",
+      "fg": [
+        40,
+        30,
+        56
+      ],
+      "bg": [
+        217,
+        203,
+        238
+      ],
+      "ratio": 10.3
+    },
+    {
+      "name": "b-proof",
+      "text": "دور على دكتور",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        43,
+        36,
+        61
+      ],
+      "ratio": 14.02
+    },
+    {
+      "name": "b-proof",
+      "text": "سلمى حسن",
+      "fg": [
+        221,
+        212,
+        233
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.18
+    },
+    {
+      "name": "b-proof",
+      "text": "أهلاً يا سلمى",
+      "fg": [
+        221,
+        214,
+        230
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.33
+    },
+    {
+      "name": "b-proof",
+      "text": "متابعتي",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "b-proof",
+      "text": "ميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "b-proof",
+      "text": "دراسة مكان الشعار · القايمة مش متصلة بخد",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "b-proof",
+      "text": "EgyHealth 360",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "b-proof",
+      "text": "360",
+      "fg": [
+        220,
+        250,
+        148
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 16.3
+    },
+    {
+      "name": "b-proof",
+      "text": "My care",
+      "fg": [
+        40,
+        30,
+        56
+      ],
+      "bg": [
+        217,
+        203,
+        238
+      ],
+      "ratio": 10.3
+    },
+    {
+      "name": "b-proof",
+      "text": "Find care",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        43,
+        36,
+        61
+      ],
+      "ratio": 14.02
+    },
+    {
+      "name": "b-proof",
+      "text": "Salma Hassan",
+      "fg": [
+        221,
+        212,
+        233
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.18
+    },
+    {
+      "name": "b-proof",
+      "text": "Hi, Salma",
+      "fg": [
+        221,
+        214,
+        230
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.33
+    },
+    {
+      "name": "b-proof",
+      "text": "My care",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "b-proof",
+      "text": "Your next appointment and what your doct",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "b-proof",
+      "text": "Logo placement study · navigation is not",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "c-proof",
+      "text": "Skip to concepts",
+      "fg": [
+        33,
+        26,
+        48
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 16.73
+    },
+    {
+      "name": "c-proof",
+      "text": "EGYHEALTH 360 / NOVA / ORIGINAL LOGO EXP",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 11.48
+    },
+    {
+      "name": "c-proof",
+      "text": "CONCEPT C · PROPOSAL",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "c-proof",
+      "text": "Unequal facets",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "c-proof",
+      "text": "Three unequal planes form a compact obli",
+      "fg": [
+        224,
+        214,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 13.07
+    },
+    {
+      "name": "c-proof",
+      "text": "Dark",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 15.88
+    },
+    {
+      "name": "c-proof",
+      "text": "Light",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        247,
+        244,
+        251
+      ],
+      "ratio": 13.36
+    },
+    {
+      "name": "c-proof",
+      "text": "Monochrome",
+      "fg": [
+        23,
+        23,
+        23
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 17.93
+    },
+    {
+      "name": "c-proof",
+      "text": "Actual CSS pixel sizes",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 15.88
+    },
+    {
+      "name": "c-proof",
+      "text": "Unscaled source sizes; no optical substi",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 11.55
+    },
+    {
+      "name": "c-proof",
+      "text": "16px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 10.48
+    },
+    {
+      "name": "c-proof",
+      "text": "24px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 10.48
+    },
+    {
+      "name": "c-proof",
+      "text": "32px",
+      "fg": [
+        214,
+        199,
+        228
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 10.48
+    },
+    {
+      "name": "c-proof",
+      "text": "16px",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 14.55
+    },
+    {
+      "name": "c-proof",
+      "text": "24px",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 14.55
+    },
+    {
+      "name": "c-proof",
+      "text": "32px",
+      "fg": [
+        48,
+        36,
+        60
+      ],
+      "bg": [
+        255,
+        255,
+        255
+      ],
+      "ratio": 14.55
+    },
+    {
+      "name": "c-proof",
+      "text": "Compact applications",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 15.88
+    },
+    {
+      "name": "c-proof",
+      "text": "EgyHealth 360",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        48,
+        38,
+        63
+      ],
+      "ratio": 13.52
+    },
+    {
+      "name": "c-proof",
+      "text": "App mask and browser-tab studies, not a ",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        33,
+        26,
+        48
+      ],
+      "ratio": 11.55
+    },
+    {
+      "name": "c-proof",
+      "text": "Pinned NOVA Patient header context",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "c-proof",
+      "text": "PR #94 at9e5fca14; original Arabic/Engli",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.67
+    },
+    {
+      "name": "c-proof",
+      "text": "Faceted systems are crowded in software,",
+      "fg": [
+        222,
+        210,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.67
+    },
+    {
+      "name": "c-proof",
+      "text": "Editable symbol SVG",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "c-proof",
+      "text": "Outlined full wordmark SVG",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "c-proof",
+      "text": "All three concepts",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 17.41
+    },
+    {
+      "name": "c-proof",
+      "text": "All concepts unselected. No final Brand ",
+      "fg": [
+        223,
+        208,
+        233
+      ],
+      "bg": [
+        23,
+        18,
+        33
+      ],
+      "ratio": 12.52
+    },
+    {
+      "name": "c-proof",
+      "text": "EgyHealth 360",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "c-proof",
+      "text": "360",
+      "fg": [
+        220,
+        250,
+        148
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 16.3
+    },
+    {
+      "name": "c-proof",
+      "text": "متابعتي",
+      "fg": [
+        40,
+        30,
+        56
+      ],
+      "bg": [
+        217,
+        203,
+        238
+      ],
+      "ratio": 10.3
+    },
+    {
+      "name": "c-proof",
+      "text": "دور على دكتور",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        43,
+        36,
+        61
+      ],
+      "ratio": 14.02
+    },
+    {
+      "name": "c-proof",
+      "text": "سلمى حسن",
+      "fg": [
+        221,
+        212,
+        233
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.18
+    },
+    {
+      "name": "c-proof",
+      "text": "أهلاً يا سلمى",
+      "fg": [
+        221,
+        214,
+        230
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.33
+    },
+    {
+      "name": "c-proof",
+      "text": "متابعتي",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "c-proof",
+      "text": "ميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "c-proof",
+      "text": "دراسة مكان الشعار · القايمة مش متصلة بخد",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "c-proof",
+      "text": "EgyHealth 360",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "c-proof",
+      "text": "360",
+      "fg": [
+        220,
+        250,
+        148
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 16.3
+    },
+    {
+      "name": "c-proof",
+      "text": "My care",
+      "fg": [
+        40,
+        30,
+        56
+      ],
+      "bg": [
+        217,
+        203,
+        238
+      ],
+      "ratio": 10.3
+    },
+    {
+      "name": "c-proof",
+      "text": "Find care",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        43,
+        36,
+        61
+      ],
+      "ratio": 14.02
+    },
+    {
+      "name": "c-proof",
+      "text": "Salma Hassan",
+      "fg": [
+        221,
+        212,
+        233
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.18
+    },
+    {
+      "name": "c-proof",
+      "text": "Hi, Salma",
+      "fg": [
+        221,
+        214,
+        230
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 13.33
+    },
+    {
+      "name": "c-proof",
+      "text": "My care",
+      "fg": [
+        250,
+        248,
+        255
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 17.91
+    },
+    {
+      "name": "c-proof",
+      "text": "Your next appointment and what your doct",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    },
+    {
+      "name": "c-proof",
+      "text": "Logo placement study · navigation is not",
+      "fg": [
+        200,
+        190,
+        216
+      ],
+      "bg": [
+        17,
+        15,
+        32
+      ],
+      "ratio": 10.61
+    }
+  ],
+  "limitations": "Sampled contrast/AX/reflow is not WCAG certification, measured recognition, exhaustive similarity search or trademark clearance."
+}

@@ -1,0 +1,4654 @@
+{
+  "browser": "Chromium154.0.8037.57",
+  "method": "80 actual page cases:4 owner/proof pages +6 pinnedheader contexts ×4 widths ×normal/root200%; all visible direct-text sizes are explicitly doubled with measured ratios, independent of rem/px; this is not native zoom. 36 native CSS-size vector configurations checked. AX semantics are not screenreader proof.",
+  "cases": [
+    {
+      "name": "index",
+      "width": 1280,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 1280,
+      "height": 1348,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope",
+        "Plex"
+      ],
+      "targets": [
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / OWNER SELECTION PACKAGE\n\nThree ideas. One name.\n\nOriginal proposals for visual review. Same scale, palette and wordmark family; silhouette and construction carry the differences. No concept is selected.\n\nتلات مقترحات لشعار EgyHealth 360. الاختيار أو التعديل أو الرفض لصاحب المنتج. دي مش هوية نهائية.\n\nCONCEPT A\nShared stem\n\nحروف مترابطة\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\n16px\n24px\n32px\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nInspect proofs\nSVG\nCONCEPT B\nChanging course\n\nمسار مستمر\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\n16px\n24px\n32px\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nInspect proofs\nSVG\nCONCEPT C\nUnequal facets\n\nأوجه متكاملة\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\n16px\n24px\n32px\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nInspect proofs\nSVG\nChoose A, B or C for further refinement, reject all, or name specific changes. A concept preference does not finalize the full identity.\nFinal Brand V2 and Design System V2 remain owner-gated. No legal clearance or measured user recognition is claimed.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "index",
+      "width": 1280,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 1280,
+      "height": 2783,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope",
+        "Plex"
+      ],
+      "targets": [
+        {
+          "text": "Inspect proofs",
+          "width": 257.109375,
+          "height": 72
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 257.109375,
+          "height": 72
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 257.109375,
+          "height": 72
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / OWNER SELECTION PACKAGE\n\nThree ideas. One name.\n\nOriginal proposals for visual review. Same scale, palette and wordmark family; silhouette and construction carry the differences. No concept is selected.\n\nتلات مقترحات لشعار EgyHealth 360. الاختيار أو التعديل أو الرفض لصاحب المنتج. دي مش هوية نهائية.\n\nCONCEPT A\nShared stem\n\nحروف مترابطة\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\n16px\n24px\n32px\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nInspect proofs\nSVG\nCONCEPT B\nChanging course\n\nمسار مستمر\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\n16px\n24px\n32px\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nInspect proofs\nSVG\nCONCEPT C\nUnequal facets\n\nأوجه متكاملة\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\n16px\n24px\n32px\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nInspect proofs\nSVG\nChoose A, B or C for further refinement, reject all, or name specific changes. A concept preference does not finalize the full identity.\nFinal Brand V2 and Design System V2 remain owner-gated. No legal clearance or measured user recognition is claimed.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "index",
+      "width": 768,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 768,
+      "height": 2829,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope",
+        "Plex"
+      ],
+      "targets": [
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / OWNER SELECTION PACKAGE\n\nThree ideas. One name.\n\nOriginal proposals for visual review. Same scale, palette and wordmark family; silhouette and construction carry the differences. No concept is selected.\n\nتلات مقترحات لشعار EgyHealth 360. الاختيار أو التعديل أو الرفض لصاحب المنتج. دي مش هوية نهائية.\n\nCONCEPT A\nShared stem\n\nحروف مترابطة\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\n16px\n24px\n32px\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nInspect proofs\nSVG\nCONCEPT B\nChanging course\n\nمسار مستمر\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\n16px\n24px\n32px\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nInspect proofs\nSVG\nCONCEPT C\nUnequal facets\n\nأوجه متكاملة\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\n16px\n24px\n32px\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nInspect proofs\nSVG\nChoose A, B or C for further refinement, reject all, or name specific changes. A concept preference does not finalize the full identity.\nFinal Brand V2 and Design System V2 remain owner-gated. No legal clearance or measured user recognition is claimed.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "index",
+      "width": 768,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 768,
+      "height": 4710,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope",
+        "Plex"
+      ],
+      "targets": [
+        {
+          "text": "Inspect proofs",
+          "width": 257.109375,
+          "height": 72
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 257.109375,
+          "height": 72
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 257.109375,
+          "height": 72
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / OWNER SELECTION PACKAGE\n\nThree ideas. One name.\n\nOriginal proposals for visual review. Same scale, palette and wordmark family; silhouette and construction carry the differences. No concept is selected.\n\nتلات مقترحات لشعار EgyHealth 360. الاختيار أو التعديل أو الرفض لصاحب المنتج. دي مش هوية نهائية.\n\nCONCEPT A\nShared stem\n\nحروف مترابطة\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\n16px\n24px\n32px\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nInspect proofs\nSVG\nCONCEPT B\nChanging course\n\nمسار مستمر\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\n16px\n24px\n32px\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nInspect proofs\nSVG\nCONCEPT C\nUnequal facets\n\nأوجه متكاملة\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\n16px\n24px\n32px\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nInspect proofs\nSVG\nChoose A, B or C for further refinement, reject all, or name specific changes. A concept preference does not finalize the full identity.\nFinal Brand V2 and Design System V2 remain owner-gated. No legal clearance or measured user recognition is claimed.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "index",
+      "width": 390,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 390,
+      "height": 3202,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope",
+        "Plex"
+      ],
+      "targets": [
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / OWNER SELECTION PACKAGE\n\nThree ideas. One name.\n\nOriginal proposals for visual review. Same scale, palette and wordmark family; silhouette and construction carry the differences. No concept is selected.\n\nتلات مقترحات لشعار EgyHealth 360. الاختيار أو التعديل أو الرفض لصاحب المنتج. دي مش هوية نهائية.\n\nCONCEPT A\nShared stem\n\nحروف مترابطة\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\n16px\n24px\n32px\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nInspect proofs\nSVG\nCONCEPT B\nChanging course\n\nمسار مستمر\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\n16px\n24px\n32px\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nInspect proofs\nSVG\nCONCEPT C\nUnequal facets\n\nأوجه متكاملة\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\n16px\n24px\n32px\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nInspect proofs\nSVG\nChoose A, B or C for further refinement, reject all, or name specific changes. A concept preference does not finalize the full identity.\nFinal Brand V2 and Design System V2 remain owner-gated. No legal clearance or measured user recognition is claimed.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "index",
+      "width": 390,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 390,
+      "height": 7162,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope",
+        "Plex"
+      ],
+      "targets": [
+        {
+          "text": "Inspect proofs",
+          "width": 257.109375,
+          "height": 72
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 257.109375,
+          "height": 72
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 257.109375,
+          "height": 72
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / OWNER SELECTION PACKAGE\n\nThree ideas. One name.\n\nOriginal proposals for visual review. Same scale, palette and wordmark family; silhouette and construction carry the differences. No concept is selected.\n\nتلات مقترحات لشعار EgyHealth 360. الاختيار أو التعديل أو الرفض لصاحب المنتج. دي مش هوية نهائية.\n\nCONCEPT A\nShared stem\n\nحروف مترابطة\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\n16px\n24px\n32px\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nInspect proofs\nSVG\nCONCEPT B\nChanging course\n\nمسار مستمر\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\n16px\n24px\n32px\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nInspect proofs\nSVG\nCONCEPT C\nUnequal facets\n\nأوجه متكاملة\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\n16px\n24px\n32px\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nInspect proofs\nSVG\nChoose A, B or C for further refinement, reject all, or name specific changes. A concept preference does not finalize the full identity.\nFinal Brand V2 and Design System V2 remain owner-gated. No legal clearance or measured user recognition is claimed.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "index",
+      "width": 320,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 320,
+      "height": 3438,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope",
+        "Plex"
+      ],
+      "targets": [
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 144.5625,
+          "height": 48
+        },
+        {
+          "text": "SVG",
+          "width": 63.84375,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / OWNER SELECTION PACKAGE\n\nThree ideas. One name.\n\nOriginal proposals for visual review. Same scale, palette and wordmark family; silhouette and construction carry the differences. No concept is selected.\n\nتلات مقترحات لشعار EgyHealth 360. الاختيار أو التعديل أو الرفض لصاحب المنتج. دي مش هوية نهائية.\n\nCONCEPT A\nShared stem\n\nحروف مترابطة\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\n16px\n24px\n32px\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nInspect proofs\nSVG\nCONCEPT B\nChanging course\n\nمسار مستمر\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\n16px\n24px\n32px\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nInspect proofs\nSVG\nCONCEPT C\nUnequal facets\n\nأوجه متكاملة\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\n16px\n24px\n32px\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nInspect proofs\nSVG\nChoose A, B or C for further refinement, reject all, or name specific changes. A concept preference does not finalize the full identity.\nFinal Brand V2 and Design System V2 remain owner-gated. No legal clearance or measured user recognition is claimed.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "index",
+      "width": 320,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 320,
+      "height": 8665,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope",
+        "Plex"
+      ],
+      "targets": [
+        {
+          "text": "Inspect proofs",
+          "width": 230,
+          "height": 128
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 230,
+          "height": 128
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        },
+        {
+          "text": "Inspect proofs",
+          "width": 230,
+          "height": 128
+        },
+        {
+          "text": "SVG",
+          "width": 95.6875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / OWNER SELECTION PACKAGE\n\nThree ideas. One name.\n\nOriginal proposals for visual review. Same scale, palette and wordmark family; silhouette and construction carry the differences. No concept is selected.\n\nتلات مقترحات لشعار EgyHealth 360. الاختيار أو التعديل أو الرفض لصاحب المنتج. دي مش هوية نهائية.\n\nCONCEPT A\nShared stem\n\nحروف مترابطة\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\n16px\n24px\n32px\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nInspect proofs\nSVG\nCONCEPT B\nChanging course\n\nمسار مستمر\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\n16px\n24px\n32px\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nInspect proofs\nSVG\nCONCEPT C\nUnequal facets\n\nأوجه متكاملة\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\n16px\n24px\n32px\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nInspect proofs\nSVG\nChoose A, B or C for further refinement, reject all, or name specific changes. A concept preference does not finalize the full identity.\nFinal Brand V2 and Design System V2 remain owner-gated. No legal clearance or measured user recognition is claimed.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-proof",
+      "width": 1280,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 1280,
+      "height": 1740,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT A · PROPOSAL\nShared stem\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-proof",
+      "width": 1280,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 1280,
+      "height": 2510,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 325.03125,
+          "height": 72
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 422.65625,
+          "height": 72
+        },
+        {
+          "text": "All three concepts",
+          "width": 293.546875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT A · PROPOSAL\nShared stem\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-proof",
+      "width": 768,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 768,
+      "height": 2978,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT A · PROPOSAL\nShared stem\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-proof",
+      "width": 768,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 768,
+      "height": 4184,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 325.03125,
+          "height": 72
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 422.65625,
+          "height": 72
+        },
+        {
+          "text": "All three concepts",
+          "width": 293.546875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT A · PROPOSAL\nShared stem\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-proof",
+      "width": 390,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 390,
+      "height": 3092,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT A · PROPOSAL\nShared stem\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-proof",
+      "width": 390,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 390,
+      "height": 5384,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 325.03125,
+          "height": 72
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 350,
+          "height": 128
+        },
+        {
+          "text": "All three concepts",
+          "width": 293.546875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT A · PROPOSAL\nShared stem\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-proof",
+      "width": 320,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 320,
+      "height": 3541,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT A · PROPOSAL\nShared stem\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-proof",
+      "width": 320,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 320,
+      "height": 6563,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 280,
+          "height": 128
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 280,
+          "height": 128
+        },
+        {
+          "text": "All three concepts",
+          "width": 280,
+          "height": 128
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT A · PROPOSAL\nShared stem\n\nA drawn e–h ligature: two initials share one structural stem, keeping the name at the center of recognition.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nThe joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-proof",
+      "width": 1280,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 1280,
+      "height": 1740,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT B · PROPOSAL\nChanging course\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-proof",
+      "width": 1280,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 1280,
+      "height": 2510,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 325.03125,
+          "height": 72
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 422.65625,
+          "height": 72
+        },
+        {
+          "text": "All three concepts",
+          "width": 293.546875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT B · PROPOSAL\nChanging course\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-proof",
+      "width": 768,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 768,
+      "height": 2978,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT B · PROPOSAL\nChanging course\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-proof",
+      "width": 768,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 768,
+      "height": 4135,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 325.03125,
+          "height": 72
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 422.65625,
+          "height": 72
+        },
+        {
+          "text": "All three concepts",
+          "width": 293.546875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT B · PROPOSAL\nChanging course\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-proof",
+      "width": 390,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 390,
+      "height": 3068,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT B · PROPOSAL\nChanging course\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-proof",
+      "width": 390,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 390,
+      "height": 5384,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 325.03125,
+          "height": 72
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 350,
+          "height": 128
+        },
+        {
+          "text": "All three concepts",
+          "width": 293.546875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT B · PROPOSAL\nChanging course\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-proof",
+      "width": 320,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 320,
+      "height": 3544,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT B · PROPOSAL\nChanging course\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-proof",
+      "width": 320,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 320,
+      "height": 6465,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 280,
+          "height": 128
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 280,
+          "height": 128
+        },
+        {
+          "text": "All three concepts",
+          "width": 280,
+          "height": 128
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT B · PROPOSAL\nChanging course\n\nAn open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nA route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-proof",
+      "width": 1280,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 1280,
+      "height": 1740,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT C · PROPOSAL\nUnequal facets\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-proof",
+      "width": 1280,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 1280,
+      "height": 2510,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 325.03125,
+          "height": 72
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 422.65625,
+          "height": 72
+        },
+        {
+          "text": "All three concepts",
+          "width": 293.546875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT C · PROPOSAL\nUnequal facets\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-proof",
+      "width": 768,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 768,
+      "height": 2978,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT C · PROPOSAL\nUnequal facets\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-proof",
+      "width": 768,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 768,
+      "height": 4184,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 325.03125,
+          "height": 72
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 422.65625,
+          "height": 72
+        },
+        {
+          "text": "All three concepts",
+          "width": 293.546875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT C · PROPOSAL\nUnequal facets\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-proof",
+      "width": 390,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 390,
+      "height": 3120,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT C · PROPOSAL\nUnequal facets\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-proof",
+      "width": 390,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 390,
+      "height": 5489,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 325.03125,
+          "height": 72
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 350,
+          "height": 128
+        },
+        {
+          "text": "All three concepts",
+          "width": 293.546875,
+          "height": 72
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT C · PROPOSAL\nUnequal facets\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-proof",
+      "width": 320,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 320,
+      "height": 3597,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 175.515625,
+          "height": 44
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 224.328125,
+          "height": 44
+        },
+        {
+          "text": "All three concepts",
+          "width": 159.78125,
+          "height": 44
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT C · PROPOSAL\nUnequal facets\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-proof",
+      "width": 320,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 320,
+      "height": 6675,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "Editable symbol SVG",
+          "width": 280,
+          "height": 128
+        },
+        {
+          "text": "Outlined full wordmark SVG",
+          "width": 280,
+          "height": 128
+        },
+        {
+          "text": "All three concepts",
+          "width": 280,
+          "height": 128
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brandSymbol": null,
+      "bodyText": "Skip to concepts\n\nEGYHEALTH 360 / NOVA / ORIGINAL LOGO EXPLORATION\n\nCONCEPT C · PROPOSAL\nUnequal facets\n\nThree unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.\n\nDark\n\nLight\n\nMonochrome\n\nActual CSS pixel sizes\n\nUnscaled source sizes; no optical substitute or simplified extra mark.\n\n16px\n24px\n32px\n16px\n24px\n32px\nCompact applications\nEgyHealth 360\n\nApp mask and browser-tab studies, not a published app or selected favicon.\n\nPinned NOVA Patient header context\n\nPR #94 at9e5fca14; original Arabic/English navigation, patient identity and page heading. Only the proposal symbol/brand spacing is introduced here.\n\nFaceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant.\n\nEditable symbol SVG\nOutlined full wordmark SVG\nAll three concepts\nAll concepts unselected. No final Brand V2, Design System, application or deployment approval. No trademark clearance.",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-ar-header",
+      "width": 1440,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 122.6875,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 161.5,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-ar-header",
+      "width": 1440,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 168.375,
+          "height": 77.1875
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 246,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-ar-header",
+      "width": 768,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 333,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 333,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-ar-header",
+      "width": 768,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 333,
+          "height": 77.1875
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 333,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-ar-header",
+      "width": 390,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 165,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 165,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-ar-header",
+      "width": 390,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 165,
+          "height": 131
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 165,
+          "height": 131
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-ar-header",
+      "width": 320,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 134,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 134,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-ar-header",
+      "width": 320,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 134,
+          "height": 186.5
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 134,
+          "height": 186.5
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-en-header",
+      "width": 1440,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 136.265625,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 145.84375,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-en-header",
+      "width": 1440,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 195.515625,
+          "height": 77.1875
+        },
+        {
+          "text": "Find care",
+          "width": 214.671875,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-en-header",
+      "width": 768,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 333,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 333,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-en-header",
+      "width": 768,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 333,
+          "height": 77.1875
+        },
+        {
+          "text": "Find care",
+          "width": 333,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-en-header",
+      "width": 390,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 165,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 165,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-en-header",
+      "width": 390,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 165,
+          "height": 131
+        },
+        {
+          "text": "Find care",
+          "width": 165,
+          "height": 131
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-en-header",
+      "width": 320,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 134,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 134,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "a-en-header",
+      "width": 320,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 134,
+          "height": 131
+        },
+        {
+          "text": "Find care",
+          "width": 134,
+          "height": 131
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-ar-header",
+      "width": 1440,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 122.6875,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 161.5,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-ar-header",
+      "width": 1440,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 168.375,
+          "height": 77.1875
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 246,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-ar-header",
+      "width": 768,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 333,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 333,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-ar-header",
+      "width": 768,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 333,
+          "height": 77.1875
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 333,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-ar-header",
+      "width": 390,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 165,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 165,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-ar-header",
+      "width": 390,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 165,
+          "height": 131
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 165,
+          "height": 131
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-ar-header",
+      "width": 320,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 134,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 134,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-ar-header",
+      "width": 320,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 134,
+          "height": 186.5
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 134,
+          "height": 186.5
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-en-header",
+      "width": 1440,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 136.265625,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 145.84375,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-en-header",
+      "width": 1440,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 195.515625,
+          "height": 77.1875
+        },
+        {
+          "text": "Find care",
+          "width": 214.671875,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-en-header",
+      "width": 768,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 333,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 333,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-en-header",
+      "width": 768,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 333,
+          "height": 77.1875
+        },
+        {
+          "text": "Find care",
+          "width": 333,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-en-header",
+      "width": 390,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 165,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 165,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-en-header",
+      "width": 390,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 165,
+          "height": 131
+        },
+        {
+          "text": "Find care",
+          "width": 165,
+          "height": 131
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-en-header",
+      "width": 320,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 134,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 134,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "b-en-header",
+      "width": 320,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 134,
+          "height": 131
+        },
+        {
+          "text": "Find care",
+          "width": 134,
+          "height": 131
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-ar-header",
+      "width": 1440,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 122.6875,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 161.5,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-ar-header",
+      "width": 1440,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 168.375,
+          "height": 77.1875
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 246,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-ar-header",
+      "width": 768,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 333,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 333,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-ar-header",
+      "width": 768,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 333,
+          "height": 77.1875
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 333,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-ar-header",
+      "width": 390,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 165,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 165,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-ar-header",
+      "width": 390,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 165,
+          "height": 131
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 165,
+          "height": 131
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-ar-header",
+      "width": 320,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 134,
+          "height": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 134,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-ar-header",
+      "width": 320,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "ar",
+      "dir": "rtl",
+      "fonts": [
+        "Plex",
+        "Plex",
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "width": 134,
+          "height": 186.5
+        },
+        {
+          "text": "دور على دكتور",
+          "width": 134,
+          "height": 186.5
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "متابعتي\nدور على دكتور",
+      "heading": "أهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.",
+      "bodyText": "EgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nدراسة مكان الشعار · القايمة مش متصلة بخدمة",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-en-header",
+      "width": 1440,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 136.265625,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 145.84375,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-en-header",
+      "width": 1440,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 1440,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 195.515625,
+          "height": 77.1875
+        },
+        {
+          "text": "Find care",
+          "width": 214.671875,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-en-header",
+      "width": 768,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 333,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 333,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-en-header",
+      "width": 768,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 768,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 333,
+          "height": 77.1875
+        },
+        {
+          "text": "Find care",
+          "width": 333,
+          "height": 77.1875
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-en-header",
+      "width": 390,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 165,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 165,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-en-header",
+      "width": 390,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 390,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 165,
+          "height": 131
+        },
+        {
+          "text": "Find care",
+          "width": 165,
+          "height": 131
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-en-header",
+      "width": 320,
+      "scale": 1,
+      "textRatios": [
+        1
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 134,
+          "height": 48
+        },
+        {
+          "text": "Find care",
+          "width": 134,
+          "height": 48
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    },
+    {
+      "name": "c-en-header",
+      "width": 320,
+      "scale": 2,
+      "textRatios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "documentWidth": 320,
+      "height": 1000,
+      "overflow": [],
+      "clipping": [],
+      "lang": "en",
+      "dir": "ltr",
+      "fonts": [
+        "Manrope"
+      ],
+      "targets": [
+        {
+          "text": "My care",
+          "width": 134,
+          "height": 131
+        },
+        {
+          "text": "Find care",
+          "width": 134,
+          "height": 131
+        }
+      ],
+      "brokenImages": [],
+      "missingIcons": [],
+      "brand": "EgyHealth 360",
+      "brandSymbol": {
+        "width": 28,
+        "height": 28,
+        "transform": "none"
+      },
+      "nav": "My care\nFind care",
+      "heading": "Hi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.",
+      "bodyText": "EgyHealth 360\nMy care\nFind care\nSalma Hassan\n\nHi, Salma\n\nMy care\n\nYour next appointment and what your doctor shared.\n\nLogo placement study · navigation is not connected",
+      "unnamedControls": 0
+    }
+  ],
+  "smallSizes": [
+    {
+      "id": "a",
+      "variant": "dark",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "dark",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "dark",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "light",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "light",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "light",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "mono",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "mono",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "mono",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "reverse",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "reverse",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "a",
+      "variant": "reverse",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5.75,
+        "y": 6.375,
+        "width": 54.25,
+        "height": 46.375
+      }
+    },
+    {
+      "id": "b",
+      "variant": "dark",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "dark",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "dark",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "light",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "light",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "light",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "mono",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "mono",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "mono",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "reverse",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "reverse",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "b",
+      "variant": "reverse",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 6,
+        "y": 7,
+        "width": 52,
+        "height": 50
+      }
+    },
+    {
+      "id": "c",
+      "variant": "dark",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "dark",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "dark",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "light",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "light",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "light",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "mono",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "mono",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "mono",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "reverse",
+      "size": 16,
+      "display": {
+        "width": 16,
+        "height": 16
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "reverse",
+      "size": 24,
+      "display": {
+        "width": 24,
+        "height": 24
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    },
+    {
+      "id": "c",
+      "variant": "reverse",
+      "size": 32,
+      "display": {
+        "width": 32,
+        "height": 32
+      },
+      "viewBox": "0 0 64 64",
+      "bounds": {
+        "x": 5,
+        "y": 5,
+        "width": 55,
+        "height": 55
+      }
+    }
+  ],
+  "keyboard": [
+    {
+      "skip": {
+        "text": "Skip to concepts",
+        "outline": "3px",
+        "top": 12
+      },
+      "main": "main",
+      "links": [
+        {
+          "name": "Inspect proofs",
+          "outline": "3px",
+          "style": "solid"
+        },
+        {
+          "name": "SVG",
+          "outline": "3px",
+          "style": "solid"
+        },
+        {
+          "name": "Inspect proofs",
+          "outline": "3px",
+          "style": "solid"
+        },
+        {
+          "name": "SVG",
+          "outline": "3px",
+          "style": "solid"
+        },
+        {
+          "name": "Inspect proofs",
+          "outline": "3px",
+          "style": "solid"
+        },
+        {
+          "name": "SVG",
+          "outline": "3px",
+          "style": "solid"
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "external": [],
+  "failed": [],
+  "failures": []
+}

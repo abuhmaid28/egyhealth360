@@ -1,0 +1,26 @@
+[
+  {
+    "id": "a",
+    "name": "Shared stem",
+    "ar": "\u062d\u0631\u0648\u0641 \u0645\u062a\u0631\u0627\u0628\u0637\u0629",
+    "idea": "A drawn e\u2013h ligature: two initials share one structural stem, keeping the name at the center of recognition.",
+    "shape": "<g transform=\"translate(4 2) scale(.875)\"><path fill-rule=\"evenodd\" d=\"M35 34C35 23 28 18 19 18C7 18 2 26 2 38C2 51 10 58 21 58C26 58 30 56 31 54V44H27C25 47 24 48 21 48C15 48 12 44 12 40H36V34ZM12 32H25C25 27 22 25 19 25C15 25 13 28 12 32Z\"/><path d=\"M35 5H45V21C47 19 49 18 52 18C59 18 64 23 64 32V58H56V35C56 31 54 28 51 28C48 28 45 30 45 35V58H35Z\"/></g>",
+    "tradeoff": "The joined initials carry an explicit name cue, but e-health lettermarks remain crowded. Test whether the shared stem reads clearly rather than as an unrelated abstract glyph."
+  },
+  {
+    "id": "b",
+    "name": "Changing course",
+    "ar": "\u0645\u0633\u0627\u0631 \u0645\u0633\u062a\u0645\u0631",
+    "idea": "An open rising ribbon with two unequal landings: care can continue through a change of context without a closed loop.",
+    "shape": "<path d=\"M6 39H11C18 39 20 34 23 25C27 12 34 7 46 7H58V20H47C40 20 38 24 35 34C31 48 24 57 10 57H6Z\"/>",
+    "tradeoff": "A route or transport reading remains possible. This is a continuity metaphor, not speed, automatic referral, complete records or unrestricted access."
+  },
+  {
+    "id": "c",
+    "name": "Unequal facets",
+    "ar": "\u0623\u0648\u062c\u0647 \u0645\u062a\u0643\u0627\u0645\u0644\u0629",
+    "idea": "Three unequal planes form a compact oblique silhouette. Shared visual language allows distinct responsibilities without literal role badges.",
+    "shape": "<path d=\"M7 10L35 5L52 20L24 25Z\"/><path d=\"M28 33L56 28L60 49L44 59Z\"/><path d=\"M5 23L16 34L34 60L6 48Z\"/>",
+    "tradeoff": "Faceted systems are crowded in software, infrastructure and finance. Three planes are a construction choice, not a claim that the platform has three roles or a centralized data grant."
+  }
+]
