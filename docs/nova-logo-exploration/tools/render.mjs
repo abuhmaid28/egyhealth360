@@ -11,6 +11,8 @@ for(const [name,width,file] of [['index',1280,'comparison-wide'],['index',390,'c
   await page.route('**/*',route=>{const url=route.request().url();if(!url.startsWith(origin+'/')&&!url.startsWith('data:')){external.push(url);return route.abort();}return route.continue();});
   await page.goto(`${origin}/${directory}/${name}.html`);
   for(const frame of page.frames())await frame.evaluate(()=>document.fonts.ready);
+  await page.waitForFunction(()=>[...document.querySelectorAll('iframe')].every(f=>f.contentDocument?.readyState==='complete'&&f.contentDocument.fonts.status==='loaded'&&f.clientHeight>=Math.ceil(f.contentDocument.body.getBoundingClientRect().height)));
+
   observations.push({name,width,height:await page.evaluate(()=>document.documentElement.scrollHeight)});
   await page.screenshot({path:`${directory}/evidence/${file}.png`,fullPage:true});await page.close();
 }
