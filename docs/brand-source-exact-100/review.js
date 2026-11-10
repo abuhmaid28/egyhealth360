@@ -1,5 +1,5 @@
 /* Static review controls only; no application imports or service calls. */
-/* global document, window */
+/* global document, window, URL */
 const query = new URL(window.location.href).searchParams;
 const locale = query.get('lang') === 'ar' ? 'ar' : 'en';
 const theme = query.get('theme') === 'light' ? 'light' : 'dark';

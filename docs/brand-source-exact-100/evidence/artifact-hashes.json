@@ -128,8 +128,8 @@
   "files": [
     {
       "path": "docs/brand-source-exact-100/INDEPENDENT_REVIEW.md",
-      "sha256": "2a8e53c71ebcd1ef08cb89b29f856f186e0ce069b378e53de62bc05f64b94e26",
-      "bytes": 6619
+      "sha256": "8db1e5815dfb7147606c669d82a56869baba76d2c9ffb0ad1acc2a7524640e2a",
+      "bytes": 7143
     },
     {
       "path": "docs/brand-source-exact-100/README.md",
@@ -138,8 +138,8 @@
     },
     {
       "path": "docs/brand-source-exact-100/VALIDATION.md",
-      "sha256": "1cec57656e2259d048eda623cbdb6b578d89895de56e892b0e5a387330d7baaf",
-      "bytes": 9584
+      "sha256": "9f57b59a88fb12e9b2d9d1faa0c060617d0f5ce63ca5e51d1573e49188f4e959",
+      "bytes": 9843
     },
     {
       "path": "docs/brand-source-exact-100/assets/Inter-OFL.txt",
@@ -573,8 +573,8 @@
     },
     {
       "path": "docs/brand-source-exact-100/evidence/independent-reviewed-assets.json",
-      "sha256": "bba2dd02544c38f56cbfca99aab50151f1994322fc2aad011296b3ef3caa1b69",
-      "bytes": 2032
+      "sha256": "56cbedbdece467afa0f73669ff220ad034e315f00821ccc2a612d4aef29b83cc",
+      "bytes": 2366
     },
     {
       "path": "docs/brand-source-exact-100/evidence/independent-source.json",
@@ -673,8 +673,8 @@
     },
     {
       "path": "docs/brand-source-exact-100/review.js",
-      "sha256": "3466e0610092de797b3cc29160614365051c14c5bdfc64776de40f2fbc4d01f9",
-      "bytes": 906
+      "sha256": "45f06b9f1de706a33e9b61e24a17e54e19bba4fce977c12175c7b28f1fda279a",
+      "bytes": 911
     },
     {
       "path": "docs/brand-source-exact-100/source/lockup-dark.svg",

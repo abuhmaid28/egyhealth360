@@ -16,10 +16,15 @@
     "assets/maskable-512.svg": "e9af80f66e0b4c712b28dfbda527fa3572e51f193cbff669d53d8e309c0e6978",
     "assets/symbol-transparent.svg": "85fab1ed23199654946e0a84122c6302751becf9a6578c6ed8a7424dbf0c531e",
     "review.css": "a518338b557740464503d2c08f9baf1fc6cd5c56d35629a4a967d0377b081d39",
-    "review.js": "3466e0610092de797b3cc29160614365051c14c5bdfc64776de40f2fbc4d01f9",
+    "review.js": "45f06b9f1de706a33e9b61e24a17e54e19bba4fce977c12175c7b28f1fda279a",
     "source/lockup-dark.svg": "98818e104ae837379b13294760b76025a622d179499d3d586292859d520910ae",
     "source/lockup-light.svg": "7e2c326dbc3215d961dfc2472e96589bb5581a50c3272f915607a221bbccef48",
     "source/symbol-primary.svg": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b",
     "index.html": "cb28b83f6cdb6c996a541fcbb7fdf3706a896d7696cff32a93c611e37ed05fe3"
+  },
+  "lint_metadata_followup": {
+    "file": "review.js",
+    "delta": "Only /* global document, window */ \u2192 /* global document, window, URL */",
+    "independent_verification": "Previous reviewed SHA-256 reproduced after reversing exactly that comment edit; no executable source change. Prior browser evidence still applies."
   }
 }
