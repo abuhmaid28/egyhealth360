@@ -1,0 +1,152 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "before": "87535bb1682b934ec90ed6bff9e66ba3140e331d",
+  "newHeadReceipt": "PR #109 final comment/body; no self-referential hash",
+  "allowedPrefix": "docs/design-system-v2/staff-admin-pilot/",
+  "changedFileInventory": [
+    "docs/design-system-v2/staff-admin-pilot/CAPABILITY_AND_AUTHORITY.md",
+    "docs/design-system-v2/staff-admin-pilot/DESIGN_REVIEW.md",
+    "docs/design-system-v2/staff-admin-pilot/QA.md",
+    "docs/design-system-v2/staff-admin-pilot/REFINEMENT.md",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/admin-ar-dark-390-comparison.png",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/admin-en-light-1440-comparison.png",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/comparison-results.json",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/independent-review.md",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/laboratory-ar-dark-768-comparison.png",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/laboratory-ar-light-390-comparison.png",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/pharmacy-ar-dark-390-comparison.png",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/pharmacy-ar-light-390-comparison.png",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/preservation.json",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/qa-results.json",
+    "docs/design-system-v2/staff-admin-pilot/evidence/refinement/supplemental.json",
+    "docs/design-system-v2/staff-admin-pilot/gallery.html",
+    "docs/design-system-v2/staff-admin-pilot/refinement.mjs",
+    "docs/design-system-v2/staff-admin-pilot/screen.css",
+    "docs/design-system-v2/staff-admin-pilot/screen.js",
+    "docs/design-system-v2/staff-admin-pilot/supplemental.mjs",
+    "docs/design-system-v2/staff-admin-pilot/verify.mjs"
+  ],
+  "changedFileCount": 21,
+  "outsideAllowedChanges": [],
+  "originalEvidence": [
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/admin-ar-dark-1440.png",
+      "sha256": "3fe58d892fb083ad43a1a7a5a8e91251e47ae76d109ef95f0527509e4dd9459a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/admin-ar-dark-390-work-text200.png",
+      "sha256": "06f7f167b053ae9c309f4b074d98c5e1da36020c33276bb5d92371813eaf7f3a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/admin-ar-dark-390.png",
+      "sha256": "3b84d0dc9b57ed67269fab788b54c625dba47443d040307fe79377a6f657726a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/admin-ar-light-1440.png",
+      "sha256": "bde9e7ebc1e17e7cd1d8402fb2a74f0da7749278210ddc1652a6fab50a5f87df",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/admin-ar-light-390.png",
+      "sha256": "0d5e235ee1f10b7455b9f90c96614e868e7b8f119159e81bbc24bc4cdd628e16",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/admin-en-dark-1440-organizations.png",
+      "sha256": "2e47954672810fe8f0cfb74e95dba5f9c559c5424ea38e66e77ed6a86611da08",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/independent-review.md",
+      "sha256": "24fbe890fe1cb0852abc567eb379acf61cc0ed9a9890be625c73ccaad9232823",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/laboratory-ar-dark-1440.png",
+      "sha256": "90c3d50af38aef526008bd5ef31cb8e0fda71d3a17c29743d424b337c28c0882",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/laboratory-ar-dark-390.png",
+      "sha256": "f11adf5017f6684f911b4b1b1b893c3cc771944e33aa391e158e718620ab7179",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/laboratory-ar-light-1440.png",
+      "sha256": "b9333b69c86d01fce5ea815794fa49d177bf285a005fee9b455768d9c47e73d6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/laboratory-ar-light-390.png",
+      "sha256": "e1617cb236496fb8d819945bff9f9a9fb1d65d38977c138a12f7bcfe8a143f6b",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/laboratory-ar-light-768-work.png",
+      "sha256": "bccc650c7ccd3b45aa325c6086155ec8d7c56567cc8eed904cf8ad49d63affb0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/laboratory-en-light-390-work.png",
+      "sha256": "7816613f3660b8edeec658d01af02ad4c91ef7d8563d713f7fbb96712c4b0911",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/pharmacy-ar-dark-1440.png",
+      "sha256": "c80bfb69da6327a71c00928eb8d3ac27d4cf2a47d0030d0803c2ead055ac04bd",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/pharmacy-ar-dark-390.png",
+      "sha256": "dc4ab232b450088783353f7f78cad2cf80a3da4ed8b44e8dd6a197eb5f48e43c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/pharmacy-ar-light-1440.png",
+      "sha256": "779f4260167649a769447d66e5d4b85f0fbdd2ce787c8338cfe951cf97c1d5e2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/pharmacy-ar-light-320-history.png",
+      "sha256": "e0bc2a14540ecf4808ed20759dbc4e417440fa53885d4022eaf92e63e1608d71",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/pharmacy-ar-light-390.png",
+      "sha256": "009372a41c1285b8179988b19b542b0e8f5e596099cb751b428ac3a578ec4733",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/pharmacy-en-dark-1440-accepted.png",
+      "sha256": "6eb0f1a1ee4d53f87ec6d08de5c7525e27a6ba856de60ab7b857c57433c60402",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/preservation.json",
+      "sha256": "748af7cfa94cb55b215291c1568fec47f67fd8af676621f177aa7f7c4f07c21d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/qa-results.json",
+      "sha256": "fc8064fb2bc72caf1e86991ce52eaac3beee793c92b38efd415f1b235c63edc0",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/source-provenance.json",
+      "sha256": "280ad6ef44b118e5a23f75f1caa612efad5a47fa45e46061c926867a36ad7bcc",
+      "unchanged": true
+    },
+    {
+      "path": "docs/design-system-v2/staff-admin-pilot/evidence/supplemental.json",
+      "sha256": "4575fa2d333646ca3d5287b48e6486e679a4a2480cb28c70af3589d4c5c1496a",
+      "unchanged": true
+    }
+  ],
+  "originalPngCount": 18,
+  "trackedStartingFilesOutsideFolderUnchanged": 1423,
+  "protectedEvidence": "All starting-head tracked paths outside allowed folder unchanged, including docs/ui-screenshots/doctor-demo and old Brand/Patient/Doctor evidence present in this branch. No files copied from those branches.",
+  "pass": true
+}

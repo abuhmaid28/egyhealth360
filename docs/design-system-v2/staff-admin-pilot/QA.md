@@ -1,5 +1,7 @@
 # Browser QA and delivery limits
 
+**Refinement delivery:** [new Before/After evidence, measurements, rerun QA and owner stop](REFINEMENT.md). The original 18 PNGs and reports below remain historical evidence at `87535bb1682b934ec90ed6bff9e66ba3140e331d`; they are preserved unchanged. Current scripts write new reports under `evidence/refinement/` and do not overwrite the originals.
+
 ## Reproduce
 
 From repository root, with the repository's existing Playwright installed:

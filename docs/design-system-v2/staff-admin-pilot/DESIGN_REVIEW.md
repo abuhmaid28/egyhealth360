@@ -1,6 +1,6 @@
 # One identity, three bounded workspaces
 
-**Issue #108 · design review only · stop for Product Owner visual/content review.** No production UI, backend, contract, manifest/service worker, dependency, CI or deployment changes. The [capability gate](CAPABILITY_AND_AUTHORITY.md) was written before screens. Every record is synthetic; no service is connected and no successful mutation is simulated.
+**Issue #108 · design review only · stop for Product Owner visual/content review.** The single owner-authorized refinement on existing PR #109 is recorded in [REFINEMENT.md](REFINEMENT.md); its new comparisons supersede the original composition/QA observations below where stated. No production UI, backend, contract, manifest/service worker, dependency, CI or deployment changes. The [capability gate](CAPABILITY_AND_AUTHORITY.md) was written before screens. Every record is synthetic; no service is connected and no successful mutation is simulated.
 
 ## Preferred source and deliberate adaptation
 
@@ -12,7 +12,7 @@ Light uses warm white task surfaces on a pale violet canvas. Dark uses layered i
 
 | Role | Main composition / hierarchy | Preserved meaning |
 | --- | --- | --- |
-| Pharmacy | Narrow exact-work queue beside a generous chosen-route plane; source/date anchor → minimum identity → whole source item → explicit review action. On phones the same DOM stacks queue then detail; selected route stays text-labelled. | Acceptance and dispense are separate. Accepted B changes heading to remaining-item work. No inventory, pickup, delivery, substitutions, partial quantity, refill or adherence. |
+| Pharmacy | Narrow exact-work queue beside a generous chosen-route plane; source/date anchor → minimum identity → whole source item → explicit review action. On phones an expandable route selector precedes the selected detail; both routes remain reachable and the selected route/status stay text-labelled. | Acceptance and dispense are separate. Accepted B changes heading to remaining-item work. No inventory, pickup, delivery, substitutions, partial quantity, refill or adherence. |
 | Laboratory | Visibly FUTURE concept, narrower order context, three distinct conceptual stages, a blank result writing plane and explicit verification-boundary review. | No active order/result, no invented clinical values. Draft visibility differs from verified final; same-person verification is permitted and attributable. No doctor-release queue or sample/LIS workflow. |
 | Admin | People and Organizations are direct global entries; operational list faces one exact organization–person membership detail. Object-scoped account, organization and membership statuses stay distinct. | No clinical chart or metrics dashboard. Internal inspect/end membership is not a public Live console. Secondary synthetic records deliberately open a uniform unavailable specimen rather than another identity's detail. |
 
@@ -26,7 +26,7 @@ Arabic uses the accepted Egyptian voice with professional الوصفة الطب�
 
 The review layer remains separate from the task screen: persistent DEMO-ONLY or FUTURE banners survive screenshots, plus a concise candidate footer. Patient/medication names and source instructions are intentionally not fabricated. Real pharmacy UI would show the unchanged exact signed medication/quantity/instructions within current authority; this specimen is not enough to evaluate clinical-source legibility. Lab deliberately has no lab values. This protects contract truth but limits realistic clinical usability assessment.
 
-Mobile preserves a visible exact-work queue and a full readable detail. This makes the Pharmacy action relatively deep (roughly 1.4–1.6k px from the top at 390 in observed captures); scope explanation is a disclosure to reduce overhead. The tradeoff favors explicit context over immediate action access; it is not evidence of staff efficiency. Queue-detail page separation or a more compact summary needs Product Owner choice and later staff usability work. Admin's 200% text heading was adjusted to wrap before the secondary label rather than splitting an Arabic word.
+The authorized refinement replaces the tall phone queue with a compact selected-route disclosure and puts the noncommitting review action after minimum identity/source context. Detailed signed-source requirements, time, purpose-limited history and safety consequences remain accessible. Lab stages and blank result precede its verification-boundary review; Admin account/org/current-membership context precedes its operational review. Exact mobile measurements and remaining depth are in [REFINEMENT.md](REFINEMENT.md). These are browser reading-path improvements, not measured staff efficiency or a production clinical-action design approval.
 
 ## Product Owner decisions required
 
@@ -35,4 +35,4 @@ Mobile preserves a visible exact-work queue and a full readable detail. This mak
 3. Decide theme default/system/persistence/shared-device behavior separately. No inferred implementation approval.
 4. Approve later exact screen/content/architecture scope only after separate capability exposure and whole-project health/release gates. Laboratory remains future.
 
-**AP03 physical platform/install/print and AP05 artwork rights/trademark remain OPEN.** No rights clearance, WCAG certification, whole-product health or final Design System acceptance is claimed. [Browser QA](QA.md) and [independent critique](evidence/independent-review.md) support review only. Keep the new PR Draft/Open/Unmerged, auto-merge off. No merge, deployment, ready transition or production implementation.
+**AP03 physical platform/install/print and AP05 artwork rights/trademark remain OPEN.** No rights clearance, WCAG certification, whole-product health or final Design System acceptance is claimed. [Browser QA](QA.md) and [independent critique](evidence/independent-review.md) support review only. Keep existing PR #109 Draft/Open/Unmerged, auto-merge off. No merge, deployment, ready transition or production implementation.

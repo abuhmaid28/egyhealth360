@@ -1,5 +1,7 @@
 # Capability and authority gate — Issue #108
 
+**Refinement recheck, 10 November 2026:** main/base remains `5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3`; PR #109 starting head `87535bb1682b934ec90ed6bff9e66ba3140e331d`. Re-read Issue #108, latest owner authorization [6773923460](https://github.com/abuhmaid28/egyhealth360/pull/109#issuecomment-6773923460), controlling #101/#105/#107 decisions, accepted I1/I3/Slice2/security/IA/content references, and current controller/persistence/schema/OpenAPI/Live adapter guards. The matrix below still applies; no material discrepancy found. No Live verification or new capability is claimed. [Bounded refinement evidence](REFINEMENT.md).
+
 Gate completed BEFORE screen creation on 10 November 2026. Source baseline: `5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3` (fresh origin/main). No material source/accepted-contract contradiction found for the bounded designs below. Historical I3 contract inventory describes its pre-Slice-1 baseline; the accepted Slice 2 and current source establish pharmacy implementation. It is not a Live Lab claim.
 
 ## Evidence and classifications
