@@ -28,7 +28,7 @@ for(const role of ['patient','doctor'])for(const lang of ['ar','en'])for(const t
 }
 for(const theme of ['light','dark']){
  await page.goto(`${base}/screen.html?role=doctor&lang=en&theme=${theme}`);await page.evaluate(()=>document.fonts.ready);
- const samples=[['primary','.button.primary'],['secondary','.editor-actions .button:not(.primary)'],['link','.context-shortcut'],['navigation','.global-nav a[aria-current]']];
+ const samples=[['primary','.button.primary'],['secondary','.editor-actions .button:not(.primary)'],['link','.authority-details summary'],['navigation','.global-nav a[aria-current]']];
  for(const[name,selector]of samples){const target=page.locator(selector).first();await target.hover();output.states.push({theme,state:'hover',name,...await target.evaluate(el=>{const s=getComputedStyle(el);return{color:s.color,background:s.backgroundColor,border:s.borderTopColor};})});}
  await page.locator('[data-write-preview]').first().click();output.states.push({theme,state:'disabled',name:'noncommitting action',...await page.locator('dialog button:disabled').evaluate(el=>{const s=getComputedStyle(el);return{color:s.color,background:s.backgroundColor,border:s.borderTopColor,disabled:el.disabled};})});
  await page.keyboard.press('Escape');
@@ -36,4 +36,4 @@ for(const theme of ['light','dark']){
 function luminance(color){const n=color.match(/[\d.]+/g).slice(0,3).map(Number).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4;});return n[0]*.2126+n[1]*.7152+n[2]*.0722;}
 for(const r of output.states){if(r.background==='rgba(0, 0, 0, 0)')continue;const a=luminance(r.color),b=luminance(r.background);r.textContrast=+((Math.max(a,b)+.05)/(Math.min(a,b)+.05)).toFixed(3);assert.ok(r.textContrast>=4.5);}
 output.result='PASS';output.limits='DOM range-copy and computed bidi isolation, not clipboard/assistive speech. Intl validates fixture instants and DST/midnight obligations; alternate appointment screens/formatter are not implemented. Text-spacing is a CSS override, not physical OS/native zoom.';
-writeFileSync(resolve(root,'evidence/supplemental.json'),JSON.stringify(output,null,2)+'\n');await browser.close();console.log('Supplemental mixed-direction/temporal/text-spacing/hover-disabled probes PASS.');
+writeFileSync(resolve(root,'evidence/refinement/supplemental.json'),JSON.stringify(output,null,2)+'\n');await browser.close();console.log('Supplemental mixed-direction/temporal/text-spacing/hover-disabled probes PASS.');

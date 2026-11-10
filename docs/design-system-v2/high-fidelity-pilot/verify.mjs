@@ -7,13 +7,14 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 const root = dirname(fileURLToPath(import.meta.url));
+const outputRoot = resolve(root,'evidence/refinement');
 const toolRoot = process.env.QA_TOOL_ROOT;
 assert.ok(toolRoot, 'Set QA_TOOL_ROOT to isolated tooling with playwright and @axe-core/playwright.');
 const { chromium } = await import(pathToFileURL(resolve(toolRoot,'node_modules/playwright/index.mjs')));
 const { default: AxeBuilder } = await import(pathToFileURL(resolve(toolRoot,'node_modules/@axe-core/playwright/dist/index.mjs')));
 const base = process.env.QA_BASE_URL ?? 'http://127.0.0.1:8766';
 const browser = await chromium.launch({executablePath:process.env.CHROMIUM_PATH ?? '/usr/bin/chromium',args:['--no-sandbox']});
-const evidence = {browser:await browser.version(),playwright:'1.56.1',axe:'4.11.0',matrix:[],contrasts:[],interactions:[],screenshots:[]};
+const evidence = {baseline:'7181bde73ececcf2ba68882d6ecd2c10ab756385',browser:await browser.version(),playwright:'1.56.1',axe:'4.11.0',matrix:[],contrasts:[],interactions:[],screenshots:[]};
 const pairs = new Map();
 const errors = [];
 
@@ -37,7 +38,7 @@ function inspect(){
     const r=el.getBoundingClientRect();if(r.width<43.9||r.height<43.9)badTargets.push({tag:el.tagName,text:el.textContent.trim(),width:r.width,height:r.height});
   }
   const checks=[];
-  for(const el of document.querySelectorAll('.button,.writing-field,.global-nav a[aria-current],.task-disclosure')){
+  for(const el of document.querySelectorAll('.button,.writing-field,.global-nav a[aria-current],.local-nav a,.context-disclosure')){
     if(!visible(el))continue;const s=getComputedStyle(el);const border=s.borderTopColor;
     if(parseFloat(s.borderTopWidth)>0) checks.push({kind:'control outer boundary',foreground:border,background:bg(el.parentElement),ratio:+ratio(border,bg(el.parentElement)).toFixed(3)});
     if(parseFloat(s.borderTopWidth)>0 && border!==s.backgroundColor)checks.push({kind:'control inner boundary',foreground:border,background:bg(el),ratio:+ratio(border,bg(el)).toFixed(3)});
@@ -64,21 +65,55 @@ for(const text of [100,200])for(const role of ['patient','doctor'])for(const lan
     // Actual keyboard dialog, Escape and focus restoration for both screen families.
     const selector=role==='patient'?'[data-appointment]':'[data-write-preview]';const target=page.locator(selector).first();await target.focus();await page.keyboard.press('Tab');await target.focus();record.focus=await target.evaluate(el=>({color:getComputedStyle(el).outlineColor,width:getComputedStyle(el).outlineWidth,style:getComputedStyle(el).outlineStyle}));assert.equal(record.focus.width,'3px');await page.keyboard.press('Enter');assert.ok(await page.locator('dialog').evaluate(el=>el.open));await page.keyboard.press('Tab');assert.ok(await page.evaluate(()=>document.activeElement.closest('dialog')!==null));await page.keyboard.press('Escape');assert.ok(await target.evaluate(el=>el===document.activeElement));
     if(role==='patient'){await target.click();assert.match(await page.locator('dialog').innerText(),/Africa\/Cairo \(UTC\+02:00\)/);await page.keyboard.press('Escape');}
-    else if(width===390){const jump=page.locator('.context-shortcut');await jump.click();assert.equal(await page.evaluate(()=>document.activeElement.id),'context');await page.locator('.context-return').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'documentation');await page.locator('.task-disclosure summary').focus();await page.keyboard.press('Enter');assert.ok(await page.locator('.task-disclosure').evaluate(el=>el.open));}
-    record.keyboard='PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable';
+    else if(width===390){await page.locator('.context-disclosure>summary').focus();await page.keyboard.press('Enter');assert.ok(await page.locator('.context-disclosure').evaluate(el=>el.open));assert.match(await page.locator('.context-identity').innerText(),/15:00–15:30/);await page.locator('.context-return').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'context-opener');assert.equal(await page.locator('.context-disclosure').evaluate(el=>el.open),false);}
+    record.keyboard='PASS: activation, modal containment, Escape, focus restore; narrow Doctor source disclosure/return where applicable';
+  }
+  record.pageHeight=await page.evaluate(()=>document.documentElement.scrollHeight);
+  record.headerFocusOrder=await page.evaluate(()=>[...document.querySelector('.masthead-inner').children].map(el=>el.className));
+  if(role==='doctor'){
+    const assessState=async state=>{
+      const d=await page.evaluate(inspect);
+      for(const v of [...d.texts.map(v=>({...v,kind:'text'})),...d.nonText]){const key=`${theme}|${v.kind}|${v.foreground}|${v.background}`;if(!pairs.has(key))pairs.set(key,{theme,...v,observations:0});pairs.get(key).observations++;}
+      const entry={role,lang,theme,width,text,state,overflow:d.overflow,clipped:d.clipped,badText:d.badText,badTargets:d.badTargets,nonTextFailures:d.nonText.filter(v=>v.ratio<3)};
+      if(text===100&&width===390){const audit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']).analyze();entry.axe={violations:audit.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),incomplete:audit.incomplete.map(v=>v.id)};}
+      evidence.interactions.push(entry);
+    };
+    if(width<900){await page.locator('.context-disclosure').evaluate(el=>el.open=true);await assessState('source-disclosure-open');await page.locator('.context-return').click();assert.equal(await page.evaluate(()=>document.activeElement.id),'context-opener');}
+    const originalNote=await page.locator('#private-note').inputValue();
+    await page.locator('#private-note').fill(originalNote+'\nQA transient input');
+    for(const id of ['follow-up','review-close']){
+      await page.locator(`[data-task="${id}"]`).click();await page.waitForFunction(id=>document.querySelector(`[data-task-panel="${id}"]`).hidden===false,id);
+      assert.equal(await page.locator('.local-nav [aria-current]').getAttribute('data-task'),id);
+      await assessState(id);
+      await page.locator(`#${id} [data-write-preview]`).click();assert.match(await page.locator('dialog').innerText(),/Design preview only|معاينة تصميم فقط/);await page.keyboard.press('Escape');
+    }
+    await page.locator('[data-task="documentation"]').click();await page.waitForFunction(()=>!document.querySelector('[data-task-panel="documentation"]').hidden);
+    assert.equal(await page.locator('#private-note').inputValue(),originalNote+'\nQA transient input');
+    await page.locator('#private-note').fill(originalNote);
   }
   evidence.matrix.push(record);console.log(`Checked ${role}/${lang}/${theme}/${width}/text${text}`);await context.close();
 }
 evidence.contrasts=[...pairs.values()];evidence.pageErrors=errors;
-const captureCases=[['patient','ar','light',390],['patient','ar','dark',390],['patient','en','light',1440],['patient','en','dark',1440],['patient','en','light',768],['patient','ar','dark',390,200],['doctor','ar','light',1440],['doctor','ar','dark',1440],['doctor','en','light',390],['doctor','en','dark',390],['doctor','ar','dark',768],['doctor','en','light',1440],['patient','ar','light',1440]];
-for(const[role,lang,theme,width,text=100]of captureCases){
-  const context=await browser.newContext({viewport:{width,height:1200},deviceScaleFactor:1});const page=await context.newPage();await page.goto(`${base}/screen.html?${new URLSearchParams({role,lang,theme,text})}`);await page.evaluate(()=>document.fonts.ready);
-  const file=`${role}-${lang}-${theme}-${width}${text===200?'-text200':''}.png`;await page.screenshot({path:resolve(root,'evidence',file),fullPage:width<1024});
-  const bytes=readFileSync(resolve(root,'evidence',file));evidence.screenshots.push({file,role,lang,theme,width,text,fullPage:width<1024,sha256:createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length});await context.close();
+const captureCases=[
+ {role:'patient',lang:'ar',theme:'light',width:390},
+ {role:'patient',lang:'ar',theme:'dark',width:390},
+ {role:'patient',lang:'en',theme:'light',width:768},
+ {role:'patient',lang:'ar',theme:'dark',width:390,text:200},
+ {role:'doctor',lang:'ar',theme:'light',width:390},
+ {role:'doctor',lang:'en',theme:'dark',width:390},
+ {role:'doctor',lang:'ar',theme:'dark',width:1440},
+ {role:'doctor',lang:'ar',theme:'light',width:390,state:'context-open'}
+];
+for(const{role,lang,theme,width,text=100,state}of captureCases){
+ const context=await browser.newContext({viewport:{width,height:1200},deviceScaleFactor:1});const page=await context.newPage();await page.goto(`${base}/screen.html?${new URLSearchParams({role,lang,theme,text})}`);await page.evaluate(()=>document.fonts.ready);
+ if(state==='context-open')await page.locator('.context-disclosure>summary').click();
+ const file=`${role}-${lang}-${theme}-${width}${text===200?'-text200':''}${state?'-'+state:''}.png`;
+ await page.screenshot({path:resolve(outputRoot,file),fullPage:width<1024});
+ const bytes=readFileSync(resolve(outputRoot,file));evidence.screenshots.push({file,role,lang,theme,width,text,state:state??'default',fullPage:width<1024,sha256:createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length});await context.close();
 }
 // Review wrapper selectors and deliberately paired browser views.
-const page=await browser.newPage({viewport:{width:1280,height:1000}});await page.goto(`${base}/gallery.html`);await page.selectOption('#role','doctor');await page.selectOption('#lang','en');await page.selectOption('#theme','dark');await page.selectOption('#width','768');await page.selectOption('#text','200');assert.match(await page.locator('#screen').getAttribute('src'),/role=doctor&lang=en&theme=dark&text=200/);assert.equal(await page.locator('#light').getAttribute('width'),'768');assert.match(await page.locator('#light').getAttribute('src'),/theme=light/);evidence.galleryControls='PASS';await page.close();
-const failures=evidence.matrix.filter(r=>r.overflow||r.clipped.length||r.badText.length||r.badTargets.length||r.nonTextFailures.length||r.warning||r.externalRequests.length||r.axe?.violations.length);
-evidence.summary={cases:evidence.matrix.length,coreCases:40,wideCases:8,text200Cases:16,axeCases:evidence.matrix.filter(r=>r.axe).length,failures:failures.length,contrastPairCount:evidence.contrasts.length,contrastObservations:evidence.contrasts.reduce((n,r)=>n+r.observations,0),screenshots:evidence.screenshots.length};
-writeFileSync(resolve(root,'evidence/qa-results.json'),JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify(evidence.summary));for(const row of failures)console.log(JSON.stringify(row));await browser.close();
+const page=await browser.newPage({viewport:{width:1280,height:1000}});await page.goto(`${base}/gallery.html`);await page.selectOption('#role','doctor');await page.selectOption('#lang','en');await page.selectOption('#theme','dark');await page.selectOption('#width','768');await page.selectOption('#text','200');assert.match(await page.locator('#screen').getAttribute('src'),/role=doctor&lang=en&theme=dark&text=200/);assert.equal(await page.locator('#light').getAttribute('width'),'768');assert.match(await page.locator('#light').getAttribute('src'),/theme=light/);await page.selectOption('#comparison-case','doctor-en-dark-390');assert.equal(await page.locator('#after-image').getAttribute('src'),'evidence/refinement/doctor-en-dark-390.png');evidence.galleryControls='PASS';await page.close();
+const failures=[...evidence.matrix,...evidence.interactions].filter(r=>r.overflow||r.clipped.length||r.badText.length||r.badTargets.length||r.nonTextFailures.length||r.warning||r.externalRequests?.length||r.axe?.violations.length);
+evidence.summary={cases:evidence.matrix.length,coreCases:40,wideCases:8,text200Cases:16,axeCases:[...evidence.matrix,...evidence.interactions].filter(r=>r.axe).length,interactionStates:evidence.interactions.length,failures:failures.length,contrastPairCount:evidence.contrasts.length,contrastObservations:evidence.contrasts.reduce((n,r)=>n+r.observations,0),screenshots:evidence.screenshots.length};
+writeFileSync(resolve(outputRoot,'qa-results.json'),JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify(evidence.summary));for(const row of failures)console.log(JSON.stringify(row));await browser.close();
 if(failures.length||errors.length)process.exitCode=1;

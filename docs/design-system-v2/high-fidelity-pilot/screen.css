@@ -19,3 +19,105 @@ html[lang=ar] .consultation .intro h1{letter-spacing:0}
 .appointment-top{flex-wrap:wrap}.date-tile{flex-wrap:wrap}
 .global-nav a{min-width:0;overflow-wrap:anywhere}.global-nav a span{min-width:0}
 @media(max-width:899px){.context-shortcut,.context-return{display:inline-flex}.consultation .local-nav{display:none}.task-disclosure{display:block;border:1px solid var(--control);border-radius:10px;margin-block:16px 20px;background:var(--surface)}.task-disclosure summary{display:flex;align-items:center;gap:10px;padding:12px 16px;min-height:52px;cursor:pointer;font-weight:600;list-style:none}.task-disclosure summary::-webkit-details-marker{display:none}.task-disclosure summary span{flex:1}.task-disclosure nav{display:flex;flex-direction:column;padding:4px 16px 12px}.task-disclosure a{display:flex;min-height:48px;align-items:center;padding:8px;color:var(--action);text-decoration:underline;text-underline-offset:4px}.authority .text-link{margin-block-start:8px}}
+/* One owner-authorized refinement: quieter Patient retrieval, context at Doctor authoring. */
+[hidden]{display:none!important}
+.patient-page .intro{padding-block:36px 28px}
+.patient-layout{grid-template-columns:minmax(0,1.8fr) minmax(300px,1fr);gap:48px}
+.appointment{box-shadow:0 12px 36px #17142b06;border-radius:24px}
+:root[data-theme=dark] .appointment{box-shadow:none}
+.appointment-top{padding-block:24px 20px}
+.appointment-main{gap:28px;padding-block-end:28px}
+.date-tile{position:relative;border-radius:14px;padding-block:16px;border-block-start:3px solid var(--action)}
+.appointment-bottom{justify-content:flex-end;padding-block:20px;background:var(--surface);border-block-start:1px solid var(--line)}
+.appointment-bottom .primary{min-width:240px}
+.button{border-radius:12px;padding-inline:20px}
+.button.primary{font-weight:600}
+.care-index{min-width:0}
+.care-index .section-heading{padding-block:4px 16px;margin:0;border-block-end:1px solid var(--line)}
+.care-index h2{font-size:1.25rem}
+.care-row{display:flex;align-items:center;gap:14px;min-height:68px;padding:16px 0;border-block-end:1px solid var(--line)}
+.care-row>span{flex:1;min-width:0}
+.care-row strong{display:block;font-size:1rem;line-height:1.6}
+.care-row small{display:block;color:var(--muted);font-size:1rem;font-weight:400;line-height:1.65;margin-block-start:4px}
+.care-row:hover{color:var(--action);background:var(--raised)}
+.care-permission{font-size:1rem;color:var(--muted);margin-block-start:16px;line-height:1.7}
+.patient-footer{margin-block-start:16px;padding-block:24px}
+.consultation .intro{padding-block:20px 16px}
+.visit-anchor{padding-block:20px;border-radius:18px;gap:24px}
+.authority-details summary{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;color:var(--action);text-decoration:underline;text-underline-offset:4px;list-style:none}
+.authority-details summary::-webkit-details-marker{display:none}
+.authority-details summary svg{width:18px;height:18px}
+.authority-details p{margin-block:8px 0}
+.task-plane{min-width:0}
+.context-disclosure{display:none}
+.context-return{display:none}
+.task-panel .editor-content>p{margin-block-end:20px;max-width:60ch}
+.task-panel .panel-state{font-weight:600}
+.outline[hidden]{display:block!important;visibility:hidden}
+.continued-section{margin-block-start:20px;padding-block:20px}
+@media(max-width:1199px){.patient-layout{gap:32px;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr)}}
+@media(max-width:899px){
+ .global-nav{order:initial}
+ .patient-layout{grid-template-columns:minmax(0,1fr);gap:28px}
+ .patient-page .intro{padding-block:28px 24px}
+ .appointment-main{grid-template-columns:124px minmax(0,1fr)}
+ .care-index{max-width:none}
+ .context-disclosure{display:block;border:1px solid var(--control);border-radius:14px;background:var(--raised);margin-block-end:16px}
+ .context-disclosure>summary{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;min-height:64px;list-style:none}
+ .context-disclosure>summary::-webkit-details-marker{display:none}
+ .context-disclosure>summary>span{flex:1;min-width:0}
+ .context-disclosure>summary strong{display:block;font-weight:600;line-height:1.6}
+ .context-disclosure>summary small{display:block;font-size:1rem;color:var(--muted);line-height:1.6;margin-block-start:2px}
+ .context-disclosure[open]>summary{border-block-end:1px solid var(--control)}
+ .context-disclosure[open]>summary>svg:last-child{transform:rotate(180deg)}
+ #context-slot .source-context{background:transparent;border-radius:0;padding:16px}
+ #context-slot .source-context>h2,#context-slot .source-context>p{display:none}
+ #context-slot .source-state:first-of-type{padding-block-start:0}
+ .source-context .context-return{display:flex;width:100%;margin-block-start:16px}
+ .consultation .local-nav{display:flex;flex-wrap:wrap;gap:8px;border:0;padding:0;margin-block:16px 20px;background:transparent;border-radius:0}
+ .local-nav a{flex:1 1 max-content;max-width:100%;justify-content:center;text-align:center;min-height:52px;padding:10px 4px;border:1px solid var(--control);border-block-end:3px solid var(--control);border-radius:10px;font-weight:600;line-height:1.5;min-width:0}
+ .local-nav a[aria-current]{background:var(--raised);border-color:var(--action)}
+ .local-nav a svg{display:none}
+ .outline[hidden]{display:none!important}
+ .visit-anchor{padding:16px;border-radius:14px;gap:12px}
+ .authority{padding-block-start:12px}
+ .authority p{margin-block-start:2px}
+ .patient-identity h2{font-size:1.25rem}
+ .visit-specifics{margin-block-start:2px}
+}
+@media(max-width:559px){
+ .patient-page .intro{padding-block:24px 20px}
+ .patient-page h1{font-size:1.875rem;line-height:1.35}
+ .appointment{border-radius:20px}
+ .appointment-top{padding:20px 20px 16px;gap:8px}
+ .appointment-top h2{font-size:1.25rem}
+ .appointment-main{grid-template-columns:minmax(0,1fr);gap:20px;padding:0 20px 20px}
+ .date-tile{flex-direction:row;padding:10px 16px;border-block-start:0;border-inline-start:3px solid var(--action);min-height:0;gap:12px}
+ .date-tile .day{font-size:2.75rem}
+ .date-tile .month{font-size:1.0625rem}
+ .appointment-name{font-size:1.375rem;line-height:1.5}
+ .specialty{margin-block:4px 12px}
+ .appointment-bottom{padding:16px 20px 20px}
+ .appointment-bottom .primary{min-width:0;width:100%}
+ .patient-layout{gap:28px}
+ .care-index .section-heading{padding-block:0 12px}
+ .care-row{padding-block:14px;min-height:64px;gap:12px}
+ .care-row>svg{width:21px;height:21px}
+ .care-row>svg:last-child{width:18px;height:18px}
+ .patient-footer{margin-block-start:8px;padding-block:20px}
+ .consultation .intro{padding-block:16px 12px;gap:4px}
+ .consultation .intro h1{font-size:1.5rem;line-height:1.5}
+ .consultation .intro>.status{margin-block-start:4px}
+ .consultation .local-nav{margin-block:16px;gap:6px}
+ .local-nav a{font-size:1rem;padding:8px 4px;min-height:56px}
+ .editor-heading{padding:20px 16px}
+ .editor-content{padding:20px 16px}
+ .writing-field{min-height:260px}
+ .editor-actions{margin-block-start:20px;gap:10px}
+ .context-disclosure>summary{padding:12px 14px;gap:10px}
+ .context-disclosure>summary>svg{width:20px;height:20px}
+}
+
+.context-identity{display:none}@media(max-width:899px){.context-identity{display:block;padding-block-end:16px;margin-block-end:4px;border-block-end:1px solid var(--line);font-size:1rem}.context-identity p{color:var(--muted);margin-block-start:4px;line-height:1.6}}
+/* Avatar geometry grows with text; the account action keeps its full accessible name. */
+@media(max-width:559px){.account .avatar{width:2.5rem;height:2.5rem}}
