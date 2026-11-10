@@ -1,0 +1,26 @@
+{
+  "case": "plex-doctor-ar-dark-320-text200",
+  "metrics": {
+    "size": "32px",
+    "width": 252,
+    "scrollWidth": 266,
+    "value": "DEMO-360-01"
+  },
+  "end": {
+    "left": 13,
+    "start": 11,
+    "end": 11
+  },
+  "home": {
+    "left": 0,
+    "start": 0,
+    "end": 0
+  },
+  "selected": {
+    "value": "DEMO-360-01",
+    "start": 0,
+    "end": 11
+  },
+  "pass": true,
+  "limitation": "At320/200 the single-line reference field internally scrolls. Home/End expose the whole retained value; Ctrl+A selects all11 characters. This remains a usability concern distinct from document overflow."
+}

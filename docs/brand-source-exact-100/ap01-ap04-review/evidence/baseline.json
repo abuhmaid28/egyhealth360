@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-11-10T05:31:37.336602+00:00",
+  "repository": "abuhmaid28/egyhealth360",
+  "pr": 101,
+  "branch": "design/100-source-exact-violet-apricot",
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "previousAcceptedHead": "81ea915d10c4ad83578465dcd8b2d26d69d1b6fe",
+  "source96": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+  "foundation97": "e1abedc3d1c8811912f0fe6576e4b4f3459210ce",
+  "authorization": "https://github.com/abuhmaid28/egyhealth360/pull/101#issuecomment-6759512805",
+  "DP02VisualAcceptance": "https://github.com/abuhmaid28/egyhealth360/pull/101#issuecomment-6759258304",
+  "PRstate": "Draft/Open/Unmerged",
+  "allowedExistingFileChanges": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md"
+  ],
+  "scope": "Only new ap01-ap04-review appendix and current summaries. Prior package, approved SVGs and all historical evidence byte-preserved."
+}

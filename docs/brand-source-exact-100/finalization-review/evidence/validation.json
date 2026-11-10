@@ -1,0 +1,325 @@
+{
+  "browser": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+  "platform": "linux",
+  "kernel": "Linux 6.18.57",
+  "os": "\"Debian GNU/Linux 13 (trixie)\"",
+  "availability": {
+    "chromium": {
+      "path": "/usr/bin/chromium",
+      "tested": true
+    },
+    "edge": {
+      "path": "/usr/bin/microsoft-edge",
+      "exists": false,
+      "tested": false
+    },
+    "firefox": {
+      "path": "/home/agent/.cache/ms-playwright/firefox-1555/firefox/firefox",
+      "exists": false,
+      "tested": false
+    },
+    "webkit": {
+      "path": "/home/agent/.cache/ms-playwright/webkit-2370/pw_run.sh",
+      "exists": false,
+      "tested": false
+    },
+    "safari": {
+      "available": false,
+      "tested": false,
+      "reason": "No Apple Safari / OS"
+    },
+    "android": {
+      "available": false,
+      "tested": false,
+      "reason": "No physical Android device"
+    },
+    "ios": {
+      "available": false,
+      "tested": false,
+      "reason": "No physical Apple device"
+    }
+  },
+  "board": {
+    "sourceCommit": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+    "sourcePath": "docs/brand-identity-reconstruction/source/approved-board.png",
+    "sha256": "0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417",
+    "bytes": 2377890,
+    "crop": [
+      145,
+      70,
+      310,
+      320
+    ],
+    "role": "Historical material reference only"
+  },
+  "cases": [
+    {
+      "theme": "dark",
+      "pass": true,
+      "width": 1440,
+      "documentWidth": 1440,
+      "nativeSizes": [
+        {
+          "file": "../assets/icon-16.svg",
+          "width": 16,
+          "height": 16,
+          "expected": 16
+        },
+        {
+          "file": "../assets/icon-24.svg",
+          "width": 24,
+          "height": 24,
+          "expected": 24
+        },
+        {
+          "file": "../assets/icon-32.svg",
+          "width": 32,
+          "height": 32,
+          "expected": 32
+        },
+        {
+          "file": "../assets/icon-64.svg",
+          "width": 64,
+          "height": 64,
+          "expected": 64
+        },
+        {
+          "file": "../assets/icon-192.svg",
+          "width": 192,
+          "height": 192,
+          "expected": 192
+        },
+        {
+          "file": "../assets/icon-512.svg",
+          "width": 512,
+          "height": 512,
+          "expected": 512
+        }
+      ],
+      "images": [
+        {
+          "src": "verified historical board data URL",
+          "loaded": true
+        },
+        {
+          "src": "../source/symbol-primary.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/symbol-transparent.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/primary-bilingual-dark.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/compact-ar-dark.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/compact-en-dark.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-16.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-24.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-32.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-64.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-192.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-512.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/primary-bilingual-light.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/primary-bilingual-dark.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-32.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-64.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-192.svg",
+          "loaded": true
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "pass": true,
+      "width": 1440,
+      "documentWidth": 1440,
+      "nativeSizes": [
+        {
+          "file": "../assets/icon-16.svg",
+          "width": 16,
+          "height": 16,
+          "expected": 16
+        },
+        {
+          "file": "../assets/icon-24.svg",
+          "width": 24,
+          "height": 24,
+          "expected": 24
+        },
+        {
+          "file": "../assets/icon-32.svg",
+          "width": 32,
+          "height": 32,
+          "expected": 32
+        },
+        {
+          "file": "../assets/icon-64.svg",
+          "width": 64,
+          "height": 64,
+          "expected": 64
+        },
+        {
+          "file": "../assets/icon-192.svg",
+          "width": 192,
+          "height": 192,
+          "expected": 192
+        },
+        {
+          "file": "../assets/icon-512.svg",
+          "width": 512,
+          "height": 512,
+          "expected": 512
+        }
+      ],
+      "images": [
+        {
+          "src": "verified historical board data URL",
+          "loaded": true
+        },
+        {
+          "src": "../source/symbol-primary.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/symbol-transparent.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/primary-bilingual-light.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/compact-ar-light.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/compact-en-light.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-16.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-24.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-32.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-64.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-192.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-512.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/primary-bilingual-light.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/primary-bilingual-dark.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-32.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-64.svg",
+          "loaded": true
+        },
+        {
+          "src": "../assets/icon-192.svg",
+          "loaded": true
+        }
+      ]
+    }
+  ],
+  "nativeZoom": [
+    {
+      "zoom": 1,
+      "pass": true,
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "titleSize": "30px",
+      "documentWidth": 1280,
+      "nativeZoom": 1,
+      "reusedApprovedSpecimen": true
+    },
+    {
+      "zoom": 2,
+      "pass": true,
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "titleSize": "30px",
+      "documentWidth": 640,
+      "nativeZoom": 2,
+      "reusedApprovedSpecimen": true
+    }
+  ],
+  "print": {
+    "method": "Actual Chromium Page.printToPDF; A4 with backgrounds; parsed by Poppler pdfinfo; native payload retained in deterministic gzip",
+    "artifact": "chromium-print.pdf.gz",
+    "payloadSha256": "7cb63c8a03ceb4e7eefeade936e6ad22ddc54ea94b50f61b08ec333f8abc7a50",
+    "pages": 1,
+    "physicalPrintTested": false,
+    "colorManagementTested": false
+  },
+  "errors": [],
+  "limits": [
+    "No actual Chrome-branded/Edge/Firefox/Safari result inferred from Chromium",
+    "No physical devices, OS text settings, installed PWA or physical print proof",
+    "No public distribution or legal clearance claim"
+  ]
+}

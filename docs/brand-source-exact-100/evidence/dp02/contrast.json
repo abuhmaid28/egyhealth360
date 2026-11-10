@@ -1,0 +1,134 @@
+[
+  {
+    "theme": "dark",
+    "text": "English",
+    "foreground": "rgb(167, 139, 250)",
+    "background": "rgb(29, 32, 48)",
+    "ratio": 5.928859917856991,
+    "threshold": 4.5
+  },
+  {
+    "theme": "dark",
+    "text": "Read the audit and owner gate",
+    "foreground": "rgb(167, 139, 250)",
+    "background": "rgb(16, 18, 29)",
+    "ratio": 6.851281513251919,
+    "threshold": 4.5
+  },
+  {
+    "theme": "dark",
+    "text": "NOT TESTED: native browser zoom, screen readers, real devices, installed PWA, WebKit, print or trademark clearance. These specimens do not establish WCAG certification.",
+    "foreground": "rgb(246, 242, 255)",
+    "background": "rgb(16, 18, 29)",
+    "ratio": 16.92576217397838,
+    "threshold": 4.5
+  },
+  {
+    "theme": "dark",
+    "text": "Full-size AR / EN · light",
+    "foreground": "rgb(23, 20, 43)",
+    "background": "rgb(248, 247, 251)",
+    "ratio": 16.80807600132796,
+    "threshold": 4.5
+  },
+  {
+    "theme": "dark",
+    "text": "outlineColor",
+    "foreground": "rgb(255, 184, 139)",
+    "background": "rgb(29, 32, 48)",
+    "ratio": 9.589514745770925,
+    "threshold": 3
+  },
+  {
+    "theme": "dark",
+    "text": "borderColor",
+    "foreground": "rgb(167, 139, 250)",
+    "background": "rgb(29, 32, 48)",
+    "ratio": 5.928859917856991,
+    "threshold": 3
+  },
+  {
+    "theme": "light",
+    "text": "English",
+    "foreground": "rgb(98, 64, 184)",
+    "background": "rgb(255, 255, 255)",
+    "ratio": 7.13113991229178,
+    "threshold": 4.5
+  },
+  {
+    "theme": "light",
+    "text": "Read the audit and owner gate",
+    "foreground": "rgb(98, 64, 184)",
+    "background": "rgb(248, 247, 251)",
+    "ratio": 6.685818690198745,
+    "threshold": 4.5
+  },
+  {
+    "theme": "light",
+    "text": "NOT TESTED: native browser zoom, screen readers, real devices, installed PWA, WebKit, print or trademark clearance. These specimens do not establish WCAG certification.",
+    "foreground": "rgb(23, 20, 43)",
+    "background": "rgb(248, 247, 251)",
+    "ratio": 16.80807600132796,
+    "threshold": 4.5
+  },
+  {
+    "theme": "light",
+    "text": "Browser circular-mask simulation. Installed PWA / OS masking NOT TESTED.",
+    "foreground": "rgb(246, 242, 255)",
+    "background": "rgb(16, 18, 29)",
+    "ratio": 16.92576217397838,
+    "threshold": 4.5
+  },
+  {
+    "theme": "light",
+    "text": "borderColor",
+    "foreground": "rgb(98, 64, 184)",
+    "background": "rgb(255, 255, 255)",
+    "ratio": 7.13113991229178,
+    "threshold": 3
+  },
+  {
+    "theme": "dark",
+    "text": "hover .locale",
+    "foreground": "rgb(23, 20, 43)",
+    "background": "rgb(167, 139, 250)",
+    "surrounding": "rgb(29, 32, 48)",
+    "ratio": 6.587603133088349,
+    "threshold": 4.5,
+    "filledBoundaryRatio": 5.928859917856991,
+    "boundaryThreshold": 3
+  },
+  {
+    "theme": "dark",
+    "text": "hover .review-links a:first-child",
+    "foreground": "rgb(23, 20, 43)",
+    "background": "rgb(167, 139, 250)",
+    "surrounding": "rgb(16, 18, 29)",
+    "ratio": 6.587603133088349,
+    "threshold": 4.5,
+    "filledBoundaryRatio": 6.851281513251919,
+    "boundaryThreshold": 3
+  },
+  {
+    "theme": "light",
+    "text": "hover .locale",
+    "foreground": "rgb(255, 255, 255)",
+    "background": "rgb(98, 64, 184)",
+    "surrounding": "rgb(255, 255, 255)",
+    "ratio": 7.13113991229178,
+    "threshold": 4.5,
+    "filledBoundaryRatio": 7.13113991229178,
+    "boundaryThreshold": 3
+  },
+  {
+    "theme": "light",
+    "text": "hover .review-links a:first-child",
+    "foreground": "rgb(255, 255, 255)",
+    "background": "rgb(98, 64, 184)",
+    "surrounding": "rgb(248, 247, 251)",
+    "ratio": 7.13113991229178,
+    "threshold": 4.5,
+    "filledBoundaryRatio": 6.685818690198745,
+    "boundaryThreshold": 3
+  }
+]
