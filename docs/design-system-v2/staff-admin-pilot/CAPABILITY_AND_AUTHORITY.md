@@ -1,0 +1,36 @@
+# Capability and authority gate — Issue #108
+
+Gate completed BEFORE screen creation on 10 November 2026. Source baseline: `5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3` (fresh origin/main). No material source/accepted-contract contradiction found for the bounded designs below. Historical I3 contract inventory describes its pre-Slice-1 baseline; the accepted Slice 2 and current source establish pharmacy implementation. It is not a Live Lab claim.
+
+## Evidence and classifications
+
+BACKEND CONTRACT IMPLEMENTED means current merged source, not independently executed backend tests in this design sprint. LIVE FRONTEND EXPOSED requires independent browser/API demonstration. No proposed staff management/clinical task satisfies that latter classification here. Every gallery record/action is DEMO-ONLY / SYNTHETIC; Laboratory additionally FUTURE CONTRACT / NOT IMPLEMENTED. Hosting parity is UNVERIFIED; no hosted login or clinical transaction was executed.
+
+| Role / displayed task or state | Backend reality | Frontend / gallery classification | Evidence |
+| --- | --- | --- | --- |
+| Pharmacy F1 assigned queue, pending/accepted exact route | BACKEND CONTRACT IMPLEMENTED | Current Live interface explicitly unavailable; gallery DEMO-ONLY | [controller](../../../apps/api/src/pharmacy.ts), [persistence](../../../packages/db/src/pharmacy.ts), [OpenAPI](../../openapi.json), [Live UI](../../../apps/web/src/components/operations.tsx) |
+| Pharmacy F2 exact detail, explicit accept, eligible full-item dispense | BACKEND CONTRACT IMPLEMENTED | I3 Live frontend gap; gallery actions show review explanations only, never completion | [Slice 2](../../V3_I3_SLICE2.md), [API Live adapter](../../../apps/web/src/lib/api/live.ts) (`artifacts: unavailable`) |
+| Pharmacy F3/F4 history, correction/reversal | BACKEND CONTRACT IMPLEMENTED | DEMO-ONLY reduced-purpose specimen; no patient name/instructions, reversal cannot re-dispense | [history projection](../../../packages/db/src/pharmacy.ts), [migration 22](../../../packages/db/prisma/migrations/20261101170000_v3_i3_pharmacy_fulfillment/migration.sql) |
+| Pharmacy F5 current access context | BACKEND CONTRACT IMPLEMENTED exact member-org check | DEMO-ONLY scope text; UI does not confer authority | [readMemberOrganization](../../../packages/db/src/organizations.ts) |
+| Lab L1/L2 assigned order/accept | FUTURE CONTRACT / NOT IMPLEMENTED; only staff/org foundations exist | FUTURE CONCEPT / NOT LIVE, synthetic empty order specimen | [I3 §5](../../V3_I3_CONTRACT.md), [schema](../../../packages/db/prisma/schema.prisma), [API inventory](../../openapi.json) |
+| Lab L3 draft → explicit verify/finalize → current final | FUTURE CONTRACT / NOT IMPLEMENTED | FUTURE labelled stages; no lab values or actual final result | Same I3 contract; no Lab order/result models or OpenAPI routes |
+| Lab L4 amendment/retraction history | FUTURE CONTRACT / NOT IMPLEMENTED | FUTURE empty history/specimen only | [IA L1–L5](../../IA_SITEMAPS.md), [security](../../SECURITY.md) |
+| Admin A1 People operational list / account card | Bounded identity foundations; general account-list/status UI/API exposure UNVERIFIED | DEMO-ONLY list composition, no account-status command proposed | [I1](../../V3_I1_CONTRACT.md), [operations UI](../../../apps/web/src/components/operations.tsx) |
+| Admin A2/A4 organization inspect/status | BACKEND CONTRACT IMPLEMENTED internal service, no general public management OpenAPI | DEMO-ONLY candidate organization list/detail | [organizations service](../../../packages/db/src/organizations.ts) `inspectOrganization`, `setOrganizationStatus` |
+| Admin A5 exact membership inspect/grant/end | BACKEND CONTRACT IMPLEMENTED internal bounded service | DEMO-ONLY detail/end explanation; no IAM role editor or confirmed write | Same service `inspectMembership`, `grantMembership`, `endMembership` |
+| Admin public directory | Live adapter/code exists, hosted browser demonstration NOT performed | Not the management capability; no Live claim in gallery | [Live adapter](../../../apps/web/src/lib/api/live.ts) |
+| Denied / empty / error / uncertain response | Accepted safe contracts, no gallery backend enforcement | DEMO-ONLY presentation states with no hidden references/counts; manual recovery explanation | [Security](../../SECURITY.md), [Content](../../CONTENT_SYSTEM.md) |
+
+## Binding boundary per screen/action
+
+Pharmacy current user/session + active PHARMACY + exact current active/unended membership + exact valid route/privacy must be checked server-side on reads, writes and replay. Filter before counts/paging. Pending acceptance may precede source validity; dispense requires current signed unrestricted source and half-open database-time validity. No partial dispense, caller quantity, substitution, inventory, pickup, delivery, refill or adherence. History shows actual own-route facts only, excludes patient display name/source instructions; terminal reversal preserves FULLY_DISPENSED and cannot restore entitlement. Wrong-patient restriction suppresses lineage payload, IDs, references, counts, receipts and conflicts. No general patient browser.
+
+Lab future exact LAB org/current staff/member/artifact authority is independent of clinician authority. Drafts hidden from patient/clinician, explicit verify/finalize directly makes current final available under accepted policy. Same person may enter/finalize with truthful attribution; no doctor-release queue. Amend/retract preserves history; no automatic finalization, LIS, sample barcode, imaging, inventory or fabricated medical values. Future implementation needs separate authorization.
+
+Admin controls operational identity/org/membership only. No patient chart/counts, consent/assignment manufacture, impersonation, clinical payload, signing, generic audit chart, privacy override or break-glass. Ending membership blocks subsequent staff checks; it does not erase history or silently transfer accepted work. Candidate lists require separately authorized future API exposure.
+
+Across roles: `ClinicianPatientAssignment` is the sole treating grant; booking, role, membership, authorship and public directory grant ZERO clinician authority. Private notes, source signing/release and consultation close remain independent. Server owns actor/time/status; preserve canonical operation keys, immutable history, atomic minimized audit, current reauthorization and no automatic clinical write retry. Gallery dialogs explain decisions, never issue requests or simulate committed mutations.
+
+## Read set and stop
+
+Read AGENTS → #108 and latest #107 Owner decision 6769908758 → CURRENT_STATUS → FOUNDATION_CHARTER/SOURCE_OF_TRUTH → IA_SITEMAPS/INFORMATION_ARCHITECTURE, V3_I1_CONTRACT, V3_I3_CONTRACT/Slice2, SECURITY, CONTENT_SYSTEM/ARABIC_UX → current schema/migrations/API/controller/persistence/Live UI and adapter. [Approved visual reference](https://github.com/abuhmaid28/egyhealth360/tree/56f4f700aa83297c9f5c164a5304135303137f75/docs/design-system-v2/high-fidelity-pilot); Brand pinned `687f94074c0ac4d45610546517ea6aa228d36183`; DS #105 controlling decisions remain binding. Proceed only with review artifacts; stop for Product Owner visual/content choice. No production/contract changes.

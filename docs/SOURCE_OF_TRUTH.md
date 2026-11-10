@@ -232,3 +232,12 @@ The table below classifies **HISTORICAL EVIDENCE — REJECTED VISUAL CANDIDATES*
 Do not mass-delete/move historical files. Existing issue/PR/screenshot paths remain stable. Prefer explicit index/header classifications and precise current reference repairs; any future archive move needs a link-preserving plan. Old mutable status paragraphs inside classified accepted/historical documents are not current instructions.
 
 Each milestone delivery updates CURRENT_STATUS and affected current references, preserves contract/history evidence and verifies mutual consistency before handoff. Add new important documents to this index. At every major milestone health review recheck architecture, roadmap, debt, Product/UX/Design, security/data, CI/runtime and deployment truth. Final UX/content/brand/Design System/prototype approval is separate from technical CI. [Charter](FOUNDATION_CHARTER.md).
+
+## Issue #108 — DESIGN REVIEW CANDIDATE / OWNER REVIEW REQUIRED
+
+| Artifact | Responsibility / limit |
+| --- | --- |
+| [staff-admin-pilot/CAPABILITY_AND_AUTHORITY.md](design-system-v2/staff-admin-pilot/CAPABILITY_AND_AUTHORITY.md) | Fresh source gate; backend versus Live exposure versus synthetic versus future. |
+| [staff-admin-pilot/DESIGN_REVIEW.md](design-system-v2/staff-admin-pilot/DESIGN_REVIEW.md) | One Pharmacy/FUTURE Lab/Admin visual candidate, preferred #107 reference; no final DS approval. |
+| [staff-admin-pilot/QA.md](design-system-v2/staff-admin-pilot/QA.md) | Browser matrix, 18 captures, scope and explicit limits; exact remote CI in Draft PR receipt. |
+| [staff-admin-pilot/evidence/independent-review.md](design-system-v2/staff-admin-pilot/evidence/independent-review.md) | Independent visual, authority/privacy and source-provenance critique; no clinical/runtime certification. |
