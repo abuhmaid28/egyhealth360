@@ -1,0 +1,58 @@
+[
+  {
+    "file": "inter.ttf",
+    "source": "docs/brand-source-exact-100/ap01-ap04-review/fonts/inter-variable.ttf",
+    "ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "blob": "047c92f6e2212473dc436020afed689527076d44",
+    "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+    "bytes": 876576
+  },
+  {
+    "file": "plex-400.ttf",
+    "source": "docs/brand-source-exact-100/ap01-ap04-review/fonts/plex-400.ttf",
+    "ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "blob": "e779068718b9801b809605b2bf3067121cce524c",
+    "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9",
+    "bytes": 235924
+  },
+  {
+    "file": "plex-600.ttf",
+    "source": "docs/brand-source-exact-100/ap01-ap04-review/fonts/plex-600.ttf",
+    "ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "blob": "f7a7fc87747a9ddabb3557d4a3f4140a7a1460b0",
+    "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467",
+    "bytes": 244616
+  },
+  {
+    "file": "ar-light.svg",
+    "source": "docs/brand-source-exact-100/assets/primary-ar-light.svg",
+    "ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "blob": "30e2f66388345f0863d29dd050429a6e826051a4",
+    "sha256": "76d14637666b2d9aadbdc211223454c3f216bff38927c11577ed4d77abce4fa4",
+    "bytes": 17925
+  },
+  {
+    "file": "ar-dark.svg",
+    "source": "docs/brand-source-exact-100/assets/primary-ar-dark.svg",
+    "ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "blob": "4581e121783a9fc8db772908271e5cafd926fd04",
+    "sha256": "f96e38a2a6e1e7273edd57b8e98005f28b0894efa03ffba41ef2c0394a5196da",
+    "bytes": 17924
+  },
+  {
+    "file": "en-light.svg",
+    "source": "docs/brand-source-exact-100/assets/primary-en-light.svg",
+    "ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "blob": "d07d0662f2bdd32f9ad68032726208b51fa00ab8",
+    "sha256": "f6935c1441d2e68092109425d31f707621f6ec33b405d6ceb00fc0876f53b54e",
+    "bytes": 23501
+  },
+  {
+    "file": "en-dark.svg",
+    "source": "docs/brand-source-exact-100/assets/primary-en-dark.svg",
+    "ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "blob": "f209d89484e1c0656ee2e020170b36bf7b41cfe7",
+    "sha256": "eaa33073140aff82d87d34e134157671f7f8d38ac625618a26b69978641bddd5",
+    "bytes": 23500
+  }
+]

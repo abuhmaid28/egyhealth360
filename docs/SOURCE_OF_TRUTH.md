@@ -1,6 +1,6 @@
 # Source of truth and document index
 
-Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
+Current bounded reference: [DS V2 specification candidate](design-system-v2/spec-pilot/FOUNDATIONS_AND_RESPONSIVE_SPEC.md), [owner gates](design-system-v2/spec-pilot/DECISION_GATES.md), [local gallery](design-system-v2/spec-pilot/gallery.html) and [QA](design-system-v2/spec-pilot/QA.md), under [Issue104](https://github.com/abuhmaid28/egyhealth360/issues/104). [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable state. Brand references pin PR101 at `687f94074c0ac4d45610546517ea6aa228d36183`; planning references pin PR103 at `4052e2657dd8d354fe11e33ed51fc32ec8065583`, accepted only as a blueprint. This pack proposes semantic/visual/responsive choices; time/navigation/theme/new design choices remain owner-gated, AP03/AP05 remain OPEN. Earlier [staging polish](STAGING_UI_POLISH.md), [viewer](staging-polish-evidence/review.html) and [R1 report](R1_UX_INTEGRATION_REPAIR.md) preserve historical evidence, not current release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
 
@@ -109,6 +109,15 @@ All tracked documentation Markdown paths are classified below. Research files ar
 | [UX_FOUNDATION.md](UX_FOUNDATION.md) | Product mental models, five behavioral profiles/JTBD, priorities, principles, safety constraints and anti-patterns; new UX choices remain proposals. |
 | [USER_JOURNEYS.md](USER_JOURNEYS.md) | Intent-based journeys, exact responsibility/information handoffs and current/future boundaries; not final IA or approved screens. |
 | [UX_DECISION_REGISTER.md](UX_DECISION_REGISTER.md) | Inherited approved foundations versus recommendations, owner decisions and explicit later-stage deferrals. |
+
+## PROPOSED / OWNER REVIEW — Design System V2 specification pilot
+
+| Document / artifact | Responsibility / limits |
+| --- | --- |
+| [design-system-v2/spec-pilot/FOUNDATIONS_AND_RESPONSIVE_SPEC.md](design-system-v2/spec-pilot/FOUNDATIONS_AND_RESPONSIVE_SPEC.md) | Candidate foundations, component anatomy/behavior, responsive AR/EN light/dark and two-role patterns; not an adopted DS. |
+| [design-system-v2/spec-pilot/DECISION_GATES.md](design-system-v2/spec-pilot/DECISION_GATES.md) | Accepted versus candidate/open DSV2-01–04, exact proposed time decision text and AP03/AP05 distribution holds. |
+| [design-system-v2/spec-pilot/QA.md](design-system-v2/spec-pilot/QA.md) | Actual bounded browser/contrast/keyboard/preservation evidence, independent review and explicit untested limits; remote exact-head CI lives in the Draft PR. |
+| `design-system-v2/spec-pilot/gallery.html`, specimen HTML/CSS/JS, reference manifest/preparation script, browser QA script, evidence JSON/10 PNGs | Local synthetic design proof only; no production imports/routes/API, new dependencies or hosting. Seven pinned font/logo references are temporary ignored files, not redistributed inventory. |
 
 ## ACCEPTED CONTRACT
 
