@@ -1,0 +1,710 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "hash_algorithm": "SHA-256",
+  "self_exclusion": "docs/brand-source-exact-100/evidence/artifact-hashes.json",
+  "hashed_file_count": 116,
+  "changed_file_count": 119,
+  "changed_file_inventory": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md",
+    "docs/brand-source-exact-100/INDEPENDENT_REVIEW.md",
+    "docs/brand-source-exact-100/README.md",
+    "docs/brand-source-exact-100/VALIDATION.md",
+    "docs/brand-source-exact-100/assets/Inter-OFL.txt",
+    "docs/brand-source-exact-100/assets/bilingual-dark.svg",
+    "docs/brand-source-exact-100/assets/bilingual-light.svg",
+    "docs/brand-source-exact-100/assets/compact-ar-dark.svg",
+    "docs/brand-source-exact-100/assets/compact-ar-light.svg",
+    "docs/brand-source-exact-100/assets/compact-en-dark.svg",
+    "docs/brand-source-exact-100/assets/compact-en-light.svg",
+    "docs/brand-source-exact-100/assets/icon-16.svg",
+    "docs/brand-source-exact-100/assets/icon-192.svg",
+    "docs/brand-source-exact-100/assets/icon-24.svg",
+    "docs/brand-source-exact-100/assets/icon-32.svg",
+    "docs/brand-source-exact-100/assets/icon-512.svg",
+    "docs/brand-source-exact-100/assets/icon-64.svg",
+    "docs/brand-source-exact-100/assets/inter.woff2",
+    "docs/brand-source-exact-100/assets/maskable-512.svg",
+    "docs/brand-source-exact-100/assets/plex-arabic-OFL.txt",
+    "docs/brand-source-exact-100/assets/plex-arabic-regular.ttf",
+    "docs/brand-source-exact-100/assets/symbol-transparent.svg",
+    "docs/brand-source-exact-100/evidence/arabic-after-dark-505.png",
+    "docs/brand-source-exact-100/evidence/arabic-after-light-505.png",
+    "docs/brand-source-exact-100/evidence/arabic-before-505.png",
+    "docs/brand-source-exact-100/evidence/artifact-hashes.json",
+    "docs/brand-source-exact-100/evidence/bilingual-dark.png",
+    "docs/brand-source-exact-100/evidence/bilingual-light.png",
+    "docs/brand-source-exact-100/evidence/browser-qa.json",
+    "docs/brand-source-exact-100/evidence/compact-ar-dark.png",
+    "docs/brand-source-exact-100/evidence/compact-ar-light.png",
+    "docs/brand-source-exact-100/evidence/compact-en-dark.png",
+    "docs/brand-source-exact-100/evidence/compact-en-light.png",
+    "docs/brand-source-exact-100/evidence/contrast.json",
+    "docs/brand-source-exact-100/evidence/focus-dark-ar-320-normal.png",
+    "docs/brand-source-exact-100/evidence/focus-dark-ar-320-text200.png",
+    "docs/brand-source-exact-100/evidence/focus-dark-en-320-normal.png",
+    "docs/brand-source-exact-100/evidence/focus-dark-en-320-text200.png",
+    "docs/brand-source-exact-100/evidence/focus-light-ar-320-normal.png",
+    "docs/brand-source-exact-100/evidence/focus-light-ar-320-text200.png",
+    "docs/brand-source-exact-100/evidence/focus-light-en-320-normal.png",
+    "docs/brand-source-exact-100/evidence/focus-light-en-320-text200.png",
+    "docs/brand-source-exact-100/evidence/header-dark-ar-1024-normal.png",
+    "docs/brand-source-exact-100/evidence/header-dark-ar-1024-text200.png",
+    "docs/brand-source-exact-100/evidence/header-dark-ar-1440-normal.png",
+    "docs/brand-source-exact-100/evidence/header-dark-ar-1440-text200.png",
+    "docs/brand-source-exact-100/evidence/header-dark-ar-320-normal.png",
+    "docs/brand-source-exact-100/evidence/header-dark-ar-320-text200.png",
+    "docs/brand-source-exact-100/evidence/header-dark-ar-390-normal.png",
+    "docs/brand-source-exact-100/evidence/header-dark-ar-390-text200.png",
+    "docs/brand-source-exact-100/evidence/header-dark-ar-768-normal.png",
+    "docs/brand-source-exact-100/evidence/header-dark-ar-768-text200.png",
+    "docs/brand-source-exact-100/evidence/header-dark-en-1024-normal.png",
+    "docs/brand-source-exact-100/evidence/header-dark-en-1024-text200.png",
+    "docs/brand-source-exact-100/evidence/header-dark-en-1440-normal.png",
+    "docs/brand-source-exact-100/evidence/header-dark-en-1440-text200.png",
+    "docs/brand-source-exact-100/evidence/header-dark-en-320-normal.png",
+    "docs/brand-source-exact-100/evidence/header-dark-en-320-text200.png",
+    "docs/brand-source-exact-100/evidence/header-dark-en-390-normal.png",
+    "docs/brand-source-exact-100/evidence/header-dark-en-390-text200.png",
+    "docs/brand-source-exact-100/evidence/header-dark-en-768-normal.png",
+    "docs/brand-source-exact-100/evidence/header-dark-en-768-text200.png",
+    "docs/brand-source-exact-100/evidence/header-light-ar-1024-normal.png",
+    "docs/brand-source-exact-100/evidence/header-light-ar-1024-text200.png",
+    "docs/brand-source-exact-100/evidence/header-light-ar-1440-normal.png",
+    "docs/brand-source-exact-100/evidence/header-light-ar-1440-text200.png",
+    "docs/brand-source-exact-100/evidence/header-light-ar-320-normal.png",
+    "docs/brand-source-exact-100/evidence/header-light-ar-320-text200.png",
+    "docs/brand-source-exact-100/evidence/header-light-ar-390-normal.png",
+    "docs/brand-source-exact-100/evidence/header-light-ar-390-text200.png",
+    "docs/brand-source-exact-100/evidence/header-light-ar-768-normal.png",
+    "docs/brand-source-exact-100/evidence/header-light-ar-768-text200.png",
+    "docs/brand-source-exact-100/evidence/header-light-en-1024-normal.png",
+    "docs/brand-source-exact-100/evidence/header-light-en-1024-text200.png",
+    "docs/brand-source-exact-100/evidence/header-light-en-1440-normal.png",
+    "docs/brand-source-exact-100/evidence/header-light-en-1440-text200.png",
+    "docs/brand-source-exact-100/evidence/header-light-en-320-normal.png",
+    "docs/brand-source-exact-100/evidence/header-light-en-320-text200.png",
+    "docs/brand-source-exact-100/evidence/header-light-en-390-normal.png",
+    "docs/brand-source-exact-100/evidence/header-light-en-390-text200.png",
+    "docs/brand-source-exact-100/evidence/header-light-en-768-normal.png",
+    "docs/brand-source-exact-100/evidence/header-light-en-768-text200.png",
+    "docs/brand-source-exact-100/evidence/icon-16.png",
+    "docs/brand-source-exact-100/evidence/icon-192.png",
+    "docs/brand-source-exact-100/evidence/icon-24.png",
+    "docs/brand-source-exact-100/evidence/icon-32.png",
+    "docs/brand-source-exact-100/evidence/icon-512.png",
+    "docs/brand-source-exact-100/evidence/icon-64.png",
+    "docs/brand-source-exact-100/evidence/independent-ar-320-text200-focus.png",
+    "docs/brand-source-exact-100/evidence/independent-browser.json",
+    "docs/brand-source-exact-100/evidence/independent-en-1440-light-hover.png",
+    "docs/brand-source-exact-100/evidence/independent-reviewed-assets.json",
+    "docs/brand-source-exact-100/evidence/independent-source.json",
+    "docs/brand-source-exact-100/evidence/maskable-512.png",
+    "docs/brand-source-exact-100/evidence/maskable-circle.png",
+    "docs/brand-source-exact-100/evidence/maskable-safe-area.png",
+    "docs/brand-source-exact-100/evidence/native-pixel-strip.png",
+    "docs/brand-source-exact-100/evidence/page-dark-ar-1440-normal.png",
+    "docs/brand-source-exact-100/evidence/page-dark-ar-390-normal.png",
+    "docs/brand-source-exact-100/evidence/page-dark-en-1440-normal.png",
+    "docs/brand-source-exact-100/evidence/page-dark-en-390-normal.png",
+    "docs/brand-source-exact-100/evidence/page-light-ar-1440-normal.png",
+    "docs/brand-source-exact-100/evidence/page-light-ar-390-normal.png",
+    "docs/brand-source-exact-100/evidence/page-light-en-1440-normal.png",
+    "docs/brand-source-exact-100/evidence/page-light-en-390-normal.png",
+    "docs/brand-source-exact-100/evidence/path-audit.json",
+    "docs/brand-source-exact-100/evidence/preservation.json",
+    "docs/brand-source-exact-100/evidence/provenance.json",
+    "docs/brand-source-exact-100/evidence/symbol-transparent.png",
+    "docs/brand-source-exact-100/index.html",
+    "docs/brand-source-exact-100/review.css",
+    "docs/brand-source-exact-100/review.js",
+    "docs/brand-source-exact-100/source/lockup-dark.svg",
+    "docs/brand-source-exact-100/source/lockup-light.svg",
+    "docs/brand-source-exact-100/source/symbol-primary.svg",
+    "docs/brand-source-exact-100/tools/audit.py",
+    "docs/brand-source-exact-100/tools/generate.py",
+    "docs/brand-source-exact-100/tools/qa.mjs"
+  ],
+  "files": [
+    {
+      "path": "docs/brand-source-exact-100/INDEPENDENT_REVIEW.md",
+      "sha256": "2a8e53c71ebcd1ef08cb89b29f856f186e0ce069b378e53de62bc05f64b94e26",
+      "bytes": 6619
+    },
+    {
+      "path": "docs/brand-source-exact-100/README.md",
+      "sha256": "21e4759445a4abfb44df585ff69ca38768605528db3f414087704cb05ad7002d",
+      "bytes": 11292
+    },
+    {
+      "path": "docs/brand-source-exact-100/VALIDATION.md",
+      "sha256": "1cec57656e2259d048eda623cbdb6b578d89895de56e892b0e5a387330d7baaf",
+      "bytes": 9584
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/Inter-OFL.txt",
+      "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39",
+      "bytes": 4376
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/bilingual-dark.svg",
+      "sha256": "0c9dbbab6c66b801fd54720a0eb99632cb10646197880541c72667343a603c63",
+      "bytes": 76220
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/bilingual-light.svg",
+      "sha256": "acedb28f25ce3b1bae16bbe449ac2836261a3e785ca0b95497f3b662991d8f0f",
+      "bytes": 76221
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/compact-ar-dark.svg",
+      "sha256": "bbed526c401f31fefdd1b98d8ab62c64663f2b03b1b8b0ef24a5f81498ea922d",
+      "bytes": 17866
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/compact-ar-light.svg",
+      "sha256": "d83098460ac57d43801314dd5a8f96fa40b72268ae27893b302a0661e8ca89ff",
+      "bytes": 17867
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/compact-en-dark.svg",
+      "sha256": "6ad7f9b61b1a43308e16e8d0a6a4bf80c389bac29d46d292eef938af8e2120c3",
+      "bytes": 23442
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/compact-en-light.svg",
+      "sha256": "e49f02c9e4a7619ca8265d9d01e8e8a3b52176ec4654658b72e2cac6bf60b887",
+      "bytes": 23443
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-16.svg",
+      "sha256": "15c147afe9ac2d798fe32566728cdc4c4bbf4552ab32d77eb8be7dd40bfba03e",
+      "bytes": 6502
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-192.svg",
+      "sha256": "b7e02d3d890178926675e5e2e2c9aee4de633076d75e45894fa2498b4c5d0a0a",
+      "bytes": 6505
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-24.svg",
+      "sha256": "2540551a4214fb96cefbbf05442b3eb53adc5ff592833d77e1865cdeefd711c4",
+      "bytes": 6502
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-32.svg",
+      "sha256": "610a7c913c918b73245a3d29a7d4b6a14e787444d72f862b025d7b002f61159b",
+      "bytes": 6502
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-512.svg",
+      "sha256": "28fba5b16f7d5f73e99ebccd7cdfe05364284134ddd5665cfb20758f67481716",
+      "bytes": 6505
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-64.svg",
+      "sha256": "a90ab9d865da8546826b3a986e59d8b06b8ff1adec666f6ed106843632a16997",
+      "bytes": 6502
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/inter.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "bytes": 48256
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/maskable-512.svg",
+      "sha256": "e9af80f66e0b4c712b28dfbda527fa3572e51f193cbff669d53d8e309c0e6978",
+      "bytes": 6533
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f",
+      "bytes": 4362
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9",
+      "bytes": 235924
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/symbol-transparent.svg",
+      "sha256": "85fab1ed23199654946e0a84122c6302751becf9a6578c6ed8a7424dbf0c531e",
+      "bytes": 6443
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/arabic-after-dark-505.png",
+      "sha256": "f6b8a4d1da5f7e7bab90433a5f8054695d048da0e9c8e2a32e39fd90a3183694",
+      "bytes": 35828
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/arabic-after-light-505.png",
+      "sha256": "f81ecff6ba57a7b6b5475eba716993abc3f1c66c8a8f076f0e0b65248f5f126c",
+      "bytes": 35276
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/arabic-before-505.png",
+      "sha256": "161dbd94b007866edcf7b0fc844ac5153724d6dbbbe8c4118545f31bbdfd0196",
+      "bytes": 37840
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/bilingual-dark.png",
+      "sha256": "cd7e2031f9674238a38627d507afa558afcd61ff5ca2ed21ad99d10c388d1722",
+      "bytes": 80351
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/bilingual-light.png",
+      "sha256": "02324c9bc49da768d5fbb9c9452872597edb97bbd6bb6a392f61308df281a1af",
+      "bytes": 78894
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/browser-qa.json",
+      "sha256": "090efa510e49aae7160666a905d695a4255bd53578ef0c8c35689a4df31fa13e",
+      "bytes": 470043
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/compact-ar-dark.png",
+      "sha256": "a43724b4510eb00ffe5ab2f53b0b17aba62f64752fd14319e861f8350b518705",
+      "bytes": 6092
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/compact-ar-light.png",
+      "sha256": "3315b21309e231545d14107c987dbbb6217e266771e0ce3bb214193da551aad7",
+      "bytes": 6524
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/compact-en-dark.png",
+      "sha256": "ce0024f4a7316dae84d49a8d672468c0ad0af685775a7156944107df6f8e6dc3",
+      "bytes": 6004
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/compact-en-light.png",
+      "sha256": "26db570665eb229ee2527de686e70524a8db7a56f8016def866dd2b62b68afa4",
+      "bytes": 6379
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/contrast.json",
+      "sha256": "90d447633082538bf1c27f2a8d0eeb73ba75973f1a33e8dec88769d0a68c9cb2",
+      "bytes": 4236
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/focus-dark-ar-320-normal.png",
+      "sha256": "ac1aec3f0e8bb2e5033b032da110c5cad6f98e662a5ed1ec3a62ff12997e18ba",
+      "bytes": 6604
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/focus-dark-ar-320-text200.png",
+      "sha256": "32ac0555732c108ad919561fad371d5a056afa0ece7e7bd220409f5be974c5d4",
+      "bytes": 7829
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/focus-dark-en-320-normal.png",
+      "sha256": "d839daa73742126b2bfa8a23ad040bb85284f7ef8c50d25b6c7e7aa19671861e",
+      "bytes": 6352
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/focus-dark-en-320-text200.png",
+      "sha256": "89271e287ecfbcf815ceb7ccc8e269f37a780535527171e6e96535e121b6fc2e",
+      "bytes": 7671
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/focus-light-ar-320-normal.png",
+      "sha256": "3028d47fca0d441ac37c1b431f4740b1baa7a8c833cd29beb6bbc63288ebcc5b",
+      "bytes": 6332
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/focus-light-ar-320-text200.png",
+      "sha256": "83cb471387ca32107d52c4208aac4529e36691ed6a691b059871745302ee9f97",
+      "bytes": 7580
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/focus-light-en-320-normal.png",
+      "sha256": "1ab0fd7c1468f1732b92a30000d47d2b8959e66af2e42c529a49d72e30f7705a",
+      "bytes": 6105
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/focus-light-en-320-text200.png",
+      "sha256": "25ffd0a33936c8cce2f5ac536ba028c04a5b951bfdffcb554ac35dcefd49e0c8",
+      "bytes": 7453
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-ar-1024-normal.png",
+      "sha256": "fa6e1330c6a50c4d2d9f7b2bca1a0741fd31ef2a4126ca83f4799e12f4b13af8",
+      "bytes": 8673
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-ar-1024-text200.png",
+      "sha256": "9fc1669a51f1b45af4ef2519dbe9fe11ab40e74f1c3a0d95b173489258aa7edd",
+      "bytes": 10182
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-ar-1440-normal.png",
+      "sha256": "352921408c335a8c9abe256da934ad835f42f15329bc8ea996389f7d25d71e23",
+      "bytes": 8872
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-ar-1440-text200.png",
+      "sha256": "54e6d6c524c6861e27ed9b5d49e0855a562f01b28282b274a3fcc1c4657bc78c",
+      "bytes": 10458
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-ar-320-normal.png",
+      "sha256": "d47965d8e3dacbecb24aed832917793a5c9b1ef2d4bc93c3f381bd950339ae44",
+      "bytes": 6157
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-ar-320-text200.png",
+      "sha256": "05d3225eefee15860958b4875ba204dd408be173ad7ea581427b5c8044b3ffbb",
+      "bytes": 7402
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-ar-390-normal.png",
+      "sha256": "008f6b305b3122eb5364638c709f3ea4a7ca4b4e27fd5c6837e48f7170c1a937",
+      "bytes": 6221
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-ar-390-text200.png",
+      "sha256": "8cc6d37e8a8cd608a51755249483c29dc26c22b188af879984d4e0d7e6e57792",
+      "bytes": 7350
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-ar-768-normal.png",
+      "sha256": "981ecf906796337f80c5b58c36a3476ce947f707c016288daf7467e1275506e9",
+      "bytes": 6750
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-ar-768-text200.png",
+      "sha256": "4bdc90a6a05ad9068ca8c6399effccc1a0c1bb9bddf6850901f1798d6fc493a6",
+      "bytes": 7944
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-en-1024-normal.png",
+      "sha256": "8e84bccf8232bd6340d33d1b61fd843f8de6e60d1f07b06f00e72c960ef9ed1d",
+      "bytes": 8154
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-en-1024-text200.png",
+      "sha256": "2c15ffd609b1af6c14db02965725c7ddbea75d1d1eb0921aa5bf12cd50ebb6a4",
+      "bytes": 9641
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-en-1440-normal.png",
+      "sha256": "11f0c5680aea5c7b7de338eaa73dda51f279690dccd3ef408e460668afef1888",
+      "bytes": 8422
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-en-1440-text200.png",
+      "sha256": "3d85bb885aecf240353ba12b3a4af50e98d62594e477458079b914691eae2440",
+      "bytes": 9962
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-en-320-normal.png",
+      "sha256": "6c00c571f0096dd9f396ac38e6b4247b54c1c0384f0644aa1293c2cc539c2995",
+      "bytes": 5940
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-en-320-text200.png",
+      "sha256": "ed69e2079fe04c3229019408e5b63ffcb7e1d0da3843178ab40ba2b860826d31",
+      "bytes": 7261
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-en-390-normal.png",
+      "sha256": "95a53260203d903b027efa4f6ca406ebb47e30ff5f3ebd38b346a0dcfe82ad38",
+      "bytes": 6034
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-en-390-text200.png",
+      "sha256": "785664adf066618dec553d859915af8f367fd5b0cba4e9632801c445d87662b9",
+      "bytes": 7167
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-en-768-normal.png",
+      "sha256": "e48f12afc5845329e3ef567e4dd382a9de302b675f2c099b3248c7776f3b62f6",
+      "bytes": 6727
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-dark-en-768-text200.png",
+      "sha256": "7b66be4eb7b5e783318f39864eb3885bedc82bb8c9338f94772be508fee303e4",
+      "bytes": 7659
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-ar-1024-normal.png",
+      "sha256": "a51fcaaef7617c77d4fd211df3f44d0d6a2c683834242012128c02d13a14f65e",
+      "bytes": 8451
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-ar-1024-text200.png",
+      "sha256": "178013da00c8bf0e391465ec2f9736802701bc104d98989880b0139c505d11db",
+      "bytes": 9903
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-ar-1440-normal.png",
+      "sha256": "777957398df620b26797a2a01475cc179f8f09d352b7c9edcb219231c4171b7d",
+      "bytes": 8681
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-ar-1440-text200.png",
+      "sha256": "33eee373ea4bb5d2de7cd2c13fcb765d34b8036512d75e26fbc2cbcdb1411a7c",
+      "bytes": 10234
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-ar-320-normal.png",
+      "sha256": "eccbe20ee5ccfb9c4145c4b33d966dc03cbfd88d2333870ac0dd3bff9ceac6c3",
+      "bytes": 5942
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-ar-320-text200.png",
+      "sha256": "94ece6d4d32fc89bd00c639d265de7def5e8d27867fa42ef7205f3e02eec717f",
+      "bytes": 7203
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-ar-390-normal.png",
+      "sha256": "8ec3ddad9fbfe600213259d35b825c76c2f70cf73697914695b2eef8040b347b",
+      "bytes": 6033
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-ar-390-text200.png",
+      "sha256": "61a2fbe5e97b97d1191c075ec9369c1b657df9b990537a5d9107dd4a543d7da8",
+      "bytes": 7130
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-ar-768-normal.png",
+      "sha256": "262e40d664fc06b316d4737afaf775c8934a2cade9b0798de976c375f1ff0a45",
+      "bytes": 6600
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-ar-768-text200.png",
+      "sha256": "592e5e9d8bd1a2b645761556220ca0fc381b5e696425c6205752bd723609c584",
+      "bytes": 7797
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-en-1024-normal.png",
+      "sha256": "d7da91541864db0d392863f4a871716860d586a9b8daf21cf641d3a072e717fc",
+      "bytes": 7998
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-en-1024-text200.png",
+      "sha256": "90978f6d8fcedafbd57007740a0d0ce36eca9f60e8b1279a17f2eb52d41ec280",
+      "bytes": 9314
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-en-1440-normal.png",
+      "sha256": "b44431b3a815b458f429478b242fc440c9ecf8f95a13e54ddfbbdb6cc4cdbec9",
+      "bytes": 8245
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-en-1440-text200.png",
+      "sha256": "81a9095b7f5373a2f4ca45031853ca32d08090d986e35ea3d774569464bfe494",
+      "bytes": 9703
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-en-320-normal.png",
+      "sha256": "cd63dbfdcf9b141be0adab3d89f7c6fc078c646f766bc502be9983e9d6fb7ff9",
+      "bytes": 5716
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-en-320-text200.png",
+      "sha256": "08e4c5c9f5bfd33f09b430384c0bfcabc841079edb65842e3375a96ed502854d",
+      "bytes": 7077
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-en-390-normal.png",
+      "sha256": "1165a41759a5dfa6b2d8df7909fb291e1e6c36e8d0a3c7dbf69b99c240062fcf",
+      "bytes": 5824
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-en-390-text200.png",
+      "sha256": "6761f032ce42b2ee2a666f81ba9760a7064dd2b53285fabd5a7cac24676f0cde",
+      "bytes": 6914
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-en-768-normal.png",
+      "sha256": "c27269cb43fcd987c31370ec1005bce77093380d83e27b32d8b5fb8828fb65fc",
+      "bytes": 6558
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/header-light-en-768-text200.png",
+      "sha256": "cf146715e6d5d0ba30c4060e8e58266a74e33530c85161525651aa3439f6d3a9",
+      "bytes": 7456
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/icon-16.png",
+      "sha256": "9d23e0887221d583455468bfea0c87ab6f84fdd78c57d93a3006bd1f5a43cafe",
+      "bytes": 531
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/icon-192.png",
+      "sha256": "818a457ea5a792d127b2d74b17fcab9946f386dfaa3e57eb17307ab39ad8bc94",
+      "bytes": 12558
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/icon-24.png",
+      "sha256": "ecea0787f77e729aacbb69a08e7e8cb7697ab50ab039a9b17dd109d6627ceb5e",
+      "bytes": 859
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/icon-32.png",
+      "sha256": "ac42e1885138ce5794558f7b1167f7741cc2a098da4a79857738ac472b72e26c",
+      "bytes": 1260
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/icon-512.png",
+      "sha256": "cafab23f5b84dcc2642e3400c9aa729fa4839a6e4f7be0e1246f2ee9e04663b5",
+      "bytes": 48845
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/icon-64.png",
+      "sha256": "c6446424fee9c3c4eda7b946a4a71ee0766c469be19fb29fdf78cffa9499ca34",
+      "bytes": 2974
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/independent-ar-320-text200-focus.png",
+      "sha256": "32ac0555732c108ad919561fad371d5a056afa0ece7e7bd220409f5be974c5d4",
+      "bytes": 7829
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/independent-browser.json",
+      "sha256": "1a97f52b9add6b2250b786369ff33acb71d0e0982e3cd6ce92dd89f1c033c2c2",
+      "bytes": 30460
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/independent-en-1440-light-hover.png",
+      "sha256": "2eaf917da2dfcc7e4ff7d059ba9113a2902841d60ed75385e3b28e0bfb9496fa",
+      "bytes": 8159
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/independent-reviewed-assets.json",
+      "sha256": "bba2dd02544c38f56cbfca99aab50151f1994322fc2aad011296b3ef3caa1b69",
+      "bytes": 2032
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/independent-source.json",
+      "sha256": "6da534a93fcbc735fa8fb1019ea9e7d78633c2c29657054de268a4e4cdffae1c",
+      "bytes": 29164
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/maskable-512.png",
+      "sha256": "be06da18d5952e0d252ef51a7d84e3c05b6146d0d88ac2a38125aa88cc2ec98a",
+      "bytes": 26555
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/maskable-circle.png",
+      "sha256": "c2174ad30bfb94d99bd27bbc9b13ca95389f67330d59df83c340c934dac57f67",
+      "bytes": 12582
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/maskable-safe-area.png",
+      "sha256": "fec352fae6fb2e9c5cf564298d2fd6c3d7bfc611e529cbb6e17a523afc431ff4",
+      "bytes": 16709
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/native-pixel-strip.png",
+      "sha256": "51177b61bbc3670b5c1580288ee71484656efd4c062bd9939f5ca8119086d9cf",
+      "bytes": 20847
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/page-dark-ar-1440-normal.png",
+      "sha256": "5b3492bd9c6cc9b53a48280117de9110c0c9498792197e046069f3e18b8b1a4f",
+      "bytes": 475403
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/page-dark-ar-390-normal.png",
+      "sha256": "31bdf77bf23147a2aaff578861a4ddedc3482be89171c82d6a7653e76e3382cc",
+      "bytes": 364422
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/page-dark-en-1440-normal.png",
+      "sha256": "f18f6b5c4c711995318e0d8282fdc0c29313e3485542121d1d329c875c3774c3",
+      "bytes": 474991
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/page-dark-en-390-normal.png",
+      "sha256": "7e9538062b6afa4569d514048cff744850547349bef67df0d3afc953c32620a0",
+      "bytes": 364241
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/page-light-ar-1440-normal.png",
+      "sha256": "bf091b78360bb672013615c3e6b08da67d57ef73da8b5c01a435c70e3484ce5f",
+      "bytes": 475088
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/page-light-ar-390-normal.png",
+      "sha256": "71196a42abbe4d295fcfbe872316a95af47ab835de75c66beb7ed10aa13ddc79",
+      "bytes": 363464
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/page-light-en-1440-normal.png",
+      "sha256": "b059d72b967c5b418dd590f399ca5b101b84c9c38fc0f877bac6617dd1905bcf",
+      "bytes": 474716
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/page-light-en-390-normal.png",
+      "sha256": "914159ebc5fb5d4ec84c51b0680cf78f317407971a28db38138448eca2e4fd36",
+      "bytes": 363245
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/path-audit.json",
+      "sha256": "c28b40cc30a277da5bc40c5f2669c44fc2187a608c007ed23efd2aa8c233ca01",
+      "bytes": 108482
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/preservation.json",
+      "sha256": "4a2b20fe2fddd54d5bd91d9d220fc58fe71531eea6bfdda072f6d52f861d699e",
+      "bytes": 409952
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/provenance.json",
+      "sha256": "c681327c79ebc3823a4d34c4692f5386032c249c9ceac75d9cdc634835ebf870",
+      "bytes": 3324
+    },
+    {
+      "path": "docs/brand-source-exact-100/evidence/symbol-transparent.png",
+      "sha256": "ffac25e7b32205d9677e576da99f4e1e91c51444743cb50f94d17c3879c7c2f1",
+      "bytes": 34290
+    },
+    {
+      "path": "docs/brand-source-exact-100/index.html",
+      "sha256": "cb28b83f6cdb6c996a541fcbb7fdf3706a896d7696cff32a93c611e37ed05fe3",
+      "bytes": 6374
+    },
+    {
+      "path": "docs/brand-source-exact-100/review.css",
+      "sha256": "a518338b557740464503d2c08f9baf1fc6cd5c56d35629a4a967d0377b081d39",
+      "bytes": 3612
+    },
+    {
+      "path": "docs/brand-source-exact-100/review.js",
+      "sha256": "3466e0610092de797b3cc29160614365051c14c5bdfc64776de40f2fbc4d01f9",
+      "bytes": 906
+    },
+    {
+      "path": "docs/brand-source-exact-100/source/lockup-dark.svg",
+      "sha256": "98818e104ae837379b13294760b76025a622d179499d3d586292859d520910ae",
+      "bytes": 75925
+    },
+    {
+      "path": "docs/brand-source-exact-100/source/lockup-light.svg",
+      "sha256": "7e2c326dbc3215d961dfc2472e96589bb5581a50c3272f915607a221bbccef48",
+      "bytes": 75936
+    },
+    {
+      "path": "docs/brand-source-exact-100/source/symbol-primary.svg",
+      "sha256": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b",
+      "bytes": 6320
+    },
+    {
+      "path": "docs/brand-source-exact-100/tools/audit.py",
+      "sha256": "17e52b6c1870b45e631f4da4b08a9172762f1b8e630fbdd3d2784b712b4713b2",
+      "bytes": 6711
+    },
+    {
+      "path": "docs/brand-source-exact-100/tools/generate.py",
+      "sha256": "98f5f7b118ccc508465c0a353b430c192584be75de4f5b3b6808bb61d0ab8adb",
+      "bytes": 6738
+    },
+    {
+      "path": "docs/brand-source-exact-100/tools/qa.mjs",
+      "sha256": "c54436895bc63d71bfb26ae2684d65248cd18d5b6fff2466b04f39ae3e1a91bc",
+      "bytes": 12980
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "reviewer": "Independent review agent, separate source/browser checks",
+  "files": {
+    "assets/bilingual-dark.svg": "0c9dbbab6c66b801fd54720a0eb99632cb10646197880541c72667343a603c63",
+    "assets/bilingual-light.svg": "acedb28f25ce3b1bae16bbe449ac2836261a3e785ca0b95497f3b662991d8f0f",
+    "assets/compact-ar-dark.svg": "bbed526c401f31fefdd1b98d8ab62c64663f2b03b1b8b0ef24a5f81498ea922d",
+    "assets/compact-ar-light.svg": "d83098460ac57d43801314dd5a8f96fa40b72268ae27893b302a0661e8ca89ff",
+    "assets/compact-en-dark.svg": "6ad7f9b61b1a43308e16e8d0a6a4bf80c389bac29d46d292eef938af8e2120c3",
+    "assets/compact-en-light.svg": "e49f02c9e4a7619ca8265d9d01e8e8a3b52176ec4654658b72e2cac6bf60b887",
+    "assets/icon-16.svg": "15c147afe9ac2d798fe32566728cdc4c4bbf4552ab32d77eb8be7dd40bfba03e",
+    "assets/icon-192.svg": "b7e02d3d890178926675e5e2e2c9aee4de633076d75e45894fa2498b4c5d0a0a",
+    "assets/icon-24.svg": "2540551a4214fb96cefbbf05442b3eb53adc5ff592833d77e1865cdeefd711c4",
+    "assets/icon-32.svg": "610a7c913c918b73245a3d29a7d4b6a14e787444d72f862b025d7b002f61159b",
+    "assets/icon-512.svg": "28fba5b16f7d5f73e99ebccd7cdfe05364284134ddd5665cfb20758f67481716",
+    "assets/icon-64.svg": "a90ab9d865da8546826b3a986e59d8b06b8ff1adec666f6ed106843632a16997",
+    "assets/maskable-512.svg": "e9af80f66e0b4c712b28dfbda527fa3572e51f193cbff669d53d8e309c0e6978",
+    "assets/symbol-transparent.svg": "85fab1ed23199654946e0a84122c6302751becf9a6578c6ed8a7424dbf0c531e",
+    "review.css": "a518338b557740464503d2c08f9baf1fc6cd5c56d35629a4a967d0377b081d39",
+    "review.js": "3466e0610092de797b3cc29160614365051c14c5bdfc64776de40f2fbc4d01f9",
+    "source/lockup-dark.svg": "98818e104ae837379b13294760b76025a622d179499d3d586292859d520910ae",
+    "source/lockup-light.svg": "7e2c326dbc3215d961dfc2472e96589bb5581a50c3272f915607a221bbccef48",
+    "source/symbol-primary.svg": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b",
+    "index.html": "cb28b83f6cdb6c996a541fcbb7fdf3706a896d7696cff32a93c611e37ed05fe3"
+  }
+}

@@ -1,5 +1,13 @@
 # Source of truth and document index
 
+Current issue-scoped review reference: [source-exact Violet × Apricot candidate #100](brand-source-exact-100/README.md). This is a provisional review package under explicit [issue #100](https://github.com/abuhmaid28/egyhealth360/issues/100), not final Brand/Design System approval or runtime authorization. CURRENT_STATUS owns mutable state; earlier task wording below remains historical within this scope.
+
+| Issue #100 review document | Classification / responsibility |
+| --- | --- |
+| [brand-source-exact-100/README.md](brand-source-exact-100/README.md) | CURRENT SCOPED REVIEW: source-exact assets, provenance, allowed deltas, DP01 candidate, DP02/AP01–AP05 and owner gate; not final approved identity. |
+| [brand-source-exact-100/VALIDATION.md](brand-source-exact-100/VALIDATION.md) | POINT-IN-TIME EVIDENCE: actual source/path/Arabic/responsive/contrast/native-pixel checks and limitations; final remote head/CI in PR handoff. |
+| [brand-source-exact-100/INDEPENDENT_REVIEW.md](brand-source-exact-100/INDEPENDENT_REVIEW.md) | INDEPENDENT REVIEW EVIDENCE: separately executed screenshot/source/browser review and limits; no owner visual approval. |
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
