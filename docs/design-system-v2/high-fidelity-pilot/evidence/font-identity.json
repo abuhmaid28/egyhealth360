@@ -1,0 +1,37 @@
+[
+  {
+    "file": "inter.ttf",
+    "family": "Inter",
+    "subfamily": "Regular",
+    "postscript": "Inter-Regular",
+    "weight": 400,
+    "axes": [
+      {
+        "tag": "opsz",
+        "min": 14.0,
+        "max": 32.0
+      },
+      {
+        "tag": "wght",
+        "min": 100.0,
+        "max": 900.0
+      }
+    ]
+  },
+  {
+    "file": "plex-400.ttf",
+    "family": "IBM Plex Sans Arabic",
+    "subfamily": "Regular",
+    "postscript": "IBMPlexSansArabic-Regular",
+    "weight": 400,
+    "axes": []
+  },
+  {
+    "file": "plex-600.ttf",
+    "family": "IBM Plex Sans Arabic SemiBold",
+    "subfamily": "Regular",
+    "postscript": "IBMPlexSansArabic-SemiBold",
+    "weight": 600,
+    "axes": []
+  }
+]

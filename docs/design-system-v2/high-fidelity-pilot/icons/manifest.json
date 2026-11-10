@@ -1,0 +1,91 @@
+{
+  "package": "lucide-static@0.468.0",
+  "license": "ISC (Feather portions MIT per package notice)",
+  "source": "https://www.npmjs.com/package/lucide-static/v/0.468.0",
+  "icons": [
+    {
+      "file": "arrow-up-right.svg",
+      "sha256": "7a58fb69deddd385b9bd47b406d3e9f3ccfbe11b319efcd5071cbd5b19c1bd4f"
+    },
+    {
+      "file": "arrow-left.svg",
+      "sha256": "e31ed0af85ffbed2b54f78f37af197c3b84b24e776cba1d27613d6a9ad555a16"
+    },
+    {
+      "file": "arrow-right.svg",
+      "sha256": "12b97a4d2821da556ce7df95f89df46deb94aa711d46b36a848be0de0ac2a7f0"
+    },
+    {
+      "file": "calendar-days.svg",
+      "sha256": "b91ebeecee30b2b6f9258f4fdf25c5fc91adbd265bf071139774dea2f9e51ac7"
+    },
+    {
+      "file": "clock-3.svg",
+      "sha256": "80b713e5b0d9e50b40faf9615e067690839a4cfa243c5f1bfb180eadde201243"
+    },
+    {
+      "file": "map-pin.svg",
+      "sha256": "ad781fbeaaa4c67a1a0c2144c6b3472877fc06c2dddf230bffcbe61a6adce984"
+    },
+    {
+      "file": "chevron-down.svg",
+      "sha256": "04458777b8a99214cd167dc9a8c8a1e35dcc9373b7577f74d5b5da6418ffcf67"
+    },
+    {
+      "file": "chevron-right.svg",
+      "sha256": "fea488a3b60fd7738bbbf8ca98826ef5c0381347c5fd1048d45ee70a75a51cfe"
+    },
+    {
+      "file": "file-text.svg",
+      "sha256": "512f414d72aabc5218b94a9da571df70d8e0b014cfb32ec366b559ec868952d6"
+    },
+    {
+      "file": "lock-keyhole.svg",
+      "sha256": "d2c052ce26b89b063a4b1ecaa98198803b7d881cb0d176cb33c067e5140b2dd0"
+    },
+    {
+      "file": "users.svg",
+      "sha256": "b3ed379df6aea1aa451ff4bbf8b2884c210849ed30fc220484eced85f5d53c2c"
+    },
+    {
+      "file": "user-round.svg",
+      "sha256": "d7390d374551a27503c64a6c4232753f0f5ad5dc03aefa760b52c9347e5474c3"
+    },
+    {
+      "file": "search.svg",
+      "sha256": "e11a04d51c122a8a759211424920efc65fa36b7ab06237c34ef90317d920ddf9"
+    },
+    {
+      "file": "calendar-check-2.svg",
+      "sha256": "9389266048456998363ef4d72fc4c9913d6e81b751e320c294c5770a3ec89c34"
+    },
+    {
+      "file": "notebook-pen.svg",
+      "sha256": "4723725b43bd649181f37fd32669650ccd8babacd3a7fae698a0e1bfbc92fe33"
+    },
+    {
+      "file": "shield-check.svg",
+      "sha256": "0e9116845c6053cd3bfa09a3e4c232f5fb28c3abab75792287d2aed31c24ebe7"
+    },
+    {
+      "file": "circle-help.svg",
+      "sha256": "e2522d899494d7fbd9d1da86175ba3f17a1516a5e8a9aac90517f497884c8b29"
+    },
+    {
+      "file": "external-link.svg",
+      "sha256": "15432d67349662d1427ca5b8cc52d4152a9a893a251a842a817de1974a6b5766"
+    },
+    {
+      "file": "check.svg",
+      "sha256": "538432eec072ceeccf5a7aacf347a2ad2bff9937d203dbd0b4f4245d7accd93c"
+    },
+    {
+      "file": "x.svg",
+      "sha256": "0f38855d9d5775c10960ae53e46b745f77914b43f78c43bf8abc39f4d5e06de1"
+    },
+    {
+      "file": "chevrons-up-down.svg",
+      "sha256": "e1342b2bea6c359dc2b637ca03cb40c925f5885ce7cc9e9a0da94e1ced1d8fc1"
+    }
+  ]
+}
