@@ -1,0 +1,5130 @@
+{
+  "result": "PASS",
+  "hash_encoding": "SHA-256 of ordered 8-byte big-endian d byte length + raw UTF-8 d, per path and per group",
+  "source_group_inventory": {
+    "symbol-primary": [
+      {
+        "group": "master-symbol",
+        "path_count": 8,
+        "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+        "path_d_sha256": [
+          "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+          "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+          "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+          "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+          "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+          "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+          "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+          "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 8,
+          "ellipse": 1
+        },
+        "source_group_attributes": {
+          "id": "master-symbol"
+        }
+      }
+    ],
+    "lockup-dark": [
+      {
+        "group": "master-symbol",
+        "path_count": 8,
+        "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+        "path_d_sha256": [
+          "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+          "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+          "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+          "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+          "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+          "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+          "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+          "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 8,
+          "ellipse": 1
+        },
+        "source_group_attributes": {
+          "id": "master-symbol"
+        }
+      },
+      {
+        "group": "EgyHealth",
+        "path_count": 9,
+        "ordered_length_prefixed_d_sha256": "0b8856f7e70f34c2aa4cf55110e16c5368d3ce023aaae2a7225aa0677896f5e3",
+        "path_d_sha256": [
+          "1559d629e80ddcdd555f1970cf28580a9af0d7f1c8178445d2946abfba20a0fc",
+          "8f579e2fe4f9cd6d67669de3315409df7b284e413efa5d0513b789eb57719aea",
+          "17191a95ac58959289922fb434d1f0e7a9d89d8c0c5de65754e8951bdbecb703",
+          "5b8608ff32071782378e8728e23086dc567aae895ab25ff0ef34bdd2d8da3802",
+          "fd795eb1ada97a0c5f71d2ddcdcb86da80c36ad5e5037ad2581111f9325a4c2d",
+          "a2ff28b9cc04ec5048474408ee03cb9420c44dc27ac3c20ac6c3b1e93a1616ec",
+          "3316d3cbd6a5aa8824054b45650c31e3d9d1d91c963c1159aac59cba4ad1d58a",
+          "179af6e8bc1253f01619dd131e7fc16dca37c1818a7f3b217826846d2a6e7708",
+          "12a479e347efd82981b980cd7ac30f244bf55234c20ed97aa0b6f892d1512619"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 9
+        },
+        "source_group_attributes": {
+          "data-text": "EgyHealth",
+          "fill": "#ffffff",
+          "transform": "translate(352 110) scale(0.040172166427546625 -0.0419921875)"
+        }
+      },
+      {
+        "group": "360",
+        "path_count": 3,
+        "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+        "path_d_sha256": [
+          "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+          "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+          "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 3
+        },
+        "source_group_attributes": {
+          "data-text": "360",
+          "fill": "url(#wordGold)",
+          "transform": "translate(787 110) scale(0.04007772649987855 -0.0419921875)"
+        }
+      },
+      {
+        "group": "360",
+        "path_count": 3,
+        "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+        "path_d_sha256": [
+          "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+          "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+          "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 3
+        },
+        "source_group_attributes": {
+          "data-text": "360",
+          "fill": "url(#wordGold)",
+          "transform": "translate(382 207) scale(0.036920087442312365 -0.041015625)"
+        }
+      },
+      {
+        "group": "إيجي هيلث",
+        "path_count": 8,
+        "ordered_length_prefixed_d_sha256": "66bd96ec69d4531479e4681d9d2e9b52d3da9544a06292f8137c0859f92311b3",
+        "path_d_sha256": [
+          "50d12025d1523adbbf6d03232f6f50b1a4cf390b739be630cf2b1d9008a30a9f",
+          "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+          "abfad2d52258ce24d4cca68a729e19257185172e7c5426050f9f25a9f30dc5c1",
+          "957d770b81ef5ab482fedf40df68bb38e0416a9c6bbb981d9595f051d72d6c9f",
+          "6350b01ef622ba2e09fead10e844274b4e600d50a72b628cdea82888c200f6b2",
+          "3d44b27955d314526410d3fd0d179dd565462a23ae953446b46e521644d34020",
+          "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+          "cd8be26fc4d330425efe8a52e2b117de5c9e437bace95712bbd555f8c415b34e"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 8
+        },
+        "source_group_attributes": {
+          "data-text": "إيجي هيلث",
+          "fill": "#ffffff",
+          "transform": "translate(560 210) scale(0.08608517421999544 -0.091)"
+        }
+      },
+      {
+        "group": "رعاية متكاملة حولك",
+        "path_count": 16,
+        "ordered_length_prefixed_d_sha256": "7c2db691a3dc0c1ee9d08cc3911462ed77f26ad124dafc48e0c0ccb8fc839cb7",
+        "path_d_sha256": [
+          "2c661dd2bc656c466bc0f9aff399d0bccd3a57f95da224aea010fb11827b68fb",
+          "72544b68929ceca2311b41d44f56631084adce59f55c528eefc51909e773e5a9",
+          "d2c602c415f7b653f8abd92f1e24cf72274ee13f63796cdb3a5aef5e6d35853f",
+          "4405b6b7e853131408532ffe5eea92d779f4b310765bdc19735875228eab1559",
+          "e2ddcd8bb151bfe9b05e706053b7a908f9d28632b65b6cdd70ecac7c8a077022",
+          "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+          "f27de4220d96127d7310735eacec5b193cc5dfeb4f9f8648f63a356b9ec382c5",
+          "a544693db9135735ca317c146c4fe91494bcc1cdb81ae36a6b4049c06707cb9c",
+          "efc8d954cf57a8862bbc0b4356ec14488bffcda9ed9772500bd5ae64af973da9",
+          "a2416f6ec90b7313031d59747546480f2cc43ca8dd902c3f2852384b91eabc9a",
+          "f27de4220d96127d7310735eacec5b193cc5dfeb4f9f8648f63a356b9ec382c5",
+          "e2ddcd8bb151bfe9b05e706053b7a908f9d28632b65b6cdd70ecac7c8a077022",
+          "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+          "a544693db9135735ca317c146c4fe91494bcc1cdb81ae36a6b4049c06707cb9c",
+          "a08b0d58f1dcdd8df9de6efd27ffa0ef94063cdebd7ede1b3659c31e310fe991",
+          "25d46fff0fad9e4beeb911e178971217aa3e0416c5f88545938d3dbf49ed838d"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 16
+        },
+        "source_group_attributes": {
+          "data-text": "رعاية متكاملة حولك",
+          "fill": "#c9edf0",
+          "transform": "translate(468 286) scale(0.05198180636777128 -0.048)"
+        }
+      },
+      {
+        "group": "Integrated care around you",
+        "path_count": 23,
+        "ordered_length_prefixed_d_sha256": "69605ea4392f8a64598464a26d45f5d2b07abced279380f417ff69f75faf22a3",
+        "path_d_sha256": [
+          "c24c7bf6493f3ac9938caf332502ef2600cafb91b656bbe3183e00de3cdeb755",
+          "18861b947f9a73208828dbc09093cfae901b07dbe663da24c41168cab6a9fe63",
+          "fa60c291eacb73e210cb499ffe34c1f07b14e0153c35c45089240c54d67d63a0",
+          "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+          "ce09863077f1418bcfef51757aa8810478c7d246698f963a49e428fa2e642d7b",
+          "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+          "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+          "fa60c291eacb73e210cb499ffe34c1f07b14e0153c35c45089240c54d67d63a0",
+          "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+          "3b98d9dd0973433c9e694f91fd47be6fbe25dc14a86c857a76dc2803e417019a",
+          "682e4b097135b902bde98aed9338d569c5c3026c5e26159b71cd8c57d9afe66e",
+          "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+          "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+          "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+          "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+          "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+          "c90af49047a0485c21cda4d5d41732ba341d6dcb66de79894aa3f372ec579cec",
+          "928462fd959bb3c4a2586d7891aa897040e14ae89d7d655bbc817aac0c3fb08e",
+          "18861b947f9a73208828dbc09093cfae901b07dbe663da24c41168cab6a9fe63",
+          "3b98d9dd0973433c9e694f91fd47be6fbe25dc14a86c857a76dc2803e417019a",
+          "a268f7dd3e89abae5b3890646d4d534596d9c827b7a2c5d111cfac111c1fe055",
+          "c90af49047a0485c21cda4d5d41732ba341d6dcb66de79894aa3f372ec579cec",
+          "928462fd959bb3c4a2586d7891aa897040e14ae89d7d655bbc817aac0c3fb08e"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 23
+        },
+        "source_group_attributes": {
+          "data-text": "Integrated care around you",
+          "fill": "#c9edf0",
+          "transform": "translate(436 331) scale(0.0177452238918674 -0.01708984375)"
+        }
+      }
+    ],
+    "lockup-light": [
+      {
+        "group": "master-symbol",
+        "path_count": 8,
+        "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+        "path_d_sha256": [
+          "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+          "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+          "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+          "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+          "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+          "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+          "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+          "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 8,
+          "ellipse": 1
+        },
+        "source_group_attributes": {
+          "id": "master-symbol"
+        }
+      },
+      {
+        "group": "EgyHealth",
+        "path_count": 9,
+        "ordered_length_prefixed_d_sha256": "0b8856f7e70f34c2aa4cf55110e16c5368d3ce023aaae2a7225aa0677896f5e3",
+        "path_d_sha256": [
+          "1559d629e80ddcdd555f1970cf28580a9af0d7f1c8178445d2946abfba20a0fc",
+          "8f579e2fe4f9cd6d67669de3315409df7b284e413efa5d0513b789eb57719aea",
+          "17191a95ac58959289922fb434d1f0e7a9d89d8c0c5de65754e8951bdbecb703",
+          "5b8608ff32071782378e8728e23086dc567aae895ab25ff0ef34bdd2d8da3802",
+          "fd795eb1ada97a0c5f71d2ddcdcb86da80c36ad5e5037ad2581111f9325a4c2d",
+          "a2ff28b9cc04ec5048474408ee03cb9420c44dc27ac3c20ac6c3b1e93a1616ec",
+          "3316d3cbd6a5aa8824054b45650c31e3d9d1d91c963c1159aac59cba4ad1d58a",
+          "179af6e8bc1253f01619dd131e7fc16dca37c1818a7f3b217826846d2a6e7708",
+          "12a479e347efd82981b980cd7ac30f244bf55234c20ed97aa0b6f892d1512619"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 9
+        },
+        "source_group_attributes": {
+          "data-text": "EgyHealth",
+          "fill": "#0b3d4a",
+          "transform": "translate(352 110) scale(0.040172166427546625 -0.0419921875)"
+        }
+      },
+      {
+        "group": "360",
+        "path_count": 3,
+        "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+        "path_d_sha256": [
+          "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+          "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+          "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 3
+        },
+        "source_group_attributes": {
+          "data-text": "360",
+          "fill": "url(#wordGoldLight)",
+          "transform": "translate(787 110) scale(0.04007772649987855 -0.0419921875)"
+        }
+      },
+      {
+        "group": "360",
+        "path_count": 3,
+        "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+        "path_d_sha256": [
+          "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+          "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+          "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 3
+        },
+        "source_group_attributes": {
+          "data-text": "360",
+          "fill": "url(#wordGoldLight)",
+          "transform": "translate(382 207) scale(0.036920087442312365 -0.041015625)"
+        }
+      },
+      {
+        "group": "إيجي هيلث",
+        "path_count": 8,
+        "ordered_length_prefixed_d_sha256": "66bd96ec69d4531479e4681d9d2e9b52d3da9544a06292f8137c0859f92311b3",
+        "path_d_sha256": [
+          "50d12025d1523adbbf6d03232f6f50b1a4cf390b739be630cf2b1d9008a30a9f",
+          "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+          "abfad2d52258ce24d4cca68a729e19257185172e7c5426050f9f25a9f30dc5c1",
+          "957d770b81ef5ab482fedf40df68bb38e0416a9c6bbb981d9595f051d72d6c9f",
+          "6350b01ef622ba2e09fead10e844274b4e600d50a72b628cdea82888c200f6b2",
+          "3d44b27955d314526410d3fd0d179dd565462a23ae953446b46e521644d34020",
+          "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+          "cd8be26fc4d330425efe8a52e2b117de5c9e437bace95712bbd555f8c415b34e"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 8
+        },
+        "source_group_attributes": {
+          "data-text": "إيجي هيلث",
+          "fill": "#0b3d4a",
+          "transform": "translate(560 210) scale(0.08608517421999544 -0.091)"
+        }
+      },
+      {
+        "group": "رعاية متكاملة حولك",
+        "path_count": 16,
+        "ordered_length_prefixed_d_sha256": "7c2db691a3dc0c1ee9d08cc3911462ed77f26ad124dafc48e0c0ccb8fc839cb7",
+        "path_d_sha256": [
+          "2c661dd2bc656c466bc0f9aff399d0bccd3a57f95da224aea010fb11827b68fb",
+          "72544b68929ceca2311b41d44f56631084adce59f55c528eefc51909e773e5a9",
+          "d2c602c415f7b653f8abd92f1e24cf72274ee13f63796cdb3a5aef5e6d35853f",
+          "4405b6b7e853131408532ffe5eea92d779f4b310765bdc19735875228eab1559",
+          "e2ddcd8bb151bfe9b05e706053b7a908f9d28632b65b6cdd70ecac7c8a077022",
+          "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+          "f27de4220d96127d7310735eacec5b193cc5dfeb4f9f8648f63a356b9ec382c5",
+          "a544693db9135735ca317c146c4fe91494bcc1cdb81ae36a6b4049c06707cb9c",
+          "efc8d954cf57a8862bbc0b4356ec14488bffcda9ed9772500bd5ae64af973da9",
+          "a2416f6ec90b7313031d59747546480f2cc43ca8dd902c3f2852384b91eabc9a",
+          "f27de4220d96127d7310735eacec5b193cc5dfeb4f9f8648f63a356b9ec382c5",
+          "e2ddcd8bb151bfe9b05e706053b7a908f9d28632b65b6cdd70ecac7c8a077022",
+          "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+          "a544693db9135735ca317c146c4fe91494bcc1cdb81ae36a6b4049c06707cb9c",
+          "a08b0d58f1dcdd8df9de6efd27ffa0ef94063cdebd7ede1b3659c31e310fe991",
+          "25d46fff0fad9e4beeb911e178971217aa3e0416c5f88545938d3dbf49ed838d"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 16
+        },
+        "source_group_attributes": {
+          "data-text": "رعاية متكاملة حولك",
+          "fill": "#0b3d4a",
+          "transform": "translate(468 286) scale(0.05198180636777128 -0.048)"
+        }
+      },
+      {
+        "group": "Integrated care around you",
+        "path_count": 23,
+        "ordered_length_prefixed_d_sha256": "69605ea4392f8a64598464a26d45f5d2b07abced279380f417ff69f75faf22a3",
+        "path_d_sha256": [
+          "c24c7bf6493f3ac9938caf332502ef2600cafb91b656bbe3183e00de3cdeb755",
+          "18861b947f9a73208828dbc09093cfae901b07dbe663da24c41168cab6a9fe63",
+          "fa60c291eacb73e210cb499ffe34c1f07b14e0153c35c45089240c54d67d63a0",
+          "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+          "ce09863077f1418bcfef51757aa8810478c7d246698f963a49e428fa2e642d7b",
+          "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+          "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+          "fa60c291eacb73e210cb499ffe34c1f07b14e0153c35c45089240c54d67d63a0",
+          "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+          "3b98d9dd0973433c9e694f91fd47be6fbe25dc14a86c857a76dc2803e417019a",
+          "682e4b097135b902bde98aed9338d569c5c3026c5e26159b71cd8c57d9afe66e",
+          "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+          "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+          "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+          "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+          "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+          "c90af49047a0485c21cda4d5d41732ba341d6dcb66de79894aa3f372ec579cec",
+          "928462fd959bb3c4a2586d7891aa897040e14ae89d7d655bbc817aac0c3fb08e",
+          "18861b947f9a73208828dbc09093cfae901b07dbe663da24c41168cab6a9fe63",
+          "3b98d9dd0973433c9e694f91fd47be6fbe25dc14a86c857a76dc2803e417019a",
+          "a268f7dd3e89abae5b3890646d4d534596d9c827b7a2c5d111cfac111c1fe055",
+          "c90af49047a0485c21cda4d5d41732ba341d6dcb66de79894aa3f372ec579cec",
+          "928462fd959bb3c4a2586d7891aa897040e14ae89d7d655bbc817aac0c3fb08e"
+        ],
+        "elements": {
+          "g": 1,
+          "path": 23
+        },
+        "source_group_attributes": {
+          "data-text": "Integrated care around you",
+          "fill": "#0b3d4a",
+          "transform": "translate(436 331) scale(0.0177452238918674 -0.01708984375)"
+        }
+      }
+    ]
+  },
+  "asset_count": 20,
+  "assets": [
+    {
+      "file": "assets/symbol-transparent.svg",
+      "sha256": "85fab1ed23199654946e0a84122c6302751becf9a6578c6ed8a7424dbf0c531e",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(0 0)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "145 70 310 320",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": []
+    },
+    {
+      "file": "assets/maskable-512.svg",
+      "sha256": "e9af80f66e0b4c712b28dfbda527fa3572e51f193cbff669d53d8e309c0e6978",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(16 72) scale(.8)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 512 512",
+        "role": "img",
+        "aria-labelledby": "title",
+        "width": "512",
+        "height": "512"
+      },
+      "backgrounds": [
+        {
+          "width": "512",
+          "height": "512",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/icon-16.svg",
+      "sha256": "15c147afe9ac2d798fe32566728cdc4c4bbf4552ab32d77eb8be7dd40bfba03e",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-128 -38.4) scale(1.28)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 512 512",
+        "role": "img",
+        "aria-labelledby": "title",
+        "width": "16",
+        "height": "16"
+      },
+      "backgrounds": [
+        {
+          "width": "512",
+          "height": "512",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/icon-24.svg",
+      "sha256": "2540551a4214fb96cefbbf05442b3eb53adc5ff592833d77e1865cdeefd711c4",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-128 -38.4) scale(1.28)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 512 512",
+        "role": "img",
+        "aria-labelledby": "title",
+        "width": "24",
+        "height": "24"
+      },
+      "backgrounds": [
+        {
+          "width": "512",
+          "height": "512",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/icon-32.svg",
+      "sha256": "610a7c913c918b73245a3d29a7d4b6a14e787444d72f862b025d7b002f61159b",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-128 -38.4) scale(1.28)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 512 512",
+        "role": "img",
+        "aria-labelledby": "title",
+        "width": "32",
+        "height": "32"
+      },
+      "backgrounds": [
+        {
+          "width": "512",
+          "height": "512",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/icon-64.svg",
+      "sha256": "a90ab9d865da8546826b3a986e59d8b06b8ff1adec666f6ed106843632a16997",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-128 -38.4) scale(1.28)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 512 512",
+        "role": "img",
+        "aria-labelledby": "title",
+        "width": "64",
+        "height": "64"
+      },
+      "backgrounds": [
+        {
+          "width": "512",
+          "height": "512",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/icon-192.svg",
+      "sha256": "b7e02d3d890178926675e5e2e2c9aee4de633076d75e45894fa2498b4c5d0a0a",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-128 -38.4) scale(1.28)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 512 512",
+        "role": "img",
+        "aria-labelledby": "title",
+        "width": "192",
+        "height": "192"
+      },
+      "backgrounds": [
+        {
+          "width": "512",
+          "height": "512",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/icon-512.svg",
+      "sha256": "28fba5b16f7d5f73e99ebccd7cdfe05364284134ddd5665cfb20758f67481716",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-128 -38.4) scale(1.28)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 512 512",
+        "role": "img",
+        "aria-labelledby": "title",
+        "width": "512",
+        "height": "512"
+      },
+      "backgrounds": [
+        {
+          "width": "512",
+          "height": "512",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/compact-en-dark.svg",
+      "sha256": "6ad7f9b61b1a43308e16e8d0a6a4bf80c389bac29d46d292eef938af8e2120c3",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "EgyHealth",
+            "path_count": 9,
+            "ordered_length_prefixed_d_sha256": "0b8856f7e70f34c2aa4cf55110e16c5368d3ce023aaae2a7225aa0677896f5e3",
+            "path_d_sha256": [
+              "1559d629e80ddcdd555f1970cf28580a9af0d7f1c8178445d2946abfba20a0fc",
+              "8f579e2fe4f9cd6d67669de3315409df7b284e413efa5d0513b789eb57719aea",
+              "17191a95ac58959289922fb434d1f0e7a9d89d8c0c5de65754e8951bdbecb703",
+              "5b8608ff32071782378e8728e23086dc567aae895ab25ff0ef34bdd2d8da3802",
+              "fd795eb1ada97a0c5f71d2ddcdcb86da80c36ad5e5037ad2581111f9325a4c2d",
+              "a2ff28b9cc04ec5048474408ee03cb9420c44dc27ac3c20ac6c3b1e93a1616ec",
+              "3316d3cbd6a5aa8824054b45650c31e3d9d1d91c963c1159aac59cba4ad1d58a",
+              "179af6e8bc1253f01619dd131e7fc16dca37c1818a7f3b217826846d2a6e7708",
+              "12a479e347efd82981b980cd7ac30f244bf55234c20ed97aa0b6f892d1512619"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 9
+            },
+            "source_group_attributes": {
+              "data-text": "EgyHealth",
+              "fill": "#F6F2FF",
+              "transform": "translate(352 110) scale(0.040172166427546625 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#FFB88B",
+              "transform": "translate(787 110) scale(0.04007772649987855 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#FFB88B"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-42 -8) scale(.36)"
+        },
+        {
+          "transform": "translate(-190 0)"
+        },
+        {
+          "transform": "translate(-190 0)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 780 145",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": []
+    },
+    {
+      "file": "assets/compact-ar-dark.svg",
+      "sha256": "bbed526c401f31fefdd1b98d8ab62c64663f2b03b1b8b0ef24a5f81498ea922d",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "إيجي هيلث",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "66bd96ec69d4531479e4681d9d2e9b52d3da9544a06292f8137c0859f92311b3",
+            "path_d_sha256": [
+              "50d12025d1523adbbf6d03232f6f50b1a4cf390b739be630cf2b1d9008a30a9f",
+              "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+              "abfad2d52258ce24d4cca68a729e19257185172e7c5426050f9f25a9f30dc5c1",
+              "957d770b81ef5ab482fedf40df68bb38e0416a9c6bbb981d9595f051d72d6c9f",
+              "6350b01ef622ba2e09fead10e844274b4e600d50a72b628cdea82888c200f6b2",
+              "3d44b27955d314526410d3fd0d179dd565462a23ae953446b46e521644d34020",
+              "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+              "cd8be26fc4d330425efe8a52e2b117de5c9e437bace95712bbd555f8c415b34e"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8
+            },
+            "source_group_attributes": {
+              "data-text": "إيجي هيلث",
+              "fill": "#F6F2FF",
+              "transform": "translate(560 210) scale(0.08608517421999544 -0.091)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#FFB88B",
+              "transform": "translate(382 207) scale(0.036920087442312365 -0.041015625)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#FFB88B"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-42 -8) scale(.36)"
+        },
+        {
+          "transform": "translate(-190 -123)"
+        },
+        {
+          "transform": "translate(-190 -123)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 780 145",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": []
+    },
+    {
+      "file": "assets/bilingual-dark.svg",
+      "sha256": "0c9dbbab6c66b801fd54720a0eb99632cb10646197880541c72667343a603c63",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "EgyHealth",
+            "path_count": 9,
+            "ordered_length_prefixed_d_sha256": "0b8856f7e70f34c2aa4cf55110e16c5368d3ce023aaae2a7225aa0677896f5e3",
+            "path_d_sha256": [
+              "1559d629e80ddcdd555f1970cf28580a9af0d7f1c8178445d2946abfba20a0fc",
+              "8f579e2fe4f9cd6d67669de3315409df7b284e413efa5d0513b789eb57719aea",
+              "17191a95ac58959289922fb434d1f0e7a9d89d8c0c5de65754e8951bdbecb703",
+              "5b8608ff32071782378e8728e23086dc567aae895ab25ff0ef34bdd2d8da3802",
+              "fd795eb1ada97a0c5f71d2ddcdcb86da80c36ad5e5037ad2581111f9325a4c2d",
+              "a2ff28b9cc04ec5048474408ee03cb9420c44dc27ac3c20ac6c3b1e93a1616ec",
+              "3316d3cbd6a5aa8824054b45650c31e3d9d1d91c963c1159aac59cba4ad1d58a",
+              "179af6e8bc1253f01619dd131e7fc16dca37c1818a7f3b217826846d2a6e7708",
+              "12a479e347efd82981b980cd7ac30f244bf55234c20ed97aa0b6f892d1512619"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 9
+            },
+            "source_group_attributes": {
+              "data-text": "EgyHealth",
+              "fill": "#F6F2FF",
+              "transform": "translate(352 110) scale(0.040172166427546625 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#FFB88B",
+              "transform": "translate(787 110) scale(0.04007772649987855 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#FFB88B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#FFB88B",
+              "transform": "translate(382 207) scale(0.036920087442312365 -0.041015625)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#FFB88B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "إيجي هيلث",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "66bd96ec69d4531479e4681d9d2e9b52d3da9544a06292f8137c0859f92311b3",
+            "path_d_sha256": [
+              "50d12025d1523adbbf6d03232f6f50b1a4cf390b739be630cf2b1d9008a30a9f",
+              "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+              "abfad2d52258ce24d4cca68a729e19257185172e7c5426050f9f25a9f30dc5c1",
+              "957d770b81ef5ab482fedf40df68bb38e0416a9c6bbb981d9595f051d72d6c9f",
+              "6350b01ef622ba2e09fead10e844274b4e600d50a72b628cdea82888c200f6b2",
+              "3d44b27955d314526410d3fd0d179dd565462a23ae953446b46e521644d34020",
+              "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+              "cd8be26fc4d330425efe8a52e2b117de5c9e437bace95712bbd555f8c415b34e"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8
+            },
+            "source_group_attributes": {
+              "data-text": "إيجي هيلث",
+              "fill": "#F6F2FF",
+              "transform": "translate(560 210) scale(0.08608517421999544 -0.091)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "رعاية متكاملة حولك",
+            "path_count": 16,
+            "ordered_length_prefixed_d_sha256": "7c2db691a3dc0c1ee9d08cc3911462ed77f26ad124dafc48e0c0ccb8fc839cb7",
+            "path_d_sha256": [
+              "2c661dd2bc656c466bc0f9aff399d0bccd3a57f95da224aea010fb11827b68fb",
+              "72544b68929ceca2311b41d44f56631084adce59f55c528eefc51909e773e5a9",
+              "d2c602c415f7b653f8abd92f1e24cf72274ee13f63796cdb3a5aef5e6d35853f",
+              "4405b6b7e853131408532ffe5eea92d779f4b310765bdc19735875228eab1559",
+              "e2ddcd8bb151bfe9b05e706053b7a908f9d28632b65b6cdd70ecac7c8a077022",
+              "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+              "f27de4220d96127d7310735eacec5b193cc5dfeb4f9f8648f63a356b9ec382c5",
+              "a544693db9135735ca317c146c4fe91494bcc1cdb81ae36a6b4049c06707cb9c",
+              "efc8d954cf57a8862bbc0b4356ec14488bffcda9ed9772500bd5ae64af973da9",
+              "a2416f6ec90b7313031d59747546480f2cc43ca8dd902c3f2852384b91eabc9a",
+              "f27de4220d96127d7310735eacec5b193cc5dfeb4f9f8648f63a356b9ec382c5",
+              "e2ddcd8bb151bfe9b05e706053b7a908f9d28632b65b6cdd70ecac7c8a077022",
+              "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+              "a544693db9135735ca317c146c4fe91494bcc1cdb81ae36a6b4049c06707cb9c",
+              "a08b0d58f1dcdd8df9de6efd27ffa0ef94063cdebd7ede1b3659c31e310fe991",
+              "25d46fff0fad9e4beeb911e178971217aa3e0416c5f88545938d3dbf49ed838d"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 16
+            },
+            "source_group_attributes": {
+              "data-text": "رعاية متكاملة حولك",
+              "fill": "#F6F2FF",
+              "transform": "translate(468 286) scale(0.05198180636777128 -0.048)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#c9edf0",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "Integrated care around you",
+            "path_count": 23,
+            "ordered_length_prefixed_d_sha256": "69605ea4392f8a64598464a26d45f5d2b07abced279380f417ff69f75faf22a3",
+            "path_d_sha256": [
+              "c24c7bf6493f3ac9938caf332502ef2600cafb91b656bbe3183e00de3cdeb755",
+              "18861b947f9a73208828dbc09093cfae901b07dbe663da24c41168cab6a9fe63",
+              "fa60c291eacb73e210cb499ffe34c1f07b14e0153c35c45089240c54d67d63a0",
+              "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+              "ce09863077f1418bcfef51757aa8810478c7d246698f963a49e428fa2e642d7b",
+              "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+              "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+              "fa60c291eacb73e210cb499ffe34c1f07b14e0153c35c45089240c54d67d63a0",
+              "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+              "3b98d9dd0973433c9e694f91fd47be6fbe25dc14a86c857a76dc2803e417019a",
+              "682e4b097135b902bde98aed9338d569c5c3026c5e26159b71cd8c57d9afe66e",
+              "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+              "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+              "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+              "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+              "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+              "c90af49047a0485c21cda4d5d41732ba341d6dcb66de79894aa3f372ec579cec",
+              "928462fd959bb3c4a2586d7891aa897040e14ae89d7d655bbc817aac0c3fb08e",
+              "18861b947f9a73208828dbc09093cfae901b07dbe663da24c41168cab6a9fe63",
+              "3b98d9dd0973433c9e694f91fd47be6fbe25dc14a86c857a76dc2803e417019a",
+              "a268f7dd3e89abae5b3890646d4d534596d9c827b7a2c5d111cfac111c1fe055",
+              "c90af49047a0485c21cda4d5d41732ba341d6dcb66de79894aa3f372ec579cec",
+              "928462fd959bb3c4a2586d7891aa897040e14ae89d7d655bbc817aac0c3fb08e"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 23
+            },
+            "source_group_attributes": {
+              "data-text": "Integrated care around you",
+              "fill": "#F6F2FF",
+              "transform": "translate(436 331) scale(0.0177452238918674 -0.01708984375)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#c9edf0",
+              "to": "#F6F2FF"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-125 -55)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 28)"
+        },
+        {
+          "transform": "translate(0 34)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 1010 402",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": [
+        {
+          "width": "1010",
+          "height": "402",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/primary-en-dark.svg",
+      "sha256": "eaa33073140aff82d87d34e134157671f7f8d38ac625618a26b69978641bddd5",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "EgyHealth",
+            "path_count": 9,
+            "ordered_length_prefixed_d_sha256": "0b8856f7e70f34c2aa4cf55110e16c5368d3ce023aaae2a7225aa0677896f5e3",
+            "path_d_sha256": [
+              "1559d629e80ddcdd555f1970cf28580a9af0d7f1c8178445d2946abfba20a0fc",
+              "8f579e2fe4f9cd6d67669de3315409df7b284e413efa5d0513b789eb57719aea",
+              "17191a95ac58959289922fb434d1f0e7a9d89d8c0c5de65754e8951bdbecb703",
+              "5b8608ff32071782378e8728e23086dc567aae895ab25ff0ef34bdd2d8da3802",
+              "fd795eb1ada97a0c5f71d2ddcdcb86da80c36ad5e5037ad2581111f9325a4c2d",
+              "a2ff28b9cc04ec5048474408ee03cb9420c44dc27ac3c20ac6c3b1e93a1616ec",
+              "3316d3cbd6a5aa8824054b45650c31e3d9d1d91c963c1159aac59cba4ad1d58a",
+              "179af6e8bc1253f01619dd131e7fc16dca37c1818a7f3b217826846d2a6e7708",
+              "12a479e347efd82981b980cd7ac30f244bf55234c20ed97aa0b6f892d1512619"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 9
+            },
+            "source_group_attributes": {
+              "data-text": "EgyHealth",
+              "fill": "#F6F2FF",
+              "transform": "translate(352 110) scale(0.040172166427546625 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#FFB88B",
+              "transform": "translate(787 110) scale(0.04007772649987855 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#FFB88B"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-42 -8) scale(.36)"
+        },
+        {
+          "transform": "translate(-190 0)"
+        },
+        {
+          "transform": "translate(-190 0)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 780 145",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": [
+        {
+          "width": "780",
+          "height": "145",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/primary-ar-dark.svg",
+      "sha256": "f96e38a2a6e1e7273edd57b8e98005f28b0894efa03ffba41ef2c0394a5196da",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "إيجي هيلث",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "66bd96ec69d4531479e4681d9d2e9b52d3da9544a06292f8137c0859f92311b3",
+            "path_d_sha256": [
+              "50d12025d1523adbbf6d03232f6f50b1a4cf390b739be630cf2b1d9008a30a9f",
+              "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+              "abfad2d52258ce24d4cca68a729e19257185172e7c5426050f9f25a9f30dc5c1",
+              "957d770b81ef5ab482fedf40df68bb38e0416a9c6bbb981d9595f051d72d6c9f",
+              "6350b01ef622ba2e09fead10e844274b4e600d50a72b628cdea82888c200f6b2",
+              "3d44b27955d314526410d3fd0d179dd565462a23ae953446b46e521644d34020",
+              "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+              "cd8be26fc4d330425efe8a52e2b117de5c9e437bace95712bbd555f8c415b34e"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8
+            },
+            "source_group_attributes": {
+              "data-text": "إيجي هيلث",
+              "fill": "#F6F2FF",
+              "transform": "translate(560 210) scale(0.08608517421999544 -0.091)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#FFB88B",
+              "transform": "translate(382 207) scale(0.036920087442312365 -0.041015625)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#FFB88B"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-42 -8) scale(.36)"
+        },
+        {
+          "transform": "translate(-190 -123)"
+        },
+        {
+          "transform": "translate(-190 -123)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 780 145",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": [
+        {
+          "width": "780",
+          "height": "145",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/primary-bilingual-dark.svg",
+      "sha256": "8f6c88c7aff5e6646a62a3443e038b61bc1e21436fb4ac1947b4b552cfd3876e",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "EgyHealth",
+            "path_count": 9,
+            "ordered_length_prefixed_d_sha256": "0b8856f7e70f34c2aa4cf55110e16c5368d3ce023aaae2a7225aa0677896f5e3",
+            "path_d_sha256": [
+              "1559d629e80ddcdd555f1970cf28580a9af0d7f1c8178445d2946abfba20a0fc",
+              "8f579e2fe4f9cd6d67669de3315409df7b284e413efa5d0513b789eb57719aea",
+              "17191a95ac58959289922fb434d1f0e7a9d89d8c0c5de65754e8951bdbecb703",
+              "5b8608ff32071782378e8728e23086dc567aae895ab25ff0ef34bdd2d8da3802",
+              "fd795eb1ada97a0c5f71d2ddcdcb86da80c36ad5e5037ad2581111f9325a4c2d",
+              "a2ff28b9cc04ec5048474408ee03cb9420c44dc27ac3c20ac6c3b1e93a1616ec",
+              "3316d3cbd6a5aa8824054b45650c31e3d9d1d91c963c1159aac59cba4ad1d58a",
+              "179af6e8bc1253f01619dd131e7fc16dca37c1818a7f3b217826846d2a6e7708",
+              "12a479e347efd82981b980cd7ac30f244bf55234c20ed97aa0b6f892d1512619"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 9
+            },
+            "source_group_attributes": {
+              "data-text": "EgyHealth",
+              "fill": "#F6F2FF",
+              "transform": "translate(352 110) scale(0.040172166427546625 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#FFB88B",
+              "transform": "translate(787 110) scale(0.04007772649987855 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#FFB88B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#FFB88B",
+              "transform": "translate(382 207) scale(0.036920087442312365 -0.041015625)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#FFB88B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "إيجي هيلث",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "66bd96ec69d4531479e4681d9d2e9b52d3da9544a06292f8137c0859f92311b3",
+            "path_d_sha256": [
+              "50d12025d1523adbbf6d03232f6f50b1a4cf390b739be630cf2b1d9008a30a9f",
+              "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+              "abfad2d52258ce24d4cca68a729e19257185172e7c5426050f9f25a9f30dc5c1",
+              "957d770b81ef5ab482fedf40df68bb38e0416a9c6bbb981d9595f051d72d6c9f",
+              "6350b01ef622ba2e09fead10e844274b4e600d50a72b628cdea82888c200f6b2",
+              "3d44b27955d314526410d3fd0d179dd565462a23ae953446b46e521644d34020",
+              "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+              "cd8be26fc4d330425efe8a52e2b117de5c9e437bace95712bbd555f8c415b34e"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8
+            },
+            "source_group_attributes": {
+              "data-text": "إيجي هيلث",
+              "fill": "#F6F2FF",
+              "transform": "translate(560 210) scale(0.08608517421999544 -0.091)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#F6F2FF"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-125 -55)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 1010 350",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": [
+        {
+          "width": "1010",
+          "height": "350",
+          "fill": "#10121D"
+        }
+      ]
+    },
+    {
+      "file": "assets/compact-en-light.svg",
+      "sha256": "e49f02c9e4a7619ca8265d9d01e8e8a3b52176ec4654658b72e2cac6bf60b887",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "EgyHealth",
+            "path_count": 9,
+            "ordered_length_prefixed_d_sha256": "0b8856f7e70f34c2aa4cf55110e16c5368d3ce023aaae2a7225aa0677896f5e3",
+            "path_d_sha256": [
+              "1559d629e80ddcdd555f1970cf28580a9af0d7f1c8178445d2946abfba20a0fc",
+              "8f579e2fe4f9cd6d67669de3315409df7b284e413efa5d0513b789eb57719aea",
+              "17191a95ac58959289922fb434d1f0e7a9d89d8c0c5de65754e8951bdbecb703",
+              "5b8608ff32071782378e8728e23086dc567aae895ab25ff0ef34bdd2d8da3802",
+              "fd795eb1ada97a0c5f71d2ddcdcb86da80c36ad5e5037ad2581111f9325a4c2d",
+              "a2ff28b9cc04ec5048474408ee03cb9420c44dc27ac3c20ac6c3b1e93a1616ec",
+              "3316d3cbd6a5aa8824054b45650c31e3d9d1d91c963c1159aac59cba4ad1d58a",
+              "179af6e8bc1253f01619dd131e7fc16dca37c1818a7f3b217826846d2a6e7708",
+              "12a479e347efd82981b980cd7ac30f244bf55234c20ed97aa0b6f892d1512619"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 9
+            },
+            "source_group_attributes": {
+              "data-text": "EgyHealth",
+              "fill": "#17142B",
+              "transform": "translate(352 110) scale(0.040172166427546625 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#17142B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#6240B8",
+              "transform": "translate(787 110) scale(0.04007772649987855 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#6240B8"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-42 -8) scale(.36)"
+        },
+        {
+          "transform": "translate(-190 0)"
+        },
+        {
+          "transform": "translate(-190 0)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 780 145",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": []
+    },
+    {
+      "file": "assets/compact-ar-light.svg",
+      "sha256": "d83098460ac57d43801314dd5a8f96fa40b72268ae27893b302a0661e8ca89ff",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "إيجي هيلث",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "66bd96ec69d4531479e4681d9d2e9b52d3da9544a06292f8137c0859f92311b3",
+            "path_d_sha256": [
+              "50d12025d1523adbbf6d03232f6f50b1a4cf390b739be630cf2b1d9008a30a9f",
+              "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+              "abfad2d52258ce24d4cca68a729e19257185172e7c5426050f9f25a9f30dc5c1",
+              "957d770b81ef5ab482fedf40df68bb38e0416a9c6bbb981d9595f051d72d6c9f",
+              "6350b01ef622ba2e09fead10e844274b4e600d50a72b628cdea82888c200f6b2",
+              "3d44b27955d314526410d3fd0d179dd565462a23ae953446b46e521644d34020",
+              "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+              "cd8be26fc4d330425efe8a52e2b117de5c9e437bace95712bbd555f8c415b34e"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8
+            },
+            "source_group_attributes": {
+              "data-text": "إيجي هيلث",
+              "fill": "#17142B",
+              "transform": "translate(560 210) scale(0.08608517421999544 -0.091)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#17142B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#6240B8",
+              "transform": "translate(382 207) scale(0.036920087442312365 -0.041015625)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#6240B8"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-42 -8) scale(.36)"
+        },
+        {
+          "transform": "translate(-190 -123)"
+        },
+        {
+          "transform": "translate(-190 -123)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 780 145",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": []
+    },
+    {
+      "file": "assets/bilingual-light.svg",
+      "sha256": "acedb28f25ce3b1bae16bbe449ac2836261a3e785ca0b95497f3b662991d8f0f",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "EgyHealth",
+            "path_count": 9,
+            "ordered_length_prefixed_d_sha256": "0b8856f7e70f34c2aa4cf55110e16c5368d3ce023aaae2a7225aa0677896f5e3",
+            "path_d_sha256": [
+              "1559d629e80ddcdd555f1970cf28580a9af0d7f1c8178445d2946abfba20a0fc",
+              "8f579e2fe4f9cd6d67669de3315409df7b284e413efa5d0513b789eb57719aea",
+              "17191a95ac58959289922fb434d1f0e7a9d89d8c0c5de65754e8951bdbecb703",
+              "5b8608ff32071782378e8728e23086dc567aae895ab25ff0ef34bdd2d8da3802",
+              "fd795eb1ada97a0c5f71d2ddcdcb86da80c36ad5e5037ad2581111f9325a4c2d",
+              "a2ff28b9cc04ec5048474408ee03cb9420c44dc27ac3c20ac6c3b1e93a1616ec",
+              "3316d3cbd6a5aa8824054b45650c31e3d9d1d91c963c1159aac59cba4ad1d58a",
+              "179af6e8bc1253f01619dd131e7fc16dca37c1818a7f3b217826846d2a6e7708",
+              "12a479e347efd82981b980cd7ac30f244bf55234c20ed97aa0b6f892d1512619"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 9
+            },
+            "source_group_attributes": {
+              "data-text": "EgyHealth",
+              "fill": "#17142B",
+              "transform": "translate(352 110) scale(0.040172166427546625 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#17142B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#6240B8",
+              "transform": "translate(787 110) scale(0.04007772649987855 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#6240B8"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#6240B8",
+              "transform": "translate(382 207) scale(0.036920087442312365 -0.041015625)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#6240B8"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "إيجي هيلث",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "66bd96ec69d4531479e4681d9d2e9b52d3da9544a06292f8137c0859f92311b3",
+            "path_d_sha256": [
+              "50d12025d1523adbbf6d03232f6f50b1a4cf390b739be630cf2b1d9008a30a9f",
+              "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+              "abfad2d52258ce24d4cca68a729e19257185172e7c5426050f9f25a9f30dc5c1",
+              "957d770b81ef5ab482fedf40df68bb38e0416a9c6bbb981d9595f051d72d6c9f",
+              "6350b01ef622ba2e09fead10e844274b4e600d50a72b628cdea82888c200f6b2",
+              "3d44b27955d314526410d3fd0d179dd565462a23ae953446b46e521644d34020",
+              "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+              "cd8be26fc4d330425efe8a52e2b117de5c9e437bace95712bbd555f8c415b34e"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8
+            },
+            "source_group_attributes": {
+              "data-text": "إيجي هيلث",
+              "fill": "#17142B",
+              "transform": "translate(560 210) scale(0.08608517421999544 -0.091)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#17142B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "رعاية متكاملة حولك",
+            "path_count": 16,
+            "ordered_length_prefixed_d_sha256": "7c2db691a3dc0c1ee9d08cc3911462ed77f26ad124dafc48e0c0ccb8fc839cb7",
+            "path_d_sha256": [
+              "2c661dd2bc656c466bc0f9aff399d0bccd3a57f95da224aea010fb11827b68fb",
+              "72544b68929ceca2311b41d44f56631084adce59f55c528eefc51909e773e5a9",
+              "d2c602c415f7b653f8abd92f1e24cf72274ee13f63796cdb3a5aef5e6d35853f",
+              "4405b6b7e853131408532ffe5eea92d779f4b310765bdc19735875228eab1559",
+              "e2ddcd8bb151bfe9b05e706053b7a908f9d28632b65b6cdd70ecac7c8a077022",
+              "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+              "f27de4220d96127d7310735eacec5b193cc5dfeb4f9f8648f63a356b9ec382c5",
+              "a544693db9135735ca317c146c4fe91494bcc1cdb81ae36a6b4049c06707cb9c",
+              "efc8d954cf57a8862bbc0b4356ec14488bffcda9ed9772500bd5ae64af973da9",
+              "a2416f6ec90b7313031d59747546480f2cc43ca8dd902c3f2852384b91eabc9a",
+              "f27de4220d96127d7310735eacec5b193cc5dfeb4f9f8648f63a356b9ec382c5",
+              "e2ddcd8bb151bfe9b05e706053b7a908f9d28632b65b6cdd70ecac7c8a077022",
+              "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+              "a544693db9135735ca317c146c4fe91494bcc1cdb81ae36a6b4049c06707cb9c",
+              "a08b0d58f1dcdd8df9de6efd27ffa0ef94063cdebd7ede1b3659c31e310fe991",
+              "25d46fff0fad9e4beeb911e178971217aa3e0416c5f88545938d3dbf49ed838d"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 16
+            },
+            "source_group_attributes": {
+              "data-text": "رعاية متكاملة حولك",
+              "fill": "#17142B",
+              "transform": "translate(468 286) scale(0.05198180636777128 -0.048)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#c9edf0",
+              "to": "#17142B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "Integrated care around you",
+            "path_count": 23,
+            "ordered_length_prefixed_d_sha256": "69605ea4392f8a64598464a26d45f5d2b07abced279380f417ff69f75faf22a3",
+            "path_d_sha256": [
+              "c24c7bf6493f3ac9938caf332502ef2600cafb91b656bbe3183e00de3cdeb755",
+              "18861b947f9a73208828dbc09093cfae901b07dbe663da24c41168cab6a9fe63",
+              "fa60c291eacb73e210cb499ffe34c1f07b14e0153c35c45089240c54d67d63a0",
+              "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+              "ce09863077f1418bcfef51757aa8810478c7d246698f963a49e428fa2e642d7b",
+              "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+              "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+              "fa60c291eacb73e210cb499ffe34c1f07b14e0153c35c45089240c54d67d63a0",
+              "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+              "3b98d9dd0973433c9e694f91fd47be6fbe25dc14a86c857a76dc2803e417019a",
+              "682e4b097135b902bde98aed9338d569c5c3026c5e26159b71cd8c57d9afe66e",
+              "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+              "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+              "e04522deceaecdc0ca912026914f87dd762a99e47a132ba26459614a50343ca1",
+              "f51da6e1a476e8150c1ed448b6351f5daa8f48009b738d69d13429f2d985ad45",
+              "dc49d5e03aa2a30c87d667c34cbb23141dd2da3a6f2a2a16096e217df8a22650",
+              "c90af49047a0485c21cda4d5d41732ba341d6dcb66de79894aa3f372ec579cec",
+              "928462fd959bb3c4a2586d7891aa897040e14ae89d7d655bbc817aac0c3fb08e",
+              "18861b947f9a73208828dbc09093cfae901b07dbe663da24c41168cab6a9fe63",
+              "3b98d9dd0973433c9e694f91fd47be6fbe25dc14a86c857a76dc2803e417019a",
+              "a268f7dd3e89abae5b3890646d4d534596d9c827b7a2c5d111cfac111c1fe055",
+              "c90af49047a0485c21cda4d5d41732ba341d6dcb66de79894aa3f372ec579cec",
+              "928462fd959bb3c4a2586d7891aa897040e14ae89d7d655bbc817aac0c3fb08e"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 23
+            },
+            "source_group_attributes": {
+              "data-text": "Integrated care around you",
+              "fill": "#17142B",
+              "transform": "translate(436 331) scale(0.0177452238918674 -0.01708984375)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#c9edf0",
+              "to": "#17142B"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-125 -55)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 28)"
+        },
+        {
+          "transform": "translate(0 34)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 1010 402",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": [
+        {
+          "width": "1010",
+          "height": "402",
+          "fill": "#F8F7FB"
+        }
+      ]
+    },
+    {
+      "file": "assets/primary-en-light.svg",
+      "sha256": "f6935c1441d2e68092109425d31f707621f6ec33b405d6ceb00fc0876f53b54e",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "EgyHealth",
+            "path_count": 9,
+            "ordered_length_prefixed_d_sha256": "0b8856f7e70f34c2aa4cf55110e16c5368d3ce023aaae2a7225aa0677896f5e3",
+            "path_d_sha256": [
+              "1559d629e80ddcdd555f1970cf28580a9af0d7f1c8178445d2946abfba20a0fc",
+              "8f579e2fe4f9cd6d67669de3315409df7b284e413efa5d0513b789eb57719aea",
+              "17191a95ac58959289922fb434d1f0e7a9d89d8c0c5de65754e8951bdbecb703",
+              "5b8608ff32071782378e8728e23086dc567aae895ab25ff0ef34bdd2d8da3802",
+              "fd795eb1ada97a0c5f71d2ddcdcb86da80c36ad5e5037ad2581111f9325a4c2d",
+              "a2ff28b9cc04ec5048474408ee03cb9420c44dc27ac3c20ac6c3b1e93a1616ec",
+              "3316d3cbd6a5aa8824054b45650c31e3d9d1d91c963c1159aac59cba4ad1d58a",
+              "179af6e8bc1253f01619dd131e7fc16dca37c1818a7f3b217826846d2a6e7708",
+              "12a479e347efd82981b980cd7ac30f244bf55234c20ed97aa0b6f892d1512619"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 9
+            },
+            "source_group_attributes": {
+              "data-text": "EgyHealth",
+              "fill": "#17142B",
+              "transform": "translate(352 110) scale(0.040172166427546625 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#17142B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#6240B8",
+              "transform": "translate(787 110) scale(0.04007772649987855 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#6240B8"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-42 -8) scale(.36)"
+        },
+        {
+          "transform": "translate(-190 0)"
+        },
+        {
+          "transform": "translate(-190 0)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 780 145",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": [
+        {
+          "width": "780",
+          "height": "145",
+          "fill": "#F8F7FB"
+        }
+      ]
+    },
+    {
+      "file": "assets/primary-ar-light.svg",
+      "sha256": "76d14637666b2d9aadbdc211223454c3f216bff38927c11577ed4d77abce4fa4",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "إيجي هيلث",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "66bd96ec69d4531479e4681d9d2e9b52d3da9544a06292f8137c0859f92311b3",
+            "path_d_sha256": [
+              "50d12025d1523adbbf6d03232f6f50b1a4cf390b739be630cf2b1d9008a30a9f",
+              "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+              "abfad2d52258ce24d4cca68a729e19257185172e7c5426050f9f25a9f30dc5c1",
+              "957d770b81ef5ab482fedf40df68bb38e0416a9c6bbb981d9595f051d72d6c9f",
+              "6350b01ef622ba2e09fead10e844274b4e600d50a72b628cdea82888c200f6b2",
+              "3d44b27955d314526410d3fd0d179dd565462a23ae953446b46e521644d34020",
+              "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+              "cd8be26fc4d330425efe8a52e2b117de5c9e437bace95712bbd555f8c415b34e"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8
+            },
+            "source_group_attributes": {
+              "data-text": "إيجي هيلث",
+              "fill": "#17142B",
+              "transform": "translate(560 210) scale(0.08608517421999544 -0.091)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#17142B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#6240B8",
+              "transform": "translate(382 207) scale(0.036920087442312365 -0.041015625)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#6240B8"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-42 -8) scale(.36)"
+        },
+        {
+          "transform": "translate(-190 -123)"
+        },
+        {
+          "transform": "translate(-190 -123)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 780 145",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": [
+        {
+          "width": "780",
+          "height": "145",
+          "fill": "#F8F7FB"
+        }
+      ]
+    },
+    {
+      "file": "assets/primary-bilingual-light.svg",
+      "sha256": "855407eb7604108c1556dd945928a5cbf23fc5b09b7f97ee162a157723b61a73",
+      "groups": [
+        {
+          "inventory": {
+            "group": "master-symbol",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "56ae914e065610777ebf5511d0ba0b57245543adae67f0c86153dd688efe9747",
+            "path_d_sha256": [
+              "cf9e945cc47caddc9769d1e258751bba995de26ff53c7cf9e620ae7e4a9691af",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "e535f8fba8bc55104de26fba24695b64bb3201ad039f74d90b99c5a409b28fa9",
+              "295c58eaf8e866b531a3f7069da378467195e3f905fb7a663b85bcf144117a45",
+              "a5502639f30fa8092424a47db036ea79d0c33f6661833611d8439e035dd98406",
+              "38a3cfabc5734c0b161d6b188a65363914a062d918b2c390865e48a1a5e18689",
+              "238cdeb2f940e225585a4184c57fc007775e479e3677723fb5b0602a8530ac91"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8,
+              "ellipse": 1
+            },
+            "source_group_attributes": {
+              "id": "master-symbol"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group/6:path",
+              "attribute": "fill",
+              "from": "#f4faf9",
+              "to": "#F6F2FF"
+            },
+            {
+              "element": "group/7:path",
+              "attribute": "fill",
+              "from": "#effcf9",
+              "to": "#F6F2FF"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "EgyHealth",
+            "path_count": 9,
+            "ordered_length_prefixed_d_sha256": "0b8856f7e70f34c2aa4cf55110e16c5368d3ce023aaae2a7225aa0677896f5e3",
+            "path_d_sha256": [
+              "1559d629e80ddcdd555f1970cf28580a9af0d7f1c8178445d2946abfba20a0fc",
+              "8f579e2fe4f9cd6d67669de3315409df7b284e413efa5d0513b789eb57719aea",
+              "17191a95ac58959289922fb434d1f0e7a9d89d8c0c5de65754e8951bdbecb703",
+              "5b8608ff32071782378e8728e23086dc567aae895ab25ff0ef34bdd2d8da3802",
+              "fd795eb1ada97a0c5f71d2ddcdcb86da80c36ad5e5037ad2581111f9325a4c2d",
+              "a2ff28b9cc04ec5048474408ee03cb9420c44dc27ac3c20ac6c3b1e93a1616ec",
+              "3316d3cbd6a5aa8824054b45650c31e3d9d1d91c963c1159aac59cba4ad1d58a",
+              "179af6e8bc1253f01619dd131e7fc16dca37c1818a7f3b217826846d2a6e7708",
+              "12a479e347efd82981b980cd7ac30f244bf55234c20ed97aa0b6f892d1512619"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 9
+            },
+            "source_group_attributes": {
+              "data-text": "EgyHealth",
+              "fill": "#17142B",
+              "transform": "translate(352 110) scale(0.040172166427546625 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#17142B"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#6240B8",
+              "transform": "translate(787 110) scale(0.04007772649987855 -0.0419921875)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#6240B8"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "360",
+            "path_count": 3,
+            "ordered_length_prefixed_d_sha256": "c890bfd4e4716e8bed1f52763c3a0aa6c388ecb3c01fd0260ce2ad72c36cc4d6",
+            "path_d_sha256": [
+              "d5a74688a09f1c1824e30f793c8bf42935add31474749c67be7301196b5ec762",
+              "8bf9418b01e5c5a6a4ab07a6d898a284b9a0eba7cfd43b4547b8d0b0d0063c25",
+              "0447efdbe500b63d24171c9dd58ac0d526c6feea761730d498cc215b127dcccc"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 3
+            },
+            "source_group_attributes": {
+              "data-text": "360",
+              "fill": "#6240B8",
+              "transform": "translate(382 207) scale(0.036920087442312365 -0.041015625)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "url(#wordGold)",
+              "to": "#6240B8"
+            }
+          ]
+        },
+        {
+          "inventory": {
+            "group": "إيجي هيلث",
+            "path_count": 8,
+            "ordered_length_prefixed_d_sha256": "66bd96ec69d4531479e4681d9d2e9b52d3da9544a06292f8137c0859f92311b3",
+            "path_d_sha256": [
+              "50d12025d1523adbbf6d03232f6f50b1a4cf390b739be630cf2b1d9008a30a9f",
+              "7d14c715ff7ef6561a22e9b626e103b093142b5c19a2d945c92fc10348c15b48",
+              "abfad2d52258ce24d4cca68a729e19257185172e7c5426050f9f25a9f30dc5c1",
+              "957d770b81ef5ab482fedf40df68bb38e0416a9c6bbb981d9595f051d72d6c9f",
+              "6350b01ef622ba2e09fead10e844274b4e600d50a72b628cdea82888c200f6b2",
+              "3d44b27955d314526410d3fd0d179dd565462a23ae953446b46e521644d34020",
+              "5707567b2568c2d067bf834698d7c86ceb53578d7da9a72567b730bb88dd18d4",
+              "cd8be26fc4d330425efe8a52e2b117de5c9e437bace95712bbd555f8c415b34e"
+            ],
+            "elements": {
+              "g": 1,
+              "path": 8
+            },
+            "source_group_attributes": {
+              "data-text": "إيجي هيلث",
+              "fill": "#17142B",
+              "transform": "translate(560 210) scale(0.08608517421999544 -0.091)"
+            }
+          },
+          "allowed_color_deltas": [
+            {
+              "element": "group",
+              "attribute": "fill",
+              "from": "#ffffff",
+              "to": "#17142B"
+            }
+          ]
+        }
+      ],
+      "external_wrappers": [
+        {
+          "transform": "translate(-125 -55)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        },
+        {
+          "transform": "translate(0 0)"
+        }
+      ],
+      "gradient_stop_color_deltas": [
+        {
+          "from": "#00c9cb",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00a6ad",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#005466",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#72eee4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#3dded7",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#00babc",
+          "to": "#A78BFA"
+        },
+        {
+          "from": "#003544",
+          "to": "#17142B"
+        },
+        {
+          "from": "#00586a",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#003e50",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffe976",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffce35",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#fff1a4",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#ffdb56",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffba12",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#f9ad00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#38fff0",
+          "to": "#F6F2FF"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#003042",
+          "to": "#17142B"
+        },
+        {
+          "from": "#ffac00",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#ffdf68",
+          "to": "#FFB88B"
+        },
+        {
+          "from": "#c58c16",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#e8b74f",
+          "to": "#6240B8"
+        },
+        {
+          "from": "#022b3b",
+          "to": "#10121D"
+        },
+        {
+          "from": "#034653",
+          "to": "#1D2030"
+        },
+        {
+          "from": "#10999a",
+          "to": "#1D2030"
+        }
+      ],
+      "presentation_root": {
+        "viewBox": "0 0 1010 350",
+        "role": "img",
+        "aria-labelledby": "title"
+      },
+      "backgrounds": [
+        {
+          "width": "1010",
+          "height": "350",
+          "fill": "#F8F7FB"
+        }
+      ]
+    }
+  ]
+}

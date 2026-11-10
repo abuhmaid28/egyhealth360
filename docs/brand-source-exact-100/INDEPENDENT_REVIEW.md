@@ -1,48 +1,52 @@
-# Independent source and screenshot review
+# Independent DP02 source, browser and screenshot review
 
-Reviewed 10 November 2026 by a separate review agent under Issue #100's independent screenshot-review requirement. The reviewer did not generate or modify the candidate logo, page styling, assets, source captures or author QA tools. This is a bounded design/documentation review, not Product Owner acceptance.
+Reviewed 10 November 2026 by a separate review agent under the [latest owner authorization](https://github.com/abuhmaid28/egyhealth360/pull/101#issuecomment-6757793824). The reviewer authored no candidate artwork, page implementation, author QA tool or production code. Separate scripts outside the repository performed this review; the author harness/audit were not used as independent proof. The previous review prose remains byte-preserved in [HISTORICAL_INDEPENDENT_REVIEW.md](HISTORICAL_INDEPENDENT_REVIEW.md).
 
-**Verdict: source fidelity PASS; visual PASS FOR OWNER REVIEW; executed browser/keyboard/contrast checks PASS.** No blocking visual defect found in the inspected evidence. Final Brand, typography, palette and Design System approval remain separate owner decisions; remote CI is reported in the PR handoff.
+**Verdict: source fidelity PASS; tagline-free primary implementation PASS FOR OWNER REVIEW; independently executed browser/keyboard/contrast checks PASS. No blocking finding.** This is technical/visual review evidence, not Product Owner acceptance of this new candidate or final Brand V2 approval. Exact committed-head binding and required remote CI are recorded in the existing Draft PR handoff after commit; this report binds reviewed inputs through hashes.
 
-## Independent evidence
+## Source fidelity and preservation
 
-- [Separate source audit](evidence/independent-source.json): all 14 derived SVGs checked against PR #96 commit `cb3fd9112f15e17b3d500d7a9dd085dd6e412525`. The three original SVG copies are byte-identical to their Git blobs. Separate XML traversal and literal `d` extraction establish ordered path-string identity, preserved child transforms, ellipse geometry and group descendants. Only the permitted group/rim fills differ inside logo/glyph groups. No font rebuild or tracing found.
-- [Separate browser checks](evidence/independent-browser.json): 40 responsive/keyboard cases, covering 320/390/768/1024/1440 CSS px × AR/EN × dark/light × normal/explicit doubled computed text. No horizontal document overflow; both header links remain inside the viewport and at least 48px in each target dimension. Tab reaches skip → brand → language; Shift+Tab returns to brand; Enter changes locale/direction. Focus is visible. No observed page exception or failed request in this independent run.
-- [Reviewed asset hashes](evidence/independent-reviewed-assets.json): source/derived SVGs, CSS, review JS and final page HTML pinned for this review. The author’s full artifact inventory and preservation report are distinct evidence.
+[Independent source evidence](evidence/dp02/independent-source.json) verifies all 20 derived XML/SVG assets, including six new full-size primary files. Three source captures match the Git blobs at original PR #96 commit `cb3fd9112f15e17b3d500d7a9dd085dd6e412525`. Every literal serialized `d` byte, ordered path sequence, inner glyph transform, element inventory and symbol ellipse is preserved. Reused groups permit only group/rim fill changes relative to original source. The existing 14 assets remain byte-identical to prior reviewed head `864e84a8fe525b08dfd2449063832ef9af516b3d`.
 
-At 505 CSS px the reviewer independently reproduced Arabic name-to-tagline bounding-box clearance of **−0.523px before → +13.477px after**, in both dark/light candidates. The actual screenshots show the final ya dots clear of the following reference-only line. The correction moves following lines rather than editing glyph outlines. Compact lockups contain no tagline and show no observed dot clipping.
+The six new primary files contain only symbol and name/digit groups: EN 20 paths, AR 19, bilingual 31. No whole or partial tagline group occurs. Their complete group wrappers are byte-identical to the corresponding accepted compact or bilingual groups at the prior head, preserving DP01 name positioning. Bilingual primary omission removes both complete tagline groups; canvas/presentation edits do not edit logo contours. New gradient definitions match their accepted predecessor exactly. The default board and responsive previews load no source/tagline artwork; those versions are confined to the explicitly labeled archive.
 
-The symbol silhouette, open cavity, separate head, ribbon and underside remain coherent in the reviewed larger images. At 16px and 24px fine rim/fold detail weakens and shades merge; this is correctly disclosed and remains AP03, not a claim of universal recognition. The maskable inset appears conservative: the source symbol is fully inside the indicated central circle in the reviewed browser simulation. No OS masking or installed-PWA proof follows from it.
+Previous-head per-file preservation is also independently recorded. At final review, 1,531 of 1,540 previous-head files were byte-identical; the nine changed files were within the permitted governance/docs/page/tool set, including this current independent report. Every pre-existing screenshot and evidence JSON, source capture, original asset, font/license and unrelated runtime/schema/migration/OpenAPI/dependency/CI file is preserved. [Reviewed input hashes](evidence/dp02/independent-reviewed-assets.json) bind all SVGs, sources, CSS, JS, current/default and archive HTML and author tools. Later commit binding must verify these input hashes rather than substitute an old-head CI result.
 
-Actual locale-control contrast, independently sampled from computed browser styles:
+## Independently executed browser checks
 
-| Actual pair/state | Text | Meaningful boundary against card |
+[Independent browser evidence](evidence/dp02/independent-browser.json) records **40 PASS** cases: 320/390/768/1024/1440 CSS px × AR/EN × dark/light × normal/200% computed text. In each case: document and sampled element overflow checks pass; visible text equals its saved normal computed size or exactly twice that size; images load; both header targets remain at least 48×48px inside the viewport; locale direction, logo selection and English review-prose language metadata are correct.
+
+Keyboard checks independently execute Tab through skip → brand → locale, Shift+Tab back, then Enter to switch locale/direction. Focus has a visible solid outline at least 3px wide and measured contrast over 3:1. No page exceptions, failed/HTTP-error responses or external requests were observed. Text doubling is a computed-size experiment; it is not native browser zoom or assistive technology testing.
+
+All six full-size primary SVGs were separately rendered inline at their native viewBox size. Group envelopes stay within the canvas, and each pair of symbol/name/digit group envelopes is disjoint. Visual inspection found no accidental logo/text collision or clipped dots. Bilingual EN/AR ordering remains the source layout; the symbol is not mirrored in RTL.
+
+Selected actual UI pairs, independently measured from computed browser styles:
+
+| Pair/state | Ordinary text | Meaningful boundary |
 | --- | --- | --- |
-| Dark normal: violet on dark card | 5.93:1 | 5.93:1 |
-| Dark hover: dark ink on violet | 6.59:1 | 5.93:1 |
-| Light normal: dark violet on white | 7.13:1 | 7.13:1 |
-| Light hover: white on dark violet | 7.13:1 | 7.13:1 |
+| Dark normal locale: violet on dark card | 5.93:1 | 5.93:1 |
+| Dark hover locale: dark ink on violet | 6.59:1 | 5.93:1 |
+| Dark hover review link: dark ink on violet | 6.59:1 | 6.85:1 |
+| Light normal/hover locale | 7.13:1 | 7.13:1 |
+| Light hover review link: white on dark violet | 7.13:1 | 6.69:1 |
 
-These selected UI checks exceed 4.5:1 text and 3:1 meaningful-boundary thresholds. Trademark artwork was inspected visually and for source identity; text contrast requirements were not indiscriminately applied to gradient logo pixels. This is not whole-design WCAG certification.
+These selected checks exceed 4.5:1 ordinary text and 3:1 meaningful boundary thresholds. Trademark artwork is reviewed as artwork, not certified against ordinary UI text contrast. No whole-design WCAG certification follows.
 
-## Screenshots actually inspected
+## Visual evidence actually inspected
 
-- Arabic [before at 505px](evidence/arabic-before-505.png), [after dark](evidence/arabic-after-dark-505.png), [after light](evidence/arabic-after-light-505.png).
-- Compact outlined lockups: [AR dark](evidence/compact-ar-dark.png), [EN dark](evidence/compact-en-dark.png), [AR light](evidence/compact-ar-light.png), [EN light](evidence/compact-en-light.png).
-- Native exports viewed individually: [16](evidence/icon-16.png), [24](evidence/icon-24.png), [32](evidence/icon-32.png), [64](evidence/icon-64.png), [192](evidence/icon-192.png), [512](evidence/icon-512.png).
-- Maskable [safe-area overlay](evidence/maskable-safe-area.png) and [circle simulation](evidence/maskable-circle.png).
-- Header samples across every required width: [AR dark 320 normal](evidence/header-dark-ar-320-normal.png), [AR dark 320 doubled](evidence/header-dark-ar-320-text200.png), [EN light 320 doubled](evidence/header-light-en-320-text200.png), [EN dark 390](evidence/header-dark-en-390-normal.png), [AR light 768 doubled](evidence/header-light-ar-768-text200.png), [AR dark 1024](evidence/header-dark-ar-1024-normal.png), [EN light 1440](evidence/header-light-en-1440-normal.png).
-- Full review-page samples: [AR dark 390](evidence/page-dark-ar-390-normal.png), [EN light 1440](evidence/page-light-en-1440-normal.png). The board prose is English; the header alone is the bilingual Web/PWA specimen.
-- Reviewer-captured [AR 320 doubled/focus](evidence/independent-ar-320-text200-focus.png) and [EN 1440 light/hover](evidence/independent-en-1440-light-hover.png).
+The reviewer inspected the following current PNGs through image-viewing tools:
 
-The reviewer executed all 40 layout cases independently; screenshot inspection used the explicitly listed subset rather than claiming a separate manual inspection of all 40 author captures.
+- Full-size [bilingual dark](evidence/dp02/primary-bilingual-dark.png), [bilingual light](evidence/dp02/primary-bilingual-light.png), [Arabic dark](evidence/dp02/primary-ar-dark.png) and [English light](evidence/dp02/primary-en-light.png), plus the AR light compact export on its transparent canvas.
+- Headers at every required width: [AR dark 320 normal](evidence/dp02/header-dark-ar-320-normal.png), [AR dark 320 doubled](evidence/dp02/header-dark-ar-320-text200.png), [EN light 390](evidence/dp02/header-light-en-390-normal.png), [AR light 768 doubled](evidence/dp02/header-light-ar-768-text200.png), [AR dark 1024](evidence/dp02/header-dark-ar-1024-normal.png), [EN light 1440](evidence/dp02/header-light-en-1440-normal.png).
+- Full review sheets [AR dark 390](evidence/dp02/page-dark-ar-390-normal.png), [EN light 1440](evidence/dp02/page-light-en-1440-normal.png), and separately captured [AR 320 doubled/focus](evidence/dp02/independent-ar-320-text200-focus.png).
+- Native [16](evidence/dp02/icon-16.png), [24](evidence/dp02/icon-24.png) and [native-pixel strip](evidence/dp02/native-pixel-strip.png), [maskable safe-circle overlay](evidence/dp02/maskable-safe-area.png) and [circular-mask simulation](evidence/dp02/maskable-circle.png).
 
-## Finding and remaining gates
+The browser also independently verifies native PNG dimensions at 16/24/32/64/192/512. Fine rim/fold detail weakens at 16–24px, correctly retained as AP03. The maskable bounding rectangle's farthest corner is 170.604px from canvas center, inside the 204.8px safe radius; the inspected circle simulation preserves the symbol. These are native-size browser proofs and simulations, not installed PWA or operating-system masking evidence.
 
-IR01 — minor accessibility metadata, **RESOLVED**: English review-board sections initially inherited `lang="ar"` when the header locale was Arabic. The author added `lang="en"` to the shared `main#review` ancestor and English skip link. The reviewer independently checked both locale variants: every English section inherits English, the skip link is English, and the Arabic/English header alternative text and document locale remain correct. This has no visual effect; the final HTML hash and verification are recorded in the linked independent evidence.
+Independent captures of all six primary compositions, native strip and maskable views are under `evidence/dp02/independent-*`; every author screenshot was not separately manually inspected. All 40 responsive cases were independently executed.
 
-Lint follow-up: the first remote CI found that `URL` lacked the JavaScript file's ESLint global declaration. The reviewer independently verified that the sole `review.js` change since the reviewed browser run adds `URL` to its global comment. Reversing exactly that comment edit reproduces the previous reviewed SHA-256; executable source and visual artifacts are unchanged. The reviewed-file inventory now records the updated hash. Prior browser evidence remains applicable; exact-final-head CI belongs in the PR handoff.
+## Remaining owner/distribution gates and limits
 
-DP01 is a technically evidenced layout correction proposed for owner acceptance, not silently closed final-wordmark approval. DP02 stays OPEN and the existing Arabic tagline stays reference-only. AP01 typography/fit, AP02 material fidelity, AP03 small-medium/platform/print checks, AP04 final palette/usage and AP05 rights/trademark disposition remain their respective owner/distribution gates.
+DP01 remains owner-accepted on the prior head; exact source/name positioning is retained here. DP02 owner content decision is accepted (no tagline); the new candidate's technical implementation passes this review, while exact-head repository CI and final owner visual review remain separate handoff gates. AP01 original typography/fit, AP02 material fidelity, AP03 small-size/platform/print, AP04 final palette/usage and AP05 rights/trademark remain unresolved.
 
-NOT TESTED: native browser zoom, real screen readers or announcement behavior, real devices/touch/OS settings, installed PWA or platform favicon caching, WebKit, print, native Egyptian editorial/participant recognition or trademark clearance. Explicit computed-text doubling is not native zoom. No production header integration, native mobile-app design or broader portal UI is approved by this review.
+**NOT TESTED:** real devices, native browser zoom, actual assistive technologies/screen readers, installed PWA, platform favicon cache/masking, WebKit, print, native Egyptian editorial/participant recognition, and rights/trademark clearance. No final Brand V2, typography, Color System, Design System, clinical semantics, PWA installability or production integration is approved. Keep the same PR Draft/Open/Unmerged; no merge, auto-merge, ready transition or deployment.

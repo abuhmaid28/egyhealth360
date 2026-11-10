@@ -1,0 +1,130 @@
+{
+  "primary_policy": "Symbol and source-exact name/digits only; no tagline.",
+  "default_review": "index.html",
+  "archive_review": "historical.html",
+  "assets": [
+    {
+      "path": "assets/bilingual-dark.svg",
+      "role": "archival-reference-only",
+      "sha256": "0c9dbbab6c66b801fd54720a0eb99632cb10646197880541c72667343a603c63",
+      "tagline": true
+    },
+    {
+      "path": "assets/bilingual-light.svg",
+      "role": "archival-reference-only",
+      "sha256": "acedb28f25ce3b1bae16bbe449ac2836261a3e785ca0b95497f3b662991d8f0f",
+      "tagline": true
+    },
+    {
+      "path": "assets/compact-ar-dark.svg",
+      "role": "compact-primary",
+      "sha256": "bbed526c401f31fefdd1b98d8ab62c64663f2b03b1b8b0ef24a5f81498ea922d",
+      "tagline": false
+    },
+    {
+      "path": "assets/compact-ar-light.svg",
+      "role": "compact-primary",
+      "sha256": "d83098460ac57d43801314dd5a8f96fa40b72268ae27893b302a0661e8ca89ff",
+      "tagline": false
+    },
+    {
+      "path": "assets/compact-en-dark.svg",
+      "role": "compact-primary",
+      "sha256": "6ad7f9b61b1a43308e16e8d0a6a4bf80c389bac29d46d292eef938af8e2120c3",
+      "tagline": false
+    },
+    {
+      "path": "assets/compact-en-light.svg",
+      "role": "compact-primary",
+      "sha256": "e49f02c9e4a7619ca8265d9d01e8e8a3b52176ec4654658b72e2cac6bf60b887",
+      "tagline": false
+    },
+    {
+      "path": "assets/icon-16.svg",
+      "role": "symbol-or-icon",
+      "sha256": "15c147afe9ac2d798fe32566728cdc4c4bbf4552ab32d77eb8be7dd40bfba03e",
+      "tagline": false
+    },
+    {
+      "path": "assets/icon-192.svg",
+      "role": "symbol-or-icon",
+      "sha256": "b7e02d3d890178926675e5e2e2c9aee4de633076d75e45894fa2498b4c5d0a0a",
+      "tagline": false
+    },
+    {
+      "path": "assets/icon-24.svg",
+      "role": "symbol-or-icon",
+      "sha256": "2540551a4214fb96cefbbf05442b3eb53adc5ff592833d77e1865cdeefd711c4",
+      "tagline": false
+    },
+    {
+      "path": "assets/icon-32.svg",
+      "role": "symbol-or-icon",
+      "sha256": "610a7c913c918b73245a3d29a7d4b6a14e787444d72f862b025d7b002f61159b",
+      "tagline": false
+    },
+    {
+      "path": "assets/icon-512.svg",
+      "role": "symbol-or-icon",
+      "sha256": "28fba5b16f7d5f73e99ebccd7cdfe05364284134ddd5665cfb20758f67481716",
+      "tagline": false
+    },
+    {
+      "path": "assets/icon-64.svg",
+      "role": "symbol-or-icon",
+      "sha256": "a90ab9d865da8546826b3a986e59d8b06b8ff1adec666f6ed106843632a16997",
+      "tagline": false
+    },
+    {
+      "path": "assets/maskable-512.svg",
+      "role": "symbol-or-icon",
+      "sha256": "e9af80f66e0b4c712b28dfbda527fa3572e51f193cbff669d53d8e309c0e6978",
+      "tagline": false
+    },
+    {
+      "path": "assets/primary-ar-dark.svg",
+      "role": "primary",
+      "sha256": "f96e38a2a6e1e7273edd57b8e98005f28b0894efa03ffba41ef2c0394a5196da",
+      "tagline": false
+    },
+    {
+      "path": "assets/primary-ar-light.svg",
+      "role": "primary",
+      "sha256": "76d14637666b2d9aadbdc211223454c3f216bff38927c11577ed4d77abce4fa4",
+      "tagline": false
+    },
+    {
+      "path": "assets/primary-bilingual-dark.svg",
+      "role": "primary",
+      "sha256": "8f6c88c7aff5e6646a62a3443e038b61bc1e21436fb4ac1947b4b552cfd3876e",
+      "tagline": false
+    },
+    {
+      "path": "assets/primary-bilingual-light.svg",
+      "role": "primary",
+      "sha256": "855407eb7604108c1556dd945928a5cbf23fc5b09b7f97ee162a157723b61a73",
+      "tagline": false
+    },
+    {
+      "path": "assets/primary-en-dark.svg",
+      "role": "primary",
+      "sha256": "eaa33073140aff82d87d34e134157671f7f8d38ac625618a26b69978641bddd5",
+      "tagline": false
+    },
+    {
+      "path": "assets/primary-en-light.svg",
+      "role": "primary",
+      "sha256": "f6935c1441d2e68092109425d31f707621f6ec33b405d6ceb00fc0876f53b54e",
+      "tagline": false
+    },
+    {
+      "path": "assets/symbol-transparent.svg",
+      "role": "symbol-or-icon",
+      "sha256": "85fab1ed23199654946e0a84122c6302751becf9a6578c6ed8a7424dbf0c531e",
+      "tagline": false
+    }
+  ],
+  "source_role": "source/*.svg are byte-preserved original historical evidence, never primary delivery artwork.",
+  "previous_evidence_role": "All files directly in evidence/ are immutable historical snapshots; current evidence is in evidence/dp02/.",
+  "current_evidence": "evidence/dp02/*.png and JSON; historical-arabic-* explicitly tests archived DP01 evidence."
+}

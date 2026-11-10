@@ -131,18 +131,37 @@ r.set('height', '512')
 place(r, symbol, 'translate(16 72) scale(.8)')
 save('maskable-512', r)
 
-write_json('evidence/provenance.json', {
+# Existing bilingual assets are immutable historical DP01/DP02 specimens.
+# Full-size primary outputs omit entire tagline groups, preserving name/symbol placement.
+for theme, bg, ink, digits in [('dark', '#10121D', '#F6F2FF', '#FFB88B'), ('light', '#F8F7FB', '#17142B', '#6240B8')]:
+    for locale in ['en', 'ar']:
+        r = svg('0 0 780 145', f'{"EgyHealth 360" if locale == "en" else "إيجي هيلث 360"} — full-size primary {theme}; no tagline', bg)
+        place(r, symbol, 'translate(-42 -8) scale(.36)')
+        if locale == 'en':
+            place(r, english, 'translate(-190 0)', ink)
+            place(r, digits_en, 'translate(-190 0)', digits)
+        else:
+            place(r, arabic, 'translate(-190 -123)', ink)
+            place(r, digits_ar, 'translate(-190 -123)', digits)
+        save(f'primary-{locale}-{theme}', r)
+    r = svg('0 0 1010 350', f'EgyHealth 360 / إيجي هيلث 360 — full-size bilingual primary {theme}; no tagline', bg)
+    place(r, symbol, 'translate(-125 -55)')
+    for g in [english, digits_en, digits_ar, arabic]:
+        place(r, g, 'translate(0 0)', digits if g.get('data-text') == '360' else ink)
+    save(f'primary-bilingual-{theme}', r)
+
+write_json('evidence/dp02/provenance.json', {
     'issue': 'https://github.com/abuhmaid28/egyhealth360/issues/100',
-    'authorization': 'Issue #100 records owner reply موافق كمل on 10 Nov 2026; review-only candidate A — Balanced: Violet × Apricot.',
+    'authorization': 'PR #101 owner authorization issuecomment-6757793824, 10 Nov 2026: bounded DP02 tagline-free primary refinement on existing branch.',
     'base': BASE, 'source_pr_96': SOURCE, 'foundation_pr_97': FOUNDATION,
     'baseline_checked_utc': '2026-11-10',
     'supersession_check': 'Issue #100/comments, umbrella #72 comments, open review PRs/branches and fresh main checked; no later instruction found.',
     'sources': sources,
     'palette_status': 'Provisional issue-local values; not global approved tokens or medical semantic statuses.',
     'path_policy': 'Raw UTF-8 d bytes, order, child transforms and ellipse geometry immutable. No shaping/tracing/fonts used for logo.',
-    'allowed_deltas': ['stop-color only in existing gradients', 'rim fill colors', 'outline group fill colors', 'external wrapper transforms and spacing', 'SVG presentation root/title/viewBox/size/background', 'omission of non-applicable entire text groups in compact/icon variants'],
-    'dp01': 'Candidate layout correction only: Arabic reference tagline +28 source units; English reference tagline +34. Owner acceptance pending.',
-    'dp02': 'OPEN. Existing taglines reference-only in large specimens/source; omitted in compact headers. No new slogan.',
+    'allowed_deltas': ['stop-color only in existing gradients', 'rim fill colors', 'outline group fill colors', 'external wrapper transforms and spacing', 'SVG presentation root/title/viewBox/size/background', 'omission of whole tagline groups from all primary/default variants; whole non-applicable groups from locale/icon variants'],
+    'dp01': 'Owner accepted at 864e84a8fe525b08dfd2449063832ef9af516b3d. Name/symbol/internal transforms preserved. Historical tagline +28/+34 wrappers retained only in archived specimens.',
+    'dp02': 'Owner content decision accepted: no tagline. Primary asset implementation verification pending exact-new-head review; no new slogan. Old bilingual-* assets and pre-refinement evidence are archival only.',
     'render_tool': 'Free local Playwright 1.64.1 in /tmp/eh100-tools and existing /usr/bin/chromium; no repository dependency changes.',
 })
-print('Captured 3 original SVGs; generated 14 source-derived SVG assets.')
+print('Captured 3 original SVGs; generated 20 source-derived SVG assets (6 new tagline-free primaries; 2 archived bilingual specimens).')

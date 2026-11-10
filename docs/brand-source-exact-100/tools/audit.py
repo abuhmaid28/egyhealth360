@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 REPO = ROOT.parents[1]
 NS = '{http://www.w3.org/2000/svg}'
-META = json.loads((ROOT / 'evidence/provenance.json').read_text())
+META = json.loads((ROOT / 'evidence/dp02/provenance.json').read_text())
 
 
 def sha(data):
@@ -19,7 +19,7 @@ def sha(data):
 
 
 def write(name, value):
-    (ROOT / 'evidence' / name).write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
+    (ROOT / 'evidence/dp02' / name).write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n')
 
 
 def groups(root):
@@ -60,6 +60,9 @@ for theme in ['dark', 'light']:
     expected[f'compact-en-{theme}'] = ['master-symbol', 'EgyHealth', '360']
     expected[f'compact-ar-{theme}'] = ['master-symbol', 'إيجي هيلث', '360']
     expected[f'bilingual-{theme}'] = [label(e) for e in original_groups]
+    expected[f'primary-en-{theme}'] = expected[f'compact-en-{theme}']
+    expected[f'primary-ar-{theme}'] = expected[f'compact-ar-{theme}']
+    expected[f'primary-bilingual-{theme}'] = [label(e) for e in original_groups[:5]]
 assert {f.stem for f in (ROOT / 'assets').glob('*.svg')} == set(expected)
 
 
@@ -107,6 +110,15 @@ for name, labels in expected.items():
             stops.append({'from': b.get('stop-color'), 'to': a.get('stop-color')})
             attrs['stop-color'] = b.get('stop-color')
         assert attrs == b.attrib
+    # DP02: primary group sequence and wrappers must equal the accepted baseline,
+    # except for omission of complete tagline groups in bilingual presentation.
+    if name.startswith('primary-'):
+        prior = name.replace('primary-bilingual-', 'bilingual-').replace('primary-en-', 'compact-en-').replace('primary-ar-', 'compact-ar-')
+        accepted = ET.fromstring(subprocess.check_output(['git', 'show', f'864e84a8fe525b08dfd2449063832ef9af516b3d:docs/brand-source-exact-100/assets/{prior}.svg']))
+        actual_wrappers = [e for e in root if e.tag == NS + 'g']
+        old_wrappers = [e for e in accepted if e.tag == NS + 'g'][:len(actual_wrappers)]
+        assert [ET.tostring(e) for e in actual_wrappers] == [ET.tostring(e) for e in old_wrappers], (name, 'DP01 positioning or group bytes changed')
+        assert not any('tagline' in label(e).lower() or label(e) in ['رعاية متكاملة حولك', 'Integrated care around you'] for e in actual)
     wrappers = [e.attrib for e in root if e.tag == NS + 'g']
     assets.append({'file': str(path.relative_to(ROOT)), 'sha256': sha(data), 'groups': records,
                    'external_wrappers': wrappers, 'gradient_stop_color_deltas': stops,

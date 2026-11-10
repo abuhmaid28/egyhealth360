@@ -20,7 +20,7 @@ const renders = [];
 for (const [name, width, height] of [
   ...[16, 24, 32, 64, 192, 512].map(n => [`icon-${n}`, n, n]),
   ['maskable-512', 512, 512], ['symbol-transparent', 310, 320],
-  ...['dark', 'light'].flatMap(t => [[`bilingual-${t}`, 1010, 402], ...['en', 'ar'].map(l => [`compact-${l}-${t}`, 234, 43.5])]),
+  ...['dark', 'light'].flatMap(t => [[`primary-bilingual-${t}`, 1010, 350], ...['en', 'ar'].flatMap(l => [[`primary-${l}-${t}`, 780, 145], [`compact-${l}-${t}`, 234, 43.5]])]),
 ]) {
   const svg = await readFile(resolve(root, `assets/${name}.svg`), 'utf8');
   await page.setViewportSize({ width, height: Math.ceil(height) });
@@ -33,9 +33,18 @@ for (const [name, width, height] of [
     });
     return { groups, noClipping: groups.every(g => g.inside) };
   });
+  if (name.startsWith('primary-')) {
+    assert.ok(!geometry.groups.some(g => ['رعاية متكاملة حولك', 'Integrated care around you'].includes(g.group)), `${name}: unexpected tagline`);
+    // Locale name/digits are separate groups; bilingual lines must also stay clear.
+    const text = geometry.groups.filter(g => g.group !== 'master-symbol');
+    for (let i = 0; i < text.length; i++) for (let j = i + 1; j < text.length; j++) {
+      const a = text[i], b = text[j];
+      assert.ok(a.x + a.width <= b.x || b.x + b.width <= a.x || a.y + a.height <= b.y || b.y + b.height <= a.y, `${name}: text group collision`);
+    }
+  }
   assert.ok(geometry.noClipping, `${name}: asset clipping`);
-  await page.screenshot({ path: resolve(root, `evidence/${name}.png`), omitBackground: true });
-  const png = await readFile(resolve(root, `evidence/${name}.png`));
+  await page.screenshot({ path: resolve(root, `evidence/dp02/${name}.png`), omitBackground: true });
+  const png = await readFile(resolve(root, `evidence/dp02/${name}.png`));
   assert.equal(png.readUInt32BE(16), width);
   assert.equal(png.readUInt32BE(20), Math.ceil(height));
   renders.push({ asset: name, width, height: Math.ceil(height), deviceScaleFactor: 1, ...geometry });
@@ -56,10 +65,13 @@ for (const [file, label, height] of [['source/lockup-dark.svg', 'before', 175], 
     return { arabic, tagline, gapCssPx: tagline.y - arabic.bottom, bounds, noClipping: all.every(b => b.x >= 0 && b.y >= 0 && b.right <= bounds.right && b.bottom <= bounds.bottom) };
   });
   if (label !== 'before') assert.ok(metrics.gapCssPx > 12 && metrics.noClipping, `${label}: Arabic clearance`);
-  await page.screenshot({ path: resolve(root, `evidence/arabic-${label}-505.png`) });
+  await page.screenshot({ path: resolve(root, `evidence/dp02/historical-arabic-${label}-505.png`) });
   clearance.push({ file, intendedCssWidth: 505, ...metrics });
 }
 
+await page.goto(base);
+assert.equal(await page.locator('img[src*="bilingual-dark.svg"]').count(), 1);
+assert.equal(await page.locator('img[src^="source/"],img[src^="assets/bilingual-"]').count(), 0, 'Historical taglines must not appear on default board');
 const cases = [], keyboard = [], contrast = [];
 function lum(rgb) { return rgb.map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }).reduce((a, v, i) => a + v * [.2126, .7152, .0722][i], 0); }
 function ratio(a, b) { const l = [lum(a), lum(b)].sort((x, y) => y - x); return (l[0] + .05) / (l[1] + .05); }
@@ -83,8 +95,8 @@ for (const theme of ['dark', 'light']) for (const lang of ['en', 'ar']) for (con
   for (const t of result.text) { assert.equal(t.computedPx, t.expectedPx); assert.ok(!t.clipped); const value = ratio(rgb(t.color), rgb(t.background)); assert.ok(value >= 4.5, `${t.text}: contrast ${value}`); contrast.push({ theme, text: t.text, foreground: t.color, background: t.background, ratio: value, threshold: 4.5 }); }
   for (const c of result.controls) assert.ok(c.height >= 48 && c.width >= 48);
   const name = `${theme}-${lang}-${width}-${scale === 2 ? 'text200' : 'normal'}`;
-  await page.locator('.web-header').screenshot({ path: resolve(root, `evidence/header-${name}.png`) });
-  if (scale === 1 && [390, 1440].includes(width)) await page.screenshot({ path: resolve(root, `evidence/page-${name}.png`), fullPage: true });
+  await page.locator('.web-header').screenshot({ path: resolve(root, `evidence/dp02/header-${name}.png`) });
+  if (scale === 1 && [390, 1440].includes(width)) await page.screenshot({ path: resolve(root, `evidence/dp02/page-${name}.png`), fullPage: true });
   // Keyboard from skip link, through both real header links, to locale navigation.
   await page.keyboard.press('Tab');
   assert.equal(await page.locator(':focus').getAttribute('class'), 'skip');
@@ -96,7 +108,7 @@ for (const theme of ['dark', 'light']) for (const lang of ['en', 'ar']) for (con
   assert.equal(focus.outlineStyle, 'solid');
   assert.ok(parseFloat(focus.outlineWidth) >= 3);
   for (const role of ['outlineColor', 'borderColor']) { const value = ratio(rgb(focus[role]), rgb(focus.background)); assert.ok(value >= 3); contrast.push({ theme, text: role, foreground: focus[role], background: focus.background, ratio: value, threshold: 3 }); }
-  if (width === 320) await page.locator('.web-header').screenshot({ path: resolve(root, `evidence/focus-${name}.png`) });
+  if (width === 320) await page.locator('.web-header').screenshot({ path: resolve(root, `evidence/dp02/focus-${name}.png`) });
   await page.keyboard.press('Shift+Tab');
   assert.equal(await page.locator(':focus').getAttribute('class'), 'brand');
   await page.keyboard.press('Tab');
@@ -114,9 +126,9 @@ await page.setContent(`<html><body style="margin:0">${mask}</body></html>`);
 const maskable = await page.evaluate(() => { const b = document.querySelector('#master-symbol').getBoundingClientRect(); const radii = [[b.left, b.top], [b.right, b.top], [b.left, b.bottom], [b.right, b.bottom]].map(([x, y]) => Math.hypot(x - 256, y - 256)); return { boundingBox: { x: b.x, y: b.y, width: b.width, height: b.height }, maxBoundingCornerRadius: Math.max(...radii), safeRadius: 204.8, conservativeRectangleInside: radii.every(r => r < 204.8) }; });
 assert.ok(maskable.conservativeRectangleInside);
 await page.goto(`${base}?lang=ar&theme=dark`);
-await page.locator('.mask-review').first().screenshot({ path: resolve(root, 'evidence/maskable-safe-area.png') });
-await page.locator('.mask-review.round').screenshot({ path: resolve(root, 'evidence/maskable-circle.png') });
-await page.locator('#native-icons').screenshot({ path: resolve(root, 'evidence/native-pixel-strip.png') });
+await page.locator('.mask-review').first().screenshot({ path: resolve(root, 'evidence/dp02/maskable-safe-area.png') });
+await page.locator('.mask-review.round').screenshot({ path: resolve(root, 'evidence/dp02/maskable-circle.png') });
+await page.locator('#native-icons').screenshot({ path: resolve(root, 'evidence/dp02/native-pixel-strip.png') });
 assert.deepEqual(errors, []);
 const uniqueContrast = Array.from(new Map(contrast.map(row => [JSON.stringify([row.theme, row.foreground, row.background, row.threshold]), row])).values());
 const hover = [];
@@ -134,8 +146,8 @@ for (const theme of ['dark', 'light']) {
     uniqueContrast.push(row);
   }
 }
-await writeFile(resolve(root, 'evidence/contrast.json'), JSON.stringify(uniqueContrast, null, 2) + '\n');
+await writeFile(resolve(root, 'evidence/dp02/contrast.json'), JSON.stringify(uniqueContrast, null, 2) + '\n');
 assert.deepEqual(errors, []);
-await writeFile(resolve(root, 'evidence/browser-qa.json'), JSON.stringify({ result: 'PASS', engine: await browser.version(), deviceScaleFactor: 1, method200: 'Each normal computed text-owning element font-size multiplied by 2. Outlined trademark artwork is not text and is not enlarged.', cases, keyboard, hover, contrastObservations: contrast.length + hover.length, errors, renders, clearance, maskable, notTested: ['native zoom', 'screen readers', 'real devices', 'installed PWA', 'WebKit', 'print', 'trademark clearance'] }, null, 2) + '\n');
+await writeFile(resolve(root, 'evidence/dp02/browser-qa.json'), JSON.stringify({ result: 'PASS', engine: await browser.version(), deviceScaleFactor: 1, method200: 'Each normal computed text-owning element font-size multiplied by 2. Outlined trademark artwork is not text and is not enlarged.', cases, keyboard, hover, contrastObservations: contrast.length + hover.length, errors, renders, clearance, maskable, notTested: ['native zoom', 'screen readers', 'real devices', 'installed PWA', 'WebKit', 'print', 'trademark clearance'] }, null, 2) + '\n');
 await browser.close();
 console.log(`PASS: ${cases.length} responsive/contrast/computed-text cases; ${keyboard.length} keyboard cases; ${contrast.length + hover.length} contrast observations; DP01 clearance and maskable geometry.`);

@@ -4,7 +4,10 @@ Current issue-scoped review reference: [source-exact Violet × Apricot candidate
 
 | Issue #100 review document | Classification / responsibility |
 | --- | --- |
-| [brand-source-exact-100/README.md](brand-source-exact-100/README.md) | CURRENT SCOPED REVIEW: source-exact assets, provenance, allowed deltas, DP01 candidate, DP02/AP01–AP05 and owner gate; not final approved identity. |
+| [brand-source-exact-100/README.md](brand-source-exact-100/README.md) | CURRENT SCOPED REVIEW: source-exact assets, provenance, allowed deltas, DP01 acceptance, tagline-free DP02 primary candidate/AP01–AP05 and owner gate; not final approved identity. |
+| [brand-source-exact-100/DECISIONS.md](brand-source-exact-100/DECISIONS.md) | CURRENT SCOPED DECISIONS: DP01 accepted, DP02 no-tagline content accepted, exact-new-head implementation/owner visual gate and AP01–AP05. |
+| [brand-source-exact-100/HISTORICAL_EVIDENCE.md](brand-source-exact-100/HISTORICAL_EVIDENCE.md) | HISTORICAL EVIDENCE CLASSIFICATION: prior tagline specimens, source and screenshots retained at stable paths; excluded from current primary inventory. |
+| [brand-source-exact-100/HISTORICAL_INDEPENDENT_REVIEW.md](brand-source-exact-100/HISTORICAL_INDEPENDENT_REVIEW.md) | HISTORICAL REVIEW: byte-preserved prior reviewer prose at pre-DP02 head; not current-candidate validation. |
 | [brand-source-exact-100/VALIDATION.md](brand-source-exact-100/VALIDATION.md) | POINT-IN-TIME EVIDENCE: actual source/path/Arabic/responsive/contrast/native-pixel checks and limitations; final remote head/CI in PR handoff. |
 | [brand-source-exact-100/INDEPENDENT_REVIEW.md](brand-source-exact-100/INDEPENDENT_REVIEW.md) | INDEPENDENT REVIEW EVIDENCE: separately executed screenshot/source/browser review and limits; no owner visual approval. |
 
