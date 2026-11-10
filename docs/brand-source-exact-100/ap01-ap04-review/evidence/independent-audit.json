@@ -1,0 +1,1153 @@
+{
+  "method": "Independent Python TTFont, upstream byte fetch, HarfBuzz shaping and git blob comparison",
+  "fonts": [
+    {
+      "file": "fonts/plex-400.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9",
+      "upstreamByteIdentical": true,
+      "names": {
+        "1": "IBM Plex Sans Arabic",
+        "2": "Regular",
+        "6": "IBMPlexSansArabic-Regular",
+        "16": null,
+        "17": null
+      },
+      "OS2": 400,
+      "axes": {},
+      "weights": [
+        {
+          "requested": 400,
+          "OS2": 400,
+          "glyfSHA256": "fb0db0b070f6c05d7eb802074be596c66d62a88b01ce9ca1c7c5d5b310e00a60"
+        }
+      ],
+      "licenseSHA256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f",
+      "licenseOriginalFile": "fonts/ibmplexsansarabic-OFL.original.gz",
+      "licenseOriginalCompressedSHA256": "ea29e0b9c55bd99bff04596a541695cbfd00243231a44772f3661fa51e6f3a54",
+      "licenseOriginalPayloadSHA256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "licenseOriginalPayloadUpstreamByteIdentical": true,
+      "licensePlainTextMatchesWhitespaceNormalization": true
+    },
+    {
+      "file": "fonts/plex-600.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467",
+      "upstreamByteIdentical": true,
+      "names": {
+        "1": "IBM Plex Sans Arabic SemiBold",
+        "2": "Regular",
+        "6": "IBMPlexSansArabic-SemiBold",
+        "16": "IBM Plex Sans Arabic",
+        "17": "SemiBold"
+      },
+      "OS2": 600,
+      "axes": {},
+      "weights": [
+        {
+          "requested": 600,
+          "OS2": 600,
+          "glyfSHA256": "7b3cc03a2f0d1ae2bb8864a0b4a4e76d9be1b91f3563a56f7a24890f9f0b49af"
+        }
+      ],
+      "licenseSHA256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f",
+      "licenseOriginalFile": "fonts/ibmplexsansarabic-OFL.original.gz",
+      "licenseOriginalCompressedSHA256": "ea29e0b9c55bd99bff04596a541695cbfd00243231a44772f3661fa51e6f3a54",
+      "licenseOriginalPayloadSHA256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "licenseOriginalPayloadUpstreamByteIdentical": true,
+      "licensePlainTextMatchesWhitespaceNormalization": true
+    },
+    {
+      "file": "fonts/inter-variable.ttf",
+      "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+      "upstreamByteIdentical": true,
+      "names": {
+        "1": "Inter",
+        "2": "Regular",
+        "6": "Inter-Regular",
+        "16": null,
+        "17": null
+      },
+      "OS2": 400,
+      "axes": {
+        "opsz": [
+          14.0,
+          14.0,
+          32.0
+        ],
+        "wght": [
+          100.0,
+          400.0,
+          900.0
+        ]
+      },
+      "weights": [
+        {
+          "requested": 400,
+          "OS2": 400,
+          "glyfSHA256": "7fc25394cba853e6713d842a9fb1576e56f39e1218b3299d16aaaece254c6cb2"
+        },
+        {
+          "requested": 500,
+          "OS2": 500,
+          "glyfSHA256": "117ef7ed9fdcd87cf29a47d7a3e2c6d54079e51dc05ce5c22731ce2fe9c58dba"
+        },
+        {
+          "requested": 600,
+          "OS2": 600,
+          "glyfSHA256": "d57ade1c7f0f1d4878c0dc10824a40c2bf13c56a298884f700ede11195fad2e0"
+        },
+        {
+          "requested": 700,
+          "OS2": 700,
+          "glyfSHA256": "38f5aa3acdb220881ba4a571127d766f8e4a9067024edacb711fd496c2a2a6e4"
+        }
+      ],
+      "licenseSHA256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39",
+      "licenseOriginalFile": "fonts/inter-OFL.original.gz",
+      "licenseOriginalCompressedSHA256": "3689ce83ee4032c5f5fcf76bd79dcd4d572f740f5edb8ff4cf7755ec0592271f",
+      "licenseOriginalPayloadSHA256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+      "licenseOriginalPayloadUpstreamByteIdentical": true,
+      "licensePlainTextMatchesWhitespaceNormalization": true
+    },
+    {
+      "file": "fonts/noto-variable.ttf",
+      "sha256": "63111b5b2e074dd48cc67692e0a2726d86ee94c1c37fe8598257b7b4e87e869e",
+      "upstreamByteIdentical": true,
+      "names": {
+        "1": "Noto Sans Arabic",
+        "2": "Regular",
+        "6": "NotoSansArabic-Regular",
+        "16": null,
+        "17": null
+      },
+      "OS2": 400,
+      "axes": {
+        "wght": [
+          100.0,
+          400.0,
+          900.0
+        ],
+        "wdth": [
+          62.5,
+          100.0,
+          100.0
+        ]
+      },
+      "weights": [
+        {
+          "requested": 400,
+          "OS2": 400,
+          "glyfSHA256": "0fdefacba54c5770cda3321186889c0f26ebf0811583d09e349995df630d9399"
+        },
+        {
+          "requested": 600,
+          "OS2": 600,
+          "glyfSHA256": "62b88b16122231c037d80802bd283bc28d6e5f9098359c4ec6a63a58b4708e2b"
+        }
+      ],
+      "licenseSHA256": "df5143cdf3380169f2d03bf6d2cd243e85621fd097e608c3607cf7f9c9884ae6",
+      "licenseOriginalFile": "fonts/notosansarabic-OFL.original.gz",
+      "licenseOriginalCompressedSHA256": "2057b211b87598b762f3a9ca2183c7499faf9f4dfbdd5678df65695977d83f2e",
+      "licenseOriginalPayloadSHA256": "07fc70bfeb985cc1a87a8587d0a0c80bab11c86c9dc3fd95b6f0cb332f983e96",
+      "licenseOriginalPayloadUpstreamByteIdentical": true,
+      "licensePlainTextMatchesWhitespaceNormalization": true
+    }
+  ],
+  "shaping": [
+    {
+      "file": "plex-400.ttf",
+      "runs": {
+        "مُلخّص الزيارة": [
+          {
+            "glyph": 929,
+            "cluster": 25
+          },
+          {
+            "glyph": 432,
+            "cluster": 23
+          },
+          {
+            "glyph": 293,
+            "cluster": 21
+          },
+          {
+            "glyph": 409,
+            "cluster": 19
+          },
+          {
+            "glyph": 456,
+            "cluster": 17
+          },
+          {
+            "glyph": 477,
+            "cluster": 15
+          },
+          {
+            "glyph": 286,
+            "cluster": 13
+          },
+          {
+            "glyph": 3,
+            "cluster": 12
+          },
+          {
+            "glyph": 705,
+            "cluster": 10
+          },
+          {
+            "glyph": 1674,
+            "cluster": 6
+          },
+          {
+            "glyph": 618,
+            "cluster": 6
+          },
+          {
+            "glyph": 381,
+            "cluster": 4
+          },
+          {
+            "glyph": 1655,
+            "cluster": 0
+          },
+          {
+            "glyph": 920,
+            "cluster": 0
+          }
+        ],
+        "مُتابعة واضحة": [
+          {
+            "glyph": 935,
+            "cluster": 23
+          },
+          {
+            "glyph": 606,
+            "cluster": 21
+          },
+          {
+            "glyph": 718,
+            "cluster": 19
+          },
+          {
+            "glyph": 286,
+            "cluster": 17
+          },
+          {
+            "glyph": 955,
+            "cluster": 15
+          },
+          {
+            "glyph": 3,
+            "cluster": 14
+          },
+          {
+            "glyph": 935,
+            "cluster": 12
+          },
+          {
+            "glyph": 758,
+            "cluster": 10
+          },
+          {
+            "glyph": 389,
+            "cluster": 8
+          },
+          {
+            "glyph": 293,
+            "cluster": 6
+          },
+          {
+            "glyph": 321,
+            "cluster": 4
+          },
+          {
+            "glyph": 1655,
+            "cluster": 0
+          },
+          {
+            "glyph": 920,
+            "cluster": 0
+          }
+        ],
+        "ب ت ث ن ي": [
+          {
+            "glyph": 992,
+            "cluster": 12
+          },
+          {
+            "glyph": 3,
+            "cluster": 11
+          },
+          {
+            "glyph": 502,
+            "cluster": 9
+          },
+          {
+            "glyph": 3,
+            "cluster": 8
+          },
+          {
+            "glyph": 520,
+            "cluster": 6
+          },
+          {
+            "glyph": 3,
+            "cluster": 5
+          },
+          {
+            "glyph": 517,
+            "cluster": 3
+          },
+          {
+            "glyph": 3,
+            "cluster": 2
+          },
+          {
+            "glyph": 512,
+            "cluster": 0
+          }
+        ],
+        "لا": [
+          {
+            "glyph": 1066,
+            "cluster": 0
+          }
+        ],
+        "بتثني": [
+          {
+            "glyph": 1260,
+            "cluster": 6
+          },
+          {
+            "glyph": 323,
+            "cluster": 4
+          },
+          {
+            "glyph": 321,
+            "cluster": 2
+          },
+          {
+            "glyph": 389,
+            "cluster": 0
+          }
+        ],
+        "م ل خ ص": [
+          {
+            "glyph": 698,
+            "cluster": 9
+          },
+          {
+            "glyph": 3,
+            "cluster": 8
+          },
+          {
+            "glyph": 577,
+            "cluster": 6
+          },
+          {
+            "glyph": 3,
+            "cluster": 5
+          },
+          {
+            "glyph": 486,
+            "cluster": 3
+          },
+          {
+            "glyph": 3,
+            "cluster": 2
+          },
+          {
+            "glyph": 906,
+            "cluster": 0
+          }
+        ]
+      },
+      "noNotdef": true,
+      "distinctDottedLetters": true,
+      "contextualShapingDiffersFromIsolated": true
+    },
+    {
+      "file": "plex-600.ttf",
+      "runs": {
+        "مُلخّص الزيارة": [
+          {
+            "glyph": 929,
+            "cluster": 25
+          },
+          {
+            "glyph": 432,
+            "cluster": 23
+          },
+          {
+            "glyph": 293,
+            "cluster": 21
+          },
+          {
+            "glyph": 409,
+            "cluster": 19
+          },
+          {
+            "glyph": 456,
+            "cluster": 17
+          },
+          {
+            "glyph": 477,
+            "cluster": 15
+          },
+          {
+            "glyph": 286,
+            "cluster": 13
+          },
+          {
+            "glyph": 3,
+            "cluster": 12
+          },
+          {
+            "glyph": 705,
+            "cluster": 10
+          },
+          {
+            "glyph": 1674,
+            "cluster": 6
+          },
+          {
+            "glyph": 618,
+            "cluster": 6
+          },
+          {
+            "glyph": 381,
+            "cluster": 4
+          },
+          {
+            "glyph": 1655,
+            "cluster": 0
+          },
+          {
+            "glyph": 920,
+            "cluster": 0
+          }
+        ],
+        "مُتابعة واضحة": [
+          {
+            "glyph": 935,
+            "cluster": 23
+          },
+          {
+            "glyph": 606,
+            "cluster": 21
+          },
+          {
+            "glyph": 718,
+            "cluster": 19
+          },
+          {
+            "glyph": 286,
+            "cluster": 17
+          },
+          {
+            "glyph": 955,
+            "cluster": 15
+          },
+          {
+            "glyph": 3,
+            "cluster": 14
+          },
+          {
+            "glyph": 935,
+            "cluster": 12
+          },
+          {
+            "glyph": 758,
+            "cluster": 10
+          },
+          {
+            "glyph": 389,
+            "cluster": 8
+          },
+          {
+            "glyph": 293,
+            "cluster": 6
+          },
+          {
+            "glyph": 321,
+            "cluster": 4
+          },
+          {
+            "glyph": 1655,
+            "cluster": 0
+          },
+          {
+            "glyph": 920,
+            "cluster": 0
+          }
+        ],
+        "ب ت ث ن ي": [
+          {
+            "glyph": 992,
+            "cluster": 12
+          },
+          {
+            "glyph": 3,
+            "cluster": 11
+          },
+          {
+            "glyph": 502,
+            "cluster": 9
+          },
+          {
+            "glyph": 3,
+            "cluster": 8
+          },
+          {
+            "glyph": 520,
+            "cluster": 6
+          },
+          {
+            "glyph": 3,
+            "cluster": 5
+          },
+          {
+            "glyph": 517,
+            "cluster": 3
+          },
+          {
+            "glyph": 3,
+            "cluster": 2
+          },
+          {
+            "glyph": 512,
+            "cluster": 0
+          }
+        ],
+        "لا": [
+          {
+            "glyph": 1066,
+            "cluster": 0
+          }
+        ],
+        "بتثني": [
+          {
+            "glyph": 1260,
+            "cluster": 6
+          },
+          {
+            "glyph": 323,
+            "cluster": 4
+          },
+          {
+            "glyph": 321,
+            "cluster": 2
+          },
+          {
+            "glyph": 389,
+            "cluster": 0
+          }
+        ],
+        "م ل خ ص": [
+          {
+            "glyph": 698,
+            "cluster": 9
+          },
+          {
+            "glyph": 3,
+            "cluster": 8
+          },
+          {
+            "glyph": 577,
+            "cluster": 6
+          },
+          {
+            "glyph": 3,
+            "cluster": 5
+          },
+          {
+            "glyph": 486,
+            "cluster": 3
+          },
+          {
+            "glyph": 3,
+            "cluster": 2
+          },
+          {
+            "glyph": 906,
+            "cluster": 0
+          }
+        ]
+      },
+      "noNotdef": true,
+      "distinctDottedLetters": true,
+      "contextualShapingDiffersFromIsolated": true
+    },
+    {
+      "file": "noto-variable.ttf",
+      "runs": {
+        "مُلخّص الزيارة": [
+          {
+            "glyph": 288,
+            "cluster": 25
+          },
+          {
+            "glyph": 92,
+            "cluster": 25
+          },
+          {
+            "glyph": 30,
+            "cluster": 23
+          },
+          {
+            "glyph": 9,
+            "cluster": 21
+          },
+          {
+            "glyph": 319,
+            "cluster": 19
+          },
+          {
+            "glyph": 21,
+            "cluster": 19
+          },
+          {
+            "glyph": 283,
+            "cluster": 17
+          },
+          {
+            "glyph": 31,
+            "cluster": 17
+          },
+          {
+            "glyph": 72,
+            "cluster": 15
+          },
+          {
+            "glyph": 8,
+            "cluster": 13
+          },
+          {
+            "glyph": 3,
+            "cluster": 12
+          },
+          {
+            "glyph": 39,
+            "cluster": 10
+          },
+          {
+            "glyph": 368,
+            "cluster": 6
+          },
+          {
+            "glyph": 283,
+            "cluster": 6
+          },
+          {
+            "glyph": 26,
+            "cluster": 6
+          },
+          {
+            "glyph": 70,
+            "cluster": 4
+          },
+          {
+            "glyph": 372,
+            "cluster": 0
+          },
+          {
+            "glyph": 79,
+            "cluster": 0
+          }
+        ],
+        "مُتابعة واضحة": [
+          {
+            "glyph": 288,
+            "cluster": 23
+          },
+          {
+            "glyph": 85,
+            "cluster": 23
+          },
+          {
+            "glyph": 26,
+            "cluster": 21
+          },
+          {
+            "glyph": 283,
+            "cluster": 19
+          },
+          {
+            "glyph": 41,
+            "cluster": 19
+          },
+          {
+            "glyph": 8,
+            "cluster": 17
+          },
+          {
+            "glyph": 98,
+            "cluster": 15
+          },
+          {
+            "glyph": 3,
+            "cluster": 14
+          },
+          {
+            "glyph": 288,
+            "cluster": 12
+          },
+          {
+            "glyph": 85,
+            "cluster": 12
+          },
+          {
+            "glyph": 48,
+            "cluster": 10
+          },
+          {
+            "glyph": 317,
+            "cluster": 8
+          },
+          {
+            "glyph": 19,
+            "cluster": 8
+          },
+          {
+            "glyph": 9,
+            "cluster": 6
+          },
+          {
+            "glyph": 288,
+            "cluster": 4
+          },
+          {
+            "glyph": 18,
+            "cluster": 4
+          },
+          {
+            "glyph": 372,
+            "cluster": 0
+          },
+          {
+            "glyph": 79,
+            "cluster": 0
+          }
+        ],
+        "ب ت ث ن ي": [
+          {
+            "glyph": 319,
+            "cluster": 12
+          },
+          {
+            "glyph": 103,
+            "cluster": 12
+          },
+          {
+            "glyph": 3,
+            "cluster": 11
+          },
+          {
+            "glyph": 283,
+            "cluster": 9
+          },
+          {
+            "glyph": 80,
+            "cluster": 9
+          },
+          {
+            "glyph": 3,
+            "cluster": 8
+          },
+          {
+            "glyph": 293,
+            "cluster": 6
+          },
+          {
+            "glyph": 14,
+            "cluster": 6
+          },
+          {
+            "glyph": 3,
+            "cluster": 5
+          },
+          {
+            "glyph": 288,
+            "cluster": 3
+          },
+          {
+            "glyph": 14,
+            "cluster": 3
+          },
+          {
+            "glyph": 3,
+            "cluster": 2
+          },
+          {
+            "glyph": 317,
+            "cluster": 0
+          },
+          {
+            "glyph": 14,
+            "cluster": 0
+          }
+        ],
+        "لا": [
+          {
+            "glyph": 10,
+            "cluster": 2
+          },
+          {
+            "glyph": 73,
+            "cluster": 0
+          }
+        ],
+        "بتثني": [
+          {
+            "glyph": 319,
+            "cluster": 8
+          },
+          {
+            "glyph": 104,
+            "cluster": 8
+          },
+          {
+            "glyph": 283,
+            "cluster": 6
+          },
+          {
+            "glyph": 16,
+            "cluster": 6
+          },
+          {
+            "glyph": 293,
+            "cluster": 4
+          },
+          {
+            "glyph": 18,
+            "cluster": 4
+          },
+          {
+            "glyph": 288,
+            "cluster": 2
+          },
+          {
+            "glyph": 18,
+            "cluster": 2
+          },
+          {
+            "glyph": 317,
+            "cluster": 0
+          },
+          {
+            "glyph": 19,
+            "cluster": 0
+          }
+        ],
+        "م ل خ ص": [
+          {
+            "glyph": 38,
+            "cluster": 9
+          },
+          {
+            "glyph": 3,
+            "cluster": 8
+          },
+          {
+            "glyph": 283,
+            "cluster": 6
+          },
+          {
+            "glyph": 22,
+            "cluster": 6
+          },
+          {
+            "glyph": 3,
+            "cluster": 5
+          },
+          {
+            "glyph": 68,
+            "cluster": 3
+          },
+          {
+            "glyph": 3,
+            "cluster": 2
+          },
+          {
+            "glyph": 74,
+            "cluster": 0
+          }
+        ]
+      },
+      "noNotdef": true,
+      "distinctDottedLetters": true,
+      "contextualShapingDiffersFromIsolated": true
+    }
+  ],
+  "preservation": {
+    "previousHead": "81ea915d10c4ad83578465dcd8b2d26d69d1b6fe",
+    "tracked": 1653,
+    "byteIdentical": 1651,
+    "exceptions": [
+      "docs/CURRENT_STATUS.md",
+      "docs/SOURCE_OF_TRUTH.md"
+    ],
+    "missing": []
+  },
+  "authorContrastRecalculation": {
+    "pairs": 96,
+    "allRatiosReproduced": true,
+    "minimumByRole": {
+      "focus": 5.2179593648901035,
+      "meaningful boundary": 3.870504130902334,
+      "text": 5.714728811082288
+    }
+  },
+  "inputs": {
+    "docs/brand-source-exact-100/ap01-ap04-review/README.md": "e61438ff795248d5b60e518b08308ae42d2fb59f89c7bc8a5ed0d4fac2541a91",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/baseline.json": "72fab1f3923c688917f1dd020cb5a553268e40f68b4814d3f1cac18d584f9bbe",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/browser-qa.json": "1c187a72664eaff0348a54acafc6927b7b7ff0973b6433703eda16438622af57",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/color-pairs.json": "0a47e72ab3b25da419353bc51d2582463f8a7f2c1818499eb2a79011581eaea8",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/font-instance-audit.json": "310a1f7f27f84ead4942d93c56d55ac0f7c34243e97446e1a94d2d2c0390b72e",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/font-provenance.json": "356ce48b617cb26003be13d17ceb052a9981239d8b63bdfb7a3caba662c8a64a",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/native-zoom.json": "e3d455a604a6aa75e792342febf44df174983e1cf007a1fa7326cde5956d90fe",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/preservation.json": "d6f7621653acef873fa5a1ce6f849d26ec3c0efd38f097a5568853000ecdd96b",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-noto-doctor-ar-dark-320-text200.png": "7c52f52c7a1f58a4dd3ae6cd14fe119e15a074a4517e5df26979d835c919ed32",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-noto-doctor-ar-light-320-text200.png": "abf7cab382195d5e9bf704bab8beaea560ff046ef06b0011ef16ec5206a05c1b",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-noto-doctor-en-dark-320-text200.png": "c1bfc55ae01b464d0b36c4cc4fff374a6efc10dd33c3f44e50816e631db4bb40",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-noto-doctor-en-light-320-text200.png": "245df1b5cb2ae544fb276f4b7ca9d06a4cbd677039a50adfd33b69f9872d971d",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-noto-patient-ar-dark-320-text200.png": "a1eb4cea18ee1fffb8130f9fdb0a2d1c4c227d5d64b8c13fd9b5cd12bb2895cf",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-noto-patient-ar-light-320-text200.png": "50d568f68cf16e614c60e2f343751ae3716a4ecb95379191306a74716339d529",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-noto-patient-en-dark-320-text200.png": "373f1351cd0863bca765d7e73c2f5b870c8b897954b2fbb81b0faffaa25c5628",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-noto-patient-en-light-320-text200.png": "b981bb89009c9681cb938b88b2390e5b3eae8cd9d5479593275896488b2cfe1d",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-plex-doctor-ar-dark-320-text200.png": "82cc3cd01f8ed7e13ee427c53d9f1b080545209e6d04c96036eea270de95dd88",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-plex-doctor-ar-light-320-text200.png": "dec522d0746120db7b8e9575e197afa2574a7c5f7c0cf41d556de6e536f4ebbd",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-plex-doctor-en-dark-320-text200.png": "48d436633889723f63dd778e41c41dfe827b570427d053cb3e2532d067e98514",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-plex-doctor-en-light-320-text200.png": "9158969dcb79250fa6eb2d3143fdd95954a82f4bb0b89cab33ed0c4df88ce2e2",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-plex-patient-ar-dark-320-text200.png": "a6a3ab5516488da415845c53b588d3c17c0a8cf81eda9c992ad0b8ef2a0c3ba8",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-plex-patient-ar-light-320-text200.png": "963d89cb1e0675c13e1537deed65b5a9c5e153dd1240fc66db97b2744f81908c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-plex-patient-en-dark-320-text200.png": "06eb1a2975fcaba7fa01a0b504907d3c1785e0475524a67403a6f1b35b0d6781",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/focus-plex-patient-en-light-320-text200.png": "612ca04febbabc952292242a7361c408219597a71c1ee4b02a880c2ec72ffd62",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/interaction-dark.png": "41c816c088ef2931d06c3e4d4a759b22c3a8428e90c719d4455a246fdf1697ac",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/interaction-light.png": "11e2158340a397b7429ea1796de449b32a8f7724d0e48c70cfeae406c48e1fbe",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-doctor-ar-dark-window1280.png": "728685cd99d610e712f6261e86e7b605ebc0b32d1ac4232149e009911a914637",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-doctor-ar-dark-window640.png": "f0742b952cb01938272070fbd672a5fc3d1fbaa261ea2c8ffba00468aa0e1e79",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-doctor-ar-light-window1280.png": "2741bf477b8e2bd6c13ca083b5e73f04690100b73a27fce49aeabe2d1f85e952",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-doctor-ar-light-window640.png": "7b9839e8a00917461c427ec95799cdc42b8f28c4de679477e41352c3eee30174",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-doctor-en-dark-window1280.png": "7e29f862b75d3f5729d01ee880dab90c79857bd39a5bc261f0cdf754f0f9ade3",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-doctor-en-dark-window640.png": "5e2696953d96f9456997a21c8773f3347c75a982176dad295429373c92842ce8",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-doctor-en-light-window1280.png": "5aa45853e1b852cd886e7bd5f7f5ae6b29750a60d01b633995dd36ac179fec31",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-doctor-en-light-window640.png": "305aba38ad6a28ab4dc388342eabd49ab3d3c223b5d2c09d4bb7b33b680338cd",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-patient-ar-dark-window1280.png": "c260e2a08f2318f375f89e6c77de17c8be69fc2da6c5c5af235768c18ec62bb2",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-patient-ar-dark-window640.png": "0ca3030bf1664926cd87d15686a864c17b2463abdfe406b18e5da921d82ab01b",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-patient-ar-light-window1280.png": "8f53ba9a242198fa6f1134bfd2405a0d5daa009db701f5262b3ecba7da84d3b9",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-patient-ar-light-window640.png": "d983ebaf180308a4a11c183b3fba6dedca0d7349d0c181e5f7c589cddb309bee",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-patient-en-dark-window1280.png": "bf2ff304d383f61a9d9b2856effd3b3f6ec7e4b7153913253eca91f7805c5998",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-patient-en-dark-window640.png": "844dcc285054dc72ea3902aba25e3ded236b89b5a8929f988f5604cd7883636d",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-patient-en-light-window1280.png": "2261e68311b974a51237964a840110ff8a96ab85843035e4d24dfdc82689ab15",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-noto-patient-en-light-window640.png": "7e1afb36da8222d37e49cfbd03e183aaee2bb77abb9d6b37d1b42194a1b90943",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-doctor-ar-dark-window1280.png": "093ddfa4c226b403c545b59a5e26bd164ef9b31f8b8f42b54d8b615e8500d767",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-doctor-ar-dark-window640.png": "1aedc128ad6bb6b301a2bb4aefd48c2960a4e824a823561d5bda900e0bf74696",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-doctor-ar-light-window1280.png": "ab486573606bda7665f9b824b399f55d863e9fb4dba5be22734c3fdcbca7bb0f",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-doctor-ar-light-window640.png": "c1b1eca79b3f45e09f9908d4999f4d32a80db6718185f7e481952ef6486e333e",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-doctor-en-dark-window1280.png": "9deee53549c95c7a5d09648036e8e9eb67ad3438420b2f21d63a06518cde2290",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-doctor-en-dark-window640.png": "87f89b1568f6cb1e98c7845479a92cee732b5b97b4c2b136545d8880c7a8ba1c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-doctor-en-light-window1280.png": "95a08e50a781a9e1d1a4b608b5a114585d486815dcc8fd11f691ff6751ad3a02",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-doctor-en-light-window640.png": "cbd660b432fa14a849e1cc8d4f0ef12e91891ad5acfc0720262814dd8129e4cb",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-patient-ar-dark-window1280.png": "f4e4cca553d74af2f7aff0e943c89bbcf4187bf21d688d47473a907b327c0530",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-patient-ar-dark-window640.png": "58fa8d50d406c6b913c863eef905e583f50ffedab64bf151a38cdd67302b436a",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-patient-ar-light-window1280.png": "61c6f814932ecd60a9ee14141a9297ab62b8f721cd836feced6ed03f0e2cff09",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-patient-ar-light-window640.png": "f8b7472415a75d272abf0c7ae8f4be068bcb91f9d2183aac36dfb3de1662559f",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-patient-en-dark-window1280.png": "0a10a5d323b43ebc90267d51cd2dd588372ecda413ecbf1ba96ef455bf6b0a6b",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-patient-en-dark-window640.png": "93fe53af600585dd4087e29f3c0f805bd6028c5481fc5633e7c1eaa55dfd41a1",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-patient-en-light-window1280.png": "05025ec83554f9101572129970062b893773e5b748793fa9e7787c95f006a80d",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/native200-plex-patient-en-light-window640.png": "288e98dddd2abf5661d4db878752983442bb7a266e249715059d8fb1067adfa7",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-dark-1024-normal.png": "f1fa9d1869c41896bb249c2330c6935d4e553e09bdb2fc0541353cff9e62b0a3",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-dark-1024-text200.png": "f5e1dbc7bdfca1a8be394bc70b45189e2c81bb59e75c61a86bbec4fe97748f03",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-dark-1440-normal.png": "143425ec0d558d11d0d153a65f5e3f21b54e8e4ab9c1e48d4dccd115f5444f8a",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-dark-1440-text200.png": "ac47fc877fd47111c0f675a23d40ad8287ba7421ead76cb21d778f32275d7c41",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-dark-320-normal.png": "fc52370f1481e791da3ab4e8ddb0a4b3590de47770750e19332ab8a982f1f167",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-dark-320-text200.png": "9074950119b6be1113f3e8f80c0166b5f798cf5a16b57d94c5907c1fd1f668dc",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-dark-390-normal.png": "f8bb55ae7667cb5ca54cd3e2534fd9dd25fc958b83e40137fd4217c85c8a59b5",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-dark-390-text200.png": "3186b1d4c15d15cf40db5e8ed83ab47cc412f7a8be8a52e42c8062da28c4f453",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-dark-768-normal.png": "8b21a1321fe1ae8f0b8a20d67de321368947a71191d1a80cfdb9631a1f632c73",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-dark-768-text200.png": "a6ba1f1b96080862dbc7481067100fec817457e623ea8d4de7dd2fd3665480cc",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-light-1024-normal.png": "15eba528ad75ba06794665699bdb91967f1587ef4b927d60a1fb6f002513d793",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-light-1024-text200.png": "6c46ec7f3994d9599730e82084d08dafdbfe533900fa30da0aa536e543b67393",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-light-1440-normal.png": "5732b2979c5a838e065c6a7cc4d67dfd619d2c116d9b9725178e0ef1cfcec8cb",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-light-1440-text200.png": "805326dccefc514912130dcf85e659f615e41ce58e1a27a1805c6ac029488a5f",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-light-320-normal.png": "cce6759f37009f308d2bff51c31ece2b79e3cccb1360cfbcc4655c2e62622fb3",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-light-320-text200.png": "c77b36dc443374f6c7044d9cce4901a0703bd9b282eed14257d6bd88e6ec5774",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-light-390-normal.png": "4b7d5fd40a31cb06e59631ffe8b7bce6d1ef605c0cf54ad9bc90fc9e7f416d27",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-light-390-text200.png": "d877d2fe683408c4739aab47b78d9934205cf1c3ae90bed1caff17ab9b0cda74",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-light-768-normal.png": "e2dd36ee6d431583549085655fca8bd13b9ec1ede65520d972859aa7a51a3a70",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-ar-light-768-text200.png": "c8a5e626993e08d47ec82c2416b30084320b8b66c0edd6e05be987b7fec30dea",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-dark-1024-normal.png": "2a6c5faf887e6429a51b68aee5dcb2a0d0ec244b697e1ec9821a49141fb181e3",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-dark-1024-text200.png": "c92f041b8cadf5e006b492067591350aed0e516eed9fda455f832d6a69a3b0e5",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-dark-1440-normal.png": "e8357cb7c04da2eb188474ec2d4e27bcbb73df0f9530b836562b58d2e8fc859b",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-dark-1440-text200.png": "b7472815babd37c3f86110cec0a2517cf1a9dcbaa892632512692c13ee415f8e",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-dark-320-normal.png": "7d4f8f391e4528f7f817fab545aabb9feb5b6a096a7f8314891ccba5a4206a9f",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-dark-320-text200.png": "facb84193d839cee87e04776aefda96ceb3182e2fe516164e0c93eb84bd267af",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-dark-390-normal.png": "47738b1c3b0ab6f0c44522cbe161e29f61962ca74723a958d64b52efd4bfbd3c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-dark-390-text200.png": "6880af20bd2d5de1e758a68cfa698bb8a8da558964c1d1f0fc9185eda7c29d7c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-dark-768-normal.png": "236b92154dd9cc3b3d33e6996b8667da483e62dd0138df291b45e5bf89ca1c58",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-dark-768-text200.png": "44fcd2cd9a951ebbd4ea8893d505c5f5d5dabe713233cef9e821b98462cb8b77",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-light-1024-normal.png": "6aa5ae62a8c8970d592d3a98ad1cd36f0098ad86ffa1aed19549fb7212e1627c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-light-1024-text200.png": "9b26db80e2885ff1df25a68c5de108c52e85be2a6a8b78523854e10e7abb4987",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-light-1440-normal.png": "0db6731b6e0b1ae58d1fd3136ae168cf846e5782dbfe64027a3619a3bf8448cc",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-light-1440-text200.png": "59cc57a6be7a11708c0aef35b31e4671abb6465df504f5fe13f826ad1dcd51b9",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-light-320-normal.png": "f648610ab2a1359be0b347467d245570f9b909dddc670b4924b256bb98ff49bc",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-light-320-text200.png": "33e95c807e7dae83fe3fe2b9fa8451eba6a293e00478f7584a8fbae3608f34fa",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-light-390-normal.png": "8a6d108bae80f24ceb905bd304d269b8b9b46c539104a9f08c045a099ae914c0",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-light-390-text200.png": "04adf0dfd81036fbafcf6db20a212a1ceef01b819fc0054486af57ea4a908c00",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-light-768-normal.png": "22cb0488eb633088dbbcbb36f20a988b65ce589a7cc6923335fe47251cd20493",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-doctor-en-light-768-text200.png": "b9fb421e7ae7264f40ccce39ce2c3c3d803151949f6aaa6a497f1ff798859105",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-dark-1024-normal.png": "0d2a8805b2110fe535f2a386836f35c25488e1400d6d3dc3227a2236c2f8679d",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-dark-1024-text200.png": "7ef67d7d224a4c635e38887f9ac52876ff805cb8599b0cd8506f6b425afa8eec",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-dark-1440-normal.png": "76b374d39f4246b5fb08b47e2bffd7f0ae5cefd8cc175394935011b5c8c2dc25",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-dark-1440-text200.png": "a4ad658744ebb75feb733fac89e9f7cbff432a5eac94c8dc1ce04af7197841f7",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-dark-320-normal.png": "1d5bf7ffa8fa2cb30e28017358ca37710e63492eb8441fb07a679674a9a76af6",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-dark-320-text200.png": "e41752d047d789a206be97cff2c9d3c32bb8a75f9a8b756d89d7c86658fd53cd",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-dark-390-normal.png": "b33e546e8d63c22fbb75a1c6887a86dd23ee4c269f472554d8d874ab1add38ae",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-dark-390-text200.png": "422a3fb019c1bccc730cecc8825d6aed360e07a272e50a78d4ed7e2dfdcf9fb5",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-dark-768-normal.png": "f5f6fc2a7e041f827fccb1d6f59afd6d0a4ef6eadd504355438d7974dd5a4e49",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-dark-768-text200.png": "e613a3ce4ec52abf107871674ae271fb2a67f707a93f14948b7a5c58c39f62a3",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-light-1024-normal.png": "38e0147f9d800e1aa5bf77378297bcaa2bdc0a64c11f422695241f9b9a149afb",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-light-1024-text200.png": "a8276bc28d5c26ed3cc08e240f4f2f42d9414f8db4daa1e44218694ba7587eff",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-light-1440-normal.png": "48754f6c7ea35243c803d0c3a8faa99423044b7a666b29e2894d53f7016c9eb1",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-light-1440-text200.png": "f39b7d414ff27517807d9c7b55bbaa747d8563726d47d37ac8b0a90c28d24df7",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-light-320-normal.png": "f166d4c71f0e8a96b594633206dd6a8bf201ca393256e7c8a494db72468a3a05",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-light-320-text200.png": "0294730cebe3423defa7e8b836607b6e94cd79a28f515287f4f0fdf9fdc04d66",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-light-390-normal.png": "3d1fa429b82dc9a80071e411b86b037329ea8dd3529522416ae4e0e32722af7e",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-light-390-text200.png": "deb56a5393f5ecdfca254496db88565cebaa164d7b8113bb54cb941057538e4e",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-light-768-normal.png": "62b3f76a2972fd009304ea909563cde1c34cc3481b198250687a6fbe5e4d60e3",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-ar-light-768-text200.png": "8e78047f39c49fd6b381bc151e32c0893eb13a478f5b3c52c3dd9322b50c1007",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-dark-1024-normal.png": "9fe315030d8e252a79b993c9d72c96b016193daad7c96b8aa6f8fa38021575a6",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-dark-1024-text200.png": "a0100bef7f6cc0db36210f1ea212f1c942f05e82439bf9ec5fe6ffcb0b118e76",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-dark-1440-normal.png": "df1e4c32d8f1b36f6430c20fe476a94c3baba2f954a4571fbc45ff13feccfb33",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-dark-1440-text200.png": "f0cd42df05817f72a1510da5a4c72ca40d486ace351428bd0e0048f55f635481",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-dark-320-normal.png": "016d2fb86e29a530d6391c20df469f47ffcaddcb30a94e77ce5b65e71e4a724d",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-dark-320-text200.png": "d3f5a4c01550fcad87b28c6b669dd29b46fbf06796ee35e34ec2e589e22d61ea",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-dark-390-normal.png": "b8f07483e6fe2831bcbd7b3c2a9fb8736bbbe3749333ba1247a7a8c7f352721b",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-dark-390-text200.png": "9815c58426611d97a70f7d6ca71c2ce99998008a682fe4628374eec674dcd171",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-dark-768-normal.png": "6cb10b691c48e27db9a11389b7f8d47cacb787ccaa086a3bcd20d3f5b09229e1",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-dark-768-text200.png": "d286e89f4b8bb28734f3fe5452a77c697a5c54c5cb4c0b34231195aa7d7770c8",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-light-1024-normal.png": "54486742195611c08d9925f46ffecfe52a7840223bb340cce06215060d936b4a",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-light-1024-text200.png": "3e73b4ec577e417e6c0d215759297a1b93ad062ceb0b46c31e73233c85db1f42",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-light-1440-normal.png": "f9be6db7bcd7ed728e204259db315398bc3586d0047bd4a3683f4428e1437037",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-light-1440-text200.png": "851f00d83c583912a0dabd05a1a2280d556efdbdf0ac346384fff35ec14ba326",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-light-320-normal.png": "5feaaa1cba3db202227ae4a7f91e4fc03478ac264e07b5749eff13e822f52a8d",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-light-320-text200.png": "cccfe79ad1df05b37ec0987667509924d46d76bf7a0e7d8cd6d37c9e45358953",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-light-390-normal.png": "1538ff027998ea2c85eaffdd6361b5a1dd5298d28920e3017dde36201ac67d96",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-light-390-text200.png": "364f67a74c888cc60aa73cd4176c016fb952449f36ecb703ae7eac4ea70e19fd",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-light-768-normal.png": "7623f1081b04fc056aa5a024a778abba256a8f59e0ddb34b5bdc2379063e482a",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/noto-patient-en-light-768-text200.png": "0aff3799aa78f477c91f8040e9c6d4c01e8102698cdacc84ab3e9fa092cd7126",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-dark-1024-normal.png": "0f8b4962175c23472e9b947238cd2bbeaf45733bc36f98423b997b70143f20aa",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-dark-1024-text200.png": "f4bed77fd4cd05c55fa449aa1b9904bcc2bd9c3b555ddb06a3ff29b6159079d0",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-dark-1440-normal.png": "df25fd2e0ff75927a0e3dfa7b1091df7d99b0dbdc1a9e2e97086b9e5c3ab21da",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-dark-1440-text200.png": "12dc67789452f34c82ff282e8ff52414d0ec0df5c61cb6fd50a0b5b7b014919c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-dark-320-normal.png": "4ef6c546890ca9267a66976ed5a548917e0080bd4c0d56984ec696db02994c93",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-dark-320-text200.png": "139373663e2c950ca10b826aba223932a452fb1ca844aa46946185edac4ac617",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-dark-390-normal.png": "8ea46072a72e56db3d389fba83c4e571a9b184c7dac9ed97a20ee6f9d5e9a43c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-dark-390-text200.png": "bb95a74721a36aa1cc60432c43ec1520ad641fe89c3f2fe26935533b8cd9497b",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-dark-768-normal.png": "242ed7bd62cf2b56cbef95c00942f31eed8e00da6bee349173c8ff8d377fffa7",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-dark-768-text200.png": "523c8546dd0f157d4ade6e4031d1bac0e8a11285d6fce4e28d6d5ee169c883f2",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-light-1024-normal.png": "3ef9bd958860080ad55819885390a9a75e634081b4fcccbe809b49b41c1b6f57",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-light-1024-text200.png": "8466fae754879c24dbea0c89afca649e4e0a83a1d8eeb3c91a4650c1b281a8fe",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-light-1440-normal.png": "f6c55e91f0caca6218971542048d3641fa313c7a10708be63ed553573561e127",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-light-1440-text200.png": "540286232bb74c14a38bfc04c79d8c4e984a4ce39811ada0dc176736656793ad",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-light-320-normal.png": "4948bbef16c664df62c81dfab6aa5139138a28f6a4ac7dd938cd8180b79a278f",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-light-320-text200.png": "4a0768095d824efe8c0865f23dc7c16439d5c0f1f3e94a9fd1dfec7c5e312669",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-light-390-normal.png": "756c13c793c24cff085ed909e503232d6afdadbb5b2dde161c5c7ae0f6a9a8d5",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-light-390-text200.png": "74ec24082b17677f18867600afb14c367b9508ad25a12cd4c5bae85162d307c1",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-light-768-normal.png": "ec5ef8b5494cddd37b7139ccd8a70818429bd543a3cfba5bb94f65bfde701d58",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-ar-light-768-text200.png": "be16c1f7646b596bbda33d1136f74fdbfa96b61268ccd9df3858f93f4748434d",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-dark-1024-normal.png": "bf8b56b1c219dfd0308896a992689b0b244f739f0ac802998dc30055af79cd12",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-dark-1024-text200.png": "88111507af781eb8dda081b9733958c7010c5381647f7d8345b880999775f8b2",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-dark-1440-normal.png": "eb0043db242774efb59c46ad80e66452b02b285455f4d30aa136a0425cf0c5c9",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-dark-1440-text200.png": "a1d91ab78b6b4ec9fb34b63db15b47af5dca47939c64d367c74e43e579e5e01a",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-dark-320-normal.png": "5e51085f83d12a5d4c9dd64035ffcee9c16c0af2e17f343755d6c29271361340",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-dark-320-text200.png": "88522058a06022ff69478020f53e7655d7fb6b89af6d1dedefafdbe9c1139052",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-dark-390-normal.png": "5dc6b8ed3d9a95940848ecbed7659fc60063d68cc42aba8d8c58b5e127bd52d1",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-dark-390-text200.png": "f111b6da4bd687ce2fc094fa84956f0cb0a943265a03c055cb71cbae150d9fce",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-dark-768-normal.png": "1b7d87dbf86cdb3e9d1cf262d2f6bed4cfa79735289dcee903fb9e7a3bf0052c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-dark-768-text200.png": "8febb1683b5499164286984d3d656263510052d2ae0a8284261b3a3ed556b29c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-light-1024-normal.png": "9f967f5ae2c29d957be5e0be937bfdd43e702ae893e9771dce7e95fe734268b1",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-light-1024-text200.png": "ac379408d421ce6b6fc20c4f9706a6cfbaf5794b1f5c7f3447b01a7cdf42e6dd",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-light-1440-normal.png": "5dda888fe37e3c0ffe89023fb9ff37d898a7e92b949fe1eb96df8a81dcf4d3c2",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-light-1440-text200.png": "0250c33c303ebf9010196a2adec19e8536c59b983197cb79976860aae16d0266",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-light-320-normal.png": "1130a4815c7822752788404e5cbb6f019644f4728784eb23deed8e47ed47dfaf",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-light-320-text200.png": "1a3c9ebb3eb876b6e819de5f231c9b72c2b135f0eda689349a4817902a5454ba",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-light-390-normal.png": "f1af0ac331ff753f432332beaaa44f71f7740c2562a7f5cf3fcd29593156da3c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-light-390-text200.png": "903a4412540554f0ea8c326d750e836a92eb6edc0e03682b718e1c35e5d4cf37",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-light-768-normal.png": "03907656df0788a56220f20ea697b38ce2261dd80351546680dfe99079b05646",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-doctor-en-light-768-text200.png": "2328493347d9e875030cfb001adffa4479e34b14cf4ef0f3af21557a49cad3b9",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-dark-1024-normal.png": "c7c80dcae1b68b2eb585e82c5a609f4875991058011f31a24e93cd6f454fc31c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-dark-1024-text200.png": "ca0b64ee6466d3361c540b2c077f099b69ae7821de3456c9d5b3239d1fced62b",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-dark-1440-normal.png": "6836b63c28a3931836bb287564c9bdf96bbce309be2aca2e40780fcf0451db1e",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-dark-1440-text200.png": "83e84ab63bc51d2e51e45de269d8efa002fd3b340837eb70173d3201cb7063de",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-dark-320-normal.png": "c18b18bb7f1dcb88283639809ce9fb4687da5f2c6a133efaf5c4d212e659fc69",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-dark-320-text200.png": "90db6abf8847a26dea2d36e7219ed835141801778ba64a4811cf818d5c7aef0f",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-dark-390-normal.png": "4f2b2d7333f7126702e97e45d4b84f5e8576bfbea13768573a78885bcf5c93d7",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-dark-390-text200.png": "4b2f5fd98f5ccbc1a3130a8fe10f3a1f352698c3079f132a51d4fd9d08e06ab6",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-dark-768-normal.png": "a80e0569485577017b084aafe231fc675166892bc811df11b06f1566968f2b8c",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-dark-768-text200.png": "db0eb968ffb278de9f9bcc9af53c68411c6d9b9f921b07f27d56d2748c2b68bd",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-light-1024-normal.png": "15314042e08fdea08e871b3cdb1f4fa7338dc24d63d76306789130f7dc1e9f95",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-light-1024-text200.png": "221ddc60a27ae158057301f76448e82fd0ebc065725967520093e66c7fb1bf35",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-light-1440-normal.png": "84d52be37b5df1bff348b715faf541f4592fd30929433c9fef00533d2247d102",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-light-1440-text200.png": "457be0c6e8cd2ec53a9f5bbba96609e3015c7a90597d240aec0346c2bc67225e",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-light-320-normal.png": "fb6f325dc38def7012ec74c03d4745f0a7abe74ddb877ce86bc74df00edca349",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-light-320-text200.png": "dad0401fe62aed7a4f81dd0d74ae0b206aee7d81817be9245894ae70f5986fb2",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-light-390-normal.png": "cf907a4792cf61d5898f2281e5dcb0eb520fddc5a9482b7864b580b8472ba5c7",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-light-390-text200.png": "3ffa7d21cae1888e9f3bc82830ad8f81d56fc4d31747aeee2035cdddeb4b9cd2",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-light-768-normal.png": "cc179b7e8b8c732e78aa240f31a8c0c6eba01ef747a56031ac31a1fbe4731b02",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-ar-light-768-text200.png": "5328e5eb68ac64e7d89a625b21fad744cac31bfb47abba65c07f562db85a2b01",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-dark-1024-normal.png": "fa624f349df23393ff96ea3c7f81302e0ebd460cce544444e5168567d95670e7",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-dark-1024-text200.png": "d53ec40beadcf06ebf2553f0d81505e3cbe8083df2c3bd7b2e442dbe24c4092a",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-dark-1440-normal.png": "d4d2914e7dfc55bd562b243d27d7c18c651e1023d2391e7aab857ebbb59ab2a0",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-dark-1440-text200.png": "275cc725d645fa16c913a7aa80c46e6e4936293efebf759b6cabcdd2a07499be",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-dark-320-normal.png": "65216e812812a0ac9ee0b14561f8858f32ecb520a71823f6b2acc4e516a69b38",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-dark-320-text200.png": "8e3837ff693707d169e3ef69f4c8e47be503540a97b81bc59871a44a08f633b9",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-dark-390-normal.png": "c5926f9bae153f9c23b0a9bdd0f2597fee90e9afe12111c3dc2ee95fd2984e73",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-dark-390-text200.png": "a2f488f4eb950fe1307c2025103bfd3f534bddb010c6bb51a5c202dbd1bfe69e",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-dark-768-normal.png": "eae5b7cbfb38afb4ee55c294c4c9d7599cb3b8442f47171dbe668dcb7f3b3639",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-dark-768-text200.png": "8f6fbed8a2187c39ab7bfb95e23be8bf7c9c313f98c3b624447ef5dc5c827c82",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-light-1024-normal.png": "df90c9fb8e7f9e7ace8a55e3dd77d6b3d2995ac19d825f10887cf30f82f79ae8",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-light-1024-text200.png": "1f38176b27291a1bb64d707e9b4161085bbe437ad9e27a923f224ab6dbdd929d",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-light-1440-normal.png": "b212dbf6c269a86d81d786a18a47b6a3a1a5bd06f912aa5c6f76ef38c0c47bad",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-light-1440-text200.png": "2a356316ec1a142d9420ad113f821f65b2219448c341b40450029a8b6ea02e93",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-light-320-normal.png": "d9bf1f6521d18b48b8edcb200376ba4b1b8dc57e8b8928501caaa12213deeed3",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-light-320-text200.png": "ee3eb19ff9c12c0f326971cd10ba777f4bad2a8093dc49130b619c9c1fa609c8",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-light-390-normal.png": "8803a6b5f239dbb79f8752c0e0a3e685a08b7398c4b5b1bb6e36bbac0539de5d",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-light-390-text200.png": "ce0303615dab43634d72050bc1995d09b12247446ff5fb4b7bb709154478f75a",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-light-768-normal.png": "132491c3ff40318d304fc3df98d7909d2bac23589eaa58a4cf54e87d77b141ba",
+    "docs/brand-source-exact-100/ap01-ap04-review/evidence/screenshots/plex-patient-en-light-768-text200.png": "05f476fc6dba57e16d184afc3f5405c53de03dbc67416c0f910f2f8cff0273e2",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/ibmplexsansarabic-METADATA.pb": "9c9130e70b6ed0b36ac1f4fd2e7a33c96fbad4d45ed38dfd2ce4d034fb676502",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/ibmplexsansarabic-OFL.original.gz": "ea29e0b9c55bd99bff04596a541695cbfd00243231a44772f3661fa51e6f3a54",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/ibmplexsansarabic-OFL.txt": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/ibmplexsansarabic-upstream_info.txt": "48afa1a03bce1f261c593480cda5e5bfc891bceb5e6f96ba21d441e48912a582",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/inter-METADATA.pb": "79e4721ef4f72251c6080a40dfd9efb6728b4df1fc690f0c70eb4b1b5303a5b0",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/inter-OFL.original.gz": "3689ce83ee4032c5f5fcf76bd79dcd4d572f740f5edb8ff4cf7755ec0592271f",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/inter-OFL.txt": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/inter-upstream_info.txt": "2b8024ee190a7033708ab7d65523496c392e93cdcfd8c3a236627ae003848532",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/inter-variable.ttf": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/noto-variable.ttf": "63111b5b2e074dd48cc67692e0a2726d86ee94c1c37fe8598257b7b4e87e869e",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/notosansarabic-METADATA.pb": "514bf8961fb28742be1947e6627d6c46f5a5bf3c6d7136548b16e9a8885991b9",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/notosansarabic-OFL.original.gz": "2057b211b87598b762f3a9ca2183c7499faf9f4dfbdd5678df65695977d83f2e",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/notosansarabic-OFL.txt": "df5143cdf3380169f2d03bf6d2cd243e85621fd097e608c3607cf7f9c9884ae6",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/notosansarabic-upstream_info.txt": "97d5295bb313068717c25b99a283eee955f4cb9e23471246e69f2e57a6b169f7",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/plex-400.ttf": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9",
+    "docs/brand-source-exact-100/ap01-ap04-review/fonts/plex-600.ttf": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467",
+    "docs/brand-source-exact-100/ap01-ap04-review/gallery.html": "f8808b98ccbf4a28ecdf5ce6bc04fba92f1538e3064b46ef39e6f480c6dd0696",
+    "docs/brand-source-exact-100/ap01-ap04-review/index.html": "6d89214fe0c49ca07ef144a0dc274c6d482beb892649216819695e5c30924414",
+    "docs/brand-source-exact-100/ap01-ap04-review/review.css": "f0957ba99398838db99d3cda506e11f22c59eca99783aa96822baf67ada073ca",
+    "docs/brand-source-exact-100/ap01-ap04-review/review.mjs": "75f35903d6a1d274266b6bed26b583bbd94363294485429a2c8fc378d5b8eb9b",
+    "docs/brand-source-exact-100/ap01-ap04-review/tools/audit.py": "a300fa3a77dcd6674344aae1e88e09e5dcb367921978fda35b8fac95d03c518a",
+    "docs/brand-source-exact-100/ap01-ap04-review/tools/build-index.py": "6f69aeb870a0fbb0c5b48994552abb3d4314cfd3ad3ef4b0332bec6c398eeccc",
+    "docs/brand-source-exact-100/ap01-ap04-review/tools/native-zoom.mjs": "706ac4f3a9bde7ac848ef1117358a9fe9eb242db5e452d3b58b39367c449a3c0",
+    "docs/brand-source-exact-100/ap01-ap04-review/tools/qa.mjs": "ed51760acfb5871a8825871571021406cab6e75c3522b595cc456bf75061723b"
+  },
+  "inputInventoryExclusion": "artifact-hashes.json is derived delivery bookkeeping, finalized after this independent report; review input hashes exclude independent outputs and that self-referential inventory.",
+  "governanceInputHashes": {
+    "AGENTS.md": "76a5b84acdb7b5c1ec9bf5d91a30ce5931389ed7b0d7a2bc63a19de295983079",
+    "docs/CURRENT_STATUS.md": "361de5d53c74d246e045a690e32443108201b96b1123596b3d455c37190c78d1",
+    "docs/SOURCE_OF_TRUTH.md": "c5a3ef9a9414ec4066315fa875d1b0c78934f5c1dd1a3a732dfa8857f41ed34a",
+    "docs/FOUNDATION_CHARTER.md": "f2cd3582d7e62a9f4ea8446cfa759aaaf1787b7df71fc80cd184f054ecd554d0",
+    "docs/ARABIC_UX.md": "db9e5d3ee65fea65d2555a41da45e58bb0f52cb05bf5e18e6660e9e472021dc1",
+    "docs/CONTENT_SYSTEM.md": "12abfbfa34e77d2014517779236b945940ef86d225186e2db6d1c10b013f75e7"
+  }
+}

@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+Current AP01/AP04 evidence-only appendix: [review and owner choice](brand-source-exact-100/ap01-ap04-review/README.md), [independent second review](brand-source-exact-100/ap01-ap04-review/INDEPENDENT_REVIEW.md). [Authorization](https://github.com/abuhmaid28/egyhealth360/pull/101#issuecomment-6759512805). The prior package below is preserved point-in-time evidence at accepted DP01/DP02 head `81ea915d10c4ad83578465dcd8b2d26d69d1b6fe`; pending DP02 statements there are historical. Only the new appendix is the current AP01/AP04 comparison. No final font, palette or Design System approval.
+
 Current issue-scoped review reference: [source-exact Violet × Apricot candidate #100](brand-source-exact-100/README.md). This is a provisional review package under explicit [issue #100](https://github.com/abuhmaid28/egyhealth360/issues/100), not final Brand/Design System approval or runtime authorization. CURRENT_STATUS owns mutable state; earlier task wording below remains historical within this scope.
 
 | Issue #100 review document | Classification / responsibility |

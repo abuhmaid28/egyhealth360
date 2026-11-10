@@ -1,0 +1,145 @@
+{
+  "method": "fontTools real variable instances at wght; other axes at documented defaults; no derived font redistributed",
+  "instances": [
+    {
+      "file": "fonts/plex-400.ttf",
+      "weight": 400,
+      "axes": {},
+      "OS2WeightClass": 400,
+      "glyphTableSha256": "fb0db0b070f6c05d7eb802074be596c66d62a88b01ce9ca1c7c5d5b310e00a60",
+      "sample": "مُلخّص الزيارة والمعلومات المُتاحة",
+      "missingCodepoints": []
+    },
+    {
+      "file": "fonts/plex-600.ttf",
+      "weight": 600,
+      "axes": {},
+      "OS2WeightClass": 600,
+      "glyphTableSha256": "7b3cc03a2f0d1ae2bb8864a0b4a4e76d9be1b91f3563a56f7a24890f9f0b49af",
+      "sample": "مُلخّص الزيارة والمعلومات المُتاحة",
+      "missingCodepoints": []
+    },
+    {
+      "file": "fonts/inter-variable.ttf",
+      "weight": 400,
+      "axes": {
+        "opsz": 14.0,
+        "wght": 400
+      },
+      "OS2WeightClass": 400,
+      "glyphTableSha256": "7fc25394cba853e6713d842a9fb1576e56f39e1218b3299d16aaaece254c6cb2",
+      "sample": "Available information 0123456789",
+      "missingCodepoints": []
+    },
+    {
+      "file": "fonts/inter-variable.ttf",
+      "weight": 500,
+      "axes": {
+        "opsz": 14.0,
+        "wght": 500
+      },
+      "OS2WeightClass": 500,
+      "glyphTableSha256": "117ef7ed9fdcd87cf29a47d7a3e2c6d54079e51dc05ce5c22731ce2fe9c58dba",
+      "sample": "Available information 0123456789",
+      "missingCodepoints": []
+    },
+    {
+      "file": "fonts/inter-variable.ttf",
+      "weight": 600,
+      "axes": {
+        "opsz": 14.0,
+        "wght": 600
+      },
+      "OS2WeightClass": 600,
+      "glyphTableSha256": "d57ade1c7f0f1d4878c0dc10824a40c2bf13c56a298884f700ede11195fad2e0",
+      "sample": "Available information 0123456789",
+      "missingCodepoints": []
+    },
+    {
+      "file": "fonts/inter-variable.ttf",
+      "weight": 700,
+      "axes": {
+        "opsz": 14.0,
+        "wght": 700
+      },
+      "OS2WeightClass": 700,
+      "glyphTableSha256": "38f5aa3acdb220881ba4a571127d766f8e4a9067024edacb711fd496c2a2a6e4",
+      "sample": "Available information 0123456789",
+      "missingCodepoints": []
+    },
+    {
+      "file": "fonts/noto-variable.ttf",
+      "weight": 400,
+      "axes": {
+        "wght": 400,
+        "wdth": 100.0
+      },
+      "OS2WeightClass": 400,
+      "glyphTableSha256": "0fdefacba54c5770cda3321186889c0f26ebf0811583d09e349995df630d9399",
+      "sample": "مُلخّص الزيارة والمعلومات المُتاحة",
+      "missingCodepoints": []
+    },
+    {
+      "file": "fonts/noto-variable.ttf",
+      "weight": 600,
+      "axes": {
+        "wght": 600,
+        "wdth": 100.0
+      },
+      "OS2WeightClass": 600,
+      "glyphTableSha256": "62b88b16122231c037d80802bd283bc28d6e5f9098359c4ec6a63a58b4708e2b",
+      "sample": "مُلخّص الزيارة والمعلومات المُتاحة",
+      "missingCodepoints": []
+    }
+  ],
+  "supportingFiles": [
+    {
+      "file": "fonts/ibmplexsansarabic-METADATA.pb",
+      "sha256": "9c9130e70b6ed0b36ac1f4fd2e7a33c96fbad4d45ed38dfd2ce4d034fb676502"
+    },
+    {
+      "file": "fonts/ibmplexsansarabic-OFL.original.gz",
+      "sha256": "ea29e0b9c55bd99bff04596a541695cbfd00243231a44772f3661fa51e6f3a54"
+    },
+    {
+      "file": "fonts/ibmplexsansarabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    },
+    {
+      "file": "fonts/ibmplexsansarabic-upstream_info.txt",
+      "sha256": "48afa1a03bce1f261c593480cda5e5bfc891bceb5e6f96ba21d441e48912a582"
+    },
+    {
+      "file": "fonts/inter-METADATA.pb",
+      "sha256": "79e4721ef4f72251c6080a40dfd9efb6728b4df1fc690f0c70eb4b1b5303a5b0"
+    },
+    {
+      "file": "fonts/inter-OFL.original.gz",
+      "sha256": "3689ce83ee4032c5f5fcf76bd79dcd4d572f740f5edb8ff4cf7755ec0592271f"
+    },
+    {
+      "file": "fonts/inter-OFL.txt",
+      "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39"
+    },
+    {
+      "file": "fonts/inter-upstream_info.txt",
+      "sha256": "2b8024ee190a7033708ab7d65523496c392e93cdcfd8c3a236627ae003848532"
+    },
+    {
+      "file": "fonts/notosansarabic-METADATA.pb",
+      "sha256": "514bf8961fb28742be1947e6627d6c46f5a5bf3c6d7136548b16e9a8885991b9"
+    },
+    {
+      "file": "fonts/notosansarabic-OFL.original.gz",
+      "sha256": "2057b211b87598b762f3a9ca2183c7499faf9f4dfbdd5678df65695977d83f2e"
+    },
+    {
+      "file": "fonts/notosansarabic-OFL.txt",
+      "sha256": "df5143cdf3380169f2d03bf6d2cd243e85621fd097e608c3607cf7f9c9884ae6"
+    },
+    {
+      "file": "fonts/notosansarabic-upstream_info.txt",
+      "sha256": "97d5295bb313068717c25b99a283eee955f4cb9e23471246e69f2e57a6b169f7"
+    }
+  ]
+}
