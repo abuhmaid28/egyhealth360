@@ -241,3 +241,5 @@ Each milestone delivery updates CURRENT_STATUS and affected current references, 
 | [staff-admin-pilot/DESIGN_REVIEW.md](design-system-v2/staff-admin-pilot/DESIGN_REVIEW.md) | One Pharmacy/FUTURE Lab/Admin visual candidate, preferred #107 reference; no final DS approval. |
 | [staff-admin-pilot/QA.md](design-system-v2/staff-admin-pilot/QA.md) | Browser matrix, 18 captures, scope and explicit limits; exact remote CI in Draft PR receipt. |
 | [staff-admin-pilot/evidence/independent-review.md](design-system-v2/staff-admin-pilot/evidence/independent-review.md) | Independent visual, authority/privacy and source-provenance critique; no clinical/runtime certification. |
+| [staff-admin-pilot/REFINEMENT.md](design-system-v2/staff-admin-pilot/REFINEMENT.md) | One owner-authorized refinement of existing #109: six browser comparisons, task-depth metrics, new QA and remaining owner decisions; candidate only. |
+| [staff-admin-pilot/evidence/refinement/independent-review.md](design-system-v2/staff-admin-pilot/evidence/refinement/independent-review.md) | Independent final refinement visual/clinical-privacy/provenance review; no production or final Design System approval. |

@@ -4,6 +4,8 @@
   "newHeadReceipt": "PR #109 final comment/body; no self-referential hash",
   "allowedPrefix": "docs/design-system-v2/staff-admin-pilot/",
   "changedFileInventory": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md",
     "docs/design-system-v2/staff-admin-pilot/CAPABILITY_AND_AUTHORITY.md",
     "docs/design-system-v2/staff-admin-pilot/DESIGN_REVIEW.md",
     "docs/design-system-v2/staff-admin-pilot/QA.md",
@@ -26,7 +28,7 @@
     "docs/design-system-v2/staff-admin-pilot/supplemental.mjs",
     "docs/design-system-v2/staff-admin-pilot/verify.mjs"
   ],
-  "changedFileCount": 21,
+  "changedFileCount": 23,
   "outsideAllowedChanges": [],
   "originalEvidence": [
     {
@@ -146,7 +148,11 @@
     }
   ],
   "originalPngCount": 18,
-  "trackedStartingFilesOutsideFolderUnchanged": 1423,
-  "protectedEvidence": "All starting-head tracked paths outside allowed folder unchanged, including docs/ui-screenshots/doctor-demo and old Brand/Patient/Doctor evidence present in this branch. No files copied from those branches.",
-  "pass": true
+  "trackedStartingFilesOutsideFolderUnchanged": 1421,
+  "protectedEvidence": "All starting-head tracked paths outside the review folder and the two explicitly allowed necessary governance summaries unchanged. Original 18 PNGs and 23 evidence receipts unchanged. No assets copied from Brand/Patient/Doctor evidence branches.",
+  "pass": true,
+  "minimalGovernanceExceptions": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md"
+  ]
 }
