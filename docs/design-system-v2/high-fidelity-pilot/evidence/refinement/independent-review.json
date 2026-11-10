@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "reviewer": {
+    "identity": "Codex agent /root/refinement_visual_review",
+    "independence": "Separate from implementation agent. Review was not blind. No product-source edit, commit, external post, or approval transition. Only this report was authored.",
+    "date": "2026-11-10"
+  },
+  "scope": {
+    "repository": "abuhmaid28/egyhealth360",
+    "issue": 106,
+    "pullRequest": 107,
+    "authorization": "https://github.com/abuhmaid28/egyhealth360/pull/107#issuecomment-6768498133",
+    "oldHead": "7181bde73ececcf2ba68882d6ecd2c10ab756385",
+    "limit": "ONE bounded design-only refinement of the preferred candidate; not a visual restart, production implementation, final Design System approval or owner acceptance."
+  },
+  "verdict": "PASS FOR PRODUCT OWNER VISUAL REVIEW",
+  "verdictBoundary": "Independent visual judgment based on actual browser images and bounded interaction checks. Final technical QA/CI and final screenshot artifact binding are reported separately; neither this verdict nor CI can grant owner visual/content acceptance.",
+  "actualEnvironment": {
+    "browser": "Chromium 154.0.8037.57",
+    "playwright": "1.56.1",
+    "platform": "Linux headless",
+    "deviceScaleFactor": 1,
+    "captureViewportHeight": 1200,
+    "method": "Actual browser renders. Narrow/tablet screenshots full-page;1440px desktop screenshot is1200px viewport. No generated-image mockups."
+  },
+  "visualCritique": [
+    {
+      "criterion": "Patient reading length and repeated navigation",
+      "judgment": "Material improvement. The page now has one compact retrieval section instead of repeated summary/history discovery and a second Find care CTA. The single global Find care remains unmistakably interactive. All five secondary destinations remain: summaries/follow-up, appointments, prescriptions, available history, and doctors. The shared-summary empty state and care-permission meaning remain explicit. Appointment date, complete doctor name, clinic, localized12h time and primary detail CTA still dominate."
+    },
+    {
+      "criterion": "Doctor context at authoring",
+      "judgment": "Material improvement. Source context opens immediately before the editor in normal flow, with exact patient, named Gregorian date,24h range, IANA zone/offset and current independent care authority, then source-specific states. Allergy uncertainty is visible even while collapsed. Return closes the panel and restores focus to its opener at about24px from the viewport top, without a page-tail jump or sticky masking."
+    },
+    {
+      "criterion": "Doctor task access and sustained work",
+      "judgment": "Three local task links are directly visible. Documentation, Follow-up and Review & close focus their own in-place panels; they remain separate from global Schedule/People in your care. Unsaved textarea content survived a Documentation→Follow-up→Review & close→Documentation round trip in independent tests. Source context remains available for each task. No automatic save/sign/release/close behavior was observed."
+    },
+    {
+      "criterion": "Premium finish and personality",
+      "judgment": "The composition is more decisive and less repetitive: date-led appointment, a clearly prioritized full-width narrow CTA, compact flat retrieval rows and a connected professional writing plane. Violet keylines and differentiated shapes support hierarchy without introducing a palette restart, glow, decorative gradients, metrics or equal-sized dashboard tiles. This reads as a product refinement rather than a component test wall. Personality remains deliberately restrained and familiar rather than highly expressive or unusually original."
+    },
+    {
+      "criterion": "Dark/Light and role consistency",
+      "judgment": "Dark remains dark across canvas, raised context and editor, with controlled lavender actions and no white slabs. Light uses the same task hierarchy with airy canvas and a distinct writing surface. Patient and Doctor remain visibly related but differ appropriately in density and task continuity. No theme default/system/persistence policy was introduced."
+    },
+    {
+      "criterion": "Arabic, English and responsive behavior",
+      "judgment": "Arabic is composed as a primary layout, with complete names and natural labels; professional time and IANA identifiers preserve order. English task labels fit through content-driven wrapping. Independently checked Doctor AR/EN320px at200% text: no document overflow; local tasks expand to comfortable full-width rows. The final decorative account avatar grows with text to contain its initials. Tablet and desktop retain the same selected visual language."
+    },
+    {
+      "criterion": "Clinical/privacy/source semantics",
+      "judgment": "No observed semantic regression in this static preview: booking remains independent from care authority, private note does not become patient-visible, summary and follow-up remain separate unreleased sources, and close retains explicit irreversible/no-save/no-sign/no-release consequences. No fabricated summary/history/clinical finding or Lab/AI capability was added. These observations do not test real backend authority or clinical transactions."
+    }
+  ],
+  "independentBeforeAfterMeasurements": [
+    {
+      "role": "patient",
+      "lang": "ar",
+      "before": true,
+      "height": 1974,
+      "findCare": 2,
+      "editorTop": null,
+      "sourceAccessTop": null,
+      "taskLinkCount": 0
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "before": false,
+      "height": 1296,
+      "findCare": 1,
+      "editorTop": null,
+      "sourceAccessTop": null,
+      "taskLinkCount": 0
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "before": true,
+      "height": 2081,
+      "findCare": 2,
+      "editorTop": null,
+      "sourceAccessTop": null,
+      "taskLinkCount": 0
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "before": false,
+      "height": 1338,
+      "findCare": 1,
+      "editorTop": null,
+      "sourceAccessTop": null,
+      "taskLinkCount": 0
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "before": true,
+      "height": 3088,
+      "findCare": 0,
+      "editorTop": 702.375,
+      "sourceAccessTop": 551.578125,
+      "taskLinkCount": 0
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "before": false,
+      "height": 1964,
+      "findCare": 0,
+      "editorTop": 739.96875,
+      "sourceAccessTop": 645.78125,
+      "taskLinkCount": 3
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "before": true,
+      "height": 3230,
+      "findCare": 0,
+      "editorTop": 775.9375,
+      "sourceAccessTop": 625.9375,
+      "taskLinkCount": 0
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "before": false,
+      "height": 2077,
+      "findCare": 0,
+      "editorTop": 817.53125,
+      "sourceAccessTop": 723.34375,
+      "taskLinkCount": 3
+    }
+  ],
+  "measurementInterpretation": "390×1200 CSS viewport,100% text, Light, DPR1. Patient AR1974→1296px and EN2081→1338px; duplicate Find care links2→1. Doctor initial Documentation AR3088→1964px and EN3230→2077px; direct visible local tasks0→3. Heights are structural observations, not measured cognitive effort, participant usability or a quality score. Closed native-details descendant box coordinates are not used as a visibility or context-access metric.",
+  "findingsResolved": [
+    {
+      "finding": "Near-editor disclosure initially contained source states without exact patient/visit/authority identity.",
+      "resolution": "Added compact patient, full dated24h visit, IANA offset and current/separate-booking authority within the disclosure; independently rechecked in Documentation and Follow-up."
+    },
+    {
+      "finding": "At200% text the fixed40px account avatar visually overfilled with32px initials.",
+      "resolution": "Narrow avatar dimensions now use2.5rem:40px at100%,80px at200%. Independent current-browser200% render visually contains the initials and normal390px renders remain byte-identical."
+    }
+  ],
+  "remainingTradeoffs": [
+    "Doctor first editor begins slightly lower after explicit task/context controls: AR about702→740px; EN about776→818px. Do not claim faster first-field entry. The gain is task discovery and local recovery of source context rather than reduced first-fold height.",
+    "Expanded source context is tall because truthful identity, authority and independent source states remain readable. It opens in place and closes predictably; it does not stay permanently beside mobile authoring.",
+    "The Patient secondary list and permission explanation still require some scrolling. Reducing repetition does not establish physical-device or participant usability.",
+    "The visual expression remains conservative. Final premium/aesthetic preference belongs to the Product Owner."
+  ],
+  "sourceInputs": [
+    {
+      "file": "screen.html",
+      "sha256": "8eceb9a4c9c1604956b8c732388309b296893299238a76fe163928e0eebe745c",
+      "bytes": 336
+    },
+    {
+      "file": "screen.js",
+      "sha256": "db6a5568b566831a51feaf49b2e5a03c50ffba4b469ddb61abded5e4584141be",
+      "bytes": 21560
+    },
+    {
+      "file": "screen.css",
+      "sha256": "0d84bceff055fdbe7e53e944435fcaec24e2a71edb3390f893d74c9893e72234",
+      "bytes": 24188
+    },
+    {
+      "file": "gallery.html",
+      "sha256": "b777ffbfb8f92025a7d1c38ec35c1b2fbcdbe48f05a0e367569b18b3174b45f4",
+      "bytes": 5022
+    },
+    {
+      "file": "gallery.js",
+      "sha256": "0407eac4f0387077ea5eefedb17ac55198921851fae79bcc71bbaaaa711c24df",
+      "bytes": 1379
+    },
+    {
+      "file": "gallery.css",
+      "sha256": "df86a1d21be9b4e9ce705764d8cf374a9b6d5be3340cfce8b49081721f605048",
+      "bytes": 2818
+    },
+    {
+      "file": "icon-paths.js",
+      "sha256": "3c73d5349b1da3551cb5d10ea7381053779bc3bf5d6efac1544ceaf58bd1ce3e",
+      "bytes": 3044
+    },
+    {
+      "file": "reference-manifest.json",
+      "sha256": "7fc34d1f05b99c369837381640a5fbcac91a0ec195d78b3790e5855265f71668",
+      "bytes": 2969
+    }
+  ],
+  "provenance": {
+    "pinnedBrandHead": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "preparedFontLogoOflInputsVerified": 9,
+    "allPreparedHashesMatchManifest": true,
+    "originalReviewPngsBytePreserved": 13,
+    "originalPngVerification": "Compared each of the original13 PNGs to old-head Git bytes and original qa-results.json SHA-256.",
+    "observation": "Source-exact no-tagline logo/material and genuine Inter/Plex inputs retained; no font/asset replacement or logo filter/redraw observed. Underlying artwork rights remain AP05 OPEN."
+  },
+  "independentScreenshots": [
+    {
+      "file": "patient-ar-light-390.png",
+      "sha256": "8e1844f3f4906dd713daa28313703bb576d564c79c1cb613b6fc44c4a96868c8",
+      "artifactSHA256": "8e1844f3f4906dd713daa28313703bb576d564c79c1cb613b6fc44c4a96868c8",
+      "match": true,
+      "errors": []
+    },
+    {
+      "file": "patient-ar-dark-390.png",
+      "sha256": "980111bafb58015d994054d5b0d5fd8018ab28dae7567860369ae5a19bc42bca",
+      "artifactSHA256": "980111bafb58015d994054d5b0d5fd8018ab28dae7567860369ae5a19bc42bca",
+      "match": true,
+      "errors": []
+    },
+    {
+      "file": "patient-en-light-768.png",
+      "sha256": "67f3b2dd6ce7abcfb60ff7d0b03a6172bd3cb673f28c37db2e71df609adcaf6f",
+      "artifactSHA256": "67f3b2dd6ce7abcfb60ff7d0b03a6172bd3cb673f28c37db2e71df609adcaf6f",
+      "match": true,
+      "errors": []
+    },
+    {
+      "file": "patient-ar-dark-390-text200.png",
+      "sha256": "d4189d29c2d4aed2ba4b2576c20eddb295fe1a04850adf8d70df6ba2e6e18e90",
+      "artifactSHA256": "d4189d29c2d4aed2ba4b2576c20eddb295fe1a04850adf8d70df6ba2e6e18e90",
+      "match": true,
+      "errors": [],
+      "avatar": {
+        "width": 80,
+        "height": 80,
+        "fontSize": "32px"
+      }
+    },
+    {
+      "file": "doctor-ar-light-390.png",
+      "sha256": "ab0b918a5d86ccc7280714e7410383a824c41f065f5e9db4203f6e382b459360",
+      "artifactSHA256": "ab0b918a5d86ccc7280714e7410383a824c41f065f5e9db4203f6e382b459360",
+      "match": true,
+      "errors": []
+    },
+    {
+      "file": "doctor-en-dark-390.png",
+      "sha256": "272e93f42e8b2e38ad5974990345d6061d0447b3555c5cc434350675d2147c5d",
+      "artifactSHA256": "272e93f42e8b2e38ad5974990345d6061d0447b3555c5cc434350675d2147c5d",
+      "match": true,
+      "errors": []
+    },
+    {
+      "file": "doctor-ar-dark-1440.png",
+      "sha256": "045039e1f1aa62820b7cac6f5a8449350bd0b912a3bcbf00e5ae9ea135af72f3",
+      "artifactSHA256": "045039e1f1aa62820b7cac6f5a8449350bd0b912a3bcbf00e5ae9ea135af72f3",
+      "match": true,
+      "errors": []
+    },
+    {
+      "file": "doctor-ar-light-390-context-open.png",
+      "sha256": "8fda9122548290bb22d8d52596f1780036c550edc78287d3ebc30f802edf9f2c",
+      "artifactSHA256": "8fda9122548290bb22d8d52596f1780036c550edc78287d3ebc30f802edf9f2c",
+      "match": true,
+      "errors": []
+    }
+  ],
+  "finalArtifactBinding": {
+    "status": "PASS",
+    "detail": "All8 final PNG artifact bytes match independently rendered final-source PNGs byte-for-byte, and each matches final author qa-results.json SHA-256. All8 rendering/provenance source hashes also still match. The final200% monogram correction is included.",
+    "additionalSourceManifestEntriesVerified": 12
+  },
+  "boundedInteractionChecks": [
+    "AR/EN320px text200: no document overflow; task links wrap to full-width rows.",
+    "Native context Enter activation; Return closes disclosure and focuses context-opener with unobscured~24px top.",
+    "Exact patient/date/time/zone/current authority remains inside context in Documentation and Follow-up.",
+    "Unsaved local textarea contents retained across all three local tasks.",
+    "No page errors in8 independent final renders."
+  ],
+  "authorQa": {
+    "status": "AUTHOR ARTIFACT REVIEWED",
+    "summary": {
+      "cases": 64,
+      "coreCases": 40,
+      "wideCases": 8,
+      "text200Cases": 16,
+      "axeCases": 28,
+      "interactionStates": 84,
+      "failures": 0,
+      "contrastPairCount": 60,
+      "contrastObservations": 10500,
+      "screenshots": 8
+    },
+    "pageErrors": [],
+    "boundary": "These are author-produced full-matrix results, read after final serialization; this reviewer did not independently rerun the full matrix. Independent subset probes/renders are described separately. Initial runner exceptions and intentionally terminated runs were not substituted for this final artifact. Remote exact-new-head CI is outside this visual verdict and must be reported by the delivery agent."
+  },
+  "untested": [
+    "Physical Android/iOS and installed PWA",
+    "Safari/Firefox/Chrome/Edge products",
+    "Native400% zoom and OS text settings",
+    "Real screen-reader speech/announcements",
+    "Physical print/PDF",
+    "Native Egyptian participant/clinical editorial usability",
+    "Real backend authority/revocation/privacy/concurrency or clinical writes"
+  ],
+  "recommendation": "Present this same refined candidate to the Product Owner for visual/content selection, preserving the date-led Patient hierarchy, compact explicit retrieval, direct local Doctor tasks, and near-editor recoverable context. No further visual restart, production integration or five-role Design System adoption is implied.",
+  "openGates": [
+    "Product Owner visual/content approval",
+    "AP03 platform/install/print",
+    "AP05 artwork creator rights/trademark",
+    "Theme default/system/persistence behavior",
+    "Later frontend architecture and whole-project health review"
+  ]
+}

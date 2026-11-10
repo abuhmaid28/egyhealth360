@@ -1,0 +1,1952 @@
+{
+  "browser": "154.0.8037.57",
+  "playwright": "1.56.1",
+  "axe": "4.11.0",
+  "matrix": [
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "IBM Plex Sans Arabic SemiBold",
+          "postScriptName": "IBMPlexSansArabic-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "focus": {
+        "color": "rgb(98, 64, 184)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "width": 768,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1024,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "IBM Plex Sans Arabic SemiBold",
+          "postScriptName": "IBMPlexSansArabic-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "focus": {
+        "color": "rgb(98, 64, 184)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1920,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "IBM Plex Sans Arabic SemiBold",
+          "postScriptName": "IBMPlexSansArabic-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "focus": {
+        "color": "rgb(167, 139, 250)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 768,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1024,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "IBM Plex Sans Arabic SemiBold",
+          "postScriptName": "IBMPlexSansArabic-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "focus": {
+        "color": "rgb(167, 139, 250)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1920,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Regular",
+          "isCustomFont": true,
+          "glyphCount": 28
+        }
+      ],
+      "focus": {
+        "color": "rgb(98, 64, 184)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "width": 768,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "width": 1024,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Regular",
+          "isCustomFont": true,
+          "glyphCount": 29
+        }
+      ],
+      "focus": {
+        "color": "rgb(98, 64, 184)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "width": 1920,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Regular",
+          "isCustomFont": true,
+          "glyphCount": 28
+        }
+      ],
+      "focus": {
+        "color": "rgb(167, 139, 250)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "width": 768,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1024,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Regular",
+          "isCustomFont": true,
+          "glyphCount": 29
+        }
+      ],
+      "focus": {
+        "color": "rgb(167, 139, 250)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1920,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "IBM Plex Sans Arabic SemiBold",
+          "postScriptName": "IBMPlexSansArabic-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ],
+      "focus": {
+        "color": "rgb(98, 64, 184)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "width": 768,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1024,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "IBM Plex Sans Arabic SemiBold",
+          "postScriptName": "IBMPlexSansArabic-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ],
+      "focus": {
+        "color": "rgb(98, 64, 184)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1920,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "IBM Plex Sans Arabic SemiBold",
+          "postScriptName": "IBMPlexSansArabic-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ],
+      "focus": {
+        "color": "rgb(167, 139, 250)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 768,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1024,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "IBM Plex Sans Arabic SemiBold",
+          "postScriptName": "IBMPlexSansArabic-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 16
+        }
+      ],
+      "focus": {
+        "color": "rgb(167, 139, 250)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1920,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Regular",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "focus": {
+        "color": "rgb(98, 64, 184)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "width": 768,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "width": 1024,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Regular",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "focus": {
+        "color": "rgb(98, 64, 184)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "width": 1920,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Regular",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "focus": {
+        "color": "rgb(167, 139, 250)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "width": 768,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1024,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": [],
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      },
+      "platformFonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Regular",
+          "isCustomFont": true,
+          "glyphCount": 19
+        }
+      ],
+      "focus": {
+        "color": "rgb(167, 139, 250)",
+        "width": "3px",
+        "style": "solid"
+      },
+      "keyboard": "PASS: activation, modal containment, Escape, focus restore; narrow Doctor context jump/return and task disclosure where applicable"
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1920,
+      "text": 100,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "rtl",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "text": 200,
+      "overflow": false,
+      "clipped": [],
+      "badText": [],
+      "badTargets": [],
+      "warning": false,
+      "dir": "ltr",
+      "externalRequests": [],
+      "nonTextFailures": []
+    }
+  ],
+  "contrasts": [
+    {
+      "theme": "light",
+      "foreground": "rgb(23, 20, 43)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 17.928,
+      "example": "روح للمحتوى",
+      "size": "16px",
+      "kind": "text",
+      "observations": 242
+    },
+    {
+      "theme": "light",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(239, 234, 247)",
+      "ratio": 6.038,
+      "example": "متابعتي",
+      "size": "16px",
+      "kind": "text",
+      "observations": 46
+    },
+    {
+      "theme": "light",
+      "foreground": "rgb(23, 20, 43)",
+      "background": "rgb(248, 247, 251)",
+      "ratio": 16.808,
+      "example": "دور على دكتور",
+      "size": "16px",
+      "kind": "text",
+      "observations": 314
+    },
+    {
+      "theme": "light",
+      "foreground": "rgb(23, 20, 43)",
+      "background": "rgb(239, 234, 247)",
+      "ratio": 15.181,
+      "example": "ن أ",
+      "size": "16px",
+      "kind": "text",
+      "observations": 198
+    },
+    {
+      "theme": "light",
+      "foreground": "rgb(89, 82, 105)",
+      "background": "rgb(248, 247, 251)",
+      "ratio": 6.943,
+      "example": "أهلًا يا نور",
+      "size": "14px",
+      "kind": "text",
+      "observations": 266
+    },
+    {
+      "theme": "light",
+      "foreground": "rgb(89, 82, 105)",
+      "background": "rgb(239, 234, 247)",
+      "ratio": 6.271,
+      "example": "الخميس",
+      "size": "16px",
+      "kind": "text",
+      "observations": 198
+    },
+    {
+      "theme": "light",
+      "foreground": "rgb(89, 82, 105)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 7.406,
+      "example": "دكتور باطنة",
+      "size": "16px",
+      "kind": "text",
+      "observations": 128
+    },
+    {
+      "theme": "light",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(98, 64, 184)",
+      "ratio": 7.131,
+      "example": "شوف تفاصيل الميعاد",
+      "size": "16px",
+      "kind": "text",
+      "observations": 32
+    },
+    {
+      "theme": "light",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(248, 247, 251)",
+      "ratio": 6.686,
+      "example": "شوف السجل المتاح",
+      "size": "16px",
+      "kind": "text",
+      "observations": 92
+    },
+    {
+      "theme": "light",
+      "kind": "control outer boundary",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(248, 247, 251)",
+      "ratio": 6.686,
+      "observations": 16
+    },
+    {
+      "theme": "light",
+      "kind": "control inner boundary",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(239, 234, 247)",
+      "ratio": 6.038,
+      "observations": 16
+    },
+    {
+      "theme": "light",
+      "kind": "control outer boundary",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(239, 234, 247)",
+      "ratio": 6.038,
+      "observations": 16
+    },
+    {
+      "theme": "light",
+      "kind": "control outer boundary",
+      "foreground": "rgb(120, 112, 132)",
+      "background": "rgb(239, 234, 247)",
+      "ratio": 3.997,
+      "observations": 16
+    },
+    {
+      "theme": "light",
+      "kind": "control inner boundary",
+      "foreground": "rgb(120, 112, 132)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 4.72,
+      "observations": 74
+    },
+    {
+      "theme": "light",
+      "kind": "focus gap adjacency",
+      "foreground": "#6240B8",
+      "background": "rgb(248, 247, 251)",
+      "ratio": 6.686,
+      "observations": 32
+    },
+    {
+      "theme": "light",
+      "kind": "focus gap adjacency",
+      "foreground": "#6240B8",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 7.131,
+      "observations": 32
+    },
+    {
+      "theme": "light",
+      "kind": "focus gap adjacency",
+      "foreground": "#6240B8",
+      "background": "rgb(239, 234, 247)",
+      "ratio": 6.038,
+      "observations": 32
+    },
+    {
+      "theme": "light",
+      "kind": "primary outer boundary",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(239, 234, 247)",
+      "ratio": 6.038,
+      "observations": 16
+    },
+    {
+      "theme": "light",
+      "kind": "labelled icon",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(239, 234, 247)",
+      "ratio": 6.038,
+      "observations": 46
+    },
+    {
+      "theme": "light",
+      "kind": "labelled icon",
+      "foreground": "rgb(23, 20, 43)",
+      "background": "rgb(248, 247, 251)",
+      "ratio": 16.808,
+      "observations": 212
+    },
+    {
+      "theme": "light",
+      "kind": "labelled icon",
+      "foreground": "rgb(23, 20, 43)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 17.928,
+      "observations": 68
+    },
+    {
+      "theme": "light",
+      "kind": "labelled icon",
+      "foreground": "rgb(89, 82, 105)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 7.406,
+      "observations": 48
+    },
+    {
+      "theme": "light",
+      "kind": "labelled icon",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(98, 64, 184)",
+      "ratio": 7.131,
+      "observations": 16
+    },
+    {
+      "theme": "light",
+      "kind": "labelled icon",
+      "foreground": "rgb(23, 20, 43)",
+      "background": "rgb(239, 234, 247)",
+      "ratio": 15.181,
+      "observations": 104
+    },
+    {
+      "theme": "light",
+      "kind": "labelled icon",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(248, 247, 251)",
+      "ratio": 6.686,
+      "observations": 92
+    },
+    {
+      "theme": "light",
+      "kind": "labelled icon",
+      "foreground": "rgb(89, 82, 105)",
+      "background": "rgb(248, 247, 251)",
+      "ratio": 6.943,
+      "observations": 20
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(246, 242, 255)",
+      "background": "rgb(29, 32, 48)",
+      "ratio": 14.647,
+      "example": "روح للمحتوى",
+      "size": "16px",
+      "kind": "text",
+      "observations": 242
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(38, 42, 60)",
+      "ratio": 5.218,
+      "example": "متابعتي",
+      "size": "16px",
+      "kind": "text",
+      "observations": 46
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(246, 242, 255)",
+      "background": "rgb(16, 18, 29)",
+      "ratio": 16.926,
+      "example": "دور على دكتور",
+      "size": "16px",
+      "kind": "text",
+      "observations": 314
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(246, 242, 255)",
+      "background": "rgb(38, 42, 60)",
+      "ratio": 12.891,
+      "example": "ن أ",
+      "size": "16px",
+      "kind": "text",
+      "observations": 198
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(194, 190, 210)",
+      "background": "rgb(16, 18, 29)",
+      "ratio": 10.29,
+      "example": "أهلًا يا نور",
+      "size": "14px",
+      "kind": "text",
+      "observations": 266
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(194, 190, 210)",
+      "background": "rgb(38, 42, 60)",
+      "ratio": 7.837,
+      "example": "الخميس",
+      "size": "16px",
+      "kind": "text",
+      "observations": 198
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(194, 190, 210)",
+      "background": "rgb(29, 32, 48)",
+      "ratio": 8.905,
+      "example": "دكتور باطنة",
+      "size": "16px",
+      "kind": "text",
+      "observations": 128
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(23, 20, 43)",
+      "background": "rgb(167, 139, 250)",
+      "ratio": 6.588,
+      "example": "شوف تفاصيل الميعاد",
+      "size": "16px",
+      "kind": "text",
+      "observations": 32
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(16, 18, 29)",
+      "ratio": 6.851,
+      "example": "شوف السجل المتاح",
+      "size": "16px",
+      "kind": "text",
+      "observations": 92
+    },
+    {
+      "theme": "dark",
+      "kind": "control outer boundary",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(16, 18, 29)",
+      "ratio": 6.851,
+      "observations": 16
+    },
+    {
+      "theme": "dark",
+      "kind": "control inner boundary",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(38, 42, 60)",
+      "ratio": 5.218,
+      "observations": 16
+    },
+    {
+      "theme": "dark",
+      "kind": "control outer boundary",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(38, 42, 60)",
+      "ratio": 5.218,
+      "observations": 16
+    },
+    {
+      "theme": "dark",
+      "kind": "control outer boundary",
+      "foreground": "rgb(133, 131, 156)",
+      "background": "rgb(38, 42, 60)",
+      "ratio": 3.871,
+      "observations": 16
+    },
+    {
+      "theme": "dark",
+      "kind": "control inner boundary",
+      "foreground": "rgb(133, 131, 156)",
+      "background": "rgb(29, 32, 48)",
+      "ratio": 4.398,
+      "observations": 74
+    },
+    {
+      "theme": "dark",
+      "kind": "focus gap adjacency",
+      "foreground": "#A78BFA",
+      "background": "rgb(16, 18, 29)",
+      "ratio": 6.851,
+      "observations": 32
+    },
+    {
+      "theme": "dark",
+      "kind": "focus gap adjacency",
+      "foreground": "#A78BFA",
+      "background": "rgb(29, 32, 48)",
+      "ratio": 5.929,
+      "observations": 32
+    },
+    {
+      "theme": "dark",
+      "kind": "focus gap adjacency",
+      "foreground": "#A78BFA",
+      "background": "rgb(38, 42, 60)",
+      "ratio": 5.218,
+      "observations": 32
+    },
+    {
+      "theme": "dark",
+      "kind": "primary outer boundary",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(38, 42, 60)",
+      "ratio": 5.218,
+      "observations": 16
+    },
+    {
+      "theme": "dark",
+      "kind": "labelled icon",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(38, 42, 60)",
+      "ratio": 5.218,
+      "observations": 46
+    },
+    {
+      "theme": "dark",
+      "kind": "labelled icon",
+      "foreground": "rgb(246, 242, 255)",
+      "background": "rgb(16, 18, 29)",
+      "ratio": 16.926,
+      "observations": 212
+    },
+    {
+      "theme": "dark",
+      "kind": "labelled icon",
+      "foreground": "rgb(246, 242, 255)",
+      "background": "rgb(29, 32, 48)",
+      "ratio": 14.647,
+      "observations": 68
+    },
+    {
+      "theme": "dark",
+      "kind": "labelled icon",
+      "foreground": "rgb(194, 190, 210)",
+      "background": "rgb(29, 32, 48)",
+      "ratio": 8.905,
+      "observations": 48
+    },
+    {
+      "theme": "dark",
+      "kind": "labelled icon",
+      "foreground": "rgb(23, 20, 43)",
+      "background": "rgb(167, 139, 250)",
+      "ratio": 6.588,
+      "observations": 16
+    },
+    {
+      "theme": "dark",
+      "kind": "labelled icon",
+      "foreground": "rgb(246, 242, 255)",
+      "background": "rgb(38, 42, 60)",
+      "ratio": 12.891,
+      "observations": 104
+    },
+    {
+      "theme": "dark",
+      "kind": "labelled icon",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(16, 18, 29)",
+      "ratio": 6.851,
+      "observations": 92
+    },
+    {
+      "theme": "dark",
+      "kind": "labelled icon",
+      "foreground": "rgb(194, 190, 210)",
+      "background": "rgb(16, 18, 29)",
+      "ratio": 10.29,
+      "observations": 20
+    },
+    {
+      "theme": "light",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 7.131,
+      "example": "التوثيق",
+      "size": "16px",
+      "kind": "text",
+      "observations": 30
+    },
+    {
+      "theme": "light",
+      "kind": "control outer boundary",
+      "foreground": "rgb(120, 112, 132)",
+      "background": "rgb(248, 247, 251)",
+      "ratio": 4.425,
+      "observations": 26
+    },
+    {
+      "theme": "light",
+      "kind": "control outer boundary",
+      "foreground": "rgb(120, 112, 132)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 4.72,
+      "observations": 32
+    },
+    {
+      "theme": "light",
+      "kind": "control outer boundary",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 7.131,
+      "observations": 16
+    },
+    {
+      "theme": "light",
+      "kind": "primary outer boundary",
+      "foreground": "rgb(98, 64, 184)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 7.131,
+      "observations": 16
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(29, 32, 48)",
+      "ratio": 5.929,
+      "example": "التوثيق",
+      "size": "16px",
+      "kind": "text",
+      "observations": 30
+    },
+    {
+      "theme": "dark",
+      "kind": "control outer boundary",
+      "foreground": "rgb(133, 131, 156)",
+      "background": "rgb(16, 18, 29)",
+      "ratio": 5.082,
+      "observations": 26
+    },
+    {
+      "theme": "dark",
+      "kind": "control outer boundary",
+      "foreground": "rgb(133, 131, 156)",
+      "background": "rgb(29, 32, 48)",
+      "ratio": 4.398,
+      "observations": 32
+    },
+    {
+      "theme": "dark",
+      "kind": "control outer boundary",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(29, 32, 48)",
+      "ratio": 5.929,
+      "observations": 16
+    },
+    {
+      "theme": "dark",
+      "kind": "primary outer boundary",
+      "foreground": "rgb(167, 139, 250)",
+      "background": "rgb(29, 32, 48)",
+      "ratio": 5.929,
+      "observations": 16
+    }
+  ],
+  "interactions": [],
+  "screenshots": [
+    {
+      "file": "patient-ar-light-390.png",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "text": 100,
+      "fullPage": true,
+      "sha256": "8d7ece58e9e8674148758414ac689b20447a82fadfb92b2202a9a76afac1795a",
+      "bytes": 110923
+    },
+    {
+      "file": "patient-ar-dark-390.png",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "text": 100,
+      "fullPage": true,
+      "sha256": "1fc5cee97c558f9dea52a099502f1a3bb66f9957a142f673a567eddca3328842",
+      "bytes": 111702
+    },
+    {
+      "file": "patient-en-light-1440.png",
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "text": 100,
+      "fullPage": false,
+      "sha256": "b2b7ab796515648feae4df02763dd090ac3ee6082b8b7c0323b82e64ec1b8343",
+      "bytes": 145511
+    },
+    {
+      "file": "patient-en-dark-1440.png",
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "text": 100,
+      "fullPage": false,
+      "sha256": "16a1daa09c47de9a541d7be74fcdc6f4c28219227f2078993acf42ac49e67d6d",
+      "bytes": 145332
+    },
+    {
+      "file": "patient-en-light-768.png",
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "width": 768,
+      "text": 100,
+      "fullPage": true,
+      "sha256": "9ca508baed9ade4cd8cc8982b09ab4ec0c48061e18844bef3b37b2ef2b2a01da",
+      "bytes": 136951
+    },
+    {
+      "file": "patient-ar-dark-390-text200.png",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "text": 200,
+      "fullPage": true,
+      "sha256": "9fb4c3ad5f39b838bfb4d4db84e156f7f1e194bb0107d0a460418ad59cbf1721",
+      "bytes": 223907
+    },
+    {
+      "file": "doctor-ar-light-1440.png",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "text": 100,
+      "fullPage": false,
+      "sha256": "9e68b61e0470f9d39ebf6c82aa0f93580081f2d5b0ef78dfbb1af8a98a97efb2",
+      "bytes": 139435
+    },
+    {
+      "file": "doctor-ar-dark-1440.png",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "text": 100,
+      "fullPage": false,
+      "sha256": "a0e13109e6ace40bafea01e6c44d38a307941b20ee1b978c11cdf8f1114f74ca",
+      "bytes": 140144
+    },
+    {
+      "file": "doctor-en-light-390.png",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "text": 100,
+      "fullPage": true,
+      "sha256": "55c9673fc50386927fdb51b5c4027f8177f88fc9ddbe2fc8fd3fb8c2a1f192f1",
+      "bytes": 197788
+    },
+    {
+      "file": "doctor-en-dark-390.png",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "text": 100,
+      "fullPage": true,
+      "sha256": "9e304d5abb7014ed83f8b3c7929acb84e2bac8dfc73b129f44f4540b85f72a0e",
+      "bytes": 200640
+    },
+    {
+      "file": "doctor-ar-dark-768.png",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 768,
+      "text": 100,
+      "fullPage": true,
+      "sha256": "ced323eb215841c4b9fed97e994a055687d20939903c977860f173eee88b22c3",
+      "bytes": 184285
+    },
+    {
+      "file": "doctor-en-light-1440.png",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "text": 100,
+      "fullPage": false,
+      "sha256": "fc1c5950c2da7ffc62b0635ce2f31635fc9c6e6450a12fa078b8bde31c243b5b",
+      "bytes": 169397
+    },
+    {
+      "file": "patient-ar-light-1440.png",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "text": 100,
+      "fullPage": false,
+      "sha256": "6311719a659a04d8db4d4fd7b95c3f09dff1e7d9553771b5669d2a9502e61c34",
+      "bytes": 126285
+    }
+  ],
+  "pageErrors": [],
+  "galleryControls": "PASS",
+  "summary": {
+    "cases": 64,
+    "coreCases": 40,
+    "wideCases": 8,
+    "text200Cases": 16,
+    "axeCases": 16,
+    "failures": 0,
+    "contrastPairCount": 62,
+    "contrastObservations": 4984,
+    "screenshots": 13
+  }
+}
