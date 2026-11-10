@@ -232,3 +232,11 @@ The table below classifies **HISTORICAL EVIDENCE — REJECTED VISUAL CANDIDATES*
 Do not mass-delete/move historical files. Existing issue/PR/screenshot paths remain stable. Prefer explicit index/header classifications and precise current reference repairs; any future archive move needs a link-preserving plan. Old mutable status paragraphs inside classified accepted/historical documents are not current instructions.
 
 Each milestone delivery updates CURRENT_STATUS and affected current references, preserves contract/history evidence and verifies mutual consistency before handoff. Add new important documents to this index. At every major milestone health review recheck architecture, roadmap, debt, Product/UX/Design, security/data, CI/runtime and deployment truth. Final UX/content/brand/Design System/prototype approval is separate from technical CI. [Charter](FOUNDATION_CHARTER.md).
+
+## Issue #110 — CONSOLIDATION REVIEW / OWNER DECISION REQUIRED
+
+| Artifact | Responsibility / limit |
+| --- | --- |
+| [consolidation-review/CONSOLIDATED_REFERENCE.md](design-system-v2/consolidation-review/CONSOLIDATED_REFERENCE.md) | Exact five-PR decision/token/pattern reconciliation; approved Brand versus preferred/proposed/future, no final DS adoption. |
+| [consolidation-review/OPEN_GATES_AND_READINESS.md](design-system-v2/consolidation-review/OPEN_GATES_AND_READINESS.md) | Theme/AP03/AP05/CD07/capability gates and read-only runtime readiness; architecture and integration remain separately authorized. |
+| [consolidation-review/REVIEW_AND_HANDOFF.md](design-system-v2/consolidation-review/REVIEW_AND_HANDOFF.md) | Owner package, pinned image/report hashes, independent review, preservation and final PR/CI receipt boundary. |
