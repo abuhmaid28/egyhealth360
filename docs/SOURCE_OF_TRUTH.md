@@ -232,3 +232,12 @@ The table below classifies **HISTORICAL EVIDENCE — REJECTED VISUAL CANDIDATES*
 Do not mass-delete/move historical files. Existing issue/PR/screenshot paths remain stable. Prefer explicit index/header classifications and precise current reference repairs; any future archive move needs a link-preserving plan. Old mutable status paragraphs inside classified accepted/historical documents are not current instructions.
 
 Each milestone delivery updates CURRENT_STATUS and affected current references, preserves contract/history evidence and verifies mutual consistency before handoff. Add new important documents to this index. At every major milestone health review recheck architecture, roadmap, debt, Product/UX/Design, security/data, CI/runtime and deployment truth. Final UX/content/brand/Design System/prototype approval is separate from technical CI. [Charter](FOUNDATION_CHARTER.md).
+
+## Issue #112 — CD07 RECONCILIATION / HEALTH AND ARCHITECTURE PLAN
+
+Current CD07 amendment is documented in CONTENT_DECISION_REGISTER.md, ARABIC_UX.md and the targeted CONTENT_SYSTEM.md supersession annotation: future V2 patient appointment12h only, professional/consequential24h precise semantics preserved. Theme T1 is owner-selected design direction, not implemented; #111 is an accepted consolidation reference only. No fresh health grade or final architecture selection.
+
+| Planning artifact | Responsibility / limit |
+| --- | --- |
+| [architecture-readiness/HEALTH_AND_FRONTEND_ARCHITECTURE_REVIEW_PLAN.md](design-system-v2/architecture-readiness/HEALTH_AND_FRONTEND_ARCHITECTURE_REVIEW_PLAN.md) | Planned audit domains/evidence/severity and apps/web versus packages/ui evaluation; separate later execution/architecture/implementation gates. |
+| [architecture-readiness/DECISIONS_AND_NEXT_GATES.md](design-system-v2/architecture-readiness/DECISIONS_AND_NEXT_GATES.md) | One-page owner disposition, source pins, actual docs validation/preservation/independent review and final exact-head PR/CI receipt boundary. |
