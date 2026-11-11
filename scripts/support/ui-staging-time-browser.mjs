@@ -63,7 +63,10 @@ export async function testStagingTime(browser, origin, shots) {
       assert.ok(text.includes(locale === "ar" ? "بتوقيت القاهرة" : "Cairo time"));
       if (offset) {
         await anchor.getByText(offset, { exact: true }).waitFor();
-        assert.ok(text.includes("23:30"), `${name}: preserve repeated clinic clock time`);
+        await anchor.getByText(
+          locale === "ar" ? "11:30 م" : "11:30 pm",
+          { exact: true },
+        ).waitFor();
       } else assert.ok(!text.includes("UTC"), "ordinary appointment retains concise context");
       for (const width of [1440, 390, 320]) {
         await page.setViewportSize({ width, height: 1000 });

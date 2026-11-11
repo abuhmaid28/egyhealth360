@@ -861,3 +861,115 @@
     min-block-size: 48px;
   }
 }
+
+/* #118: identity header only. No source rail, editor, tasks or command styling. */
+.root .identityCard:global(.master-context-ribbon) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  min-block-size: 104px;
+  padding: 11px 20px;
+  border: 1px solid var(--read-border);
+  border-block-start: 3px solid var(--read-action);
+  border-radius: 16px 16px 0 0;
+  background: var(--read-raised);
+  color: var(--read-ink);
+}
+.root .identityCard :global(.master-identity) {
+  flex: 1 1 16em;
+  min-inline-size: 0;
+  gap: 12px;
+}
+.root .identityCard :global(.master-identity > div) {
+  gap: 0;
+  min-inline-size: 0;
+}
+.root .identityCard :global(h1) {
+  color: var(--read-ink);
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+.root .identityCard :global(.eyebrow) {
+  color: var(--read-secondary);
+  opacity: 1;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.root .identityCard :global(.master-patient-monogram) {
+  background: var(--read-surface);
+  color: var(--read-action);
+}
+.root .identityCard :global(.master-provider) {
+  color: var(--read-secondary);
+  opacity: 1;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.root .identityCard :global(.master-visit) {
+  padding-inline-start: 16px;
+  border-color: var(--read-border);
+  color: var(--read-ink);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.root .identityCard :global(.master-visit small) {
+  color: var(--read-secondary);
+  opacity: 1;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.root .identityCard :global(.master-consultation-state) {
+  color: var(--read-ink);
+  background: var(--read-surface);
+  border: 1px solid var(--read-border);
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.root .identityCard :global(.master-back) {
+  flex-shrink: 1;
+  min-block-size: 44px;
+  color: var(--read-action);
+  background: var(--read-surface);
+  border: 1px solid var(--read-border);
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+}
+.root .identityCard :global(.master-back:hover) {
+  background: var(--read-raised);
+}
+.root .identityCard :global(.master-back:focus-visible) {
+  outline: 3px solid var(--read-action);
+  outline-offset: 4px;
+}
+@media (max-width: 760px) {
+  .root .identityCard:global(.master-context-ribbon) {
+    padding: 16px;
+    gap: 12px;
+  }
+  .root .identityCard :global(.master-identity) {
+    flex-basis: 100%;
+  }
+  .root .identityCard :global(.master-visit) {
+    flex-basis: 100%;
+    padding: 0;
+    border: 0;
+  }
+}
+@media (forced-colors: active) {
+  .root .identityCard:global(.master-context-ribbon),
+  .root .identityCard :global(.master-consultation-state),
+  .root .identityCard :global(.master-back) {
+    border-color: CanvasText;
+  }
+  .root .identityCard :global(.master-back:focus-visible) {
+    outline-color: Highlight;
+  }
+}

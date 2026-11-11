@@ -10,6 +10,8 @@ import type {
   FactsDraft,
 } from "../lib/clinical/documentation";
 import { Icon } from "./ui";
+import { ReadContextCard, ReadStatusLabel } from "./v2/read-context";
+import styles from "./clinician-consultation.module.css";
 /** Presentation mode only. Never contains actor, authority, clinical values or service snapshots. */
 export const ClinicianPresentationContext = createContext(false);
 
@@ -40,7 +42,10 @@ export function ConsultationIdentity({
     .map((part) => [...part][0])
     .join("");
   return (
-    <header className="master-context-ribbon">
+    <ReadContextCard
+      as="header"
+      className={`master-context-ribbon ${styles.identityCard}`}
+    >
       <div className="master-identity">
         {initials && (
           <span className="master-patient-monogram" aria-hidden="true">
@@ -70,14 +75,14 @@ export function ConsultationIdentity({
           {offset && <> · <bdi dir="ltr">{offset}</bdi></>}
         </small>
       </div>
-      <span className="master-consultation-state" data-state={state}>
+      <ReadStatusLabel className="master-consultation-state" data-state={state}>
         {t(state === "CLOSED" ? "Closed visit" : "Consultation open")}
-      </span>
+      </ReadStatusLabel>
       <Link className="master-back" href={`/doctor/consultation/${bookingId}`}>
         <Icon name="arrow" size={16} />
         <span>{t("Back to consultation")}</span>
       </Link>
-    </header>
+    </ReadContextCard>
   );
 }
 export function ConsultationTasks() {
