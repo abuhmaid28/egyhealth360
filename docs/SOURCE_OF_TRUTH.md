@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+Current audit reference under [Issue #114 / owner authorization](https://github.com/abuhmaid28/egyhealth360/pull/113#issuecomment-6783681366): [fresh evidence](health-audit-2026-11/BASELINE_AND_TEST_MATRIX.md), [findings](health-audit-2026-11/HEALTH_FINDINGS.md), [Frontend V2 readiness](health-audit-2026-11/FRONTEND_V2_READINESS.md), [independent handoff](health-audit-2026-11/INDEPENDENT_REVIEW_AND_HANDOFF.md). These are point-in-time audit evidence, not contract amendments, implementation permission or final design/architecture approval. Earlier current-task wording below records its adoption-time context; CURRENT_STATUS and latest explicit owner decisions govern.
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
