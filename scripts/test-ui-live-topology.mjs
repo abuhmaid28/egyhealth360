@@ -193,12 +193,215 @@ async function lifecycle(args, exercise) {
   }
   if (receipt.result !== 'PASS') process.exitCode = 1;
 }
-async function main() {
-  options(process.argv.slice(2));
-  // WIP lifecycle checkpoint: no execution until acceptance is implemented.
-  void lifecycle; void delay; void UUID;
-  throw new Error('E2_WIP_NOT_EXECUTABLE');
+async function acceptance(s) {
+  const { browser, origin, alternate, receipt: r, fixtureCall, fixture: f, password, check } = s;
+  const state = { granted: false, authorEnded: false, otherEnded: false, summaryRestricted: false, intentRestricted: false, outage: '' };
+  const secrets = [password, ...f().secretHashes], credentialSecrets = [...secrets];
+  const contexts = [], aliases = new WeakMap(), requestRules = new WeakMap(), inflight = new Set(), scans = new Set();
+  let authWindow = false;
+  const sourceMarkers = name => [f().canaries[name], f().sources[name].id, ...f().sources[name].versions.map(v => v.id)];
+  const forbidden = alias => {
+    let names = ['private', 'draftSummary', 'draftIntent'];
+    if (alias === 'doctorA' && !state.authorEnded) names = [];
+    if (['patientB', 'admin'].includes(alias) || alias === 'doctorB' && (!state.granted || state.otherEnded) || alias === 'doctorA' && state.authorEnded) names = Object.keys(f().canaries);
+    if (state.summaryRestricted) names.push('summary'); if (state.intentRestricted) names.push('intent');
+    const values = names.flatMap(sourceMarkers), identity = name => [f().users[name].id, f().users[name].profileId, f().users[name].email, f().users[name].displayName];
+    if (alias === 'patientA') values.push(...identity('patientB'), f().otherBooking.id);
+    if (alias === 'patientB') values.push(...identity('patientA'), f().booking.id, f().consultation.id);
+    if (alias === 'doctorB' && (!state.granted || state.otherEnded)) values.push(...identity('patientA'), ...identity('patientB'), f().booking.id, f().otherBooking.id, f().consultation.id);
+    // Author keeps legitimate booking logistics after assignment ends; ADMIN
+    // operational identity visibility is not a clinical payload entitlement.
+    if (['patientA', 'doctorB'].includes(alias)) for (const name of ['summary', 'intent']) values.push(...f().sources[name].versions.filter(v => v.state === 'DRAFT').map(v => v.id));
+    return [...new Set(values)].filter(Boolean);
+  };
+  const assertClean = (text, markers) => { const n = leaks(text, markers); r.leaks += n; assert.equal(n, 0, 'PROTECTED_DATA'); };
+  const settle = async () => { const end = Date.now() + 30000; while (inflight.size) { assert.ok(Date.now() < end); await delay(50); } while (scans.size) await Promise.all([...scans]); assert.equal(r.leaks, 0); assert.equal(r.blockedRequests, 0); assert.equal(r.observationErrors ?? 0, 0); };
+  const snapshot = () => fixtureCall('snapshot');
+  const unchanged = (a, b, auth = false) => {
+    assert.equal(b.unsafeAudit, 0);
+    for (const table of Object.keys(a.hashes)) if (!(auth && ['sessions', 'audit_logs'].includes(table))) assert.equal(a.hashes[table], b.hashes[table], 'UNEXPECTED_DATABASE_WRITE');
+    if (auth) for (const key of new Set([...Object.keys(a.audits), ...Object.keys(b.audits)])) if (!['AUTH_LOGIN', 'AUTH_SESSION_REVOKED'].includes(key)) assert.equal(a.audits[key], b.audits[key]);
+  };
+  const readOnly = async fn => { await settle(); const before = snapshot(); await fn(); await settle(); unchanged(before, snapshot()); };
+  const authentication = async fn => { await settle(); const before = snapshot(); assert.equal(authWindow, false); authWindow = true; try { return await fn(); } finally { authWindow = false; await settle(); unchanged(before, snapshot(), true); } };
+  const countAuth = path => { const kind = path.endsWith('/login') ? 'login' : 'logout'; r.authRequests[kind]++; assert.ok(r.authRequests[kind] <= LEDGER[kind + 'Maximum']); };
+  const capture = (text, alias, authProjection = false) => assertClean(text, [...forbidden(alias), ...(authProjection ? credentialSecrets : secrets)]);
+  const scanDom = async (page, alias) => {
+    await page.waitForLoadState('networkidle'); await settle();
+    const value = await page.evaluate(() => ({ html: globalThis.document.documentElement.outerHTML + [...globalThis.document.querySelectorAll('input,textarea')].map(e => e.value).join('\n'), visible: globalThis.document.body.innerText,
+      storage: JSON.stringify({ local: { ...globalThis.localStorage }, session: { ...globalThis.sessionStorage } }), lang: globalThis.document.documentElement.lang, dir: globalThis.document.documentElement.dir,
+      cookie: globalThis.document.cookie, mode: globalThis.localStorage.getItem('eh360-ui-mode') }));
+    const cdp = await page.context().newCDPSession(page); const ax = await cdp.send('Accessibility.getFullAXTree'); await cdp.detach();
+    // Known caller-supplied route UUIDs can appear in Next navigation/AX URLs.
+    // Only hidden state gets this exemption; visible text and API never do.
+    const supplied = new Set(new URL(page.url()).pathname.match(UUID) ?? []);
+    const hidden = [...forbidden(alias).filter(v => !supplied.has(v)), ...secrets];
+    assertClean(value.html, hidden); assertClean(JSON.stringify(ax), hidden); capture(value.visible, alias);
+    assertClean(value.storage, [...secrets, ...Object.values(f().canaries), ...Object.values(f().users).flatMap(u => [u.id, u.profileId])]);
+    assert.ok(!value.cookie.includes('eh_session=')); assert.equal(value.mode, 'live');
+    assert.equal(await page.locator('[data-session-mode="live"]').count(), 1); assert.equal(await page.locator('[data-session-mode="demo"],.demo-button,.demo-role-links').count(), 0);
+    r.dom.push({ actor: alias, lang: value.lang, dir: value.dir, axNodes: ax.nodes.length, leakCount: 0, positiveLive: true, storedSecretsOrClinicalData: 0, suppliedHiddenRouteLocators: supplied.size });
+  };
+  const browserGet = (page, path, method = 'GET') => page.evaluate(async ({ path, method }) => {
+    const response = await globalThis.fetch('/api/v1' + path, { method, credentials: 'same-origin', cache: 'no-store' });
+    const text = await response.text(); let json; try { json = JSON.parse(text); } catch { /* actual upstream error */ }
+    return { status: response.status, text, json, cache: response.headers.get('cache-control') };
+  }, { path, method });
+  const get = async (page, path, status, alias, method = 'GET') => {
+    const v = await browserGet(page, path, method); r.http.push({ actor: alias, method, path: path.split('?')[0].replace(UUID, ':id'), expected: status, actual: v.status });
+    assert.equal(v.status, status); assert.equal(v.cache, 'no-store'); capture(v.text, alias, path === '/auth/me' && status === 200);
+    if (status >= 400) assertClean(v.text, path.match(UUID) ?? []); if (method === 'HEAD') assert.equal(v.text, ''); return v;
+  };
+  const navigate = async (page, path, alias) => { await page.goto(origin + path); await scanDom(page, alias); };
+  const loginPage = async alias => {
+    const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } }); contexts.push(context); aliases.set(context, alias);
+    await context.route('**/*', async route => {
+      const q = route.request(), url = new URL(q.url()), auth = /^\/api\/v1\/auth\/(login|logout)$/.test(url.pathname);
+      if (![origin, alternate].includes(url.origin) || !['GET', 'HEAD'].includes(q.method()) && !(authWindow && auth && ['POST', 'OPTIONS'].includes(q.method()))) { r.blockedRequests++; await route.abort(); return; }
+      if (q.method() === 'POST' && auth) countAuth(url.pathname);
+      await route.continue(); // No mocks/fulfillment; PASS requires zero aborts.
+    });
+    context.on('request', q => { inflight.add(q); requestRules.set(q, { alias: aliases.get(context), markers: forbidden(aliases.get(context)), outage: state.outage }); const key = q.method() + ' ' + new URL(q.url()).pathname.replace(UUID, ':id'); r.requestCounts[key] = (r.requestCounts[key] ?? 0) + 1; });
+    context.on('requestfinished', q => inflight.delete(q)); context.on('requestfailed', q => inflight.delete(q));
+    context.on('response', res => {
+      const path = new URL(res.url()).pathname; if (!path.startsWith('/api/v1/')) return;
+      const rule = requestRules.get(res.request());
+      const pending = (async () => { const text = await res.text(); const auth = /^\/api\/v1\/auth\/(login|me)$/.test(path) && res.status() === 200;
+        assertClean(text, [...rule.markers, ...(auth ? credentialSecrets : secrets)]);
+        if (auth) { const csrf = JSON.parse(text).data?.csrfToken; if (csrf) secrets.push(csrf); }
+        if (/^\/api\/v1\/(auth|me|patients|consultations)(\/|$)/.test(path) && rule.outage !== 'upstream') assert.equal(res.headers()['cache-control'], 'no-store');
+      })().catch(() => { r.observationErrors = (r.observationErrors ?? 0) + 1; r.lastObservationError = { path: path.replace(UUID, ':id'), status: res.status() }; }).finally(() => scans.delete(pending)); scans.add(pending);
+    });
+    const page = await context.newPage(); page.on('pageerror', () => r.browserErrors++);
+    await page.goto(origin); await page.getByRole('button', { name: 'Sign in with live account', exact: true }).waitFor();
+    await authentication(async () => {
+      await page.getByLabel('Email address', { exact: true }).fill(f().users[alias].email); await page.getByLabel('Password', { exact: true }).fill(password);
+      const next = page.waitForRequest(q => new URL(q.url()).pathname === '/api/v1/auth/login' && q.method() === 'POST');
+      await page.getByRole('button', { name: 'Sign in with live account', exact: true }).click(); const headers = await (await next).allHeaders();
+      assert.equal(headers.origin, origin); assert.equal(headers['sec-fetch-site'], 'same-origin'); await page.locator('[data-session-mode="live"]').waitFor(); await page.waitForLoadState('networkidle');
+    });
+    const cookie = (await context.cookies()).find(c => c.name === 'eh_session'); assert.ok(cookie); secrets.push(cookie.value); credentialSecrets.push(cookie.value); return page;
+  };
+  const cookie = async page => { const c = (await page.context().cookies()).find(c => c.name === 'eh_session'); assert.ok(c); return 'eh_session=' + c.value; };
+  const rawLogin = async (alias, previous) => {
+    countAuth('/login'); const v = await raw(origin, '/api/v1/auth/login', { method: 'POST', headers: { Origin: origin, 'X-EH-Login': '1', 'Content-Type': 'application/json', ...(previous ? { Cookie: previous } : {}) }, body: JSON.stringify({ email: f().users[alias].email, password }) });
+    assert.equal(v.status, 200); assert.equal(v.headers['cache-control'], 'no-store'); const token = v.headers['set-cookie'][0].split(';')[0], csrf = v.json.data.csrfToken;
+    secrets.push(token.split('=')[1], csrf); credentialSecrets.push(token.split('=')[1]); return { ...v, cookie: token, csrf };
+  };
+  const rawLogout = (token, csrf) => { countAuth('/logout'); return raw(origin, '/api/v1/auth/logout', { method: 'POST', headers: { Origin: origin, Cookie: token, 'Content-Type': 'application/json', ...(csrf === undefined ? {} : { 'X-CSRF-Token': csrf }) }, body: '{}' }); };
+  const meRaw = token => raw(origin, '/api/v1/auth/me', { headers: token ? { Cookie: token } : {} });
+  const tokenHash = value => sha(Buffer.from(value.split('=')[1], 'base64url'));
+  const recover = async () => { for (let i = 0; i < 25; i++) { try { if ((await raw(origin, '/api/v1/health')).status === 200) return; } catch { /* GET readiness */ } await delay(500); } assert.fail('RECOVERY_TIMEOUT'); };
+  let patient, patientB, author, other, admin;
+  await check('R04', 'browser login/me/cookie/no renewal or stored credentials', async () => {
+    patient = await loginPage('patientA'); const c = (await patient.context().cookies()).find(c => c.name === 'eh_session');
+    assert.equal(c.httpOnly, true); assert.equal(c.secure, false); assert.equal(c.sameSite, 'Lax'); assert.equal(c.path, '/'); assert.equal(c.domain, 'localhost');
+    await readOnly(async () => { const v = await get(patient, '/auth/me', 200, 'patientA'); assert.deepEqual(Object.keys(v.json.data).sort(), ['csrfToken', 'session', 'user']); assert.deepEqual(Object.keys(v.json.data.user).sort(), ['email', 'id', 'role']); assert.deepEqual(Object.keys(v.json.data.session), ['expiresAt']); assert.equal(v.json.data.user.id, f().users.patientA.id); assert.match(v.json.data.csrfToken, /^[A-Za-z0-9_-]{43}$/); assert.equal((await meRaw(await cookie(patient))).headers['set-cookie'], undefined); assert.equal((await patient.context().cookies()).find(c => c.name === 'eh_session').expires, c.expires); await scanDom(patient, 'patientA'); });
+  });
+  await check('R05/R06', 'raw invalid cookie/rotation/current session CSRF/logout', async () => {
+    await authentication(async () => {
+      const a = await rawLogin('patientA'), attributes = cookieAttributes(a.headers['set-cookie'][0]); assert.deepEqual({ ...attributes, maxAge: 0 }, { name: 'eh_session', httpOnly: true, secure: false, sameSite: 'Lax', path: '/', domainPresent: false, maxAge: 0 }); assert.ok(attributes.maxAge > 28000 && attributes.maxAge <= 28800);
+      for (const token of [undefined, 'eh_session=bad', 'eh_session=' + randomBytes(32).toString('base64url'), a.cookie + '; ' + a.cookie]) { const v = await meRaw(token); assert.equal(v.status, 401); assert.equal(v.json.error.code, 'AUTH_UNAUTHENTICATED'); assert.equal(cookieAttributes(v.headers['set-cookie'][0]).maxAge, 0); }
+      const b = await rawLogin('patientB', a.cookie); assert.notEqual(b.csrf, a.csrf); assert.equal((await meRaw(a.cookie)).status, 401);
+      for (const csrf of [undefined, '', 'bad', a.csrf]) { const v = await rawLogout(b.cookie, csrf); assert.equal(v.status, 403); assert.equal(v.json.error.code, 'AUTH_CSRF_INVALID'); }
+      countAuth('/logout'); assert.equal((await raw(origin, '/api/v1/auth/logout', { method: 'POST', headers: ['Origin', origin, 'Cookie', b.cookie, 'X-CSRF-Token', b.csrf, 'X-CSRF-Token', b.csrf, 'Content-Type', 'application/json'], body: '{}' })).status, 403);
+      assert.equal((await meRaw(b.cookie)).status, 200); assert.equal((await rawLogout(b.cookie, b.csrf)).status, 204); assert.equal((await meRaw(b.cookie)).status, 401); assert.equal((await rawLogout(b.cookie, b.csrf)).status, 401);
+    });
+  });
+  await check('R05', 'inactive/expired/revoked synthetic actors/sessions', async () => {
+    fixtureCall('disable'); await authentication(async () => { countAuth('/login'); const v = await raw(origin, '/api/v1/auth/login', { method: 'POST', headers: { Origin: origin, 'X-EH-Login': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ email: f().users.patientB.email, password }) }); assert.equal(v.status, 401); assert.equal(v.json.error.code, 'AUTH_INVALID_CREDENTIALS'); }); fixtureCall('enable');
+    let expired, revoked; await authentication(async () => { expired = await rawLogin('patientB'); revoked = await rawLogin('patientB'); });
+    fixtureCall('expire', { tokenHash: tokenHash(expired.cookie) }); fixtureCall('revoke', { tokenHash: tokenHash(revoked.cookie) });
+    await readOnly(async () => { for (const v of [expired, revoked]) assert.equal((await meRaw(v.cookie)).status, 401); });
+  });
+  await check('R07', 'raw Origin/Fetch Metadata/JSON/request guards', async () => {
+    const base = { Origin: origin, 'X-EH-Login': '1', 'Content-Type': 'application/json' }, body = JSON.stringify({ email: f().users.patientA.email, password });
+    const variants = [
+      ['missingOrigin', Object.fromEntries(Object.entries(base).filter(([k]) => k !== 'Origin')), body, 403],
+      ['missingLogin', Object.fromEntries(Object.entries(base).filter(([k]) => k !== 'X-EH-Login')), body, 403],
+      ...[['blankOrigin', { Origin: '' }], ['otherOrigin', { Origin: alternate }], ['crossSite', { 'Sec-Fetch-Site': 'cross-site' }], ['invalidMetadata', { 'Sec-Fetch-Site': 'invalid' }], ['sameSiteNoBypass', { Origin: alternate, 'Sec-Fetch-Site': 'same-site' }], ['badLogin', { 'X-EH-Login': '' }]].map(([name, extra]) => [name, { ...base, ...extra }, body, 403]),
+      ['duplicateOrigin', ['Origin', origin, 'Origin', origin, 'X-EH-Login', '1', 'Content-Type', 'application/json'], body, 403],
+      ['duplicateMetadata', ['Origin', origin, 'Sec-Fetch-Site', 'same-origin', 'Sec-Fetch-Site', 'same-origin', 'X-EH-Login', '1', 'Content-Type', 'application/json'], body, 403],
+      ['media', { ...base, 'Content-Type': 'text/plain' }, body, 415], ['malformed', base, '{', 400], ['oversized', base, '{"x":"' + 'a'.repeat(17000) + '"}', 413], ['badCredentials', base, JSON.stringify({ email: f().users.patientA.email, password: 'wrong synthetic value' }), 401],
+    ];
+    await authentication(async () => { for (const [variant, headers, payload, status] of variants) { countAuth('/login'); const v = await raw(origin, '/api/v1/auth/login', { method: 'POST', headers, body: payload }); assert.equal(v.status, status); assert.equal(v.headers['cache-control'], 'no-store'); r.http.push({ variant, path: '/auth/login', expected: status, actual: v.status }); } });
+    const context = await browser.newContext();
+    try { await context.route('**/*', async route => { const q = route.request(), u = new URL(q.url()); if (![origin, alternate].includes(u.origin) || !['GET', 'HEAD'].includes(q.method()) && !(authWindow && u.pathname === '/api/v1/auth/login' && ['POST', 'OPTIONS'].includes(q.method()))) { r.blockedRequests++; await route.abort(); } else await route.continue(); }); const page = await context.newPage(); await page.goto(alternate); const before = snapshot();
+      await authentication(async () => { const denied = await page.evaluate(async ({ origin, email, password }) => { try { await globalThis.fetch(origin + '/api/v1/auth/login', { method: 'POST', credentials: 'include', headers: { 'X-EH-Login': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) }); return false; } catch { return true; } }, { origin, email: f().users.patientA.email, password }); assert.equal(denied, true); }); unchanged(before, snapshot());
+    } finally { await context.close(); }
+  });
+  await check('R08/R10', 'fixture close/private sign do not implicitly release drafts', async () => { await readOnly(async () => { assert.equal(f().consultation.state, 'CLOSED'); for (const path of ['/me/summaries', '/me/follow-up-intents']) assert.equal((await get(patient, path, 200, 'patientA')).json.meta.total, 0); await get(patient, '/me/summaries/' + f().sources.draftSummary.id, 404, 'patientA'); await navigate(patient, '/patient/summaries', 'patientA'); }); });
+  fixtureCall('release');
+  await check('R08', 'patient-own/IDOR/nonexistent/count/HEAD and real UI reads', async () => {
+    patientB = await loginPage('patientB'); await readOnly(async () => {
+      const own = await get(patient, '/me/bookings', 200, 'patientA'); assert.equal(own.json.meta.total, 1); assert.equal(own.json.data[0].id, f().booking.id);
+      const denied = await get(patient, '/me/bookings/' + f().otherBooking.id, 404, 'patientA'), absent = await get(patient, '/me/bookings/' + randomUUID(), 404, 'patientA'); assert.deepEqual(denied.json, absent.json);
+      await get(patient, '/patients/' + f().users.patientB.profileId + '/profile', 404, 'patientA'); await get(patientB, '/me/bookings/' + f().otherBooking.id, 200, 'patientB'); await get(patientB, '/me/summaries/' + f().sources.summary.id, 404, 'patientB');
+      for (const [path, name] of [['summaries', 'summary'], ['follow-up-intents', 'intent']]) { assert.equal((await get(patient, '/me/' + path + '?page=1&pageSize=1', 200, 'patientA')).json.meta.total, 1); await get(patient, '/me/' + path + '/' + f().sources[name].id, 200, 'patientA'); await get(patient, '/me/' + path + '/' + f().sources[name].id, 200, 'patientA', 'HEAD'); }
+      for (const path of ['/patient/appointments/' + f().booking.id, '/patient/summaries', '/patient/follow-up']) await navigate(patient, path, 'patientA'); await navigate(patientB, '/patient/summaries', 'patientB');
+    });
+  });
+  await check('R09/R10', 'current treating author versus booked-unassigned/other doctor/ADMIN', async () => {
+    author = await loginPage('doctorA'); other = await loginPage('doctorB'); admin = await loginPage('admin');
+    await readOnly(async () => {
+      const documents = '/consultations/' + f().consultation.id + '/documents/';
+      await get(author, '/me/bookings/' + f().booking.id + '/consultation', 200, 'doctorA'); await get(author, '/me/bookings/' + f().otherBooking.id, 200, 'doctorA'); await get(author, '/me/bookings/' + f().otherBooking.id + '/consultation', 404, 'doctorA'); await get(author, documents + f().sources.private.id, 200, 'doctorA');
+      for (const [alias, page] of [['doctorB', other], ['admin', admin]]) { await get(page, '/patients/' + f().users.patientA.profileId + '/summaries', 404, alias); await get(page, documents + f().sources.private.id, 404, alias); await get(page, '/me/bookings/' + f().booking.id + '/consultation', 404, alias); await navigate(page, '/doctor/consultation/' + f().booking.id + '/documentation', alias); }
+      await navigate(author, '/doctor/consultation/' + f().booking.id + '/documentation', 'doctorA');
+    });
+  });
+  fixtureCall('grantOther'); state.granted = true;
+  await check('R09/R10', 'separate current grant allows released sources, never private authoring', async () => { await readOnly(async () => { await get(other, '/patients/' + f().users.patientA.profileId + '/summaries/' + f().sources.summary.id, 200, 'doctorB'); await get(other, '/patients/' + f().users.patientA.profileId + '/follow-up-intents/' + f().sources.intent.id, 200, 'doctorB'); await get(other, '/consultations/' + f().consultation.id + '/documents/' + f().sources.private.id, 404, 'doctorB'); await other.goto(origin + '/doctor/summaries'); await other.getByLabel('Patient record locator', { exact: true }).fill(f().users.patientA.profileId); await other.getByRole('button', { name: 'View released summaries', exact: true }).click(); await scanDom(other, 'doctorB'); }); });
+  await check('R14', 'same-candidate API/web restore retains session and safe read boundaries', async () => {
+    await settle(); const before = snapshot(); const proof = s.restore(); await recover(); await patient.reload(); await get(patient, '/auth/me', 200, 'patientA'); await get(patient, '/me/bookings/' + f().otherBooking.id, 404, 'patientA'); await get(patient, '/me/summaries/' + f().sources.summary.id, 200, 'patientA'); await get(other, '/consultations/' + f().consultation.id + '/documents/' + f().sources.private.id, 404, 'doctorB'); await settle(); unchanged(before, snapshot());
+    await authentication(async () => { const v = await rawLogin('patientB'); assert.equal((await rawLogout(v.cookie, v.csrf)).status, 204); }); await scanDom(patient, 'patientA'); r.R14 = { result: 'PASS', ...proof };
+  });
+  await check('R09', 'suspension denies clinic context but not independent released history', async () => {
+    fixtureCall('suspend'); await readOnly(async () => { await get(author, '/me/bookings/' + f().booking.id + '/consultation', 404, 'doctorA'); await get(patient, '/me/summaries/' + f().sources.summary.id, 200, 'patientA'); await get(other, '/patients/' + f().users.patientA.profileId + '/summaries/' + f().sources.summary.id, 200, 'doctorB'); }); fixtureCall('restore'); await readOnly(async () => { await get(author, '/me/bookings/' + f().booking.id + '/consultation', 200, 'doctorA'); });
+  });
+  await check('R10', 'independent restrictions suppress ordinary details/counts, retain immutable versions', async () => {
+    await settle(); const before = snapshot(); fixtureCall('restrictSummary'); state.summaryRestricted = true;
+    await readOnly(async () => { await get(patient, '/me/summaries/' + f().sources.summary.id, 404, 'patientA'); assert.equal((await get(patient, '/me/summaries', 200, 'patientA')).json.meta.total, 0); await get(patient, '/me/follow-up-intents/' + f().sources.intent.id, 200, 'patientA'); await get(other, '/patients/' + f().users.patientA.profileId + '/summaries/' + f().sources.summary.id, 404, 'doctorB'); await navigate(patient, '/patient/summaries', 'patientA'); });
+    fixtureCall('restrictIntent'); state.intentRestricted = true; await readOnly(async () => { await get(patient, '/me/follow-up-intents/' + f().sources.intent.id, 404, 'patientA'); assert.equal((await get(patient, '/me/follow-up-intents', 200, 'patientA')).json.meta.total, 0); await navigate(patient, '/patient/follow-up', 'patientA'); });
+    const after = snapshot(); for (const name of ['consultation_document_versions', 'follow_up_intent_versions']) assert.equal(before.hashes[name], after.hashes[name]);
+  });
+  await check('R09', 'ended membership/grants recheck clinical authority, preserve legitimate logistics', async () => {
+    fixtureCall('endMembership'); await readOnly(async () => { await get(author, '/me/bookings/' + f().booking.id + '/consultation', 404, 'doctorA'); await get(author, '/consultations/' + f().consultation.id + '/documents/' + f().sources.private.id, 200, 'doctorA'); });
+    fixtureCall('endOther'); state.otherEnded = true; fixtureCall('endAuthor'); state.authorEnded = true;
+    await readOnly(async () => { for (const [alias, page] of [['doctorA', author], ['doctorB', other]]) { for (const path of ['/patients/' + f().users.patientA.profileId + '/profile', '/patients/' + f().users.patientA.profileId + '/summaries', '/consultations/' + f().consultation.id + '/documents/' + f().sources.private.id]) await get(page, path, 404, alias); await navigate(page, '/doctor/consultation/' + f().booking.id + '/documentation', alias); } await get(author, '/me/bookings/' + f().booking.id, 200, 'doctorA'); });
+  });
+  await check('R11', 'real browser database503/upstream500 error/recovery EN/AR without Demo', async () => {
+    for (const locale of ['en', 'ar']) {
+      await patient.goto(origin + '/patient/summaries'); await patient.getByRole('button', { name: locale === 'ar' ? 'العربية' : 'English', exact: true }).click(); await patient.setViewportSize({ width: locale === 'ar' ? 390 : 1440, height: 900 }); await patient.waitForLoadState('networkidle');
+      const refresh = () => patient.getByRole('button', { name: locale === 'ar' ? 'تحديث التوثيق المتاح للعرض' : 'Refresh visible documentation', exact: true });
+      const empty = () => patient.getByText(locale === 'ar' ? 'لا توجد ملخصات منشورة متاحة للعرض' : 'No visible released summaries', { exact: true });
+      await readOnly(async () => {
+        for (const [kind, status] of [['database', 503], ['upstream', 500]]) {
+          state.outage = kind;
+          try { await s.outage(kind, async () => {
+            let health; for (let i = 0; i < 20; i++) { try { const v = await raw(origin, '/api/v1/health'); if (v.status === status) { health = v; break; } } catch { /* GET readiness */ } await delay(500); } assert.equal(health?.status, status);
+            if (kind === 'database') assert.equal(health.json.error.code, 'DATABASE_UNAVAILABLE'); else assert.equal(health.text.trim(), 'Internal Server Error');
+            const next = patient.waitForResponse(v => new URL(v.url()).pathname === '/api/v1/me/summaries' && v.request().method() === 'GET'); await refresh().click(); assert.equal((await next).status(), status);
+            const alert = patient.getByRole('alert').first(); await alert.waitFor({ state: 'visible' }); assert.ok((await alert.innerText()).trim()); assert.equal(await empty().isVisible(), false); await scanDom(patient, 'patientA');
+            r.observations.push({ locale, width: locale === 'ar' ? 390 : 1440, failedRead: status, visibleError: true, falseEmpty: false, live: true });
+          }); } finally { state.outage = ''; }
+          await recover(); await refresh().click(); await empty().waitFor({ state: 'visible' });
+        }
+        await get(patient, '/auth/me', 200, 'patientA'); await scanDom(patient, 'patientA'); assert.equal(await patient.evaluate(() => globalThis.document.documentElement.dir), locale === 'ar' ? 'rtl' : 'ltr');
+      });
+    }
+    r.observations.push({ F03: 'OPEN; critical Arabic fallback unchanged', F04: 'OPEN; initial EN/LTR SSR unchanged; only post-effect recovery checked' });
+  });
+  await check('R05/R11', 'UI logout/account switch/reload/Back/Forward clears prior patient data', async () => {
+    await patient.getByRole('button', { name: 'English', exact: true }).click(); await authentication(async () => { await patient.getByRole('button', { name: 'Sign out', exact: true }).click(); await patient.getByRole('button', { name: 'Sign in with live account', exact: true }).waitFor(); });
+    await settle(); aliases.set(patient.context(), 'patientB');
+    await authentication(async () => { await patient.getByLabel('Email address', { exact: true }).fill(f().users.patientB.email); await patient.getByLabel('Password', { exact: true }).fill(password); await patient.getByRole('button', { name: 'Sign in with live account', exact: true }).click(); await patient.locator('[data-session-mode="live"]').waitFor(); await patient.waitForLoadState('networkidle'); });
+    await readOnly(async () => { assert.equal((await get(patient, '/auth/me', 200, 'patientB')).json.data.user.id, f().users.patientB.id); await patient.goto(origin + '/patient/appointments/' + f().booking.id); await patient.reload(); await patient.goBack(); await patient.goForward(); await get(patient, '/me/bookings/' + f().booking.id, 404, 'patientB'); await scanDom(patient, 'patientB'); });
+  });
+  await settle(); assert.equal(r.browserErrors, 0); r.finalRows = snapshot().rows;
+  for (const context of contexts) await context.close();
 }
+async function main() { await lifecycle(process.argv.slice(2), acceptance); }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  main().catch(() => { console.error('E2_WIP_NOT_EXECUTABLE'); process.exitCode = 1; });
+  main().catch(() => { console.error('E2_PREFLIGHT_REJECTED'); process.exitCode = 1; });
 }
