@@ -486,7 +486,18 @@ async function acceptance(s) {
     await patient.getByRole('button', { name: 'English', exact: true }).click(); await authentication(async () => { await patient.getByRole('button', { name: 'Sign out', exact: true }).click(); await patient.getByRole('button', { name: 'Sign in with live account', exact: true }).waitFor(); assert.ok(!(await patient.context().cookies()).some(c => c.name === 'eh_session')); });
     await settle(); aliases.set(patient.context(), 'patientB');
     await authentication(async () => { await patient.getByLabel('Email address', { exact: true }).fill(f().users.patientB.email); await patient.getByLabel('Password', { exact: true }).fill(password); await patient.getByRole('button', { name: 'Sign in with live account', exact: true }).click(); await patient.locator('[data-session-mode="live"]').waitFor(); await patient.waitForLoadState('networkidle'); });
-    await readOnly(async () => { assert.equal((await get(patient, '/auth/me', 200, 'patientB')).json.data.user.id, f().users.patientB.id); await patient.goto(origin + '/patient/appointments/' + f().booking.id); await patient.reload(); await patient.goBack(); await patient.goForward(); await get(patient, '/me/bookings/' + f().booking.id, 404, 'patientB'); await scanDom(patient, 'patientB'); });
+    await readOnly(async () => {
+      assert.equal((await get(patient, '/auth/me', 200, 'patientB')).json.data.user.id, f().users.patientB.id);
+      // Finish hydration, response/body observation and full privacy scans before
+      // destroying each document. This proves a settled history journey, not
+      // rapid interrupted-navigation safety; pending/error assertions stay fatal.
+      await scanDom(patient, 'patientB');
+      await patient.goto(origin + '/patient/appointments/' + f().booking.id); await scanDom(patient, 'patientB');
+      await patient.reload(); await scanDom(patient, 'patientB');
+      await patient.goBack(); await scanDom(patient, 'patientB');
+      await patient.goForward(); await scanDom(patient, 'patientB');
+      await get(patient, '/me/bookings/' + f().booking.id, 404, 'patientB'); await scanDom(patient, 'patientB');
+    });
   });
   await settle(); assert.equal(r.browserErrors, 0); r.finalRows = snapshot().rows;
   for (const context of contexts) await context.close();
