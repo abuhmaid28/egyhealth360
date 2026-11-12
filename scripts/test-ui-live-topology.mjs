@@ -82,8 +82,11 @@ async function lifecycle(args, exercise) {
   const env = { PATH: dirname(process.execPath) + ':/usr/local/bin:/usr/bin:/bin', HOME: process.env.HOME,
     POSTGRES_USER: 'eh124_e2', POSTGRES_DB: 'eh124_e2', POSTGRES_PASSWORD: randomBytes(24).toString('hex'), AUTH_BROWSER_ORIGIN: origin, NEXT_TELEMETRY_DISABLED: '1' };
   if (process.env.DOCKER_CONFIG) env.DOCKER_CONFIG = process.env.DOCKER_CONFIG;
+  let commandFailure;
   const command = (binary, argv, input, timeout = 60000) => {
     const r = spawnSync(binary, argv, { cwd: repo, env, input, encoding: 'utf8', timeout, maxBuffer: 32000000 });
+    if (r.error || r.status !== 0) commandFailure = { tool: binary, operation: argv.filter(v => ['network', 'connect', 'disconnect', 'compose', 'up', 'down', 'rm', 'exec', 'start', 'stop', 'inspect', 'image'].includes(v)).join(' '), exit: r.status,
+      staticIpRejected: /user specified IP address|user-configured subnet|user configured subnet/i.test(r.stderr ?? '') };
     assert.ok(!r.error && r.status === 0, 'BOUNDED_COMMAND_FAILED'); return r.stdout.trim();
   };
   const docker = (...argv) => command('docker', ['--host=unix:///var/run/docker.sock', ...argv]);
@@ -179,7 +182,18 @@ async function lifecycle(args, exercise) {
     const outage = async (kind, fn) => {
       const pg = Object.values(inspect('container', containers.postgres.Id).NetworkSettings.Networks)[0];
       try { if (kind === 'database') docker('network', 'disconnect', networkId, containers.postgres.Id); docker('stop', '--time', '10', containers.api.Id); if (kind === 'database') docker('start', containers.api.Id); await fn(); }
-      finally { if (kind === 'database') docker('network', 'connect', '--ip', pg.IPAddress, ...pg.Aliases.flatMap(a => ['--alias', a]), networkId, containers.postgres.Id); else docker('start', containers.api.Id); }
+      finally {
+        if (kind === 'database') {
+          // This bridge uses Docker-owned IPAM, not a user-defined static
+          // subnet. Restore the same service/DNS aliases with Docker allocation.
+          docker('network', 'connect', ...pg.Aliases.flatMap(a => ['--alias', a]), networkId, containers.postgres.Id);
+          const restored = inspect('container', containers.postgres.Id).NetworkSettings.Networks;
+          assert.equal(Object.keys(restored).length, 1); const current = Object.values(restored)[0]; assert.equal(current.NetworkID, networkId); assert.ok(current.IPAddress);
+          for (const alias of pg.Aliases) assert.ok(current.Aliases.includes(alias));
+          assert.deepEqual(Object.keys(inspect('network', networkId).Containers).sort(), Object.values(containers).map(c => c.Id).sort());
+          receipt.databaseNetworkRestores = (receipt.databaseNetworkRestores ?? 0) + 1;
+        } else docker('start', containers.api.Id);
+      }
     };
     browser = await chromium.launch({ headless: true, env: { PATH: env.PATH, HOME: env.HOME, LANG: 'C.UTF-8', TZ: 'UTC' }, ...(o.chromium ? { executablePath: o.chromium } : {}) });
     const logs = markers => {
@@ -193,7 +207,7 @@ async function lifecycle(args, exercise) {
     receipt.result = 'PASS';
   } catch (error) {
     if (active) active.result = 'FAIL';
-    receipt.failure = { stage, code: 'E2_REJECTED', line: Number(error.stack?.match(/test-ui-live-topology\.mjs:(\d+)/)?.[1] ?? 0) };
+    receipt.failure = { stage, code: 'E2_REJECTED', line: Number(error.stack?.match(/test-ui-live-topology\.mjs:(\d+)/)?.[1] ?? 0), ...(commandFailure ? { command: commandFailure } : {}) };
   } finally {
     let closed = !browser; if (browser) { try { await browser.close(); closed = true; } catch { receipt.result = 'FAIL'; } }
     if (compose) { try { docker(...compose, 'down', '--volumes', '--remove-orphans', '--timeout', '10'); const remaining = Object.fromEntries(['container', 'network', 'volume'].map(k => [k, resources(k).length])); assert.ok(Object.values(remaining).every(n => n === 0)); if (image) docker('image', 'rm', project + ':local'); for (const n of [webPort, apiPort]) { const s = createServer(); await new Promise((r, reject) => { s.once('error', reject); s.listen(n, '127.0.0.1', r); }); await new Promise(r => s.close(r)); } assert.ok(closed); receipt.R13 = { result: 'PASS', remaining, browserClosed: closed, portsReleased: true, uniqueTagRemoved: !!image }; } catch { receipt.R13 = { result: 'FAIL' }; receipt.result = 'FAIL'; } }
