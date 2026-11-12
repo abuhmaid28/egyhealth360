@@ -185,11 +185,11 @@ async function lifecycle(args, exercise) {
     const logs = markers => {
       for (const name of ['api', 'web', 'worker']) {
         const v = spawnSync('docker', ['--host=unix:///var/run/docker.sock', 'logs', containers[name].Id], { env, encoding: 'utf8', timeout: 15000, maxBuffer: 8000000 });
-        assert.ok(!v.error && v.status === 0); const hits = leaks(v.stdout + v.stderr, markers); receipt.leaks += hits; assert.equal(hits, 0, 'PROTECTED_LOG_DATA');
+        assert.ok(!v.error && v.status === 0); const hits = leaks(v.stdout + v.stderr, [...markers, env.POSTGRES_PASSWORD]); receipt.leaks += hits; assert.equal(hits, 0, 'PROTECTED_LOG_DATA');
         receipt.logChecks = (receipt.logChecks ?? 0) + 1;
       }
     };
-    await exercise({ browser, origin, direct, alternate, receipt, check, fixtureCall, fixture: () => fixture, password, persist, restore, outage, logs });
+    await exercise({ browser, origin, direct, alternate, receipt, check, fixtureCall, fixture: () => fixture, password, runtimeSecrets: [env.POSTGRES_PASSWORD], persist, restore, outage, logs });
     receipt.result = 'PASS';
   } catch (error) {
     if (active) active.result = 'FAIL';
@@ -204,7 +204,7 @@ async function lifecycle(args, exercise) {
 async function acceptance(s) {
   const { browser, origin, alternate, receipt: r, fixtureCall, fixture: f, password, check } = s;
   const state = { granted: false, authorEnded: false, otherEnded: false, summaryRestricted: false, intentRestricted: false, outage: '' };
-  const secrets = [password, ...f().secretHashes], credentialSecrets = [...secrets];
+  const secrets = [password, ...s.runtimeSecrets, ...f().secretHashes], credentialSecrets = [...secrets];
   const contexts = [], aliases = new WeakMap(), requestRules = new WeakMap(), inflight = new Set(), scans = new Set(), drains = new Set();
   let authWindow = false;
   const sourceMarkers = name => [f().canaries[name], f().sources[name].id, ...f().sources[name].versions.map(v => v.id)];
@@ -253,8 +253,8 @@ async function acceptance(s) {
     const supplied = new Set(new URL(page.url()).pathname.match(UUID) ?? []);
     const hidden = [...forbidden(alias).filter(v => !supplied.has(v)), ...secrets];
     assertClean(value.html, hidden); assertClean(JSON.stringify(ax), hidden); capture(value.visible, alias);
-    assertClean(value.storage, [...secrets, ...Object.values(f().canaries), ...Object.values(f().users).flatMap(u => [u.id, u.profileId])]);
-    assert.ok(!value.cookie.includes('eh_session=')); assert.equal(value.mode, 'live');
+    assertClean(value.storage, [...secrets, ...Object.values(f().canaries), ...Object.values(f().users).flatMap(u => [u.id, u.profileId, u.email, u.displayName])]);
+    assertClean(value.cookie, secrets); assert.ok(!value.cookie.includes('eh_session=')); assert.equal(value.mode, 'live');
     assert.equal(await page.locator('[data-session-mode="live"]').count(), 1); assert.equal(await page.locator('[data-session-mode="demo"],.demo-button,.demo-role-links').count(), 0);
     r.dom.push({ actor: alias, lang: value.lang, dir: value.dir, axNodes: ax.nodes.length, leakCount: 0, positiveLive: true, storedSecretsOrClinicalData: 0, suppliedHiddenRouteLocators: supplied.size });
   };
@@ -400,7 +400,7 @@ async function acceptance(s) {
       ['media', { ...base, 'Content-Type': 'text/plain' }, body, 415], ['malformed', base, '{', 400], ['oversized', base, '{"x":"' + 'a'.repeat(17000) + '"}', 413], ['badCredentials', base, JSON.stringify({ email: f().users.patientA.email, password: 'wrong synthetic value' }), 401],
     ];
     await authentication(async () => { for (const [variant, headers, payload, status] of variants) { countAuth('/login'); const v = safeError(await raw(origin, '/api/v1/auth/login', { method: 'POST', headers, body: payload })); assert.equal(v.status, status); r.http.push({ variant, path: '/auth/login', expected: status, actual: v.status, sanitized: true }); } });
-    await authentication(async () => { for (const metadata of ['same-origin', 'none']) { const v = await rawLogin('patientB', undefined, metadata); assert.equal((await rawLogout(v.cookie, v.csrf)).status, 204); r.http.push({ variant: metadata, path: '/auth/login', expected: 200, actual: v.status }); } });
+    await authentication(async () => { for (const metadata of ['same-origin', 'same-site', 'none']) { const v = await rawLogin('patientB', undefined, metadata); assert.equal((await rawLogout(v.cookie, v.csrf)).status, 204); r.http.push({ variant: metadata, path: '/auth/login', expected: 200, actual: v.status }); } });
     const context = await browser.newContext();
     try { await context.route('**/*', async route => { const q = route.request(), u = new URL(q.url()); if (![origin, alternate].includes(u.origin) || !['GET', 'HEAD'].includes(q.method()) && !(authWindow && u.pathname === '/api/v1/auth/login' && ['POST', 'OPTIONS'].includes(q.method()))) { r.blockedRequests++; await route.abort(); } else { if (q.method() === 'POST') countAuth('/login'); await route.continue(); } }); const page = await context.newPage(); await page.goto(alternate); const before = snapshot();
       await authentication(async () => { const denied = await page.evaluate(async ({ origin, email, password }) => { try { await globalThis.fetch(origin + '/api/v1/auth/login', { method: 'POST', credentials: 'include', headers: { 'X-EH-Login': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) }); return false; } catch { return true; } }, { origin, email: f().users.patientA.email, password }); assert.equal(denied, true); }); unchanged(before, snapshot());
