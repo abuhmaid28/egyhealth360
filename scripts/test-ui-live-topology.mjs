@@ -57,7 +57,8 @@ function raw(origin, path, { method = 'GET', headers = {}, body } = {}) {
   const url = new URL(path, origin);
   assert.equal(url.protocol, 'http:'); assert.ok(['localhost', '127.0.0.1'].includes(url.hostname));
   return new Promise((done, reject) => {
-    const req = httpRequest(url, { method, headers, timeout: 10000 }, res => {
+    const transportHeaders = Array.isArray(headers) ? ['Host', url.host, ...headers] : headers;
+    const req = httpRequest(url, { method, headers: transportHeaders, timeout: 10000 }, res => {
       const chunks = []; let size = 0;
       res.on('data', part => { size += part.length; if (size > 2000000) req.destroy(new Error('BODY_LIMIT')); else chunks.push(part); });
       res.on('end', () => { const text = Buffer.concat(chunks).toString('utf8'); let json; try { json = JSON.parse(text); } catch { /* shell/upstream error */ } done({ status: res.statusCode, headers: res.headers, text, json }); });
@@ -181,7 +182,14 @@ async function lifecycle(args, exercise) {
       finally { if (kind === 'database') docker('network', 'connect', '--ip', pg.IPAddress, ...pg.Aliases.flatMap(a => ['--alias', a]), networkId, containers.postgres.Id); else docker('start', containers.api.Id); }
     };
     browser = await chromium.launch({ headless: true, env: { PATH: env.PATH, HOME: env.HOME, LANG: 'C.UTF-8', TZ: 'UTC' }, ...(o.chromium ? { executablePath: o.chromium } : {}) });
-    await exercise({ browser, origin, direct, alternate, receipt, check, fixtureCall, fixture: () => fixture, password, persist, restore, outage });
+    const logs = markers => {
+      for (const name of ['api', 'web', 'worker']) {
+        const v = spawnSync('docker', ['--host=unix:///var/run/docker.sock', 'logs', containers[name].Id], { env, encoding: 'utf8', timeout: 15000, maxBuffer: 8000000 });
+        assert.ok(!v.error && v.status === 0); const hits = leaks(v.stdout + v.stderr, markers); receipt.leaks += hits; assert.equal(hits, 0, 'PROTECTED_LOG_DATA');
+        receipt.logChecks = (receipt.logChecks ?? 0) + 1;
+      }
+    };
+    await exercise({ browser, origin, direct, alternate, receipt, check, fixtureCall, fixture: () => fixture, password, persist, restore, outage, logs });
     receipt.result = 'PASS';
   } catch (error) {
     if (active) active.result = 'FAIL';
@@ -266,11 +274,15 @@ async function acceptance(s) {
     context.on('response', res => {
       const path = new URL(res.url()).pathname; if (!path.startsWith('/api/v1/')) return;
       const rule = requestRules.get(res.request());
+      let observation = 'body';
       const pending = (async () => { const text = await res.text(); const auth = /^\/api\/v1\/auth\/(login|me)$/.test(path) && res.status() === 200;
+        observation = 'privacy';
         assertClean(text, [...rule.markers, ...(auth ? credentialSecrets : secrets)]);
+        observation = 'projection';
         if (auth) { const csrf = JSON.parse(text).data?.csrfToken; if (csrf) secrets.push(csrf); }
+        observation = 'cache';
         if (/^\/api\/v1\/(auth|me|patients|consultations)(\/|$)/.test(path) && rule.outage !== 'upstream') assert.equal(res.headers()['cache-control'], 'no-store');
-      })().catch(() => { r.observationErrors = (r.observationErrors ?? 0) + 1; r.lastObservationError = { path: path.replace(UUID, ':id'), status: res.status() }; }).finally(() => scans.delete(pending)); scans.add(pending);
+      })().catch(error => { r.observationErrors = (r.observationErrors ?? 0) + 1; r.lastObservationError = { path: path.replace(UUID, ':id'), status: res.status(), observation, kind: error instanceof assert.AssertionError ? 'ASSERTION' : 'BODY_OR_TRANSPORT' }; }).finally(() => scans.delete(pending)); scans.add(pending);
     });
     const page = await context.newPage(); page.on('pageerror', () => r.browserErrors++);
     await page.goto(origin); await page.getByRole('button', { name: 'Sign in with live account', exact: true }).waitFor();
@@ -288,11 +300,17 @@ async function acceptance(s) {
     assert.equal(v.status, 200); assert.equal(v.headers['cache-control'], 'no-store'); const token = v.headers['set-cookie'][0].split(';')[0], csrf = v.json.data.csrfToken;
     secrets.push(token.split('=')[1], csrf); credentialSecrets.push(token.split('=')[1]); return { ...v, cookie: token, csrf };
   };
-  const rawLogout = (token, csrf) => { countAuth('/logout'); return raw(origin, '/api/v1/auth/logout', { method: 'POST', headers: { Origin: origin, Cookie: token, 'Content-Type': 'application/json', ...(csrf === undefined ? {} : { 'X-CSRF-Token': csrf }) }, body: '{}' }); };
-  const meRaw = token => raw(origin, '/api/v1/auth/me', { headers: token ? { Cookie: token } : {} });
+  const allPrivate = () => [...secrets, ...Object.values(f().canaries), ...Object.values(f().users).flatMap(u => [u.id, u.profileId, u.email, u.displayName])];
+  const safeError = v => {
+    assert.equal(v.headers['cache-control'], 'no-store'); assert.deepEqual(Object.keys(v.json), ['error']); assert.deepEqual(Object.keys(v.json.error).sort(), ['code', 'message']);
+    assertClean(v.text, allPrivate()); assert.ok(!/postgresql:|SELECT |INSERT |stack|password_hash/i.test(v.text)); return v;
+  };
+  const rawLogout = async (token, csrf) => { countAuth('/logout'); const v = await raw(origin, '/api/v1/auth/logout', { method: 'POST', headers: { Origin: origin, Cookie: token, 'Content-Type': 'application/json', ...(csrf === undefined ? {} : { 'X-CSRF-Token': csrf }) }, body: '{}' }); if (v.status >= 400) safeError(v); return v; };
+  const meRaw = async token => { const v = await raw(origin, '/api/v1/auth/me', { headers: token ? { Cookie: token } : {} }); if (v.status >= 400) safeError(v); return v; };
   const tokenHash = value => sha(Buffer.from(value.split('=')[1], 'base64url'));
   const recover = async () => { for (let i = 0; i < 25; i++) { try { if ((await raw(origin, '/api/v1/health')).status === 200) return; } catch { /* GET readiness */ } await delay(500); } assert.fail('RECOVERY_TIMEOUT'); };
   let patient, patientB, author, other, admin;
+  try {
   await check('R04', 'browser login/me/cookie/no renewal or stored credentials', async () => {
     patient = await loginPage('patientA'); const c = (await patient.context().cookies()).find(c => c.name === 'eh_session');
     assert.equal(c.httpOnly, true); assert.equal(c.secure, false); assert.equal(c.sameSite, 'Lax'); assert.equal(c.path, '/'); assert.equal(c.domain, 'localhost');
@@ -304,12 +322,12 @@ async function acceptance(s) {
       for (const token of [undefined, 'eh_session=bad', 'eh_session=' + randomBytes(32).toString('base64url'), a.cookie + '; ' + a.cookie]) { const v = await meRaw(token); assert.equal(v.status, 401); assert.equal(v.json.error.code, 'AUTH_UNAUTHENTICATED'); assert.equal(cookieAttributes(v.headers['set-cookie'][0]).maxAge, 0); }
       const b = await rawLogin('patientB', a.cookie); assert.notEqual(b.csrf, a.csrf); assert.equal((await meRaw(a.cookie)).status, 401);
       for (const csrf of [undefined, '', 'bad', a.csrf]) { const v = await rawLogout(b.cookie, csrf); assert.equal(v.status, 403); assert.equal(v.json.error.code, 'AUTH_CSRF_INVALID'); }
-      countAuth('/logout'); assert.equal((await raw(origin, '/api/v1/auth/logout', { method: 'POST', headers: ['Origin', origin, 'Cookie', b.cookie, 'X-CSRF-Token', b.csrf, 'X-CSRF-Token', b.csrf, 'Content-Type', 'application/json'], body: '{}' })).status, 403);
+      countAuth('/logout'); assert.equal(safeError(await raw(origin, '/api/v1/auth/logout', { method: 'POST', headers: ['Origin', origin, 'Cookie', b.cookie, 'X-CSRF-Token', b.csrf, 'X-CSRF-Token', b.csrf, 'Content-Type', 'application/json'], body: '{}' })).status, 403);
       assert.equal((await meRaw(b.cookie)).status, 200); assert.equal((await rawLogout(b.cookie, b.csrf)).status, 204); assert.equal((await meRaw(b.cookie)).status, 401); assert.equal((await rawLogout(b.cookie, b.csrf)).status, 401);
     });
   });
   await check('R05', 'inactive/expired/revoked synthetic actors/sessions', async () => {
-    fixtureCall('disable'); await authentication(async () => { countAuth('/login'); const v = await raw(origin, '/api/v1/auth/login', { method: 'POST', headers: { Origin: origin, 'X-EH-Login': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ email: f().users.patientB.email, password }) }); assert.equal(v.status, 401); assert.equal(v.json.error.code, 'AUTH_INVALID_CREDENTIALS'); }); fixtureCall('enable');
+    fixtureCall('disable'); await authentication(async () => { countAuth('/login'); const v = safeError(await raw(origin, '/api/v1/auth/login', { method: 'POST', headers: { Origin: origin, 'X-EH-Login': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ email: f().users.patientB.email, password }) })); assert.equal(v.status, 401); assert.equal(v.json.error.code, 'AUTH_INVALID_CREDENTIALS'); }); fixtureCall('enable');
     let expired, revoked; await authentication(async () => { expired = await rawLogin('patientB'); revoked = await rawLogin('patientB'); });
     fixtureCall('expire', { tokenHash: tokenHash(expired.cookie) }); fixtureCall('revoke', { tokenHash: tokenHash(revoked.cookie) });
     await readOnly(async () => { for (const v of [expired, revoked]) assert.equal((await meRaw(v.cookie)).status, 401); });
@@ -324,7 +342,7 @@ async function acceptance(s) {
       ['duplicateMetadata', ['Origin', origin, 'Sec-Fetch-Site', 'same-origin', 'Sec-Fetch-Site', 'same-origin', 'X-EH-Login', '1', 'Content-Type', 'application/json'], body, 403],
       ['media', { ...base, 'Content-Type': 'text/plain' }, body, 415], ['malformed', base, '{', 400], ['oversized', base, '{"x":"' + 'a'.repeat(17000) + '"}', 413], ['badCredentials', base, JSON.stringify({ email: f().users.patientA.email, password: 'wrong synthetic value' }), 401],
     ];
-    await authentication(async () => { for (const [variant, headers, payload, status] of variants) { countAuth('/login'); const v = await raw(origin, '/api/v1/auth/login', { method: 'POST', headers, body: payload }); assert.equal(v.status, status); assert.equal(v.headers['cache-control'], 'no-store'); r.http.push({ variant, path: '/auth/login', expected: status, actual: v.status }); } });
+    await authentication(async () => { for (const [variant, headers, payload, status] of variants) { countAuth('/login'); const v = safeError(await raw(origin, '/api/v1/auth/login', { method: 'POST', headers, body: payload })); assert.equal(v.status, status); r.http.push({ variant, path: '/auth/login', expected: status, actual: v.status, sanitized: true }); } });
     const context = await browser.newContext();
     try { await context.route('**/*', async route => { const q = route.request(), u = new URL(q.url()); if (![origin, alternate].includes(u.origin) || !['GET', 'HEAD'].includes(q.method()) && !(authWindow && u.pathname === '/api/v1/auth/login' && ['POST', 'OPTIONS'].includes(q.method()))) { r.blockedRequests++; await route.abort(); } else await route.continue(); }); const page = await context.newPage(); await page.goto(alternate); const before = snapshot();
       await authentication(async () => { const denied = await page.evaluate(async ({ origin, email, password }) => { try { await globalThis.fetch(origin + '/api/v1/auth/login', { method: 'POST', credentials: 'include', headers: { 'X-EH-Login': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) }); return false; } catch { return true; } }, { origin, email: f().users.patientA.email, password }); assert.equal(denied, true); }); unchanged(before, snapshot());
@@ -353,7 +371,7 @@ async function acceptance(s) {
   fixtureCall('grantOther'); state.granted = true;
   await check('R09/R10', 'separate current grant allows released sources, never private authoring', async () => { await readOnly(async () => { await get(other, '/patients/' + f().users.patientA.profileId + '/summaries/' + f().sources.summary.id, 200, 'doctorB'); await get(other, '/patients/' + f().users.patientA.profileId + '/follow-up-intents/' + f().sources.intent.id, 200, 'doctorB'); await get(other, '/consultations/' + f().consultation.id + '/documents/' + f().sources.private.id, 404, 'doctorB'); await other.goto(origin + '/doctor/summaries'); await other.getByLabel('Patient record locator', { exact: true }).fill(f().users.patientA.profileId); await other.getByRole('button', { name: 'View released summaries', exact: true }).click(); await scanDom(other, 'doctorB'); }); });
   await check('R14', 'same-candidate API/web restore retains session and safe read boundaries', async () => {
-    await settle(); const before = snapshot(); const proof = s.restore(); await recover(); await patient.reload(); await get(patient, '/auth/me', 200, 'patientA'); await get(patient, '/me/bookings/' + f().otherBooking.id, 404, 'patientA'); await get(patient, '/me/summaries/' + f().sources.summary.id, 200, 'patientA'); await get(other, '/consultations/' + f().consultation.id + '/documents/' + f().sources.private.id, 404, 'doctorB'); await settle(); unchanged(before, snapshot());
+    await settle(); const before = snapshot(); s.logs(allPrivate()); const proof = s.restore(); await recover(); await patient.reload(); await get(patient, '/auth/me', 200, 'patientA'); await get(patient, '/me/bookings/' + f().otherBooking.id, 404, 'patientA'); await get(patient, '/me/summaries/' + f().sources.summary.id, 200, 'patientA'); await get(other, '/consultations/' + f().consultation.id + '/documents/' + f().sources.private.id, 404, 'doctorB'); await settle(); unchanged(before, snapshot());
     await authentication(async () => { const v = await rawLogin('patientB'); assert.equal((await rawLogout(v.cookie, v.csrf)).status, 204); }); await scanDom(patient, 'patientA'); r.R14 = { result: 'PASS', ...proof };
   });
   await check('R09', 'suspension denies clinic context but not independent released history', async () => {
@@ -400,6 +418,7 @@ async function acceptance(s) {
   });
   await settle(); assert.equal(r.browserErrors, 0); r.finalRows = snapshot().rows;
   for (const context of contexts) await context.close();
+  } finally { s.logs(allPrivate()); }
 }
 async function main() { await lifecycle(process.argv.slice(2), acceptance); }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
