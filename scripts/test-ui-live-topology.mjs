@@ -326,18 +326,34 @@ async function acceptance(s) {
       })().catch(error => { r.observationErrors = (r.observationErrors ?? 0) + 1; r.lastObservationError = { path: path.replace(UUID, ':id'), status: res.status(), observation, kind: error instanceof assert.AssertionError ? 'ASSERTION' : 'BODY_OR_TRANSPORT', resourceGone: /No resource with given identifier/.test(error.message ?? ''), requestFailed: !!res.request().failure() }; }).finally(() => scans.delete(pending)); scans.add(pending);
     });
     const page = await context.newPage(); page.on('pageerror', () => r.browserErrors++);
+    const network = await context.newCDPSession(page), loginIds = new Set(), extra = new Map();
+    await network.send('Network.enable');
+    network.on('Network.requestWillBeSent', e => { if (new URL(e.request.url).pathname === '/api/v1/auth/login' && e.request.method === 'POST') loginIds.add(e.requestId); });
+    network.on('Network.requestWillBeSentExtraInfo', e => {
+      const headers = Object.fromEntries(Object.entries(e.headers).map(([k, v]) => [k.toLowerCase(), v]));
+      const site = headers['sec-fetch-site'];
+      extra.set(e.requestId, { originMatches: headers.origin === origin, metadata: ['same-origin', 'same-site', 'none', 'cross-site'].includes(site) ? site : site === undefined ? 'ABSENT' : 'INVALID' });
+    });
     await page.goto(origin); await page.getByRole('button', { name: 'Sign in with live account', exact: true }).waitFor();
     await authentication(async () => {
       await page.getByLabel('Email address', { exact: true }).fill(f().users[alias].email); await page.getByLabel('Password', { exact: true }).fill(password);
       const next = page.waitForRequest(q => new URL(q.url()).pathname === '/api/v1/auth/login' && q.method() === 'POST');
+      const response = page.waitForResponse(v => new URL(v.url()).pathname === '/api/v1/auth/login' && v.request().method() === 'POST');
       await page.getByRole('button', { name: 'Sign in with live account', exact: true }).click(); const headers = await (await next).allHeaders();
-      assert.equal(headers.origin, origin); assert.equal(headers['sec-fetch-site'], 'same-origin'); await page.locator('[data-session-mode="live"]').waitFor(); await page.waitForLoadState('networkidle');
+      assert.equal((await response).status(), 200); await page.locator('[data-session-mode="live"]').waitFor(); await page.waitForLoadState('networkidle');
+      const wire = [...loginIds].map(id => extra.get(id)).filter(Boolean); assert.equal(wire.length, 1);
+      r.browserLoginHeaders ??= []; r.browserLoginHeaders.push({ actor: alias, requestOriginMatches: headers.origin === origin, ...wire[0] });
+      assert.equal(wire[0].originMatches, true);
+      // EH-006 explicitly permits absent Fetch Metadata with mandatory Origin
+      // and X-EH-Login. Raw probes below prove both present and absent branches.
+      assert.ok(['same-origin', 'same-site', 'none', 'ABSENT'].includes(wire[0].metadata));
     });
+    await network.detach();
     const cookie = (await context.cookies()).find(c => c.name === 'eh_session'); assert.ok(cookie); secrets.push(cookie.value); credentialSecrets.push(cookie.value); return page;
   };
   const cookie = async page => { const c = (await page.context().cookies()).find(c => c.name === 'eh_session'); assert.ok(c); return 'eh_session=' + c.value; };
-  const rawLogin = async (alias, previous) => {
-    countAuth('/login'); const v = await raw(origin, '/api/v1/auth/login', { method: 'POST', headers: { Origin: origin, 'X-EH-Login': '1', 'Content-Type': 'application/json', ...(previous ? { Cookie: previous } : {}) }, body: JSON.stringify({ email: f().users[alias].email, password }) });
+  const rawLogin = async (alias, previous, metadata) => {
+    countAuth('/login'); const v = await raw(origin, '/api/v1/auth/login', { method: 'POST', headers: { Origin: origin, 'X-EH-Login': '1', 'Content-Type': 'application/json', ...(previous ? { Cookie: previous } : {}), ...(metadata ? { 'Sec-Fetch-Site': metadata } : {}) }, body: JSON.stringify({ email: f().users[alias].email, password }) });
     assert.equal(v.status, 200); assert.equal(v.headers['cache-control'], 'no-store'); const token = v.headers['set-cookie'][0].split(';')[0], csrf = v.json.data.csrfToken;
     secrets.push(token.split('=')[1], csrf); credentialSecrets.push(token.split('=')[1]); return { ...v, cookie: token, csrf };
   };
@@ -384,8 +400,9 @@ async function acceptance(s) {
       ['media', { ...base, 'Content-Type': 'text/plain' }, body, 415], ['malformed', base, '{', 400], ['oversized', base, '{"x":"' + 'a'.repeat(17000) + '"}', 413], ['badCredentials', base, JSON.stringify({ email: f().users.patientA.email, password: 'wrong synthetic value' }), 401],
     ];
     await authentication(async () => { for (const [variant, headers, payload, status] of variants) { countAuth('/login'); const v = safeError(await raw(origin, '/api/v1/auth/login', { method: 'POST', headers, body: payload })); assert.equal(v.status, status); r.http.push({ variant, path: '/auth/login', expected: status, actual: v.status, sanitized: true }); } });
+    await authentication(async () => { for (const metadata of ['same-origin', 'none']) { const v = await rawLogin('patientB', undefined, metadata); assert.equal((await rawLogout(v.cookie, v.csrf)).status, 204); r.http.push({ variant: metadata, path: '/auth/login', expected: 200, actual: v.status }); } });
     const context = await browser.newContext();
-    try { await context.route('**/*', async route => { const q = route.request(), u = new URL(q.url()); if (![origin, alternate].includes(u.origin) || !['GET', 'HEAD'].includes(q.method()) && !(authWindow && u.pathname === '/api/v1/auth/login' && ['POST', 'OPTIONS'].includes(q.method()))) { r.blockedRequests++; await route.abort(); } else await route.continue(); }); const page = await context.newPage(); await page.goto(alternate); const before = snapshot();
+    try { await context.route('**/*', async route => { const q = route.request(), u = new URL(q.url()); if (![origin, alternate].includes(u.origin) || !['GET', 'HEAD'].includes(q.method()) && !(authWindow && u.pathname === '/api/v1/auth/login' && ['POST', 'OPTIONS'].includes(q.method()))) { r.blockedRequests++; await route.abort(); } else { if (q.method() === 'POST') countAuth('/login'); await route.continue(); } }); const page = await context.newPage(); await page.goto(alternate); const before = snapshot();
       await authentication(async () => { const denied = await page.evaluate(async ({ origin, email, password }) => { try { await globalThis.fetch(origin + '/api/v1/auth/login', { method: 'POST', credentials: 'include', headers: { 'X-EH-Login': '1', 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) }); return false; } catch { return true; } }, { origin, email: f().users.patientA.email, password }); assert.equal(denied, true); }); unchanged(before, snapshot());
     } finally { await context.close(); }
   });
