@@ -205,7 +205,7 @@ async function acceptance(s) {
   const { browser, origin, alternate, receipt: r, fixtureCall, fixture: f, password, check } = s;
   const state = { granted: false, authorEnded: false, otherEnded: false, summaryRestricted: false, intentRestricted: false, outage: '' };
   const secrets = [password, ...f().secretHashes], credentialSecrets = [...secrets];
-  const contexts = [], aliases = new WeakMap(), requestRules = new WeakMap(), inflight = new Set(), scans = new Set();
+  const contexts = [], aliases = new WeakMap(), requestRules = new WeakMap(), inflight = new Set(), scans = new Set(), drains = new Set();
   let authWindow = false;
   const sourceMarkers = name => [f().canaries[name], f().sources[name].id, ...f().sources[name].versions.map(v => v.id)];
   const forbidden = alias => {
@@ -225,12 +225,12 @@ async function acceptance(s) {
   const assertClean = (text, markers) => { const n = leaks(text, markers); r.leaks += n; assert.equal(n, 0, 'PROTECTED_DATA'); };
   const settle = async () => {
     const end = Date.now() + 30000;
-    while (inflight.size) {
-      if (Date.now() >= end) r.settleFailure = { reason: 'REQUESTS_NOT_QUIESCENT', paths: [...inflight].map(q => new URL(q.url()).pathname.replace(UUID, ':id')), scans: scans.size };
+    while (inflight.size || drains.size) {
+      if (Date.now() >= end) r.settleFailure = { reason: 'REQUESTS_NOT_QUIESCENT', paths: [...inflight].map(q => new URL(q.url()).pathname.replace(UUID, ':id')), scans: scans.size, drains: drains.size };
       assert.ok(Date.now() < end, 'REQUESTS_NOT_QUIESCENT'); await delay(50);
     }
     while (scans.size) await Promise.all([...scans]);
-    assert.equal(r.leaks, 0); assert.equal(r.blockedRequests, 0); assert.equal(r.observationErrors ?? 0, 0);
+    assert.equal(r.leaks, 0); assert.equal(r.blockedRequests, 0); assert.equal(r.observationErrors ?? 0, 0); assert.equal(r.bodyDrainErrors ?? 0, 0);
   };
   const snapshot = () => fixtureCall('snapshot');
   const unchanged = (a, b, auth = false) => {
@@ -271,16 +271,35 @@ async function acceptance(s) {
   const navigate = async (page, path, alias) => { await page.goto(origin + path); await scanDom(page, alias); };
   const loginPage = async alias => {
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } }); contexts.push(context); aliases.set(context, alias);
+    await context.exposeBinding('__eh124BodyObservation', (_source, event, id, code) => {
+      assert.match(id, /^[a-f0-9-]{36}$/);
+      if (event === 'start') { assert.ok(!drains.has(id)); drains.add(id); }
+      else if (event === 'error') { assert.ok(['BODY_READ', 'BODY_TIMEOUT', 'BODY_SIZE'].includes(code)); r.bodyDrainErrors = (r.bodyDrainErrors ?? 0) + 1; r.lastBodyDrainError = code; }
+      else { assert.equal(event, 'end'); assert.ok(drains.delete(id)); r.bodyDrains = (r.bodyDrains ?? 0) + 1; }
+    });
     await context.addInitScript(() => {
       const nativeFetch = globalThis.fetch;
       globalThis.fetch = async (...args) => {
         const response = await Reflect.apply(nativeFetch, globalThis, args);
         const url = new URL(response.url);
         if (url.origin === globalThis.location.origin && url.pathname.startsWith('/api/v1/')) {
-          // The pinned adapter throws on error status without consuming its
-          // body. Consume a clone for observation; original response, status,
-          // headers, cookies, timing of fetch resolution and requests stay real.
-          void response.clone().arrayBuffer().catch(() => {});
+          // Drain one bounded clone, no new HTTP or substituted Response. This
+          // changes body-consumption timing; no uninstrumented timing claim.
+          const clone = response.clone(), id = globalThis.crypto.randomUUID();
+          void (async () => {
+            await globalThis.__eh124BodyObservation('start', id);
+            let timer, reader, code = 'BODY_READ';
+            try {
+              reader = clone.body?.getReader(); let bytes = 0;
+              await Promise.race([
+                (async () => { if (!reader) return; for (;;) { const part = await reader.read(); if (part.done) return; bytes += part.value.byteLength; if (bytes > 2000000) { code = 'BODY_SIZE'; throw new Error('BODY_SIZE'); } } })(),
+                new Promise((_, reject) => { timer = globalThis.setTimeout(() => { code = 'BODY_TIMEOUT'; reject(new Error('BODY_TIMEOUT')); }, 15000); }),
+              ]);
+            } catch {
+              if (reader) void reader.cancel().catch(() => {});
+              await globalThis.__eh124BodyObservation('error', id, code);
+            } finally { globalThis.clearTimeout(timer); await globalThis.__eh124BodyObservation('end', id); }
+          })();
         }
         return response;
       };
