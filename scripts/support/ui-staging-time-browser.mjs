@@ -1,4 +1,5 @@
 /** Controlled, read-only HTTP presentation proof; no hosted credentials or persistence claim. */
+/* global document, getComputedStyle, innerWidth */
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
 import { resolve } from "node:path";
@@ -21,12 +22,14 @@ export async function testStagingTime(browser, origin, shots) {
       globalThis.localStorage.setItem("eh360-ui-mode", "live");
       globalThis.localStorage.setItem("eh360-locale", locale);
     }, locale);
+    let role = "PATIENT", denied = 0;
     let booking = {
       id: id(1), slotId: id(2), providerId: id(3), clinicId: id(4),
       patientDisplayName: "Synthetic time review", timeZone: "Africa/Cairo",
       state: "BOOKED", version: 1, createdAt: "2026-10-01T10:00:00Z",
       predecessorId: null, successorId: null, attendance: "UNKNOWN",
-      transitions: [], attendanceHistory: [],
+      transitions: [{ id: id(10), command: "CREATE", fromState: null, toState: "BOOKED", recordedAt: "2026-11-01T13:45:00Z" }],
+      attendanceHistory: [{ id: id(11), observation: "ATTENDED", supersedesId: null, reason: null, recordedAt: "2026-11-01T15:05:00Z" }],
     };
     await page.route("**/api/v1/**", route => {
       const request = route.request(), path = new URL(request.url()).pathname;
@@ -34,16 +37,18 @@ export async function testStagingTime(browser, origin, shots) {
       const send = (data, meta) => route.fulfill({ json: { data, ...(meta ? { meta } : {}) } });
       if (request.method() !== "GET") return route.fulfill({ status: 405, json: {} });
       if (path.endsWith("/auth/me")) return send({
-        user: { role: "PATIENT", email: "synthetic-time@example.invalid" },
+        user: { role, email: "synthetic-time@example.invalid" },
         csrfToken: "controlled-time-only",
       });
       if (path.endsWith("/me/profile")) return send({
         id: id(8), displayName: "Synthetic time review", dateOfBirth: null, sex: null,
       });
       if (path.endsWith("/me/bookings")) return send([booking], { page: 1, pageSize: 20, total: 1 });
-      if (path.endsWith(`/me/bookings/${id(1)}`)) return send(booking);
+      if (path.endsWith(`/me/bookings/${id(1)}`)) return denied
+        ? route.fulfill({ status: denied, json: { error: { code: "BOOKING_NOT_FOUND", message: "DENIED_TIME_CANARY" }, private: "WRONG_PATIENT_TIME_CANARY" } })
+        : send(booking);
       if (path.endsWith("/directory/providers")) return send([{
-        id: id(3), displayName: "Recorded doctor · دكتور",
+        id: id(3), displayName: "Recorded doctor · دكتور Synthetic Long Recorded Name Without Truncation",
         specialty: { key: "internal", displayName: "Internal medicine" }, clinics: [],
       }]);
       if (path.endsWith("/directory/clinics")) return send([{
@@ -73,20 +78,25 @@ export async function testStagingTime(browser, origin, shots) {
       }
     }
 
-    for (const [name, startAt, endAt] of [
-      ["same-day", "2026-11-05T07:00:00Z", "2026-11-05T07:30:00Z"],
-      ["cross-midnight", "2026-11-05T21:30:00Z", "2026-11-05T22:30:00Z"],
+    for (const [name, startAt, endAt, zone, expected, offsets] of [
+      ["same-day", "2026-11-05T07:00:00Z", "2026-11-05T07:30:00Z", "Africa/Cairo", ["9", "9:30"], ["UTC+02:00"]],
+      ["cross-midnight", "2026-11-05T21:30:00Z", "2026-11-05T22:30:00Z", "Africa/Cairo", ["11:30", "12:30"], ["UTC+02:00"]],
+      ["fold", "2026-10-29T20:30:00Z", "2026-10-29T21:30:00Z", "Africa/Cairo", ["11:30", "11:30"], ["UTC+03:00", "UTC+02:00"]],
+      ["cross-zone", "2026-11-12T13:00:00Z", "2026-11-12T13:30:00Z", "America/New_York", ["8", "8:30"], ["UTC-05:00"]],
     ]) {
-      booking = { ...booking, startAt, endAt };
+      booking = { ...booking, startAt, endAt, timeZone: zone };
       await page.goto(`${origin}/patient/appointments/${id(1)}`);
       const range = page.locator(".booking-time > bdi").first();
       await range.waitFor();
-      const formatTime = value => new Intl.DateTimeFormat("en-GB", {
-        timeZone: booking.timeZone, hour: "2-digit", minute: "2-digit", hourCycle: "h23",
-      }).format(new Date(value));
       assert.equal(await range.getAttribute("dir"), "ltr");
-      const times = range.locator(':scope > bdi[dir="ltr"]');
-      assert.deepEqual(await times.allTextContents(), [formatTime(startAt), formatTime(endAt)]);
+      const times = range.locator("[data-appointment-endpoint]");
+      const morning = locale === "ar" ? "صباحًا" : "am", evening = locale === "ar" ? "مساءً" : "pm";
+      assert.deepEqual(await times.allTextContents(), expected.map((clock, i) => `${clock} ${name === "fold" || (name === "cross-midnight" && i === 0) ? evening : morning}`));
+      const detailTime = page.locator("[data-patient-detail-time]");
+      assert.ok((await detailTime.innerText()).includes(zone));
+      for (const offset of offsets) assert.ok((await detailTime.innerText()).includes(offset));
+      assert.ok((await page.locator(".timeline").innerText()).includes(zone === "America/New_York" ? "08:45" : "15:45"), "consequential booking history remains24h in the event zone");
+      assert.ok((await page.locator(".observation-row").innerText()).includes(zone === "America/New_York" ? "10:05" : "17:05"), "attendance timestamp remains24h in the event zone");
       await page.setViewportSize({ width: 1440, height: 1000 });
       const first = await times.nth(0).boundingBox(), last = await times.nth(1).boundingBox();
       assert.ok(first.x < last.x && Math.abs(first.y - last.y) < 2, `${locale} ${name}: endpoints ordered visually`);
@@ -102,6 +112,52 @@ export async function testStagingTime(browser, origin, shots) {
           await page.screenshot({ path: resolve(shots, `time-booking-${name}-ar-${width}.png`), fullPage: true });
       }
     }
+    // Text growth is applied from one pre-captured computed-size snapshot, never compounded.
+    await page.setViewportSize({ width: 320, height: 1000 });
+    await page.evaluate(() => {
+      const sizes = [...document.querySelectorAll("body *")].map(el => [el, getComputedStyle(el).fontSize]);
+      for (const [el, size] of sizes) el.style.fontSize = `${parseFloat(size) * 2}px`;
+    });
+    for (const width of [320, 390, 1440]) {
+      await page.setViewportSize({ width, height: 1000 });
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), "200% text reflow");
+      assert.ok(await page.locator("[data-appointment-endpoint]").evaluateAll(nodes => nodes.every(el => {
+        const range = document.createRange(); range.selectNodeContents(el);
+        const boxes = [...range.getClientRects()];
+        return boxes.length > 0 && boxes.every(box => box.left >= 0 && box.right <= innerWidth + 1 && Math.abs(box.top - boxes[0].top) < 2);
+      })), "each clock and its period remain together at200%");
+    }
+    assert.ok((await page.locator(".booking-identity").innerText()).includes("Synthetic Long Recorded Name Without Truncation"));
+    const back = page.locator("a.back-link").first();
+    await back.focus();
+    assert.equal(await back.evaluate(el => el === document.activeElement), true);
+    await back.click();
+    await page.waitForURL("**/patient/appointments");
+    await page.locator(".booking-time").first().waitFor();
+    assert.equal(await page.locator("[data-patient-detail-time]").count(), 0, "list caller remains default");
+    assert.ok((await page.locator(".booking-time").first().innerText()).includes("08:00"));
+    await page.goBack();
+    await page.locator("[data-patient-detail-time]").waitFor();
+    assert.equal(await page.getByRole("button", { name: locale === "ar" ? "إعادة جدولة الحجز" : "Reschedule booking", exact: true }).count(), 1);
+
+    for (const status of [401, 403, 404, 503]) {
+      denied = status;
+      await page.reload();
+      await page.locator(".error-panel").first().waitFor();
+      assert.equal(await page.locator(".booking-time").count(), 0);
+      const body = await page.locator("body").innerText(), accessible = await page.locator("body").ariaSnapshot();
+      for (const value of ["DENIED_TIME_CANARY", "WRONG_PATIENT_TIME_CANARY", "Synthetic Long Recorded Name Without Truncation", id(1)]) {
+        assert.ok(!body.includes(value) && !accessible.includes(value), "denied synthetic payload/reference absent");
+      }
+      assert.equal(await page.locator("[data-demo-utility]").count(), 0);
+    }
+    denied = 0;
+    role = "CLINICIAN";
+    booking = { ...booking, startAt: "2026-11-12T13:00:00Z", endAt: "2026-11-12T13:30:00Z", timeZone: "Africa/Cairo" };
+    await page.goto(`${origin}/doctor/appointments/${id(1)}`);
+    await page.locator(".booking-time").first().waitFor();
+    assert.equal(await page.locator("[data-patient-detail-time]").count(), 0);
+    assert.match(await page.locator(".booking-time").first().innerText(), /15:00.*15:30/);
     assert.ok(calls.every(call => call.method === "GET"), "time display must not issue commands");
     assert.equal(await page.locator("[data-demo-utility]").count(), 0);
     assert.deepEqual(errors, []);
@@ -129,5 +185,5 @@ export async function testStagingTime(browser, origin, shots) {
     assert.deepEqual(clinician.state.errors, []);
     await clinician.page.close();
   }
-  console.log("PASS staging time review: both Cairo repeated-hour offsets, concise ordinary context, Patient/Clinician EN/AR at 1440/390/320px; same-day and cross-midnight Live booking ranges visually ordered; read-only controlled HTTP, no Demo fallback.");
+  console.log("PASS staging time review: Cairo folds, scoped Patient Detail12h, professional/history24h, midnight/cross-zone, EN/AR1440/390/320px/text200%, Back/focus and controlled401/403/404/503 suppression; GET-only fixtures, NOT Live E2E.");
 }
