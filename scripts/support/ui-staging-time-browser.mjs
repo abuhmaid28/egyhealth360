@@ -118,12 +118,15 @@ export async function testStagingTime(browser, origin, shots) {
       const sizes = [...document.querySelectorAll("body *")].map(el => [el, getComputedStyle(el).fontSize]);
       for (const [el, size] of sizes) el.style.fontSize = `${parseFloat(size) * 2}px`;
     });
-    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), "200% text reflow");
-    assert.ok(await page.locator("[data-appointment-endpoint]").evaluateAll(nodes => nodes.every(el => {
-      const range = document.createRange(); range.selectNodeContents(el);
-      const boxes = [...range.getClientRects()];
-      return boxes.length > 0 && boxes.every(box => box.left >= 0 && box.right <= innerWidth + 1 && Math.abs(box.top - boxes[0].top) < 2);
-    })), "each clock and its period remain together at200%");
+    for (const width of [320, 390, 1440]) {
+      await page.setViewportSize({ width, height: 1000 });
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), "200% text reflow");
+      assert.ok(await page.locator("[data-appointment-endpoint]").evaluateAll(nodes => nodes.every(el => {
+        const range = document.createRange(); range.selectNodeContents(el);
+        const boxes = [...range.getClientRects()];
+        return boxes.length > 0 && boxes.every(box => box.left >= 0 && box.right <= innerWidth + 1 && Math.abs(box.top - boxes[0].top) < 2);
+      })), "each clock and its period remain together at200%");
+    }
     assert.ok((await page.locator(".booking-identity").innerText()).includes("Synthetic Long Recorded Name Without Truncation"));
     const back = page.locator("a.back-link").first();
     await back.focus();
