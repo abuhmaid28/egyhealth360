@@ -13,7 +13,6 @@ import { accountName, presentationName, directoryLabel, timeZoneLabel, repeatedT
 import {
   appointmentActivity,
   careDate,
-  careTime,
   nextCareAppointment,
   ownDemoAppointment,
   ownLiveAppointment,
@@ -29,6 +28,7 @@ import { useDirectoryNames } from "./live-booking";
 import { Icon, useResource, type IconName } from "./ui";
 import styles from "./patient-my-care.module.css";
 import { PortalShell } from "./portal-shell";
+import { ReadContextCard, ReadStatusLabel } from "./v2/read-context";
 
 type ScreenState = "ready" | "loading" | "empty" | "error" | "uncertain";
 const noSubscribe = () => () => {};
@@ -169,6 +169,7 @@ function CareScreen({
   return (
     <>
       <PortalShell
+        patientMyCareV2
         onLogout={onLogout}
         onRoleChange={onRoleChange}
         toast={toast}
@@ -218,7 +219,7 @@ function CareScreen({
             }}
             translate={t}
           />
-          <NextForYou
+          <CareIndex
             c={c}
             summaryHref={summaryHref}
             hasSummary={hasSummary}
@@ -226,21 +227,12 @@ function CareScreen({
             mode={api.mode}
             loading={state === "loading" || care.pending}
           />
-          <CareShortcuts
-            c={c}
-            summaryHref={summaryHref}
-            live={api.mode === "live"}
-          />
           <section
             className={styles.recent}
             aria-labelledby="care-recent-title"
           >
             <div className={styles.sectionHeading}>
               <h2 id="care-recent-title">{c.recentCare}</h2>
-              <Link href="/patient/history" className={styles.textLink}>
-                {c.viewAll}
-                <Icon name="arrow" size={16} />
-              </Link>
             </div>
             {unverified && (
               <div
@@ -337,14 +329,18 @@ function AppointmentAnchor({
 }) {
   const offset = a ? repeatedTimeOffset(a.startAt, a.timeZone) : null;
   return (
-    <section
+    <ReadContextCard
       className={styles.appointment}
       aria-labelledby="care-next-title"
       data-appointment-anchor
     >
       <div className={styles.appointmentTop}>
         <h2 id="care-next-title">{c.nextAppointment}</h2>
-        {!loading && !error && a && <StateLabel state={a.state} c={c} />}
+        {!loading && !error && a && (
+          <ReadStatusLabel>
+            <StateLabel state={a.state} c={c} />
+          </ReadStatusLabel>
+        )}
       </div>
       {loading ? (
         <CareLoading c={c} />
@@ -376,21 +372,31 @@ function AppointmentAnchor({
             </span>
             <div className={styles.doctorInfo}>
               <h3>
-                {a.specialty ? directoryLabel(a.specialty, translate) : c.specialtyUnavailable}
-              </h3>
-              <p>
                 <bdi>
                   {a.doctor
                     ? presentationName(a.doctor, translate)
                     : c.doctorUnavailable}
                 </bdi>
+              </h3>
+              <p>
+                {a.specialty ? directoryLabel(a.specialty, translate) : c.specialtyUnavailable}
               </p>
               <small>{c.inPerson}</small>
             </div>
             <div className={styles.appointmentWhen}>
               <p>
                 <bdi>{careDate(a.startAt, a.timeZone, locale)}</bdi>{" "}
-                <bdi dir="ltr">{careTime(a.startAt, a.timeZone)}</bdi>
+                <bdi dir={locale === "ar" ? "rtl" : "ltr"}>
+                  {new Intl.DateTimeFormat(
+                    locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB",
+                    {
+                      hour: "numeric",
+                      minute: "2-digit",
+                      hourCycle: "h12",
+                      timeZone: a.timeZone,
+                    },
+                  ).format(new Date(a.startAt))}
+                </bdi>
               </p>
               <p className={styles.eventZone}>
                 <bdi>{timeZoneLabel(a.timeZone, translate)}</bdi>
@@ -427,143 +433,44 @@ function AppointmentAnchor({
           <p className={styles.boundary}>{c.bookingBoundary}</p>
         </div>
       )}
-    </section>
+    </ReadContextCard>
   );
 }
-function NextForYou({
-  c,
-  summaryHref,
-  hasSummary,
-  hasFollowUp,
-  mode,
-  loading,
-}: {
-  c: Copy;
-  summaryHref: string;
-  hasSummary: boolean;
-  hasFollowUp: boolean;
-  mode: "live" | "demo";
-  loading: boolean;
+function CareIndex({ c, summaryHref, hasSummary, hasFollowUp, mode, loading }: {
+  c: Copy; summaryHref: string; hasSummary: boolean; hasFollowUp: boolean;
+  mode: "live" | "demo"; loading: boolean;
 }) {
-  const actions: {
-    href: string;
-    icon: IconName;
-    title: string;
-    context: string;
-  }[] = [
-    ...(hasSummary
-      ? [
-          {
-            href: summaryHref,
-            icon: "record" as const,
-            title: c.readSummary,
-            context: c.readSummaryContext,
-          },
-        ]
-      : []),
-    ...(hasFollowUp
-      ? [
-          {
-            href: mode === "live" ? "/patient/follow-up" : "/patient/record",
-            icon: "calendar" as const,
-            title: c.readFollowUp,
-            context: c.readFollowUpContext,
-          },
-        ]
-      : []),
-    {
-      href: "/patient/appointments",
-      icon: "calendar",
-      title: c.reviewAppointments,
-      context: c.reviewAppointmentsContext,
-    },
+  const items: { title: string; context: string; icon: IconName; href?: string; followUp?: boolean }[] = [
+    { title: c.appointments, context: c.reviewAppointmentsContext, icon: "calendar", href: "/patient/appointments" },
+    { title: !loading && hasSummary ? c.readSummary : c.summaries, context: loading ? c.loadingContext : hasSummary ? c.readSummaryContext : c.historical, icon: "record", href: summaryHref },
+    { title: !loading && hasFollowUp && mode === "live" ? c.readFollowUp : c.followUp, context: c.readFollowUpContext, icon: "heart", href: "/patient/follow-up", followUp: true },
+    { title: c.prescriptions, context: mode === "live" ? c.notIntegrated : c.viewSources, icon: "pill", href: mode === "live" ? undefined : "/patient/medications" },
+    { title: c.records, context: c.historical, icon: "record", href: "/patient/history" },
+    ...(mode === "demo" ? [{ title: c.laboratory, context: c.demo, icon: "lab" as const, href: "/patient/laboratory" }] : []),
   ];
   return (
-    <section className={styles.nextForYou} aria-labelledby="care-actions-title">
-      <h2 id="care-actions-title">{c.nextForYou}</h2>
-      {loading ? (
-        <CareLoading c={c} />
-      ) : (
-        <ul>
-          {actions.slice(0, 3).map((a) => (
-            <li key={a.title}>
-              <Link href={a.href}>
-                <span className={styles.iconSpot}>
-                  <Icon name={a.icon} size={18} />
-                </span>
-                <span>
-                  <strong>{a.title}</strong>
-                  <small>{a.context}</small>
-                </span>
-                <Icon name="chevron" size={18} />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
-  );
-}
-function CareShortcuts({
-  c,
-  summaryHref,
-  live,
-}: {
-  c: Copy;
-  summaryHref: string;
-  live: boolean;
-}) {
-  const items: { title: string; icon: IconName; href?: string }[] = [
-    {
-      title: c.prescriptions,
-      icon: "pill",
-      href: live ? undefined : "/patient/medications",
-    },
-    { title: c.summaries, icon: "record", href: summaryHref },
-    { title: c.records, icon: "record", href: "/patient/history" },
-    { title: c.appointments, icon: "calendar", href: "/patient/appointments" },
-  ];
-  return (
-    <section
-      className={styles.shortcuts}
-      aria-labelledby="care-shortcuts-title"
-    >
+    <section className={styles.careIndex} aria-labelledby="care-shortcuts-title">
       <h2 id="care-shortcuts-title">{c.yourCare}</h2>
-      <nav
-        className={styles.tiles}
-        aria-label={c.secondary}
-        data-care-shortcuts
-      >
-        {items.map((item) => {
-          const content: ReactNode = (
-            <>
-              <span className={styles.iconSpot}>
-                <Icon name={item.icon} />
-              </span>
-              <strong>{item.title}</strong>
-              <small>{item.href ? c.viewSources : c.notIntegrated}</small>
-            </>
-          );
-          return item.href ? (
-            <Link
-              key={item.title}
-              href={item.href}
-              aria-label={item.title}
-              title={item.title}
-            >
-              {content}
-            </Link>
-          ) : (
-            <div
-              key={item.title}
-              role="group"
-              aria-label={item.title}
-              aria-disabled="true"
-            >
-              {content}
-            </div>
-          );
-        })}
+      <nav aria-label={c.secondary} data-care-shortcuts>
+        <ul>
+          {items.map(item => {
+            const content: ReactNode = <>
+              <Icon name={item.icon} />
+              <span><strong>{item.title}</strong><small>{item.context}</small></span>
+              {item.href && <Icon name="chevron" size={16} />}
+            </>;
+            return (
+              <li key={item.icon + item.title}>
+                {item.href
+                  ? <Link className={styles.careRow} href={item.href}>{content}</Link>
+                  : <div className={styles.careRow} role="group" aria-disabled="true" aria-label={item.title}>{content}</div>}
+                {item.followUp && mode === "demo" && hasFollowUp && !loading && (
+                  <Link href="/patient/record" className={styles.contextAction} data-care-context>{c.readFollowUp}<Icon name="arrow" size={16} /></Link>
+                )}
+              </li>
+            );
+          })}
+        </ul>
       </nav>
     </section>
   );
