@@ -1,0 +1,55 @@
+/* Slice-local candidates from #101's audited pairs, not final DS aliases.
+   Dark is an authored specimen selected only by review/test DOM attributes.
+   No product theme selection, media preference, storage or T1 behavior. */
+.card {
+  --read-canvas: #f8f7fb;
+  --read-surface: #fff;
+  --read-raised: #efeaf7;
+  --read-ink: #17142b;
+  --read-secondary: #595269;
+  --read-action: #6240b8;
+  --read-on-action: #fff;
+  --read-hover: #50309d;
+  --read-border: #787084;
+  color: var(--read-ink);
+  background: var(--read-surface);
+  border: 1px solid var(--read-border);
+  border-block-start: 3px solid var(--read-action);
+  border-radius: 16px;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  color-scheme: light;
+}
+.card[data-read-appearance="dark"] {
+  --read-canvas: #10121d;
+  --read-surface: #1d2030;
+  --read-raised: #262a3c;
+  --read-ink: #f6f2ff;
+  --read-secondary: #c2bed2;
+  --read-action: #a78bfa;
+  --read-on-action: #17142b;
+  --read-hover: #bda7ff;
+  --read-border: #85839c;
+  color-scheme: dark;
+}
+.card .status {
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: 100%;
+  padding: 4px 10px;
+  border: 1px solid var(--read-border);
+  border-radius: 10px;
+  color: var(--read-ink);
+  background: var(--read-raised);
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: normal;
+}
+@media (forced-colors: active) {
+  .card {
+    border-color: CanvasText;
+  }
+  .card .status {
+    border-color: CanvasText;
+  }
+}
