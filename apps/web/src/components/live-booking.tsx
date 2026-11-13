@@ -157,10 +157,10 @@ export function BookingTime({
     return (
       <div className="booking-time" data-patient-detail-time>
         <bdi dir="ltr">
-          <bdi>{start.date}</bdi> · <bdi dir={direction} data-appointment-endpoint="start">{start.clock}</bdi>
+          <bdi>{start.date}</bdi> · <bdi dir={direction} style={{ whiteSpace: "nowrap" }} data-appointment-endpoint="start">{start.clock}</bdi>
           {differentOffsets && <> <bdi dir="ltr">({start.offset})</bdi></>} –{" "}
           {start.date !== end.date && <><bdi>{end.date}</bdi> · </>}
-          <bdi dir={direction} data-appointment-endpoint="end">{end.clock}</bdi>
+          <bdi dir={direction} style={{ whiteSpace: "nowrap" }} data-appointment-endpoint="end">{end.clock}</bdi>
           {differentOffsets && <> <bdi dir="ltr">({end.offset})</bdi></>}
         </bdi>
         <small>

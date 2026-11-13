@@ -95,8 +95,8 @@ export async function testStagingTime(browser, origin, shots) {
       const detailTime = page.locator("[data-patient-detail-time]");
       assert.ok((await detailTime.innerText()).includes(zone));
       for (const offset of offsets) assert.ok((await detailTime.innerText()).includes(offset));
-      assert.ok((await page.locator(".timeline").innerText()).includes("15:45"), "consequential booking history remains24h");
-      assert.ok((await page.locator(".observation-row").innerText()).includes("17:05"), "attendance timestamp remains24h");
+      assert.ok((await page.locator(".timeline").innerText()).includes(zone === "America/New_York" ? "08:45" : "15:45"), "consequential booking history remains24h in the event zone");
+      assert.ok((await page.locator(".observation-row").innerText()).includes(zone === "America/New_York" ? "10:05" : "17:05"), "attendance timestamp remains24h in the event zone");
       await page.setViewportSize({ width: 1440, height: 1000 });
       const first = await times.nth(0).boundingBox(), last = await times.nth(1).boundingBox();
       assert.ok(first.x < last.x && Math.abs(first.y - last.y) < 2, `${locale} ${name}: endpoints ordered visually`);
@@ -119,6 +119,11 @@ export async function testStagingTime(browser, origin, shots) {
       for (const [el, size] of sizes) el.style.fontSize = `${parseFloat(size) * 2}px`;
     });
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), "200% text reflow");
+    assert.ok(await page.locator("[data-appointment-endpoint]").evaluateAll(nodes => nodes.every(el => {
+      const range = document.createRange(); range.selectNodeContents(el);
+      const boxes = [...range.getClientRects()];
+      return boxes.length > 0 && boxes.every(box => box.left >= 0 && box.right <= innerWidth + 1 && Math.abs(box.top - boxes[0].top) < 2);
+    })), "each clock and its period remain together at200%");
     assert.ok((await page.locator(".booking-identity").innerText()).includes("Synthetic Long Recorded Name Without Truncation"));
     const back = page.locator("a.back-link").first();
     await back.focus();

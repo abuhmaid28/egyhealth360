@@ -43,7 +43,7 @@ test("Patient detail authors both periods and named Gregorian dates in EN and Eg
     assert.ok(text(html).includes("Africa/Cairo (UTC+02:00)"));
     assert.doesNotMatch(text(html), /[٠-٩۰-۹]/);
     assert.match(html, /<bdi dir="ltr">/);
-    assert.match(html, new RegExp(`dir="${lang === "ar" ? "rtl" : "ltr"}" data-appointment-endpoint="start"`));
+    assert.match(html, new RegExp(`dir="${lang === "ar" ? "rtl" : "ltr"}" style="white-space:nowrap" data-appointment-endpoint="start"`));
   }
 });
 test("Noon and midnight retain both explicit periods and actual date", () => {
