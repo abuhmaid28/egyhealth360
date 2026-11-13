@@ -159,12 +159,15 @@ test("All critical slice copy is already authored in Arabic; no new fallback key
   }
   for (const key of ["Patient and visit", "Consultation open", "Closed visit", "Back to consultation", "Cairo time", "Coordinated Universal Time"]) assert.ok(dictionary[key], key);
 });
-test("Only the two authorized component declarations change; loaders, source rail, timestamps and command composition stay byte-identical", () => {
-  for (const [file, target] of [[patientFile, "AppointmentAnchor"], [doctorFile, "ConsultationIdentity"]]) {
-    const declarations = (text) => ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX).statements
-      .filter((n) => !ts.isImportDeclaration(n) && !(ts.isFunctionDeclaration(n) && n.name?.text === target)).map((n) => n.getText());
-    assert.equal(sha256(JSON.stringify(declarations(read(file)))), baseline[file].sha256);
-  }
+test("Patient presentation is bounded; all source preparation and entire Doctor files stay exact main", () => {
+  const source = read(patientFile), ast = ts.createSourceFile(patientFile, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const permitted = ["AppointmentAnchor", "CareScreen", "NextForYou", "CareShortcuts", "CareIndex"];
+  const others = ast.statements.filter(n => !ts.isImportDeclaration(n) && !(ts.isFunctionDeclaration(n) && permitted.includes(n.name?.text))).map(n => n.getText());
+  assert.equal(sha256(JSON.stringify(others)), "15c00883e48f79d9e8a86554531876c588af3bc9bb3fec60f0821d7a26caaa43");
+  const care = ast.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === "CareScreen");
+  assert.equal(sha256(JSON.stringify(care.body.statements.filter(n => !ts.isReturnStatement(n)).map(n => n.getText()))), "ee62c4b41b00a5dca70a26001b83f2e9c6d0e99be31678e7d27551d54a8874a7");
+  assert.equal(sha256(read(doctorFile)), "8f7f12f5395ad41e86ca0c25c7368484be1e3183f208317b22a11684ad7c2e9e");
+  assert.equal(sha256(read(root + "components/clinician-consultation.module.css")), "3f139ece2068afad2cf36d28e9af9e62d48d8976e00f4b32c32371fdde03deb6");
 });
 test("Neutral display components import only React types and local CSS; no hooks, request, storage, policy or clinical dependency", () => {
   const file = root + "components/v2/read-context.tsx", source = read(file);
@@ -187,4 +190,69 @@ test("Combined helper retains both Patient12h surfaces and exact protected profe
   for (const assertion of ["data-appointment-endpoint", "consequential booking history remains24h", "attendance timestamp remains24h", "each clock and its period remain together at200%", "denied synthetic payload/reference absent", "time display must not issue commands", "list caller remains default"]) assert.ok(source.includes(assertion), assertion);
   const professional = source.slice(source.indexOf("    const clinician = await clinicianMasterPage"), source.indexOf("  console.log("));
   assert.equal(sha256(professional), "8d0664648f994efc0b0d09816bea2d3149b27d3cae513384c59afce16010b5b3");
+});
+
+const index = evaluate(functions(patientFile, ["CareIndex"]), { styles, Link, Icon });
+test("Care index separates retrieval from released-source claims and preserves each mode's destinations", () => {
+  for (locale of ["en", "ar"]) {
+    const render = extra => renderToStaticMarkup(React.createElement(index.CareIndex, {
+      c: copy[locale], summaryHref: "/patient/summaries", hasSummary: false, hasFollowUp: false, mode: "live", loading: false, ...extra,
+    }));
+    const live = render({});
+    for (const href of ["/patient/appointments", "/patient/summaries", "/patient/follow-up", "/patient/history"]) assert.ok(live.includes(`href="${href}"`));
+    assert.ok(live.includes(copy[locale].notIntegrated));
+    assert.ok(!live.includes(copy[locale].readSummaryContext));
+    assert.ok(!live.includes('href="/patient/medications"') && !live.includes('href="/patient/laboratory"'));
+    const demo = render({ summaryHref: "/patient/record", mode: "demo", hasSummary: true, hasFollowUp: true });
+    for (const href of ["/patient/record", "/patient/follow-up", "/patient/medications", "/patient/laboratory"]) assert.ok(demo.includes(`href="${href}"`));
+    assert.ok(demo.includes(copy[locale].readSummaryContext) && demo.includes("data-care-context"));
+    const pending = render({ summaryHref: "/patient/record", mode: "demo", hasSummary: true, hasFollowUp: true, loading: true });
+    assert.ok(!pending.includes(copy[locale].readSummaryContext) && !pending.includes("data-care-context"));
+    assert.ok(pending.includes(copy[locale].loadingContext));
+  }
+});
+
+let path = "/patient", role = "PATIENT", mode = "demo";
+const shellSource = read(root + "components/portal-shell.tsx");
+const shellAST = ts.createSourceFile("shell.tsx", shellSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+const shell = evaluate(shellAST.statements.filter(n => !ts.isImportDeclaration(n)).map(n => n.getText()).join("\n"), {
+  Link, Icon, care: styles, styles, myCareCopy: copy, accountName: presentation.accountName,
+  LanguageSwitch: () => React.createElement("span", null, "Language control"),
+  usePathname: () => path, useLocale,
+  useApp: () => ({ api: { mode }, session: { role, name: "Permitted account", mode } }),
+});
+const renderShell = patientMyCareV2 => renderToStaticMarkup(React.createElement(shell.PortalShell, {
+  patientMyCareV2, onLogout: () => { throw Error("render must never log out"); }, toast: "", onDismiss: () => {},
+}, React.createElement("article", null, "Permitted content")));
+test("Presentation requires explicit opt-in, exact PATIENT role and exact route; every other default is identical", () => {
+  for (locale of ["en", "ar"]) for (mode of ["demo", "live"]) for (role of ["PATIENT", "CLINICIAN", "PHARMACY_STAFF", "LAB_STAFF", "ADMIN"]) for (path of ["/patient", "/patient/appointments", "/patient/", "/doctor/schedule"]) {
+    const plain = renderShell(false), opted = renderShell(true);
+    assert.ok(!plain.includes("data-patient-my-care-v2"));
+    if (role !== "PATIENT" || path !== "/patient") assert.equal(opted, plain);
+    else {
+      assert.ok(opted.includes("data-patient-my-care-v2"));
+      assert.ok(!opted.includes("data-bottom-navigation"));
+      assert.ok(opted.includes('href="/patient"') && opted.includes('href="/patient/discover"'));
+      assert.ok(opted.includes('href="/patient/settings"') && opted.includes('href="#main"'));
+      assert.ok(opted.includes(copy[locale].signOut) && opted.includes("Language control"));
+      assert.ok(!opted.includes('class="secondary"'));
+    }
+  }
+});
+
+test("Default shell reconstructs exact main source and shared CSS prefix", () => {
+  let original = shellSource;
+  const changes = [
+    [' onClick={myCareV2 ? (event) => {\n        const main = document.getElementById("main");\n        if (!main) return;\n        event.preventDefault();\n        main.focus({ preventScroll: true });\n        main.scrollIntoView({ block: "start" });\n      } : undefined}', ""],
+    ["  patientMyCareV2?: boolean;\n", ""],
+    ["  patientMyCareV2 = false,\n", ""],
+    ['  const myCareV2 = patientMyCareV2 && patient && path === "/patient";\n', ""],
+    ['      data-patient-my-care-v2={myCareV2 || undefined}\n', ""],
+    ['className={`${care.root} ${styles.root}${myCareV2 ? ` ${styles.patientMyCareV2}` : ""}`}', 'className={`${care.root} ${styles.root}`}'],
+    ['!myCareV2 && secondary.length > 0', 'secondary.length > 0'],
+    ['patient && !myCareV2 && (', 'patient && ('],
+  ];
+  for (const [from,to] of changes) { assert.equal(original.split(from).length, 2, from); original = original.replace(from,to); }
+  assert.equal(sha256(original), "7c4f8f07105d9b1854097938f3dd2ac7dda37cf86eac5bf7fbbc626284817ed8");
+  assert.equal(sha256(read(root + "components/portal-shell.module.css").slice(0,4671)), "a17947877e71c51799d6d28f9faf1784ca7fe968430f876a0c39d24cff3775da");
 });

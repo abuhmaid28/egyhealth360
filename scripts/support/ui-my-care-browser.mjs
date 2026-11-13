@@ -81,6 +81,47 @@ const booking = {
   attendanceHistory: [],
 };
 
+// Controlled browser measurements, not a WCAG certification or hosted/clinical acceptance.
+async function measurePresentation(page, locale) {
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("DOM.enable"); await cdp.send("CSS.enable");
+  const { root } = await cdp.send("DOM.getDocument");
+  const fonts = [];
+  for (const selector of ["[data-appointment-anchor] h3", "[data-appointment-anchor] bdi[dir]", "header bdi[dir=ltr]"]) {
+    const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: root.nodeId, selector });
+    const result = await cdp.send("CSS.getPlatformFontsForNode", { nodeId });
+    fonts.push({ selector, fonts: result.fonts.filter(f => f.glyphCount > 0).map(f => f.familyName) });
+  }
+  assert.ok(fonts[0].fonts.some(f => f.includes(locale === "ar" ? "Plex" : "Inter")), JSON.stringify(fonts));
+  assert.ok(fonts[1].fonts.some(f => f.includes(locale === "ar" ? "Plex" : "Inter")), JSON.stringify(fonts));
+  assert.ok(fonts[2].fonts.some(f => f.includes("Inter")), JSON.stringify(fonts));
+  await cdp.detach();
+  const contrast = await page.evaluate(() => {
+    const rgb = s => s.match(/[\d.]+/g)?.map(Number);
+    const lum = c => c.slice(0, 3).map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }).reduce((n,v,i) => n + v * [.2126,.7152,.0722][i], 0);
+    const ratio = (a,b) => (Math.max(lum(a),lum(b))+.05)/(Math.min(lum(a),lum(b))+.05);
+    const background = el => { for (;el;el=el.parentElement) { const c=rgb(globalThis.getComputedStyle(el).backgroundColor); if(c && (c.length<4 || c[3]===1)) return c; } return [255,255,255]; };
+    const text = [...globalThis.document.querySelectorAll('[data-my-care] *')].filter(el => el.checkVisibility() && [...el.childNodes].some(n => n.nodeType===3 && n.textContent.trim())).map(el => ({ text: el.textContent.trim().slice(0,50), ratio: ratio(rgb(globalThis.getComputedStyle(el).color),background(el)) }));
+    return { minimum: Math.min(...text.map(x=>x.ratio)), failures: text.filter(x=>x.ratio<4.5) };
+  });
+  assert.deepEqual(contrast.failures, [], JSON.stringify(contrast));
+  const primary = page.locator('header nav a').first(); await primary.focus();
+  await page.keyboard.press('Shift+Tab'); await page.keyboard.press('Tab');
+  const control = await primary.evaluate(el => {
+    const s=globalThis.getComputedStyle(el), rgb=x=>x.match(/[\d.]+/g).slice(0,3).map(Number);
+    const l=x=>rgb(x).map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;}).reduce((n,v,i)=>n+v*[.2126,.7152,.0722][i],0);
+    const ratio=(a,b)=>(Math.max(l(a),l(b))+.05)/(Math.min(l(a),l(b))+.05);
+    const bg=globalThis.getComputedStyle(el.closest('header')).backgroundColor;
+    return { outline: s.outlineStyle, focusRatio: ratio(s.outlineColor,bg), borderRatio: ratio(s.borderTopColor,bg) };
+  });
+  assert.equal(control.outline,"solid"); assert.ok(control.focusRatio>=3 && control.borderRatio>=3,JSON.stringify(control));
+  return { locale, fonts, contrast, control };
+}
+const releasedSummary = {
+  id: id(30), consultationId: id(31), kind: "PATIENT_SUMMARY", history: { total: 1 },
+  versions: [{ id: id(32), kind: "RELEASE", state: "SIGNED_RELEASED", content: "PERMITTED-SYNTHETIC-SUMMARY", patientInstructions: "", complaint: null, problems: [], diagnoses: [], allergyReview: { state: "NOT_REVIEWED", items: [] }, createdAt: "2026-11-01T10:00:00Z", signedAt: "2026-11-01T10:00:00Z", releasedAt: "2026-11-01T10:00:00Z", reason: null, effective: true }],
+};
+
 export async function testPatientMyCare(browser, origin, shots) {
   const report = {
     desktop: { width: 1600, height: 1000 },
@@ -90,6 +131,7 @@ export async function testPatientMyCare(browser, origin, shots) {
     textResize: [],
     focus: [],
     live: [],
+    presentation: [],
     errors: [],
   };
   if (shots) await mkdir(shots, { recursive: true });
@@ -159,17 +201,10 @@ export async function testPatientMyCare(browser, origin, shots) {
     );
     const capture = async (name, fullPage = false) => {
       if (shots) {
-        // Unobscured reading export; the matched viewport captures retain real sticky navigation.
-        const sheet = fullPage
-          ? await page.addStyleTag({
-              content: "[data-bottom-navigation]{position:static!important}",
-            })
-          : null;
         await page.screenshot({
           path: resolve(shots, name + ".png"),
           fullPage,
         });
-        if (sheet) await sheet.evaluate((el) => el.remove());
       }
       report.screens.push(name + ".png");
     };
@@ -181,7 +216,7 @@ export async function testPatientMyCare(browser, origin, shots) {
       await quickAccess.evaluate(
         (el) => globalThis.getComputedStyle(el).backgroundColor,
       ),
-      "rgb(241, 245, 249)",
+      "rgb(239, 234, 247)",
     );
     await quickAccess.focus();
     await page.keyboard.press("Shift+Tab");
@@ -206,7 +241,7 @@ export async function testPatientMyCare(browser, origin, shots) {
         scroll: globalThis.document.documentElement.scrollWidth,
       }));
       assert.ok(metrics.scroll <= width, `${locale} overflow at ${width}`);
-      assert.ok(await page.getByText(c.demo, { exact: true }).isVisible());
+      assert.ok(await page.locator("[data-demo-indication]").isVisible());
       report.reflow.push({ locale, ...metrics });
     }
     await capture(`patient-my-care-320-${locale}`, true);
@@ -240,8 +275,8 @@ export async function testPatientMyCare(browser, origin, shots) {
       );
     assert.equal(
       new Set(labels.map((x) => x.top)).size,
-      1,
-      "390px shortcuts retain one row",
+      6,
+      "390px retrieval keeps six separate readable rows",
     );
     for (const label of labels) {
       assert.notEqual(label.wrap, "anywhere");
@@ -258,6 +293,7 @@ export async function testPatientMyCare(browser, origin, shots) {
     assert.equal(await page.locator("#main [data-demo-indication]").count(), 0);
     assert.ok(await page.locator("[data-clinician-monogram]").isVisible());
     await page.evaluate(() => globalThis.scrollTo(0, 0));
+    report.presentation.push(await measurePresentation(page, locale));
     await capture(`patient-my-care-mobile-${locale}`);
     await capture(`patient-my-care-mobile-${locale}-full`, true);
     assert.equal(
@@ -265,9 +301,10 @@ export async function testPatientMyCare(browser, origin, shots) {
         .locator("[data-my-care] nav")
         .filter({ has: page.locator('a[aria-current="page"]') })
         .count(),
-      2,
-      "desktop nav is CSS-hidden; mobile nav is purpose-built",
+      1,
+      "one visible normal-flow primary navigation",
     );
+    assert.equal(await page.locator("[data-bottom-navigation]").count(), 0);
     const order = await page.locator("#main section").evaluateAll((xs) =>
       xs.map((x) => ({
         heading: x.querySelector("h2")?.textContent,
@@ -303,21 +340,33 @@ export async function testPatientMyCare(browser, origin, shots) {
       ].map((el) => [el, parseFloat(globalThis.getComputedStyle(el).fontSize)]);
       for (const [el, size] of entries) el.style.fontSize = `${size * 2}px`;
     });
-    assert.ok(
-      await page.evaluate(
-        () =>
-          globalThis.document.documentElement.scrollWidth <=
-          globalThis.innerWidth,
-      ),
-      `${locale} text resize overflow`,
-    );
-    report.textResize.push({ locale, width: 390, scale: 2 });
+    for (const width of [320, 390, 1440]) {
+      await page.setViewportSize({ width, height: 1000 });
+      assert.ok(await page.evaluate(() => globalThis.document.documentElement.scrollWidth <= globalThis.innerWidth), `${locale} ${width} text resize overflow`);
+      report.textResize.push({ locale, width, scale: 2 });
+    }
+    await page.setViewportSize({ width: 390, height: 844 });
     await capture(`patient-my-care-text-200-${locale}`, true);
     await page.reload();
     await page
       .locator('[data-appointment-anchor] a[href$="demo-my-care-visit"]')
       .waitFor();
     await page.keyboard.press("Tab");
+    assert.equal(await page.locator('a[href="#main"]').evaluate(el => el === globalThis.document.activeElement), true);
+    await page.keyboard.press("Enter");
+    assert.equal(await page.locator('#main').evaluate(el => el === globalThis.document.activeElement), true);
+    await page.locator('header summary').click();
+    await page.keyboard.press("Escape");
+    assert.equal(await page.locator('header details[open]').count(), 0);
+    await page.locator('header nav a[href="/patient/discover"]').click();
+    await page.waitForURL("**/patient/discover");
+    assert.equal(await page.locator('[data-patient-my-care-v2]').count(), 0);
+    await page.goBack(); await page.locator('[data-patient-my-care-v2]').waitFor();
+    await page.goForward(); await page.waitForURL("**/patient/discover");
+    assert.equal(await page.locator('[data-patient-my-care-v2]').count(), 0);
+    await page.goBack(); await page.locator('[data-patient-my-care-v2]').waitFor();
+    await page.locator('header nav a').first().focus();
+    await page.keyboard.press('Shift+Tab'); await page.keyboard.press('Tab');
     const focus = await page.evaluate(() => ({
       tag: globalThis.document.activeElement.tagName,
       outline: globalThis.getComputedStyle(globalThis.document.activeElement)
@@ -370,7 +419,7 @@ export async function testPatientMyCare(browser, origin, shots) {
     let profileFails = false,
       sourceFails = false,
       bookingsFail = false,
-      sessionFails = false;
+      sessionFails = false, sourceStatus = 0, accountB = false;
     const page = await browser.newPage({
       viewport: { width: 1440, height: 1000 },
     });
@@ -395,7 +444,7 @@ export async function testPatientMyCare(browser, origin, shots) {
             data: {
               user: {
                 role: "PATIENT",
-                email: "synthetic-live@example.invalid",
+                email: accountB ? "synthetic-b@example.invalid" : "synthetic-live@example.invalid",
               },
               csrfToken: "synthetic-csrf",
             },
@@ -407,8 +456,8 @@ export async function testPatientMyCare(browser, origin, shots) {
           : route.fulfill({
               json: {
                 data: {
-                  id: id(8),
-                  displayName: "Live source · أحمد",
+                  id: id(accountB ? 9 : 8),
+                  displayName: accountB ? "New permitted account" : "Live source · أحمد",
                   dateOfBirth: null,
                   sex: null,
                 },
@@ -419,8 +468,8 @@ export async function testPatientMyCare(browser, origin, shots) {
           ? route.fulfill({ status: 503, json: {} })
           : route.fulfill({
               json: {
-                data: [booking],
-                meta: { page: 1, pageSize: 20, total: 1 },
+                data: accountB ? [] : [booking],
+                meta: { page: 1, pageSize: 20, total: accountB ? 0 : 1 },
               },
             });
       if (path.endsWith("/directory/providers"))
@@ -452,11 +501,10 @@ export async function testPatientMyCare(browser, origin, shots) {
             ],
           },
         });
-      if (sourceFails && path.endsWith("/me/summaries"))
-        return route.fulfill({
-          status: 404,
-          json: { private: "PRIVATE-CANARY" },
-        });
+      if (path.includes("/me/summaries")) {
+        if (sourceFails || sourceStatus) return route.fulfill({ status: sourceStatus || 404, json: { private: "PRIVATE-CANARY", id: "WRONG-PATIENT-ID", count: 99 } });
+        return route.fulfill({ json: path.endsWith("/me/summaries") ? { data: [releasedSummary], meta: { total: 1 } } : { data: releasedSummary } });
+      }
       return route.fulfill({
         json: { data: [], meta: { page: 1, pageSize: 20, total: 0 } },
       });
@@ -496,6 +544,15 @@ export async function testPatientMyCare(browser, origin, shots) {
       0,
     );
     assert.equal(await page.locator("[data-source-verification]").count(), 0);
+    await page.locator('[data-care-shortcuts]').getByText(c.readSummary, { exact: true }).waitFor();
+    for (sourceStatus of [401, 403, 404, 503]) {
+      await page.reload(); await page.locator('[data-source-verification]').waitFor();
+      assert.equal(await page.locator('[data-care-shortcuts]').getByText(c.readSummary, { exact: true }).count(), 0, "revoked reread removes released-source claim");
+      const dom = await page.content(), ax = await page.locator('body').ariaSnapshot();
+      for (const canary of ["PRIVATE-CANARY", "WRONG-PATIENT-ID", "PERMITTED-SYNTHETIC-SUMMARY", id(30), id(32)]) { assert.ok(!dom.includes(canary)); assert.ok(!ax.includes(canary)); }
+      await page.locator('[data-appointment-anchor] a[href$="' + id(1) + '"]').waitFor();
+    }
+    sourceStatus = 0;
     profileFails = true;
     sourceFails = true;
     await page.reload();
@@ -509,6 +566,11 @@ export async function testPatientMyCare(browser, origin, shots) {
         "PRIVATE-CANARY",
       ),
     );
+    accountB = true; profileFails = false;
+    await page.reload(); await page.getByRole("heading", { name: c.empty, exact: true }).waitFor();
+    await page.getByRole("heading", { name: c.greeting + " New", exact: true }).waitFor();
+    const accountDOM = await page.content(), accountAX = await page.locator('body').ariaSnapshot();
+    for (const canary of ["Live source · أحمد", "Live doctor · مريم", '/patient/appointments/' + id(1)]) { assert.ok(!accountDOM.includes(canary)); assert.ok(!accountAX.includes(canary)); }
     bookingsFail = true;
     await page.reload();
     await page.getByRole("heading", { name: c.error, exact: true }).waitFor();
@@ -547,6 +609,7 @@ export async function testPatientMyCare(browser, origin, shots) {
           "/api/v1/directory/clinics",
           "/api/v1/me/summaries",
           "/api/v1/me/follow-up-intents",
+          "/api/v1/me/summaries/" + id(30),
         ].includes(r.path),
       ),
       JSON.stringify(calls),
@@ -555,6 +618,7 @@ export async function testPatientMyCare(browser, origin, shots) {
       locale,
       profileFailureKeepsAppointments: true,
       sourceVerification: true,
+      deniedStatuses: [401, 403, 404, 503], deniedFreshReread: true, accountReloadBoundary: true, domAndAXCanariesAbsent: true,
       liveFailureStaysLive: true,
       expiredSessionRecovery: true,
       visibleModeAt320: true,
