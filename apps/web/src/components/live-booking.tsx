@@ -123,12 +123,52 @@ export function BookingIdentity({
     </div>
   );
 }
+// Appointment read display only. Never parse these labels back into a command.
+function patientDetailEndpoint(value: string, timeZone: string, locale: string) {
+  const instant = new Date(value);
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone, hour: "numeric", minute: "2-digit", hourCycle: "h12",
+  }).formatToParts(instant);
+  const hour = parts.find(part => part.type === "hour")!.value;
+  const minute = parts.find(part => part.type === "minute")!.value;
+  const period = parts.find(part => part.type === "dayPeriod")!.value;
+  const offset = new Intl.DateTimeFormat("en-GB", {
+    timeZone, timeZoneName: "longOffset",
+  }).formatToParts(instant).find(part => part.type === "timeZoneName")!.value;
+  return {
+    clock: `${hour}${minute === "00" ? "" : `:${minute}`} ${locale === "ar" ? (period === "am" ? "صباحًا" : "مساءً") : period}`,
+    offset: offset === "GMT" ? "UTC+00:00" : offset.replace("GMT", "UTC"),
+    date: date(value, timeZone, locale),
+  };
+}
 export function BookingTime({
   booking: b,
+  patientDetail = false,
 }: {
   booking: Pick<LiveBooking, "startAt" | "endAt" | "timeZone">;
+  patientDetail?: boolean;
 }) {
   const { locale, t } = useLocale();
+  if (patientDetail) {
+    const start = patientDetailEndpoint(b.startAt, b.timeZone, locale);
+    const end = patientDetailEndpoint(b.endAt, b.timeZone, locale);
+    const differentOffsets = start.offset !== end.offset;
+    const direction = locale === "ar" ? "rtl" : "ltr";
+    return (
+      <div className="booking-time" data-patient-detail-time>
+        <bdi dir="ltr">
+          <bdi>{start.date}</bdi> · <bdi dir={direction} data-appointment-endpoint="start">{start.clock}</bdi>
+          {differentOffsets && <> <bdi dir="ltr">({start.offset})</bdi></>} –{" "}
+          {start.date !== end.date && <><bdi>{end.date}</bdi> · </>}
+          <bdi dir={direction} data-appointment-endpoint="end">{end.clock}</bdi>
+          {differentOffsets && <> <bdi dir="ltr">({end.offset})</bdi></>}
+        </bdi>
+        <small>
+          <bdi dir="ltr">{b.timeZone}{!differentOffsets && ` (${start.offset})`}</bdi>
+        </small>
+      </div>
+    );
+  }
   return (
     <div className="booking-time">
       <bdi dir="ltr">
@@ -455,7 +495,7 @@ function BookingDetails({
             <Status booking={b} />
           </div>
           <BookingIdentity booking={b} clinician={clinician} names={names} />
-          <BookingTime booking={b} />
+          <BookingTime booking={b} patientDetail={!clinician} />
           <div className="booking-actions">
             {!clinician && (
               <>
