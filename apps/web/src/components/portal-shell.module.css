@@ -237,3 +237,40 @@
     display: flex;
   }
 }
+
+/* Explicit PatientMyCare opt-in only. Default shells retain their original rules. */
+.root.patientMyCareV2 {
+  --care-navy: #17142b;
+  --care-teal: #6240b8;
+  --care-teal-dark: #50309d;
+  --care-blue: #6240b8;
+  --care-canvas: #f8f7fb;
+  --care-surface: #fff;
+  --care-alt: #efeaf7;
+  --care-border: #ddd7e9;
+  --care-border-strong: #787084;
+  --care-ink: #17142b;
+  --care-secondary: #595269;
+  --care-muted: #595269;
+  color-scheme: light;
+  font-family: Inter, "EH My Care Arabic", sans-serif;
+  font-size: 16px;
+}
+.root.patientMyCareV2[dir="rtl"] { font-family: "EH My Care Arabic", Inter, sans-serif; }
+.patientMyCareV2 .header { max-inline-size: 1328px; margin-inline: auto; gap: 32px; padding-block: 20px; }
+.patientMyCareV2 .primary { display: flex; gap: 16px; }
+.patientMyCareV2 .primary a { font-size: 16px; min-block-size: 48px; }
+.patientMyCareV2 .mode { color: var(--care-muted); font-size: 14px; }
+.patientMyCareV2 .account summary { border-color: var(--care-border-strong); }
+.patientMyCareV2 .account > div { background: var(--care-surface); }
+.patientMyCareV2 .account > div :is(a, button) { min-block-size: 44px; font-size: 16px; }
+.patientMyCareV2 > footer { font-size: 14px; padding-block-end: 32px; }
+.patientMyCareV2 > footer button { min-block-size: 44px; font-size: 16px; }
+.patientMyCareV2 :is(a, button, summary):focus-visible { outline: 3px solid var(--care-teal); outline-offset: 4px; }
+.patientMyCareV2 :global(.language-switch button) { min-block-size: 44px; min-inline-size: 44px; font-size: 14px; }
+@media (max-width: 900px) {
+  .patientMyCareV2 .header { gap: 12px; }
+  .patientMyCareV2 .primary { flex-basis: 100%; order: 0; }
+  .patientMyCareV2 .utilities { flex-basis: 100%; justify-content: flex-end; }
+  .patientMyCareV2 .primary a { flex: 1; justify-content: center; border: 1px solid var(--care-border-strong); border-radius: 10px; }
+}
