@@ -46,7 +46,7 @@ All tracked documentation Markdown paths are classified below. Research files ar
 
 | Integrated candidate and preserved source receipts | Responsibility / limits |
 | --- | --- |
-| [frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md) | Issue #133 current unified provenance, 28-path inventory, four collisions, combined tests, independent reviews, CI/rollback and open gates; below it, preserved Issue #127 source-specific history. |
+| [frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md) | Issue #133 current unified provenance, 28-path inventory, four collisions, actual combined tests/E1 health-only evidence and limits, independent reviews, exact-head CI/rollback receipt and open gates; below it, preserved Issue #127 source-specific history. |
 | [frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md](frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md) | Preserved #130 booking-create-only critical-copy/outcome contract plus current #133 integration evidence; no global F03 or release acceptance. |
 | [frontend-v2-slices/F04_INITIAL_LOCALE.md](frontend-v2-slices/F04_INITIAL_LOCALE.md) | Preserved #132 neutral startup/no-JS contract plus current #133 joint tests; no personalized Arabic SSR, cookies or release acceptance. |
 

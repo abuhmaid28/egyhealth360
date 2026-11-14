@@ -2,7 +2,7 @@
 
 Current authority: [Issue #133](https://github.com/abuhmaid28/egyhealth360/issues/133). [Unified source/conflict/validation/rollback ledger](PATIENT_MY_CARE_INTEGRATION.md#unified-integration--issue-133). This pinned source report is preserved below; its separate-branch status/test totals/CI claims are historical evidence only. Integration permits these formerly separate candidates to operate together within the exact28 paths and does not widen their runtime/security/product contracts or release approval.
 
-Final combined results, independent verdicts and actual CI are recorded in the unified ledger and Issue #133. No personalized Arabic SSR or global F03/F06 closure, backend authority, native AT, hosted acceptance or release claim.
+All33 initial-locale cases plus actual Live editor/key lifetime and2 real built joint PatientV2/F03/time flows PASS with imported styles. Exact startup get(ar)→set(ar), no gate re-entry/remount on locale/modal, and normal destination auth reread preserved. Neutral SSR/no-JS limitation remains; no personalized Arabic SSR or cookie policy. Final combined results, independent verdicts and actual CI are recorded in the unified ledger and Issue #133. No personalized Arabic SSR or global F03/F06 closure, backend authority, native AT, hosted acceptance or release claim.
 
 ---
 

@@ -2,7 +2,7 @@
 
 Current authority: [Issue #133](https://github.com/abuhmaid28/egyhealth360/issues/133). [Unified source/conflict/validation/rollback ledger](PATIENT_MY_CARE_INTEGRATION.md#unified-integration--issue-133). This pinned source report is preserved below; its separate-branch status/test totals/CI claims are historical evidence only. Integration permits these formerly separate candidates to operate together within the exact28 paths and does not widen their runtime/security/product contracts or release approval.
 
-Final combined results, independent verdicts and actual CI are recorded in the unified ledger and Issue #133. No personalized Arabic SSR or global F03/F06 closure, backend authority, native AT, hosted acceptance or release claim.
+All69 original F03 native cases plus5 actual-provider combined cases PASS. Real built PatientV2→F03 pending language/503/close/reopen/original-key retry→Patient12h detail PASS at390/1440. Global F03 stays OPEN; scoped create dialog stays consequential24h. No product fault-injection flag or clinical write. Final combined results, independent verdicts and actual CI are recorded in the unified ledger and Issue #133. No personalized Arabic SSR or global F03/F06 closure, backend authority, native AT, hosted acceptance or release claim.
 
 ---
 
