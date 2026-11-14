@@ -1,6 +1,8 @@
 # Source of truth and document index
 
-Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
+Current bounded F04 reference: [neutral initial locale implementation](frontend-v2-slices/F04_INITIAL_LOCALE.md), under [Issue #131 explicit Option B authorization](https://github.com/abuhmaid28/egyhealth360/issues/131#issuecomment-6870265872). [CURRENT_STATUS](CURRENT_STATUS.md) owns current delivery; earlier task snapshots below are historical.
+
+Preserved staging reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
 
@@ -41,6 +43,10 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| F04 bounded implementation reference | Responsibility / limits |
+| --- | --- |
+| [frontend-v2-slices/F04_INITIAL_LOCALE.md](frontend-v2-slices/F04_INITIAL_LOCALE.md) | Option B startup/no-JS contract, exact scope, synthetic validation, independent reviews, source/CI receipt and coherent rollback; no AR-personalized SSR or release approval. |
 
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |

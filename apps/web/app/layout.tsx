@@ -9,8 +9,14 @@ export const metadata = {
 };
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" dir="ltr">
       <body>
+        <noscript>
+          <div className="boot">
+            <p lang="en" dir="ltr">JavaScript is needed to open this workspace.</p>
+            <p lang="ar" dir="rtl">فتح مساحة العمل دي محتاج JavaScript.</p>
+          </div>
+        </noscript>
         <LocaleProvider>
           <LiveSessionProvider>{children}</LiveSessionProvider>
         </LocaleProvider>
