@@ -48,14 +48,13 @@ test("authored UI translation calls have Arabic catalog entries with matching pl
     "2026-11-02T09:30:00+02:00",
     "’s",
   ]);
+  const recursive = (folder) => readdirSync(folder, { withFileTypes: true }).flatMap((entry) =>
+    entry.isDirectory() ? recursive(folder + "/" + entry.name) : entry.name.endsWith(".tsx") ? [folder + "/" + entry.name] : [],
+  );
   for (const file of [
     "apps/web/src/components",
     "apps/web/src/previews",
-  ].flatMap((folder) =>
-    readdirSync(folder)
-      .filter((name) => name.endsWith(".tsx"))
-      .map((name) => folder + "/" + name),
-  )) {
+  ].flatMap(recursive)) {
     const ast = ts.createSourceFile(
       file,
       readFileSync(file, "utf8"),
@@ -76,6 +75,13 @@ test("authored UI translation calls have Arabic catalog entries with matching pl
           `Missing Arabic UI copy: ${key}`,
         );
       }
+      if (ts.isCallExpression(n) && ts.isIdentifier(n.expression) && n.expression.text === "t" && n.arguments[0] && ts.isConditionalExpression(n.arguments[0])) {
+        const check = (value) => {
+          if (ts.isConditionalExpression(value)) { check(value.whenTrue); check(value.whenFalse); }
+          else if (ts.isStringLiteral(value)) assert.ok(dictionary.ar[value.text] || allowed.has(value.text), `Missing conditional Arabic UI copy: ${value.text}`);
+        };
+        check(n.arguments[0]);
+      }
       ts.forEachChild(n, visit);
     };
     visit(ast);
@@ -87,5 +93,25 @@ test("authored UI translation calls have Arabic catalog entries with matching pl
       parameters(key),
       `Placeholder mismatch: ${key}`,
     );
+  }
+});
+
+test("finite booking task dependencies and dynamic errors remain covered; optional labels are explicitly bounded", () => {
+  const critical = {};
+  new Function("exports", "require", ts.transpileModule(readFileSync(folder + "critical-copy.ts", "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS },
+  }).outputText)(critical, () => dictionary);
+  assert.deepEqual(critical.criticalCopyTasks.bookingCreate.optional, ["Booking progress", "Choose a time", "Review details", "Booking confirmation"]);
+  assert.equal(critical.criticalCopyState("ar", "bookingCreate").ready, true);
+  for (const file of ["apps/web/src/lib/api/live-booking.ts", "apps/web/src/lib/api/errors.ts"]) {
+    const ast = ts.createSourceFile(file, readFileSync(file, "utf8"), ts.ScriptTarget.Latest, true);
+    const messages = [];
+    const visit = (n) => {
+      if (ts.isStringLiteral(n) && /\s/.test(n.text) && !n.text.startsWith("./")) messages.push(n.text);
+      ts.forEachChild(n, visit);
+    };
+    visit(ast);
+    for (const key of messages) assert.ok(dictionary.ar[key], `Missing finite booking error copy: ${key}`);
+    for (const key of messages) assert.ok(critical.criticalCopyTasks.bookingCreate.required.includes(key), `Unregistered booking error copy: ${key}`);
   }
 });
