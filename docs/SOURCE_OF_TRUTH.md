@@ -1,6 +1,8 @@
 # Source of truth and document index
 
-Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
+Current integration reference: [Issue #133 unified receipt](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md#unified-integration--issue-133). [CURRENT_STATUS](CURRENT_STATUS.md) owns integrated delivery; source-candidate reports retain their historical provenance and limits.
+
+Preserved staging reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
 
@@ -41,6 +43,12 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| Integrated candidate and preserved source receipts | Responsibility / limits |
+| --- | --- |
+| [frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md) | Issue #133 current unified provenance, 28-path inventory, four collisions, combined tests, independent reviews, CI/rollback and open gates; below it, preserved Issue #127 source-specific history. |
+| [frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md](frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md) | Preserved #130 booking-create-only critical-copy/outcome contract plus current #133 integration evidence; no global F03 or release acceptance. |
+| [frontend-v2-slices/F04_INITIAL_LOCALE.md](frontend-v2-slices/F04_INITIAL_LOCALE.md) | Preserved #132 neutral startup/no-JS contract plus current #133 joint tests; no personalized Arabic SSR, cookies or release acceptance. |
 
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |

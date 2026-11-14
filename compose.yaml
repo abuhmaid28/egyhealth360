@@ -1,7 +1,6 @@
 name: egyhealth360
 x-app: &app
   image: egyhealth360-bootstrap:local
-  build: .
   init: true
   depends_on:
     postgres:
@@ -24,6 +23,11 @@ services:
       retries: 12
   api:
     <<: *app
+    # Sole build owner: web and worker reuse this exact local image.
+    build:
+      context: .
+      args:
+        EH_UI_API_ORIGIN: http://api:3001
     environment:
       <<: *app-env
       NODE_ENV: development
@@ -37,7 +41,6 @@ services:
       retries: 12
   web:
     image: egyhealth360-bootstrap:local
-    build: .
     init: true
     command: [node, apps/web/node_modules/next/dist/bin/next, start, apps/web, --hostname, 0.0.0.0]
     ports: ['127.0.0.1:3000:3000']
