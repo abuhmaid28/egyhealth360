@@ -46,7 +46,7 @@ async function measure(page,label,role) {
     const controls=[...root.querySelectorAll('button,a,input:not([type=checkbox]),textarea,select,summary')].filter(visible);
     const clipped=controls.filter(el=>{const r=el.getBoundingClientRect();return r.left < -1||r.right>globalThis.innerWidth+1||r.width>globalThis.innerWidth+1;}).map(el=>({tag:el.tagName,text:el.textContent.trim().slice(0,35)}));
     const small=controls.filter(el=>el.matches("button,input,textarea,select,summary")&&el.getBoundingClientRect().height<43.5).map(el=>({tag:el.tagName,text:el.textContent.trim().slice(0,35),height:el.getBoundingClientRect().height}));
-    return{width:globalThis.innerWidth,scroll:globalThis.document.documentElement.scrollWidth,background:computed(root).backgroundColor,header:computed(root.querySelector("header")).backgroundColor,footer:computed(root.querySelector("footer")).backgroundColor,staff:root.querySelector("[data-staff-workspace]")?computed(root.querySelector("[data-staff-workspace]")).backgroundColor:null,contrast,clipped,small};
+    return{width:globalThis.innerWidth,scroll:globalThis.document.documentElement.scrollWidth,background:computed(root).backgroundColor,header:computed(root.querySelector(":scope > header")).backgroundColor,footer:computed(root.querySelector(":scope > footer")).backgroundColor,staff:root.querySelector("[data-staff-workspace]")?computed(root.querySelector("[data-staff-workspace]")).backgroundColor:null,contrast,clipped,small};
   });
   assert.ok(result.scroll<=result.width+1,label+": overflow "+JSON.stringify(result));
   assert.deepEqual(result.clipped,[],label+": clipped controls");assert.deepEqual(result.small,[],label+": controls below44px "+JSON.stringify(result.small));assert.deepEqual(result.contrast,[],label+": contrast "+JSON.stringify(result.contrast));
@@ -127,7 +127,7 @@ export async function testCombinedV2(browser,origin,evidenceDir) {
       await selectAppearance(page,"dark");await page.reload();await page.locator(`[data-portal-shell="${role}"]`).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
       await selectAppearance(page,"dark");await openDemoUtility(page);
       const next=role==="PATIENT"?"ADMIN":"PATIENT";await page.locator('select[aria-label="Demo workspace"]').selectOption(next);await page.locator(`[data-portal-shell="${next}"]`).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
-      await selectAppearance(page,"dark");await page.locator("footer button").first().click();await page.getByRole("button",{name:"Explore the patient demo",exact:true}).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
+      await selectAppearance(page,"dark");await page.locator("[data-portal-shell] > footer button").first().click();await page.getByRole("button",{name:"Explore the patient demo",exact:true}).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
       let loggedIn=false,expired=false;const auth=[];
       await page.route("**/api/v1/**",route=>{
         const path=new URL(route.request().url()).pathname,method=route.request().method();auth.push({path,method});
@@ -137,7 +137,7 @@ export async function testCombinedV2(browser,origin,evidenceDir) {
         return route.fulfill({status:expired?401:503,json:{error:{message:"SYNTHETIC_PRIVATE_TRANSPORT_CANARY"}}});
       });
       await page.getByLabel("Email",{exact:true}).fill("synthetic@example.invalid");await page.getByLabel("Password",{exact:true}).fill("SYNTHETIC_LOCAL_ONLY");await page.getByRole("button",{name:"Sign in",exact:true}).click();await page.locator(`[data-portal-shell="${role}"]`).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
-      await selectAppearance(page,"dark");await page.locator("footer button").first().click();await page.waitForFunction(()=>globalThis.document.documentElement.getAttribute("data-frontend-v2-theme")===null);
+      await selectAppearance(page,"dark");await page.locator("[data-portal-shell] > footer button").first().click();await page.waitForFunction(()=>globalThis.document.documentElement.getAttribute("data-frontend-v2-theme")===null);
       const visible=(await page.locator("body").innerHTML())+(await page.locator("body").ariaSnapshot());assert.doesNotMatch(visible,/PRIVATE_STAFF_CANARY|PRIVATE_DIAGNOSIS_CANARY|SYNTHETIC_PRIVATE_TRANSPORT_CANARY/);
       const state=await page.evaluate(()=>({local:Object.keys(globalThis.localStorage),session:Object.keys(globalThis.sessionStorage),cookie:globalThis.document.cookie}));assert.deepEqual(state.local.filter(k=>/theme|appearance|frontend-v2/i.test(k)),[]);assert.deepEqual(state.session,[]);assert.equal(state.cookie,"");
       assert.deepEqual(auth.filter(r=>r.method!=="GET").map(r=>r.path),["/api/v1/auth/login","/api/v1/auth/logout"]);assert.ok(!auth.some(r=>/pharmac|fulfill|dispens/.test(r.path)));

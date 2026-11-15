@@ -262,7 +262,7 @@ export async function runPreviewSafetyCheck(params = {}, transport) {
     if (status === "FAIL") report.overallStatus = "FAIL";
   };
   try {requireTransport(transport);} catch(error) {record("Test Transport Isolation Check","FAIL",{errorCategory:getSafeErrorCategory(error)});return report;}
-  let web,api,deadline;
+  let web,api,deadline,expired = false;
   try {
     params = snapshot(params,["url","apiUrl","expectedSha","timeout","maxBytes","allowTestHttp","allowAnyPathInTest"]);
     const bounds = limits(params);deadline = globalThis.performance.now() + bounds.timeout;
@@ -280,7 +280,7 @@ export async function runPreviewSafetyCheck(params = {}, transport) {
   const probe = async (name,url,html) => {
     try {
       const remaining = Math.floor(deadline-globalThis.performance.now());
-      if (remaining < 1) fail(ERROR_CATEGORIES.REQUEST_TIMEOUT);
+      if (expired || remaining < 1) fail(ERROR_CATEGORIES.REQUEST_TIMEOUT);
       const response = await safeGet(url,{timeout:remaining,maxBytes:html?params.maxBytes:Math.min(params.maxBytes ?? HEALTH_MAX_BODY_BYTES,HEALTH_MAX_BODY_BYTES)},transport);
       if (response.status !== 200) {record(name,"FAIL",{classification:"NON_200_RESPONSE"});return;}
       const headers = evaluateSecurityHeaders(response.headers);
@@ -291,7 +291,7 @@ export async function runPreviewSafetyCheck(params = {}, transport) {
         let payload;try {payload=JSON.parse(response.body);}catch{fail(ERROR_CATEGORIES.INVALID_RESPONSE);}
         record(name,headers.checks.isJson && payload?.data?.status === "ok" && !leaks.leaked?"PASS":"FAIL",{isJson:headers.checks.isJson,healthOk:payload?.data?.status === "ok",leaks:leaks.findings});
       }
-    } catch(error) {record(name,"FAIL",{errorCategory:getSafeErrorCategory(error)});}
+    } catch(error) {const code=getSafeErrorCategory(error);if(code===ERROR_CATEGORIES.REQUEST_TIMEOUT)expired=true;record(name,"FAIL",{errorCategory:code});}
   };
   await probe("Web Root Fixture",OFFLINE_WEB_ORIGIN+"/",true);
   await probe("Proxied Health Fixture",OFFLINE_WEB_ORIGIN+"/api/v1/health",false);
