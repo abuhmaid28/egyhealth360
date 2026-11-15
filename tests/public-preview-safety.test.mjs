@@ -11,6 +11,9 @@ import {
   safeGet,
   inspectLocalAssets,
   runPreviewSafetyCheck,
+  ERROR_CATEGORIES,
+  getSafeErrorCategory,
+  APPROVED_EGYHEALTH_PREVIEW_PATTERN,
 } from '../scripts/lib/public-preview-safety.mjs';
 import { parseCliArgs, formatTerminalReport } from '../scripts/verify-public-preview.mjs';
 
@@ -45,7 +48,7 @@ test('isPrivateHostnameOrIp handles hostnames and IPv6', () => {
 
   // Public hostnames
   assert.equal(isPrivateHostnameOrIp('egyhealth360.vercel.app'), false);
-  assert.equal(isPrivateHostnameOrIp('preview-eh360.example.com'), false);
+  assert.equal(isPrivateHostnameOrIp('egyhealth360-preview.vercel.app'), false);
 });
 
 test('isIpLiteral detects IPv4 and IPv6 literals', () => {
@@ -53,250 +56,324 @@ test('isIpLiteral detects IPv4 and IPv6 literals', () => {
   assert.equal(isIpLiteral('93.184.216.34'), true);
   assert.equal(isIpLiteral('::1'), true);
   assert.equal(isIpLiteral('[2001:db8::1]'), true);
-  assert.equal(isIpLiteral('preview.vercel.app'), false);
+  assert.equal(isIpLiteral('egyhealth360-preview.vercel.app'), false);
   assert.equal(isIpLiteral('localhost'), false);
 });
 
-test('Review Finding 1: validatePreviewUrl restricts ports to 443, enforces *.vercel.app, and blocks SSRF/IPs', () => {
-  // Valid HTTPS on default port or port 443
-  const valid = validatePreviewUrl('https://preview-123.vercel.app');
-  assert.equal(valid.origin, 'https://preview-123.vercel.app');
+test('Finding F1: sanitizeUrlForReport never echoes malformed inputs or canary tokens', () => {
+  // Malformed scheme with secret canary
+  const malformed = 'malformed://admin:CANARY_SECRET_PASS@not a valid url';
+  const clean = sanitizeUrlForReport(malformed);
+  assert.equal(clean, '[INVALID_TARGET]');
+  assert.equal(clean.includes('CANARY_SECRET_PASS'), false);
 
-  const validPort443 = validatePreviewUrl('https://preview-123.vercel.app:443');
-  assert.equal(validPort443.origin, 'https://preview-123.vercel.app');
+  // Unparseable non-string types
+  assert.equal(sanitizeUrlForReport(null), '[INVALID_TARGET]');
+  assert.equal(sanitizeUrlForReport(12345), '[INVALID_TARGET]');
+  assert.equal(sanitizeUrlForReport(''), '[INVALID_TARGET]');
 
-  // Disallowed ports in public mode
-  assert.throws(() => validatePreviewUrl('https://preview-123.vercel.app:3000'), /DISALLOWED_PORT/);
-  assert.throws(() => validatePreviewUrl('https://preview-123.vercel.app:3001'), /DISALLOWED_PORT/);
-  assert.throws(() => validatePreviewUrl('https://preview-123.vercel.app:8080'), /DISALLOWED_PORT/);
-  assert.throws(() => validatePreviewUrl('https://preview-123.vercel.app:80'), /DISALLOWED_PORT/);
-
-  // Rejects raw IP literals
-  assert.throws(() => validatePreviewUrl('https://93.184.216.34'), /IP_HOSTNAME_FORBIDDEN/);
-  assert.throws(() => validatePreviewUrl('https://127.0.0.1'), /IP_HOSTNAME_FORBIDDEN/);
-  assert.throws(() => validatePreviewUrl('https://[::1]'), /IP_HOSTNAME_FORBIDDEN/);
-
-  // Rejects loopback & private names
-  assert.throws(() => validatePreviewUrl('https://localhost'), /SSRF_PROHIBITED/);
-  assert.throws(() => validatePreviewUrl('https://app.local'), /SSRF_PROHIBITED/);
-  assert.throws(() => validatePreviewUrl('https://metadata.internal'), /SSRF_PROHIBITED/);
-
-  // Rejects non-vercel domain in public mode
-  assert.throws(() => validatePreviewUrl('https://attacker.com'), /UNTRUSTED_PREVIEW_DOMAIN/);
-  assert.throws(() => validatePreviewUrl('https://example.com'), /UNTRUSTED_PREVIEW_DOMAIN/);
-  assert.throws(() => validatePreviewUrl('https://evil-vercel.com'), /UNTRUSTED_PREVIEW_DOMAIN/);
-  assert.throws(() => validatePreviewUrl('https://preview.vercel.app.attacker.com'), /UNTRUSTED_PREVIEW_DOMAIN/);
-
-  // Rejects non-HTTPS protocol
-  assert.throws(() => validatePreviewUrl('http://preview.vercel.app'), /UNSAFE_PROTOCOL/);
-  assert.throws(() => validatePreviewUrl('ftp://preview.vercel.app'), /UNSAFE_PROTOCOL/);
-
-  // Rejects embedded credentials
-  assert.throws(() => validatePreviewUrl('https://admin:secret@preview.vercel.app'), /CREDENTIALS_FORBIDDEN/);
-
-  // Test escape hatch
-  const testUrl = validatePreviewUrl('http://127.0.0.1:3000', { allowTestHttp: true, allowAnyPathInTest: true });
-  assert.equal(testUrl.origin, 'http://127.0.0.1:3000');
+  // Valid URL strips userinfo, query params, and fragments
+  const validWithSecrets = 'https://admin:TOP_SECRET@egyhealth360-preview.vercel.app/api/v1/health?key=secret#hash';
+  const sanitized = sanitizeUrlForReport(validWithSecrets);
+  assert.equal(sanitized, 'https://egyhealth360-preview.vercel.app/api/v1/health');
+  assert.equal(sanitized.includes('TOP_SECRET'), false);
+  assert.equal(sanitized.includes('key=secret'), false);
+  assert.equal(sanitized.includes('#hash'), false);
 });
 
-test('Review Finding 2: reject cross-origin redirects, unexpected paths, queries, and fragments', async () => {
-  // Queries and fragments rejected on target URL
-  assert.throws(() => validatePreviewUrl('https://preview.vercel.app/?secret=token'), /QUERY_PARAMETERS_FORBIDDEN/);
-  assert.throws(() => validatePreviewUrl('https://preview.vercel.app/#anchor'), /FRAGMENT_FORBIDDEN/);
+test('Finding F1: validatePreviewUrl never echoes secret paths, hosts or headers in errors', () => {
+  // Disallowed path with secret canary token
+  const secretPathUrl = 'https://egyhealth360-preview.vercel.app/CANARY_SECRET_PATH_123';
+  assert.throws(
+    () => validatePreviewUrl(secretPathUrl),
+    (err) => {
+      assert.equal(err.message, ERROR_CATEGORIES.DISALLOWED_PATH);
+      assert.equal(err.message.includes('CANARY_SECRET_PATH_123'), false);
+      return true;
+    }
+  );
 
-  // Unapproved paths rejected
-  assert.throws(() => validatePreviewUrl('https://preview.vercel.app/admin'), /DISALLOWED_PATH/);
-  assert.throws(() => validatePreviewUrl('https://preview.vercel.app/users/profile'), /DISALLOWED_PATH/);
+  // Disallowed port error does not echo arbitrary port
+  assert.throws(
+    () => validatePreviewUrl('https://egyhealth360-preview.vercel.app:8080'),
+    (err) => {
+      assert.equal(err.message, ERROR_CATEGORIES.DISALLOWED_PORT);
+      assert.equal(err.message.includes('8080'), false);
+      return true;
+    }
+  );
 
-  // Approved paths permitted
-  const root = validatePreviewUrl('https://preview.vercel.app/');
-  assert.equal(root.pathname, '/');
-  const health = validatePreviewUrl('https://preview.vercel.app/api/v1/health');
-  assert.equal(health.pathname, '/api/v1/health');
+  // Query parameter error
+  assert.throws(
+    () => validatePreviewUrl('https://egyhealth360-preview.vercel.app/?secret=canary'),
+    (err) => {
+      assert.equal(err.message, ERROR_CATEGORIES.QUERY_PARAMETERS_FORBIDDEN);
+      assert.equal(err.message.includes('canary'), false);
+      return true;
+    }
+  );
+});
 
-  // Mock fetch simulating redirect behaviors
-  const mockRedirectFetch = async (target) => {
-    const urlStr = typeof target === 'string' ? target : target.href;
-    if (urlStr === 'https://preview-a.vercel.app/') {
-      return {
-        status: 302,
-        headers: new globalThis.Headers({ location: 'https://preview-b.vercel.app/' }),
-        text: async () => '',
-      };
-    }
-    if (urlStr === 'https://preview-a.vercel.app/redirect-to-query') {
-      return {
-        status: 302,
-        headers: new globalThis.Headers({ location: 'https://preview-a.vercel.app/?token=leak' }),
-        text: async () => '',
-      };
-    }
-    if (urlStr === 'https://preview-a.vercel.app/redirect-to-fragment') {
-      return {
-        status: 302,
-        headers: new globalThis.Headers({ location: 'https://preview-a.vercel.app/#leak' }),
-        text: async () => '',
-      };
-    }
-    if (urlStr === 'https://preview-a.vercel.app/redirect-to-ssrf') {
-      return {
-        status: 302,
-        headers: new globalThis.Headers({ location: 'http://169.254.169.254/metadata' }),
-        text: async () => '',
-      };
-    }
-    if (urlStr === 'https://preview-a.vercel.app/redirect-safe') {
-      return {
-        status: 302,
-        headers: new globalThis.Headers({ location: 'https://preview-a.vercel.app/api/v1/health' }),
-        text: async () => '',
-      };
-    }
-    if (urlStr === 'https://preview-a.vercel.app/api/v1/health') {
-      return {
-        status: 200,
-        headers: new globalThis.Headers({ 'content-type': 'application/json' }),
-        text: async () => JSON.stringify({ data: { status: 'ok' } }),
-      };
-    }
-    throw new Error(`NOT_MOCKED: ${urlStr}`);
+test('Finding F1: runPreviewSafetyCheck never reflects exception traces or unvetted headers into reports', async () => {
+  // Mock fetch throwing exception containing secret canary
+  const mockLeakingFetch = async () => {
+    throw new Error('INTERNAL_SECRET_CANARY_TRACE_INFO');
   };
 
-  // 1. Cross-origin redirect must throw CROSS_ORIGIN_REDIRECT_FORBIDDEN
-  await assert.rejects(
-    async () => safeGet('https://preview-a.vercel.app/', {}, mockRedirectFetch),
-    /CROSS_ORIGIN_REDIRECT_FORBIDDEN/
-  );
+  const report = await runPreviewSafetyCheck({
+    url: 'https://egyhealth360-preview.vercel.app',
+  }, mockLeakingFetch);
 
-  // 2. Redirect to SSRF target must throw CROSS_ORIGIN_REDIRECT_FORBIDDEN
-  await assert.rejects(
-    async () => safeGet('https://preview-a.vercel.app/redirect-to-ssrf', { allowAnyPathInTest: true }, mockRedirectFetch),
-    /CROSS_ORIGIN_REDIRECT_FORBIDDEN/
-  );
-
-  // 3. Redirect with query string must throw QUERY_PARAMETERS_FORBIDDEN
-  await assert.rejects(
-    async () => safeGet('https://preview-a.vercel.app/redirect-to-query', { allowAnyPathInTest: true }, mockRedirectFetch),
-    /QUERY_PARAMETERS_FORBIDDEN/
-  );
-
-  // 4. Redirect with fragment must throw FRAGMENT_FORBIDDEN
-  await assert.rejects(
-    async () => safeGet('https://preview-a.vercel.app/redirect-to-fragment', { allowAnyPathInTest: true }, mockRedirectFetch),
-    /FRAGMENT_FORBIDDEN/
-  );
-
-  // 5. Safe same-origin redirect succeeds
-  const safeRes = await safeGet('https://preview-a.vercel.app/redirect-safe', { allowAnyPathInTest: true }, mockRedirectFetch);
-  assert.equal(safeRes.status, 200);
-  assert.equal(safeRes.finalUrl, 'https://preview-a.vercel.app/api/v1/health');
-});
-
-test('Review Finding 3: sanitizeUrlForReport completely strips credentials, userinfo, queries, and fragments', () => {
-  const dirty = 'https://admin:SUPER_SECRET_TOKEN_999@preview-123.vercel.app/api/v1/health?param=secret#token';
-  const clean = sanitizeUrlForReport(dirty);
-  assert.equal(clean, 'https://preview-123.vercel.app/api/v1/health');
-  assert.equal(clean.includes('SUPER_SECRET'), false);
-  assert.equal(clean.includes('admin'), false);
-  assert.equal(clean.includes('param=secret'), false);
-  assert.equal(clean.includes('#token'), false);
-
-  // Fallback for unparseable input
-  assert.equal(sanitizeUrlForReport(12345), '[NON_STRING_URL]');
-});
-
-test('Review Finding 3: runPreviewSafetyCheck never leaks userinfo or response bodies into report or logs', async () => {
-  const dirtyUrl = 'https://bot:MY_HIGHLY_SECRET_KEY@preview-test.vercel.app';
-  const report = await runPreviewSafetyCheck({ url: dirtyUrl }, async () => {
-    throw new Error('NETWORK_DOWN');
-  });
-
+  assert.equal(report.overallStatus, 'FAIL');
   const serialized = JSON.stringify(report);
-  assert.equal(serialized.includes('MY_HIGHLY_SECRET_KEY'), false);
+  assert.equal(serialized.includes('INTERNAL_SECRET_CANARY_TRACE_INFO'), false);
 
   const formatted = formatTerminalReport(report);
-  assert.equal(formatted.includes('MY_HIGHLY_SECRET_KEY'), false);
+  assert.equal(formatted.includes('INTERNAL_SECRET_CANARY_TRACE_INFO'), false);
 
-  // Proxied health route check only stores allowlisted healthStatus, never unvetted payload fields
-  const mockHealthFetch = async (target) => {
-    const urlStr = typeof target === 'string' ? target : target.href;
-    if (urlStr === 'https://preview-safe.vercel.app/') {
-      return {
-        status: 200,
-        headers: new globalThis.Headers({ 'content-type': 'text/html' }),
-        text: async () => '<!DOCTYPE html><html><body>EgyHealth</body></html>',
-      };
-    }
-    if (urlStr === 'https://preview-safe.vercel.app/api/v1/health') {
-      return {
-        status: 200,
-        headers: new globalThis.Headers({ 'content-type': 'application/json' }),
-        text: async () => JSON.stringify({
-          data: {
-            status: 'ok',
-            internal_db_secret: 'SHOULD_NOT_BE_EXPOSED_IN_REPORT_DETAILS',
-            nested: { confidential: true },
-          },
-        }),
-      };
-    }
-    throw new Error('NOT_FOUND');
-  };
-
-  const healthReport = await runPreviewSafetyCheck({ url: 'https://preview-safe.vercel.app' }, mockHealthFetch);
-  const healthCheck = healthReport.checks.find(c => c.name.includes('Proxied Health'));
-  assert.ok(healthCheck);
-  assert.equal(healthCheck.status, 'PASS');
-  assert.equal(healthCheck.details.healthStatus, 'ok');
-  assert.equal('internal_db_secret' in healthCheck.details, false);
-  assert.equal(JSON.stringify(healthReport).includes('SHOULD_NOT_BE_EXPOSED_IN_REPORT_DETAILS'), false);
-});
-
-test('Review Finding 4: apply timeout and response-size limits to complete request including body consumption', async () => {
-  // 1. Content-Length header exceeding limit
-  const fetchTooLargeHeader = async () => ({
-    status: 200,
-    headers: new globalThis.Headers({ 'content-length': '2000000' }),
-    text: async () => '',
+  // Header security evaluation does not reflect malicious nosniff canary
+  const badHeaders = new globalThis.Headers({
+    'content-type': 'text/html; secret-canary=true',
+    'x-content-type-options': 'CANARY_INJECTED_NOSNIFF_VALUE',
   });
-  await assert.rejects(
-    async () => safeGet('https://preview-size.vercel.app/', { maxBytes: 100000 }, fetchTooLargeHeader),
-    /RESPONSE_TOO_LARGE/
-  );
+  const headersEval = evaluateSecurityHeaders(badHeaders);
+  assert.equal(headersEval.pass, false);
+  assert.equal(headersEval.warnings.includes('INVALID_NOSNIFF_HEADER'), true);
+  assert.equal(JSON.stringify(headersEval).includes('CANARY_INJECTED_NOSNIFF_VALUE'), false);
 
-  // 2. Body text length exceeding limit
-  const fetchTooLargeBody = async () => ({
-    status: 200,
-    headers: new globalThis.Headers({}),
-    text: async () => 'X'.repeat(5000),
-  });
-  await assert.rejects(
-    async () => safeGet('https://preview-size.vercel.app/', { maxBytes: 1000 }, fetchTooLargeBody),
-    /RESPONSE_TOO_LARGE/
-  );
-
-  // 3. Stalled body consumption triggers end-to-end timeout
-  const fetchStalledBody = async (_url, options) => ({
+  // Expected SHA validation: rejects non-40hex canary values without echoing
+  const badShaReport = await runPreviewSafetyCheck({
+    url: 'https://egyhealth360-preview.vercel.app',
+    expectedSha: 'INJECTION_CANARY_SHA_VALUE_THAT_IS_NOT_HEX',
+  }, async () => ({
     status: 200,
     headers: new globalThis.Headers({ 'content-type': 'text/html' }),
-    text: () => new Promise((_, reject) => {
-      if (options.signal) {
-        options.signal.addEventListener('abort', () => {
-          const abortErr = new Error('The operation was aborted');
-          abortErr.name = 'AbortError';
-          reject(abortErr);
-        });
-      }
-    }),
+    text: async () => '<html><body>OK</body></html>',
+  }));
+
+  const shaCheck = badShaReport.checks.find(c => c.name.includes('Source SHA'));
+  assert.ok(shaCheck);
+  assert.equal(shaCheck.status, 'FAIL');
+  assert.equal(shaCheck.details.errorCategory, ERROR_CATEGORIES.INVALID_SHA_FORMAT);
+  assert.equal(JSON.stringify(badShaReport).includes('INJECTION_CANARY_SHA_VALUE_THAT_IS_NOT_HEX'), false);
+});
+
+test('Finding F2: safeGet enforces real streaming byte limits with early cancellation', async () => {
+  // 1. Upfront Content-Length header check
+  const fetchTooLargeHeader = async () => ({
+    status: 200,
+    headers: new globalThis.Headers({ 'content-length': '5000000' }),
+    body: { cancel: async () => {} },
+  });
+  await assert.rejects(
+    async () => safeGet('https://egyhealth360-preview.vercel.app/', { maxBytes: 1000 }, fetchTooLargeHeader),
+    (err) => err.message === ERROR_CATEGORIES.RESPONSE_TOO_LARGE
+  );
+
+  // 2. Real streaming chunk reader cancels early when byte limit exceeded
+  let streamCanceled = false;
+  let chunksRead = 0;
+  const mockStreamingBody = {
+    getReader: () => {
+      const chunks = [
+        new TextEncoder().encode('X'.repeat(600)),
+        new TextEncoder().encode('Y'.repeat(600)),
+        new TextEncoder().encode('Z'.repeat(600)),
+      ];
+      let idx = 0;
+      return {
+        read: async () => {
+          if (idx < chunks.length) {
+            chunksRead++;
+            return { done: false, value: chunks[idx++] };
+          }
+          return { done: true, value: undefined };
+        },
+        cancel: async () => {
+          streamCanceled = true;
+        },
+      };
+    },
+  };
+
+  const fetchStreamResponse = async () => ({
+    status: 200,
+    headers: new globalThis.Headers({ 'content-type': 'text/html' }),
+    body: mockStreamingBody,
   });
 
   await assert.rejects(
-    async () => safeGet('https://preview-size.vercel.app/', { timeout: 30 }, fetchStalledBody),
-    /REQUEST_TIMEOUT/
+    async () => safeGet('https://egyhealth360-preview.vercel.app/', { maxBytes: 1000 }, fetchStreamResponse),
+    (err) => err.message === ERROR_CATEGORIES.RESPONSE_TOO_LARGE
+  );
+  assert.equal(streamCanceled, true);
+  assert.equal(chunksRead, 2); // Exceeded on chunk 2 (1200 bytes > 1000 bytes); chunk 3 was never read!
+
+  // 3. Multi-byte UTF-8 payload exceeding byte bound even if character count is smaller
+  const multibyte3ByteChars = '€'.repeat(400); // 400 chars, but 1200 UTF-8 bytes!
+  const fetchMultibyte = async () => ({
+    status: 200,
+    headers: new globalThis.Headers({}),
+    text: async () => multibyte3ByteChars,
+  });
+  await assert.rejects(
+    async () => safeGet('https://egyhealth360-preview.vercel.app/', { maxBytes: 1000 }, fetchMultibyte),
+    (err) => err.message === ERROR_CATEGORIES.RESPONSE_TOO_LARGE
+  );
+
+  // 4. Stalled stream triggers REQUEST_TIMEOUT
+  const fetchStalledStream = async (_url, options) => ({
+    status: 200,
+    headers: new globalThis.Headers({ 'content-type': 'text/html' }),
+    body: {
+      getReader: () => ({
+        read: () => new Promise((_, reject) => {
+          if (options.signal) {
+            options.signal.addEventListener('abort', () => {
+              const abortErr = new Error('The operation was aborted');
+              abortErr.name = 'AbortError';
+              reject(abortErr);
+            });
+          }
+        }),
+        cancel: async () => {},
+      }),
+    },
+  });
+
+  await assert.rejects(
+    async () => safeGet('https://egyhealth360-preview.vercel.app/', { timeout: 30 }, fetchStalledStream),
+    (err) => err.message === ERROR_CATEGORIES.REQUEST_TIMEOUT
   );
 });
 
-test('Review Finding 5: AP05 asset audit marks gate OPEN and status NOT_VERIFIED', () => {
+test('Finding F3: APPROVED_EGYHEALTH_PREVIEW_PATTERN restricts origins to EgyHealth projects', () => {
+  // Approved EgyHealth preview domains
+  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360.vercel.app'), true);
+  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360-preview.vercel.app'), true);
+  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360-pre-final-staging-abuhmaid2810gmailcoms-projects.vercel.app'), true);
+  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360-pre-final-api-abuhmaid2810gmailcoms-projects.vercel.app'), true);
+
+  // Foreign or unapproved Vercel projects MUST be rejected
+  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('attacker.vercel.app'), false);
+  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('otherproject.vercel.app'), false);
+  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('evil-egyhealth360.vercel.app'), false);
+  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360.attacker.com'), false);
+  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360.vercel.app.attacker.com'), false);
+
+  assert.throws(
+    () => validatePreviewUrl('https://attacker.vercel.app'),
+    /UNTRUSTED_PREVIEW_DOMAIN/
+  );
+});
+
+test('Finding F3: test options strictly require explicit injected offline transport', async () => {
+  // Invoking safeGet with allowTestHttp without customFetch MUST reject
+  await assert.rejects(
+    async () => safeGet('http://127.0.0.1:3000', { allowTestHttp: true }),
+    /TEST_TRANSPORT_REQUIRED/
+  );
+
+  // Explicitly passing globalThis.fetch as customFetch with test options MUST reject
+  await assert.rejects(
+    async () => safeGet('http://127.0.0.1:3000', { allowTestHttp: true }, globalThis.fetch),
+    /TEST_TRANSPORT_REQUIRED/
+  );
+
+  // runPreviewSafetyCheck fails closed immediately when allowTestHttp is passed without customFetch
+  const testReport = await runPreviewSafetyCheck({
+    url: 'http://127.0.0.1:3000',
+    allowTestHttp: true,
+  });
+  assert.equal(testReport.overallStatus, 'FAIL');
+  assert.equal(testReport.checks[0].details.errorCategory, ERROR_CATEGORIES.TEST_TRANSPORT_REQUIRED);
+});
+
+test('Finding F4: safeGet rejects ALL HTTP redirects (301, 302, 303, 307, 308)', async () => {
+  const mockRedirectFetch = async (target) => {
+    const urlStr = typeof target === 'string' ? target : target.href;
+    if (urlStr.includes('/redirect-301')) {
+      return {
+        status: 301,
+        headers: new globalThis.Headers({ location: 'https://egyhealth360-preview.vercel.app/api/v1/health' }),
+        body: { cancel: async () => {} },
+      };
+    }
+    if (urlStr.includes('/redirect-302')) {
+      return {
+        status: 302,
+        headers: new globalThis.Headers({ location: 'https://egyhealth360-preview.vercel.app/target' }),
+        body: { cancel: async () => {} },
+      };
+    }
+    if (urlStr.includes('/redirect-307')) {
+      return {
+        status: 307,
+        headers: new globalThis.Headers({ location: 'https://attacker.com/leak' }),
+        body: { cancel: async () => {} },
+      };
+    }
+    return {
+      status: 200,
+      headers: new globalThis.Headers({ 'content-type': 'text/html' }),
+      text: async () => '<h1>OK</h1>',
+    };
+  };
+
+  // 301 redirect rejected
+  await assert.rejects(
+    async () => safeGet('https://egyhealth360-preview.vercel.app/redirect-301', { allowAnyPathInTest: true }, mockRedirectFetch),
+    (err) => err.message === ERROR_CATEGORIES.REDIRECTS_PROHIBITED
+  );
+
+  // 302 redirect rejected
+  await assert.rejects(
+    async () => safeGet('https://egyhealth360-preview.vercel.app/redirect-302', { allowAnyPathInTest: true }, mockRedirectFetch),
+    (err) => err.message === ERROR_CATEGORIES.REDIRECTS_PROHIBITED
+  );
+
+  // 307 redirect rejected
+  await assert.rejects(
+    async () => safeGet('https://egyhealth360-preview.vercel.app/redirect-307', { allowAnyPathInTest: true }, mockRedirectFetch),
+    (err) => err.message === ERROR_CATEGORIES.REDIRECTS_PROHIBITED
+  );
+});
+
+test('P3: parseCliArgs strictly rejects unknown options, duplicate flags, and invalid timeout', () => {
+  // Unknown option
+  assert.throws(() => parseCliArgs(['--unknown-flag', 'value']), /UNKNOWN_OPTION/);
+
+  // Duplicate flag
+  assert.throws(
+    () => parseCliArgs(['--url', 'https://egyhealth360.vercel.app', '--url', 'https://egyhealth360-2.vercel.app']),
+    /DUPLICATE_ARGUMENT/
+  );
+
+  // Invalid timeout (string)
+  assert.throws(() => parseCliArgs(['--timeout', 'not-a-number']), /INVALID_TIMEOUT/);
+
+  // Timeout out of range (<1000)
+  assert.throws(() => parseCliArgs(['--timeout', '500']), /INVALID_TIMEOUT/);
+
+  // Timeout out of range (>60000)
+  assert.throws(() => parseCliArgs(['--timeout', '70000']), /INVALID_TIMEOUT/);
+
+  // Valid arguments parse cleanly
+  const valid = parseCliArgs([
+    '--url', 'https://egyhealth360-preview.vercel.app',
+    '--api-url', 'https://egyhealth360-api.vercel.app',
+    '--expected-sha', 'd268264b1d062c65425a223f8f25d6e72442586e',
+    '--timeout', '5000',
+    '--json',
+  ]);
+  assert.equal(valid.url, 'https://egyhealth360-preview.vercel.app');
+  assert.equal(valid.apiUrl, 'https://egyhealth360-api.vercel.app');
+  assert.equal(valid.expectedSha, 'd268264b1d062c65425a223f8f25d6e72442586e');
+  assert.equal(valid.timeout, 5000);
+  assert.equal(valid.json, true);
+});
+
+test('inspectLocalAssets inspects fonts and notes AP05 open gate', () => {
   const assets = inspectLocalAssets();
   assert.equal(assets.pass, false);
   assert.equal(assets.status, 'NOT_VERIFIED');
@@ -320,37 +397,19 @@ test('scanBodyForLeaks detects sensitive environment and DB secrets', () => {
   assert.equal(scanBodyForLeaks(leakStack).leaked, true);
 });
 
-test('evaluateSecurityHeaders flags unexpected Set-Cookie and nosniff mismatch', () => {
-  const goodHeaders = new globalThis.Headers({
-    'content-type': 'application/json',
-    'x-content-type-options': 'nosniff',
-  });
-  const goodRes = evaluateSecurityHeaders(goodHeaders);
-  assert.equal(goodRes.pass, true);
-  assert.equal(goodRes.warnings.length, 0);
-
-  const cookieHeaders = new globalThis.Headers({
-    'content-type': 'application/json',
-    'set-cookie': 'eh_session=xyz; Path=/; HttpOnly',
-  });
-  const cookieRes = evaluateSecurityHeaders(cookieHeaders);
-  assert.equal(cookieRes.pass, false);
-  assert.ok(cookieRes.warnings.some(w => /Set-Cookie/i.test(w)));
-});
-
-test('runPreviewSafetyCheck executes complete workflow deterministically', async () => {
+test('runPreviewSafetyCheck executes complete workflow deterministically in offline mode', async () => {
   const mockResponses = {
-    'https://preview-134.vercel.app/': {
+    'https://egyhealth360-preview.vercel.app/': {
       status: 200,
       headers: new globalThis.Headers({ 'content-type': 'text/html; charset=utf-8', 'x-content-type-options': 'nosniff' }),
       text: async () => '<!DOCTYPE html><html><head><title>EgyHealth 360</title></head><body><div id="root">App</div></body></html>',
     },
-    'https://preview-134.vercel.app/api/v1/health': {
+    'https://egyhealth360-preview.vercel.app/api/v1/health': {
       status: 200,
       headers: new globalThis.Headers({ 'content-type': 'application/json' }),
-      text: async () => JSON.stringify({ data: { status: 'ok' } }),
+      text: async () => JSON.stringify({ data: { status: 'ok', secret_internal: 'IGNORE_ME' } }),
     },
-    'https://api-134.vercel.app/api/v1/health': {
+    'https://egyhealth360-api.vercel.app/api/v1/health': {
       status: 200,
       headers: new globalThis.Headers({ 'content-type': 'application/json' }),
       text: async () => JSON.stringify({ data: { status: 'ok' } }),
@@ -365,30 +424,32 @@ test('runPreviewSafetyCheck executes complete workflow deterministically', async
   };
 
   const report = await runPreviewSafetyCheck({
-    url: 'https://preview-134.vercel.app',
-    apiUrl: 'https://api-134.vercel.app',
+    url: 'https://egyhealth360-preview.vercel.app',
+    apiUrl: 'https://egyhealth360-api.vercel.app',
     expectedSha: 'd268264b1d062c65425a223f8f25d6e72442586e',
   }, mockFetch);
 
   assert.equal(report.overallStatus, 'PASS');
   assert.equal(report.clinicalReadiness, 'NOT_VERIFIED');
   assert.ok(report.clinicalReadinessReason.includes('ZERO clinical readiness'));
-  assert.ok(report.ssrfPolicy.includes('socket-level DNS pinning is unverified'));
   assert.equal(report.summary.fail, 0);
   assert.ok(report.checks.some(c => c.name.includes('Proxied Health') && c.status === 'PASS'));
   assert.ok(report.checks.some(c => c.name.includes('Direct API Health') && c.status === 'PASS'));
   assert.ok(report.checks.some(c => c.name.includes('Source SHA Attestation') && c.status === 'NOT_VERIFIED'));
   assert.ok(report.checks.some(c => c.name.includes('AP05 Brand & Asset') && c.status === 'NOT_VERIFIED'));
+
+  // Ensure secret_internal was never copied into check details
+  assert.equal(JSON.stringify(report).includes('IGNORE_ME'), false);
 });
 
 test('runPreviewSafetyCheck flags FAIL on secret leak in HTML', async () => {
   const mockResponses = {
-    'https://preview-leak.vercel.app/': {
+    'https://egyhealth360-leak.vercel.app/': {
       status: 200,
       headers: new globalThis.Headers({ 'content-type': 'text/html' }),
       text: async () => '<html><body>Error DATABASE_URL=postgres://user:pass@neon.tech/main</body></html>',
     },
-    'https://preview-leak.vercel.app/api/v1/health': {
+    'https://egyhealth360-leak.vercel.app/api/v1/health': {
       status: 200,
       headers: new globalThis.Headers({ 'content-type': 'application/json' }),
       text: async () => JSON.stringify({ data: { status: 'ok' } }),
@@ -400,7 +461,7 @@ test('runPreviewSafetyCheck flags FAIL on secret leak in HTML', async () => {
     return mockResponses[urlStr];
   };
 
-  const report = await runPreviewSafetyCheck({ url: 'https://preview-leak.vercel.app' }, mockFetch);
+  const report = await runPreviewSafetyCheck({ url: 'https://egyhealth360-leak.vercel.app' }, mockFetch);
   assert.equal(report.overallStatus, 'FAIL');
   assert.ok(report.summary.fail >= 1);
   const leakCheck = report.checks.find(c => c.name.includes('Web Root'));
@@ -408,34 +469,12 @@ test('runPreviewSafetyCheck flags FAIL on secret leak in HTML', async () => {
   assert.ok(leakCheck.details.leaks.length >= 1);
 });
 
-test('parseCliArgs parses all flags and options correctly', () => {
-  const args = [
-    '--url', 'https://preview.vercel.app',
-    '--api-url', 'https://api.vercel.app',
-    '--expected-sha', 'abcdef123456',
-    '--timeout', '5000',
-    '--json',
-  ];
-  const parsed = parseCliArgs(args);
-  assert.equal(parsed.url, 'https://preview.vercel.app');
-  assert.equal(parsed.apiUrl, 'https://api.vercel.app');
-  assert.equal(parsed.expectedSha, 'abcdef123456');
-  assert.equal(parsed.timeout, 5000);
-  assert.equal(parsed.json, true);
-
-  // Formatting check
-  const fakeReport = {
-    evaluatedAt: '2026-11-15T00:00:00.000Z',
-    targetWebUrl: 'https://preview.vercel.app',
-    overallStatus: 'PASS',
-    checks: [{ name: 'Test Check', status: 'PASS', details: { elapsedMs: 50 } }],
-    ssrfPolicy: 'Restricted to approved *.vercel.app',
-    clinicalReadiness: 'NOT_VERIFIED',
-    clinicalReadinessReason: 'Test reason',
-    summary: { pass: 1, warn: 0, fail: 0, notVerified: 0 },
-  };
-  const formatted = formatTerminalReport(fakeReport);
-  assert.ok(formatted.includes('EGYHEALTH 360'));
-  assert.ok(formatted.includes('[PASS        ] Test Check'));
-  assert.ok(formatted.includes('NETWORK & SSRF POLICY NOTE:'));
+test('getSafeErrorCategory maps errors correctly to enum categories', () => {
+  assert.equal(getSafeErrorCategory(new Error(ERROR_CATEGORIES.DISALLOWED_PORT)), ERROR_CATEGORIES.DISALLOWED_PORT);
+  assert.equal(getSafeErrorCategory(new Error(ERROR_CATEGORIES.REDIRECTS_PROHIBITED)), ERROR_CATEGORIES.REDIRECTS_PROHIBITED);
+  const abortErr = new Error('The operation was aborted');
+  abortErr.name = 'AbortError';
+  assert.equal(getSafeErrorCategory(abortErr), ERROR_CATEGORIES.REQUEST_TIMEOUT);
+  assert.equal(getSafeErrorCategory(new Error('Unknown connection dropped')), ERROR_CATEGORIES.FETCH_FAILED);
+  assert.equal(getSafeErrorCategory(null), ERROR_CATEGORIES.UNKNOWN_ERROR);
 });

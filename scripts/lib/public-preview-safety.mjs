@@ -3,17 +3,53 @@
  * Dependency-free, safe, read-only verification of public deployment previews.
  *
  * Security Invariants:
- * 1. Enforces HTTPS on standard port 443 only (no arbitrary ports).
- * 2. Restricts preview domains to reviewed *.vercel.app hosts; bans IP literals.
- * 3. Rejects queries, fragments, and disallowed paths (permits only / and /api/v1/health).
- * 4. Strictly forbids cross-origin redirects and redirects with query/fragment.
- * 5. Complete end-to-end timeout covering body consumption; strict response byte caps.
- * 6. Zero secret leakage: sanitizes URL userinfo and never logs raw response bodies or unvetted JSON.
- * 7. AP05 asset audit returns NOT_VERIFIED / OPEN_GATE (inventory != license clearance).
- * 8. Never conflates HTTP 200 with Live clinical release readiness.
+ * 1. F1: Strict reporting secrecy: allowlisted report fields, fixed error categories, zero reflection.
+ * 2. F2: Real streaming resource limits with byte-counting, early stream cancellation, and end-to-end deadline.
+ * 3. F3: Bounded to approved EgyHealth preview origins (egyhealth360-*.vercel.app); strict test transport isolation.
+ * 4. F4: Zero redirects followed: every 3xx is immediately rejected with REDIRECTS_PROHIBITED.
+ * 5. AP05 asset audit marks status NOT_VERIFIED / OPEN_GATE (inventory != license clearance).
+ * 6. Never conflates HTTP 200 with Live clinical release readiness.
  */
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
+
+/** Fixed, allowlisted error categories preventing user data / exception message reflection */
+export const ERROR_CATEGORIES = {
+  PREVIEW_URL_REQUIRED: 'PREVIEW_URL_REQUIRED',
+  INVALID_URL_FORMAT: 'INVALID_URL_FORMAT',
+  UNSAFE_PROTOCOL: 'UNSAFE_PROTOCOL',
+  CREDENTIALS_FORBIDDEN: 'CREDENTIALS_FORBIDDEN',
+  DISALLOWED_PORT: 'DISALLOWED_PORT',
+  QUERY_PARAMETERS_FORBIDDEN: 'QUERY_PARAMETERS_FORBIDDEN',
+  FRAGMENT_FORBIDDEN: 'FRAGMENT_FORBIDDEN',
+  IP_HOSTNAME_FORBIDDEN: 'IP_HOSTNAME_FORBIDDEN',
+  SSRF_PROHIBITED: 'SSRF_PROHIBITED',
+  UNTRUSTED_PREVIEW_DOMAIN: 'UNTRUSTED_PREVIEW_DOMAIN',
+  DISALLOWED_PATH: 'DISALLOWED_PATH',
+  REDIRECTS_PROHIBITED: 'REDIRECTS_PROHIBITED',
+  RESPONSE_TOO_LARGE: 'RESPONSE_TOO_LARGE',
+  REQUEST_TIMEOUT: 'REQUEST_TIMEOUT',
+  TEST_TRANSPORT_REQUIRED: 'TEST_TRANSPORT_REQUIRED',
+  FETCH_FAILED: 'FETCH_FAILED',
+  INVALID_HEALTH_PAYLOAD: 'INVALID_HEALTH_PAYLOAD',
+  INVALID_SHA_FORMAT: 'INVALID_SHA_FORMAT',
+  UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+};
+
+/**
+ * Maps any error or message into a fixed allowlisted error category string.
+ * @param {unknown} err
+ * @returns {string}
+ */
+export function getSafeErrorCategory(err) {
+  if (!err) return ERROR_CATEGORIES.UNKNOWN_ERROR;
+  const msg = typeof err === 'string' ? err : err.message || '';
+  for (const cat of Object.keys(ERROR_CATEGORIES)) {
+    if (msg.startsWith(cat)) return cat;
+  }
+  if (err.name === 'AbortError') return ERROR_CATEGORIES.REQUEST_TIMEOUT;
+  return ERROR_CATEGORIES.FETCH_FAILED;
+}
 
 /**
  * Checks if an IPv4 address string falls into a private or loopback range.
@@ -71,87 +107,92 @@ export function isIpLiteral(hostname) {
 }
 
 /**
- * Sanitizes any raw input URL before recording in logs, reports, or terminal outputs.
- * Completely removes userinfo (passwords/tokens), search params, and hash fragments.
+ * Sanitizes input URL for reporting. Returns [INVALID_TARGET] for unparseable or disallowed URLs.
+ * Never echoes raw unparsed inputs, userinfo, query strings, or fragments.
  * @param {string} rawUrl
  * @returns {string}
  */
 export function sanitizeUrlForReport(rawUrl) {
-  if (typeof rawUrl !== 'string') return '[NON_STRING_URL]';
+  if (typeof rawUrl !== 'string' || rawUrl.trim() === '') return '[INVALID_TARGET]';
   try {
     const parsed = new URL(rawUrl.trim());
+    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+      return '[INVALID_TARGET]';
+    }
     parsed.username = '';
     parsed.password = '';
     parsed.search = '';
     parsed.hash = '';
-    return parsed.href;
+    const cleanPath = parsed.pathname === '' || parsed.pathname === '/' ? '/' : parsed.pathname;
+    return `${parsed.origin}${cleanPath}`;
   } catch {
-    // Fallback: strip userinfo pattern if URL parsing fails
-    return rawUrl.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@').slice(0, 120);
+    /* Invalid URL format: never echo raw input! */
+    return '[INVALID_TARGET]';
   }
 }
 
 /**
- * Pattern for approved public Vercel preview hostnames.
- * Matches *.vercel.app, e.g. egyhealth360-preview.vercel.app
+ * Pattern for approved public EgyHealth preview project hostnames.
+ * Matches egyhealth360.vercel.app or egyhealth360-*.vercel.app.
+ * Strictly prevents arbitrary foreign *.vercel.app projects.
  */
-export const APPROVED_VERCEL_PREVIEW_PATTERN = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*\.vercel\.app$/i;
+export const APPROVED_EGYHEALTH_PREVIEW_PATTERN = /^egyhealth360(?:-[a-z0-9-]+)?\.vercel\.app$/i;
 
 /**
  * Validates a target preview URL against strict public HTTPS rules.
- * Throws an Error with a safe message if URL is invalid or unsafe.
+ * Throws an Error with a fixed category string if URL is invalid or unsafe.
  * @param {string} inputUrl
  * @param {object} [options]
  * @param {boolean} [options.allowTestHttp] - Test-only escape hatch for offline tests
- * @param {boolean} [options.isInspectionRoute] - Whether validating an inspection subroute (/api/v1/health)
+ * @param {boolean} [options.allowAnyPathInTest] - Test-only escape hatch for path tests
  * @returns {URL}
  */
 export function validatePreviewUrl(inputUrl, options = {}) {
   if (typeof inputUrl !== 'string' || inputUrl.trim() === '') {
-    throw new Error('PREVIEW_URL_REQUIRED: URL must be a non-empty string');
+    throw new Error(ERROR_CATEGORIES.PREVIEW_URL_REQUIRED);
   }
   let parsed;
   try {
     parsed = new URL(inputUrl.trim());
   } catch {
-    throw new Error('INVALID_URL_FORMAT: Cannot parse URL');
+    throw new Error(ERROR_CATEGORIES.INVALID_URL_FORMAT);
   }
 
   const allowTest = !!options.allowTestHttp;
 
   // 1. Protocol: HTTPS only in public mode
   if (parsed.protocol !== 'https:' && !(allowTest && parsed.protocol === 'http:')) {
-    throw new Error(`UNSAFE_PROTOCOL: Protocol must be HTTPS, got "${parsed.protocol}"`);
+    throw new Error(ERROR_CATEGORIES.UNSAFE_PROTOCOL);
   }
 
   // 2. Reject embedded userinfo
   if (parsed.username || parsed.password) {
-    throw new Error('CREDENTIALS_FORBIDDEN: URL must not contain embedded userinfo or credentials');
+    throw new Error(ERROR_CATEGORIES.CREDENTIALS_FORBIDDEN);
   }
 
-  // 3. Port: Port 443 ONLY (or omitted). No arbitrary ports like 3000, 3001, 8080 in public mode.
+  // 3. Port: Port 443 ONLY (or omitted). No arbitrary ports in public mode.
   if (parsed.port && parsed.port !== '443' && !allowTest) {
-    throw new Error(`DISALLOWED_PORT: Public preview must use standard HTTPS port 443, got "${parsed.port}"`);
+    throw new Error(ERROR_CATEGORIES.DISALLOWED_PORT);
   }
 
   // 4. Query parameters and fragments strictly forbidden
   if (parsed.search && parsed.search !== '') {
-    throw new Error('QUERY_PARAMETERS_FORBIDDEN: Target URL must not contain query parameters');
+    throw new Error(ERROR_CATEGORIES.QUERY_PARAMETERS_FORBIDDEN);
   }
   if (parsed.hash && parsed.hash !== '') {
-    throw new Error('FRAGMENT_FORBIDDEN: Target URL must not contain URL fragments');
+    throw new Error(ERROR_CATEGORIES.FRAGMENT_FORBIDDEN);
   }
 
-  // 5. Hostname & IP Restrictions
+  // 5. Hostname & IP Restrictions: must match approved EgyHealth project preview
   if (!allowTest) {
     if (isIpLiteral(parsed.hostname)) {
-      throw new Error(`IP_HOSTNAME_FORBIDDEN: Public preview requires a domain hostname, got IP literal "${parsed.hostname}"`);
+      throw new Error(ERROR_CATEGORIES.IP_HOSTNAME_FORBIDDEN);
     }
     if (isPrivateHostnameOrIp(parsed.hostname)) {
-      throw new Error(`SSRF_PROHIBITED: Target hostname "${parsed.hostname}" is loopback, private, or local`);
+      throw new Error(ERROR_CATEGORIES.SSRF_PROHIBITED);
     }
-    if (!APPROVED_VERCEL_PREVIEW_PATTERN.test(parsed.hostname)) {
-      throw new Error(`UNTRUSTED_PREVIEW_DOMAIN: Target hostname "${parsed.hostname}" must be an approved *.vercel.app domain`);
+    if (!APPROVED_EGYHEALTH_PREVIEW_PATTERN.test(parsed.hostname)) {
+      throw new Error(ERROR_CATEGORIES.UNTRUSTED_PREVIEW_DOMAIN);
     }
   }
 
@@ -159,7 +200,7 @@ export function validatePreviewUrl(inputUrl, options = {}) {
   const normalizedPath = parsed.pathname === '' ? '/' : parsed.pathname;
   const allowedPaths = ['/', '/api/v1/health'];
   if (!allowedPaths.includes(normalizedPath) && !options.allowAnyPathInTest) {
-    throw new Error(`DISALLOWED_PATH: Target URL path must be root / or /api/v1/health, got "${normalizedPath}"`);
+    throw new Error(ERROR_CATEGORIES.DISALLOWED_PATH);
   }
 
   return parsed;
@@ -189,12 +230,12 @@ export function scanBodyForLeaks(body) {
   const findings = [];
   for (const pattern of SENSITIVE_PATTERNS) {
     if (pattern.test(body)) {
-      findings.push(`Pattern matched: ${pattern.toString()}`);
+      findings.push('SENSITIVE_PATTERN_MATCHED');
     }
   }
   // Check for raw unhandled server error stacks
   if (/at\s+async\s+[a-zA-Z0-9_.]+\s+\(/i.test(body) && /node_modules|apps\/[a-z]+/i.test(body)) {
-    findings.push('Unhandled Node.js stack trace detected in body');
+    findings.push('UNHANDLED_STACK_TRACE_MATCHED');
   }
   return {
     leaked: findings.length > 0,
@@ -203,32 +244,34 @@ export function scanBodyForLeaks(body) {
 }
 
 /**
- * Checks response security headers and flags warnings.
+ * Checks response security headers without reflecting unvalidated header values.
  * @param {Headers} headers
- * @returns {{ pass: boolean, warnings: string[], checks: Record<string, string|null> }}
+ * @returns {{ pass: boolean, warnings: string[], checks: { isHtml: boolean, isJson: boolean, hasNosniff: boolean } }}
  */
 export function evaluateSecurityHeaders(headers) {
   const warnings = [];
-  const contentType = headers.get('content-type') || '';
-  const nosniff = headers.get('x-content-type-options');
-  const setCookie = headers.get('set-cookie');
-  const frameOptions = headers.get('x-frame-options');
+  const contentType = (headers?.get('content-type') || '').toLowerCase();
+  const nosniff = headers?.get('x-content-type-options');
+  const setCookie = headers?.get('set-cookie');
 
-  if (nosniff && nosniff.toLowerCase() !== 'nosniff') {
-    warnings.push(`X-Content-Type-Options is "${nosniff}", expected "nosniff"`);
+  const isHtml = contentType.includes('text/html');
+  const isJson = contentType.includes('application/json');
+  const hasNosniff = nosniff ? nosniff.toLowerCase() === 'nosniff' : false;
+
+  if (nosniff && !hasNosniff) {
+    warnings.push('INVALID_NOSNIFF_HEADER');
   }
   if (setCookie) {
-    warnings.push('Unexpected Set-Cookie header present on anonymous public read endpoint');
+    warnings.push('UNEXPECTED_SET_COOKIE');
   }
 
   return {
     pass: warnings.length === 0,
     warnings,
     checks: {
-      contentType,
-      xContentTypeOptions: nosniff,
-      setCookie: setCookie ? '[REDACTED_COOKIE_PRESENT]' : null,
-      xFrameOptions: frameOptions,
+      isHtml,
+      isJson,
+      hasNosniff,
     },
   };
 }
@@ -238,97 +281,120 @@ export const DEFAULT_MAX_BODY_BYTES = 1048576; // 1 MB
 export const HEALTH_MAX_BODY_BYTES = 65536; // 64 KB
 
 /**
- * Performs safe GET request with complete end-to-end timeout, strict redirect limits,
- * response size ceiling, and same-origin redirect enforcement.
+ * Performs safe GET request with complete streaming resource bounds:
+ * - Reject ALL redirects immediately (Finding F4).
+ * - Real streaming chunk byte counting with early reader cancellation (Finding F2).
+ * - Enforces explicit offline transport injection when test options are active (Finding F3).
+ * - Fixed error categories (Finding F1).
+ *
  * @param {string} targetUrl
- * @param {object} options
+ * @param {object} [options]
  * @param {number} [options.timeout]
- * @param {number} [options.maxRedirects]
  * @param {number} [options.maxBytes]
  * @param {boolean} [options.allowTestHttp]
+ * @param {boolean} [options.allowAnyPathInTest]
  * @param {function} [fetchFn] - Custom fetch function for offline testing
  * @returns {Promise<{ status: number, headers: Headers, body: string, finalUrl: string, elapsedMs: number }>}
  */
 export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetch) {
+  // Finding F3: If relaxed test options are active, an explicit injected offline transport is MANDATORY!
+  if (options.allowTestHttp || options.allowAnyPathInTest) {
+    if (!fetchFn || fetchFn === globalThis.fetch) {
+      throw new Error(ERROR_CATEGORIES.TEST_TRANSPORT_REQUIRED);
+    }
+  }
+
   const fetchImpl = fetchFn || globalThis.fetch;
   const timeoutMs = options.timeout ?? 10000;
-  const maxRedirects = options.maxRedirects ?? 2;
   const maxBytes = options.maxBytes ?? DEFAULT_MAX_BODY_BYTES;
   const initialUrl = validatePreviewUrl(targetUrl, options);
-  let currentUrl = initialUrl.href;
-  const initialOrigin = initialUrl.origin;
-  let redirectsFollowed = 0;
+  const currentUrl = initialUrl.href;
 
-  while (redirectsFollowed <= maxRedirects) {
-    const started = Date.now();
-    const controller = new globalThis.AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const started = Date.now();
+  const controller = new globalThis.AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
 
-    try {
-      const response = await fetchImpl(currentUrl, {
-        method: 'GET',
-        redirect: 'manual',
-        headers: {
-          'Accept': 'text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8',
-          'User-Agent': 'EgyHealth360-ReleaseSafetyHarness/1.0',
-        },
-        signal: controller.signal,
-      });
+  try {
+    const response = await fetchImpl(currentUrl, {
+      method: 'GET',
+      redirect: 'manual',
+      headers: {
+        'Accept': 'text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8',
+        'User-Agent': 'EgyHealth360-ReleaseSafetyHarness/1.0',
+      },
+      signal: controller.signal,
+    });
 
-      // Handle redirect
-      if ([301, 302, 307, 308].includes(response.status)) {
-        const location = response.headers.get('location');
-        if (!location) {
-          throw new Error(`REDIRECT_WITHOUT_LOCATION: Received HTTP ${response.status} without Location header`);
-        }
-        const resolved = new URL(location, currentUrl);
-
-        // Strict redirect invariant: SAME-ORIGIN ONLY!
-        if (resolved.origin !== initialOrigin) {
-          throw new Error(`CROSS_ORIGIN_REDIRECT_FORBIDDEN: Redirect to foreign origin "${resolved.origin}" is forbidden`);
-        }
-
-        // Validate redirect target against safe path & no-query invariants
-        validatePreviewUrl(resolved.href, options);
-        currentUrl = resolved.href;
-        redirectsFollowed++;
-        if (redirectsFollowed > maxRedirects) {
-          throw new Error(`MAX_REDIRECTS_EXCEEDED: Exceeded ${maxRedirects} redirects`);
-        }
-        continue;
+    // Finding F4: REJECT ALL REDIRECTS! Zero redirects followed!
+    if ([301, 302, 303, 307, 308].includes(response.status)) {
+      if (response.body && typeof response.body.cancel === 'function') {
+        try { await response.body.cancel(); } catch { /* ignore stream cancel */ }
       }
-
-      // Check Content-Length if provided before reading full body
-      const clHeader = response.headers.get('content-length');
-      if (clHeader) {
-        const clNum = Number(clHeader);
-        if (!Number.isNaN(clNum) && clNum > maxBytes) {
-          throw new Error(`RESPONSE_TOO_LARGE: Content-Length ${clNum} exceeds limit of ${maxBytes} bytes`);
-        }
-      }
-
-      // Read body text while controller timeout remains active!
-      const body = await response.text();
-      if (body.length > maxBytes) {
-        throw new Error(`RESPONSE_TOO_LARGE: Body size ${body.length} exceeds limit of ${maxBytes} bytes`);
-      }
-
-      const elapsedMs = Date.now() - started;
-      return {
-        status: response.status,
-        headers: response.headers,
-        body,
-        finalUrl: currentUrl,
-        elapsedMs,
-      };
-    } catch (err) {
-      if (err.name === 'AbortError') {
-        throw new Error(`REQUEST_TIMEOUT: Request and body consumption timed out after ${timeoutMs}ms`);
-      }
-      throw err;
-    } finally {
-      globalThis.clearTimeout(timer);
+      throw new Error(ERROR_CATEGORIES.REDIRECTS_PROHIBITED);
     }
+
+    // Upfront Content-Length check if provided
+    const clHeader = response.headers?.get('content-length');
+    if (clHeader) {
+      const clNum = Number(clHeader);
+      if (!Number.isNaN(clNum) && clNum > maxBytes) {
+        if (response.body && typeof response.body.cancel === 'function') {
+          try { await response.body.cancel(); } catch { /* ignore stream cancel */ }
+        }
+        throw new Error(ERROR_CATEGORIES.RESPONSE_TOO_LARGE);
+      }
+    }
+
+    // Finding F2: Real streaming resource limits with early cancellation
+    let bodyText = '';
+    if (response.body && typeof response.body.getReader === 'function') {
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let totalBytes = 0;
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          totalBytes += value.byteLength;
+          if (totalBytes > maxBytes) {
+            await reader.cancel();
+            controller.abort();
+            throw new Error(ERROR_CATEGORIES.RESPONSE_TOO_LARGE);
+          }
+          bodyText += decoder.decode(value, { stream: true });
+        }
+        bodyText += decoder.decode(); // flush remaining
+      } catch (streamErr) {
+        if (streamErr.message === ERROR_CATEGORIES.RESPONSE_TOO_LARGE) throw streamErr;
+        if (streamErr.name === 'AbortError') throw new Error(ERROR_CATEGORIES.REQUEST_TIMEOUT);
+        throw streamErr;
+      }
+    } else {
+      // Offline / mock fetch fallback
+      const rawText = await response.text();
+      const encoder = new TextEncoder();
+      const actualByteLength = encoder.encode(rawText).byteLength;
+      if (actualByteLength > maxBytes) {
+        throw new Error(ERROR_CATEGORIES.RESPONSE_TOO_LARGE);
+      }
+      bodyText = rawText;
+    }
+
+    const elapsedMs = Date.now() - started;
+    return {
+      status: response.status,
+      headers: response.headers,
+      body: bodyText,
+      finalUrl: currentUrl,
+      elapsedMs,
+    };
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      throw new Error(ERROR_CATEGORIES.REQUEST_TIMEOUT);
+    }
+    throw err;
+  } finally {
+    globalThis.clearTimeout(timer);
   }
 }
 
@@ -355,7 +421,7 @@ export function inspectLocalAssets(rootDir = process.cwd()) {
     assets.push({
       path: 'apps/web/public/fonts/my-care',
       type: 'font',
-      note: 'IBM Plex Sans Arabic (OFL licensed) / Inter variable fonts present on-repo (inventory check only)',
+      note: 'Local font assets folder present; contents, license clearance, and creator rights unverified on-repo (inventory check only)',
     });
   }
 
@@ -369,6 +435,7 @@ export function inspectLocalAssets(rootDir = process.cwd()) {
 
 /**
  * Main safety harness coordinator.
+ * Strictly allowlisted report fields, zero raw exception or unvetted header reflection.
  * @param {object} params
  * @param {string} params.url - Web root URL
  * @param {string} [params.apiUrl] - Optional separate API URL
@@ -379,7 +446,29 @@ export function inspectLocalAssets(rootDir = process.cwd()) {
  * @returns {Promise<object>} Full verified report
  */
 export async function runPreviewSafetyCheck(params, customFetch) {
-  // Sanitize URLs immediately before storing in report
+  // Finding F3: If relaxed test options are active, explicit injected offline transport is required!
+  if (params.allowTestHttp) {
+    if (!customFetch || customFetch === globalThis.fetch) {
+      return {
+        evaluatedAt: new Date().toISOString(),
+        overallStatus: 'FAIL',
+        targetWebUrl: '[TEST_TRANSPORT_REQUIRED]',
+        targetApiUrl: null,
+        expectedSha: null,
+        checks: [{
+          name: 'Test Transport Isolation Check',
+          status: 'FAIL',
+          details: { errorCategory: ERROR_CATEGORIES.TEST_TRANSPORT_REQUIRED },
+        }],
+        ssrfPolicy: 'Restricted to approved egyhealth360-*.vercel.app preview hosts on port 443.',
+        clinicalReadiness: 'NOT_VERIFIED',
+        clinicalReadinessReason: 'HTTP 200 on health only proves network routing and process liveness; it grants ZERO clinical readiness.',
+        summary: { pass: 0, warn: 0, fail: 1, notVerified: 0 },
+      };
+    }
+  }
+
+  // Finding F1: Sanitize URLs immediately before storing in report
   const safeWebUrl = sanitizeUrlForReport(params.url);
   const safeApiUrl = params.apiUrl ? sanitizeUrlForReport(params.apiUrl) : null;
 
@@ -388,15 +477,15 @@ export async function runPreviewSafetyCheck(params, customFetch) {
     overallStatus: 'PASS',
     targetWebUrl: safeWebUrl,
     targetApiUrl: safeApiUrl,
-    expectedSha: params.expectedSha || null,
+    expectedSha: null,
     checks: [],
-    ssrfPolicy: 'Restricted to approved *.vercel.app preview hosts on port 443; socket-level DNS pinning is unverified in standard Node fetch.',
+    ssrfPolicy: 'Restricted to approved egyhealth360-*.vercel.app preview hosts on port 443; socket-level DNS pinning is unverified in standard Node fetch.',
     clinicalReadiness: 'NOT_VERIFIED',
     clinicalReadinessReason: 'HTTP 200 on health only proves network routing and process liveness; it grants ZERO clinical readiness, does NOT certify live authentication, session cookies, CSRF, or database migrations.',
     summary: { pass: 0, warn: 0, fail: 0, notVerified: 0 },
   };
 
-  const recordCheck = (name, status, details) => {
+  const recordCheck = (name, status, details = {}) => {
     result.checks.push({ name, status, details });
     if (status === 'PASS') result.summary.pass++;
     else if (status === 'WARN') {
@@ -416,7 +505,7 @@ export async function runPreviewSafetyCheck(params, customFetch) {
     webUrl = validatePreviewUrl(params.url, { allowTestHttp: params.allowTestHttp });
     recordCheck('Web URL Structure & Preview Origin Safety', 'PASS', { origin: webUrl.origin });
   } catch (err) {
-    recordCheck('Web URL Structure & Preview Origin Safety', 'FAIL', { error: err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') });
+    recordCheck('Web URL Structure & Preview Origin Safety', 'FAIL', { errorCategory: getSafeErrorCategory(err) });
     return result;
   }
 
@@ -427,7 +516,7 @@ export async function runPreviewSafetyCheck(params, customFetch) {
       apiUrl = validatePreviewUrl(params.apiUrl, { allowTestHttp: params.allowTestHttp });
       recordCheck('API URL Structure & Preview Origin Safety', 'PASS', { origin: apiUrl.origin });
     } catch (err) {
-      recordCheck('API URL Structure & Preview Origin Safety', 'FAIL', { error: err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') });
+      recordCheck('API URL Structure & Preview Origin Safety', 'FAIL', { errorCategory: getSafeErrorCategory(err) });
       return result;
     }
   }
@@ -453,18 +542,18 @@ export async function runPreviewSafetyCheck(params, customFetch) {
         recordCheck('Web Root Public Exposure & Leak Check', warnings.length > 0 ? 'WARN' : 'PASS', {
           status: webRes.status,
           elapsedMs: webRes.elapsedMs,
-          contentType: headersEval.checks.contentType,
+          isHtml: headersEval.checks.isHtml,
           warnings,
         });
       }
     } else {
       recordCheck('Web Root Public Exposure & Leak Check', 'FAIL', {
         status: webRes.status,
-        expected: 200,
+        errorCategory: 'NON_200_STATUS',
       });
     }
   } catch (err) {
-    recordCheck('Web Root Public Exposure & Leak Check', 'FAIL', { error: err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') });
+    recordCheck('Web Root Public Exposure & Leak Check', 'FAIL', { errorCategory: getSafeErrorCategory(err) });
   }
 
   // 4. Probe Proxied Health `/api/v1/health`
@@ -481,7 +570,7 @@ export async function runPreviewSafetyCheck(params, customFetch) {
     try {
       parsedBody = JSON.parse(healthRes.body);
     } catch {
-      // Non-JSON response
+      /* ignore non-json response */
     }
 
     if (healthRes.status === 200 && parsedBody?.data?.status === 'ok') {
@@ -489,18 +578,17 @@ export async function runPreviewSafetyCheck(params, customFetch) {
       recordCheck('Proxied Health Route (/api/v1/health)', warnings.length > 0 ? 'WARN' : 'PASS', {
         status: healthRes.status,
         elapsedMs: healthRes.elapsedMs,
-        healthStatus: parsedBody.data.status, // Only record allowlisted field!
+        healthStatus: 'ok',
         warnings,
       });
     } else {
       recordCheck('Proxied Health Route (/api/v1/health)', 'FAIL', {
         status: healthRes.status,
-        errorCategory: 'INVALID_HEALTH_PAYLOAD',
-        expectedPayload: '{"data":{"status":"ok"}}',
+        errorCategory: ERROR_CATEGORIES.INVALID_HEALTH_PAYLOAD,
       });
     }
   } catch (err) {
-    recordCheck('Proxied Health Route (/api/v1/health)', 'FAIL', { error: err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') });
+    recordCheck('Proxied Health Route (/api/v1/health)', 'FAIL', { errorCategory: getSafeErrorCategory(err) });
   }
 
   // 5. Probe Direct API if provided
@@ -513,30 +601,41 @@ export async function runPreviewSafetyCheck(params, customFetch) {
         maxBytes: HEALTH_MAX_BODY_BYTES,
       }, customFetch);
       let parsed = null;
-      try { parsed = JSON.parse(directRes.body); } catch { /* ignore non-json response */ }
+      try {
+        parsed = JSON.parse(directRes.body);
+      } catch {
+        /* ignore non-json response */
+      }
       if (directRes.status === 200 && parsed?.data?.status === 'ok') {
         recordCheck('Direct API Health Route', 'PASS', {
           status: directRes.status,
           elapsedMs: directRes.elapsedMs,
-          healthStatus: parsed.data.status,
+          healthStatus: 'ok',
         });
       } else {
         recordCheck('Direct API Health Route', 'FAIL', {
           status: directRes.status,
-          errorCategory: 'INVALID_DIRECT_HEALTH_PAYLOAD',
+          errorCategory: ERROR_CATEGORIES.INVALID_HEALTH_PAYLOAD,
         });
       }
     } catch (err) {
-      recordCheck('Direct API Health Route', 'FAIL', { error: err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') });
+      recordCheck('Direct API Health Route', 'FAIL', { errorCategory: getSafeErrorCategory(err) });
     }
   }
 
-  // 6. Source Attestation
+  // 6. Source Attestation (Finding F1: strictly validated expectedSha)
   if (params.expectedSha) {
-    recordCheck('Source SHA Attestation', 'NOT_VERIFIED', {
-      expectedSha: params.expectedSha,
-      reason: 'Public HTML does not expose unauthenticated Git commit SHA headers; manual or authenticated Vercel metadata required for exact-commit certification.',
-    });
+    if (/^[0-9a-f]{40}$/i.test(params.expectedSha)) {
+      result.expectedSha = params.expectedSha.toLowerCase();
+      recordCheck('Source SHA Attestation', 'NOT_VERIFIED', {
+        expectedSha: params.expectedSha.toLowerCase(),
+        reason: 'Public HTML does not expose unauthenticated Git commit SHA headers; manual or authenticated Vercel metadata required for exact-commit certification.',
+      });
+    } else {
+      recordCheck('Source SHA Attestation', 'FAIL', {
+        errorCategory: ERROR_CATEGORIES.INVALID_SHA_FORMAT,
+      });
+    }
   }
 
   // 7. Local Asset & AP05 Check: NOT_VERIFIED (OPEN_GATE)
@@ -547,8 +646,11 @@ export async function runPreviewSafetyCheck(params, customFetch) {
       ap05Status: assetCheck.ap05Status,
       assets: assetCheck.assets,
     });
-  } catch (err) {
-    recordCheck('AP05 Brand & Asset Rights Audit', 'NOT_VERIFIED', { error: err.message });
+  } catch {
+    recordCheck('AP05 Brand & Asset Rights Audit', 'NOT_VERIFIED', {
+      status: 'NOT_VERIFIED',
+      errorCategory: ERROR_CATEGORIES.UNKNOWN_ERROR,
+    });
   }
 
   return result;
