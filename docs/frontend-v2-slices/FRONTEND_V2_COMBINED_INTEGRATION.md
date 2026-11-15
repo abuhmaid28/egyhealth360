@@ -14,7 +14,7 @@ Exact baseline: `d268264b1d062c65425a223f8f25d6e72442586e` (#134). Branch `integ
 | --- | --- |
 |1/6 source freeze/assembly|Pinned GitHub state and authorization verified;55 source snapshots assembled,44 import-only blob/modes verified.|
 |2/6 canonical T1/shared staff shell|Shared all-role shell/T1 and scoped Patient/Doctor content implemented;7 combined unit/provenance cases and frontend build/types PASS; full browser qualification follows in4/6.|
-|3/6 OFFLINE-ONLY C remediation|Implemented inside C3 files;37 offline tests PASS, including original16 groups strengthened to the new offline contract and21 new adversarial/CLI/deadline cases. Independent review remains pending.|
+|3/6 OFFLINE-ONLY C remediation|Implemented inside C3 files;37 offline tests PASS, including original16 groups strengthened to the new offline contract and21 new adversarial/CLI/deadline cases. Fresh independent C adversarial review bounded PASS at0feb16c:37/37 plus5 extra probe groups and40/40 deadline checks; no open P0/P1/contractP2 in offline scope.|
 |4/6 combined regression/browser/evidence|Prior blocker resolved by Owner amendment; qualification resuming. Historical failure:323 UI cases ran,322 PASS; frozen read-surfaces shell reconstruction at247 only understands original A presentation additions. Required all-role shell needs a separately approved edit-permission substitution; no frozen test edited.|
 |5/6 independent frontend/security/adversarial reviews|Pending.|
 |6/6 safe publication/frozen-head FULL CI/receipt|Pending; no push, PR, CI or deployment performed.|

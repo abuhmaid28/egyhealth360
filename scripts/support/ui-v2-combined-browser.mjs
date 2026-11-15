@@ -74,6 +74,34 @@ async function scaleText(page) {
   });
 }
 async function restoreText(page) {await page.locator("[data-portal-shell], [data-portal-shell] *").evaluateAll(nodes=>nodes.forEach(el=>el.style.removeProperty("font-size")));}
+export async function testCombinedSessionBoundaries(browser,origin) {
+  const journeys=[];
+  // All-role account, role, reload, mode and synthetic expired-session boundaries.
+  for(const role of Object.keys(homes)) {
+    const frame=await demoPage(browser,origin,role,"en"),{page}=frame;
+    try {
+      await selectAppearance(page,"dark");await page.reload();await page.locator(`[data-portal-shell="${role}"]`).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
+      await selectAppearance(page,"dark");await openDemoUtility(page);
+      const next=role==="PATIENT"?"ADMIN":"PATIENT";await page.locator('select[aria-label="Demo workspace"]').selectOption(next);await page.locator(`[data-portal-shell="${next}"]`).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
+      await selectAppearance(page,"dark");await page.locator("[data-portal-shell] > footer button").first().click();await page.getByRole("button",{name:"Explore the patient demo",exact:true}).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
+      let loggedIn=false,expired=false;const auth=[];
+      await page.route("**/api/v1/**",route=>{
+        const path=new URL(route.request().url()).pathname,method=route.request().method();auth.push({path,method});
+        if(path.endsWith("/auth/login")){loggedIn=true;return route.fulfill({json:{data:{user:{role,email:"synthetic@example.invalid"},csrfToken:"synthetic-only"}}});}
+        if(path.endsWith("/auth/me")&&loggedIn&&!expired)return route.fulfill({json:{data:{user:{role,email:"synthetic@example.invalid"},csrfToken:"synthetic-only"}}});
+        if(path.endsWith("/auth/logout")){expired=true;return route.fulfill({status:401,json:{error:{message:"SYNTHETIC_PRIVATE_TRANSPORT_CANARY"}}});}
+        return route.fulfill({status:expired?401:503,json:{error:{message:"SYNTHETIC_PRIVATE_TRANSPORT_CANARY"}}});
+      });
+      await page.getByLabel("Email address",{exact:true}).fill("synthetic@example.invalid");await page.getByLabel("Password",{exact:true}).fill("SYNTHETIC_LOCAL_ONLY");await page.getByRole("button",{name:"Sign in with live account",exact:true}).click();await page.locator(`[data-portal-shell="${role}"]`).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
+      await selectAppearance(page,"dark");await page.locator("[data-portal-shell] > footer button").first().click();await page.waitForFunction(()=>globalThis.document.documentElement.getAttribute("data-frontend-v2-theme")===null);
+      const visible=(await page.locator("body").innerHTML())+(await page.locator("body").ariaSnapshot());assert.doesNotMatch(visible,/PRIVATE_STAFF_CANARY|PRIVATE_DIAGNOSIS_CANARY|SYNTHETIC_PRIVATE_TRANSPORT_CANARY/);
+      const state=await page.evaluate(()=>({local:Object.keys(globalThis.localStorage),session:Object.keys(globalThis.sessionStorage),cookie:globalThis.document.cookie}));assert.deepEqual(state.local.filter(k=>/theme|appearance|frontend-v2/i.test(k)),[]);assert.deepEqual(state.session,[]);assert.equal(state.cookie,"");
+      assert.deepEqual(auth.filter(r=>r.method!=="GET").map(r=>r.path),["/api/v1/auth/login","/api/v1/auth/logout"]);assert.ok(!auth.some(r=>/pharmac|fulfill|dispens/.test(r.path)));
+      journeys.push({role,reloadReset:true,accountRoleReset:true,logoutReset:true,modeReset:true,controlled401Reset:true,storage:state,authRequests:auth});
+    } finally {await frame.context.close();}
+  }
+  return journeys;
+}
 export async function testCombinedV2(browser,origin,evidenceDir) {
   const out=evidenceDir?resolve(evidenceDir):await mkdtemp(join(tmpdir(),"eh135-combined-"));await mkdir(out,{recursive:true});
   const receipt={source:execFileSync("git",["rev-parse","HEAD"],{encoding:"utf8"}).trim(),dirty:!!execFileSync("git",["status","--porcelain"],{encoding:"utf8"}).trim(),browser:browser.version(),origin,synthetic:true,scans:[],screens:[],fonts:[],axe:[],journeys:[],heldAuth:[],noJS:[]};
@@ -120,30 +148,9 @@ export async function testCombinedV2(browser,origin,evidenceDir) {
       else assert.equal(frame.calls.length,0,"Demo does not call Live endpoints");
     } finally {await frame.context.close();}
   }
-  // All-role account, role, reload, mode and synthetic expired-session boundaries.
-  for(const role of Object.keys(homes)) {
-    const frame=await demoPage(browser,origin,role,"en"),{page}=frame;
-    try {
-      await selectAppearance(page,"dark");await page.reload();await page.locator(`[data-portal-shell="${role}"]`).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
-      await selectAppearance(page,"dark");await openDemoUtility(page);
-      const next=role==="PATIENT"?"ADMIN":"PATIENT";await page.locator('select[aria-label="Demo workspace"]').selectOption(next);await page.locator(`[data-portal-shell="${next}"]`).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
-      await selectAppearance(page,"dark");await page.locator("[data-portal-shell] > footer button").first().click();await page.getByRole("button",{name:"Explore the patient demo",exact:true}).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
-      let loggedIn=false,expired=false;const auth=[];
-      await page.route("**/api/v1/**",route=>{
-        const path=new URL(route.request().url()).pathname,method=route.request().method();auth.push({path,method});
-        if(path.endsWith("/auth/login")){loggedIn=true;return route.fulfill({json:{data:{user:{role,email:"synthetic@example.invalid"},csrfToken:"synthetic-only"}}});}
-        if(path.endsWith("/auth/me")&&loggedIn&&!expired)return route.fulfill({json:{data:{user:{role,email:"synthetic@example.invalid"},csrfToken:"synthetic-only"}}});
-        if(path.endsWith("/auth/logout")){expired=true;return route.fulfill({status:401,json:{error:{message:"SYNTHETIC_PRIVATE_TRANSPORT_CANARY"}}});}
-        return route.fulfill({status:expired?401:503,json:{error:{message:"SYNTHETIC_PRIVATE_TRANSPORT_CANARY"}}});
-      });
-      await page.getByLabel("Email",{exact:true}).fill("synthetic@example.invalid");await page.getByLabel("Password",{exact:true}).fill("SYNTHETIC_LOCAL_ONLY");await page.getByRole("button",{name:"Sign in",exact:true}).click();await page.locator(`[data-portal-shell="${role}"]`).waitFor();assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"),null);
-      await selectAppearance(page,"dark");await page.locator("[data-portal-shell] > footer button").first().click();await page.waitForFunction(()=>globalThis.document.documentElement.getAttribute("data-frontend-v2-theme")===null);
-      const visible=(await page.locator("body").innerHTML())+(await page.locator("body").ariaSnapshot());assert.doesNotMatch(visible,/PRIVATE_STAFF_CANARY|PRIVATE_DIAGNOSIS_CANARY|SYNTHETIC_PRIVATE_TRANSPORT_CANARY/);
-      const state=await page.evaluate(()=>({local:Object.keys(globalThis.localStorage),session:Object.keys(globalThis.sessionStorage),cookie:globalThis.document.cookie}));assert.deepEqual(state.local.filter(k=>/theme|appearance|frontend-v2/i.test(k)),[]);assert.deepEqual(state.session,[]);assert.equal(state.cookie,"");
-      assert.deepEqual(auth.filter(r=>r.method!=="GET").map(r=>r.path),["/api/v1/auth/login","/api/v1/auth/logout"]);assert.ok(!auth.some(r=>/pharmac|fulfill|dispens/.test(r.path)));
-      receipt.journeys.push({role,reloadReset:true,accountRoleReset:true,logoutReset:true,modeReset:true,controlled401Reset:true,storage:state,authRequests:auth});
-    } finally {await frame.context.close();}
-  }
+  await writeFile(resolve(out,"combined-visual-receipt.json"),JSON.stringify({...receipt,visualPhaseComplete:true},null,2)+"\n");
+  console.log(`Combined visual phase PASS: ${receipt.scans.length} seams,${receipt.screens.length} screenshots,${receipt.axe.length} axe scans.`);
+  receipt.journeys = await testCombinedSessionBoundaries(browser,origin);
   // Neutral first paint applies to every route, including staff restoration.
   for(const colorScheme of["light","dark"])for(const role of Object.keys(homes)) {
     const page=await browser.newPage({javaScriptEnabled:false,colorScheme});try {
