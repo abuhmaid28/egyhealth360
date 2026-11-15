@@ -88,7 +88,7 @@ test('scanBodyForLeaks detects sensitive environment and DB secrets', () => {
 });
 
 test('evaluateSecurityHeaders flags unexpected Set-Cookie and nosniff mismatch', () => {
-  const goodHeaders = new Headers({
+  const goodHeaders = new globalThis.Headers({
     'content-type': 'application/json',
     'x-content-type-options': 'nosniff',
   });
@@ -96,7 +96,7 @@ test('evaluateSecurityHeaders flags unexpected Set-Cookie and nosniff mismatch',
   assert.equal(goodRes.pass, true);
   assert.equal(goodRes.warnings.length, 0);
 
-  const cookieHeaders = new Headers({
+  const cookieHeaders = new globalThis.Headers({
     'content-type': 'application/json',
     'set-cookie': 'eh_session=xyz; Path=/; HttpOnly',
   });
@@ -111,21 +111,21 @@ test('safeGet handles responses and protects against malicious redirects', async
     if (url === 'https://example.com/start') {
       return {
         status: 302,
-        headers: new Headers({ location: 'https://example.com/final' }),
+        headers: new globalThis.Headers({ location: 'https://example.com/final' }),
         text: async () => '',
       };
     }
     if (url === 'https://example.com/final') {
       return {
         status: 200,
-        headers: new Headers({ 'content-type': 'text/html' }),
+        headers: new globalThis.Headers({ 'content-type': 'text/html' }),
         text: async () => '<h1>Final Destination</h1>',
       };
     }
     if (url === 'https://example.com/bad-redirect') {
       return {
         status: 302,
-        headers: new Headers({ location: 'http://169.254.169.254/metadata' }),
+        headers: new globalThis.Headers({ location: 'http://169.254.169.254/metadata' }),
         text: async () => '',
       };
     }
@@ -154,12 +154,12 @@ test('runPreviewSafetyCheck executes complete workflow deterministically', async
   const mockResponses = {
     'https://preview.example.com/': {
       status: 200,
-      headers: new Headers({ 'content-type': 'text/html; charset=utf-8', 'x-content-type-options': 'nosniff' }),
+      headers: new globalThis.Headers({ 'content-type': 'text/html; charset=utf-8', 'x-content-type-options': 'nosniff' }),
       text: async () => '<!DOCTYPE html><html><head><title>EgyHealth 360</title></head><body><div id="root">App</div></body></html>',
     },
     'https://preview.example.com/api/v1/health': {
       status: 200,
-      headers: new Headers({ 'content-type': 'application/json' }),
+      headers: new globalThis.Headers({ 'content-type': 'application/json' }),
       text: async () => JSON.stringify({ data: { status: 'ok' } }),
     },
   };
@@ -188,12 +188,12 @@ test('runPreviewSafetyCheck flags FAIL on secret leak in HTML', async () => {
   const mockResponses = {
     'https://preview.example.com/': {
       status: 200,
-      headers: new Headers({ 'content-type': 'text/html' }),
+      headers: new globalThis.Headers({ 'content-type': 'text/html' }),
       text: async () => '<html><body>Error DATABASE_URL=postgres://user:pass@neon.tech/main</body></html>',
     },
     'https://preview.example.com/api/v1/health': {
       status: 200,
-      headers: new Headers({ 'content-type': 'application/json' }),
+      headers: new globalThis.Headers({ 'content-type': 'application/json' }),
       text: async () => JSON.stringify({ data: { status: 'ok' } }),
     },
   };

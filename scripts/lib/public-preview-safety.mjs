@@ -2,7 +2,6 @@
  * EgyHealth 360 — Public Preview Safety Library
  * Dependency-free, safe, read-only verification of public deployment previews.
  */
-import { createHash } from 'node:crypto';
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 
@@ -185,7 +184,7 @@ export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetc
         },
         signal: controller.signal,
       });
-      clearTimeout(timer);
+      globalThis.clearTimeout(timer);
       const elapsedMs = Date.now() - started;
 
       // Handle redirect
@@ -213,7 +212,7 @@ export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetc
         elapsedMs,
       };
     } catch (err) {
-      clearTimeout(timer);
+      globalThis.clearTimeout(timer);
       if (err.name === 'AbortError') {
         throw new Error(`REQUEST_TIMEOUT: Timed out after ${timeoutMs}ms`);
       }

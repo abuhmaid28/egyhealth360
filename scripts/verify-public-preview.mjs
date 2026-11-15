@@ -143,7 +143,7 @@ export async function main(argv = process.argv.slice(2)) {
       }
       return {
         status: matched.status ?? 200,
-        headers: new Headers(matched.headers ?? {}),
+        headers: new globalThis.Headers(matched.headers ?? {}),
         text: async () => matched.body ?? '',
       };
     };
