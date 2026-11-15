@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import "./globals.css";
+import "../src/components/v2/frontend-v2-tokens.css";
 import { LiveSessionProvider } from "../src/components/live-session";
 import { LocaleProvider } from "../src/lib/i18n/context";
 export const metadata = {

@@ -90,7 +90,7 @@ Only these 50 paths may differ from the sole parent; paths are a ceiling, not a 
 ## Checkpoint ledger and resumption
 
 1. Source/G0 freeze complete. Baseline browser capture pending local build.
-2. Shared foundation/navigation/T1 pending.
+2. Shared foundation/navigation/T1 implemented: scoped audited Light/Dark pairs, CSS System first paint, memory-only override, session/account/capability reset without remount. Original source/CSS preservation tests retained. Build/typecheck/focused lint PASS; real Chromium baseline captured outside Git. Full visual QA remains checkpoint5.
 3. Patient journeys pending.
 4. Doctor journeys pending.
 5. Full local QA/screenshots pending.

@@ -3,7 +3,7 @@ import { safeErrorMessage } from "../lib/api/errors";
 import { LanguageSwitch, useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import type {
   HealthcareAdapter,
   Mode,
@@ -40,12 +40,18 @@ const roles: { role: Role; name: string }[] = [
   { role: "LAB_STAFF", name: "Laboratory" },
   { role: "ADMIN", name: "Admin" },
 ];
-export function Application({
+import { FrontendV2ThemeProvider, useFrontendV2Theme } from "./v2/frontend-v2-theme";
+
+export function Application(props: { liveConfigured?: boolean }) {
+  return <FrontendV2ThemeProvider><WorkspaceApplication {...props} /></FrontendV2ThemeProvider>;
+}
+function WorkspaceApplication({
   liveConfigured = true,
 }: {
   liveConfigured?: boolean;
 }) {
   const liveSession = useLiveSession();
+  const { reset: resetTheme } = useFrontendV2Theme();
   const { t } = useLocale();
 
   const pathname = usePathname();
@@ -56,6 +62,18 @@ export function Application({
   const [preview, setPreview] = useState<Preview>("ready");
   const [refresh, setRefresh] = useState(0);
   const [toast, setToast] = useState("");
+  // Session object changes only on restore, explicit account/mode entry or logout.
+  // Reset presentation without keying/remounting any clinical subtree.
+  useLayoutEffect(() => { resetTheme(); }, [session, api, resetTheme]);
+  useEffect(() => {
+    if (api?.mode !== "live" || !api.documentation) return;
+    const source = api.documentation;
+    let stamp = source.scopeStamp();
+    return source.subscribe(() => {
+      const next = source.scopeStamp();
+      if (next !== stamp) { stamp = next; resetTheme(); }
+    });
+  }, [api, resetTheme]);
   const booking = useMemo(() => api && createBookingService(api), [api]);
   useEffect(() => {
     let active = true;
