@@ -1,6 +1,16 @@
 /**
  * EgyHealth 360 — Public Preview Safety Library
  * Dependency-free, safe, read-only verification of public deployment previews.
+ *
+ * Security Invariants:
+ * 1. Enforces HTTPS on standard port 443 only (no arbitrary ports).
+ * 2. Restricts preview domains to reviewed *.vercel.app hosts; bans IP literals.
+ * 3. Rejects queries, fragments, and disallowed paths (permits only / and /api/v1/health).
+ * 4. Strictly forbids cross-origin redirects and redirects with query/fragment.
+ * 5. Complete end-to-end timeout covering body consumption; strict response byte caps.
+ * 6. Zero secret leakage: sanitizes URL userinfo and never logs raw response bodies or unvetted JSON.
+ * 7. AP05 asset audit returns NOT_VERIFIED / OPEN_GATE (inventory != license clearance).
+ * 8. Never conflates HTTP 200 with Live clinical release readiness.
  */
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -12,7 +22,7 @@ import { resolve } from 'node:path';
  */
 export function isPrivateIpv4(ip) {
   const parts = ip.split('.').map(Number);
-  if (parts.length !== 4 || parts.some(p => isNaN(p) || p < 0 || p > 255)) return false;
+  if (parts.length !== 4 || parts.some(p => Number.isNaN(p) || p < 0 || p > 255)) return false;
   const [a, b] = parts;
   if (a === 127) return true; // Loopback
   if (a === 10) return true; // 10.0.0.0/8
@@ -49,11 +59,51 @@ export function isPrivateHostnameOrIp(hostname) {
 }
 
 /**
+ * Checks if a hostname is an IP address literal (IPv4 or IPv6).
+ * @param {string} hostname
+ * @returns {boolean}
+ */
+export function isIpLiteral(hostname) {
+  const clean = hostname.toLowerCase().replace(/^\[|\]$/g, '');
+  if (/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(clean)) return true;
+  if (clean.includes(':')) return true;
+  return false;
+}
+
+/**
+ * Sanitizes any raw input URL before recording in logs, reports, or terminal outputs.
+ * Completely removes userinfo (passwords/tokens), search params, and hash fragments.
+ * @param {string} rawUrl
+ * @returns {string}
+ */
+export function sanitizeUrlForReport(rawUrl) {
+  if (typeof rawUrl !== 'string') return '[NON_STRING_URL]';
+  try {
+    const parsed = new URL(rawUrl.trim());
+    parsed.username = '';
+    parsed.password = '';
+    parsed.search = '';
+    parsed.hash = '';
+    return parsed.href;
+  } catch {
+    // Fallback: strip userinfo pattern if URL parsing fails
+    return rawUrl.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@').slice(0, 120);
+  }
+}
+
+/**
+ * Pattern for approved public Vercel preview hostnames.
+ * Matches *.vercel.app, e.g. egyhealth360-preview.vercel.app
+ */
+export const APPROVED_VERCEL_PREVIEW_PATTERN = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)*\.vercel\.app$/i;
+
+/**
  * Validates a target preview URL against strict public HTTPS rules.
  * Throws an Error with a safe message if URL is invalid or unsafe.
  * @param {string} inputUrl
  * @param {object} [options]
  * @param {boolean} [options.allowTestHttp] - Test-only escape hatch for offline tests
+ * @param {boolean} [options.isInspectionRoute] - Whether validating an inspection subroute (/api/v1/health)
  * @returns {URL}
  */
 export function validatePreviewUrl(inputUrl, options = {}) {
@@ -67,21 +117,49 @@ export function validatePreviewUrl(inputUrl, options = {}) {
     throw new Error('INVALID_URL_FORMAT: Cannot parse URL');
   }
 
-  const allowHttp = !!options.allowTestHttp;
-  if (parsed.protocol !== 'https:' && !(allowHttp && parsed.protocol === 'http:')) {
+  const allowTest = !!options.allowTestHttp;
+
+  // 1. Protocol: HTTPS only in public mode
+  if (parsed.protocol !== 'https:' && !(allowTest && parsed.protocol === 'http:')) {
     throw new Error(`UNSAFE_PROTOCOL: Protocol must be HTTPS, got "${parsed.protocol}"`);
   }
 
+  // 2. Reject embedded userinfo
   if (parsed.username || parsed.password) {
     throw new Error('CREDENTIALS_FORBIDDEN: URL must not contain embedded userinfo or credentials');
   }
 
-  if (parsed.port && !['80', '443', '3000', '3001', '8080'].includes(parsed.port) && !allowHttp) {
-    throw new Error(`DISALLOWED_PORT: Public preview must use standard ports, got "${parsed.port}"`);
+  // 3. Port: Port 443 ONLY (or omitted). No arbitrary ports like 3000, 3001, 8080 in public mode.
+  if (parsed.port && parsed.port !== '443' && !allowTest) {
+    throw new Error(`DISALLOWED_PORT: Public preview must use standard HTTPS port 443, got "${parsed.port}"`);
   }
 
-  if (!allowHttp && isPrivateHostnameOrIp(parsed.hostname)) {
-    throw new Error(`SSRF_PROHIBITED: Target hostname or IP "${parsed.hostname}" is loopback, private, or local`);
+  // 4. Query parameters and fragments strictly forbidden
+  if (parsed.search && parsed.search !== '') {
+    throw new Error('QUERY_PARAMETERS_FORBIDDEN: Target URL must not contain query parameters');
+  }
+  if (parsed.hash && parsed.hash !== '') {
+    throw new Error('FRAGMENT_FORBIDDEN: Target URL must not contain URL fragments');
+  }
+
+  // 5. Hostname & IP Restrictions
+  if (!allowTest) {
+    if (isIpLiteral(parsed.hostname)) {
+      throw new Error(`IP_HOSTNAME_FORBIDDEN: Public preview requires a domain hostname, got IP literal "${parsed.hostname}"`);
+    }
+    if (isPrivateHostnameOrIp(parsed.hostname)) {
+      throw new Error(`SSRF_PROHIBITED: Target hostname "${parsed.hostname}" is loopback, private, or local`);
+    }
+    if (!APPROVED_VERCEL_PREVIEW_PATTERN.test(parsed.hostname)) {
+      throw new Error(`UNTRUSTED_PREVIEW_DOMAIN: Target hostname "${parsed.hostname}" must be an approved *.vercel.app domain`);
+    }
+  }
+
+  // 6. Path restrictions: Only '/' or '/api/v1/health' allowed
+  const normalizedPath = parsed.pathname === '' ? '/' : parsed.pathname;
+  const allowedPaths = ['/', '/api/v1/health'];
+  if (!allowedPaths.includes(normalizedPath) && !options.allowAnyPathInTest) {
+    throw new Error(`DISALLOWED_PATH: Target URL path must be root / or /api/v1/health, got "${normalizedPath}"`);
   }
 
   return parsed;
@@ -155,18 +233,30 @@ export function evaluateSecurityHeaders(headers) {
   };
 }
 
+/** Maximum allowed response size: 1MB for web root, 64KB for health */
+export const DEFAULT_MAX_BODY_BYTES = 1048576; // 1 MB
+export const HEALTH_MAX_BODY_BYTES = 65536; // 64 KB
+
 /**
- * Performs safe GET request with timeout, redirect limit, and SSRF prevention.
+ * Performs safe GET request with complete end-to-end timeout, strict redirect limits,
+ * response size ceiling, and same-origin redirect enforcement.
  * @param {string} targetUrl
  * @param {object} options
+ * @param {number} [options.timeout]
+ * @param {number} [options.maxRedirects]
+ * @param {number} [options.maxBytes]
+ * @param {boolean} [options.allowTestHttp]
  * @param {function} [fetchFn] - Custom fetch function for offline testing
  * @returns {Promise<{ status: number, headers: Headers, body: string, finalUrl: string, elapsedMs: number }>}
  */
 export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetch) {
   const fetchImpl = fetchFn || globalThis.fetch;
   const timeoutMs = options.timeout ?? 10000;
-  const maxRedirects = options.maxRedirects ?? 3;
-  let currentUrl = validatePreviewUrl(targetUrl, options).href;
+  const maxRedirects = options.maxRedirects ?? 2;
+  const maxBytes = options.maxBytes ?? DEFAULT_MAX_BODY_BYTES;
+  const initialUrl = validatePreviewUrl(targetUrl, options);
+  let currentUrl = initialUrl.href;
+  const initialOrigin = initialUrl.origin;
   let redirectsFollowed = 0;
 
   while (redirectsFollowed <= maxRedirects) {
@@ -184,8 +274,6 @@ export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetc
         },
         signal: controller.signal,
       });
-      globalThis.clearTimeout(timer);
-      const elapsedMs = Date.now() - started;
 
       // Handle redirect
       if ([301, 302, 307, 308].includes(response.status)) {
@@ -194,6 +282,13 @@ export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetc
           throw new Error(`REDIRECT_WITHOUT_LOCATION: Received HTTP ${response.status} without Location header`);
         }
         const resolved = new URL(location, currentUrl);
+
+        // Strict redirect invariant: SAME-ORIGIN ONLY!
+        if (resolved.origin !== initialOrigin) {
+          throw new Error(`CROSS_ORIGIN_REDIRECT_FORBIDDEN: Redirect to foreign origin "${resolved.origin}" is forbidden`);
+        }
+
+        // Validate redirect target against safe path & no-query invariants
         validatePreviewUrl(resolved.href, options);
         currentUrl = resolved.href;
         redirectsFollowed++;
@@ -203,7 +298,22 @@ export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetc
         continue;
       }
 
+      // Check Content-Length if provided before reading full body
+      const clHeader = response.headers.get('content-length');
+      if (clHeader) {
+        const clNum = Number(clHeader);
+        if (!Number.isNaN(clNum) && clNum > maxBytes) {
+          throw new Error(`RESPONSE_TOO_LARGE: Content-Length ${clNum} exceeds limit of ${maxBytes} bytes`);
+        }
+      }
+
+      // Read body text while controller timeout remains active!
       const body = await response.text();
+      if (body.length > maxBytes) {
+        throw new Error(`RESPONSE_TOO_LARGE: Body size ${body.length} exceeds limit of ${maxBytes} bytes`);
+      }
+
+      const elapsedMs = Date.now() - started;
       return {
         status: response.status,
         headers: response.headers,
@@ -212,26 +322,32 @@ export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetc
         elapsedMs,
       };
     } catch (err) {
-      globalThis.clearTimeout(timer);
       if (err.name === 'AbortError') {
-        throw new Error(`REQUEST_TIMEOUT: Timed out after ${timeoutMs}ms`);
+        throw new Error(`REQUEST_TIMEOUT: Request and body consumption timed out after ${timeoutMs}ms`);
       }
       throw err;
+    } finally {
+      globalThis.clearTimeout(timer);
     }
   }
 }
 
 /**
  * Local scan of referenced logo, brand, and font assets in apps/web/public.
- * Verifies AP05 asset status (flagging creator assets vs open source).
+ * Verifies AP05 asset status (inventory check only, NOT rights clearance).
  * @param {string} [rootDir]
- * @returns {{ pass: boolean, assets: Array<{ path: string, type: string, note: string }> }}
+ * @returns {{ pass: boolean, status: string, assets: Array<{ path: string, type: string, note: string }>, ap05Status: string }}
  */
 export function inspectLocalAssets(rootDir = process.cwd()) {
   const assets = [];
   const publicDir = resolve(rootDir, 'apps/web/public');
   if (!existsSync(publicDir)) {
-    return { pass: true, assets: [], note: 'No apps/web/public folder in target' };
+    return {
+      pass: false,
+      status: 'NOT_VERIFIED',
+      assets: [],
+      ap05Status: 'NOT_VERIFIED: apps/web/public directory not found; assets cannot be audited',
+    };
   }
 
   const fontsDir = resolve(publicDir, 'fonts/my-care');
@@ -239,14 +355,15 @@ export function inspectLocalAssets(rootDir = process.cwd()) {
     assets.push({
       path: 'apps/web/public/fonts/my-care',
       type: 'font',
-      note: 'IBM Plex Sans Arabic (OFL licensed) / Inter variable fonts verified present on-repo',
+      note: 'IBM Plex Sans Arabic (OFL licensed) / Inter variable fonts present on-repo (inventory check only)',
     });
   }
 
   return {
-    pass: true,
+    pass: false, // NOT pass: presence of files is not license or trademark clearance
+    status: 'NOT_VERIFIED',
     assets,
-    ap05Status: 'OPEN_GATE: Custom vector logo rights remain uncertified; textual wordmarks must be used in release',
+    ap05Status: 'OPEN_GATE: Local font asset presence is an inventory check only, NOT proof of third-party creator rights or trademark clearance. AP05 creator rights gate remains OPEN.',
   };
 }
 
@@ -262,13 +379,18 @@ export function inspectLocalAssets(rootDir = process.cwd()) {
  * @returns {Promise<object>} Full verified report
  */
 export async function runPreviewSafetyCheck(params, customFetch) {
+  // Sanitize URLs immediately before storing in report
+  const safeWebUrl = sanitizeUrlForReport(params.url);
+  const safeApiUrl = params.apiUrl ? sanitizeUrlForReport(params.apiUrl) : null;
+
   const result = {
     evaluatedAt: new Date().toISOString(),
     overallStatus: 'PASS',
-    targetWebUrl: params.url,
-    targetApiUrl: params.apiUrl || null,
+    targetWebUrl: safeWebUrl,
+    targetApiUrl: safeApiUrl,
     expectedSha: params.expectedSha || null,
     checks: [],
+    ssrfPolicy: 'Restricted to approved *.vercel.app preview hosts on port 443; socket-level DNS pinning is unverified in standard Node fetch.',
     clinicalReadiness: 'NOT_VERIFIED',
     clinicalReadinessReason: 'HTTP 200 on health only proves network routing and process liveness; it grants ZERO clinical readiness, does NOT certify live authentication, session cookies, CSRF, or database migrations.',
     summary: { pass: 0, warn: 0, fail: 0, notVerified: 0 },
@@ -292,9 +414,9 @@ export async function runPreviewSafetyCheck(params, customFetch) {
   let webUrl;
   try {
     webUrl = validatePreviewUrl(params.url, { allowTestHttp: params.allowTestHttp });
-    recordCheck('Web URL Structure & SSRF Safety', 'PASS', { url: webUrl.href });
+    recordCheck('Web URL Structure & Preview Origin Safety', 'PASS', { origin: webUrl.origin });
   } catch (err) {
-    recordCheck('Web URL Structure & SSRF Safety', 'FAIL', { error: err.message });
+    recordCheck('Web URL Structure & Preview Origin Safety', 'FAIL', { error: err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') });
     return result;
   }
 
@@ -303,16 +425,20 @@ export async function runPreviewSafetyCheck(params, customFetch) {
   if (params.apiUrl) {
     try {
       apiUrl = validatePreviewUrl(params.apiUrl, { allowTestHttp: params.allowTestHttp });
-      recordCheck('API URL Structure & SSRF Safety', 'PASS', { url: apiUrl.href });
+      recordCheck('API URL Structure & Preview Origin Safety', 'PASS', { origin: apiUrl.origin });
     } catch (err) {
-      recordCheck('API URL Structure & SSRF Safety', 'FAIL', { error: err.message });
+      recordCheck('API URL Structure & Preview Origin Safety', 'FAIL', { error: err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') });
       return result;
     }
   }
 
   // 3. Probe Web Root `/`
   try {
-    const webRes = await safeGet(webUrl.href, { timeout: params.timeout, allowTestHttp: params.allowTestHttp }, customFetch);
+    const webRes = await safeGet(webUrl.origin + '/', {
+      timeout: params.timeout,
+      allowTestHttp: params.allowTestHttp,
+      maxBytes: DEFAULT_MAX_BODY_BYTES,
+    }, customFetch);
     const leakCheck = scanBodyForLeaks(webRes.body);
     const headersEval = evaluateSecurityHeaders(webRes.headers);
 
@@ -338,20 +464,24 @@ export async function runPreviewSafetyCheck(params, customFetch) {
       });
     }
   } catch (err) {
-    recordCheck('Web Root Public Exposure & Leak Check', 'FAIL', { error: err.message });
+    recordCheck('Web Root Public Exposure & Leak Check', 'FAIL', { error: err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') });
   }
 
   // 4. Probe Proxied Health `/api/v1/health`
-  const healthTarget = new URL('/api/v1/health', webUrl.href).href;
+  const healthTarget = webUrl.origin + '/api/v1/health';
   try {
-    const healthRes = await safeGet(healthTarget, { timeout: params.timeout, allowTestHttp: params.allowTestHttp }, customFetch);
+    const healthRes = await safeGet(healthTarget, {
+      timeout: params.timeout,
+      allowTestHttp: params.allowTestHttp,
+      maxBytes: HEALTH_MAX_BODY_BYTES,
+    }, customFetch);
     const headersEval = evaluateSecurityHeaders(healthRes.headers);
 
     let parsedBody = null;
     try {
       parsedBody = JSON.parse(healthRes.body);
     } catch {
-      // Not JSON
+      // Non-JSON response
     }
 
     if (healthRes.status === 200 && parsedBody?.data?.status === 'ok') {
@@ -359,40 +489,45 @@ export async function runPreviewSafetyCheck(params, customFetch) {
       recordCheck('Proxied Health Route (/api/v1/health)', warnings.length > 0 ? 'WARN' : 'PASS', {
         status: healthRes.status,
         elapsedMs: healthRes.elapsedMs,
-        body: parsedBody,
+        healthStatus: parsedBody.data.status, // Only record allowlisted field!
         warnings,
       });
     } else {
       recordCheck('Proxied Health Route (/api/v1/health)', 'FAIL', {
         status: healthRes.status,
-        bodySnippet: healthRes.body.slice(0, 100),
-        expectedBody: '{"data":{"status":"ok"}}',
+        errorCategory: 'INVALID_HEALTH_PAYLOAD',
+        expectedPayload: '{"data":{"status":"ok"}}',
       });
     }
   } catch (err) {
-    recordCheck('Proxied Health Route (/api/v1/health)', 'FAIL', { error: err.message });
+    recordCheck('Proxied Health Route (/api/v1/health)', 'FAIL', { error: err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') });
   }
 
   // 5. Probe Direct API if provided
   if (apiUrl) {
-    const directHealth = new URL('/api/v1/health', apiUrl.href).href;
+    const directHealth = apiUrl.origin + '/api/v1/health';
     try {
-      const directRes = await safeGet(directHealth, { timeout: params.timeout, allowTestHttp: params.allowTestHttp }, customFetch);
+      const directRes = await safeGet(directHealth, {
+        timeout: params.timeout,
+        allowTestHttp: params.allowTestHttp,
+        maxBytes: HEALTH_MAX_BODY_BYTES,
+      }, customFetch);
       let parsed = null;
       try { parsed = JSON.parse(directRes.body); } catch { /* ignore non-json response */ }
       if (directRes.status === 200 && parsed?.data?.status === 'ok') {
         recordCheck('Direct API Health Route', 'PASS', {
           status: directRes.status,
           elapsedMs: directRes.elapsedMs,
+          healthStatus: parsed.data.status,
         });
       } else {
         recordCheck('Direct API Health Route', 'FAIL', {
           status: directRes.status,
-          bodySnippet: directRes.body.slice(0, 100),
+          errorCategory: 'INVALID_DIRECT_HEALTH_PAYLOAD',
         });
       }
     } catch (err) {
-      recordCheck('Direct API Health Route', 'FAIL', { error: err.message });
+      recordCheck('Direct API Health Route', 'FAIL', { error: err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') });
     }
   }
 
@@ -404,12 +539,16 @@ export async function runPreviewSafetyCheck(params, customFetch) {
     });
   }
 
-  // 7. Local Asset & AP05 Check
+  // 7. Local Asset & AP05 Check: NOT_VERIFIED (OPEN_GATE)
   try {
     const assetCheck = inspectLocalAssets();
-    recordCheck('AP05 Brand & Asset Rights Audit', 'PASS', assetCheck);
+    recordCheck('AP05 Brand & Asset Rights Audit', 'NOT_VERIFIED', {
+      status: assetCheck.status,
+      ap05Status: assetCheck.ap05Status,
+      assets: assetCheck.assets,
+    });
   } catch (err) {
-    recordCheck('AP05 Brand & Asset Rights Audit', 'WARN', { error: err.message });
+    recordCheck('AP05 Brand & Asset Rights Audit', 'NOT_VERIFIED', { error: err.message });
   }
 
   return result;

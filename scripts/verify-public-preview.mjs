@@ -12,7 +12,7 @@
 import { resolve } from 'node:path';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { runPreviewSafetyCheck } from './lib/public-preview-safety.mjs';
+import { runPreviewSafetyCheck, sanitizeUrlForReport } from './lib/public-preview-safety.mjs';
 
 export function parseCliArgs(args) {
   const options = {
@@ -66,8 +66,10 @@ Options:
   --offline-fixture <path> Path to mock responses JSON file (offline / test mode)
   --help, -h               Show this help message
 
-Guarantees:
-  - Enforces public HTTPS and strictly blocks SSRF to private/loopback networks.
+Guarantees & Constraints:
+  - Enforces HTTPS on standard port 443 only.
+  - Restricts public previews to verified *.vercel.app hostnames; blocks raw IP literals.
+  - Rejects cross-origin redirects, URL queries, fragments, and unapproved routes.
   - Zero clinical commands, zero mutations, zero credential transmissions.
   - Differentiates public network reachability from live clinical release readiness.
 `);
@@ -79,8 +81,8 @@ export function formatTerminalReport(report) {
   lines.push('           EGYHEALTH 360 — PUBLIC PREVIEW SAFETY AUDIT                ');
   lines.push('======================================================================');
   lines.push(`Evaluated At : ${report.evaluatedAt}`);
-  lines.push(`Target Web   : ${report.targetWebUrl}`);
-  if (report.targetApiUrl) lines.push(`Target API   : ${report.targetApiUrl}`);
+  lines.push(`Target Web   : ${sanitizeUrlForReport(report.targetWebUrl)}`);
+  if (report.targetApiUrl) lines.push(`Target API   : ${sanitizeUrlForReport(report.targetApiUrl)}`);
   lines.push(`Overall State: [${report.overallStatus}]`);
   lines.push('----------------------------------------------------------------------');
   lines.push('CHECK RESULTS:');
@@ -102,6 +104,9 @@ export function formatTerminalReport(report) {
     }
   }
 
+  lines.push('----------------------------------------------------------------------');
+  lines.push('NETWORK & SSRF POLICY NOTE:');
+  lines.push(`  Notice : ${report.ssrfPolicy}`);
   lines.push('----------------------------------------------------------------------');
   lines.push('CLINICAL READINESS GATE (STRICT INVARIANT):');
   lines.push(`  Status : [${report.clinicalReadiness}]`);
@@ -164,7 +169,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   main().then((code) => {
     process.exitCode = code;
   }).catch((err) => {
-    console.error('Fatal execution error:', err);
+    console.error('Fatal execution error:', err.message ? err.message.replace(/:\/\/[^@/\s]+@/g, '://[REDACTED]@') : 'Unknown error');
     process.exitCode = 1;
   });
 }
