@@ -52,7 +52,7 @@ async function presentation(page, label) {
 }
 async function text200(page) {
   return page.evaluate(() => {
-    const nodes = [...document.querySelectorAll("[data-frontend-v2], [data-frontend-v2] *")];
+    const nodes = [...globalThis.document.querySelectorAll("[data-frontend-v2], [data-frontend-v2] *")];
     const sizes = nodes.map(el => parseFloat(globalThis.getComputedStyle(el).fontSize));
     nodes.forEach((el, i) => { el.style.fontSize = `${sizes[i] * 2}px`; });
     return sizes.every((size, i) => parseFloat(globalThis.getComputedStyle(nodes[i]).fontSize) === size * 2);
