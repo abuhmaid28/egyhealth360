@@ -83,9 +83,20 @@ async function patientPage(browser, origin, locale) {
   return { page, context, calls, errors };
 }
 export async function testV2PatientDoctor(browser, origin, shots) {
+  // System palette must apply to F04's neutral shell before any application JS.
+  for (const colorScheme of ["light", "dark"]) {
+    const page = await browser.newPage({ javaScriptEnabled: false, colorScheme });
+    await page.goto(origin + "/patient");
+    const boot = page.locator("[data-initial-locale]");
+    await boot.waitFor();
+    assert.equal(await boot.evaluate(el => globalThis.getComputedStyle(el).backgroundColor), palettes[colorScheme]);
+    assert.equal(await page.locator("button,input,textarea,a").count(), 0);
+    assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"), null);
+    await page.close();
+  }
   const out = process.env.UI_V2_PACKAGE_A_EVIDENCE_DIR ?? shots;
   if (out) await mkdir(out, { recursive: true });
-  const receipt = { source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(), browser: browser.version(), origin, synthetic: true, screens: [], scans: [], axe: [], journeys: [], routeFailures: [] };
+  const receipt = { source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(), browser: browser.version(), origin, synthetic: true, systemFirstPaint: ["light", "dark"], screens: [], scans: [], axe: [], journeys: [], routeFailures: [] };
   const capture = async (page, role, locale, theme, width) => {
     if (!out) return;
     receipt.screens.push(await screenshot(page, out, `a-${role}-${locale}-${theme}-${width}.png`, { role, locale, theme, viewport: { width, height: 1000 }, fullPage: true, source: receipt.source, fixture: role === "patient" ? "myCareDemoState" : "clinicianMasterPage controlled GET" }));
@@ -193,7 +204,15 @@ export async function testV2PatientDoctor(browser, origin, shots) {
     await patient.page.locator('select[aria-label="Demo workspace"],select[aria-label="مساحة العرض التجريبي"]').selectOption("CLINICIAN");
     await patient.page.waitForURL("**/doctor");
     await canvas(patient.page, "light");
-    receipt.journeys.push({ locale, uncertainOriginalWrites: 1, presentationWrites: 0, editorDOMPreserved: true, themeReloadAccountReset: true });
+    receipt.journeys.push({ locale, uncertainOriginalWrites: 1, presentationWrites: 0, editorDOMPreserved: true, themeReloadAccountReset: true, themeLogoutReset: true });
+    await selectAppearance(patient.page, "dark");
+    await patient.page.locator("footer > button").click();
+    await patient.page.waitForURL("**/login");
+    await patient.page.locator(".demo-button").waitFor();
+    assert.equal(await patient.page.locator("html").getAttribute("data-frontend-v2-theme"), null);
+    await patient.page.locator(".demo-button").click();
+    await patient.page.locator("[data-frontend-v2]").waitFor();
+    await canvas(patient.page, "light");
     await patient.context.close(); await doctor.page.close();
   }
   assert.deepEqual(receipt.routeFailures, [], "Supported journey presentation failures");

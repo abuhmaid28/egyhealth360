@@ -132,7 +132,7 @@
 [data-frontend-v2] .v2-theme-switch select { min-block-size: 44px; inline-size: 100%; border: 1px solid var(--v2-control); border-radius: 8px; padding: 8px; }
 [data-frontend-v2] .v2-theme-switch small { color: var(--v2-muted); font-size: 14px; }
 /* F04 stays neutral bilingual and CSS-only until the original locale resolves. */
-[data-initial-locale] { color: var(--v2-ink); background: var(--v2-canvas); color-scheme: var(--v2-scheme); }
+[data-initial-locale][data-initial-locale] { color: var(--v2-ink); background: var(--v2-canvas); color-scheme: var(--v2-scheme); }
 @media (prefers-reduced-motion: reduce) {
   [data-frontend-v2] *, [data-frontend-v2] *::before, [data-frontend-v2] *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
