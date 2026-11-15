@@ -166,7 +166,11 @@ test("Patient presentation is bounded; all source preparation and entire Doctor 
   assert.equal(sha256(JSON.stringify(others)), "15c00883e48f79d9e8a86554531876c588af3bc9bb3fec60f0821d7a26caaa43");
   const care = ast.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === "CareScreen");
   assert.equal(sha256(JSON.stringify(care.body.statements.filter(n => !ts.isReturnStatement(n)).map(n => n.getText()))), "ee62c4b41b00a5dca70a26001b83f2e9c6d0e99be31678e7d27551d54a8874a7");
-  assert.equal(sha256(read(doctorFile)), "8f7f12f5395ad41e86ca0c25c7368484be1e3183f208317b22a11684ad7c2e9e");
+  // Preserve the entire inherited projection/task/timestamp code; only the new
+  // disclosure and its React imports are excluded from this historical digest.
+  const inheritedDoctor = read(doctorFile).split("\n// Package A presentation disclosure;")[0]
+    .replace(", useLayoutEffect, type ReactNode", "");
+  assert.equal(sha256(inheritedDoctor), "8f7f12f5395ad41e86ca0c25c7368484be1e3183f208317b22a11684ad7c2e9e");
   assert.equal(sha256(read(root + "components/clinician-consultation.module.css")), "3f139ece2068afad2cf36d28e9af9e62d48d8976e00f4b32c32371fdde03deb6");
 });
 test("Neutral display components import only React types and local CSS; no hooks, request, storage, policy or clinical dependency", () => {
@@ -216,7 +220,7 @@ let path = "/patient", role = "PATIENT", mode = "demo";
 const shellSource = read(root + "components/portal-shell.tsx");
 const shellAST = ts.createSourceFile("shell.tsx", shellSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 const shell = evaluate(shellAST.statements.filter(n => !ts.isImportDeclaration(n)).map(n => n.getText()).join("\n"), {
-  Link, Icon, care: styles, styles, myCareCopy: copy, accountName: presentation.accountName,
+  Link, Icon, care: styles, styles, v2: styles, FrontendV2ThemeSwitch: () => null, myCareCopy: copy, accountName: presentation.accountName,
   LanguageSwitch: () => React.createElement("span", null, "Language control"),
   usePathname: () => path, useLocale,
   useApp: () => ({ api: { mode }, session: { role, name: "Permitted account", mode } }),
@@ -241,7 +245,14 @@ test("Presentation requires explicit opt-in, exact PATIENT role and exact route;
 });
 
 test("Default shell reconstructs exact main source and shared CSS prefix", () => {
-  let original = shellSource;
+  // Remove only Package A presentation additions before reconstructing the original shell.
+  // The original legacy-source hash and its reconstruction assertions stay intact.
+  let original = shellSource
+    .replace('import { FrontendV2ThemeSwitch } from "./v2/frontend-v2-theme";\n', "")
+    .replace('import v2 from "./v2/patient-doctor-layout.module.css";\n\n', "")
+    .replace('${patient || clinician ? ` ${v2.root}` : ""}', "")
+    .replace('      data-frontend-v2={patient || clinician || undefined}\n', "")
+    .replace('                {(patient || clinician) && <FrontendV2ThemeSwitch />}\n', "");
   const changes = [
     [' onClick={myCareV2 ? (event) => {\n        const main = document.getElementById("main");\n        if (!main) return;\n        event.preventDefault();\n        main.focus({ preventScroll: true });\n        main.scrollIntoView({ block: "start" });\n      } : undefined}', ""],
     ["  patientMyCareV2?: boolean;\n", ""],

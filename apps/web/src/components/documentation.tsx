@@ -1,7 +1,7 @@
 "use client";
 import { presentationName } from '../lib/presentation';
 import { careDate, careTime } from "../lib/patient-my-care";
-import { ClinicalTimestamp, ClinicianSourceRail, SourcePurpose } from "./clinician-consultation-presentation";
+import { ClinicalTimestamp, ClinicianSourceRail, ClinicianSourceContext, SourcePurpose } from "./clinician-consultation-presentation";
 import {
   useId,
   useState,
@@ -465,6 +465,7 @@ function DocumentationEditor({
           <a href="#doc-summary"><span>{t("Patient summary and instructions")}</span>{professional && <SourcePurpose kind="summary" />}</a>
           <a href="#doc-history">{t("Signed history")}</a>
         </nav>
+        {professional && <ClinicianSourceContext><ClinicianSourceRail view={view} factTarget={factTarget} /></ClinicianSourceContext>}
         <div className="documentation-content">
           <div
             className="documentation-feedback"
@@ -806,7 +807,6 @@ function DocumentationEditor({
             )}
           </Card>
         </div>
-        {professional && <ClinicianSourceRail view={view} factTarget={factTarget} />}
       </div>
       {confirmation && (
         <Modal

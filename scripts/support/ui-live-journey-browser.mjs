@@ -134,11 +134,21 @@ export async function testLiveJourney(browser, origin, shots) {
           globalThis.document.fonts.check(
             locale === "ar"
               ? '16px "EH My Care Arabic"'
-              : '16px "EH My Care Manrope"',
+              : '16px Inter',
           ),
         locale,
       ),
     );
+    // Package A uses approved Inter/Plex. Check the actual rendered heading,
+    // not only whether a declared legacy font happened to be downloaded.
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("DOM.enable");
+    await cdp.send("CSS.enable");
+    const { root } = await cdp.send("DOM.getDocument");
+    const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: root.nodeId, selector: "#main h1" });
+    const rendered = await cdp.send("CSS.getPlatformFontsForNode", { nodeId });
+    assert.ok(rendered.fonts.some(font => font.glyphCount > 0 && font.familyName.includes(locale === "ar" ? "Plex" : "Inter")), JSON.stringify(rendered.fonts));
+    await cdp.detach();
     for (const control of await page.locator(".language-switch button").all()) {
       const rect = await control.boundingBox();
       assert.ok(rect && rect.width >= 44 && rect.height >= 44);

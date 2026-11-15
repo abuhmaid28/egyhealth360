@@ -20,6 +20,7 @@ import {
   LiveBookingList,
   LiveBookingDetail,
   LiveCreateReview,
+  BookingTime,
 } from "./live-booking";
 import { DemoContinuation, PatientJourney, LiveSummaryEntry } from "./journey";
 import { PublicAvailability } from "./availability";
@@ -1088,10 +1089,7 @@ function Appointments({ id }: { id?: string }) {
                         {date(a.slot.startAt, a.slot.timeZone, locale)}
                       </Detail>
                       <Detail icon="clock" title={t("Time")}>
-                        {time(a.slot.startAt, a.slot.timeZone, locale)}
-                        {t("–")}
-                        {time(a.slot.endAt, a.slot.timeZone, locale)} {t("·")}{" "}
-                        {timeZoneLabel(a.slot.timeZone, t)}
+                        <BookingTime booking={a.slot} patientDetail />
                       </Detail>
                       <Detail icon="pin" title={t("Location")}>
                         {
