@@ -2012,3 +2012,6 @@
   .root[data-frontend-v2] .appointment .appointmentBottom .whiteButton { inline-size: 100%; }
   .root[data-frontend-v2] .dateTile { font-size: 20px; }
 }
+.root[data-frontend-v2] .bottomNav a[aria-current="page"] { color: var(--v2-action); background: var(--v2-raised); }
+
+.root[data-frontend-v2] .wordmark { text-decoration: underline; text-decoration-color: var(--v2-accent); text-decoration-thickness: 3px; text-underline-offset: 6px; }

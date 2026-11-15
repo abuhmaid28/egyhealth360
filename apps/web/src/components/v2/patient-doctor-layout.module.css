@@ -31,9 +31,9 @@
 }
 
 /* Supported selection, booking, released/history and professional operational destinations. */
-.root[data-frontend-v2] :global(.doctor-card) { border: 1px solid var(--v2-line); border-radius: 20px; background: var(--v2-surface); }
-.root[data-frontend-v2] :global(.doctor-card:hover) { border-color: var(--v2-control); }
-.root[data-frontend-v2] :global(.doctor-profile-banner) { background: var(--v2-raised); color: var(--v2-ink); }
+.root[data-frontend-v2] :global(.provider-card) { border: 1px solid var(--v2-line); border-radius: 20px; background: var(--v2-surface); }
+.root[data-frontend-v2] :global(.provider-card:hover) { border-color: var(--v2-control); }
+.root[data-frontend-v2] :global(.doctor-profile) { background: var(--v2-raised); color: var(--v2-ink); }
 .root[data-frontend-v2] :global(.avatar) { color: var(--v2-action); background: var(--v2-raised); }
 .root[data-frontend-v2] :global(.slots button) { color: var(--v2-ink); background: var(--v2-surface); border: 1px solid var(--v2-control); min-block-size: 48px; }
 .root[data-frontend-v2] :global(.slots button.selected) { color: var(--v2-action); background: var(--v2-raised); border: 2px solid var(--v2-action); }
@@ -87,7 +87,7 @@
 .root[data-frontend-v2] :global(.master-source-rail dl > div:nth-child(-n + 2)) { background: transparent; border: 0; border-block-end: 1px solid var(--v2-line); padding: 16px 0; }
 .root[data-frontend-v2] :global(.documentation-warning) { background: var(--v2-raised); color: var(--v2-ink); }
 .root[data-frontend-v2] :global(.scoped-consultation .consultation-ribbon) { box-shadow: none; }
-@media (min-width: 901px) { .root[data-frontend-v2] > header > div { padding-block: 14px; } }
+@media (min-width: 901px) { .root[data-frontend-v2] > header > div { padding-block: 11px; } }
 @media (max-width: 1099px) {
   .root[data-frontend-v2] :global(.documentation-grid) { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .root[data-frontend-v2] :global(.documentation-outline) { position: static; grid-column: 1; grid-row: auto; display: flex; flex-wrap: wrap; }
@@ -107,3 +107,25 @@
   .root[data-frontend-v2] :global(.master-visit) { padding: 0; border: 0; }
   .root[data-frontend-v2] :global(.master-local-tasks a) { flex-basis: 100%; }
 }
+.root[data-frontend-v2] :global(.body-copy) { color: var(--v2-muted); font-size: 16px; }
+.root[data-frontend-v2] :global(.availability-context),
+.root[data-frontend-v2] :global(.availability-note),
+.root[data-frontend-v2] :global(.public-availability-note),
+.root[data-frontend-v2] :global(.date-tile),
+.root[data-frontend-v2] :global(.directory-note),
+.root[data-frontend-v2] :global(.appointment-date),
+.root[data-frontend-v2] :global(.provider-clinic),
+.root[data-frontend-v2] :global(.detail .icon-tile),
+.root[data-frontend-v2] :global(.stat .icon-tile) { color: var(--v2-ink); background: var(--v2-raised); border-color: var(--v2-line); }
+.root[data-frontend-v2] :global(.availability-context small),
+.root[data-frontend-v2] :global(.availability-note small) { color: var(--v2-muted); }
+.root[data-frontend-v2] :global(.master-consultation-state) { max-inline-size: 100%; flex-shrink: 1; white-space: normal; overflow-wrap: anywhere; }
+@media (min-width: 1600px) {
+  .root[data-frontend-v2] > main,
+  .root[data-frontend-v2] > header > div { max-inline-size: 1440px; }
+}
+.root[data-frontend-v2] :global(.filter-chips button.selected) { color: var(--v2-on-action); background: var(--v2-action); border-color: var(--v2-action); }
+.root[data-frontend-v2] :global(.boundary-notice) { background: var(--v2-raised); border-color: var(--v2-control); }
+.root[data-frontend-v2] :global(.boundary-notice p) { color: var(--v2-muted); }
+.root[data-frontend-v2] :global(.map-art) { color: var(--v2-ink); background: var(--v2-raised); border-color: var(--v2-line); }
+.root[data-frontend-v2] :global(.tabs span) { color: inherit; background: var(--v2-raised); }
