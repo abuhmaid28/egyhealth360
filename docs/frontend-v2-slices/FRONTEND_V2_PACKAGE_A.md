@@ -91,7 +91,7 @@ Only these 50 paths may differ from the sole parent; paths are a ceiling, not a 
 
 1. Source/G0 freeze complete. Baseline browser capture pending local build.
 2. Shared foundation/navigation/T1 implemented: scoped audited Light/Dark pairs, CSS System first paint, memory-only override, session/account/capability reset without remount. Original source/CSS preservation tests retained. Build/typecheck/focused lint PASS; real Chromium baseline captured outside Git. Full visual QA remains checkpoint5.
-3. Patient journeys pending.
+3. Patient presentation complete on existing journeys: date-led single-CTA My Care, supported discovery/provider/clinic/availability, booking review/detail/history/released/follow-up/settings via scoped foundation. Original adapters/data preparation and all Patient12h/DST/privacy assertions preserved;25 focused tests and production build PASS. Responsive/functional matrix follows in checkpoint5.
 4. Doctor journeys pending.
 5. Full local QA/screenshots pending.
 6. Independent reviews/one Draft/final-head CI pending.

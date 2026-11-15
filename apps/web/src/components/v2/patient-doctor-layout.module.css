@@ -29,3 +29,26 @@
   .root[data-frontend-v2] :global(.card) { padding: 20px 16px; }
   .root[data-frontend-v2] :global(.page-heading h1) { font-size: 26px; }
 }
+
+/* Supported selection, booking, released/history and professional operational destinations. */
+.root[data-frontend-v2] :global(.doctor-card) { border: 1px solid var(--v2-line); border-radius: 20px; background: var(--v2-surface); }
+.root[data-frontend-v2] :global(.doctor-card:hover) { border-color: var(--v2-control); }
+.root[data-frontend-v2] :global(.doctor-profile-banner) { background: var(--v2-raised); color: var(--v2-ink); }
+.root[data-frontend-v2] :global(.avatar) { color: var(--v2-action); background: var(--v2-raised); }
+.root[data-frontend-v2] :global(.slots button) { color: var(--v2-ink); background: var(--v2-surface); border: 1px solid var(--v2-control); min-block-size: 48px; }
+.root[data-frontend-v2] :global(.slots button.selected) { color: var(--v2-action); background: var(--v2-raised); border: 2px solid var(--v2-action); }
+.root[data-frontend-v2] :global(.filter-chips button) { color: var(--v2-muted); background: var(--v2-surface); border: 1px solid var(--v2-control); }
+.root[data-frontend-v2] :global(.filter-chips button.active) { color: var(--v2-action); background: var(--v2-raised); border-color: var(--v2-action); }
+.root[data-frontend-v2] :global(.booking-time) { font-size: 16px; }
+.root[data-frontend-v2] :global(.booking-time small) { font-size: 14px; }
+.root[data-frontend-v2] :global(.live-booking-row) { gap: 24px; }
+.root[data-frontend-v2] :global(.booking-identity h3) { font-size: 20px; overflow-wrap: anywhere; }
+.root[data-frontend-v2] :global(.error-panel p) { color: var(--v2-ink); }
+.root[data-frontend-v2] :global(.modal) { border: 1px solid var(--v2-control); border-radius: 20px; }
+.root[data-frontend-v2] :global(.confirmation-details) { background: var(--v2-raised); }
+.root[data-frontend-v2] :global(.detail-icon) { background: var(--v2-raised); color: var(--v2-action); }
+.root[data-frontend-v2] :global(.empty .button) { font-size: 16px; }
+.root[data-frontend-v2] :global(.appointment-main h3) { white-space: normal; text-overflow: clip; }
+.root[data-frontend-v2] :global(.patient-journey) { background: var(--v2-surface); }
+.root[data-frontend-v2] :global(.patient-journey > a) { background: var(--v2-raised); }
+.root[data-frontend-v2] :global(.journey-number) { background: var(--v2-surface); }

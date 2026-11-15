@@ -68,6 +68,7 @@ function WorkspaceApplication({
   useEffect(() => {
     if (api?.mode !== "live" || !api.documentation) return;
     const source = api.documentation;
+    if (!source.subscribe) return;
     let stamp = source.scopeStamp();
     return source.subscribe(() => {
       const next = source.scopeStamp();

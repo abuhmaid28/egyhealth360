@@ -358,6 +358,9 @@ function AppointmentAnchor({
         </div>
       ) : a ? (
         <>
+          <time className={styles.dateTile} dateTime={a.startAt}>
+            <bdi>{careDate(a.startAt, a.timeZone, locale)}</bdi>
+          </time>
           <div className={styles.appointmentDetails}>
             <span
               className={styles.doctorAvatar}
@@ -385,7 +388,6 @@ function AppointmentAnchor({
             </div>
             <div className={styles.appointmentWhen}>
               <p>
-                <bdi>{careDate(a.startAt, a.timeZone, locale)}</bdi>{" "}
                 <bdi dir={locale === "ar" ? "rtl" : "ltr"}>
                   {new Intl.DateTimeFormat(
                     locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB",
