@@ -45,7 +45,9 @@ test("Audited V2 text/action/control pairs retain contrast across both authored 
 
 test("Theme resets consume existing capability notification without keying or commanding the editor", () => {
   const app = read("apps/web/src/components/application.tsx");
-  assert.ok(app.includes("[session, api, resetTheme]"));
+  assert.ok(app.includes('const chooseMode = (mode: Mode) => {\n    resetTheme();'));
+  assert.ok(app.includes('await api?.logout();\n      resetTheme();'));
+  assert.ok(read("apps/web/app/layout.tsx").includes("<FrontendV2ThemeProvider>"));
   assert.ok(app.includes("source.subscribe(() =>"));
   assert.ok(app.includes("if (next !== stamp) { stamp = next; resetTheme(); }"));
   assert.doesNotMatch(app, /key=\{(?:theme|locale)\}/);

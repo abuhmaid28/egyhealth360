@@ -3,7 +3,7 @@ import { safeErrorMessage } from "../lib/api/errors";
 import { LanguageSwitch, useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type {
   HealthcareAdapter,
   Mode,
@@ -40,12 +40,9 @@ const roles: { role: Role; name: string }[] = [
   { role: "LAB_STAFF", name: "Laboratory" },
   { role: "ADMIN", name: "Admin" },
 ];
-import { FrontendV2ThemeProvider, useFrontendV2Theme } from "./v2/frontend-v2-theme";
+import { useFrontendV2Theme } from "./v2/frontend-v2-theme";
 
-export function Application(props: { liveConfigured?: boolean }) {
-  return <FrontendV2ThemeProvider><WorkspaceApplication {...props} /></FrontendV2ThemeProvider>;
-}
-function WorkspaceApplication({
+export function Application({
   liveConfigured = true,
 }: {
   liveConfigured?: boolean;
@@ -62,9 +59,6 @@ function WorkspaceApplication({
   const [preview, setPreview] = useState<Preview>("ready");
   const [refresh, setRefresh] = useState(0);
   const [toast, setToast] = useState("");
-  // Session object changes only on restore, explicit account/mode entry or logout.
-  // Reset presentation without keying/remounting any clinical subtree.
-  useLayoutEffect(() => { resetTheme(); }, [session, api, resetTheme]);
   useEffect(() => {
     if (api?.mode !== "live" || !api.documentation) return;
     const source = api.documentation;
@@ -88,6 +82,7 @@ function WorkspaceApplication({
         : adapter.session();
     restored.then((s) => {
       if (active) {
+        if (!s) resetTheme();
         setSession(s);
         setReady(true);
       }
@@ -95,7 +90,7 @@ function WorkspaceApplication({
     return () => {
       active = false;
     };
-  }, [liveSession, liveConfigured]);
+  }, [liveSession, liveConfigured, resetTheme]);
   useEffect(() => {
     if (!toast) return;
     const timer = setTimeout(() => setToast(""), 4500);
@@ -105,6 +100,7 @@ function WorkspaceApplication({
     setPreview("ready");
   }, [pathname]);
   const chooseMode = (mode: Mode) => {
+    resetTheme();
     liveSession.clear();
     liveSession.selectMode(mode);
     const adapter =
@@ -123,6 +119,7 @@ function WorkspaceApplication({
   const logout = async () => {
     try {
       await api?.logout();
+      resetTheme();
       setSession(null);
       router.push("/login");
     } catch (e) {

@@ -154,7 +154,7 @@ function ScopedWorkspace({
         </a>
       </nav>
       </header>}
-      <div id="live-documentation">
+      <div id="live-documentation" tabIndex={-1}>
         <DocumentationWorkspaceScreen service={service} professional={professional} />
       </div>
       <FollowUpScreen service={followUp} author />

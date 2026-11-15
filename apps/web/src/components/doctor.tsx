@@ -103,7 +103,7 @@ function Schedule({ dashboard }: { dashboard: boolean }) {
         title={
           dashboard
             ? t("Welcome back, {name}.", { name: session.name })
-            : "Your schedule"
+            : t("Your schedule")
         }
         description={t(
           "Every appointment is a chance to make care feel more connected.",

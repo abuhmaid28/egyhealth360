@@ -60,7 +60,7 @@ export function ConsultationCloseCard({
   }, [context.state, review]);
   return (
     <>
-      <Card className="consultation-close-card" id="review-close">
+      <Card className="consultation-close-card" id="review-close" tabIndex={-1}>
         <div ref={result} tabIndex={-1} className="close-result" role="status">
           <CardTitle
             title={t(
