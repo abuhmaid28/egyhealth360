@@ -1,11 +1,13 @@
 /** Direct opt-in proof on the built app; not invoked by the inherited CI browser runner. */
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { mkdir } from "node:fs/promises";
+import { mkdir, mkdtemp } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { chromium } from "playwright";
 import { myCareDemoState, openDemoUtility } from "./ui-my-care-browser.mjs";
 const origin = "http://127.0.0.1:3107";
-const shots = "docs/frontend-v2-slices/evidence";
+const shots = process.env.STAFF_V2_EVIDENCE_DIR || await mkdtemp(join(tmpdir(), "eh135-staff-"));
 const rolePaths = { PHARMACY_STAFF: "pharmacy", ADMIN: "admin", LAB_STAFF: "laboratory" };
 const state = role => {
   const s = myCareDemoState();

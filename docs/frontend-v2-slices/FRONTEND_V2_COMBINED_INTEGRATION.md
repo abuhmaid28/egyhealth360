@@ -13,7 +13,7 @@ Exact baseline: `d268264b1d062c65425a223f8f25d6e72442586e` (#134). Branch `integ
 | Checkpoint | State |
 | --- | --- |
 |1/6 source freeze/assembly|Pinned GitHub state and authorization verified;55 source snapshots assembled,44 import-only blob/modes verified.|
-|2/6 canonical T1/shared staff shell|Pending.|
+|2/6 canonical T1/shared staff shell|Shared all-role shell/T1 and scoped Patient/Doctor content implemented;7 combined unit/provenance cases and frontend build/types PASS; full browser qualification follows in4/6.|
 |3/6 OFFLINE-ONLY C remediation|Pending.|
 |4/6 combined regression/browser/evidence|Pending.|
 |5/6 independent frontend/security/adversarial reviews|Pending.|

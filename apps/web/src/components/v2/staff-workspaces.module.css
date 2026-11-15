@@ -1,32 +1,19 @@
-/* Passive staff palette only. Package A owns root/theme policy and final tokens. */
+/* Shared T1 values follow the sole layout-owned canonical theme attribute. */
 .root {
-  --staff-canvas:#f8f7fc; --staff-surface:#fff; --staff-raised:#efeaf8;
-  --staff-ink:#1b1630; --staff-muted:#625972; --staff-line:#dcd4ec;
-  --staff-action:#6340ba; --staff-on-action:#fff; --staff-apricot:#ffe5cf;
-  --staff-control:#82758e;
-  background:var(--staff-canvas); color:var(--staff-ink); border-radius:24px;
-  padding:clamp(16px,2.5vw,36px); min-width:0; font-size:1rem; line-height:1.75;
+  --staff-canvas:var(--v2-canvas); --staff-surface:var(--v2-surface); --staff-raised:var(--v2-raised);
+  --staff-ink:var(--v2-ink); --staff-muted:var(--v2-muted); --staff-line:var(--v2-line);
+  --staff-action:var(--v2-action); --staff-on-action:var(--v2-on-action); --staff-control:var(--v2-control);
+  /* Existing #109 decorative pair; conveys no new clinical status meaning. */
+  --staff-apricot:#ffe5cf;
+  background:var(--staff-canvas); color:var(--staff-ink); color-scheme:var(--v2-scheme); border-radius:24px;
+  padding:clamp(16px,2.5vw,36px); min-width:0; font-size:1rem; line-height:inherit;
   --ink:var(--staff-ink); --muted:var(--staff-muted); --white:var(--staff-surface);
   --canvas:var(--staff-canvas); --line:var(--staff-line); --blue:var(--staff-action);
 }
-@media(prefers-color-scheme:dark) { .root {
-  --staff-canvas:#15121f; --staff-surface:#211c2e; --staff-raised:#30253f;
-  --staff-ink:#f6f0ff; --staff-muted:#c6bad5; --staff-line:#54465f;
-  --staff-action:#c9aeff; --staff-on-action:#25153e; --staff-apricot:#4b3228;
-  --staff-control:#a89ab5; color-scheme:dark;
-} }
-:global([data-theme="dark"]) .root {
-  --staff-canvas:#15121f; --staff-surface:#211c2e; --staff-raised:#30253f;
-  --staff-ink:#f6f0ff; --staff-muted:#c6bad5; --staff-line:#54465f;
-  --staff-action:#c9aeff; --staff-on-action:#25153e; --staff-apricot:#4b3228;
-  --staff-control:#a89ab5; color-scheme:dark;
+@media(prefers-color-scheme:dark) {
+  :global(:root:not([data-frontend-v2-theme="light"])) .root { --staff-apricot:#4b3228; }
 }
-:global([data-theme="light"]) .root {
-  --staff-canvas:#f8f7fc; --staff-surface:#fff; --staff-raised:#efeaf8;
-  --staff-ink:#1b1630; --staff-muted:#625972; --staff-line:#dcd4ec;
-  --staff-action:#6340ba; --staff-on-action:#fff; --staff-apricot:#ffe5cf;
-  --staff-control:#82758e; color-scheme:light;
-}
+:global(:root[data-frontend-v2-theme="dark"]) .root { --staff-apricot:#4b3228; }
 .root * {box-sizing:border-box; min-width:0;}
 .root h1,.root h2,.root h3,.root p {margin:0; color:inherit; overflow-wrap:anywhere;}
 .root h1 {font-size:clamp(1.85rem,3vw,2.7rem); line-height:1.4; letter-spacing:-.035em;}

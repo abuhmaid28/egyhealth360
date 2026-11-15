@@ -143,11 +143,12 @@ export function PortalShell({
     ));
   return (
     <div
-      className={`${care.root} ${styles.root}${patient || clinician ? ` ${v2.root}` : ""}${myCareV2 ? ` ${styles.patientMyCareV2}` : ""}`}
+      className={`${care.root} ${styles.root} ${v2.root}${myCareV2 ? ` ${styles.patientMyCareV2}` : ""}`}
       lang={locale}
       dir={locale === "ar" ? "rtl" : "ltr"}
       data-portal-shell={session.role}
-      data-frontend-v2={patient || clinician || undefined}
+      data-frontend-v2
+      data-frontend-v2-content={patient || clinician || undefined}
       data-patient-my-care-v2={myCareV2 || undefined}
     >
       <a className={care.skip} href="#main" onClick={myCareV2 ? (event) => {
@@ -210,7 +211,7 @@ export function PortalShell({
               </summary>
               <div>
                 <bdi>{name}</bdi>
-                {(patient || clinician) && <FrontendV2ThemeSwitch />}
+                <FrontendV2ThemeSwitch />
                 <Link href={settings}>{c.settings}</Link>
                 <button onClick={() => void onLogout()}>{c.signOut}</button>
               </div>
