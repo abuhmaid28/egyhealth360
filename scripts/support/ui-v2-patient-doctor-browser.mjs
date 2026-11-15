@@ -90,6 +90,8 @@ export async function testV2PatientDoctor(browser, origin, shots) {
     const boot = page.locator("[data-initial-locale]");
     await boot.waitFor();
     assert.equal(await boot.evaluate(el => globalThis.getComputedStyle(el).backgroundColor), palettes[colorScheme]);
+    assert.equal(await page.locator("body").evaluate(el => globalThis.getComputedStyle(el).backgroundColor), palettes[colorScheme]);
+    assert.equal(await page.locator("noscript .boot").evaluate(el => globalThis.getComputedStyle(el).color), colorScheme === "dark" ? "rgb(246, 242, 255)" : "rgb(23, 20, 43)");
     assert.equal(await page.locator("button,input,textarea,a").count(), 0);
     assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"), null);
     await page.close();
@@ -108,6 +110,7 @@ export async function testV2PatientDoctor(browser, origin, shots) {
         const boot = page.locator(path.startsWith("/doctor") ? "[data-clinician-master-boot]" : "main.boot:not([data-initial-locale])");
         await boot.waitFor();
         assert.equal(await boot.evaluate(el => globalThis.getComputedStyle(el).backgroundColor), palettes[colorScheme]);
+        assert.equal(await page.locator("body").evaluate(el => globalThis.getComputedStyle(el).backgroundColor), palettes[colorScheme]);
         assert.ok(!(await boot.innerText()).includes("SYNTHETIC_HELD_AUTH_CANARY"));
         assert.equal(await boot.locator("button,input,textarea,a").count(), 0);
       } finally { release(); await page.close(); }

@@ -179,3 +179,11 @@ main.boot.boot bdi[dir="ltr"],
 [data-clinician-master-boot][data-clinician-master-boot] bdi[dir="ltr"] { font-family: Inter, "EH My Care Arabic", sans-serif; }
 main.boot .skeleton,
 [data-clinician-master-boot] .skeleton { background: var(--v2-disabled); }
+body:has([data-initial-locale], main.boot, [data-clinician-master-boot]) {
+  background: var(--v2-canvas);
+  color: var(--v2-ink);
+  color-scheme: var(--v2-scheme);
+  font-family: Inter, "EH My Care Arabic", sans-serif;
+}
+noscript .boot { color: var(--v2-ink); background: var(--v2-canvas); }
+noscript [lang="ar"] { font-family: "EH My Care Arabic", Inter, sans-serif; }
