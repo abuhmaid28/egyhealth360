@@ -18,8 +18,8 @@
 .root[data-frontend-v2][data-frontend-v2-content] :global(.progress-steps) { flex-wrap: wrap; min-inline-size: 0; }
 @media (max-width: 900px) {
   .root[data-frontend-v2] > header > div { gap: 12px; padding-inline: 24px; }
-  .root[data-frontend-v2] > header > div > nav { order: 3; flex-basis: 100%; display: flex; gap: 12px; }
-  .root[data-frontend-v2] > header > div > nav a { flex: 1; min-block-size: 48px; border: 1px solid var(--v2-control); border-block-end-width: 3px; border-radius: 10px; text-align: center; }
+  .root[data-frontend-v2] > header > div > nav { order: 3; flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 12px; }
+  .root[data-frontend-v2] > header > div > nav a { flex: 1 1 120px; min-inline-size: 0; overflow-wrap: anywhere; min-block-size: 48px; border: 1px solid var(--v2-control); border-block-end-width: 3px; border-radius: 10px; text-align: center; }
   .root[data-frontend-v2] > header > div > nav a[aria-current="page"] { border-color: var(--v2-action); box-shadow: none; }
 }
 @media (max-width: 600px) {

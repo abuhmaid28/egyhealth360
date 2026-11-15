@@ -69,8 +69,8 @@ async function scaleText(page) {
   return page.evaluate(()=>{
     const nodes=[...globalThis.document.querySelectorAll("[data-portal-shell], [data-portal-shell] *")];
     const sizes=nodes.map(el=>parseFloat(globalThis.getComputedStyle(el).fontSize));
-    nodes.forEach((el,i)=>{el.style.fontSize=sizes[i]*2+"px";});
-    return sizes.every((n,i)=>parseFloat(globalThis.getComputedStyle(nodes[i]).fontSize)===n*2);
+    nodes.forEach((el,i)=>{el.style.setProperty("font-size",sizes[i]*2+"px","important");});
+    const failed=sizes.flatMap((n,i)=>{const actual=parseFloat(globalThis.getComputedStyle(nodes[i]).fontSize);return actual===n*2?[]:[{tag:nodes[i].tagName,cls:nodes[i].className,want:n*2,actual}];});return{valid:failed.length===0,failed};
   });
 }
 async function restoreText(page) {await page.locator("[data-portal-shell], [data-portal-shell] *").evaluateAll(nodes=>nodes.forEach(el=>el.style.removeProperty("font-size")));}
@@ -96,7 +96,7 @@ export async function testCombinedV2(browser,origin,evidenceDir) {
         receipt.scans.push({role,locale,choice,os,effective,...result});
       }
       for(const appearance of["light","dark"]) {
-        await page.setViewportSize({width:320,height:1000});await page.emulateMedia({colorScheme:appearance==="dark"?"light":"dark"});await selectAppearance(page,appearance);assert.equal(await scaleText(page),true);
+        await page.setViewportSize({width:320,height:1000});await page.emulateMedia({colorScheme:appearance==="dark"?"light":"dark"});await selectAppearance(page,appearance);const scale=await scaleText(page);assert.equal(scale.valid,true,`${role}/${locale} text200: ${JSON.stringify(scale.failed)}`);
         receipt.scans.push({role,locale,choice:appearance,textScale:2,...await measure(page,`${role}/${locale}/${appearance}/320/text200`,role)});await restoreText(page);
       }
       if(["PHARMACY_STAFF","ADMIN","LAB_STAFF"].includes(role)) {
