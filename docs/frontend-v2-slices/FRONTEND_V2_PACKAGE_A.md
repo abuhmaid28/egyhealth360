@@ -183,10 +183,7 @@ tests/ui-v2-visual-integration.test.mjs
 
 All8 PNGs are actual browser full-page captures on final9274f23, not generated/edited images or copied prototype artwork. Patient uses existing `myCareDemoState()` in isolated Demo contexts. Doctor uses existing `clinicianMasterPage()` controlled GET fixtures through the production Live adapter: its Live indicator describes adapter mode, not a hosted/DB session. Capture precedes deliberate uncertain-write probes. No real patient data.
 
-#107 is a hierarchy/character reference, not pixel parity: fixtures and rich current editors differ. Approved bounded differences include neutral text wordmark, actual recorded names, honest unsupported capability labels, richer existing documentation and explicit mode/theme controls. Other representative scans and | `before-patient-ar-390.png` | `ee702ec2042a2f64e9789515acbf3954546c0e194e64755b2c44b282da9cde54` |
-| `before-doctor-ar-390.png` | `3e0b1f854a0cd0fc2e16574be4637da249a48e4a260657f16cda40f7f7ac218f` |
-| `before-patient-en-1440.png` | `34fd69061862ee431de553ef87bd2bac4893bd5c3314db203426eaf46bf56fe4` |
-| `before-doctor-en-1440.png` | `25359390a8a7f2a85400fd97cc5c11d70159b259919deb80dd0e94ec5771d379` | images stay outside Git.
+#107 is a hierarchy/character reference, not pixel parity: fixtures and rich current editors differ. Approved bounded differences include neutral text wordmark, actual recorded names, honest unsupported capability labels, richer existing documentation and explicit mode/theme controls. Other representative scans and before images stay outside Git.
 
 | Final image | Viewport / locale / theme | SHA-256 |
 | --- | --- | --- |
@@ -199,10 +196,7 @@ All8 PNGs are actual browser full-page captures on final9274f23, not generated/e
 | [a-doctor-en-light-1440.png](evidence/a-doctor-en-light-1440.png) |1440×1000 / en / light| `4c9f0e2054a4e80d40a959da72cec9c4477a86263b053adaaaea6cf69edf11b8` |
 | [a-doctor-en-dark-1440.png](evidence/a-doctor-en-dark-1440.png) |1440×1000 / en / dark| `14dc4ca4efd0e53a7c0859d47d3eb09505f9a0a96abc20c515217bb816885f68` |
 
-Matched | `before-patient-ar-390.png` | `ee702ec2042a2f64e9789515acbf3954546c0e194e64755b2c44b282da9cde54` |
-| `before-doctor-ar-390.png` | `3e0b1f854a0cd0fc2e16574be4637da249a48e4a260657f16cda40f7f7ac218f` |
-| `before-patient-en-1440.png` | `34fd69061862ee431de553ef87bd2bac4893bd5c3314db203426eaf46bf56fe4` |
-| `before-doctor-en-1440.png` | `25359390a8a7f2a85400fd97cc5c11d70159b259919deb80dd0e94ec5771d379` | build is exact #134 `d268264b1d062c65425a223f8f25d6e72442586e`, its own detached checkout/build with same pinned toolchain, existing fixtures/viewports, DPR1/fullPage and original Light-only behavior. No reference runtime code was imported. An initial symlink-root build attempt failed; isolated frozen install/build succeeded before these captures.
+Matched before build is exact #134 `d268264b1d062c65425a223f8f25d6e72442586e`, its own detached checkout/build with same pinned toolchain, existing fixtures/viewports, DPR1/fullPage and original Light-only behavior. No reference runtime code was imported. An initial symlink-root build attempt failed; isolated frozen install/build succeeded before these captures.
 
 | Before image (outside Git) | SHA-256 |
 | --- | --- |
