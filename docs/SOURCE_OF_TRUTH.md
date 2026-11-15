@@ -1,6 +1,8 @@
 # Source of truth and document index
 
-Current integration reference: [Issue #133 unified receipt](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md#unified-integration--issue-133). [CURRENT_STATUS](CURRENT_STATUS.md) owns integrated delivery; source-candidate reports retain their historical provenance and limits.
+Current Package A reference: [Patient/Doctor V2 receipt](frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md), under [Issue #136](https://github.com/abuhmaid28/egyhealth360/issues/136). This is a bounded stacked Draft candidate, not merged/deployed or final Design System approval.
+
+Preserved integration reference: [Issue #133 unified receipt](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md#unified-integration--issue-133). [CURRENT_STATUS](CURRENT_STATUS.md) owns integrated delivery; source-candidate reports retain their historical provenance and limits.
 
 Preserved staging reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
@@ -43,6 +45,10 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| Package A candidate | Responsibility / limits |
+| --- | --- |
+| [frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md](frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md) | Exact source/scope, current Patient/Doctor visual integration, T1, real-browser evidence, independent agent reviews, validation, handoff and rollback; no release or Package B authorization. |
 
 | Integrated candidate and preserved source receipts | Responsibility / limits |
 | --- | --- |
