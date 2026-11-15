@@ -190,6 +190,16 @@ export async function testV2PatientDoctor(browser, origin, shots) {
       await patient.page.locator(".loading").waitFor({ state: "hidden" });
       await selectAppearance(patient.page, "dark");
       try { await presentation(patient.page, `${locale} ${path}`); } catch (error) { receipt.routeFailures.push(error.message); }
+      if (path === "/patient/appointments/demo-my-care-visit") {
+        const endpoints = patient.page.locator("[data-patient-detail-time] [data-appointment-endpoint]");
+        assert.equal(await endpoints.count(), 2, "Demo appointment detail uses the same scoped12h endpoint presentation as Live");
+        for (const text of await endpoints.allTextContents()) assert.match(text, locale === "ar" ? /صباحًا|مساءً/ : /\b(?:am|pm)\b/);
+        await patient.page.setViewportSize({ width: 320, height: 1000 });
+        assert.ok(await text200(patient.page));
+        receipt.scans.push({ role: "patient", locale, theme: "dark", route: path, textScale: 2, ...(await presentation(patient.page, `${locale} Demo appointment detail320/text200`)) });
+        await restoreText(patient.page);
+        await patient.page.setViewportSize({ width: 390, height: 1000 });
+      }
       assert.ok(!/SYNTHETIC_PRIVATE_TRANSPORT_CANARY/.test(await patient.page.locator("body").innerText()));
       receipt.journeys.push({ locale, path, theme: "dark" });
     }
