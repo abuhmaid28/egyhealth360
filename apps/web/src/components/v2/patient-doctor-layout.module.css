@@ -100,7 +100,6 @@
   .root[data-frontend-v2] :global(.master-local-tasks a[aria-current]) { background: var(--v2-raised); border-color: var(--v2-action); }
   .root[data-frontend-v2] :global(.master-local-tasks a[aria-current]::after) { display: none; }
   .root[data-frontend-v2] :global(.scoped-consultation .consultation-ribbon) { position: static; }
-  .root[data-frontend-v2] :global(.scoped-consultation) { --consultation-offset: 16px !important; }
 }
 @media (max-width: 600px) {
   .root[data-frontend-v2] :global(.documentation-content > .card) { padding: 20px 16px; }
