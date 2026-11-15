@@ -14,8 +14,8 @@ Exact baseline: `d268264b1d062c65425a223f8f25d6e72442586e` (#134). Branch `integ
 | --- | --- |
 |1/6 source freeze/assembly|Pinned GitHub state and authorization verified;55 source snapshots assembled,44 import-only blob/modes verified.|
 |2/6 canonical T1/shared staff shell|Shared all-role shell/T1 and scoped Patient/Doctor content implemented;7 combined unit/provenance cases and frontend build/types PASS; full browser qualification follows in4/6.|
-|3/6 OFFLINE-ONLY C remediation|Pending.|
-|4/6 combined regression/browser/evidence|Pending.|
+|3/6 OFFLINE-ONLY C remediation|Implemented inside C3 files;37 offline tests PASS, including original16 groups strengthened to the new offline contract and21 new adversarial/CLI/deadline cases. Independent review remains pending.|
+|4/6 combined regression/browser/evidence|BLOCKED:323 UI cases ran,322 PASS; frozen read-surfaces shell reconstruction at247 only understands original A presentation additions. Required all-role shell needs a separately approved edit-permission substitution; no frozen test edited.|
 |5/6 independent frontend/security/adversarial reviews|Pending.|
 |6/6 safe publication/frozen-head FULL CI/receipt|Pending; no push, PR, CI or deployment performed.|
 
@@ -176,3 +176,11 @@ Before any publication inspect fresh GitHub/Vercel triggers/metadata and disclos
 Coherent source/build return to exact #134 only at a quiescent original-operation boundary after uncertain operations reconcile. No keys/session/history wiping or automatic clinical retry; no data/schema rollback needed by this frontend/tool-only candidate. No rollback executed.
 
 F06/E2 #124 NO-GO, hosted F02/U03/source/API/DB/identity parity, global F03, AP03 actual devices/AT, AP05 rights, Final DS, Pharmacy S1/org selection, Admin management and Lab backend remain OPEN. Clinical, privacy, hosted and release approval are not conferred by candidate tests or CI. Stop at one reviewed Draft/receipt or a precise material blocker.
+
+## Material scope blocker — source-reconstruction guard
+
+`tests/ui-v2-read-surfaces.test.mjs:247–269` is an import-only owner file (`09df6e8c0e021c9b6d7d4d3ff87c9394264664cf`). Its exact-source reconstruction strips only Package A conditional class/data/theme-selector additions. The authorized all-role shell necessarily changes those three clauses, so the inherited test fails at266 before checking the unchanged original hash. Actual UI run:323 cases,322 PASS,1 FAIL. No assertion/threshold/test was skipped or edited.
+
+Proposed amendment, NOT applied: exchange edit permissions for `apps/web/src/components/v2/frontend-v2-tokens.css` and `tests/ui-v2-read-surfaces.test.mjs`. Both already belong to the58 paths; remain14 editable/44 import-only, all17 PNGs preserved. The token CSS needs no functional change and is restored byte/mode-exact to Package A (`f0f6ea6b778d48216d5cb98a7de3442340b74936`); its generic data-attribute selectors already serve all roles. The proposed test patch changes only three presentation normalization strings plus their comment, preserving every assertion and the original shell SHA256 `7c4f8f07105d9b1854097938f3dd2ac7dda37cf86eac5bf7fbbc626284817ed8` and original CSS-prefix SHA256 `a17947877e71c51799d6d28f9faf1784ca7fe968430f876a0c39d24cff3775da`.
+
+A standalone proposal preview evaluated those same reconstruction assertions in memory and passed both original hashes; it is not candidate qualification. Frozen test remains its pinned blob. Owner scope amendment is required by [the explicit14/44 contract](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900321063) before applying any such patch. Execution pauses at this blocker; combined browser/evidence/reviews/publication/CI are not complete. No push, Draft PR, deployment or CI dispatch. Original candidate worktrees/heads remain untouched.

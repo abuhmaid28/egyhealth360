@@ -1,61 +1,35 @@
-/**
- * EgyHealth 360 — Public Preview Safety Library
- * Dependency-free, safe, read-only verification of public deployment previews.
- *
- * Security Invariants:
- * 1. F1: Strict reporting secrecy: allowlisted report fields, fixed error categories, zero reflection.
- * 2. F2: Real streaming resource limits with byte-counting, early stream cancellation, and end-to-end deadline.
- * 3. F3: Bounded to approved EgyHealth preview origins (egyhealth360-*.vercel.app); strict test transport isolation.
- * 4. F4: Zero redirects followed: every 3xx is immediately rejected with REDIRECTS_PROHIBITED.
- * 5. AP05 asset audit marks status NOT_VERIFIED / OPEN_GATE (inventory != license clearance).
- * 6. Never conflates HTTP 200 with Live clinical release readiness.
+/** OFFLINE-ONLY fixture inspection. This is not a hosted security/release gate.
+ * No CLI/library default network transport exists. Explicit injected functions
+ * are trusted test code: arbitrary JavaScript cannot be proven network-free or
+ * forcibly terminated. Deadlines bound our awaited asynchronous operations;
+ * they cannot preempt synchronous injected code or undo its external effects.
  */
-import { existsSync } from 'node:fs';
-import { resolve } from 'node:path';
-
-/** Fixed, allowlisted error categories preventing user data / exception message reflection */
-export const ERROR_CATEGORIES = {
-  PREVIEW_URL_REQUIRED: 'PREVIEW_URL_REQUIRED',
-  INVALID_URL_FORMAT: 'INVALID_URL_FORMAT',
-  UNSAFE_PROTOCOL: 'UNSAFE_PROTOCOL',
-  CREDENTIALS_FORBIDDEN: 'CREDENTIALS_FORBIDDEN',
-  DISALLOWED_PORT: 'DISALLOWED_PORT',
-  QUERY_PARAMETERS_FORBIDDEN: 'QUERY_PARAMETERS_FORBIDDEN',
-  FRAGMENT_FORBIDDEN: 'FRAGMENT_FORBIDDEN',
-  IP_HOSTNAME_FORBIDDEN: 'IP_HOSTNAME_FORBIDDEN',
-  SSRF_PROHIBITED: 'SSRF_PROHIBITED',
-  UNTRUSTED_PREVIEW_DOMAIN: 'UNTRUSTED_PREVIEW_DOMAIN',
-  DISALLOWED_PATH: 'DISALLOWED_PATH',
-  REDIRECTS_PROHIBITED: 'REDIRECTS_PROHIBITED',
-  RESPONSE_TOO_LARGE: 'RESPONSE_TOO_LARGE',
-  REQUEST_TIMEOUT: 'REQUEST_TIMEOUT',
-  TEST_TRANSPORT_REQUIRED: 'TEST_TRANSPORT_REQUIRED',
-  FETCH_FAILED: 'FETCH_FAILED',
-  INVALID_HEALTH_PAYLOAD: 'INVALID_HEALTH_PAYLOAD',
-  INVALID_SHA_FORMAT: 'INVALID_SHA_FORMAT',
-  UNKNOWN_ERROR: 'UNKNOWN_ERROR',
-};
-
-/**
- * Maps any error or message into a fixed allowlisted error category string.
- * @param {unknown} err
- * @returns {string}
- */
-export function getSafeErrorCategory(err) {
-  if (!err) return ERROR_CATEGORIES.UNKNOWN_ERROR;
-  const msg = typeof err === 'string' ? err : err.message || '';
-  for (const cat of Object.keys(ERROR_CATEGORIES)) {
-    if (msg.startsWith(cat)) return cat;
-  }
-  if (err.name === 'AbortError') return ERROR_CATEGORIES.REQUEST_TIMEOUT;
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
+export const ERROR_CATEGORIES = Object.freeze(Object.fromEntries([
+  "UNKNOWN_ERROR", "FETCH_FAILED", "INVALID_URL", "INVALID_PROTOCOL", "DISALLOWED_PORT",
+  "USERINFO_FORBIDDEN", "QUERY_PARAMETERS_FORBIDDEN", "FRAGMENT_FORBIDDEN", "DISALLOWED_PATH",
+  "IP_HOSTNAME_FORBIDDEN", "SSRF_PROHIBITED", "UNTRUSTED_PREVIEW_DOMAIN", "TEST_TRANSPORT_REQUIRED",
+  "REDIRECTS_PROHIBITED", "RESPONSE_TOO_LARGE", "REQUEST_TIMEOUT", "INVALID_SHA_FORMAT",
+  "INVALID_RESOURCE_LIMIT", "INVALID_RESPONSE", "STREAM_REQUIRED", "TEST_OPTIONS_REJECTED",
+  "UNKNOWN_OPTION", "DUPLICATE_ARGUMENT", "MISSING_ARGUMENT_VALUE", "INVALID_TIMEOUT", "UNEXPECTED_ARGUMENT",
+].map(code => [code, code])));
+class SafetyError extends Error { constructor(code) { super(code); this.name = "SafetyError"; } }
+const fail = code => { throw new SafetyError(code); };
+export function getSafeErrorCategory(error) {
+  if (!error) return ERROR_CATEGORIES.UNKNOWN_ERROR;
+  try {
+    const message = typeof error === "string" ? error : Object.getOwnPropertyDescriptor(error, "message")?.value;
+    if (typeof message === "string") for (const code of Object.keys(ERROR_CATEGORIES)) if (message === code || message.startsWith(code + ":")) return code;
+    if (Object.getOwnPropertyDescriptor(error, "name")?.value === "AbortError") return ERROR_CATEGORIES.REQUEST_TIMEOUT;
+  } catch { /* Untrusted accessors/proxies never become report output. */ }
   return ERROR_CATEGORIES.FETCH_FAILED;
 }
+export const OFFLINE_WEB_ORIGIN = "https://offline-web.egyhealth.invalid";
+export const OFFLINE_API_ORIGIN = "https://offline-api.egyhealth.invalid";
+export const DEFAULT_MAX_BODY_BYTES = 1048576;
+export const HEALTH_MAX_BODY_BYTES = 65536;
 
-/**
- * Checks if an IPv4 address string falls into a private or loopback range.
- * @param {string} ip
- * @returns {boolean}
- */
 export function isPrivateIpv4(ip) {
   const parts = ip.split('.').map(Number);
   if (parts.length !== 4 || parts.some(p => Number.isNaN(p) || p < 0 || p > 255)) return false;
@@ -106,304 +80,140 @@ export function isIpLiteral(hostname) {
   return false;
 }
 
-/**
- * Sanitizes input URL for reporting. Returns [INVALID_TARGET] for unparseable or disallowed URLs.
- * Never echoes raw unparsed inputs, userinfo, query strings, or fragments.
- * @param {string} rawUrl
- * @returns {string}
- */
-export function sanitizeUrlForReport(rawUrl) {
-  if (typeof rawUrl !== 'string' || rawUrl.trim() === '') return '[INVALID_TARGET]';
-  try {
-    const parsed = new URL(rawUrl.trim());
-    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
-      return '[INVALID_TARGET]';
-    }
-    parsed.username = '';
-    parsed.password = '';
-    parsed.search = '';
-    parsed.hash = '';
-    const cleanPath = parsed.pathname === '' || parsed.pathname === '/' ? '/' : parsed.pathname;
-    return `${parsed.origin}${cleanPath}`;
-  } catch {
-    /* Invalid URL format: never echo raw input! */
-    return '[INVALID_TARGET]';
-  }
+
+
+/** Fixed reserved fixture origins are identifiers only; never ownership proof. */
+export function validatePreviewUrl(input) {
+  if (typeof input !== "string" || input.length > 256) return fail(ERROR_CATEGORIES.INVALID_URL);
+  let url; try { url = new URL(input); } catch { return fail(ERROR_CATEGORIES.INVALID_URL); }
+  if (url.protocol !== "https:") return fail(ERROR_CATEGORIES.INVALID_PROTOCOL);
+  if (url.username || url.password) return fail(ERROR_CATEGORIES.USERINFO_FORBIDDEN);
+  if (url.port) return fail(ERROR_CATEGORIES.DISALLOWED_PORT);
+  if (url.search || input.includes("?")) return fail(ERROR_CATEGORIES.QUERY_PARAMETERS_FORBIDDEN);
+  if (url.hash || input.includes("#")) return fail(ERROR_CATEGORIES.FRAGMENT_FORBIDDEN);
+  if (!["/", "/api/v1/health"].includes(url.pathname)) return fail(ERROR_CATEGORIES.DISALLOWED_PATH);
+  if (isIpLiteral(url.hostname)) return fail(ERROR_CATEGORIES.IP_HOSTNAME_FORBIDDEN);
+  if (isPrivateHostnameOrIp(url.hostname)) return fail(ERROR_CATEGORIES.SSRF_PROHIBITED);
+  if (![OFFLINE_WEB_ORIGIN, OFFLINE_API_ORIGIN].includes(url.origin)) return fail(ERROR_CATEGORIES.UNTRUSTED_PREVIEW_DOMAIN);
+  if (input !== url.href && input !== url.origin) return fail(ERROR_CATEGORIES.INVALID_URL);
+  return url;
 }
-
-/**
- * Pattern for approved public EgyHealth preview project hostnames.
- * Matches egyhealth360.vercel.app or egyhealth360-*.vercel.app.
- * Strictly prevents arbitrary foreign *.vercel.app projects.
- */
-export const APPROVED_EGYHEALTH_PREVIEW_PATTERN = /^egyhealth360(?:-[a-z0-9-]+)?\.vercel\.app$/i;
-
-/**
- * Validates a target preview URL against strict public HTTPS rules.
- * Throws an Error with a fixed category string if URL is invalid or unsafe.
- * @param {string} inputUrl
- * @param {object} [options]
- * @param {boolean} [options.allowTestHttp] - Test-only escape hatch for offline tests
- * @param {boolean} [options.allowAnyPathInTest] - Test-only escape hatch for path tests
- * @returns {URL}
- */
-export function validatePreviewUrl(inputUrl, options = {}) {
-  if (typeof inputUrl !== 'string' || inputUrl.trim() === '') {
-    throw new Error(ERROR_CATEGORIES.PREVIEW_URL_REQUIRED);
-  }
-  let parsed;
+export function sanitizeUrlForReport(input) {
   try {
-    parsed = new URL(inputUrl.trim());
-  } catch {
-    throw new Error(ERROR_CATEGORIES.INVALID_URL_FORMAT);
-  }
-
-  const allowTest = !!options.allowTestHttp;
-
-  // 1. Protocol: HTTPS only in public mode
-  if (parsed.protocol !== 'https:' && !(allowTest && parsed.protocol === 'http:')) {
-    throw new Error(ERROR_CATEGORIES.UNSAFE_PROTOCOL);
-  }
-
-  // 2. Reject embedded userinfo
-  if (parsed.username || parsed.password) {
-    throw new Error(ERROR_CATEGORIES.CREDENTIALS_FORBIDDEN);
-  }
-
-  // 3. Port: Port 443 ONLY (or omitted). No arbitrary ports in public mode.
-  if (parsed.port && parsed.port !== '443' && !allowTest) {
-    throw new Error(ERROR_CATEGORIES.DISALLOWED_PORT);
-  }
-
-  // 4. Query parameters and fragments strictly forbidden
-  if (parsed.search && parsed.search !== '') {
-    throw new Error(ERROR_CATEGORIES.QUERY_PARAMETERS_FORBIDDEN);
-  }
-  if (parsed.hash && parsed.hash !== '') {
-    throw new Error(ERROR_CATEGORIES.FRAGMENT_FORBIDDEN);
-  }
-
-  // 5. Hostname & IP Restrictions: must match approved EgyHealth project preview
-  if (!allowTest) {
-    if (isIpLiteral(parsed.hostname)) {
-      throw new Error(ERROR_CATEGORIES.IP_HOSTNAME_FORBIDDEN);
-    }
-    if (isPrivateHostnameOrIp(parsed.hostname)) {
-      throw new Error(ERROR_CATEGORIES.SSRF_PROHIBITED);
-    }
-    if (!APPROVED_EGYHEALTH_PREVIEW_PATTERN.test(parsed.hostname)) {
-      throw new Error(ERROR_CATEGORIES.UNTRUSTED_PREVIEW_DOMAIN);
-    }
-  }
-
-  // 6. Path restrictions: Only '/' or '/api/v1/health' allowed
-  const normalizedPath = parsed.pathname === '' ? '/' : parsed.pathname;
-  const allowedPaths = ['/', '/api/v1/health'];
-  if (!allowedPaths.includes(normalizedPath) && !options.allowAnyPathInTest) {
-    throw new Error(ERROR_CATEGORIES.DISALLOWED_PATH);
-  }
-
-  return parsed;
+    const url = validatePreviewUrl(input);
+    return url.origin === OFFLINE_WEB_ORIGIN ? "OFFLINE_WEB" : "OFFLINE_API";
+  } catch { return "[INVALID_TARGET]"; }
 }
-
-/**
- * Known sensitive tokens or environment variables to detect in HTML bodies.
- */
-export const SENSITIVE_PATTERNS = [
-  /DATABASE_URL\s*[:=]/i,
-  /postgres(?:ql)?:\/\/[^\s"'<>]+/i,
-  /AUTH_SESSION_SECRET\s*[:=]/i,
-  /VERCEL_TOKEN\s*[:=]/i,
-  /BEGIN (?:RSA )?PRIVATE KEY/i,
-  /password\s*[:=]\s*["'][^"']{6,}["']/i,
-  /jwt_secret/i,
-  /neon\.tech\/[a-z0-9_-]+\?sslmode=/i,
+const leakPatterns = [
+  /DATABASE_URL|postgres(?:ql)?:\/\//i, /VERCEL_TOKEN|JWT_SECRET|SESSION_TOKEN|CSRF_TOKEN/i,
+  /(?:password|api[_-]?key|secret)\s*[:=]\s*["']?[^\s"'<>]{5,}/i,
+  /(?:Error:|Exception:)[^\n]*\n\s+at /,
 ];
-
-/**
- * Scans an HTML body for accidental secret leakage or stack traces.
- * @param {string} body
- * @returns {{ leaked: boolean, findings: string[] }}
- */
 export function scanBodyForLeaks(body) {
-  if (typeof body !== 'string') return { leaked: false, findings: [] };
-  const findings = [];
-  for (const pattern of SENSITIVE_PATTERNS) {
-    if (pattern.test(body)) {
-      findings.push('SENSITIVE_PATTERN_MATCHED');
-    }
-  }
-  // Check for raw unhandled server error stacks
-  if (/at\s+async\s+[a-zA-Z0-9_.]+\s+\(/i.test(body) && /node_modules|apps\/[a-z]+/i.test(body)) {
-    findings.push('UNHANDLED_STACK_TRACE_MATCHED');
-  }
-  return {
-    leaked: findings.length > 0,
-    findings,
-  };
+  const findings = typeof body === "string" ? leakPatterns.flatMap((pattern,index) => pattern.test(body) ? [`SENSITIVE_PATTERN_${index+1}`] : []) : ["INVALID_BODY"];
+  return { leaked: findings.length > 0, findings };
 }
-
-/**
- * Checks response security headers without reflecting unvalidated header values.
- * @param {Headers} headers
- * @returns {{ pass: boolean, warnings: string[], checks: { isHtml: boolean, isJson: boolean, hasNosniff: boolean } }}
- */
 export function evaluateSecurityHeaders(headers) {
-  const warnings = [];
-  const contentType = (headers?.get('content-type') || '').toLowerCase();
-  const nosniff = headers?.get('x-content-type-options');
-  const setCookie = headers?.get('set-cookie');
-
-  const isHtml = contentType.includes('text/html');
-  const isJson = contentType.includes('application/json');
-  const hasNosniff = nosniff ? nosniff.toLowerCase() === 'nosniff' : false;
-
-  if (nosniff && !hasNosniff) {
-    warnings.push('INVALID_NOSNIFF_HEADER');
-  }
-  if (setCookie) {
-    warnings.push('UNEXPECTED_SET_COOKIE');
-  }
-
-  return {
-    pass: warnings.length === 0,
-    warnings,
-    checks: {
-      isHtml,
-      isJson,
-      hasNosniff,
-    },
-  };
-}
-
-/** Maximum allowed response size: 1MB for web root, 64KB for health */
-export const DEFAULT_MAX_BODY_BYTES = 1048576; // 1 MB
-export const HEALTH_MAX_BODY_BYTES = 65536; // 64 KB
-
-/**
- * Performs safe GET request with complete streaming resource bounds:
- * - Reject ALL redirects immediately (Finding F4).
- * - Real streaming chunk byte counting with early reader cancellation (Finding F2).
- * - Enforces explicit offline transport injection when test options are active (Finding F3).
- * - Fixed error categories (Finding F1).
- *
- * @param {string} targetUrl
- * @param {object} [options]
- * @param {number} [options.timeout]
- * @param {number} [options.maxBytes]
- * @param {boolean} [options.allowTestHttp]
- * @param {boolean} [options.allowAnyPathInTest]
- * @param {function} [fetchFn] - Custom fetch function for offline testing
- * @returns {Promise<{ status: number, headers: Headers, body: string, finalUrl: string, elapsedMs: number }>}
- */
-export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetch) {
-  // Finding F3: If relaxed test options are active, an explicit injected offline transport is MANDATORY!
-  if (options.allowTestHttp || options.allowAnyPathInTest) {
-    if (!fetchFn || fetchFn === globalThis.fetch) {
-      throw new Error(ERROR_CATEGORIES.TEST_TRANSPORT_REQUIRED);
-    }
-  }
-
-  const fetchImpl = fetchFn || globalThis.fetch;
-  const timeoutMs = options.timeout ?? 10000;
-  const maxBytes = options.maxBytes ?? DEFAULT_MAX_BODY_BYTES;
-  const initialUrl = validatePreviewUrl(targetUrl, options);
-  const currentUrl = initialUrl.href;
-
-  const started = Date.now();
-  const controller = new globalThis.AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-
+  const warnings = []; let contentType = "", nosniff = "", cookie = false;
   try {
-    const response = await fetchImpl(currentUrl, {
-      method: 'GET',
-      redirect: 'manual',
-      headers: {
-        'Accept': 'text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8',
-        'User-Agent': 'EgyHealth360-ReleaseSafetyHarness/1.0',
-      },
-      signal: controller.signal,
+    const type = headers.get("content-type"), sniff = headers.get("x-content-type-options");
+    contentType = typeof type === "string" ? type.toLowerCase() : "";
+    nosniff = typeof sniff === "string" ? sniff.toLowerCase() : "";
+    cookie = headers.has("set-cookie");
+  } catch { warnings.push("INVALID_HEADERS"); }
+  const isHtml = /^(?:text\/html|application\/xhtml\+xml)(?:;|$)/.test(contentType);
+  const isJson = /^application\/json(?:;|$)/.test(contentType);
+  const hasNosniff = nosniff === "nosniff";
+  if (!hasNosniff) warnings.push("INVALID_NOSNIFF_HEADER");
+  if (cookie) warnings.push("UNEXPECTED_SET_COOKIE");
+  return {pass:warnings.length === 0, warnings, checks:{isHtml,isJson,hasNosniff}};
+}
+function requireTransport(transport) {
+  if (typeof transport !== "function" || transport === globalThis.fetch) fail(ERROR_CATEGORIES.TEST_TRANSPORT_REQUIRED);
+}
+function snapshot(input, keys) {
+  try {
+    if (!input || typeof input !== "object" || Array.isArray(input)) fail(ERROR_CATEGORIES.INVALID_RESOURCE_LIMIT);
+    const copy = {};
+    for (const key of keys) {
+      const field = Object.getOwnPropertyDescriptor(input,key);
+      if (!field) continue;
+      if (!Object.hasOwn(field,"value")) fail(ERROR_CATEGORIES.INVALID_RESPONSE);
+      copy[key] = field.value;
+    }
+    return copy;
+  } catch(error) { throw new SafetyError(getSafeErrorCategory(error)); }
+}
+function limits(options) {
+  const timeout = options.timeout ?? 10000, maxBytes = options.maxBytes ?? DEFAULT_MAX_BODY_BYTES;
+  if (!Number.isInteger(timeout) || timeout < 1 || timeout > 60000 || !Number.isInteger(maxBytes) || maxBytes < 1 || maxBytes > DEFAULT_MAX_BODY_BYTES) fail(ERROR_CATEGORIES.INVALID_RESOURCE_LIMIT);
+  if (options.allowTestHttp || options.allowAnyPathInTest) fail(ERROR_CATEGORIES.TEST_OPTIONS_REJECTED);
+  return {timeout,maxBytes};
+}
+/** Trusted fixture transport only. Non-streaming/text() fallbacks are rejected. */
+export async function safeGet(target, options = {}, transport) {
+  let bounds, url;
+  try {
+    requireTransport(transport);
+    options = snapshot(options,["timeout","maxBytes","allowTestHttp","allowAnyPathInTest"]);
+    bounds = limits(options);url = validatePreviewUrl(target);
+  } catch(error) {throw new SafetyError(getSafeErrorCategory(error));}
+  const {timeout,maxBytes} = bounds;
+  const started = globalThis.performance.now(), deadline = started + timeout;
+  const controller = new globalThis.AbortController();
+  let reader, response, rawBody, timer, failed = true;
+  const check = () => { if (controller.signal.aborted || globalThis.performance.now() >= deadline) fail(ERROR_CATEGORIES.REQUEST_TIMEOUT); };
+  const timedOut = new Promise((_,reject) => { timer = setTimeout(() => {controller.abort();reject(new SafetyError(ERROR_CATEGORIES.REQUEST_TIMEOUT));}, timeout); });
+  const within = async task => {
+    check();
+    const value = await Promise.race([Promise.resolve().then(task),timedOut]);
+    check(); return value;
+  };
+  // Abort first. Cancellation is invoked asynchronously and observed, never an
+  // unbounded await. A pending promise alone does not keep the Node process alive.
+  const cancel = body => {
+    const ownedReader = reader;
+    Promise.resolve().then(() => ownedReader ? ownedReader.cancel?.() : body?.cancel?.()).catch(() => {}).finally(() => { try { ownedReader?.releaseLock?.(); } catch { /* Pending injected reads cannot be forcibly terminated. */ } });
+  };
+  try {
+    response = await within(async () => {
+      const result = await transport(url.href, {method:"GET",redirect:"manual",signal:controller.signal,credentials:"omit",headers:{Accept:"text/html,application/json"}});
+      if (controller.signal.aborted || globalThis.performance.now() >= deadline) { controller.abort();cancel(result?.body);fail(ERROR_CATEGORIES.REQUEST_TIMEOUT); }
+      return result;
     });
-
-    // Finding F4: REJECT ALL REDIRECTS! Zero redirects followed!
-    if ([301, 302, 303, 307, 308].includes(response.status)) {
-      if (response.body && typeof response.body.cancel === 'function') {
-        try { await response.body.cancel(); } catch { /* ignore stream cancel */ }
-      }
-      throw new Error(ERROR_CATEGORIES.REDIRECTS_PROHIBITED);
+    if (!response || typeof response !== "object" || Array.isArray(response)) fail(ERROR_CATEGORIES.INVALID_RESPONSE);
+    response = snapshot(response,["status","headers","body"]);rawBody = response.body;
+    const status = response?.status;
+    if (!response || typeof response !== "object" || !Number.isInteger(status) || status < 100 || status > 599) fail(ERROR_CATEGORIES.INVALID_RESPONSE);
+    if (status >= 300 && status <= 399) fail(ERROR_CATEGORIES.REDIRECTS_PROHIBITED);
+    const headers = response.headers instanceof globalThis.Headers ? response.headers : new globalThis.Headers(response.headers);
+    const length = headers.get("content-length");
+    if (length !== null && (!/^\d+$/.test(length) || !Number.isSafeInteger(Number(length)))) fail(ERROR_CATEGORIES.INVALID_RESPONSE);
+    if (length !== null && Number(length) > maxBytes) fail(ERROR_CATEGORIES.RESPONSE_TOO_LARGE);
+    if (typeof response.body?.getReader !== "function") fail(ERROR_CATEGORIES.STREAM_REQUIRED);
+    reader = response.body.getReader();
+    const decoder = new globalThis.TextDecoder();let bytes = 0, body = "";
+    for (;;) {
+      const chunk = await within(() => reader.read());
+      if (!chunk || typeof chunk.done !== "boolean") fail(ERROR_CATEGORIES.INVALID_RESPONSE);
+      if (chunk.done) break;
+      if (!(chunk.value instanceof Uint8Array)) fail(ERROR_CATEGORIES.INVALID_RESPONSE);
+      bytes += chunk.value.byteLength;
+      if (bytes > maxBytes) fail(ERROR_CATEGORIES.RESPONSE_TOO_LARGE);
+      check(); body += decoder.decode(chunk.value,{stream:true});
     }
-
-    // Upfront Content-Length check if provided
-    const clHeader = response.headers?.get('content-length');
-    if (clHeader) {
-      const clNum = Number(clHeader);
-      if (!Number.isNaN(clNum) && clNum > maxBytes) {
-        if (response.body && typeof response.body.cancel === 'function') {
-          try { await response.body.cancel(); } catch { /* ignore stream cancel */ }
-        }
-        throw new Error(ERROR_CATEGORIES.RESPONSE_TOO_LARGE);
-      }
-    }
-
-    // Finding F2: Real streaming resource limits with early cancellation
-    let bodyText = '';
-    if (response.body && typeof response.body.getReader === 'function') {
-      const reader = response.body.getReader();
-      const decoder = new globalThis.TextDecoder('utf-8');
-      let totalBytes = 0;
-      try {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          totalBytes += value.byteLength;
-          if (totalBytes > maxBytes) {
-            await reader.cancel();
-            controller.abort();
-            throw new Error(ERROR_CATEGORIES.RESPONSE_TOO_LARGE);
-          }
-          bodyText += decoder.decode(value, { stream: true });
-        }
-        bodyText += decoder.decode(); // flush remaining
-      } catch (streamErr) {
-        if (streamErr.message === ERROR_CATEGORIES.RESPONSE_TOO_LARGE) throw streamErr;
-        if (streamErr.name === 'AbortError') throw new Error(ERROR_CATEGORIES.REQUEST_TIMEOUT);
-        throw streamErr;
-      }
-    } else {
-      // Offline / mock fetch fallback
-      const rawText = await response.text();
-      const encoder = new globalThis.TextEncoder();
-      const actualByteLength = encoder.encode(rawText).byteLength;
-      if (actualByteLength > maxBytes) {
-        throw new Error(ERROR_CATEGORIES.RESPONSE_TOO_LARGE);
-      }
-      bodyText = rawText;
-    }
-
-    const elapsedMs = Date.now() - started;
-    return {
-      status: response.status,
-      headers: response.headers,
-      body: bodyText,
-      finalUrl: currentUrl,
-      elapsedMs,
-    };
-  } catch (err) {
-    if (err.name === 'AbortError') {
-      throw new Error(ERROR_CATEGORIES.REQUEST_TIMEOUT);
-    }
-    throw err;
+    body += decoder.decode();check();failed = false;
+    return {status,headers,body,finalUrl:url.origin === OFFLINE_WEB_ORIGIN ? "OFFLINE_WEB" : "OFFLINE_API",elapsedMs:Math.ceil(globalThis.performance.now()-started)};
+  } catch (error) {
+    controller.abort();cancel(rawBody);
+    throw new SafetyError(getSafeErrorCategory(error));
   } finally {
     globalThis.clearTimeout(timer);
+    if (failed) controller.abort();
+    try { if (!failed) reader?.releaseLock?.(); } catch { /* A noncooperative injected read may still be pending. */ }
   }
 }
 
-/**
- * Local scan of referenced logo, brand, and font assets in apps/web/public.
- * Verifies AP05 asset status (inventory check only, NOT rights clearance).
- * @param {string} [rootDir]
- * @returns {{ pass: boolean, status: string, assets: Array<{ path: string, type: string, note: string }>, ap05Status: string }}
- */
 export function inspectLocalAssets(rootDir = process.cwd()) {
   const assets = [];
   const publicDir = resolve(rootDir, 'apps/web/public');
@@ -433,225 +243,60 @@ export function inspectLocalAssets(rootDir = process.cwd()) {
   };
 }
 
-/**
- * Main safety harness coordinator.
- * Strictly allowlisted report fields, zero raw exception or unvetted header reflection.
- * @param {object} params
- * @param {string} params.url - Web root URL
- * @param {string} [params.apiUrl] - Optional separate API URL
- * @param {string} [params.expectedSha] - Optional expected Git SHA
- * @param {number} [params.timeout]
- * @param {boolean} [params.allowTestHttp]
- * @param {function} [customFetch]
- * @returns {Promise<object>} Full verified report
- */
-export async function runPreviewSafetyCheck(params, customFetch) {
-  // Finding F3: If relaxed test options are active, explicit injected offline transport is required!
-  if (params.allowTestHttp) {
-    if (!customFetch || customFetch === globalThis.fetch) {
-      return {
-        evaluatedAt: new Date().toISOString(),
-        overallStatus: 'FAIL',
-        targetWebUrl: '[TEST_TRANSPORT_REQUIRED]',
-        targetApiUrl: null,
-        expectedSha: null,
-        checks: [{
-          name: 'Test Transport Isolation Check',
-          status: 'FAIL',
-          details: { errorCategory: ERROR_CATEGORIES.TEST_TRANSPORT_REQUIRED },
-        }],
-        ssrfPolicy: 'Restricted to approved egyhealth360-*.vercel.app preview hosts on port 443.',
-        clinicalReadiness: 'NOT_VERIFIED',
-        clinicalReadinessReason: 'HTTP 200 on health only proves network routing and process liveness; it grants ZERO clinical readiness.',
-        summary: { pass: 0, warn: 0, fail: 1, notVerified: 0 },
-      };
-    }
-  }
 
-  // Finding F1: Sanitize URLs immediately before storing in report
-  const safeWebUrl = sanitizeUrlForReport(params.url);
-  const safeApiUrl = params.apiUrl ? sanitizeUrlForReport(params.apiUrl) : null;
 
-  const result = {
-    evaluatedAt: new Date().toISOString(),
-    overallStatus: 'PASS',
-    targetWebUrl: safeWebUrl,
-    targetApiUrl: safeApiUrl,
-    expectedSha: null,
-    checks: [],
-    ssrfPolicy: 'Restricted to approved egyhealth360-*.vercel.app preview hosts on port 443; socket-level DNS pinning is unverified in standard Node fetch.',
-    clinicalReadiness: 'NOT_VERIFIED',
-    clinicalReadinessReason: 'HTTP 200 on health only proves network routing and process liveness; it grants ZERO clinical readiness, does NOT certify live authentication, session cookies, CSRF, or database migrations.',
-    summary: { pass: 0, warn: 0, fail: 0, notVerified: 0 },
+export async function runPreviewSafetyCheck(params = {}, transport) {
+  const report = {
+    evaluatedAt:new Date().toISOString(), mode:"OFFLINE_ONLY", overallStatus:"PASS",
+    targetWebUrl:"[INVALID_TARGET]",targetApiUrl:null,expectedSha:null,
+    originOwnership:"NOT_VERIFIED",dnsSocketSafety:"NOT_VERIFIED",
+    ssrfPolicy:"OFFLINE_ONLY: no built-in network transport; origin ownership and DNS/socket safety NOT_VERIFIED.",
+    clinicalReadiness:"NOT_VERIFIED",
+    clinicalReadinessReason:"Offline fixture success grants ZERO clinical readiness; no hosted, session, CSRF, DB or source attestation.",
+    transportTrust:"Injected functions are trusted test code, not independently proven offline or forcibly terminable.",
+    checks:[],summary:{pass:0,warn:0,fail:0,notVerified:0},
   };
-
-  const recordCheck = (name, status, details = {}) => {
-    result.checks.push({ name, status, details });
-    if (status === 'PASS') result.summary.pass++;
-    else if (status === 'WARN') {
-      result.summary.warn++;
-      if (result.overallStatus !== 'FAIL') result.overallStatus = 'WARN';
-    } else if (status === 'FAIL') {
-      result.summary.fail++;
-      result.overallStatus = 'FAIL';
-    } else {
-      result.summary.notVerified++;
-    }
+  const record = (name,status,details={}) => {
+    report.checks.push({name,status,details});
+    report.summary[status === "NOT_VERIFIED" ? "notVerified" : status.toLowerCase()]++;
+    if (status === "FAIL") report.overallStatus = "FAIL";
   };
-
-  // 1. Validate Web URL
-  let webUrl;
+  try {requireTransport(transport);} catch(error) {record("Test Transport Isolation Check","FAIL",{errorCategory:getSafeErrorCategory(error)});return report;}
+  let web,api,deadline;
   try {
-    webUrl = validatePreviewUrl(params.url, { allowTestHttp: params.allowTestHttp });
-    recordCheck('Web URL Structure & Preview Origin Safety', 'PASS', { origin: webUrl.origin });
-  } catch (err) {
-    recordCheck('Web URL Structure & Preview Origin Safety', 'FAIL', { errorCategory: getSafeErrorCategory(err) });
-    return result;
-  }
-
-  // 2. Validate API URL if provided
-  let apiUrl = null;
-  if (params.apiUrl) {
-    try {
-      apiUrl = validatePreviewUrl(params.apiUrl, { allowTestHttp: params.allowTestHttp });
-      recordCheck('API URL Structure & Preview Origin Safety', 'PASS', { origin: apiUrl.origin });
-    } catch (err) {
-      recordCheck('API URL Structure & Preview Origin Safety', 'FAIL', { errorCategory: getSafeErrorCategory(err) });
-      return result;
+    params = snapshot(params,["url","apiUrl","expectedSha","timeout","maxBytes","allowTestHttp","allowAnyPathInTest"]);
+    const bounds = limits(params);deadline = globalThis.performance.now() + bounds.timeout;
+    web = validatePreviewUrl(params.url ?? OFFLINE_WEB_ORIGIN);
+    if (web.origin !== OFFLINE_WEB_ORIGIN || web.pathname !== "/") fail(ERROR_CATEGORIES.UNTRUSTED_PREVIEW_DOMAIN);
+    if (params.apiUrl !== undefined && params.apiUrl !== null) {
+      api = validatePreviewUrl(params.apiUrl);
+      if (api.origin !== OFFLINE_API_ORIGIN) fail(ERROR_CATEGORIES.UNTRUSTED_PREVIEW_DOMAIN);
     }
+    report.targetWebUrl="OFFLINE_WEB";report.targetApiUrl=api?"OFFLINE_API":null;
+  } catch(error) {record("Offline Target Validation","FAIL",{errorCategory:getSafeErrorCategory(error)});return report;}
+  if (params.expectedSha !== undefined && params.expectedSha !== null && (typeof params.expectedSha !== "string" || !/^[0-9a-f]{40}$/i.test(params.expectedSha))) {
+    record("Source SHA Attestation","FAIL",{errorCategory:ERROR_CATEGORIES.INVALID_SHA_FORMAT});return report;
   }
-
-  // 3. Probe Web Root `/`
-  try {
-    const webRes = await safeGet(webUrl.origin + '/', {
-      timeout: params.timeout,
-      allowTestHttp: params.allowTestHttp,
-      maxBytes: DEFAULT_MAX_BODY_BYTES,
-    }, customFetch);
-    const leakCheck = scanBodyForLeaks(webRes.body);
-    const headersEval = evaluateSecurityHeaders(webRes.headers);
-
-    if (webRes.status === 200) {
-      if (leakCheck.leaked) {
-        recordCheck('Web Root Public Exposure & Leak Check', 'FAIL', {
-          status: webRes.status,
-          leaks: leakCheck.findings,
-        });
+  const probe = async (name,url,html) => {
+    try {
+      const remaining = Math.floor(deadline-globalThis.performance.now());
+      if (remaining < 1) fail(ERROR_CATEGORIES.REQUEST_TIMEOUT);
+      const response = await safeGet(url,{timeout:remaining,maxBytes:html?params.maxBytes:Math.min(params.maxBytes ?? HEALTH_MAX_BODY_BYTES,HEALTH_MAX_BODY_BYTES)},transport);
+      if (response.status !== 200) {record(name,"FAIL",{classification:"NON_200_RESPONSE"});return;}
+      const headers = evaluateSecurityHeaders(response.headers);
+      const leaks = scanBodyForLeaks(response.body);
+      if (html) {
+        record(name,!headers.checks.isHtml || leaks.leaked?"FAIL":"PASS",{isHtml:headers.checks.isHtml,hasNosniff:headers.checks.hasNosniff,warnings:headers.warnings,leaks:leaks.findings});
       } else {
-        const warnings = [...headersEval.warnings];
-        recordCheck('Web Root Public Exposure & Leak Check', warnings.length > 0 ? 'WARN' : 'PASS', {
-          status: webRes.status,
-          elapsedMs: webRes.elapsedMs,
-          isHtml: headersEval.checks.isHtml,
-          warnings,
-        });
+        let payload;try {payload=JSON.parse(response.body);}catch{fail(ERROR_CATEGORIES.INVALID_RESPONSE);}
+        record(name,headers.checks.isJson && payload?.data?.status === "ok" && !leaks.leaked?"PASS":"FAIL",{isJson:headers.checks.isJson,healthOk:payload?.data?.status === "ok",leaks:leaks.findings});
       }
-    } else {
-      recordCheck('Web Root Public Exposure & Leak Check', 'FAIL', {
-        status: webRes.status,
-        errorCategory: 'NON_200_STATUS',
-      });
-    }
-  } catch (err) {
-    recordCheck('Web Root Public Exposure & Leak Check', 'FAIL', { errorCategory: getSafeErrorCategory(err) });
-  }
-
-  // 4. Probe Proxied Health `/api/v1/health`
-  const healthTarget = webUrl.origin + '/api/v1/health';
-  try {
-    const healthRes = await safeGet(healthTarget, {
-      timeout: params.timeout,
-      allowTestHttp: params.allowTestHttp,
-      maxBytes: HEALTH_MAX_BODY_BYTES,
-    }, customFetch);
-    const headersEval = evaluateSecurityHeaders(healthRes.headers);
-
-    let parsedBody = null;
-    try {
-      parsedBody = JSON.parse(healthRes.body);
-    } catch {
-      /* ignore non-json response */
-    }
-
-    if (healthRes.status === 200 && parsedBody?.data?.status === 'ok') {
-      const warnings = [...headersEval.warnings];
-      recordCheck('Proxied Health Route (/api/v1/health)', warnings.length > 0 ? 'WARN' : 'PASS', {
-        status: healthRes.status,
-        elapsedMs: healthRes.elapsedMs,
-        healthStatus: 'ok',
-        warnings,
-      });
-    } else {
-      recordCheck('Proxied Health Route (/api/v1/health)', 'FAIL', {
-        status: healthRes.status,
-        errorCategory: ERROR_CATEGORIES.INVALID_HEALTH_PAYLOAD,
-      });
-    }
-  } catch (err) {
-    recordCheck('Proxied Health Route (/api/v1/health)', 'FAIL', { errorCategory: getSafeErrorCategory(err) });
-  }
-
-  // 5. Probe Direct API if provided
-  if (apiUrl) {
-    const directHealth = apiUrl.origin + '/api/v1/health';
-    try {
-      const directRes = await safeGet(directHealth, {
-        timeout: params.timeout,
-        allowTestHttp: params.allowTestHttp,
-        maxBytes: HEALTH_MAX_BODY_BYTES,
-      }, customFetch);
-      let parsed = null;
-      try {
-        parsed = JSON.parse(directRes.body);
-      } catch {
-        /* ignore non-json response */
-      }
-      if (directRes.status === 200 && parsed?.data?.status === 'ok') {
-        recordCheck('Direct API Health Route', 'PASS', {
-          status: directRes.status,
-          elapsedMs: directRes.elapsedMs,
-          healthStatus: 'ok',
-        });
-      } else {
-        recordCheck('Direct API Health Route', 'FAIL', {
-          status: directRes.status,
-          errorCategory: ERROR_CATEGORIES.INVALID_HEALTH_PAYLOAD,
-        });
-      }
-    } catch (err) {
-      recordCheck('Direct API Health Route', 'FAIL', { errorCategory: getSafeErrorCategory(err) });
-    }
-  }
-
-  // 6. Source Attestation (Finding F1: strictly validated expectedSha)
-  if (params.expectedSha) {
-    if (/^[0-9a-f]{40}$/i.test(params.expectedSha)) {
-      result.expectedSha = params.expectedSha.toLowerCase();
-      recordCheck('Source SHA Attestation', 'NOT_VERIFIED', {
-        expectedSha: params.expectedSha.toLowerCase(),
-        reason: 'Public HTML does not expose unauthenticated Git commit SHA headers; manual or authenticated Vercel metadata required for exact-commit certification.',
-      });
-    } else {
-      recordCheck('Source SHA Attestation', 'FAIL', {
-        errorCategory: ERROR_CATEGORIES.INVALID_SHA_FORMAT,
-      });
-    }
-  }
-
-  // 7. Local Asset & AP05 Check: NOT_VERIFIED (OPEN_GATE)
-  try {
-    const assetCheck = inspectLocalAssets();
-    recordCheck('AP05 Brand & Asset Rights Audit', 'NOT_VERIFIED', {
-      status: assetCheck.status,
-      ap05Status: assetCheck.ap05Status,
-      assets: assetCheck.assets,
-    });
-  } catch {
-    recordCheck('AP05 Brand & Asset Rights Audit', 'NOT_VERIFIED', {
-      status: 'NOT_VERIFIED',
-      errorCategory: ERROR_CATEGORIES.UNKNOWN_ERROR,
-    });
-  }
-
-  return result;
+    } catch(error) {record(name,"FAIL",{errorCategory:getSafeErrorCategory(error)});}
+  };
+  await probe("Web Root Fixture",OFFLINE_WEB_ORIGIN+"/",true);
+  await probe("Proxied Health Fixture",OFFLINE_WEB_ORIGIN+"/api/v1/health",false);
+  if (api) await probe("Direct API Health Fixture",OFFLINE_API_ORIGIN+"/api/v1/health",false);
+  record("Source SHA Attestation","NOT_VERIFIED",{reason:"Offline fixtures cannot attest deployed source."});
+  record("AP05 Brand & Asset Inventory","NOT_VERIFIED",{classification:"OPEN_GATE"});
+  return report;
 }

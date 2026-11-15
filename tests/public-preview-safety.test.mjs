@@ -1,5 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {mkdtemp,writeFile,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join,resolve} from 'node:path';
+import {spawnSync} from 'node:child_process';
 import {
   isPrivateIpv4,
   isPrivateHostnameOrIp,
@@ -13,9 +17,15 @@ import {
   runPreviewSafetyCheck,
   ERROR_CATEGORIES,
   getSafeErrorCategory,
-  APPROVED_EGYHEALTH_PREVIEW_PATTERN,
+  OFFLINE_WEB_ORIGIN,
+  OFFLINE_API_ORIGIN,
 } from '../scripts/lib/public-preview-safety.mjs';
 import { parseCliArgs, formatTerminalReport } from '../scripts/verify-public-preview.mjs';
+
+function textStream(text) {
+  const bytes = new globalThis.TextEncoder().encode(text);
+  return new globalThis.ReadableStream({start(controller) {controller.enqueue(bytes);controller.close();}});
+}
 
 test('isPrivateIpv4 correctly identifies loopback and private ranges', () => {
   assert.equal(isPrivateIpv4('127.0.0.1'), true);
@@ -75,7 +85,7 @@ test('Finding F1: sanitizeUrlForReport never echoes malformed inputs or canary t
   // Valid URL strips userinfo, query params, and fragments
   const validWithSecrets = 'https://admin:TOP_SECRET@egyhealth360-preview.vercel.app/api/v1/health?key=secret#hash';
   const sanitized = sanitizeUrlForReport(validWithSecrets);
-  assert.equal(sanitized, 'https://egyhealth360-preview.vercel.app/api/v1/health');
+  assert.equal(sanitized, '[INVALID_TARGET]');
   assert.equal(sanitized.includes('TOP_SECRET'), false);
   assert.equal(sanitized.includes('key=secret'), false);
   assert.equal(sanitized.includes('#hash'), false);
@@ -83,7 +93,7 @@ test('Finding F1: sanitizeUrlForReport never echoes malformed inputs or canary t
 
 test('Finding F1: validatePreviewUrl never echoes secret paths, hosts or headers in errors', () => {
   // Disallowed path with secret canary token
-  const secretPathUrl = 'https://egyhealth360-preview.vercel.app/CANARY_SECRET_PATH_123';
+  const secretPathUrl = 'https://offline-web.egyhealth.invalid/CANARY_SECRET_PATH_123';
   assert.throws(
     () => validatePreviewUrl(secretPathUrl),
     (err) => {
@@ -95,7 +105,7 @@ test('Finding F1: validatePreviewUrl never echoes secret paths, hosts or headers
 
   // Disallowed port error does not echo arbitrary port
   assert.throws(
-    () => validatePreviewUrl('https://egyhealth360-preview.vercel.app:8080'),
+    () => validatePreviewUrl('https://offline-web.egyhealth.invalid:8080'),
     (err) => {
       assert.equal(err.message, ERROR_CATEGORIES.DISALLOWED_PORT);
       assert.equal(err.message.includes('8080'), false);
@@ -105,7 +115,7 @@ test('Finding F1: validatePreviewUrl never echoes secret paths, hosts or headers
 
   // Query parameter error
   assert.throws(
-    () => validatePreviewUrl('https://egyhealth360-preview.vercel.app/?secret=canary'),
+    () => validatePreviewUrl('https://offline-web.egyhealth.invalid/?secret=canary'),
     (err) => {
       assert.equal(err.message, ERROR_CATEGORIES.QUERY_PARAMETERS_FORBIDDEN);
       assert.equal(err.message.includes('canary'), false);
@@ -121,7 +131,7 @@ test('Finding F1: runPreviewSafetyCheck never reflects exception traces or unvet
   };
 
   const report = await runPreviewSafetyCheck({
-    url: 'https://egyhealth360-preview.vercel.app',
+    url: 'https://offline-web.egyhealth.invalid',
   }, mockLeakingFetch);
 
   assert.equal(report.overallStatus, 'FAIL');
@@ -143,12 +153,12 @@ test('Finding F1: runPreviewSafetyCheck never reflects exception traces or unvet
 
   // Expected SHA validation: rejects non-40hex canary values without echoing
   const badShaReport = await runPreviewSafetyCheck({
-    url: 'https://egyhealth360-preview.vercel.app',
+    url: 'https://offline-web.egyhealth.invalid',
     expectedSha: 'INJECTION_CANARY_SHA_VALUE_THAT_IS_NOT_HEX',
   }, async () => ({
     status: 200,
     headers: new globalThis.Headers({ 'content-type': 'text/html' }),
-    text: async () => '<html><body>OK</body></html>',
+    body: textStream('<html><body>OK</body></html>'),
   }));
 
   const shaCheck = badShaReport.checks.find(c => c.name.includes('Source SHA'));
@@ -166,7 +176,7 @@ test('Finding F2: safeGet enforces real streaming byte limits with early cancell
     body: { cancel: async () => {} },
   });
   await assert.rejects(
-    async () => safeGet('https://egyhealth360-preview.vercel.app/', { maxBytes: 1000 }, fetchTooLargeHeader),
+    async () => safeGet('https://offline-web.egyhealth.invalid/', { maxBytes: 1000 }, fetchTooLargeHeader),
     (err) => err.message === ERROR_CATEGORIES.RESPONSE_TOO_LARGE
   );
 
@@ -203,7 +213,7 @@ test('Finding F2: safeGet enforces real streaming byte limits with early cancell
   });
 
   await assert.rejects(
-    async () => safeGet('https://egyhealth360-preview.vercel.app/', { maxBytes: 1000 }, fetchStreamResponse),
+    async () => safeGet('https://offline-web.egyhealth.invalid/', { maxBytes: 1000 }, fetchStreamResponse),
     (err) => err.message === ERROR_CATEGORIES.RESPONSE_TOO_LARGE
   );
   assert.equal(streamCanceled, true);
@@ -214,10 +224,10 @@ test('Finding F2: safeGet enforces real streaming byte limits with early cancell
   const fetchMultibyte = async () => ({
     status: 200,
     headers: new globalThis.Headers({}),
-    text: async () => multibyte3ByteChars,
+    body: textStream(multibyte3ByteChars),
   });
   await assert.rejects(
-    async () => safeGet('https://egyhealth360-preview.vercel.app/', { maxBytes: 1000 }, fetchMultibyte),
+    async () => safeGet('https://offline-web.egyhealth.invalid/', { maxBytes: 1000 }, fetchMultibyte),
     (err) => err.message === ERROR_CATEGORIES.RESPONSE_TOO_LARGE
   );
 
@@ -242,29 +252,17 @@ test('Finding F2: safeGet enforces real streaming byte limits with early cancell
   });
 
   await assert.rejects(
-    async () => safeGet('https://egyhealth360-preview.vercel.app/', { timeout: 30 }, fetchStalledStream),
+    async () => safeGet('https://offline-web.egyhealth.invalid/', { timeout: 30 }, fetchStalledStream),
     (err) => err.message === ERROR_CATEGORIES.REQUEST_TIMEOUT
   );
 });
 
-test('Finding F3: APPROVED_EGYHEALTH_PREVIEW_PATTERN restricts origins to EgyHealth projects', () => {
-  // Approved EgyHealth preview domains
-  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360.vercel.app'), true);
-  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360-preview.vercel.app'), true);
-  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360-pre-final-staging-abuhmaid2810gmailcoms-projects.vercel.app'), true);
-  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360-pre-final-api-abuhmaid2810gmailcoms-projects.vercel.app'), true);
-
-  // Foreign or unapproved Vercel projects MUST be rejected
-  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('attacker.vercel.app'), false);
-  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('otherproject.vercel.app'), false);
-  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('evil-egyhealth360.vercel.app'), false);
-  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360.attacker.com'), false);
-  assert.equal(APPROVED_EGYHEALTH_PREVIEW_PATTERN.test('egyhealth360.vercel.app.attacker.com'), false);
-
-  assert.throws(
-    () => validatePreviewUrl('https://attacker.vercel.app'),
-    /UNTRUSTED_PREVIEW_DOMAIN/
-  );
+test('Finding F3: no production project name is origin-ownership attestation', () => {
+  for (const host of ['egyhealth360.vercel.app','egyhealth360-preview.vercel.app','egyhealth360-pre-final-staging-abuhmaid2810gmailcoms-projects.vercel.app','egyhealth360-pre-final-api-abuhmaid2810gmailcoms-projects.vercel.app','attacker.vercel.app','otherproject.vercel.app','evil-egyhealth360.vercel.app','egyhealth360.attacker.com','egyhealth360.vercel.app.attacker.com']) {
+    assert.throws(() => validatePreviewUrl('https://'+host), /UNTRUSTED_PREVIEW_DOMAIN/);
+  }
+  assert.equal(validatePreviewUrl(OFFLINE_WEB_ORIGIN).origin, OFFLINE_WEB_ORIGIN);
+  assert.equal(validatePreviewUrl(OFFLINE_API_ORIGIN).origin, OFFLINE_API_ORIGIN);
 });
 
 test('Finding F3: test options strictly require explicit injected offline transport', async () => {
@@ -290,53 +288,12 @@ test('Finding F3: test options strictly require explicit injected offline transp
 });
 
 test('Finding F4: safeGet rejects ALL HTTP redirects (301, 302, 303, 307, 308)', async () => {
-  const mockRedirectFetch = async (target) => {
-    const urlStr = typeof target === 'string' ? target : target.href;
-    if (urlStr.includes('/redirect-301')) {
-      return {
-        status: 301,
-        headers: new globalThis.Headers({ location: 'https://egyhealth360-preview.vercel.app/api/v1/health' }),
-        body: { cancel: async () => {} },
-      };
-    }
-    if (urlStr.includes('/redirect-302')) {
-      return {
-        status: 302,
-        headers: new globalThis.Headers({ location: 'https://egyhealth360-preview.vercel.app/target' }),
-        body: { cancel: async () => {} },
-      };
-    }
-    if (urlStr.includes('/redirect-307')) {
-      return {
-        status: 307,
-        headers: new globalThis.Headers({ location: 'https://attacker.com/leak' }),
-        body: { cancel: async () => {} },
-      };
-    }
-    return {
-      status: 200,
-      headers: new globalThis.Headers({ 'content-type': 'text/html' }),
-      text: async () => '<h1>OK</h1>',
-    };
-  };
-
-  // 301 redirect rejected
-  await assert.rejects(
-    async () => safeGet('https://egyhealth360-preview.vercel.app/redirect-301', { allowAnyPathInTest: true }, mockRedirectFetch),
-    (err) => err.message === ERROR_CATEGORIES.REDIRECTS_PROHIBITED
-  );
-
-  // 302 redirect rejected
-  await assert.rejects(
-    async () => safeGet('https://egyhealth360-preview.vercel.app/redirect-302', { allowAnyPathInTest: true }, mockRedirectFetch),
-    (err) => err.message === ERROR_CATEGORIES.REDIRECTS_PROHIBITED
-  );
-
-  // 307 redirect rejected
-  await assert.rejects(
-    async () => safeGet('https://egyhealth360-preview.vercel.app/redirect-307', { allowAnyPathInTest: true }, mockRedirectFetch),
-    (err) => err.message === ERROR_CATEGORIES.REDIRECTS_PROHIBITED
-  );
+  for (const status of [301,302,303,307,308]) {
+    let calls=0,reads=0,cancels=0;
+    const transport=async()=>{calls++;return {status,headers:new globalThis.Headers({location:'https://CANARY_REDIRECT.invalid/private'}),body:{getReader(){reads++;},async cancel(){cancels++;}}};};
+    await assert.rejects(safeGet(OFFLINE_WEB_ORIGIN+'/',{},transport), error=>error.message===ERROR_CATEGORIES.REDIRECTS_PROHIBITED);
+    assert.equal(calls,1);assert.equal(reads,0);assert.equal(cancels,1);
+  }
 });
 
 test('P3: parseCliArgs strictly rejects unknown options, duplicate flags, and invalid timeout', () => {
@@ -360,14 +317,14 @@ test('P3: parseCliArgs strictly rejects unknown options, duplicate flags, and in
 
   // Valid arguments parse cleanly
   const valid = parseCliArgs([
-    '--url', 'https://egyhealth360-preview.vercel.app',
-    '--api-url', 'https://egyhealth360-api.vercel.app',
+    '--url', 'https://offline-web.egyhealth.invalid',
+    '--api-url', 'https://offline-api.egyhealth.invalid',
     '--expected-sha', 'd268264b1d062c65425a223f8f25d6e72442586e',
     '--timeout', '5000',
     '--json',
   ]);
-  assert.equal(valid.url, 'https://egyhealth360-preview.vercel.app');
-  assert.equal(valid.apiUrl, 'https://egyhealth360-api.vercel.app');
+  assert.equal(valid.url, 'https://offline-web.egyhealth.invalid');
+  assert.equal(valid.apiUrl, 'https://offline-api.egyhealth.invalid');
   assert.equal(valid.expectedSha, 'd268264b1d062c65425a223f8f25d6e72442586e');
   assert.equal(valid.timeout, 5000);
   assert.equal(valid.json, true);
@@ -399,20 +356,20 @@ test('scanBodyForLeaks detects sensitive environment and DB secrets', () => {
 
 test('runPreviewSafetyCheck executes complete workflow deterministically in offline mode', async () => {
   const mockResponses = {
-    'https://egyhealth360-preview.vercel.app/': {
+    'https://offline-web.egyhealth.invalid/': {
       status: 200,
       headers: new globalThis.Headers({ 'content-type': 'text/html; charset=utf-8', 'x-content-type-options': 'nosniff' }),
-      text: async () => '<!DOCTYPE html><html><head><title>EgyHealth 360</title></head><body><div id="root">App</div></body></html>',
+      body: textStream('<!DOCTYPE html><html><head><title>EgyHealth 360</title></head><body><div id="root">App</div></body></html>'),
     },
-    'https://egyhealth360-preview.vercel.app/api/v1/health': {
+    'https://offline-web.egyhealth.invalid/api/v1/health': {
       status: 200,
       headers: new globalThis.Headers({ 'content-type': 'application/json' }),
-      text: async () => JSON.stringify({ data: { status: 'ok', secret_internal: 'IGNORE_ME' } }),
+      body: textStream(JSON.stringify({ data: { status: 'ok', secret_internal: 'IGNORE_ME' } })),
     },
-    'https://egyhealth360-api.vercel.app/api/v1/health': {
+    'https://offline-api.egyhealth.invalid/api/v1/health': {
       status: 200,
       headers: new globalThis.Headers({ 'content-type': 'application/json' }),
-      text: async () => JSON.stringify({ data: { status: 'ok' } }),
+      body: textStream(JSON.stringify({ data: { status: 'ok' } })),
     },
   };
 
@@ -424,8 +381,8 @@ test('runPreviewSafetyCheck executes complete workflow deterministically in offl
   };
 
   const report = await runPreviewSafetyCheck({
-    url: 'https://egyhealth360-preview.vercel.app',
-    apiUrl: 'https://egyhealth360-api.vercel.app',
+    url: 'https://offline-web.egyhealth.invalid',
+    apiUrl: 'https://offline-api.egyhealth.invalid',
     expectedSha: 'd268264b1d062c65425a223f8f25d6e72442586e',
   }, mockFetch);
 
@@ -444,15 +401,15 @@ test('runPreviewSafetyCheck executes complete workflow deterministically in offl
 
 test('runPreviewSafetyCheck flags FAIL on secret leak in HTML', async () => {
   const mockResponses = {
-    'https://egyhealth360-leak.vercel.app/': {
+    'https://offline-web.egyhealth.invalid/': {
       status: 200,
       headers: new globalThis.Headers({ 'content-type': 'text/html' }),
-      text: async () => '<html><body>Error DATABASE_URL=postgres://user:pass@neon.tech/main</body></html>',
+      body: textStream('<html><body>Error DATABASE_URL=postgres://user:pass@neon.tech/main</body></html>'),
     },
-    'https://egyhealth360-leak.vercel.app/api/v1/health': {
+    'https://offline-web.egyhealth.invalid/api/v1/health': {
       status: 200,
       headers: new globalThis.Headers({ 'content-type': 'application/json' }),
-      text: async () => JSON.stringify({ data: { status: 'ok' } }),
+      body: textStream(JSON.stringify({ data: { status: 'ok' } })),
     },
   };
 
@@ -461,7 +418,7 @@ test('runPreviewSafetyCheck flags FAIL on secret leak in HTML', async () => {
     return mockResponses[urlStr];
   };
 
-  const report = await runPreviewSafetyCheck({ url: 'https://egyhealth360-leak.vercel.app' }, mockFetch);
+  const report = await runPreviewSafetyCheck({ url: 'https://offline-web.egyhealth.invalid' }, mockFetch);
   assert.equal(report.overallStatus, 'FAIL');
   assert.ok(report.summary.fail >= 1);
   const leakCheck = report.checks.find(c => c.name.includes('Web Root'));
@@ -477,4 +434,163 @@ test('getSafeErrorCategory maps errors correctly to enum categories', () => {
   assert.equal(getSafeErrorCategory(abortErr), ERROR_CATEGORIES.REQUEST_TIMEOUT);
   assert.equal(getSafeErrorCategory(new Error('Unknown connection dropped')), ERROR_CATEGORIES.FETCH_FAILED);
   assert.equal(getSafeErrorCategory(null), ERROR_CATEGORIES.UNKNOWN_ERROR);
+});
+
+// Combined authorization strengthens the same16 original regression groups:
+// fixed reserved offline targets replace project-name attestation; fixtures are
+// actual streams; no inherited byte, cancellation, secrecy or redirect check is removed.
+const CANARY = 'SYNTHETIC_REVIEW_CANARY';
+const clean = report => {
+  assert.doesNotMatch(JSON.stringify(report),new RegExp(CANARY));
+  assert.doesNotMatch(formatTerminalReport(report),new RegExp(CANARY));
+};
+const deadline = async promise => {
+  let timer;
+  try {return await Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('TEST_WATCHDOG_EXCEEDED')),250);})]);}
+  finally {globalThis.clearTimeout(timer);}
+};
+const response = (body='<html>synthetic</html>',headers={'content-type':'text/html','x-content-type-options':'nosniff'})=>({status:200,headers:new globalThis.Headers(headers),body:textStream(body)});
+
+test('F1 full reports reject valid-looking target paths, hosts, ports and apiUrl without reflection or transport',async()=>{
+  for(const url of [`https://offline-web.egyhealth.invalid/${CANARY}`,`https://${CANARY.toLowerCase()}.example/`,`https://offline-web.egyhealth.invalid:8443/`,`https://egyhealth360-${CANARY.toLowerCase()}.vercel.app/`,`https://user:${CANARY}@offline-web.egyhealth.invalid/`,`https://offline-web.egyhealth.invalid/?secret=${CANARY}`,`https://offline-web.egyhealth.invalid/#${CANARY}`]) {
+    for(const input of [{url},{url:OFFLINE_WEB_ORIGIN,apiUrl:url}]) {
+      let calls=0;const report=await runPreviewSafetyCheck(input,async()=>{calls++;return response();});
+      assert.equal(report.overallStatus,'FAIL');assert.equal(calls,0);assert.equal(report.targetWebUrl,'[INVALID_TARGET]');assert.equal(report.targetApiUrl,null);clean(report);
+      assert.equal(sanitizeUrlForReport(url),'[INVALID_TARGET]');
+    }
+  }
+});
+test('F1 fixture statuses must be numeric integer HTTP statuses before any report classification',async()=>{
+  for(const status of [CANARY,{secret:CANARY},null,undefined,'200',NaN,Infinity,0,99,600,200.5]) {
+    const report=await runPreviewSafetyCheck({url:OFFLINE_WEB_ORIGIN},async()=>({...response(),status}));
+    assert.equal(report.overallStatus,'FAIL');assert.ok(report.checks.some(c=>c.details.errorCategory==='INVALID_RESPONSE'));clean(report);
+    await assert.rejects(safeGet(OFFLINE_WEB_ORIGIN,{},async()=>({...response(),status})),/INVALID_RESPONSE/);
+  }
+});
+test('F1 accepted fixture reports expose static target identifiers only, never headers, body extras or expected SHA',async()=>{
+  const report=await runPreviewSafetyCheck({url:OFFLINE_WEB_ORIGIN,apiUrl:OFFLINE_API_ORIGIN,expectedSha:'a'.repeat(40)},async url=>url.endsWith('/health')?response(JSON.stringify({data:{status:'ok',extra:CANARY}}),{'content-type':'application/json','x-canary':CANARY}):response(`<html>${CANARY}</html>`,{'content-type':'text/html','x-content-type-options':CANARY,'set-cookie':CANARY}));
+  assert.equal(report.mode,'OFFLINE_ONLY');assert.equal(report.targetWebUrl,'OFFLINE_WEB');assert.equal(report.targetApiUrl,'OFFLINE_API');assert.equal(report.expectedSha,null);clean(report);
+  assert.equal(report.originOwnership,'NOT_VERIFIED');assert.equal(report.dnsSocketSafety,'NOT_VERIFIED');assert.equal(report.clinicalReadiness,'NOT_VERIFIED');
+});
+test('F1 terminal formatting rejects arbitrary untrusted names, target values, status and details',()=>{
+  assert.doesNotMatch(formatTerminalReport({overallStatus:CANARY,targetWebUrl:CANARY,targetApiUrl:CANARY,checks:[{name:CANARY,status:CANARY,details:{errorCategory:CANARY,leaks:[CANARY]}}]}),new RegExp(CANARY));
+});
+test('F1 argument/accessor/Proxy exceptions are classified without evaluating or reflecting untrusted data',async()=>{
+  let getters=0;const params={url:OFFLINE_WEB_ORIGIN};Object.defineProperty(params,'expectedSha',{get(){getters++;throw new Error(CANARY);}});
+  const report=await runPreviewSafetyCheck(params,async()=>response());assert.equal(report.overallStatus,'FAIL');assert.equal(getters,0);clean(report);
+  const proxy=new Proxy({}, {getOwnPropertyDescriptor(){throw new Error(CANARY);}});
+  const failed=await runPreviewSafetyCheck(proxy,async()=>response());assert.equal(failed.overallStatus,'FAIL');clean(failed);
+  assert.equal(getSafeErrorCategory(new Proxy({}, {getOwnPropertyDescriptor(){throw new Error(CANARY);}})),ERROR_CATEGORIES.FETCH_FAILED);
+});
+test('F2 exported request and report limits reject invalid timeout/maxBytes before invoking transport',async()=>{
+  for(const field of ['timeout','maxBytes'])for(const value of [0,-1,NaN,Infinity,'10',1.5,field==='timeout'?60001:1048577]) {
+    let calls=0;const transport=async()=>{calls++;return response();};
+    await assert.rejects(safeGet(OFFLINE_WEB_ORIGIN,{[field]:value},transport),/INVALID_RESOURCE_LIMIT/);
+    const report=await runPreviewSafetyCheck({url:OFFLINE_WEB_ORIGIN,[field]:value},transport);assert.equal(report.overallStatus,'FAIL');assert.equal(calls,0);clean(report);
+  }
+  for(const options of [null,1,'secret',[]])await assert.rejects(safeGet(OFFLINE_WEB_ORIGIN,options,async()=>response()),/INVALID_RESOURCE_LIMIT/);
+});
+test('F2 non-streaming fallback is rejected without calling text or claiming a post-buffer memory bound',async()=>{
+  let reads=0;
+  await assert.rejects(safeGet(OFFLINE_WEB_ORIGIN,{},async()=>({status:200,headers:new globalThis.Headers(),text:async()=>{reads++;return CANARY;}})),/STREAM_REQUIRED/);
+  assert.equal(reads,0);
+});
+test('F2 asynchronous fetch that ignores abort cannot delay the owned deadline indefinitely',async()=>{
+  let signal;const started=globalThis.performance.now();
+  await assert.rejects(deadline(safeGet(OFFLINE_WEB_ORIGIN,{timeout:10},async(_url,options)=>{signal=options.signal;return new Promise(()=>{});})),/REQUEST_TIMEOUT/);
+  assert.equal(signal.aborted,true);assert.ok(globalThis.performance.now()-started<200);
+});
+test('F2 late successful transport is rejected and its eventual body is cancelled after abort',async()=>{
+  let cancels=0,signal;
+  await assert.rejects(deadline(safeGet(OFFLINE_WEB_ORIGIN,{timeout:5},async(_url,options)=>{signal=options.signal;await new Promise(r=>setTimeout(r,30));return{status:200,headers:new globalThis.Headers(),body:{async cancel(){assert.equal(signal.aborted,true);cancels++;}}};})),/REQUEST_TIMEOUT/);
+  await new Promise(r=>setTimeout(r,40));assert.equal(cancels,1);
+});
+test('F2 noncooperative reader/cancellation settles rejection with abort before asynchronous cleanup',async()=>{
+  let signal,cancels=0;const started=globalThis.performance.now();
+  await assert.rejects(deadline(safeGet(OFFLINE_WEB_ORIGIN,{timeout:10},async(_url,options)=>{signal=options.signal;return{status:200,headers:new globalThis.Headers(),body:{getReader:()=>({read:()=>new Promise(()=>{}),cancel(){cancels++;assert.equal(signal.aborted,true);return new Promise(()=>{});}})}};})),/REQUEST_TIMEOUT/);
+  assert.equal(cancels,1);assert.ok(globalThis.performance.now()-started<200);
+});
+test('F2 oversized stream aborts before a pending cancel and never reads or decodes the next chunk',async()=>{
+  let signal,reads=0,cancels=0;
+  await assert.rejects(deadline(safeGet(OFFLINE_WEB_ORIGIN,{timeout:100,maxBytes:2},async(_url,options)=>{signal=options.signal;return{status:200,headers:new globalThis.Headers(),body:{getReader:()=>({async read(){reads++;return{done:false,value:new Uint8Array([1,2,3])};},cancel(){cancels++;assert.equal(signal.aborted,true);return new Promise(()=>{});}})}};})),/RESPONSE_TOO_LARGE/);
+  assert.equal(reads,1);assert.equal(cancels,1);
+});
+test('F2 UTF-8 characters split between chunks preserve text and obey exact byte cap',async()=>{
+  const transport=async()=>({status:200,headers:new globalThis.Headers(),body:new globalThis.ReadableStream({start(c){for(const n of [0xe2,0x82,0xac])c.enqueue(new Uint8Array([n]));c.close();}})});
+  assert.equal((await safeGet(OFFLINE_WEB_ORIGIN,{maxBytes:3},transport)).body,'€');
+  await assert.rejects(safeGet(OFFLINE_WEB_ORIGIN,{maxBytes:2},transport),/RESPONSE_TOO_LARGE/);
+});
+test('F2 malformed stream values fail with a constant error and timers do not survive successful reads',async()=>{
+  for(const chunk of [null,{done:'yes'},{done:false,value:CANARY}])await assert.rejects(safeGet(OFFLINE_WEB_ORIGIN,{timeout:20},async()=>({status:200,headers:new globalThis.Headers(),body:{getReader:()=>({read:async()=>chunk,cancel:async()=>{}})}})),/INVALID_RESPONSE/);
+  let signal;await safeGet(OFFLINE_WEB_ORIGIN,{timeout:20},async(_url,o)=>{signal=o.signal;return response();});await new Promise(r=>setTimeout(r,25));assert.equal(signal.aborted,false);
+});
+test('F3 public exported entries have zero default/global fetch path, including rejected production names',async()=>{
+  const original=globalThis.fetch;let calls=0;globalThis.fetch=async()=>{calls++;throw new Error(CANARY);};
+  try {
+    for(const target of [OFFLINE_WEB_ORIGIN,'https://egyhealth360.vercel.app','https://egyhealth360-prefix.vercel.app']) {
+      await assert.rejects(safeGet(target),/TEST_TRANSPORT_REQUIRED/);
+      await assert.rejects(safeGet(target,{},globalThis.fetch),/TEST_TRANSPORT_REQUIRED/);
+      const report=await runPreviewSafetyCheck({url:target});assert.equal(report.overallStatus,'FAIL');clean(report);
+    }
+    assert.equal(calls,0);
+    // Injection is a trusted-code boundary, not a sandbox for arbitrary wrappers.
+    await assert.rejects(safeGet(OFFLINE_WEB_ORIGIN,{},()=>globalThis.fetch()),/FETCH_FAILED/);assert.equal(calls,1);
+  } finally {globalThis.fetch=original;}
+});
+test('F3 old test escape flags cannot approve real origins even with an injected function',async()=>{
+  for(const field of ['allowTestHttp','allowAnyPathInTest']) {
+    let calls=0;await assert.rejects(safeGet(OFFLINE_WEB_ORIGIN,{[field]:true},async()=>{calls++;return response();}),/TEST_OPTIONS_REJECTED/);assert.equal(calls,0);
+  }
+});
+test('F4 entire300–399 range aborts/cancels before body processing, with exactly one request and no Location access',async()=>{
+  for(let status=300;status<=399;status++) {
+    let calls=0,reads=0,cancels=0,signal;
+    await assert.rejects(safeGet(OFFLINE_WEB_ORIGIN,{},async(_url,o)=>{calls++;signal=o.signal;return{status,headers:{get(){throw new Error(CANARY);}},body:{getReader(){reads++;},async cancel(){assert.equal(signal.aborted,true);cancels++;}}};}),/REDIRECTS_PROHIBITED/);
+    assert.equal(calls,1);assert.equal(reads,0);assert.equal(cancels,1);
+  }
+});
+
+test('F1 invalid SHA is rejected before any fixture call and is never attested or reflected',async()=>{
+  let calls=0;const report=await runPreviewSafetyCheck({url:OFFLINE_WEB_ORIGIN,expectedSha:CANARY},async()=>{calls++;return response();});
+  assert.equal(calls,0);assert.equal(report.overallStatus,'FAIL');clean(report);
+});
+test('F2 report probes share one owned deadline instead of resetting the budget per response',async()=>{
+  let calls=0;const report=await deadline(runPreviewSafetyCheck({url:OFFLINE_WEB_ORIGIN,apiUrl:OFFLINE_API_ORIGIN,timeout:5},async()=>{calls++;await new Promise(r=>setTimeout(r,25));return response();}));
+  assert.equal(report.overallStatus,'FAIL');assert.equal(calls,1);assert.ok(report.checks.some(c=>c.details.errorCategory==='REQUEST_TIMEOUT'));
+});
+const cli=(args)=>{
+  const guard='globalThis.fetch=()=>{process.stderr.write("FORBIDDEN_NETWORK_CALL");throw new Error("NO_NETWORK");};';
+  const result=spawnSync(process.execPath,['--import','data:text/javascript,'+encodeURIComponent(guard),resolve('scripts/verify-public-preview.mjs'),...args],{encoding:'utf8',timeout:3000});
+  assert.ifError(result.error);assert.doesNotMatch(result.stdout+result.stderr,/FORBIDDEN_NETWORK_CALL/);assert.doesNotMatch(result.stdout+result.stderr,new RegExp(CANARY));return result;
+};
+test('F1/F3 actual CLI JSON/stdout/stderr/terminal reject malformed fixture status without reflection',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'eh135-'+CANARY+'-'));const file=join(dir,CANARY+'.json');
+  try {
+    for(const status of [CANARY,null,{secret:CANARY},'200',0,999,200.5]) {
+      await writeFile(file,JSON.stringify({default:{status,body:'<html>OK</html>',headers:{'content-type':'text/html'}}}));
+      for(const flags of [[],['--json']]) {
+        const r=cli(['--offline-fixture',file,...flags]);assert.equal(r.status,1);assert.match(r.stdout,/INVALID_RESPONSE/);
+        if(flags.length) {const report=JSON.parse(r.stdout);assert.equal(report.mode,'OFFLINE_ONLY');assert.equal(report.overallStatus,'FAIL');}
+      }
+    }
+  } finally {await rm(dir,{recursive:true,force:true});}
+});
+test('F1 actual CLI rejected URL/apiUrl/ports/flags/duplicate targets and file errors have fixed output',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'eh135-'+CANARY+'-'));const file=join(dir,CANARY+'.json');
+  try {
+    await writeFile(file,'{invalid '+CANARY);
+    const cases=[[],['--url',`https://egyhealth360-${CANARY.toLowerCase()}.vercel.app/`],['--'+CANARY],['--url',OFFLINE_WEB_ORIGIN,OFFLINE_WEB_ORIGIN],['--offline-fixture',join(dir,'MISSING-'+CANARY)],['--offline-fixture',file],['--offline-fixture',file,'--url',`${OFFLINE_WEB_ORIGIN}/${CANARY}`],['--offline-fixture',file,'--api-url',`${OFFLINE_API_ORIGIN}:8443/`]];
+    for(const args of cases)assert.equal(cli(args).status,1);
+    await writeFile(file,'x'.repeat(2*1024*1024+1));assert.equal(cli(['--offline-fixture',file]).status,1);
+  } finally {await rm(dir,{recursive:true,force:true});}
+});
+test('F3 actual CLI succeeds only with explicit local bounded streaming fixtures and keeps all hosted gates unverified',async()=>{
+  const dir=await mkdtemp(join(tmpdir(),'eh135-fixture-'));const file=join(dir,'fixture.json');
+  const health={status:200,headers:{'content-type':'application/json'},body:JSON.stringify({data:{status:'ok',extra:CANARY}})};
+  try {
+    await writeFile(file,JSON.stringify({web:{status:200,headers:{'content-type':'text/html','x-content-type-options':'nosniff'},body:`<html>${CANARY}</html>`},health,api:health}));
+    const result=cli(['--offline-fixture',file,'--api-url',OFFLINE_API_ORIGIN,'--json']);assert.equal(result.status,0);
+    const report=JSON.parse(result.stdout);assert.equal(report.mode,'OFFLINE_ONLY');assert.equal(report.overallStatus,'PASS');assert.equal(report.clinicalReadiness,'NOT_VERIFIED');assert.equal(report.originOwnership,'NOT_VERIFIED');assert.equal(report.dnsSocketSafety,'NOT_VERIFIED');assert.equal(report.expectedSha,null);
+    const terminal=cli(['--offline-fixture',file]);assert.equal(terminal.status,0);assert.match(terminal.stdout,/OFFLINE_ONLY/);
+  } finally {await rm(dir,{recursive:true,force:true});}
 });

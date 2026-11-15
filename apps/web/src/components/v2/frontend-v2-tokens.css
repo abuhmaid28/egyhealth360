@@ -1,4 +1,4 @@
-/* Package A candidate: exact #101 audited pairs, shared by all five portals; clinical layouts stay separately scoped.
+/* Package A candidate: exact #101 audited pairs, scoped to Patient/Doctor.
    System CSS is available before hydration; explicit T1 selection is memory-only. */
 :root {
   --v2-accent: #ffb88b;
@@ -57,7 +57,7 @@
   --v2-scheme: dark;
   --v2-shadow: none;
 }
-/* One shared token contract; role layouts never own theme/session policy. */
+/* Higher specificity than historical local tokens; no staff portal rollout. */
 [data-frontend-v2][data-portal-shell][lang][dir] {
   --care-navy: var(--v2-ink);
   --care-teal: var(--v2-action);
