@@ -161,3 +161,21 @@
 
 [data-frontend-v2] .language-switch button { color: var(--v2-muted); background: transparent; }
 [data-frontend-v2] .language-switch button[aria-pressed="true"] { color: var(--v2-action); background: var(--v2-raised); }
+/* The locale shell and session-restoration shells form one neutral first-paint path. */
+main.boot.boot,
+[data-clinician-master-boot][data-clinician-master-boot] {
+  --care-canvas: var(--v2-canvas);
+  --care-surface: var(--v2-surface);
+  --care-navy: var(--v2-ink);
+  --care-ink: var(--v2-ink);
+  --care-muted: var(--v2-muted);
+  --care-border: var(--v2-line);
+  color: var(--v2-ink);
+  background: var(--v2-canvas);
+  color-scheme: var(--v2-scheme);
+  font-family: Inter, "EH My Care Arabic", sans-serif;
+}
+main.boot.boot bdi[dir="ltr"],
+[data-clinician-master-boot][data-clinician-master-boot] bdi[dir="ltr"] { font-family: Inter, "EH My Care Arabic", sans-serif; }
+main.boot .skeleton,
+[data-clinician-master-boot] .skeleton { background: var(--v2-disabled); }

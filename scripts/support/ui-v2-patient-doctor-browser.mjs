@@ -94,9 +94,28 @@ export async function testV2PatientDoctor(browser, origin, shots) {
     assert.equal(await page.locator("html").getAttribute("data-frontend-v2-theme"), null);
     await page.close();
   }
+  // Hold only synthetic auth: neither the generic nor professional restoring shell
+  // may flash the inherited Light palette between neutral locale and themed content.
+  for (const locale of ["ar", "en"]) for (const colorScheme of ["light", "dark"]) {
+    for (const path of ["/patient/appointments", "/doctor/consultation/00000000-0000-4000-8000-000000000003/documentation"]) {
+      const page = await browser.newPage({ colorScheme });
+      await page.addInitScript(locale => { globalThis.localStorage.setItem("eh360-ui-mode", "live"); globalThis.localStorage.setItem("eh360-locale", locale); }, locale);
+      let release;
+      const held = new Promise(done => { release = done; });
+      await page.route("**/api/v1/auth/me", async route => { await held; await route.fulfill({ status: 401, json: { error: { message: "SYNTHETIC_HELD_AUTH_CANARY" } } }); });
+      try {
+        await page.goto(origin + path);
+        const boot = page.locator(path.startsWith("/doctor") ? "[data-clinician-master-boot]" : "main.boot:not([data-initial-locale])");
+        await boot.waitFor();
+        assert.equal(await boot.evaluate(el => globalThis.getComputedStyle(el).backgroundColor), palettes[colorScheme]);
+        assert.ok(!(await boot.innerText()).includes("SYNTHETIC_HELD_AUTH_CANARY"));
+        assert.equal(await boot.locator("button,input,textarea,a").count(), 0);
+      } finally { release(); await page.close(); }
+    }
+  }
   const out = process.env.UI_V2_PACKAGE_A_EVIDENCE_DIR ?? shots;
   if (out) await mkdir(out, { recursive: true });
-  const receipt = { source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(), browser: browser.version(), origin, synthetic: true, systemFirstPaint: ["light", "dark"], screens: [], scans: [], axe: [], journeys: [], routeFailures: [] };
+  const receipt = { source: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(), browser: browser.version(), origin, synthetic: true, systemFirstPaint: ["light", "dark"], heldAuthRestorationCases: 8, screens: [], scans: [], axe: [], journeys: [], routeFailures: [] };
   const capture = async (page, role, locale, theme, width) => {
     if (!out) return;
     receipt.screens.push(await screenshot(page, out, `a-${role}-${locale}-${theme}-${width}.png`, { role, locale, theme, viewport: { width, height: 1000 }, fullPage: true, source: receipt.source, fixture: role === "patient" ? "myCareDemoState" : "clinicianMasterPage controlled GET" }));
