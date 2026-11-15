@@ -2,7 +2,7 @@
  * EgyHealth 360 — Public Preview Safety Library
  * Dependency-free, safe, read-only verification of public deployment previews.
  */
-import { readFileSync, existsSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 /**
@@ -379,7 +379,7 @@ export async function runPreviewSafetyCheck(params, customFetch) {
     try {
       const directRes = await safeGet(directHealth, { timeout: params.timeout, allowTestHttp: params.allowTestHttp }, customFetch);
       let parsed = null;
-      try { parsed = JSON.parse(directRes.body); } catch {}
+      try { parsed = JSON.parse(directRes.body); } catch { /* ignore non-json response */ }
       if (directRes.status === 200 && parsed?.data?.status === 'ok') {
         recordCheck('Direct API Health Route', 'PASS', {
           status: directRes.status,
