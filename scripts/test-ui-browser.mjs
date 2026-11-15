@@ -1,3 +1,4 @@
+import { testV2PatientDoctor } from "./support/ui-v2-patient-doctor-browser.mjs";
 import { testR1Mode } from "./support/ui-r1-mode-browser.mjs";
 import { testInitialLocale } from "./support/ui-initial-locale-browser.mjs";
 import { testStagingTime } from "./support/ui-staging-time-browser.mjs";
@@ -437,6 +438,7 @@ try {
   await testLiveAvailability(browser, origin, shots);
   await testPatientMyCare(browser, origin, shots);
   await testClinicianMaster(browser, origin);
+  await testV2PatientDoctor(browser, origin, shots);
   await testArabic(browser, origin, shots);
   await testPolish(browser, origin, shots);
   await testLiveJourney(browser, origin, shots);
