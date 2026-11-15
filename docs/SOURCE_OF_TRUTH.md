@@ -1,4 +1,4 @@
-Current combined candidate: [Frontend V2 Combined Integration](frontend-v2-slices/FRONTEND_V2_COMBINED_INTEGRATION.md), under [Issue135 Owner GO](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900321063).58-path ceiling; bounded candidate only, no merge/release/Live activation.
+Current combined local candidate: [Frontend V2 Combined Integration receipt](frontend-v2-slices/FRONTEND_V2_COMBINED_INTEGRATION.md), under [Owner GO](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900321063) and [14/44 scope amendment](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900745939). Local validation/reviews PASS;publication blocked by deployment-trigger visibility.58-path ceiling;no combined remoteCI,merge,deployment,Live or release acceptance.
 
 # Source of truth and document index
 
