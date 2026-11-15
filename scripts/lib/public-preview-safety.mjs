@@ -349,7 +349,7 @@ export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetc
     let bodyText = '';
     if (response.body && typeof response.body.getReader === 'function') {
       const reader = response.body.getReader();
-      const decoder = new TextDecoder('utf-8');
+      const decoder = new globalThis.TextDecoder('utf-8');
       let totalBytes = 0;
       try {
         while (true) {
@@ -372,7 +372,7 @@ export async function safeGet(targetUrl, options = {}, fetchFn = globalThis.fetc
     } else {
       // Offline / mock fetch fallback
       const rawText = await response.text();
-      const encoder = new TextEncoder();
+      const encoder = new globalThis.TextEncoder();
       const actualByteLength = encoder.encode(rawText).byteLength;
       if (actualByteLength > maxBytes) {
         throw new Error(ERROR_CATEGORIES.RESPONSE_TOO_LARGE);

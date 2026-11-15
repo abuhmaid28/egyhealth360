@@ -176,9 +176,9 @@ test('Finding F2: safeGet enforces real streaming byte limits with early cancell
   const mockStreamingBody = {
     getReader: () => {
       const chunks = [
-        new TextEncoder().encode('X'.repeat(600)),
-        new TextEncoder().encode('Y'.repeat(600)),
-        new TextEncoder().encode('Z'.repeat(600)),
+        new globalThis.TextEncoder().encode('X'.repeat(600)),
+        new globalThis.TextEncoder().encode('Y'.repeat(600)),
+        new globalThis.TextEncoder().encode('Z'.repeat(600)),
       ];
       let idx = 0;
       return {
