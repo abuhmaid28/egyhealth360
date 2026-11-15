@@ -245,14 +245,14 @@ test("Presentation requires explicit opt-in, exact PATIENT role and exact route;
 });
 
 test("Default shell reconstructs exact main source and shared CSS prefix", () => {
-  // Remove only Package A presentation additions before reconstructing the original shell.
+  // Remove only authorized combined presentation additions before reconstructing the original shell.
   // The original legacy-source hash and its reconstruction assertions stay intact.
   let original = shellSource
     .replace('import { FrontendV2ThemeSwitch } from "./v2/frontend-v2-theme";\n', "")
     .replace('import v2 from "./v2/patient-doctor-layout.module.css";\n\n', "")
-    .replace('${patient || clinician ? ` ${v2.root}` : ""}', "")
-    .replace('      data-frontend-v2={patient || clinician || undefined}\n', "")
-    .replace('                {(patient || clinician) && <FrontendV2ThemeSwitch />}\n', "");
+    .replace(' ${v2.root}', "")
+    .replace('      data-frontend-v2\n      data-frontend-v2-content={patient || clinician || undefined}\n', "")
+    .replace('                <FrontendV2ThemeSwitch />\n', "");
   const changes = [
     [' onClick={myCareV2 ? (event) => {\n        const main = document.getElementById("main");\n        if (!main) return;\n        event.preventDefault();\n        main.focus({ preventScroll: true });\n        main.scrollIntoView({ block: "start" });\n      } : undefined}', ""],
     ["  patientMyCareV2?: boolean;\n", ""],

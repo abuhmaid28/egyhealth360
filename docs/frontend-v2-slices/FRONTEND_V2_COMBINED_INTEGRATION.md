@@ -15,7 +15,7 @@ Exact baseline: `d268264b1d062c65425a223f8f25d6e72442586e` (#134). Branch `integ
 |1/6 source freeze/assembly|Pinned GitHub state and authorization verified;55 source snapshots assembled,44 import-only blob/modes verified.|
 |2/6 canonical T1/shared staff shell|Shared all-role shell/T1 and scoped Patient/Doctor content implemented;7 combined unit/provenance cases and frontend build/types PASS; full browser qualification follows in4/6.|
 |3/6 OFFLINE-ONLY C remediation|Implemented inside C3 files;37 offline tests PASS, including original16 groups strengthened to the new offline contract and21 new adversarial/CLI/deadline cases. Independent review remains pending.|
-|4/6 combined regression/browser/evidence|BLOCKED:323 UI cases ran,322 PASS; frozen read-surfaces shell reconstruction at247 only understands original A presentation additions. Required all-role shell needs a separately approved edit-permission substitution; no frozen test edited.|
+|4/6 combined regression/browser/evidence|Prior blocker resolved by Owner amendment; qualification resuming. Historical failure:323 UI cases ran,322 PASS; frozen read-surfaces shell reconstruction at247 only understands original A presentation additions. Required all-role shell needs a separately approved edit-permission substitution; no frozen test edited.|
 |5/6 independent frontend/security/adversarial reviews|Pending.|
 |6/6 safe publication/frozen-head FULL CI/receipt|Pending; no push, PR, CI or deployment performed.|
 
@@ -23,7 +23,7 @@ Exact baseline: `d268264b1d062c65425a223f8f25d6e72442586e` (#134). Branch `integ
 
 ```text
 apps/web/src/components/portal-shell.tsx
-apps/web/src/components/v2/frontend-v2-tokens.css
+tests/ui-v2-read-surfaces.test.mjs
 apps/web/src/components/v2/patient-doctor-layout.module.css
 apps/web/src/components/v2/staff-workspaces.module.css
 scripts/support/ui-v2-staff-browser.mjs
@@ -122,7 +122,7 @@ All44 import-only entries below must preserve the listed Git blob and mode. Edit
 | `apps/web/src/components/portal-shell.tsx` | #148 | `f3c555220247829468c239c0ad84a94038300f76` | `a285520b6cd26eb312692fba6eff7aa221862014` | `100644` | editable |
 | `apps/web/src/components/v2/admin-workspace.tsx` | #139 | `17fa1c9ff51cf980e406e2a5fa79d0bc276728d1` | `620322133e2fdedf6f5242c44e1eea0ecd5e6dd2` | `100644` | import-only |
 | `apps/web/src/components/v2/frontend-v2-theme.tsx` | #148 | `f3c555220247829468c239c0ad84a94038300f76` | `4b8228b773d3594cf1b2463eb501a2ee860cd3c2` | `100644` | import-only |
-| `apps/web/src/components/v2/frontend-v2-tokens.css` | #148 | `f3c555220247829468c239c0ad84a94038300f76` | `f0f6ea6b778d48216d5cb98a7de3442340b74936` | `100644` | editable |
+| `apps/web/src/components/v2/frontend-v2-tokens.css` | #148 | `f3c555220247829468c239c0ad84a94038300f76` | `f0f6ea6b778d48216d5cb98a7de3442340b74936` | `100644` | import-only |
 | `apps/web/src/components/v2/laboratory-future.tsx` | #139 | `17fa1c9ff51cf980e406e2a5fa79d0bc276728d1` | `ac90cb2936ed950bf349313f4da07fedb00d33a7` | `100644` | import-only |
 | `apps/web/src/components/v2/patient-doctor-layout.module.css` | #148 | `f3c555220247829468c239c0ad84a94038300f76` | `fa7d1c53ac1f5c6c57c2c52119c411e9ac1357a8` | `100644` | editable |
 | `apps/web/src/components/v2/pharmacy-workspace.tsx` | #139 | `17fa1c9ff51cf980e406e2a5fa79d0bc276728d1` | `c5431ef386542199b705fffe9ec44e53e8812adb` | `100644` | import-only |
@@ -159,7 +159,7 @@ All44 import-only entries below must preserve the listed Git blob and mode. Edit
 | `scripts/verify-public-preview.mjs` | #141 | `8bf1a928b2bd45d2371fc857789c6141ddb08a4f` | `b7ed02eba8abc363fdd3684ca62d5a098def7017` | `100644` | editable |
 | `tests/public-preview-safety.test.mjs` | #141 | `8bf1a928b2bd45d2371fc857789c6141ddb08a4f` | `78c75af0b1f14b4c8bed83dede8977789f5a1bf2` | `100644` | editable |
 | `tests/ui-pharmacy-read.test.mjs` | #147 | `2724a20e216ed893cba3cdf7bc866c6695dd66a8` | `52d75afcc261ab1b543ab9bb606d6f6aeface4cb` | `100644` | import-only |
-| `tests/ui-v2-read-surfaces.test.mjs` | #148 | `f3c555220247829468c239c0ad84a94038300f76` | `09df6e8c0e021c9b6d7d4d3ff87c9394264664cf` | `100644` | import-only |
+| `tests/ui-v2-read-surfaces.test.mjs` | #148 | `f3c555220247829468c239c0ad84a94038300f76` | `09df6e8c0e021c9b6d7d4d3ff87c9394264664cf` | `100644` | editable |
 | `tests/ui-v2-staff.test.mjs` | #139 | `17fa1c9ff51cf980e406e2a5fa79d0bc276728d1` | `a187f8e628ae5d20af7f57d67c5072da67c6a957` | `100644` | import-only |
 | `tests/ui-v2-visual-integration.test.mjs` | #148 | `f3c555220247829468c239c0ad84a94038300f76` | `dc2d534d3323d5748a3a803746fb207027fb34c5` | `100644` | import-only |
 
@@ -177,10 +177,12 @@ Coherent source/build return to exact #134 only at a quiescent original-operatio
 
 F06/E2 #124 NO-GO, hosted F02/U03/source/API/DB/identity parity, global F03, AP03 actual devices/AT, AP05 rights, Final DS, Pharmacy S1/org selection, Admin management and Lab backend remain OPEN. Clinical, privacy, hosted and release approval are not conferred by candidate tests or CI. Stop at one reviewed Draft/receipt or a precise material blocker.
 
-## Material scope blocker — source-reconstruction guard
+## Resolved scope blocker — source-reconstruction guard
 
 `tests/ui-v2-read-surfaces.test.mjs:247–269` is an import-only owner file (`09df6e8c0e021c9b6d7d4d3ff87c9394264664cf`). Its exact-source reconstruction strips only Package A conditional class/data/theme-selector additions. The authorized all-role shell necessarily changes those three clauses, so the inherited test fails at266 before checking the unchanged original hash. Actual UI run:323 cases,322 PASS,1 FAIL. No assertion/threshold/test was skipped or edited.
 
 Proposed amendment, NOT applied: exchange edit permissions for `apps/web/src/components/v2/frontend-v2-tokens.css` and `tests/ui-v2-read-surfaces.test.mjs`. Both already belong to the58 paths; remain14 editable/44 import-only, all17 PNGs preserved. The token CSS needs no functional change and is restored byte/mode-exact to Package A (`f0f6ea6b778d48216d5cb98a7de3442340b74936`); its generic data-attribute selectors already serve all roles. The proposed test patch changes only three presentation normalization strings plus their comment, preserving every assertion and the original shell SHA256 `7c4f8f07105d9b1854097938f3dd2ac7dda37cf86eac5bf7fbbc626284817ed8` and original CSS-prefix SHA256 `a17947877e71c51799d6d28f9faf1784ca7fe968430f876a0c39d24cff3775da`.
 
 A standalone proposal preview evaluated those same reconstruction assertions in memory and passed both original hashes; it is not candidate qualification. Frozen test remains its pinned blob. Owner scope amendment is required by [the explicit14/44 contract](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900321063) before applying any such patch. Execution pauses at this blocker; combined browser/evidence/reviews/publication/CI are not complete. No push, Draft PR, deployment or CI dispatch. Original candidate worktrees/heads remain untouched.
+
+**Owner amendment applied:** [recorded authorization](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900745939) accepts the exact permission exchange above. Token CSS is now import-only; read-surfaces test receives only the reviewed normalization/comment patch. All assertions and expected hashes remain unchanged; full UI qualification now passes323/323 after the approved normalization patch; combined browser qualification follows.

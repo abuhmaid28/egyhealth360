@@ -1,3 +1,4 @@
+import { testCombinedV2 } from "./support/ui-v2-combined-browser.mjs";
 import { testV2PatientDoctor } from "./support/ui-v2-patient-doctor-browser.mjs";
 import { testR1Mode } from "./support/ui-r1-mode-browser.mjs";
 import { testInitialLocale } from "./support/ui-initial-locale-browser.mjs";
@@ -439,6 +440,7 @@ try {
   await testPatientMyCare(browser, origin, shots);
   await testClinicianMaster(browser, origin);
   await testV2PatientDoctor(browser, origin, shots);
+  await testCombinedV2(browser, origin, process.env.UI_V2_COMBINED_EVIDENCE_DIR);
   await testArabic(browser, origin, shots);
   await testPolish(browser, origin, shots);
   await testLiveJourney(browser, origin, shots);
@@ -447,6 +449,11 @@ try {
   await testConsultationOpening(browser, origin, shots);
   await testDocumentation(browser, origin, shots);
   await testConsultationClose(browser, origin);
+  await new Promise((done,reject) => {
+    const staff=spawn(process.execPath,["scripts/support/ui-v2-staff-browser.mjs"],{stdio:["ignore","pipe","pipe"]});
+    let output="";staff.stdout.on("data",chunk=>{output+=chunk;});staff.stderr.on("data",chunk=>{output+=chunk;});
+    staff.on("error",reject);staff.on("close",code=>code===0?(console.log(output.trim()),done()):reject(new Error("Staff browser proof failed: "+output)));
+  });
   assert.deepEqual(errors, []);
   console.log(
     "PASS: browser Golden Demo, role boundaries, patient privacy, reload continuity, 23 route state variants + live HTTP contract probe, desktop/tablet/mobile navigation and overflow; no browser exceptions.",

@@ -67,6 +67,11 @@ const pinned = [
     "mode": "100644"
   },
   {
+    "path": "apps/web/src/components/v2/frontend-v2-tokens.css",
+    "blob": "f0f6ea6b778d48216d5cb98a7de3442340b74936",
+    "mode": "100644"
+  },
+  {
     "path": "docs/frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md",
     "blob": "deb8c41ce3af042c200c121e52a0414796dee5c0",
     "mode": "100644"
@@ -124,11 +129,6 @@ const pinned = [
   {
     "path": "scripts/support/ui-v2-patient-doctor-browser.mjs",
     "blob": "3b48d89a8891ce59c54e1ddab5a5e39b345edd1d",
-    "mode": "100644"
-  },
-  {
-    "path": "tests/ui-v2-read-surfaces.test.mjs",
-    "blob": "09df6e8c0e021c9b6d7d4d3ff87c9394264664cf",
     "mode": "100644"
   },
   {
