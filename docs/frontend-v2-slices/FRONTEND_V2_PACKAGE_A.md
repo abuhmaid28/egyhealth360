@@ -2,6 +2,8 @@
 
 Bounded implementation candidate, authorized by [Issue #136](https://github.com/abuhmaid28/egyhealth360/issues/136); [roadmap](https://github.com/abuhmaid28/egyhealth360/issues/135). No merge, deployment, Package B or release approval.
 
+**Current CD07 completeness follow-up:** `9274f2347c16a47c53672ea73f9eca601ce75ada`, app tree `a82bad433855aea7a574b5ff67c1a6f121e55071`,32 actual paths inside the amended50 ceiling. Demo appointment detail now reuses the same existing12h/IANA/DST component as Live; list/review/history/professional24h remain unchanged. Two added Demo320/text200 scans bring the primary matrix to46. Prior805/f725/3cf qualification hashes below are retained historical evidence; this follow-up and the final PR receipt control the eventual final source/CI identity.
+
 ## Source and G0 freeze (checkpoint 1/6)
 
 - Sole parent: PR #134 `d268264b1d062c65425a223f8f25d6e72442586e`, tree `92fb45db0c933b7bfe47cc272d953950f10999ac`. Remote Draft/open/unmerged and baseline CI run 43643309450 success verified on 15 November 2026.
@@ -87,101 +89,60 @@ Only these 50 paths may differ from the sole parent; paths are a ceiling, not a 
 - `origin/reference-105`: `82fbbe9fef28a6407947852d47473ea35cd057a8`
 - `origin/reference-111`: `84e39a14a888686307562a5df383d2a475bfcd2f`
 
-## Checkpoint ledger and resumption
+## Checkpoints, final source and handoff
 
-1. Source/G0 freeze complete at `7695dc8`; exact source references,50-path maximum and capability ownership pinned. Baseline later captured from its own detached checkout/build using matched synthetic fixtures.
-2. Shared foundation/navigation/T1 implemented at `e2329ea` (later first-paint/focus fixes are recorded below): scoped audited Light/Dark pairs, CSS System first paint, memory-only override, session/account/capability reset without remount. Original source/CSS preservation tests retained. Build/typecheck/focused lint PASS; real Chromium baseline captured outside Git. Full visual QA remains checkpoint5.
-3. Patient presentation complete at `723fccc` on existing journeys: date-led single-CTA My Care, supported discovery/provider/clinic/availability, booking review/detail/history/released/follow-up/settings via scoped foundation. Original adapters/data preparation and all Patient12h/DST/privacy assertions preserved;25 focused tests and production build PASS. Responsive/functional matrix follows in checkpoint5.
-4. Doctor presentation complete at `abbe1bf` on existing schedule/availability/opening/consultation/documentation/follow-up/close/released/settings. Source context is before the editor in DOM and responsive disclosure; editor and all command-owning children remain mounted. Ordinary task links gain native focusable destinations. All245 inherited UI tests plus3 new integration tests pass; production build/focused lint pass. Full browser matrix remains checkpoint5.
-5. Full local QA/screenshots: final runtime source `f725ed051fdf28765a44d2d2ada078194b25cbd8`; full amended local suite PASS at805bb955172777c833705efe7ba34d1b44f38d85;44 scans,8 primary axe scans,2 noJS palettes,8 held-auth cases and8 browser screenshots PASS. Hashes are recorded below.
-6. Independent reviews: bounded PASS on the final runtime source, with final docs/evidence preservation recheck. Single stacked Draft and exact-head manual CI/merge-tree receipt are maintained in the delivery PR; no merge/deploy or Package B.
-
-Resume from the branch and latest checkpoint commit, inspect the single Draft PR and its current CI first, and preserve every original assertion. Local raw evidence is under `/tmp/eh136-*`; the downloadable outside-Git review bundle also contains matched before images and machine receipts. Final PR head/CI identities belong in the delivery PR because this source commit cannot self-reference its eventual hash. Do not rerun a successful final full CI without a new failure/source change.
-
-
-## Final implementation and preserved behavior
-
-The production application reuses its existing catch-all route, adapters, service instances and command owners. No historical design code is merged or cherry-picked. New scoped CSS maps the audited Light/Dark Brand roles into existing components; Staff/Admin/Lab retain their original shell. English uses the existing licensed Inter variable file; Arabic uses the existing IBM Plex Sans Arabic Regular/Semibold files and notices. A neutral textual wordmark with a decorative Apricot underline replaces no artwork and assumes no AP05 rights.
-
-Patient My Care leads with a full localized appointment date, complete recorded doctor name, scoped12h time and one detail action, then compact explicit source retrieval. Discovery/provider/clinic/availability, review/detail/history, released summary/follow-up and settings inherit the same actual foundation. Unsupported Live prescription/lab/relationship-management capabilities remain honestly unavailable or explicitly separate Demo. No new API request or backend capability is invented.
-
-Doctor schedule/availability/opening/released/settings share the professional foundation. The actual consultation keeps its current identity and source context, three ordinary local task links and rich existing documentation. Source context comes before the editor in DOM and becomes a compact native disclosure on narrow screens; the editor remains mounted. Focusable task targets preserve Enter/Back/hash semantics. Private note signing, explicit summary/follow-up release, history/privacy and irreversible Review & Close remain independent original commands. Professional times remain24h; no clinical text is translated or inferred.
-
-T1 is layout-owned React memory, CSS System first paint and an explicit native System/Light/Dark select in the account disclosure. There is no theme localStorage/sessionStorage/cookie/account/server preference, identity-indexed preference or API call. Explicit logout/account/mode entry and existing capability-epoch notifications clear the override; reload starts System. Theme/locale/task navigation never keys or remounts the command-owning subtree, changes a payload/key, or retries a command.
-
-## Validation and genuine browser evidence
-
-Toolchain: Node24.21.0, pnpm10.34.6, Next16.4.1, React19.3.0, Playwright1.64.1; actual Chromium154.0.8037.57, DPR1, reduced motion, viewport height1000. Existing frozen lockfile/dependency manifests unchanged. Local axe-core4.11.0 is test tooling installed outside Git, supplied through `UI_V2_AXE_PATH`; CI retains the always-on browser contrast/reflow/AX assertions without adding a dependency.
-
-| Gate | Actual evidence |
+| Checkpoint | Qualified result |
 | --- | --- |
-| Frontend lint/build/typecheck | Existing pinned commands for `apps/web` and `packages/ui`; PASS on final production code. |
-| UI units |248/248 PASS: all245 inherited tests retained plus3 new integration tests. Historical scope digests reconstruct only explicitly authorized presentation additions and still compare original source/prefix hashes; no journey/privacy assertion or threshold removed. |
-| Full controlled browser suite | PASS at7ce3e06, then affected F04 +entire Package A matrix PASS atf725ed0. The full f725 repeat exposed only the stale Manrope expectation; the Owner-approved test-only amendment is805bb9, with unchanged runtime tree. Final amended full-suite PASS at805bb955172777c833705efe7ba34d1b44f38d85, including the original Review & Close matrix;0 browser exceptions. Includes F03/F04 startup/critical copy/pending-editor lifetime, real built Patient→booking→detail integration, Live/Demo boundaries, time/DST/history, privacy/denial and all existing controlled opening/documentation/follow-up/close flows. Synthetic HTTP fixtures, not hosted E2. |
-| New Package A matrix |44 measured visual/reflow scans: Patient/Doctor ×AR/EN ×Light/Dark ×320/390/768/1024/1440, plus320/text200 with Doctor context expanded. System both media choices, opposing explicit override, Next navigation/Back/reload/account/logout reset, editor DOM/value and original uncertain operation preservation. |
-| First paint | Actual JavaScript-disabled System Light/Dark on neutral bilingual F04 shell/body/message and8 held-auth AR/EN ×Light/Dark ×generic/professional restoration cases;0 task controls, no theme attribute/cookie or personalized SSR. Original held-JS/noJS/hydration/locale tests remain. |
-| Accessibility |8 primary axe WCAG2A/AA/2.1A/AA scans, actual text/control contrast checks, native keyboard/skip/hash/account/dialog focus, CDP AX checks; independent reviewer adds20 axe probes and expanded context/focus checks. Bounded browser evidence, no physical AT/device certification. |
-| Policy/docs/scope |30/30 existing policy tests; Markdown classification/local references and whitespace PASS. Exact final path/blob ledger recorded below. |
-| Security/clinical/privacy | Original adapter/command code unchanged. Independent EN/AR probe retains exactly one deliberately503 uncertain original body/key across presentation changes; controlled401 suppresses private DOM/AX and clears T1. No automatic writes/retries/fallback or new authority. |
+|1/6 Source/G0|7695dc8 pins exact #134 parent, selected visual sources, capability ownership and maximum allowance.|
+|2/6 Shared foundation/T1|e2329ea introduces scoped audited Light/Dark pairs, Navigation A family, licensed Inter/Plex, focus and memory-only T1. Later startup fixes cover all neutral planes.|
+|3/6 Patient|723fccc date-led My Care plus existing supported destinations; final9274f23 also aligns Demo detail with the same existing scoped12h renderer.|
+|4/6 Doctor|abbe1bf source context before sustained editor, ordinary local task links, existing independent commands;7ce3e06 preserves measured anchor clearance.|
+|5/6 Local/browser/evidence|Final source9274f23: build/types/lint,248 UI units, complete controlled suite,46 scans,8 primary axe scans,8 held-auth cases,2 noJS palettes and8 actual PNGs PASS.|
+|6/6 Independent reviews/Draft/CI|Independent source verdicts bounded PASS. One stacked Draft #148; exact final-head/manual FULL CI and proposed-merge proof are maintained in its delivery receipt after execution. No release or next-package authorization.|
 
-Routine defects found by actual tests were corrected in scope: Dark legacy colors on navigation/filter/date/map/count/body-copy surfaces; Arabic font cascade; EN320/text200 consultation-state overflow; wide-screen inherited header geometry; neutral first-paint selector specificity; and compact anchor clearance. Inherited assertions/thresholds remain, with one expressly authorized approved-font correction described below. Intermediate failing logs are retained outside Git; only final qualified runs establish PASS.
+Qualified final production/test source: `9274f2347c16a47c53672ea73f9eca601ce75ada`; exact `apps/web` tree `a82bad433855aea7a574b5ff67c1a6f121e55071`. The eventual receipt-only commit must preserve all qualified app/script/test bytes and the8 approved PNG hashes. Final PR head/run/jobs/checkout and merge-tree proof belong in the PR/Issue136 receipt because this commit cannot self-reference its eventual SHA or later CI result.
 
-### Capture method and source attribution
+Resume from the existing `feat/136-frontend-v2-package-a` branch and single [Draft #148](https://github.com/abuhmaid28/egyhealth360/pull/148); inspect its current head/CI first. Do not restart, reset/rebase, import parallel candidates, repeat completed work, or rerun successful FULL CI without a new source/failure reason. Raw evidence lives under `/tmp/eh136-*` and the outside-Git downloadable review bundle.
 
-All eight approved PNGs are real browser full-page captures from the built final source. Patient uses the existing `myCareDemoState()` fixture in an isolated Demo browser context; Doctor uses the existing `clinicianMasterPage()` controlled GET fixture through the production Live adapter. The Doctor screen's Live indicator describes adapter mode, not a real hosted/DB session. Captures introduce no clinical write; deliberate uncertain-write probes occur after screenshots. No real patient data, generated image, copied prototype artwork, new fonts or icons.
+## Actual implementation and preserved ownership
 
-Reference #107 establishes hierarchy and character, not pixel parity: fixtures and rich current editors differ. Approved differences include the neutral text wordmark, honest unsupported capability labels, actual recorded names, richer current documentation and explicit mode/theme controls. Eight final images and metadata/hashes follow. Other representative scans and four matched baseline screenshots stay outside Git as authorized.
+Scoped tokens reuse #101's exact Violet × Apricot pairs and existing licensed Inter variable/Plex Arabic Regular/Semibold files and notices. No new font/logo/icon artwork or dependency. Neutral textual wordmark with a decorative Apricot underline avoids AP05 artwork assumptions. Staff/Admin/Lab mounted portals retain their original shell treatment; no Package B code is imported.
 
-### Matched before evidence
+Patient My Care is date-led, with complete recorded doctor identity, localized named date,12h appointment clock, actual zone/fold offset and one detail CTA, followed by compact explicit retrieval. Existing discovery/provider/clinic/finite availability, booking review/detail/change/cancel/history, own released summaries/follow-up/bounded history/settings get the same presentation foundation. Demo appointment detail reuses existing `BookingTime` with `patientDetail`; Live detail was already scoped12h. List/review/professional/consequential24h defaults remain unchanged. No display label is parsed back into a command.
 
-The before build is exact parent `d268264b1d062c65425a223f8f25d6e72442586e`, detached checkout `/tmp/eh136-baseline`, independently built with the same pinned toolchain. It uses the same existing fixtures/viewports, original Light-only behavior, DPR1 and full-page capture. No reference branch runtime is imported. The first attempted shared-node_modules baseline build failed Turbopack's symlink-root check; a proper isolated frozen install/build succeeded before these captures.
+Doctor schedule/availability/opening/released/settings share the foundation. Consultation retains exact patient/visit/current-source context, source disclosure before the editor in DOM and ordinary Documentation / Follow-up / Review & Close hash links with native focus/Back. Editors remain mounted and preserve their values. Private signing, summary/follow-up release, history/privacy and irreversible close remain original separate commands; no new clinical authority or inferred completion.
 
-| Before image (outside Git) | SHA-256 |
+T1 is layout-owned React memory: CSS System first paint, account-disclosure System/Light/Dark override, clear on logout/account/mode/reload and existing capability-epoch/session-expiry notifications. No theme localStorage/sessionStorage/cookie/account/server preference, identity-indexed preference, API call or new session contract. Neutral locale/noJS/generic/professional restoring shells, outer canvas, message and wordmark honor System without changing F04 markup or locale startup ordering. Theme/locale/task navigation never keys or remounts a command owner or retries a command.
+
+Unsupported Live prescription/lab/relationship-management capabilities remain honestly unavailable or separately labelled synthetic Demo. No new API requests, backend features, clinical text translation/inference, hidden draft/private counts, wrong-patient source references or Live→Demo fallback.
+
+## Actual qualification
+
+Pinned Node24.21.0/pnpm10.34.6, Next16.4.1/React19.3.0, Playwright1.64.1; genuine Chromium154.0.8037.57, DPR1, reduced motion, viewport height1000. Frozen manifests/lockfile unchanged. Local axe-core4.11.0 was installed outside Git via optional `UI_V2_AXE_PATH`; CI keeps always-on contrast/reflow/keyboard/AX checks without adding a dependency.
+
+| Gate | Actual result |
 | --- | --- |
-| `before-patient-ar-390.png` | `ee702ec2042a2f64e9789515acbf3954546c0e194e64755b2c44b282da9cde54` |
-| `before-doctor-ar-390.png` | `3e0b1f854a0cd0fc2e16574be4637da249a48e4a260657f16cda40f7f7ac218f` |
-| `before-patient-en-1440.png` | `34fd69061862ee431de553ef87bd2bac4893bd5c3314db203426eaf46bf56fe4` |
-| `before-doctor-en-1440.png` | `25359390a8a7f2a85400fd97cc5c11d70159b259919deb80dd0e94ec5771d379` |
+|Frontend lint/build/types|Existing pinned frontend ESLint, web/UI build/typecheck PASS.|
+|UI units|248/248 PASS:245 inherited tests retained +3 new integration tests; no journey/privacy assertion or threshold removed. Historical source digests reconstruct only authorized presentation additions and still compare original hashes.|
+|Full controlled suite|PASS at9274f23 through the final Golden Demo/role/privacy/reload/23-route/no-browser-exception assertion, including F03/F04, time/DST/history, booking, opening, documentation, follow-up and measured-offset Review & Close.|
+|Primary browser matrix|46 scans:44 Patient/Doctor ×AR/EN ×Light/Dark ×320/390/768/1024/1440 +320/text200 cases, plus2 Demo-detail320/text200 scans. Explicit override against opposing System, Next/Back/reload/account/logout, original uncertain-operation/editor identity PASS.|
+|First paint|Actual2 noJS System palettes and8 AR/EN ×Light/Dark ×generic/professional held-auth cases: body/shell/message/wordmark correct,0 task controls, no canary/theme persistence or personalized SSR. Original held-JS/hydration/locale tests retained.|
+|Accessibility|8 primary axe WCAG2A/AA/2.1A/AA scans0 violations; actual text/control contrast, skip/hash/account/dialog keyboard/focus and CDP AX. Original independent reviewer adds20 zero-violation axe probes; fresh reviewer verifies final source/offset/startup/editor and320/text200. No physical AT/device certification.|
+|Demo detail follow-up|Independent AR/EN ×normal/Cairo fold/cross-midnight6 actual cases PASS: both periods, actual IANA offsets/dates/bidi/order,0APIcalls/errors. Existing9 time-format units PASS;320/text200 title remains52px with document width320 and no clipping/shrinking; time contrast>=7.837.|
+|Policy/docs/scope|30 existing policy tests, Markdown classification/local-reference and whitespace/scope checks PASS; final receipt checks repeated before commit.|
+|Security/clinical/privacy|Independent76 focused units and EN/AR real-browser synthetic probes: exactly one deliberately503 uncertain original body/key survives theme/locale/hash/Back; controlled401 removes private DOM/AX and clears T1. No automatic writes/retries/fallback or new authority.|
 
-## Independent reviews
+Final raw qualification: `/tmp/eh136-demo12-full.log`, `/tmp/eh136-demo12-full/package-a-browser-receipt.json`, `/tmp/eh136-units-final.log`. This is local synthetic transport/presentation evidence, not hosted or backend persistence acceptance. Existing disposable PostgreSQL/Docker writes in final FULL CI are separate from local browser probes.
 
-These are two distinct independent Codex agent reviews, not human GitHub approvals or clinical/release certification.
+Routine actual findings corrected within scope: Dark legacy pairs, Arabic font cascade, EN320/text200 state/title overflow, inherited wide header geometry, all neutral startup planes, measured compact anchor clearance, approved-font assertion and consistent Demo detail12h. Intermediate failed/superseded logs remain outside Git; only qualified final runs establish PASS.
 
-| Reviewer / scope | Source and actual verdict |
-| --- | --- |
-| `/root/frontend_final_receipt_review` — final Frontend/Visual/Accessibility (with original `/root/frontend_review` broad review) | Bounded PASS. Inspected all8 actual PNGs and #107, source/preservation, inherited Doctor geometry, keyboard/focus and expanded320/text200 in AR/EN.18 initial independent axe probes had0 violations; the follow-up noJS/focus recheck adds2 more with0. Fresh final review independently rechecks noJS,8 held-auth cases, source/offset/focus/editor and320/text200, the actual approved-font helper and all8 PNG hash identities. Narrow post-review fixes, including final consultation offset and complete noJS/held-auth startup canvas, are independently rechecked atf725ed0; the final amended source805bb9 and artifact preservation are bound in the final PR receipt. Optional P3: desktop source disclosure repeats its internal source heading; no blocking finding. |
-| `/root/security_review` — Security/Clinical/Privacy | Bounded PASS at805bb9 (runtime unchanged fromf725ed0);76 focused unit tests and independent EN/AR actual browser lifecycle/401 probes. Same editor DOM/value and original uncertain body/key,0 automatic commands, private DOM/AX suppression and T1 reset. Final runtime tree `497d4be8be414a03459f18c943dce0513abc4462`; no unresolved security/clinical/privacy finding. |
+## Owner amendments and exact scope
 
-Final independent Frontend receipt: `/tmp/eh136-final-frontend-receipt.json` (SHA-256 `afb1336676a40d3fb4df5962dcd9216a53de900d7fce0ff849a360eb845b4697`). Final Frontend startup receipt: `/tmp/eh136-independent-frontend-final-startup.json`; the final8 PNG hashes exactly match all8 independently visually inspected PNGs in the broad receipt. Independent raw receipts: `/tmp/eh136-independent-frontend-review.json`, `/tmp/eh136-independent-frontend-narrow-review.json`, `/tmp/eh136-security-review.json`, `/tmp/eh136-security-browser.log`; copied into the outside-Git review bundle. Final hashes and final-head recheck are in the single PR receipt.
+The Product Owner explicitly accepted existing manual exact-head CI: «وافق على manual exact-head CI بالـworkflow الحالي». The unchanged workflow triggers pull-request CI only for main while this Draft targets `integrate/133-bounded-candidates`; therefore manual FULL on the frozen final head plus proposed-merge tree equality replaces automatic PR CI. Do not edit workflow triggers, invent skipped lanes or reuse #134's prior result.
 
-## Publication and CI provenance
+The Product Owner also explicitly approved: «وافق على تبديل المسار وفحص Inter الأقوى». The unused `apps/web/app/loading.tsx` allowance is replaced by `scripts/support/ui-live-journey-browser.mjs`; the exact ceiling remains50. The stale English Manrope-download expectation contradicted the approved Inter direction. The patch changes only that expected font to Inter and adds actual CDP glyph-backed Inter/Plex verification. Reversing precisely that expectation and added block reconstructs the old helper byte-for-byte, preserving every journey/privacy/recovery/target-size assertion. No unused font is loaded merely to satisfy a stale expectation; no test/threshold is weakened.
 
-Owner explicitly accepted on15 November2026: «وافق على manual exact-head CI بالـworkflow الحالي». The unchanged `.github/workflows/ci.yml` only triggers pull-request CI for main, whereas this authorized Draft targets `integrate/133-bounded-candidates`. Therefore run the existing workflow once by workflow_dispatch on the frozen final branch head, with all normal FULL lanes, and prove the PR's GitHub merge checkout has the same tree as that tested head. Do not change workflow triggers, invent skips, claim automatic PR CI, or relabel #134's earlier run as new proof.
-
-Read-only publication preflight: repository public; Vercel `get_git_deployment_context` lists only unrelated `simple-ecommerce` Git linkage and no Origin connection in the available Hobby team. No EgyHealth Git deployment linkage was reported; unchanged GitHub workflow contains no deploy job. No Vercel setting, deployment, preview, alias, service or domain action was performed. GitHub repository-hook listing returned403 (integration permission); no hook configuration is claimed inspected or changed. The explicitly requested Vercel Git integration check was available and repeated before publication. Recheck before the single final push/PR if configuration changes.
-
-Exact final base/head, PR URL, workflow run/jobs/conclusions/checkout log and merge-tree equivalence are in the delivery PR body after execution. They must not be inferred from historical baseline CI or this earlier receipt text. Keep Draft/Open/Unmerged and auto-merge off.
-
-## Remaining gates and rollback
-
-G0 is frozen for this bounded candidate only. Product Owner visual acceptance, Final Design System decisions, AP03 real devices/AT, AP05 creator artwork rights, global F03 beyond the accepted booking-create slice, F02/U03 hosted source/DB/identity parity and F06/E2/whole-project release gates remain open. Package B is not included in this candidate; its separate Draft #139 remains unchanged, and combined integration requires separate authorization. Native participant/editorial review, print/PWA/physical accessibility and hosted E2 are not claimed. No backend, database, authentication, session, CSRF, clinical-contract or policy change; no release approval.
-
-Rollback is a coherent source/build reversion to exact #134 at a quiescent boundary after original pending/uncertain operations have been reconciled. Do not wipe storage/session/operation keys, silently retry a clinical command, or treat main as a verified healthy Live fallback. No DB rollback is required by this frontend-only diff. No rollback, merge or deployment is performed here. Stop after delivery for Owner review.
-
-
-## Parallel-candidate preservation (resumption verification)
-
-The continuation request requires preserving these independent Drafts. Their real changed-file lists have zero intersection with both this candidate's31 actual paths and the entire #13650-path ceiling. No imports, merges, rebases, cherry-picks, pushes or edits to those branches were performed. They are not prerequisites for this delivery; any combined integration remains a separate task.
-
-| Draft | Observed exact head | Changed paths | Intersection with #136 |
-| --- | --- | --- | --- |
-| [#139](https://github.com/abuhmaid28/egyhealth360/pull/139) | `17fa1c9ff51cf980e406e2a5fa79d0bc276728d1` |18|0|
-| [#141](https://github.com/abuhmaid28/egyhealth360/pull/141) | `8bf1a928b2bd45d2371fc857789c6141ddb08a4f` |3|0|
-| [#147](https://github.com/abuhmaid28/egyhealth360/pull/147) | `2724a20e216ed893cba3cdf7bc866c6695dd66a8` |2|0|
-
-### Actual changed-path inventory
-
-31 total:17 existing paths modified,6 new source/test/docs files and8 authorized browser PNGs. No baseline path deleted. Exact mode/type/blob preservation is verified after final commit; all1,435 baseline paths remain and all1,418 unmodified baseline files are identical.
+Actual final inventory:32 paths,18 modified/14 added,0 deleted. All1,435 baseline paths remain;1,417 unmodified baseline mode/type/blob records are identical. No Backend/Auth/Session/CSRF/Clinical/DB/OpenAPI/dependency/workflow/policy/protected-artwork edit. Exact final tree and inventory are in the delivery receipt.
 
 ```text
 apps/web/app/layout.tsx
@@ -194,6 +155,7 @@ apps/web/src/components/follow-up-intents.tsx
 apps/web/src/components/live-documentation.tsx
 apps/web/src/components/patient-my-care.module.css
 apps/web/src/components/patient-my-care.tsx
+apps/web/src/components/patient.tsx
 apps/web/src/components/portal-shell.tsx
 apps/web/src/components/v2/frontend-v2-theme.tsx
 apps/web/src/components/v2/frontend-v2-tokens.css
@@ -210,18 +172,23 @@ docs/frontend-v2-slices/evidence/a-patient-ar-dark-390.png
 docs/frontend-v2-slices/evidence/a-patient-ar-light-390.png
 docs/frontend-v2-slices/evidence/a-patient-en-dark-1440.png
 docs/frontend-v2-slices/evidence/a-patient-en-light-1440.png
+scripts/support/ui-live-journey-browser.mjs
 scripts/support/ui-v2-patient-doctor-browser.mjs
 scripts/test-ui-browser.mjs
-scripts/support/ui-live-journey-browser.mjs
 tests/ui-v2-read-surfaces.test.mjs
 tests/ui-v2-visual-integration.test.mjs
 ```
 
-### Final browser captures
+## Genuine browser captures and comparisons
 
-Source `f725ed051fdf28765a44d2d2ada078194b25cbd8`; Chromium154.0.8037.57, DPR1, height1000, fullPage, original existing synthetic fixtures, actual explicit theme selection. SHA-256 records verified against the actual final PNG bytes.
+All8 PNGs are actual browser full-page captures on final9274f23, not generated/edited images or copied prototype artwork. Patient uses existing `myCareDemoState()` in isolated Demo contexts. Doctor uses existing `clinicianMasterPage()` controlled GET fixtures through the production Live adapter: its Live indicator describes adapter mode, not a hosted/DB session. Capture precedes deliberate uncertain-write probes. No real patient data.
 
-| Image | Viewport / locale / theme | SHA-256 |
+#107 is a hierarchy/character reference, not pixel parity: fixtures and rich current editors differ. Approved bounded differences include neutral text wordmark, actual recorded names, honest unsupported capability labels, richer existing documentation and explicit mode/theme controls. Other representative scans and | `before-patient-ar-390.png` | `ee702ec2042a2f64e9789515acbf3954546c0e194e64755b2c44b282da9cde54` |
+| `before-doctor-ar-390.png` | `3e0b1f854a0cd0fc2e16574be4637da249a48e4a260657f16cda40f7f7ac218f` |
+| `before-patient-en-1440.png` | `34fd69061862ee431de553ef87bd2bac4893bd5c3314db203426eaf46bf56fe4` |
+| `before-doctor-en-1440.png` | `25359390a8a7f2a85400fd97cc5c11d70159b259919deb80dd0e94ec5771d379` | images stay outside Git.
+
+| Final image | Viewport / locale / theme | SHA-256 |
 | --- | --- | --- |
 | [a-patient-ar-light-390.png](evidence/a-patient-ar-light-390.png) |390×1000 / ar / light| `3134ba58607ea3feb400f79d2475c67b7d799b4b10b678e28a5842dcc4c009a9` |
 | [a-patient-ar-dark-390.png](evidence/a-patient-ar-dark-390.png) |390×1000 / ar / dark| `4a163a76fc9bd3c79bb71ed994341a2aef66c4cf0e2a1be0ef8f5d074b6bee98` |
@@ -232,23 +199,43 @@ Source `f725ed051fdf28765a44d2d2ada078194b25cbd8`; Chromium154.0.8037.57, DPR1, 
 | [a-doctor-en-light-1440.png](evidence/a-doctor-en-light-1440.png) |1440×1000 / en / light| `4c9f0e2054a4e80d40a959da72cec9c4477a86263b053adaaaea6cf69edf11b8` |
 | [a-doctor-en-dark-1440.png](evidence/a-doctor-en-dark-1440.png) |1440×1000 / en / dark| `14dc4ca4efd0e53a7c0859d47d3eb09505f9a0a96abc20c515217bb816885f68` |
 
+Matched | `before-patient-ar-390.png` | `ee702ec2042a2f64e9789515acbf3954546c0e194e64755b2c44b282da9cde54` |
+| `before-doctor-ar-390.png` | `3e0b1f854a0cd0fc2e16574be4637da249a48e4a260657f16cda40f7f7ac218f` |
+| `before-patient-en-1440.png` | `34fd69061862ee431de553ef87bd2bac4893bd5c3314db203426eaf46bf56fe4` |
+| `before-doctor-en-1440.png` | `25359390a8a7f2a85400fd97cc5c11d70159b259919deb80dd0e94ec5771d379` | build is exact #134 `d268264b1d062c65425a223f8f25d6e72442586e`, its own detached checkout/build with same pinned toolchain, existing fixtures/viewports, DPR1/fullPage and original Light-only behavior. No reference runtime code was imported. An initial symlink-root build attempt failed; isolated frozen install/build succeeded before these captures.
 
-## Owner scope amendment — approved-font regression check
+| Before image (outside Git) | SHA-256 |
+| --- | --- |
+| `before-patient-ar-390.png` | `ee702ec2042a2f64e9789515acbf3954546c0e194e64755b2c44b282da9cde54` |
+| `before-doctor-ar-390.png` | `3e0b1f854a0cd0fc2e16574be4637da249a48e4a260657f16cda40f7f7ac218f` |
+| `before-patient-en-1440.png` | `34fd69061862ee431de553ef87bd2bac4893bd5c3314db203426eaf46bf56fe4` |
+| `before-doctor-en-1440.png` | `25359390a8a7f2a85400fd97cc5c11d70159b259919deb80dd0e94ec5771d379` |
 
-On15 November2026 the Product Owner explicitly approved: «وافق على تبديل المسار وفحص Inter الأقوى». The unused `apps/web/app/loading.tsx` entry is replaced by `scripts/support/ui-live-journey-browser.mjs`; the maximum allowlist remains exactly50 paths. The old full-suite English font assertion required the unused legacy Manrope to have downloaded, contradicting the approved Inter production direction. The actual f725 full run failed at `testLiveJourney:131` on that expectation; no application behavior, privacy or clinical assertion failed there.
+## Independent review verdicts
 
-The authorized patch changes only the English font-availability expectation to Inter and adds an actual CDP rendered-heading Inter/Plex check with nonzero glyph counts. Every existing journey/privacy/recovery/target-size assertion stays intact. A standalone preview through the real built app passed EN/AR before applying the patch. No unused legacy font is loaded merely to satisfy a stale assertion, no test is skipped and no threshold is lowered. Final full-suite/CI outcomes below supersede the intermediate failing log. The amendment adds one actual modified test path (31 total candidate paths), not a new asset or dependency.
+Two distinct independent agent reviews, not human GitHub/clinical/release certification:
 
+- `/root/frontend_final_receipt_review`: bounded PASS at9274f23. Rechecked actual final source, #107 comparison and PNG identity, noJS/held-auth full canvas, source/offset/focus/editor, normal/fold/midnight Demo12h,320/text200 and approved rendered-font helper. Original `/root/frontend_review` broad evidence includes all8 visually inspected PNGs and20 axe probes. Optional P3: duplicated desktop source-disclosure heading; no blocking finding.
+- `/root/security_review`: bounded PASS on Demo display wiring; exact reconstruction proves no Live route, command/state/authority/professional-time drift. Existing76-unit and EN/AR401/uncertain-command evidence remains applicable; subsequent heading change is CSS-only. Final delivery-head preservation is rechecked against qualified9274f23.
 
-## Completed local qualification — checkpoint 5/6
+Raw independent receipts: `/tmp/eh136-final-frontend-receipt.json`, `/tmp/eh136-final-frontend-demo12.json`, `/tmp/eh136-independent-frontend-final-startup.json`, `/tmp/eh136-independent-frontend-narrow-review.json`, `/tmp/eh136-security-review.json`. The qualified805 receipt is separately archived as `/tmp/eh136-frontend-qualified-805.json` with hash `afb1336676a40d3fb4df5962dcd9216a53de900d7fce0ff849a360eb845b4697`; it is historical qualification, not the latest delivery hash. Current final-review hashes belong in the PR receipt to avoid self-referencing a later head.
 
-Qualified final source/test head: `805bb955172777c833705efe7ba34d1b44f38d85`; production runtime source `f725ed051fdf28765a44d2d2ada078194b25cbd8`, exact `apps/web` tree `497d4be8be414a03459f18c943dce0513abc4462`. The test-only approved-font amendment changes no production byte. The final receipt/evidence commit must preserve that runtime tree, every tested source/helper/unit byte and these8 PNG hashes; remote FULL CI then tests the eventual exact final head.
+## Parallel candidates, publication and final CI
 
-- Pinned frontend ESLint, web/UI build/typecheck and248 UI units: PASS.
-- Complete unchanged-flow controlled browser suite plus approved-font amendment and Package A assertions: PASS on805bb9. It reaches the final Golden Demo/role/privacy/reload/23-route-state/no-browser-exception assertion, including documentation, follow-up and Review & Close. Final log `/tmp/eh136-amended-full.log`; exact-copy machine receipt `/tmp/eh136-amended-full/package-a-browser-receipt.json`.
-- Final Package A:44 visual/reflow scans,8 axe scans with0 violations,2 noJS System palettes and8 held-auth canvas cases, explicit override/reload/account/logout resets, original uncertain operation/DOM/value/Back preservation: PASS. No backend/DB/auth clinical probe.
-- All8 screenshots recaptured again at805bb9 are byte-identical to the final authorized PNGs and to the independently inspected images; compiled application tree is identical across those captures.
--30 existing policy tests,938 local references/57 Markdown files at qualification, whitespace and amended-scope checks: PASS. Final docs-only checks are repeated before commit.
-- Both independent final source reviews: bounded PASS on805bb9; fresh Frontend receipt and prior startup/screenshot/keyboard/axe evidence are retained, as are Security's independent76-unit and EN/AR401/uncertain-command probes. No unresolved in-scope P0/P1/P2. Optional P3 duplicate desktop source heading remains disclosed.
+These independent Drafts have zero changed-path intersection with both32 actual Package A paths and the amended50 ceiling. No edits/imports/merges/rebases/cherry-picks/pushes to their branches; do not wait for or integrate them here.
 
-The only remaining execution step is the one stacked Draft, its proposed merge-tree proof and the already authorized unchanged-workflow manual FULL CI on its exact frozen final head, followed by a complete Issue136/PR receipt. No remote run or release result is inferred in advance.
+| Draft | Observed exact head | Paths | Intersection |
+| --- | --- | --- | --- |
+| [#139](https://github.com/abuhmaid28/egyhealth360/pull/139) | `17fa1c9ff51cf980e406e2a5fa79d0bc276728d1` |18|0|
+| [#141](https://github.com/abuhmaid28/egyhealth360/pull/141) | `8bf1a928b2bd45d2371fc857789c6141ddb08a4f` |3|0|
+| [#147](https://github.com/abuhmaid28/egyhealth360/pull/147) | `2724a20e216ed893cba3cdf7bc866c6695dd66a8` |2|0|
+
+Read-only prepublication Vercel Git context reports only unrelated `simple-ecommerce` Git linkage and no Origin connection in the available Hobby team; no EgyHealth Git linkage. Workflow has no deployment job. GitHub hook-list read returned403 under integration permission; no hook configuration is claimed inspected/changed. No Vercel setting/service/preview/deployment/domain action. Initial push reported0 GitHub deployment records for its head; final source publication is rechecked.
+
+Earlier CI [43681806496](https://github.com/abuhmaid28/egyhealth360/actions/runs/43681806496) on3cfceb1 was explicitly cancelled/superseded when the final Demo-detail completeness gap was found; it is not final-head Green evidence. Keep the same [Draft #148](https://github.com/abuhmaid28/egyhealth360/pull/148), update only this issue branch with the qualified correction, and run the existing manual FULL workflow on the new frozen final head. Verify every selected job including validate, actual checkout head, and GitHub proposed merge parents/tree equality. Final head/run/jobs/checkout/review hashes and Issue136 receipt are maintained in that PR after execution; do not infer them in advance.
+
+## Remaining gates and rollback
+
+G0 is frozen for this bounded candidate only. Product Owner visual acceptance, Final DS, AP03 actual devices/AT, AP05 creator artwork rights, global F03 beyond accepted booking-create, F02/U03 hosted source/DB/identity parity, F06/E2/whole-project release and separately authorized combined A+B/C/S0 integration remain open. Lab backend/Live features, native participant/editorial review, print/PWA and physical accessibility are not claimed. No merge/Ready/auto-merge/deployment/F06/E2/E3 or release approval.
+
+Rollback is a coherent source/build return to exact #134 only at a quiescent boundary after original pending/uncertain operations are reconciled. Never wipe keys/session/history, retry a clinical command automatically or treat main as a verified healthy Live fallback. No DB rollback is required by this frontend-only diff. No rollback or release is performed. Stop after the completed Draft/CI/receipt delivery for Owner review.
