@@ -228,15 +228,19 @@ const pinned = [
   }
 ];
 
-test("Combined source preserves all44 import-only owner blobs and modes, including17 reference PNGs", () => {
-  assert.equal(pinned.length, 44);
-  assert.equal(pinned.filter(r => r.path.endsWith(".png")).length, 17);
-  for (const r of pinned) {
-    const bytes = readFileSync(r.path);
-    const hash = createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");
-    assert.equal(hash, r.blob, r.path);
-    assert.equal(statSync(r.path).mode & 0o111 ? "100755" : "100644", r.mode, r.path);
-  }
+// B5 experimental ownership: keep the original44 entries above; bind the five explicitly authorized overlays instead of deleting provenance assertions.
+const overlays = {
+  "apps/web/src/components/operations.tsx": "e51f634f1dfac48778b0b0d2050ba07bf433f400",
+  "apps/web/src/components/v2/staff-workspace.tsx": "1b244354aec894e63495a164046bbc0569e9e8e3",
+  "apps/web/src/components/v2/staff-copy.ts": "28cf7d49645068fd558797f22283dfc28cbf8518",
+  "apps/web/src/components/v2/pharmacy-workspace.tsx": "737e998a3bda1f3deeafaa968e3cf44419ca2543",
+  "apps/web/src/components/v2/admin-workspace.tsx": "317383ce833232984c2eed239b3cc0a8dc211c7e"
+};
+test("B5 preserves39 original owner pins and exact5 authorized overlay blobs/modes, including17 reference PNGs", () => {
+  assert.equal(pinned.length,44);assert.equal(Object.keys(overlays).length,5);
+  assert.equal(pinned.filter(r=>!Object.hasOwn(overlays,r.path)).length,39);
+  assert.equal(pinned.filter(r=>r.path.endsWith(".png")).length,17);
+  for(const r of pinned){const bytes=readFileSync(r.path);const hash=createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");assert.equal(hash,overlays[r.path]??r.blob,r.path);assert.equal(statSync(r.path).mode&0o111?"100755":"100644",r.mode,r.path);}
 });
 const webRequire = createRequire(resolve("apps/web/package.json"));
 const React = webRequire("react");
@@ -278,10 +282,31 @@ for (const candidate of Object.keys(homes)) test(`Combined ${candidate} has one 
     assert.equal(apiCalls,0);
   }
 });
-test("Inactive S0 and offline tooling never become application imports during composition",()=>{
-  function inspect(dir) {for(const entry of readdirSync(dir,{withFileTypes:true})) {
+test("B5 bounds S0 imports to the exact typed Pharmacy engine and keeps offline tooling out of the application",()=>{
+  function inspect(dir){for(const entry of readdirSync(dir,{withFileTypes:true})){
     const path=resolve(dir,entry.name);if(entry.isDirectory())inspect(path);
-    else if(/\.[jt]sx?$/.test(path)&&!path.endsWith("pharmacy-read.ts"))assert.doesNotMatch(readFileSync(path,"utf8"),/(?:from\s*|import\s*\(|require\s*\()["'][^"']*(?:pharmacy-read|public-preview-safety|verify-public-preview)/,path);
-  }}
-  inspect(resolve("apps/web/app"));inspect(resolve("apps/web/src"));
+    else if(/\.[jt]sx?$/.test(path)&&!path.endsWith("pharmacy-read.ts")){
+      const source=readFileSync(path,"utf8");
+      assert.doesNotMatch(source,/(?:from\s*|import\s*\(|require\s*\()["'][^"']*(?:public-preview-safety|verify-public-preview)/,path);
+      for(const match of source.matchAll(/(?:from\s*|import\s*\(|require\s*\()["']([^"']*pharmacy-read[^"']*)["']/g)){
+        assert.equal(path,resolve("apps/web/src/lib/api/pharmacy-live.ts"));assert.equal(match[1],"./pharmacy-read");
+      }
+    }
+  }}inspect(resolve("apps/web/app"));inspect(resolve("apps/web/src"));
 });
+
+const frozenB4 = {
+  "apps/web/src/components/operations.tsx": "68177748659c42e8ce8dcbc65c0a5d631560d4eff877d20945db3f6f6365cd83",
+  "apps/web/src/components/v2/pharmacy-live-read.module.css": "ec9dba3701262e05447d9bbbc7ee24b6c843433d872c485aa59f72a80026c32e",
+  "apps/web/src/components/v2/pharmacy-live-read.tsx": "9b098c5bb8f6b54552d047716feaf84cc516117a71bb719e3946d40b95c52df7",
+  "apps/web/src/components/v2/staff-workspace.tsx": "b601d98159bf4778cf8f748a3fb1fdd8e70c3fa702607e99e8468ac856d4c827",
+  "apps/web/src/lib/api/contracts.ts": "bf7f8bd997c9ccd28e1d27fd501f11e311365c6a32a936473e2e4d3b7e599115",
+  "apps/web/src/lib/api/live.ts": "ef31f65d738f75252310335c2776c0939d5b5e4db85d40223a544f6fc66c3953",
+  "apps/web/src/lib/api/pharmacy-live.ts": "cb2c08d9c4e965bef714e9ead9de5e796ec7a48a9c662b535625e8c0b9ebe37b",
+  "docs/CURRENT_STATUS.md": "9e947bfa9ad50e399654ebaa7aeeb1b06aa1d204415ba886859870ca0f7f8780",
+  "docs/SOURCE_OF_TRUTH.md": "8f5418653ab128870a6e558688831ef8c9b7f507fcfb51976e3f5e2e6031c23f",
+  "docs/frontend-v2-slices/PHARMACY_LIVE_READ_INTEGRATION.md": "9f00ef430907ef1c5d178b96214da3422cd295d911c50107f155762732392e11",
+  "scripts/support/ui-pharmacy-live-browser.mjs": "d1966f8a9922521ea55e381d259d7cc0fb5f4b2f8a68d9fbeab80e7cea4c65a7",
+  "scripts/test-ui-browser.mjs": "c34e2dc9fd11e01e4fcae42b87b95924b0cc0b8e770d453986afc7e65d7cddf3"
+};
+test("B5 retains every12 untouched B4 integration files byte-exact; only the eighth ownership test is aligned",()=>{assert.equal(Object.keys(frozenB4).length,12);for(const[path,hash]of Object.entries(frozenB4))assert.equal(createHash("sha256").update(readFileSync(path)).digest("hex"),hash,path);});

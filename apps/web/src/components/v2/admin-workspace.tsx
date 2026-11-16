@@ -8,10 +8,11 @@ import { useStaffCopy } from "./staff-copy";
 import s from "./staff-workspaces.module.css";
 
 export function AdminWorkspace({ path, directory }: { path: string; directory?: ReactNode }) {
-  const { c, status } = useStaffCopy();
+  const { c, status, copy } = useStaffCopy();
   const { api, preview } = useApp();
   const data = useResource(() => api.operations(), [api]);
   const [selected, setSelected] = useState("");
+  const [search, setSearch] = useState("");
   const organizations = path === "/admin/organizations" || path === "/admin/scheduling";
   return <>
     <StaffHeading eyebrow={c("Platform operations · view only", "إدارة المنصة · عرض فقط")} title={c("People & organizations", "الأشخاص والجهات")} description={c("A clear operational view. Membership never grants clinical authority.", "صورة تشغيلية واضحة. العضوية مش بتمنح صلاحية رعاية.")} />
@@ -19,13 +20,16 @@ export function AdminWorkspace({ path, directory }: { path: string; directory?: 
       {[["/admin/users", c("People", "الأشخاص")], ["/admin/organizations", c("Organizations", "الجهات")], ["/admin/directory", c("Public directory", "الدليل العام")], ["/admin/scheduling", c("Clinic settings", "إعدادات العيادات")]].map(([href, label]) => <Link key={href} href={href} aria-current={path === href || path === "/admin" && href === "/admin/users" ? "page" : undefined}>{label}</Link>)}
     </nav>
     <StaffResource resource={data} preview={preview}>{o => {
-      const rows = organizations ? o.organizations.filter(v => path !== "/admin/scheduling" || v.kind === "Clinic") : o.users;
+      const rawRows = organizations ? o.organizations.filter(v => path !== "/admin/scheduling" || v.kind === "Clinic") : o.users;
+      const rows = search.trim() ? rawRows.filter(v => v.name.toLowerCase().includes(search.toLowerCase()) || ("kind" in v ? v.kind : v.role).toLowerCase().includes(search.toLowerCase())) : rawRows;
       const chosen = rows.find(v => v.name === selected) ?? rows[0];
       return path === "/admin/directory" ? <div className={s.directory}>{directory}</div> : <div className={s.adminGrid}>
         <section className={s.people} aria-label={organizations ? c("Organizations", "الجهات") : c("People", "الأشخاص")}>
           <div className={s.panelHead}><div><p className={s.eyebrow}>{c("Synthetic operational projection", "عرض تشغيلي ببيانات مصطنعة")}</p><h2>{organizations ? c("Organization network", "شبكة الجهات") : c("People", "الأشخاص")}</h2></div><Icon name={organizations ? "building" : "user"} /></div>
+          {rawRows.length > 0 && <div style={{ padding: "12px 16px 0 16px" }}><input type="search" className={s.searchInput} placeholder={copy.searchPlaceholderUsers} value={search} onChange={e => setSearch(e.target.value)} aria-label={copy.searchPlaceholderUsers} /></div>}
           {rows.map(v => <button className={s.personRow} key={v.name} aria-pressed={chosen?.name === v.name} onClick={() => setSelected(v.name)}><span className={s.avatar}><Icon name={organizations ? "building" : "user"} /></span><span><strong><bdi>{v.name}</bdi></strong><small>{status("kind" in v ? v.kind : v.role)}</small></span><span className={s.status}>{status(v.status)}</span></button>)}
-          {!rows.length && <p className={s.content}>{c("No permitted entries", "مفيش بيانات مسموح بعرضها")}</p>}
+          {!rows.length && rawRows.length > 0 && <p className={s.noResults}>{copy.noMatchingUsers}</p>}
+          {!rawRows.length && <p className={s.content}>{c("No permitted entries", "مفيش بيانات مسموح بعرضها")}</p>}
         </section>
         <section className={s.panel} aria-label={c("Selected operational context", "السياق التشغيلي المحدد")}>
           <div className={s.panelHead}><div><p className={s.eyebrow}>{c("Selected context · no management commands", "السياق المحدد · من غير إجراءات إدارة")}</p><h2>{c("Operational details", "التفاصيل التشغيلية")}</h2></div><Icon name="shield" /></div>

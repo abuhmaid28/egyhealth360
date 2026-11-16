@@ -125,11 +125,11 @@ export async function testR1Mode(browser, origin) {
     ["ADMIN", ["/admin", "/admin/organizations", "/admin/users", "/admin/directory", "/admin/scheduling", "/admin/settings"]],
   ]) {
     const page = await browser.newPage();
-    const calls = [], errors = [];
+    const calls = [], methods = [], errors = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.route("**/api/v1/**", (route) => {
       const path = new URL(route.request().url()).pathname;
-      calls.push(path);
+      calls.push(path);methods.push(route.request().method());
       return route.fulfill(path.endsWith("/auth/me") ? {
         json: { data: { user: { role, email: "operational-ui@example.invalid" }, csrfToken: "controlled-ui-only" } },
       } : { status: 503, json: { error: { message: "PRIVATE_OPERATIONAL_CANARY" } } });
@@ -142,7 +142,11 @@ export async function testR1Mode(browser, origin) {
         assert.equal(await page.locator("html").getAttribute("dir"), locale === "ar" ? "rtl" : "ltr");
         assert.equal(await page.locator("[data-demo-utility]").count(), 0);
         await page.locator('[data-session-mode="live"]').waitFor();
-        if (!path.endsWith("/settings"))
+        if(role==="PHARMACY_STAFF"&&!path.endsWith("/settings")){
+          await page.getByRole("heading",{name:locale==="ar"?"قراءات الصيدلية المسموحة":"Pharmacy permitted reads",exact:true}).waitFor();
+          await page.locator("[data-read-status][role=alert]").waitFor();
+          assert.equal(await page.locator("[data-pharmacy-read] select").count(),0);
+        }else if (!path.endsWith("/settings"))
           await page.getByRole("heading", { name: locale === "ar" ? "الإمكانية دي مش متاحة في الواجهة الحالية" : "Unavailable in the current Live interface", exact: true }).waitFor();
         for (const width of [1440, 390, 320]) {
           await page.setViewportSize({ width, height: 1000 });
@@ -151,7 +155,8 @@ export async function testR1Mode(browser, origin) {
         assert.ok(!(await page.locator("#main").innerText()).includes("PRIVATE_OPERATIONAL_CANARY"));
       }
     }
-    assert.ok(calls.every((path) => /\/(auth\/me|directory\/(providers|clinics))$/.test(path)), `${role}: no clinical payload requests`);
+    assert.ok(methods.every(method=>method==="GET"),`${role}: zero writes`);
+    assert.ok(calls.every(path=>/\/(auth\/me|directory\/(providers|clinics))$/.test(path)||(role==="PHARMACY_STAFF"&&path==="/api/v1/pharmacies/context")),`${role}: no unrequested artifact/clinical payload requests`);
     assert.deepEqual(errors, []);
     await page.close();
   }

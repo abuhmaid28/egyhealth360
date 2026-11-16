@@ -1,4 +1,5 @@
 "use client";
+import { PharmacyLiveRead } from "./v2/pharmacy-live-read";
 import { directoryLabel } from "../lib/presentation";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
@@ -23,6 +24,7 @@ function OperationsContent({ path }: { path: string }) {
   const { session, api } = useApp();
   const admin = session.role === "ADMIN";
   const lab = session.role === "LAB_STAFF";
+  if (api.mode === "live" && session.role === "PHARMACY_STAFF" && api.pharmacyRead && !path.endsWith("/settings")) return <PharmacyLiveRead engine={api.pharmacyRead} />;
   if (api.mode === "live" && !path.endsWith("/settings")) {
     const message =
       locale === "ar"

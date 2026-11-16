@@ -1,3 +1,7 @@
+if (process.argv.includes("--pharmacy-read-lab")) {
+  await import("./support/ui-pharmacy-live-browser.mjs");
+  process.exit(0);
+}
 import { testCombinedV2 } from "./support/ui-v2-combined-browser.mjs";
 import { testV2PatientDoctor } from "./support/ui-v2-patient-doctor-browser.mjs";
 import { testR1Mode } from "./support/ui-r1-mode-browser.mjs";

@@ -20,6 +20,7 @@
 .root h2 {font-size:1.25rem; line-height:1.6;}
 .root h3 {font-size:1.1rem; line-height:1.7;}
 .root button,.root a,.root summary {font:inherit; overflow-wrap:anywhere;}
+.root :is(button,a,summary) {min-height:44px;}
 .root button,.root summary {cursor:pointer;}
 .root button:disabled {cursor:wait; opacity:.65;}
 .root :is(button,a,summary):focus-visible {outline:3px solid var(--staff-action); outline-offset:4px;}
@@ -33,6 +34,10 @@
 .queue {padding-block:12px;}
 .queue>h2 {margin-block-end:8px;}
 .queue>p {font-size:.875rem; margin-block-end:16px;}
+.searchBox {margin-block-end:14px;}
+.searchInput {width:100%; min-height:44px; padding:10px 14px; border:1px solid var(--staff-line); border-radius:10px; background:var(--staff-surface); color:var(--staff-ink); font:inherit;}
+.searchInput:focus-visible {outline:3px solid var(--staff-action); outline-offset:2px;}
+.noResults {padding:14px 8px; color:var(--staff-muted); font-size:.875rem;}
 .queueRow,.personRow {width:100%; text-align:start; background:transparent; border:0; border-block-end:1px solid var(--staff-line); color:var(--staff-ink); display:flex; align-items:center; gap:14px; padding:20px 12px; min-height:80px;}
 .queueRow>span:nth-child(2),.personRow>span:nth-child(2) {flex:1;}
 .queueRow strong,.queueRow small,.personRow strong,.personRow small {display:block;}
@@ -52,6 +57,7 @@
 .source h3 {margin-block:4px 16px;}
 .itemNumber {background:var(--staff-raised);color:var(--staff-action);border-radius:8px; padding:4px 10px;align-self:start;}
 .boundary {padding:16px 20px; background:var(--staff-apricot);border-inline-start:3px solid var(--staff-control); border-radius:8px; font-size:.875rem;}
+.boundaryNotice {margin-block-start:12px; font-size:.8125rem; color:var(--staff-muted);}
 .status {display:inline-flex;align-items:center;gap:8px;border:1px solid var(--staff-control); padding:3px 10px;border-radius:8px;font-size:.8125rem;justify-self:start;align-self:center;}
 .steps {list-style:none;display:flex;flex-wrap:wrap;gap:16px;padding:0;margin:0;font-size:.8125rem;color:var(--staff-muted);}
 .steps li {display:flex;gap:8px;align-items:center;flex:1 1 110px;}
@@ -101,7 +107,7 @@
 .root :global(.field textarea) {background:var(--staff-canvas);color:var(--staff-ink);border:1px solid var(--staff-control);border-radius:10px;min-height:100px;}
 .root :global(.field) :is(label,small) {color:var(--staff-muted);}
 
-:global([dir="rtl"]) .root h1 {letter-spacing:0;}
+:global([dir="rtl"]) .root :is(h1,h2,h3,p,span,strong,small,button,a,summary) {letter-spacing:0!important;}
 
 .conceptNumber {flex-shrink:0;line-height:1;}
 @media(max-width:600px) {.conceptIntro {flex-direction:column;align-items:start;}}

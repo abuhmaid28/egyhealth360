@@ -14,7 +14,7 @@ export function StaffWorkspace({ children }: { children: ReactNode }) {
     <div className={s.notice} role="note"><Icon name="shield" size={18} /><strong>{lab
       ? c("FUTURE / CONCEPT / NOT LIVE", "مستقبلي / تصوّر / غير متاح فعليًا")
       : api.mode === "demo" ? c("DEMO ONLY · synthetic workspace", "عرض تجريبي فقط · بيانات مصطنعة")
-        : c("Live · staff capabilities unavailable", "الرعاية المتصلة · إمكانيات الفريق مش متاحة")}</strong>
+        : session.role === "PHARMACY_STAFF" && api.pharmacyRead ? c("Live · Pharmacy READ ONLY", "الرعاية المتصلة · قراءة الصيدلية فقط") : c("Live · staff capabilities unavailable", "الرعاية المتصلة · إمكانيات الفريق مش متاحة")}</strong>
       <span>{lab ? c("No active orders or results", "مفيش طلبات أو نتائج فعلية") : c("Purpose-limited access", "المعلومات المطلوبة للمهمة بس")}</span></div>
     {children}
   </section>;

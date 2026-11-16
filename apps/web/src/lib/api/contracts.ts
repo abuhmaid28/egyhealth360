@@ -1,3 +1,4 @@
+import type { PharmacyEngine } from "./pharmacy-live";
 import type { ConsultationCloseApi } from "./consultation-close";
 import type { LiveFollowUpApi } from "./follow-up-intents";
 import type { LiveDocumentationApi } from "./documentation";
@@ -125,6 +126,7 @@ export interface Operations {
   users: { name: string; role: string; status: string }[];
 }
 export interface HealthcareAdapter {
+  readonly pharmacyRead?: PharmacyEngine;
   readonly mode: Mode;
   readonly followUpIntents?: LiveFollowUpApi;
   readonly liveBookings?: LiveBookingApi;

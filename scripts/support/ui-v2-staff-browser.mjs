@@ -117,10 +117,11 @@ try {
       if(path.endsWith("/auth/me"))return route.fulfill({json:{data:{user:{role,email:"staff@example.invalid"},csrfToken:"controlled-only"}}});
       return route.fulfill({status,json:{error:"PRIVATE_HTTP_CANARY"}});
     });
-    await page.goto(`${origin}/${rolePaths[role]}`);await page.locator("[data-staff-workspace] h1").waitFor();
-    assert.match(await page.locator("[data-staff-workspace]").innerText(),/unavailable|not available/);
+    await page.goto(`${origin}/${rolePaths[role]}`);await page.locator(role==="PHARMACY_STAFF"?"[data-pharmacy-read] h1":"[data-staff-workspace] h1").waitFor();
+    if(role==="PHARMACY_STAFF"){await page.locator("[data-read-status][role=alert]").waitFor();assert.equal(await page.locator("[data-pharmacy-read] select").count(),0);}
+    else assert.match(await page.locator("[data-staff-workspace]").innerText(),/unavailable|not available/);
     if(role==="ADMIN") {await page.getByRole("link",{name:"Directory",exact:true}).last().click();await page.locator(".error-panel").waitFor();}
-    assert.ok(calls.every(c=>c.method==="GET" && /\/auth\/me$|\/directory\/providers/.test(c.path)),JSON.stringify(calls));
+    assert.ok(calls.every(c=>c.method==="GET" && (/\/auth\/me$|\/directory\/providers/.test(c.path)||(role==="PHARMACY_STAFF"&&c.path==="/api/v1/pharmacies/context"))),JSON.stringify(calls));
     assert.doesNotMatch(await page.locator("#main").ariaSnapshot(),/PRIVATE_HTTP_CANARY|SOURCE DIRECTIONS|Synthetic source item|PRIVATE_STAFF_CANARY/);await page.close();
   }
   assert.deepEqual(errors,[]);
