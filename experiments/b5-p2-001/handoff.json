@@ -1,0 +1,124 @@
+{
+  "task": "B5-P2-001 experimental remediation",
+  "checkpoint": "4/5 qualified; final transferable handoff pending",
+  "originalB5Tree": "2541ff60b7f0ddcfd3f7a9571b533b34a73f1cc6",
+  "baselineCommit": "17657d449dcf70f996103322c275457a0dc7201e",
+  "qualifiedCodeHead": "d5e2eed174532afd820419accc37bc7cf781559b",
+  "qualifiedCodeTree": "ca02ffceb44852e4836ba9c5cec193672ef65279",
+  "qualifiedSubtrees": {
+    "apps/web": "9705d490287a598fc0e823a9293658b9f0dcf9fc",
+    "scripts": "ef7c4881567e83bc6ebd7058a38a816bbca1510c",
+    "tests": "d57ba71b3a1c6e3f29220ea80e11955361c125fe",
+    "packages": "76b40cdef339c3239b186b6283256144508749f5",
+    "apps/api": "612d0faf3e076303a62b7d52b8a0b0e3178078fd"
+  },
+  "branch": "experiment/b5-p2-001 LOCAL ONLY",
+  "GitHubRemoteSHA": null,
+  "publicationSafety": "BLOCKED; no applicable source publication clearance found",
+  "baselineArtifact": {
+    "checkpoint": "baseline verified before any source modification",
+    "tree": "2541ff60b7f0ddcfd3f7a9571b533b34a73f1cc6",
+    "zipSHA256": "3525d1166d49bd592a5712f0bf1c7f989756a71c44cefb760c248042cd55999c",
+    "zipBytes": 11289465,
+    "externalURL": "https://drive.google.com/file/d/1S3HXp9W_p6nLRS-nhgoroGJpuvanWYCk/view?usp=drivesdk",
+    "remoteDownloadSHA256Verified": true,
+    "githubSourceContinuity": false,
+    "publicationSafety": "BLOCKED; latest recommendation conditional, no Owner source publication GO found"
+  },
+  "results": {
+    "baselineOriginalReproductionExit": 0,
+    "checkpoint2Red": {
+      "tests": 16,
+      "pass": 15,
+      "fail": 1,
+      "exit": 1
+    },
+    "existingPharmacyTests": {
+      "tests": 8,
+      "pass": 8,
+      "exit": 0
+    },
+    "focusedFinal": {
+      "tests": 37,
+      "pass": 37,
+      "exit": 0
+    },
+    "allInheritedUnits": {
+      "tests": 561,
+      "pass": 561,
+      "fail": 0,
+      "skip": 0,
+      "exit": 0
+    },
+    "fullBuild": 0,
+    "finalWebBuild": 0,
+    "fullTypecheck": 0,
+    "finalWebTypecheck": 0,
+    "lint": 0,
+    "docs": 0,
+    "finalDefaultBrowser": 0,
+    "pharmacyBrowser": {
+      "cases": 18,
+      "POSTs": 0,
+      "redirectsFollowed": 0,
+      "pageErrors": 0,
+      "exit": 0
+    },
+    "browser": {
+      "packageAScans": 46,
+      "packageAAxe": 8,
+      "combinedSeams": 66,
+      "combinedScreens": 20,
+      "combinedAxe": 20,
+      "StaffCases": 96,
+      "StaffScreens": 9,
+      "violations": 0
+    },
+    "realPG": {
+      "firstAttempt": {
+        "tests": 67,
+        "pass": 47,
+        "fail": 20,
+        "exit": 1,
+        "reason": "Fresh root database lacked historical migrations; table public.users missing. Isolated fixtures migrated their own databases."
+      },
+      "afterApplyingExistingMigrations": {
+        "authAuthorization": {
+          "tests": 22,
+          "pass": 22,
+          "exit": 0
+        },
+        "otherIsolatedBookingPharmacyCases": 45,
+        "distinctCasesNowPassing": 67
+      },
+      "schemaFilesChanged": false
+    },
+    "independentFrontend": "BOUNDED_FRONTEND_CONTRACT_PRESERVATION_PASS",
+    "independentSecurity": "BOUNDED_SECURITY_CLINICAL_PRIVACY_PASS"
+  },
+  "repairSemantics": [
+    "Original fenced payload always discarded",
+    "Only canonical Patient own-booking GET may recover once",
+    "Raw current-cookie auth/me must confirm exact original UUID,role,email,session-bound CSRF with unchanged generation/invalidation",
+    "New booking GET must independently reauthorize and pass all fences",
+    "No session() reactivation,CSRF restoration,POST/clinical command retry or clinical read retry"
+  ],
+  "scope": [
+    "apps/web/src/lib/api/live.ts",
+    "scripts/support/ui-my-care-browser.mjs (canonical mock user.id only; no assertion/order changes)",
+    "tests/ui-session-fence-recovery.test.mjs",
+    "tests/ui-v2-combined-integration.test.mjs (original owner manifest retained; one approved source hash override)"
+  ],
+  "remaining": [
+    "No blocking P0/P1/P2 identified in bounded experiment",
+    "P3: generic unavailable UX on denied auth revalidation; fail-closed unchanged",
+    "P3: explicit cancel of denied auth-response body optional; no new network deadline guarantee",
+    "Inherited C2 search label/no-result detail usability remains unchanged",
+    "Canonical scope/source publication,remoteCI,hostedLive,F06E2 and release gates not approved"
+  ],
+  "cleanup": {
+    "ownPGContainerNetworkRemoved": true,
+    "temporaryDatabasesBeforeRemoval": 0
+  },
+  "next": "Final preservation reviews and package publication/readback; do not rerun completed unchanged validation."
+}
