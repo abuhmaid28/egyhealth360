@@ -1,6 +1,6 @@
 {
   "task": "B5-P2-001 experimental remediation",
-  "checkpoint": "4/5 qualified; final transferable handoff pending",
+  "checkpoint": "5/5 source/evidence frozen; final archive URL and verified checksum in external delivery receipt",
   "originalB5Tree": "2541ff60b7f0ddcfd3f7a9571b533b34a73f1cc6",
   "baselineCommit": "17657d449dcf70f996103322c275457a0dc7201e",
   "qualifiedCodeHead": "d5e2eed174532afd820419accc37bc7cf781559b",
@@ -120,5 +120,12 @@
     "ownPGContainerNetworkRemoved": true,
     "temporaryDatabasesBeforeRemoval": 0
   },
-  "next": "Final preservation reviews and package publication/readback; do not rerun completed unchanged validation."
+  "next": "Final preservation reviews and package publication/readback; do not rerun completed unchanged validation.",
+  "checkpoint4Artifact": {
+    "url": "https://drive.google.com/file/d/1Pq_Ia5Uj2c-HKhnh798hFmsOm2v52TaZ/view?usp=drivesdk",
+    "sha256": "c5a7a5c909dc783fcbcf3e657383e0778f838c000d5defad98cedbc6cc8a70ee",
+    "localHead": "04fd075e3fac19c60c28cfe6941d2e8ff3b1b859"
+  },
+  "buildQualification": "Full workspace build/types completed; after final nonblocking unread-body cancellation statement, frontend was rebuilt/typechecked and the full default runner repeated successfully on that exact final build. Other package source bytes unchanged.",
+  "restoration": "Use external baseline archive and final checkpoint.bundle in a NEW isolated repo with exact134 prerequisite; fetch Combined bundle then final checkpoint bundle; check out final localHEAD from external delivery receipt. Do not apply baseline patches again or push localexperiment by assumption."
 }
