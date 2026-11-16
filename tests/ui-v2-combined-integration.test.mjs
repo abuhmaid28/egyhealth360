@@ -309,4 +309,6 @@ const frozenB4 = {
   "scripts/support/ui-pharmacy-live-browser.mjs": "d1966f8a9922521ea55e381d259d7cc0fb5f4b2f8a68d9fbeab80e7cea4c65a7",
   "scripts/test-ui-browser.mjs": "c34e2dc9fd11e01e4fcae42b87b95924b0cc0b8e770d453986afc7e65d7cddf3"
 };
-test("B5 retains every12 untouched B4 integration files byte-exact; only the eighth ownership test is aligned",()=>{assert.equal(Object.keys(frozenB4).length,12);for(const[path,hash]of Object.entries(frozenB4))assert.equal(createHash("sha256").update(readFileSync(path)).digest("hex"),hash,path);});
+// Original12-owner manifest retained. This remediation explicitly owns shared live.ts; every other file remains pinned.
+const sessionFenceRepairSHA256 = "357e5bc20ccba7662dec6a78893af72b801bb863ede64a289e6ce1a5dbbde786";
+test("Session-fence remediation preserves11 B4 files and binds the single authorized shared-adapter revision",()=>{assert.equal(Object.keys(frozenB4).length,12);for(const[path,hash]of Object.entries(frozenB4))assert.equal(createHash("sha256").update(readFileSync(path)).digest("hex"),path==="apps/web/src/lib/api/live.ts"?sessionFenceRepairSHA256:hash,path);});

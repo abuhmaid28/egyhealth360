@@ -56,9 +56,12 @@ export function createLiveAdapter(): HealthcareAdapter {
     return response;
   };
   const pharmacy = new PharmacyEngine((path, init) => send(path.slice("/api/v1".length), init));
-  const request = async <T>(path: string, init?: RequestInit): Promise<T> => {
+  const request = async <T>(path: string, init?: RequestInit, recovered = false): Promise<T> => {
     const dispatchedGeneration = authGeneration;
     const dispatchedInvalidation = authInvalidation;
+    const dispatchedIdentity = sessionIdentity;
+    const dispatchedActor = pharmacyIdentity;
+    const dispatchedCsrf = csrf;
     const response = await send(path, init);
     if (dispatchedGeneration !== authGeneration) throw new UiError("The service could not complete this request. Please try again.");
     if (
@@ -104,11 +107,37 @@ export function createLiveAdapter(): HealthcareAdapter {
             ? "This resource is unavailable for your current access."
             : "The service could not complete this request. Please try again.",
       );
-    if (dispatchedInvalidation !== authInvalidation) throw new UiError("The service could not complete this request. Please try again.");
+    if (dispatchedInvalidation !== authInvalidation) {
+      void response.body?.cancel().catch(() => {});
+      return recoverBooking<T>(path, init, recovered, dispatchedGeneration, dispatchedIdentity, dispatchedActor, dispatchedCsrf);
+    }
     const body = response.status === 204 ? undefined : await response.json();
-    if (dispatchedGeneration !== authGeneration || dispatchedInvalidation !== authInvalidation) throw new UiError("The service could not complete this request. Please try again.");
+    if (dispatchedGeneration !== authGeneration) throw new UiError("The service could not complete this request. Please try again.");
+    if (dispatchedInvalidation !== authInvalidation) return recoverBooking<T>(path, init, recovered, dispatchedGeneration, dispatchedIdentity, dispatchedActor, dispatchedCsrf);
     return body as T;
   };
+  /** Discard a fenced body. Only a newly authorized Patient logistics GET can replace it.
+   * No command replay, session creation, credential restoration or clinical reactivation. */
+  async function recoverBooking<T>(path: string, init: RequestInit | undefined, recovered: boolean, generation: number, identity: string, actor: string, token: string): Promise<T> {
+    const deny = (): never => { throw new UiError("The service could not complete this request. Please try again."); };
+    if (recovered || generation !== authGeneration || !token || !actor || !identity.startsWith('["PATIENT",') ||
+      (init?.method !== undefined && init.method !== "GET") || init?.body !== undefined || init?.signal?.aborted ||
+      !/^\/me\/bookings(?:\/[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})?(?:\?[^#]*)?$/.test(path)) return deny();
+    const invalidation = authInvalidation;
+    const confirmation = await send("/auth/me");
+    if (!confirmation.ok || generation !== authGeneration || invalidation !== authInvalidation) return deny();
+    const observed: unknown = await confirmation.json();
+    if (generation !== authGeneration || invalidation !== authInvalidation || init?.signal?.aborted) return deny();
+    const auth = (observed as { data?: Partial<Auth> } | null)?.data;
+    const user = auth?.user;
+    if (!user || user.role !== "PATIENT" || typeof user.id !== "string" ||
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(user.id) ||
+      typeof user.email !== "string" || !user.email || auth?.csrfToken !== token ||
+      JSON.stringify([user.role, user.email]) !== identity || JSON.stringify([user.id, user.role]) !== actor) return deny();
+    // This GET must independently pass backend authorization and the ordinary response fences.
+    // Do not restore csrf/sessionIdentity or invoke session(): expired commands stay cleared.
+    return request<T>(path, init, true);
+  }
   const session = (a: Auth): Session => {
     const identity = JSON.stringify([a.user.role, a.user.email]);
     if (sessionIdentity && sessionIdentity !== identity) {

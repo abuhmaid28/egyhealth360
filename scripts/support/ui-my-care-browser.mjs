@@ -443,6 +443,7 @@ export async function testPatientMyCare(browser, origin, shots) {
           json: {
             data: {
               user: {
+                id: id(accountB ? 109 : 108),
                 role: "PATIENT",
                 email: accountB ? "synthetic-b@example.invalid" : "synthetic-live@example.invalid",
               },
