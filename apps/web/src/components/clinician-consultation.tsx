@@ -1,4 +1,5 @@
 "use client";
+import { BrandLogo } from "./brand-logo";
 import { useLocale } from "../lib/i18n/context";
 import { clinicianConsultationCopy } from "../lib/clinician-consultation-copy";
 import { Loading } from "./ui";
@@ -19,9 +20,7 @@ export function ClinicianConsultationBoot() {
     >
       <header className={patient.header}>
         <div className={patient.headerInner}>
-          <bdi dir="ltr" className={patient.wordmark}>
-            EgyHealth 360
-          </bdi>
+          <span className={patient.wordmark}><BrandLogo language={locale} /></span>
         </div>
       </header>
       <main className={styles.main}>

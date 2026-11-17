@@ -1,4 +1,5 @@
 "use client";
+import { BrandLogo } from "./brand-logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
@@ -167,7 +168,7 @@ export function PortalShell({
             className={care.wordmark}
             aria-label="EgyHealth 360"
           >
-            <bdi dir="ltr">EgyHealth 360</bdi>
+            <BrandLogo decorative language={locale} />
           </Link>
           <nav
             className={`${care.primaryNav} ${styles.primary}`}

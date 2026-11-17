@@ -1,4 +1,5 @@
 "use client";
+import { BrandLogo } from "./brand-logo";
 import { safeErrorMessage } from "../lib/api/errors";
 import { LanguageSwitch, useLocale } from "../lib/i18n/context";
 import Link from "next/link";
@@ -49,7 +50,7 @@ export function Application({
 }) {
   const liveSession = useLiveSession();
   const { reset: resetTheme } = useFrontendV2Theme();
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
 
   const pathname = usePathname();
   const router = useRouter();
@@ -134,9 +135,7 @@ export function Application({
   if (!ready || !api || !booking)
     return (
       <main className={`${care.root} boot`}>
-        <bdi className={care.wordmark} dir="ltr">
-          EgyHealth 360
-        </bdi>
+        <span className={care.wordmark}><BrandLogo language={locale} /></span>
         <Loading />
       </main>
     );
@@ -271,7 +270,7 @@ function Login({
   onLive: (email: string, password: string) => Promise<void>;
   liveConfigured: boolean;
 }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -280,9 +279,7 @@ function Login({
   return (
     <main className={`${care.root} ${portal.login} login`}>
       <section className="login-story">
-        <bdi className={care.wordmark} dir="ltr">
-          EgyHealth 360
-        </bdi>
+        <span className={care.wordmark}><BrandLogo language={locale} /></span>
         <div>
           <p className="eyebrow">{t("A healthier journey starts here")}</p>
           <h1>
