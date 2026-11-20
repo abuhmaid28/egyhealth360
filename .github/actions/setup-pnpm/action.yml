@@ -1,0 +1,17 @@
+name: Frozen pnpm install with store cache
+description: Install the pinned toolchain and cache only the content-addressed store.
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+      with:
+        node-version: 24.21.0
+    - run: npm install --global pnpm@10.34.6
+      shell: bash
+    - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+      with:
+        node-version: 24.21.0
+        cache: pnpm
+        cache-dependency-path: pnpm-lock.yaml
+    - run: pnpm install --frozen-lockfile
+      shell: bash

@@ -1,0 +1,31 @@
+{
+  "base": "47fa8e8bafaac1b96d4ba0065a65250f80448156",
+  "changedPaths": [
+    "apps/web/src/components/patient-my-care.module.css",
+    "apps/web/src/components/patient-my-care.tsx",
+    "docs/CURRENT_STATUS.md",
+    "docs/IMPLEMENTATION_ROADMAP.md",
+    "docs/PROJECT.md",
+    "docs/SOURCE_OF_TRUTH.md",
+    "docs/ui-reference/PATIENT_MY_CARE_POLISH.md",
+    "docs/ui-reference/polish-evidence/optical-checks.json",
+    "docs/ui-reference/polish-evidence/patient-my-care-320-ar.png",
+    "docs/ui-reference/polish-evidence/patient-my-care-320-en.png",
+    "docs/ui-reference/polish-evidence/patient-my-care-desktop-ar.png",
+    "docs/ui-reference/polish-evidence/patient-my-care-desktop-en.png",
+    "docs/ui-reference/polish-evidence/patient-my-care-mobile-ar.png",
+    "docs/ui-reference/polish-evidence/patient-my-care-mobile-en.png",
+    "docs/ui-reference/polish-evidence/patient-my-care-mobile-full-ar.png",
+    "docs/ui-reference/polish-evidence/patient-my-care-mobile-full-en.png",
+    "docs/ui-reference/polish-evidence/patient-my-care-text-200-ar.png",
+    "docs/ui-reference/polish-evidence/patient-my-care-text-200-en.png",
+    "docs/ui-reference/polish-evidence/scope-checks.json",
+    "scripts/capture-patient-my-care-polish.mjs",
+    "scripts/check-patient-my-care-polish-scope.py",
+    "scripts/support/ui-my-care-browser.mjs"
+  ],
+  "preservedExistingFiles": 1057,
+  "preservedInventorySha256": "8c083a0708241765ee744abba93da0caa2810931ebacccde76f45c182044cf5c",
+  "priorEvidenceFilesPreserved": 112,
+  "unchanged": "All other existing bytes, including original references, all prior evidence/reports, copy, fonts/palette, data/read/state/session and appointment/next-action/shortcut/recent-care behavior, backend/API/DB/schema/security, unrelated workspaces, CI/hosting"
+}

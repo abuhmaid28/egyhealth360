@@ -1,0 +1,61 @@
+{
+  "beforeOrigin": "https://egyhealth360-pre-final-staging-abuhmaid2810gmailcoms-projects.vercel.app",
+  "beforeCandidate": "1b5c5c643f56cff74b3db32543df41845965bdb6",
+  "afterOrigin": "http://127.0.0.1:3200",
+  "after": "local production build; not deployed",
+  "mode": "Explicit Demo; fictional data only",
+  "checks": [
+    {
+      "name": "patient-home-ar",
+      "overflow": false
+    },
+    {
+      "name": "discovery-ar-desktop",
+      "overflow": false
+    },
+    {
+      "name": "search-empty-ar-desktop",
+      "overflow": false
+    },
+    {
+      "name": "search-empty-ar-mobile",
+      "overflow": false
+    },
+    {
+      "name": "doctor-ar-desktop",
+      "overflow": false
+    },
+    {
+      "name": "doctor-ar-mobile",
+      "overflow": false
+    },
+    {
+      "name": "availability-ar-mobile",
+      "overflow": false
+    },
+    {
+      "name": "pharmacy-ar-desktop",
+      "overflow": false
+    },
+    {
+      "name": "pharmacy-ar-mobile",
+      "overflow": false
+    },
+    {
+      "name": "laboratory-ar-desktop",
+      "overflow": false
+    },
+    {
+      "name": "laboratory-ar-mobile",
+      "overflow": false
+    },
+    {
+      "name": "admin-ar-desktop",
+      "overflow": false
+    },
+    {
+      "name": "admin-ar-mobile",
+      "overflow": false
+    }
+  ]
+}

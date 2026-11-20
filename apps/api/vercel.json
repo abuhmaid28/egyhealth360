@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nestjs",
+  "outputDirectory": "dist",
+  "installCommand": "npm exec --yes --package=node@24.21.0 --package=pnpm@10.34.6 -- pnpm install --frozen-lockfile --prod=false",
+  "buildCommand": "cd ../.. && npm exec --yes --package=node@24.21.0 --package=pnpm@10.34.6 -- node scripts/staging-build.mjs"
+}

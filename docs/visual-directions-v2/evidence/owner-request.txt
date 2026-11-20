@@ -1,0 +1,199 @@
+PR #79 visual directions are NOT accepted as the product visual direction.
+
+PRODUCT OWNER DECISION: REJECT A / B / C AS CURRENT FINAL-DIRECTION CANDIDATES.
+
+This is not a rejection of the Foundation Reboot work or its UX/content foundations. It is specifically a rejection of the current visual quality and aesthetic direction.
+
+Product Owner feedback is authoritative:
+
+- Direction A is strongly rejected.
+- Do not reuse the journal, paper, editorial, casebook, parchment, notebook, magazine, or document-like visual metaphor.
+- Direction B is closer to a real modern application and has some useful structural thinking, but its visual execution is still substantially below the required quality bar.
+- Direction C also feels closer to a modern real product, but its current purple/brown palette is rejected and its overall execution is still substantially below the desired professional/premium level.
+- B1 and C1 contain some conceptual potential, but neither is close to an approved logo. They may be explored, radically refined, or discarded.
+- No existing logo concept is selected.
+- No current palette, font family, visual direction, or UI treatment is approved.
+
+NEW QUALITY BAR
+
+EgyHealth 360 must look like a premium, current-generation digital product when opened on both web and mobile.
+
+The target is not:
+- “good for a graduation project”
+- “clean enough”
+- “a healthcare dashboard”
+- “technically modern”
+- “three color variations of one layout”
+
+The target is:
+- premium
+- highly polished
+- unmistakably modern/current-generation
+- digitally native
+- visually confident
+- professionally art-directed
+- elegant without being decorative
+- information-rich without clutter
+- excellent Arabic and English typography
+- consumer-quality Patient experience
+- professional high-density Clinician experience
+- credible enough to resemble a funded production product
+
+REFERENCE PRINCIPLES — DO NOT COPY PRODUCTS
+
+Study the product-design quality of excellent modern digital products such as:
+- Linear
+- Vercel
+- Stripe
+- Apple Health
+- One Medical
+- other world-class contemporary healthcare and SaaS products
+
+Extract principles, not layouts, logos, proprietary assets, or branding.
+
+Important qualities to study:
+- calm density
+- strategic minimalism
+- excellent type hierarchy
+- refined grids
+- disciplined spacing
+- sophisticated information hierarchy
+- restrained color
+- purposeful surfaces
+- excellent navigation
+- high-quality states
+- subtle depth
+- purposeful micro-interactions
+- responsive/mobile-native composition
+- visual identity that remains recognizable without excessive decoration
+
+STRICT VISUAL REJECTIONS
+
+Do not create:
+- journal UI
+- paper UI
+- editorial-document metaphors
+- beige/parchment themes
+- the current purple Direction C palette
+- generic healthcare blue templates
+- excessive cards
+- giant rounded cards everywhere
+- random gradients
+- excessive glassmorphism
+- oversized empty whitespace that reduces information usefulness
+- generic Bootstrap/admin-dashboard styling
+- generic shadcn-default appearance
+- cartoon healthcare illustrations
+- medical crosses/hearts/capsules used as lazy branding
+- futuristic sci-fi interfaces
+- decorative elements with no product purpose
+
+TYPOGRAPHY IS A PRIMARY DESIGN REQUIREMENT
+
+Do not treat typography as a later token choice.
+
+Explore high-quality typographic systems for:
+- English
+- Egyptian Arabic / Modern Arabic UI
+- mixed Arabic + Latin medical content
+- numbers
+- dates
+- medication names
+- measurements
+- dense clinician interfaces
+
+Arabic must feel intentionally designed, not merely RTL-enabled.
+
+MOBILE IS A FIRST-CLASS PRODUCT
+
+Do not create desktop screenshots and simply stack them for mobile.
+
+The Patient mobile experience in particular must feel like a premium native-quality health application.
+
+Clinician mobile surfaces must be purpose-built for appropriate mobile tasks rather than squeezing the full desktop workstation onto a phone.
+
+COLOR DIRECTION
+
+Do not freeze a palette yet.
+
+Explore sophisticated, modern palettes using disciplined combinations such as:
+- graphite
+- slate
+- deep navy
+- refined neutral whites/grays
+- high-quality blue / cyan / teal accents where appropriate
+
+Color must have purpose.
+
+Avoid the rejected A parchment palette and rejected C purple/brown identity.
+
+LOGO EXPLORATION
+
+Restart logo quality exploration.
+
+B1 and C1 may be retained only as conceptual seeds.
+
+Generate genuinely stronger logo concepts with:
+- distinctive silhouette
+- strong 16px / 24px / 32px recognition
+- excellent app-icon potential
+- excellent monochrome behavior
+- modern healthcare credibility
+- no generic hospital symbols
+- no cliché heart/cross/capsule/AI sparkle
+- no fake “360 completeness” claim
+- a concept connected to care continuity, coordination, responsibility, trusted handoff, or understandable healthcare
+
+NEXT VISUAL EXPLORATION
+
+Create exactly three NEW premium directions:
+
+D — Precision Health
+E — Human Clinical
+F — Next-Gen Health OS
+
+These names are working labels, not brand names.
+
+All three must be materially stronger than current B/C and genuinely different from one another.
+
+For each direction provide at minimum:
+
+1. Brand mood and visual principles
+2. Desktop Patient — My Care
+3. Desktop Patient — Find Care / booking
+4. Mobile Patient — My Care
+5. Mobile Patient — Find Care / appointment
+6. Desktop Clinician — Schedule
+7. Desktop Clinician — Active Consultation
+8. Responsive/mobile Clinician example
+9. Arabic RTL and English examples
+10. Loading / empty / error / warning / uncertain states
+11. Typography specimen
+12. Palette exploration
+13. Navigation system
+14. Component/surface language
+15. At least two substantially different logo concepts
+16. Logo/app-icon small-size proof
+17. One presentation board per direction
+18. One side-by-side comparison using equivalent content
+
+Do not calculate a winner.
+
+Do not finalize Brand V2.
+
+Do not implement production frontend.
+
+Do not modify backend/database/API/security behavior.
+
+Do not merge an aesthetic decision automatically.
+
+The next gate remains Product Owner visual review.
+
+The required reaction from the Product Owner should not be merely:
+“this is acceptable.”
+
+The quality bar is:
+“I would genuinely want to use and show this product.”
+
+Deliver:
+READY FOR PRODUCT OWNER VISUAL DIRECTIONS V2 REVIEW

@@ -1,0 +1,98 @@
+[
+  {
+    "locale": "en",
+    "width": 1440,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "en",
+    "width": 1440,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "en",
+    "width": 834,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "en",
+    "width": 834,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "en",
+    "width": 390,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "ar",
+    "width": 1440,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "ar",
+    "width": 1440,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "ar",
+    "width": 834,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "ar",
+    "width": 834,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "ar",
+    "width": 390,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  },
+  {
+    "locale": "ar",
+    "width": 390,
+    "foreground": "rgb(30, 53, 67)",
+    "background": "rgb(255, 255, 255)",
+    "outline": "solid",
+    "focusUnobscured": true
+  }
+]

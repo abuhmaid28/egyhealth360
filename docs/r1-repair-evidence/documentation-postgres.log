@@ -1,0 +1,69 @@
+I2S5_POSTGRES_RACE {"name":"sign-release","blockerPid":892,"waiterPid":897,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_CONFLICT"]}
+✔ I2S5 duplicate sign-release rollback=false sameKey=false (21640.943407ms)
+I2S5_POSTGRES_RACE {"name":"sign-release","blockerPid":912,"waiterPid":917,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 duplicate sign-release rollback=false sameKey=true (16193.611933ms)
+I2S5_POSTGRES_RACE {"name":"sign-release","blockerPid":937,"waiterPid":943,"pgBlockingPidsObserved":true,"rollback":true,"outcomes":["DOCUMENT_UNAVAILABLE","COMMIT"]}
+✔ I2S5 duplicate sign-release rollback=true sameKey=false (13411.564251ms)
+I2S5_POSTGRES_RACE {"name":"sign-release","blockerPid":958,"waiterPid":963,"pgBlockingPidsObserved":true,"rollback":true,"outcomes":["DOCUMENT_UNAVAILABLE","COMMIT"]}
+✔ I2S5 duplicate sign-release rollback=true sameKey=true (10747.81855ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/ASSIGNMENT","blockerPid":966,"waiterPid":978,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_NOT_FOUND"]}
+✔ I2S5 DRAFT vs ASSIGNMENT revocationFirst=true (8701.661084ms)
+I2S5_POSTGRES_RACE {"name":"RELEASE/ASSIGNMENT","blockerPid":981,"waiterPid":992,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_NOT_FOUND"]}
+✔ I2S5 RELEASE vs ASSIGNMENT revocationFirst=true (10832.802531ms)
+I2S5_POSTGRES_RACE {"name":"PRIVATE_READ/ASSIGNMENT","blockerPid":996,"waiterPid":1005,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_NOT_FOUND"]}
+✔ I2S5 PRIVATE_READ vs ASSIGNMENT revocationFirst=true (8067.715185ms)
+I2S5_POSTGRES_RACE {"name":"PRIVATE_WRITE/ASSIGNMENT","blockerPid":1015,"waiterPid":1028,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_NOT_FOUND"]}
+✔ I2S5 PRIVATE_WRITE vs ASSIGNMENT revocationFirst=true (8190.12501ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/ASSIGNMENT","blockerPid":1041,"waiterPid":1031,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 DRAFT vs ASSIGNMENT revocationFirst=false (10958.415959ms)
+I2S5_POSTGRES_RACE {"name":"RELEASE/ASSIGNMENT","blockerPid":1066,"waiterPid":1046,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 RELEASE vs ASSIGNMENT revocationFirst=false (13974.111756ms)
+I2S5_POSTGRES_RACE {"name":"PRIVATE_READ/ASSIGNMENT","blockerPid":1084,"waiterPid":1071,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 PRIVATE_READ vs ASSIGNMENT revocationFirst=false (9989.601245ms)
+I2S5_POSTGRES_RACE {"name":"PRIVATE_WRITE/ASSIGNMENT","blockerPid":1097,"waiterPid":1088,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 PRIVATE_WRITE vs ASSIGNMENT revocationFirst=false (8417.176889ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/SESSION","blockerPid":1100,"waiterPid":1110,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_UNAUTHENTICATED"]}
+✔ I2S5 DRAFT vs SESSION revocationFirst=true (10306.018478ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/SESSION","blockerPid":1132,"waiterPid":1119,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 DRAFT vs SESSION revocationFirst=false (9112.226243ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/CLINICIAN","blockerPid":1135,"waiterPid":1146,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_UNAUTHENTICATED"]}
+✔ I2S5 DRAFT vs CLINICIAN revocationFirst=true (11368.930953ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/CLINICIAN","blockerPid":1163,"waiterPid":1154,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 DRAFT vs CLINICIAN revocationFirst=false (10885.722954ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/MEMBERSHIP","blockerPid":1176,"waiterPid":1184,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_NOT_FOUND"]}
+✔ I2S5 DRAFT vs MEMBERSHIP revocationFirst=true (13146.301132ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/MEMBERSHIP","blockerPid":1197,"waiterPid":1190,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 DRAFT vs MEMBERSHIP revocationFirst=false (9213.712695ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/ORG","blockerPid":1203,"waiterPid":1217,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_NOT_FOUND"]}
+✔ I2S5 DRAFT vs ORG revocationFirst=true (15692.341745ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/ORG","blockerPid":1232,"waiterPid":1224,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 DRAFT vs ORG revocationFirst=false (13151.617706ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/AFFILIATION","blockerPid":1247,"waiterPid":1252,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_NOT_FOUND"]}
+✔ I2S5 DRAFT vs AFFILIATION revocationFirst=true (10231.381468ms)
+I2S5_POSTGRES_RACE {"name":"DRAFT/AFFILIATION","blockerPid":1272,"waiterPid":1259,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 DRAFT vs AFFILIATION revocationFirst=false (8874.071293ms)
+I2S5_POSTGRES_RACE {"name":"correction/privacy","blockerPid":1288,"waiterPid":1289,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_NOT_FOUND"]}
+✔ I2S5 correction/privacy serialized privacyFirst=true (11336.778883ms)
+I2S5_POSTGRES_RACE {"name":"correction/privacy","blockerPid":1311,"waiterPid":1312,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","COMMIT"]}
+✔ I2S5 correction/privacy serialized privacyFirst=false (16398.032715ms)
+I2S5_POSTGRES_RACE {"name":"correction/correction","blockerPid":1325,"waiterPid":1326,"pgBlockingPidsObserved":true,"rollback":false,"outcomes":["COMMIT","DOCUMENT_CONFLICT"]}
+✔ I2S5 concurrent corrections one legal signed successor (11349.307289ms)
+✔ I2S5 atomic audit failure DRAFT rolls back with reusable key (12208.501909ms)
+✔ I2S5 atomic audit failure RELEASE rolls back with reusable key (15923.500941ms)
+✔ I2S5 atomic audit failure PRIVACY rolls back with reusable key (6309.154739ms)
+I2S5_POSTGRES_EXPIRY {"blockerPid":1395,"waiterPid":1396}
+✔ I2S5 expiry after advisory wait and after tentative audit; no partial rows or consumed key (11961.749166ms)
+I2S5_POSTGRES_TIMEOUT {"blockerPid":1410,"waiterPid":1412,"noRetry":true}
+I2S5_POSTGRES_DEADLOCK {"blockerPid":1410,"waiterPid":1412,"noRetry":true}
+✔ I2S5 real timeout/external deadlock sanitized and no automatic retry (11168.491298ms)
+✔ I2S5 real HTTP private/draft secrecy, explicit release, HEAD parity/no-store and patient canaries (21029.752536ms)
+✔ I2S5 HTTP strict nested JSON/raw/media/framing/identity/method/query/alias/CSRF boundary (9711.498694ms)
+✔ I2S5 current related released HTTP route has no patient browse or private widening (10731.664613ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 399949.79792

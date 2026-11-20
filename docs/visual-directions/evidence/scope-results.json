@@ -1,0 +1,90 @@
+{
+  "base": "0a0e9c2038ecad420e95c2c67ae367129e195839",
+  "unchanged_existing_files_outside_allowlist": 599,
+  "protected_v1_count": 18,
+  "protected_v1": [
+    {
+      "path": "docs/ui-screenshots/doctor-demo/accessibility-results.json",
+      "sha256": "5342616415d951edef5cde1586f2d8ab272bc69bd5b01694f80bf0b1ff4ea66d"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/clinician-schedule-en-1440.png",
+      "sha256": "77ff53bebb4a80d6a54f1ab7b0f2bab7197a506991b3d693fac37370df6a4ed5"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/closed-consultation-ar-390.png",
+      "sha256": "c224ee86dbd144ed6ebdf3859bd296078d89b1769378ad8836e3524a74b5ecd7"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/closed-consultation-en-1440.png",
+      "sha256": "0af6e57dc08fa80158e2d1c9dd34ee25353a4ba3ea53dd601bb16775dd475b67"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/documentation-ar-390.png",
+      "sha256": "b28203f5ea27ec34f570cf1179291052e6c565b8158951d8838491b6a5abfde2"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/documentation-en-1440.png",
+      "sha256": "3e92ecdfbe3e774392187d37ee6db08fd078de93fe5834c632820c7b086d2d81"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/focus-results.json",
+      "sha256": "59298621bf4c59e37f158e33ca5d3419785c412f779ba65f8e2ac5bd05c70728"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/hosted-results.json",
+      "sha256": "480b6b4b39efe16095ff1518ad9b39c246b98c4f8274669d16827629079494a1"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/login-en-1440.png",
+      "sha256": "6764900bd3b8c89feba27add139cc45793c43cccfb0919562ee6abfc9b1c41f6"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/patient-dashboard-ar-390.png",
+      "sha256": "822176a888ae0b70afd9749cda7a54516bd7456a4600cab9812c3c2ca3ee57cb"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/patient-dashboard-en-1440.png",
+      "sha256": "62486ca639796e96ee624c4b3b7510b6e09871c87ad0882835d28332b800dd1c"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/patient-summary-ar-390.png",
+      "sha256": "8dcb43078f1110ae19373d12216c3ea85896937504bea5707c0533fcc274cc9c"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/patient-summary-en-390.png",
+      "sha256": "19ba8601d9604b19d6c8160822dd86c63443a63596635dc2ce18512f2c77ddbf"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/privacy-context-en-1440.png",
+      "sha256": "2182f8b86597ff3fa2cc9da16a223bcb5200d03112fd97c72ecd32e0d0c95a65"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/provider-booking-en-1440.png",
+      "sha256": "2c1f11fa2c2907b2725d62f364729d56abd0d50369d3aece201e15a6d73f9a85"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/review-close-ar-390.png",
+      "sha256": "da761ec09dc4c044665992e26c78946b6b1125061dd7e1b8d2e666250c2cf8f1"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/review-close-en-1440.png",
+      "sha256": "db864eebcdc0e44d94a16d5e95ec93638c059938bff2b6bd7187b1e81ba3bdc1"
+    },
+    {
+      "path": "docs/ui-screenshots/doctor-demo/review-close-en-390.png",
+      "sha256": "7f190084335d4caffd352cbb50466fe6f101c04e8880ec9057f1d3377a88761e"
+    }
+  ],
+  "permitted_existing_doc_changes": [
+    "docs/BRAND_DECISION_REGISTER.md",
+    "docs/BRAND_EXPLORATION_BRIEF.md",
+    "docs/BRAND_STRATEGY.md",
+    "docs/CURRENT_STATUS.md",
+    "docs/IMPLEMENTATION_ROADMAP.md",
+    "docs/PROJECT.md",
+    "docs/SOURCE_OF_TRUTH.md"
+  ],
+  "production_frontend_unchanged": true,
+  "backend_runtime_schema_migrations_openapi_dependencies_ci_unchanged": true
+}

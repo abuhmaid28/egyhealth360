@@ -1,0 +1,914 @@
+{
+  "baseline": "6fbd247a09d774fa42d9712068699753a88e10e6",
+  "baselineBuildId": "op8S7BYRGaB0fiibcCMxF",
+  "browser": "Chromium 154.0.8037.57 (Debian 13), desktop/mobile emulation",
+  "captures": [
+    {
+      "path": "after/admin-ar-1440.png",
+      "sha256": "d409b95fb1f1eb51ebe3f67e18a17b8f73b3e3d2310c250b55ec048ed9cd2008",
+      "bytes": 118659
+    },
+    {
+      "path": "after/admin-ar-390.png",
+      "sha256": "4d821bf89902817dfe42fd39be4776af093baa3be7bad93eb6419b8262678345",
+      "bytes": 106251
+    },
+    {
+      "path": "after/admin-directory-en-1440.png",
+      "sha256": "8a925438ed25b796b6261603b92d78f9e3a787e10cc88886741ca66fca350eee",
+      "bytes": 70181
+    },
+    {
+      "path": "after/admin-en-1440.png",
+      "sha256": "454316609e84b976b334a54c5fe34ff213cd93bf6f1d7a9f24e9f8aa1467b345",
+      "bytes": 128410
+    },
+    {
+      "path": "after/admin-en-390.png",
+      "sha256": "11d38d9d418738b6a75b4b6bceec9a8e9a0367109508738c2deccc498ac1c8fb",
+      "bytes": 116674
+    },
+    {
+      "path": "after/admin-live-ar-390.png",
+      "sha256": "5d9998d55c1ae5b3a4bd4793149c9101d28a4485c3f30593344e70f31da75095",
+      "bytes": 50220
+    },
+    {
+      "path": "after/admin-live-en-1440.png",
+      "sha256": "03e6327a63a5cb61b7b54ce74a70ea104bf380c7159c46367d6e591c78d18f9a",
+      "bytes": 59457
+    },
+    {
+      "path": "after/admin-organizations-en-1440.png",
+      "sha256": "e4e2013cc550ed5e2e645681267deb1971f5ae2898aef46685894e1a98af71df",
+      "bytes": 72941
+    },
+    {
+      "path": "after/admin-scheduling-en-1440.png",
+      "sha256": "4f5cc62eabe8843151e1c7c1ee08fcfdf011541dc1b3e500003606ea12247fb2",
+      "bytes": 78639
+    },
+    {
+      "path": "after/admin-settings-en-1440.png",
+      "sha256": "cf4e466e46d661fa52e2326d7448028e43802f3d83fb56b45c97e993f1792cc1",
+      "bytes": 49494
+    },
+    {
+      "path": "after/admin-users-en-1440.png",
+      "sha256": "f8c491edf44be2da85b0e53eae7585c905e65d2d2a5d005bdf5b9c60813999fd",
+      "bytes": 69497
+    },
+    {
+      "path": "after/clinician-documentation-ar-1440.png",
+      "sha256": "e8b897c0eb35a3cf29d3ff923347c8d978a23657e22dc71b715781ae0829093c",
+      "bytes": 411564
+    },
+    {
+      "path": "after/clinician-documentation-ar-390.png",
+      "sha256": "3a5cf2bf4d10aa861851ef2a5a6b1b75ebd6fbce890cd9338df2f9699b3f8b4e",
+      "bytes": 352659
+    },
+    {
+      "path": "after/clinician-documentation-en-1440.png",
+      "sha256": "0b5306178bb5cab92003087ba6bd1225ccfa71878721ef56175b5db678807a34",
+      "bytes": 412377
+    },
+    {
+      "path": "after/clinician-documentation-en-390.png",
+      "sha256": "93690b31cfa44ecbd4eea23bd3f01fba0fc3bf6fc724200bbb43875e4055535d",
+      "bytes": 375544
+    },
+    {
+      "path": "after/doctor-appointments-demo-my-care-visit-en-1440.png",
+      "sha256": "6da027f322aa5cbea70a95f9756bd4f424939592165ca5d2397027342143115f",
+      "bytes": 102592
+    },
+    {
+      "path": "after/doctor-ar-1440.png",
+      "sha256": "86a7a8ac71cff17ccd0a7c5c1296b0c678b2c55fdcc0c4db393340817418298b",
+      "bytes": 130084
+    },
+    {
+      "path": "after/doctor-ar-390.png",
+      "sha256": "be111ffa482ef594bb20a3da7ada8f1d83eace46d7e3aed025adcd68c8bf7409",
+      "bytes": 110365
+    },
+    {
+      "path": "after/doctor-availability-en-1440.png",
+      "sha256": "153786fd2fdfe653c7945dd463952d360f070ae58ccf95920b53745c14574ff1",
+      "bytes": 137062
+    },
+    {
+      "path": "after/doctor-consultation-demo-my-care-visit-en-1440.png",
+      "sha256": "ffe71abb7172a7dab0e3746046e6f182d47113c0361c130daedcf71c81a957a2",
+      "bytes": 201408
+    },
+    {
+      "path": "after/doctor-en-1440.png",
+      "sha256": "b02e6fe681f50a8f09ad8f1065ba7748a13ee10ca46a76d89292a13c4f9380d1",
+      "bytes": 140771
+    },
+    {
+      "path": "after/doctor-en-390.png",
+      "sha256": "61920f31cabe215acd636b2a57254e98ada0168e03fb79f294e321c3138feec5",
+      "bytes": 120867
+    },
+    {
+      "path": "after/doctor-schedule-ar-1440.png",
+      "sha256": "4bae0be56d18b37e54d5514f90f09bba6dde4d38c605e428be5b413104aa0ed4",
+      "bytes": 87729
+    },
+    {
+      "path": "after/doctor-schedule-ar-390.png",
+      "sha256": "fd5add3d2c3ae53a812399778784ccb330c62900001f92f824c0f006507b3b42",
+      "bytes": 76674
+    },
+    {
+      "path": "after/doctor-schedule-en-1440.png",
+      "sha256": "f8b73da52d513d0b101e521230c551c29f89d3d0b9d07198b56d944ff2c67a78",
+      "bytes": 95167
+    },
+    {
+      "path": "after/doctor-schedule-en-390.png",
+      "sha256": "7ff6c283674aff5f5eb5aba0621dd962b4c35f4d5cd21514a12621cdc1e28b2e",
+      "bytes": 83267
+    },
+    {
+      "path": "after/doctor-settings-en-1440.png",
+      "sha256": "cd661e45a72daba31f86dbf5c6a783c1989461ada23ef846ee463c8519788190",
+      "bytes": 52316
+    },
+    {
+      "path": "after/lab_staff-live-ar-390.png",
+      "sha256": "37ee98544b7b9917b9fb1d8e8fea7f44d23cd9434ab04a8fe9fac882e7d8810b",
+      "bytes": 39353
+    },
+    {
+      "path": "after/lab_staff-live-en-1440.png",
+      "sha256": "8b4bc149d8a0bd58ff85e3bbae82ff1bbd2851f1b888914f195edad00588cb3c",
+      "bytes": 48746
+    },
+    {
+      "path": "after/laboratory-ar-1440.png",
+      "sha256": "6f88c2baba7cbe86a48f5e0d5ead064aa056e9c24d871212c13a3e345ce9aa51",
+      "bytes": 88712
+    },
+    {
+      "path": "after/laboratory-ar-390.png",
+      "sha256": "31f80935e987ce8af5a1042a961d1bd45887169259640c3988ed2f48260dfe1e",
+      "bytes": 76027
+    },
+    {
+      "path": "after/laboratory-en-1440.png",
+      "sha256": "9f0b36d57a7f43a92260d9363d9e3c9934051c3020a5f7158dda0ff065a0de37",
+      "bytes": 98353
+    },
+    {
+      "path": "after/laboratory-en-390.png",
+      "sha256": "f0b1a095958d7abfc3bba81e0cfd180d1c6df4ec8e81e69db5bac674bfd4b630",
+      "bytes": 83592
+    },
+    {
+      "path": "after/laboratory-settings-en-1440.png",
+      "sha256": "e9e01c46570dccf838579c3e9a00488e49e24fc71350e3a718ef2bc26f7cbbd3",
+      "bytes": 45607
+    },
+    {
+      "path": "after/patient-appointments-demo-my-care-visit-en-1440.png",
+      "sha256": "d8c16f48abb8692c9b005eb1b9708fe6973deedbe54a54f9cba69e1d3bee6d3b",
+      "bytes": 120340
+    },
+    {
+      "path": "after/patient-appointments-en-1440.png",
+      "sha256": "72e83cbae209bbc72629e78564a8d20c9f13508f6adf3422d3f5e6134ec9ecdd",
+      "bytes": 56933
+    },
+    {
+      "path": "after/patient-ar-1440.png",
+      "sha256": "321fd6973b3343a5274fff1fe5afa97b7952bd7a1e48b8192f1832ff03009a37",
+      "bytes": 155027
+    },
+    {
+      "path": "after/patient-ar-390.png",
+      "sha256": "dc3f3e1500b004c3ce5ef907cef3fc8ae7756072d87db158d06dffd823a27b7a",
+      "bytes": 94748
+    },
+    {
+      "path": "after/patient-clinics-cairo-clinic-en-1440.png",
+      "sha256": "77fb3ea910c5cfc22280466ccf5a8a105622e3bb43ed997e0c65576ff43e0001",
+      "bytes": 85957
+    },
+    {
+      "path": "after/patient-discover-ar-1440.png",
+      "sha256": "e0d68db2a3513a8056b6343c8450963f9aa73d36a4dcfe6630fd80f232ba6437",
+      "bytes": 95304
+    },
+    {
+      "path": "after/patient-discover-ar-390.png",
+      "sha256": "6d45a42d4744e999b804c902f099caa630f8e4f73f491ae6deefc96d0e2a992d",
+      "bytes": 96948
+    },
+    {
+      "path": "after/patient-discover-en-1440.png",
+      "sha256": "e0aa98d1258bab5c203fbfb15eb144aae055e0397feebdff91a986c27ef218c0",
+      "bytes": 98567
+    },
+    {
+      "path": "after/patient-discover-en-390.png",
+      "sha256": "58a6450b48bb07b018bdc8a65c29b236a19a4a143801fb2e5aaaa76790201792",
+      "bytes": 103363
+    },
+    {
+      "path": "after/patient-doctors-mariam-hassan-en-1440.png",
+      "sha256": "5610510a101ad476d48f990e4958b93f3cff2e28249eb93e6b1bdc7900077785",
+      "bytes": 163473
+    },
+    {
+      "path": "after/patient-en-1440.png",
+      "sha256": "990c2bdf80d81c74afe637a7f825c4894638f74125eb93f8ca01fc3da0d2fd89",
+      "bytes": 171390
+    },
+    {
+      "path": "after/patient-en-390.png",
+      "sha256": "9ba5974bbec076b1405643e888f6fb9152c3a8f8220be2be8e31eb98ff25b5e1",
+      "bytes": 109670
+    },
+    {
+      "path": "after/patient-follow-up-en-1440.png",
+      "sha256": "701139a13cb5720cb67ae5530f411951209e8a3fc6234b485f37c3d5c8b9d032",
+      "bytes": 63012
+    },
+    {
+      "path": "after/patient-history-en-1440.png",
+      "sha256": "1573636cff84d1c2fb1927672f3cf74f7c22a64f88d072b2120c2ebff018d951",
+      "bytes": 74330
+    },
+    {
+      "path": "after/patient-laboratory-en-1440.png",
+      "sha256": "8960131cf195546565d1083a3b4d5ee5572d8c5d3922fd50af81372264734570",
+      "bytes": 61607
+    },
+    {
+      "path": "after/patient-medications-en-1440.png",
+      "sha256": "f8ff3dc468475b47e2a5624528dc5939b819b79c26fc6579b4101f602b562dec",
+      "bytes": 66870
+    },
+    {
+      "path": "after/patient-record-en-1440.png",
+      "sha256": "4de8b76fbea2beb091c11db2c2f1dc1421713a9a92f88793d69765b3c1de9862",
+      "bytes": 76879
+    },
+    {
+      "path": "after/patient-settings-en-1440.png",
+      "sha256": "ab9d12b1d7bcaa40b697156f074a36efd56dd662608a519c9f4e62558a76d278",
+      "bytes": 83280
+    },
+    {
+      "path": "after/pharmacy-ar-1440.png",
+      "sha256": "e7d834a6df4000ac42b51c6761c5bd1ac1e156265cb2dc135027c8417c978294",
+      "bytes": 87953
+    },
+    {
+      "path": "after/pharmacy-ar-390.png",
+      "sha256": "7f833b543eb173b8fd2dc2ff6a8a4f351e99526aa1fc29a67fd97c264c59864f",
+      "bytes": 76301
+    },
+    {
+      "path": "after/pharmacy-en-1440.png",
+      "sha256": "39ec9ee223150a45d38688605193e4892f6046bbb03eb3fa460bbc0c91c9fdf5",
+      "bytes": 100497
+    },
+    {
+      "path": "after/pharmacy-en-390.png",
+      "sha256": "d99bb7db0e965d1e6fd8b434c36aeaf39dde033086c3951057278204d45b5768",
+      "bytes": 86618
+    },
+    {
+      "path": "after/pharmacy-settings-en-1440.png",
+      "sha256": "35eac8098e5cdd636933f5851ed5d5a359cde6e8b046915e7dfc29952ae6d6c2",
+      "bytes": 46052
+    },
+    {
+      "path": "after/pharmacy_staff-live-ar-390.png",
+      "sha256": "6a324c1eade0d81dfa019394262407f5c9b5d6d29b23a41ff18480901ff7bb8b",
+      "bytes": 40675
+    },
+    {
+      "path": "after/pharmacy_staff-live-en-1440.png",
+      "sha256": "532c88b5406a3c34ad07c47ad82e324cb32323039086f72e100e66a5d830b1e3",
+      "bytes": 49424
+    },
+    {
+      "path": "before/admin-ar-1440.png",
+      "sha256": "5815a28e00fbe85ad3e79f48372c097fb0c081ae32b356c371abca42e68b843d",
+      "bytes": 142681
+    },
+    {
+      "path": "before/admin-ar-390.png",
+      "sha256": "cdb34da3d98a8c4f14bfffb4e32b1f9c5d54ba681973a52646c0d0485438831b",
+      "bytes": 95818
+    },
+    {
+      "path": "before/admin-directory-en-1440.png",
+      "sha256": "9814b2b1ec7a28448bed36dbc1cd1ed66fe8ee2515bd38740d1ee809b9bc495f",
+      "bytes": 96080
+    },
+    {
+      "path": "before/admin-en-1440.png",
+      "sha256": "89d5898cc5b46ac434d03695b359d877b72c74d6e0d2ac6e79da046ab75096f3",
+      "bytes": 148652
+    },
+    {
+      "path": "before/admin-en-390.png",
+      "sha256": "9dedc6d01dccd013acc3fab6b3f3a9ee103f7fdbf0c44c18805e44d1f4c4187d",
+      "bytes": 99649
+    },
+    {
+      "path": "before/admin-live-ar-390.png",
+      "sha256": "6dc0e46402f2ea9ac3437ec4ed1421d0f64ba8e2ae12a55bea5a656327273036",
+      "bytes": 33573
+    },
+    {
+      "path": "before/admin-live-en-1440.png",
+      "sha256": "461fe318c72fafe40da1e944e7ea04ef3cfc904beb51f94f9b861414940ddd6a",
+      "bytes": 80281
+    },
+    {
+      "path": "before/admin-organizations-en-1440.png",
+      "sha256": "17ee7933a89d29f5206deab1ee5c484f5ee2f241b396f9903e76426d3dcce05d",
+      "bytes": 101212
+    },
+    {
+      "path": "before/admin-scheduling-en-1440.png",
+      "sha256": "bc5d9a35f2f64889ba6710c90a3c65e010e3ce9e907b80137257c2a02b08f3d9",
+      "bytes": 104892
+    },
+    {
+      "path": "before/admin-settings-en-1440.png",
+      "sha256": "112cce8794e69aebbecc69e8c3753a038d99f68a8d5724979f39246761a9892c",
+      "bytes": 77281
+    },
+    {
+      "path": "before/admin-users-en-1440.png",
+      "sha256": "4104c37e3e7a54fa08d1fbc5d25f7b34b2460f8e9e6ff9bc2614bad54fc38dcf",
+      "bytes": 94857
+    },
+    {
+      "path": "before/clinician-documentation-ar-1440.png",
+      "sha256": "f48afa0da0bb7e5459453dd1838a45a4d7c0f50a30fdf02dd9a45225433c3f4c",
+      "bytes": 404738
+    },
+    {
+      "path": "before/clinician-documentation-ar-390.png",
+      "sha256": "e7d5111b9fb39ce5a29f03ce47cef037a8920303b8aad8dfd77b9809f002a48a",
+      "bytes": 347833
+    },
+    {
+      "path": "before/clinician-documentation-en-1440.png",
+      "sha256": "d515722769da8ddef4c738f86da38918c41783f9845f347a298b1bfc677cd282",
+      "bytes": 425124
+    },
+    {
+      "path": "before/clinician-documentation-en-390.png",
+      "sha256": "071f8cb89a4181fb7eb0030c68adc0f1776e012e2aae1311ac8cce1b71ef209a",
+      "bytes": 371332
+    },
+    {
+      "path": "before/doctor-appointments-demo-my-care-visit-en-1440.png",
+      "sha256": "9ac947c4cf026cd1119bf22ea72577e6a70b6909b8c8402178c4cb0250c5c537",
+      "bytes": 126392
+    },
+    {
+      "path": "before/doctor-ar-1440.png",
+      "sha256": "c977ae4e3e0c0ec1cc43811045650078ebd8ceaf5650e5b11131e0d753686456",
+      "bytes": 156997
+    },
+    {
+      "path": "before/doctor-ar-390.png",
+      "sha256": "862b251c363e0dd80b02f43657bfebf232370e0587387d2aa9f425e847ab0163",
+      "bytes": 106078
+    },
+    {
+      "path": "before/doctor-availability-en-1440.png",
+      "sha256": "8fb4f767eec122c06afae68efe9cf18deb8035a0dc54292fe912d5f36510f20d",
+      "bytes": 162248
+    },
+    {
+      "path": "before/doctor-consultation-demo-my-care-visit-en-1440.png",
+      "sha256": "f88d3270b3b1e0e964ba9f6bd91f9dd491260be476047645fdb073071e07065f",
+      "bytes": 214263
+    },
+    {
+      "path": "before/doctor-en-1440.png",
+      "sha256": "599cea37bf983500397d9c1774ff93c56b02d90f7c5781cdb9b09d80af6e231f",
+      "bytes": 159567
+    },
+    {
+      "path": "before/doctor-en-390.png",
+      "sha256": "ae138057051232d88c9846436f3c3de24737bf523245efecf90ea147fcacf99c",
+      "bytes": 112523
+    },
+    {
+      "path": "before/doctor-schedule-ar-1440.png",
+      "sha256": "fe102b56f265ffe9a94256a46b3377075150df369805d4c615453612ce6ad8ab",
+      "bytes": 113322
+    },
+    {
+      "path": "before/doctor-schedule-ar-390.png",
+      "sha256": "58061a804f155babe585c6a6bd91e5b497f760ad1d1132f25a60ed78d81c616d",
+      "bytes": 71949
+    },
+    {
+      "path": "before/doctor-schedule-en-1440.png",
+      "sha256": "390915e01658fbdf40a5f6261bea70d9f0826b23d6f6aea75b9d58c77086615a",
+      "bytes": 115349
+    },
+    {
+      "path": "before/doctor-schedule-en-390.png",
+      "sha256": "9c05dba0b2604690c4f30504099bfae9cf46c9a622427a1918d06605f7982ea2",
+      "bytes": 74864
+    },
+    {
+      "path": "before/doctor-settings-en-1440.png",
+      "sha256": "681115e9235310bf4d1117e2f6b211b98c9e197a049e40cf6c653cac3acf08a0",
+      "bytes": 78767
+    },
+    {
+      "path": "before/lab_staff-live-ar-390.png",
+      "sha256": "b4f5a7964da40cf20f2f05ed412eab0814315e17de03913776ee82a14980d1ba",
+      "bytes": 34654
+    },
+    {
+      "path": "before/lab_staff-live-en-1440.png",
+      "sha256": "8b6d8ec1d7a7d57189ea0c88580f361c63dc52bb48d73a95ebc1659c531baafc",
+      "bytes": 70499
+    },
+    {
+      "path": "before/laboratory-ar-1440.png",
+      "sha256": "4105f1629866ca672c1586dd558b9537face4e5fc4b44c364a64782a9dca0cd2",
+      "bytes": 115767
+    },
+    {
+      "path": "before/laboratory-ar-390.png",
+      "sha256": "1de432612673cbea0317ea5a67660f25abd7b2b7e46c721007f85310bbca0b76",
+      "bytes": 77301
+    },
+    {
+      "path": "before/laboratory-en-1440.png",
+      "sha256": "3daac36bdca35867024bdda0c2d0cc48e16621d054ec022fda3765d0d4db8452",
+      "bytes": 118737
+    },
+    {
+      "path": "before/laboratory-en-390.png",
+      "sha256": "8b5ee1c5dc342c6ae041ce0a78db1cab51d17122918aee6f7bf1c01c44312b42",
+      "bytes": 79086
+    },
+    {
+      "path": "before/laboratory-settings-en-1440.png",
+      "sha256": "30f6a63366a1ed9af0beab79621b1e3ffd1fd6963353fd534cae99cdd27cf61b",
+      "bytes": 71734
+    },
+    {
+      "path": "before/patient-appointments-demo-my-care-visit-en-1440.png",
+      "sha256": "10d4a62089429d9688a77d5746ee9381504803e60e1c89ada4a87975bbe23574",
+      "bytes": 146009
+    },
+    {
+      "path": "before/patient-appointments-en-1440.png",
+      "sha256": "9544a712d58ffe42d732d87b297231a8cfe13218b98ac027affa37d447ae3a8c",
+      "bytes": 84441
+    },
+    {
+      "path": "before/patient-ar-1440.png",
+      "sha256": "e7c73c0cc5b327096876772276df14f25f013b09588ffb1062702db462fd8bf9",
+      "bytes": 149200
+    },
+    {
+      "path": "before/patient-ar-390.png",
+      "sha256": "f81b587fe10d7c73c85c14cf9209d6278e1beb9a0fc0aaa8a85fe6d5cd94f4f6",
+      "bytes": 87558
+    },
+    {
+      "path": "before/patient-clinics-cairo-clinic-en-1440.png",
+      "sha256": "efdd43f81d3195ac531da9d3e1db025d911a59ae15bb5c6f2c8b0d1eff9b8b26",
+      "bytes": 110138
+    },
+    {
+      "path": "before/patient-discover-ar-1440.png",
+      "sha256": "3a288941de813fac947b8b8622f20b1e4fa7d9c6174410d3837177d49edc1b86",
+      "bytes": 117540
+    },
+    {
+      "path": "before/patient-discover-ar-390.png",
+      "sha256": "b8d76ef754213ac7859fb481fe66d93022b1f4f531e5b2c11f9b87feee82b424",
+      "bytes": 90650
+    },
+    {
+      "path": "before/patient-discover-en-1440.png",
+      "sha256": "a23d79c6254efe38d026e601772bf443eff6894f6202bdccba0d3afd1fdba056",
+      "bytes": 118681
+    },
+    {
+      "path": "before/patient-discover-en-390.png",
+      "sha256": "3d09a1951bf7beb332f736b2919bff0dbb4d521b310466d06b2885ebefd3aa99",
+      "bytes": 90861
+    },
+    {
+      "path": "before/patient-doctors-mariam-hassan-en-1440.png",
+      "sha256": "9c350701dbfaad9d201e9ce24541d9e70755c6c9a7c137cbc535d83edc4ee954",
+      "bytes": 188233
+    },
+    {
+      "path": "before/patient-en-1440.png",
+      "sha256": "d9f31ada7184e27bbf6669910a4a5a7fe7afd1e951f5df94e7b1ba284d8a75fa",
+      "bytes": 164916
+    },
+    {
+      "path": "before/patient-en-390.png",
+      "sha256": "d83fa035d613c8811532e7fb5f452500ae0c3499e5df569850459a59aba4759c",
+      "bytes": 103893
+    },
+    {
+      "path": "before/patient-follow-up-en-1440.png",
+      "sha256": "f8d103c53ea7d1703519dd6438830e2f9510653f7454fbda795e128af3c2f051",
+      "bytes": 90210
+    },
+    {
+      "path": "before/patient-history-en-1440.png",
+      "sha256": "9d2407bdf291229e4c416db8d5c5d945996f04fec506c6e9c038e95b4cfa3654",
+      "bytes": 101044
+    },
+    {
+      "path": "before/patient-laboratory-en-1440.png",
+      "sha256": "b6077b58d082ad21f6c8b2bbcf912264a4ef970e0093df5eebf89f4431a72786",
+      "bytes": 88549
+    },
+    {
+      "path": "before/patient-medications-en-1440.png",
+      "sha256": "580e7acc7123a71d04d3e5f2c8e829d08b10cfc2c70339f7211bfae209af14e1",
+      "bytes": 93471
+    },
+    {
+      "path": "before/patient-record-en-1440.png",
+      "sha256": "1a2a5daf9eeddf2c206d147f2ece3911648669a9064d1e9ce30f7b93639ec151",
+      "bytes": 103469
+    },
+    {
+      "path": "before/patient-settings-en-1440.png",
+      "sha256": "b0c0b664202d53f333ed40f84878f4aaa86fad664cb1601c64606c3c9d05e94f",
+      "bytes": 108541
+    },
+    {
+      "path": "before/pharmacy-ar-1440.png",
+      "sha256": "444b70a8da49ebb8763804bfaff64bb040e35569cf6817817b5ecba2ad95cc2c",
+      "bytes": 114890
+    },
+    {
+      "path": "before/pharmacy-ar-390.png",
+      "sha256": "84560308b1526ebcfe41441c6765285b9f753119130628f2f82495a77e73e182",
+      "bytes": 77265
+    },
+    {
+      "path": "before/pharmacy-en-1440.png",
+      "sha256": "8a70fa37a9aa1cbaae52011d34a7d1ed4c9120861d6fd28e5abd03736eed1c87",
+      "bytes": 121518
+    },
+    {
+      "path": "before/pharmacy-en-390.png",
+      "sha256": "543708430a2476c926f2e50e2a1e2af3ef1a734a9994a2a6161964a665d703d8",
+      "bytes": 82062
+    },
+    {
+      "path": "before/pharmacy-settings-en-1440.png",
+      "sha256": "52c3a9e1ef08db84f6ca3d7bd5025ce87daf8bdbf1714cc648800e049ba0f163",
+      "bytes": 71651
+    },
+    {
+      "path": "before/pharmacy_staff-live-ar-390.png",
+      "sha256": "49ae993feb510bee51d50c6a46ca459143165f34a0aca47d53923f362bdddddb",
+      "bytes": 32444
+    },
+    {
+      "path": "before/pharmacy_staff-live-en-1440.png",
+      "sha256": "6029d44ed3e59b0c9e6b24a74780b929e75b9c578e543c7c9414f8a5a751404c",
+      "bytes": 70925
+    },
+    {
+      "path": "before-admin.png",
+      "sha256": "dc588175fd069f3e0693ec7cf0a5e904d4580b3a37e0a3db5455390cd648c31c",
+      "bytes": 148504
+    },
+    {
+      "path": "before-doctor.png",
+      "sha256": "83a3ed0a0c8b317464553dad95d9abddb975391616801d343b81bd75078ca987",
+      "bytes": 160709
+    },
+    {
+      "path": "before-laboratory.png",
+      "sha256": "a3bead38a06962a614400023558472680bdaae63fe22f4443a3e3830732e6bad",
+      "bytes": 117572
+    },
+    {
+      "path": "before-patient-appointments.png",
+      "sha256": "6ae351fa55fca6d4d0ef67625376e5c3380050472a71873bfd9f96d749528d43",
+      "bytes": 83351
+    },
+    {
+      "path": "before-patient-discover.png",
+      "sha256": "a23d79c6254efe38d026e601772bf443eff6894f6202bdccba0d3afd1fdba056",
+      "bytes": 118681
+    },
+    {
+      "path": "before-patient-doctors-mariam-hassan.png",
+      "sha256": "9c350701dbfaad9d201e9ce24541d9e70755c6c9a7c137cbc535d83edc4ee954",
+      "bytes": 188233
+    },
+    {
+      "path": "before-patient-follow-up.png",
+      "sha256": "f8d103c53ea7d1703519dd6438830e2f9510653f7454fbda795e128af3c2f051",
+      "bytes": 90210
+    },
+    {
+      "path": "before-patient-history.png",
+      "sha256": "9d2407bdf291229e4c416db8d5c5d945996f04fec506c6e9c038e95b4cfa3654",
+      "bytes": 101044
+    },
+    {
+      "path": "before-patient-record.png",
+      "sha256": "1a2a5daf9eeddf2c206d147f2ece3911648669a9064d1e9ce30f7b93639ec151",
+      "bytes": 103469
+    },
+    {
+      "path": "before-patient-settings.png",
+      "sha256": "b0c0b664202d53f333ed40f84878f4aaa86fad664cb1601c64606c3c9d05e94f",
+      "bytes": 108541
+    },
+    {
+      "path": "before-patient.png",
+      "sha256": "64b8838ed996e0d407ca0d35d35db723c5420a7f0c1071f3f6ab07b2b4ffebfe",
+      "bytes": 176551
+    },
+    {
+      "path": "before-pharmacy.png",
+      "sha256": "c91385541b5afa0740b409d33a68d07839121b3fd0dbc8e2548c7de53eae235e",
+      "bytes": 121466
+    },
+    {
+      "path": "public-login-before.png",
+      "sha256": "1e02c1da439e43d5599cd01e93cde3d15cd89a12cea58815fcf73b58ba7f4ad3",
+      "bytes": 113942
+    },
+    {
+      "path": "public-login.png",
+      "sha256": "b8e6151133de7228fea1ac3788fc40ea15c7264638bc8728d698950e8f4ef797",
+      "bytes": 113939
+    },
+    {
+      "path": "real-after/55-en-live-documentation-release.png",
+      "sha256": "d24bd4960796b4014e506e7819968f0d6ad51fdafd5389dc905291b7b1659b4d",
+      "bytes": 209988
+    },
+    {
+      "path": "real-after/56-en-mobile-live-released-summary.png",
+      "sha256": "04f6e2bc303c81b2a34b3c7f45b6bc479b5bc0d8e8708dfd7c6468bde0c1f78b",
+      "bytes": 82326
+    },
+    {
+      "path": "real-after/57-ar-mobile-live-documentation.png",
+      "sha256": "29529b87b269827a7610cdb23f4a67272d4abff3c08bb0633ed614b3e10a14a2",
+      "bytes": 412496
+    },
+    {
+      "path": "real-after/58-ar-mobile-live-released-summary.png",
+      "sha256": "31447c0ec9c9ca99754e767ecad6b301a8a64fe3aae18f8adbeb789373be9731",
+      "bytes": 75599
+    },
+    {
+      "path": "real-after/booking-details-ar.png",
+      "sha256": "260014e90bc0a4e3524e20fcd25293682df32f02a36ab8c6e17c474a31dc5544",
+      "bytes": 89014
+    },
+    {
+      "path": "real-after/booking-review-ar.png",
+      "sha256": "62ff3e883d55d55c231c93a0a8e270b4995302a315854adecc98f656c5ddcab6",
+      "bytes": 213462
+    },
+    {
+      "path": "real-after/clinician-schedule-ar.png",
+      "sha256": "21874d81e15ba772e619a703cd63d3e7adf50e790d7701af71d06ec1e7d2890a",
+      "bytes": 112223
+    },
+    {
+      "path": "real-after/closeout/ar-1440-review.png",
+      "sha256": "62355e6caf76d95daf1858bb3046f403ee3fdc7802c0eb4aebc295eee640f7e7",
+      "bytes": 178495
+    },
+    {
+      "path": "real-after/closeout/ar-390-review.png",
+      "sha256": "df7cac3ef622fa5a99f541cce953743ccc27fb7a9fca5a0aa9e20bbe4bdeb24c",
+      "bytes": 79734
+    },
+    {
+      "path": "real-after/closeout/ar-834-review.png",
+      "sha256": "75c39dd73ffb1c63ec4828d634adaa4a12c72be326bbc9ad75a1f31e7b7177a3",
+      "bytes": 103202
+    },
+    {
+      "path": "real-after/closeout/en-1440-review.png",
+      "sha256": "8d57560769b2a30313043b83a66b19e0676b450a46d7de005f8fe2e373c4f82e",
+      "bytes": 193258
+    },
+    {
+      "path": "real-after/closeout/en-390-review.png",
+      "sha256": "405d56ba869f0318960b4d4a39ea086c9b6c4a0d12a947591dd5254d9c7d7124",
+      "bytes": 75181
+    },
+    {
+      "path": "real-after/closeout/en-834-review.png",
+      "sha256": "302fee0cb34d846552a09ffcbdfa74b5048ce76da65ae0e031a7cd5ac95c5509",
+      "bytes": 110924
+    },
+    {
+      "path": "real-after/discovery-live-en.png",
+      "sha256": "112a243a5842398d542c2afe22b2cdc473f042194cbb2d186399ca538bcb9be5",
+      "bytes": 78706
+    },
+    {
+      "path": "real-after/follow-up/live-ar-clinician-mobile.png",
+      "sha256": "0555b340c4ff00393c741381ae9be954583615cbf57dbcc6714576d3c2f2ad5d",
+      "bytes": 36548
+    },
+    {
+      "path": "real-after/follow-up/live-ar-patient-mobile.png",
+      "sha256": "91c32226e98bb3fd6327aec18cd3717431a3d7a4af0aeeb2f69e2be319285867",
+      "bytes": 74264
+    },
+    {
+      "path": "real-after/follow-up/live-en-patient-mobile.png",
+      "sha256": "b1c50fbfdaaf1dfb39ed535afde876f5f433921631c7735ab6a8addbe4b7ab5c",
+      "bytes": 83791
+    },
+    {
+      "path": "real-after/follow-up/live-en-release-desktop.png",
+      "sha256": "282c4018dc1deae3f00427765f8da9c4e796b4c92d8eda90cd4d480aa0ce4ae3",
+      "bytes": 183238
+    },
+    {
+      "path": "real-after/my-care-booked-ar.png",
+      "sha256": "658fc740b89880edc7df2b2a10acfcb196c1393b5a0ae80700720159c3e73cb7",
+      "bytes": 149549
+    },
+    {
+      "path": "real-after/my-care-live-en.png",
+      "sha256": "4483459dd3e8e2c2713b305445f58330388e288bcec0d9fae4e3026d5d5a2e49",
+      "bytes": 139859
+    },
+    {
+      "path": "real-after/my-care-reload-ar.png",
+      "sha256": "32212c7712aff7ca0ebad1e09e7606723163b5948000d6d7d9fa284f7df21c97",
+      "bytes": 149823
+    },
+    {
+      "path": "real-after/patient-appointments-ar.png",
+      "sha256": "62cd2d4e5181d13b67b27120320878dd9cc559d5dec7d8824da29f31bb6d715c",
+      "bytes": 51933
+    },
+    {
+      "path": "real-after/patient-follow-up-ar.png",
+      "sha256": "5977ebc9ab49c0815c84da3e9d3ebd7f4d756695cd3a17fc0543a81636d9ac5e",
+      "bytes": 52630
+    },
+    {
+      "path": "real-after/patient-history-ar.png",
+      "sha256": "9eb3a945570895ad0795e5a2790c074137beed274ccc11d257957f44e8938e7d",
+      "bytes": 96076
+    },
+    {
+      "path": "real-after/patient-laboratory-ar.png",
+      "sha256": "c518583fa9103606635e4b3faa0616026a8e4c5cfa8c23b16030c9d381e229fd",
+      "bytes": 44287
+    },
+    {
+      "path": "real-after/patient-medications-ar.png",
+      "sha256": "00a24b205b6cda5355479add23203152bb0b8cb43bc407e1732f7baf45d4ca12",
+      "bytes": 44703
+    },
+    {
+      "path": "real-after/patient-record-ar.png",
+      "sha256": "0d1b00485eb0b13aa2b5851eba9d1416f9de2077deece7a268a3c987fcff94f6",
+      "bytes": 94707
+    },
+    {
+      "path": "real-after/patient-settings-ar.png",
+      "sha256": "c8cf5dd107e416ec76244ff6bbe81aea2d02badfa2676843247069086b3117a3",
+      "bytes": 75203
+    },
+    {
+      "path": "real-after/patient-summaries-ar.png",
+      "sha256": "936f3334ca2e31d05101432c5a567fa05b9516e3136ea4d98816fc6fcd81754b",
+      "bytes": 57942
+    },
+    {
+      "path": "real-after/provider-live-ar.png",
+      "sha256": "9a44532eab7dcd3d846afa99af54d446979a651f49b1156ce72532638fe5c3a7",
+      "bytes": 136688
+    },
+    {
+      "path": "real-after/provider-live-en.png",
+      "sha256": "b36c30e1e5f6f29c2a2dbfefd540f08960fe8bdfd9e9f9e9fedaab6bc8ff466f",
+      "bytes": 147361
+    },
+    {
+      "path": "real-after/real-admin-ar-mobile.png",
+      "sha256": "4ba6128d86c73804a41dc384be5d644d56db4ed8d5507f8714bcc3511472c98c",
+      "bytes": 49575
+    },
+    {
+      "path": "real-after/real-admin-directory-en.png",
+      "sha256": "cd5662882237e377b4acdaea379fef4d9ff8dc068681d36c3d533ff8809e133d",
+      "bytes": 72983
+    },
+    {
+      "path": "real-after/real-admin-en.png",
+      "sha256": "03e6327a63a5cb61b7b54ce74a70ea104bf380c7159c46367d6e591c78d18f9a",
+      "bytes": 59457
+    },
+    {
+      "path": "real-after/real-admin-organizations-en.png",
+      "sha256": "5db6400de30e154ca8c86dd1ed6cfb95c992dbe62010f482133d079f0680d943",
+      "bytes": 59909
+    },
+    {
+      "path": "real-after/real-admin-scheduling-en.png",
+      "sha256": "e5da352e47237ed02db43b067ebdf95ea61801b3d7fdf6b51fb563fe95fb0446",
+      "bytes": 59645
+    },
+    {
+      "path": "real-after/real-admin-settings-en.png",
+      "sha256": "bcf085ed5cdb5d47999bcc8aac4bcfb6ef4f139b554798d19a74d793b379494d",
+      "bytes": 45980
+    },
+    {
+      "path": "real-after/real-admin-users-en.png",
+      "sha256": "0e7b25febbba28db9b1ca4ebda3c838bfffb23dd3a93ff454f6a687a5839afdf",
+      "bytes": 59161
+    },
+    {
+      "path": "real-after/real-lab-ar-mobile.png",
+      "sha256": "9300033ea79b90e94596f1630b77432f7e3afc00e2f6414429b7f1bf76ffe733",
+      "bytes": 38605
+    },
+    {
+      "path": "real-after/real-laboratory-en.png",
+      "sha256": "8b4bc149d8a0bd58ff85e3bbae82ff1bbd2851f1b888914f195edad00588cb3c",
+      "bytes": 48746
+    },
+    {
+      "path": "real-after/real-laboratory-settings-en.png",
+      "sha256": "67fd06e57c52e8ebe736d11604af69313fdc2c59b794aa04ff036bbd1bd35385",
+      "bytes": 42125
+    },
+    {
+      "path": "real-after/real-pharmacy-ar-mobile.png",
+      "sha256": "f285b1e72e542b4a82b7b6a5e2b068e96b28a77bd7e276462bd577b868c0b364",
+      "bytes": 40308
+    },
+    {
+      "path": "real-after/real-pharmacy-en.png",
+      "sha256": "532c88b5406a3c34ad07c47ad82e324cb32323039086f72e100e66a5d830b1e3",
+      "bytes": 49424
+    },
+    {
+      "path": "real-after/real-pharmacy-settings-en.png",
+      "sha256": "6e141e47716f71963d5481b7ed2c5147971434c7084c7735852fd2d11def173a",
+      "bytes": 42523
+    }
+  ],
+  "visualSnapshotCommit": "27327fda5a32fb3ac879e3be891df5fdfb429553",
+  "presentationRuntimeSha256": {
+    "apps/web/app/error.tsx": "1014288d5177974ecc12a7539b1217701040cd1383e5b9aee8a905ff63d8988f",
+    "apps/web/src/components/application.tsx": "81b7cb9867b9492a1aef5026787e46795112e7de5d8607d3e57520d00d00382c",
+    "apps/web/src/components/clinician-consultation.tsx": "e4d1e3c8b9b6c5deacd7371e49e50bee9f8e7eeb614925e0797769b395fe7be7",
+    "apps/web/src/components/live-session.tsx": "c6ab44fe43e7dd99c8f47ac136911b684f2b83d8f555124699343033148954f6",
+    "apps/web/src/components/operations.tsx": "9d4736e14103df88b8cbd2651db3d046198c2fbc1109bde9fb81f61c4de3a1d9",
+    "apps/web/src/components/patient-my-care.tsx": "2175a5c8b91c9a960b90ed0bda9f2fa98cbb8e52e2b3f4cc995a6ec090a08794",
+    "apps/web/src/components/patient.tsx": "a42b5c9a33f08a49788de464ba0a5679b5aefb6deacac9ad4ba1f40d06648254",
+    "apps/web/src/components/portal-shell.tsx": "7c4f8f07105d9b1854097938f3dd2ac7dda37cf86eac5bf7fbbc626284817ed8",
+    "apps/web/src/components/portal-shell.module.css": "57bdcdc44f2ddc037c9e8f13fdb1f5da58d91b397d1ee1812319ce6cd8b4c9ec"
+  },
+  "visualBuildId": "LZs2WAMqhBJdpkHFAFHss",
+  "realBrowserBuildId": "hp8PjpI1hIn7-qwSfP9Cv",
+  "realBrowserRuntimeSha256": {
+    "apps/web/app/error.tsx": "1014288d5177974ecc12a7539b1217701040cd1383e5b9aee8a905ff63d8988f",
+    "apps/web/src/components/application.tsx": "81b7cb9867b9492a1aef5026787e46795112e7de5d8607d3e57520d00d00382c",
+    "apps/web/src/components/clinician-consultation.tsx": "e4d1e3c8b9b6c5deacd7371e49e50bee9f8e7eeb614925e0797769b395fe7be7",
+    "apps/web/src/components/live-session.tsx": "c6ab44fe43e7dd99c8f47ac136911b684f2b83d8f555124699343033148954f6",
+    "apps/web/src/components/operations.tsx": "9d4736e14103df88b8cbd2651db3d046198c2fbc1109bde9fb81f61c4de3a1d9",
+    "apps/web/src/components/patient-my-care.tsx": "2175a5c8b91c9a960b90ed0bda9f2fa98cbb8e52e2b3f4cc995a6ec090a08794",
+    "apps/web/src/components/patient.tsx": "a42b5c9a33f08a49788de464ba0a5679b5aefb6deacac9ad4ba1f40d06648254",
+    "apps/web/src/components/portal-shell.tsx": "7c4f8f07105d9b1854097938f3dd2ac7dda37cf86eac5bf7fbbc626284817ed8",
+    "apps/web/src/components/portal-shell.module.css": "57bdcdc44f2ddc037c9e8f13fdb1f5da58d91b397d1ee1812319ce6cd8b4c9ec",
+    "apps/web/src/lib/api/documentation.ts": "d5cce6df973cf88c97484d8d6e401916a3e07d2a824ebc3355d3cfa99dc7d8d8"
+  },
+  "provenanceNote": "Before/after presentation source is byte-identical to visualSnapshotCommit; subsequent change is client key-ordering only. Real browser captures were refreshed on the corrected full runtime."
+}

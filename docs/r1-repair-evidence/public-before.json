@@ -1,0 +1,202 @@
+{
+  "testedAt": "2026-11-04T10:51:35.850Z",
+  "context": "new anonymous context; no storageState or Vercel cookies",
+  "requests": [
+    {
+      "origin": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/",
+      "vercelLogin": false,
+      "hasAppLogin": 1,
+      "bodyKind": "app login"
+    },
+    {
+      "origin": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/login",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/login",
+      "vercelLogin": false,
+      "hasAppLogin": 1,
+      "bodyKind": "app login"
+    },
+    {
+      "origin": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/patient",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/patient",
+      "vercelLogin": false,
+      "hasAppLogin": 1,
+      "bodyKind": "app login"
+    },
+    {
+      "origin": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/health",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/health",
+      "vercelLogin": false,
+      "hasAppLogin": 0,
+      "bodyKind": "json"
+    },
+    {
+      "origin": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/auth/me",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/auth/me",
+      "vercelLogin": false,
+      "hasAppLogin": 0,
+      "bodyKind": "json"
+    },
+    {
+      "origin": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/me/bookings",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/me/bookings",
+      "vercelLogin": false,
+      "hasAppLogin": 0,
+      "bodyKind": "json"
+    },
+    {
+      "origin": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/me/schedule",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/me/schedule",
+      "vercelLogin": false,
+      "hasAppLogin": 0,
+      "bodyKind": "json"
+    },
+    {
+      "origin": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/health",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/health",
+      "vercelLogin": false,
+      "hasAppLogin": 0,
+      "bodyKind": "json"
+    },
+    {
+      "origin": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/auth/me",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/auth/me",
+      "vercelLogin": false,
+      "hasAppLogin": 0,
+      "bodyKind": "json"
+    },
+    {
+      "origin": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/me/bookings",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/me/bookings",
+      "vercelLogin": false,
+      "hasAppLogin": 0,
+      "bodyKind": "json"
+    },
+    {
+      "origin": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/api/v1/me/schedule",
+      "status": 401,
+      "finalUrl": "https://eh360-r1-api-6fbd247-a0vhq6thv-abuhmaid2810gmailcoms-projects.vercel.app/api/v1/me/schedule",
+      "vercelLogin": false,
+      "hasAppLogin": 0,
+      "bodyKind": "json"
+    },
+    {
+      "origin": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app",
+      "path": "/.env",
+      "status": 200,
+      "finalUrl": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/.env",
+      "vercelLogin": false,
+      "hasAppLogin": 1,
+      "bodyKind": "app login"
+    }
+  ],
+  "routes": [
+    {
+      "path": "/patient",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/patient",
+      "mode": "demo",
+      "legacySidebar": 0,
+      "screenshot": "before-patient.png"
+    },
+    {
+      "path": "/patient/discover",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/patient/discover",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-patient-discover.png"
+    },
+    {
+      "path": "/patient/doctors/mariam-hassan",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/patient/doctors/mariam-hassan",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-patient-doctors-mariam-hassan.png"
+    },
+    {
+      "path": "/patient/appointments",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/patient/appointments",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-patient-appointments.png"
+    },
+    {
+      "path": "/patient/history",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/patient/history",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-patient-history.png"
+    },
+    {
+      "path": "/patient/record",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/patient/record",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-patient-record.png"
+    },
+    {
+      "path": "/patient/follow-up",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/patient/follow-up",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-patient-follow-up.png"
+    },
+    {
+      "path": "/patient/settings",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/patient/settings",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-patient-settings.png"
+    },
+    {
+      "path": "/doctor",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/doctor",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-doctor.png"
+    },
+    {
+      "path": "/pharmacy",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/pharmacy",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-pharmacy.png"
+    },
+    {
+      "path": "/laboratory",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/laboratory",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-laboratory.png"
+    },
+    {
+      "path": "/admin",
+      "url": "https://eh360-r1-web-6fbd247-1zuoqo86g-abuhmaid2810gmailcoms-projects.vercel.app/admin",
+      "mode": "demo",
+      "legacySidebar": 1,
+      "screenshot": "before-admin.png"
+    }
+  ],
+  "errors": [],
+  "cookies": []
+}

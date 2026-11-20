@@ -1,0 +1,71 @@
+{
+  "d": {
+    "name": "Precision Health",
+    "idea": "Clarity at every handoff.",
+    "mood": "Measured, precise, quietly capable.",
+    "logic": "Calendar-led patient orientation; neutral vertical navigation; fine rules and compact parallel clinical panes.",
+    "type": "Inter + Noto Sans Arabic",
+    "primary": "#155b83",
+    "colors": [
+      "#17212b",
+      "#536273",
+      "#f7f9fb",
+      "#ffffff",
+      "#155b83"
+    ],
+    "alternate": [
+      "#192c3a",
+      "#657380",
+      "#f5f7f9",
+      "#ffffff",
+      "#246575"
+    ],
+    "risk": "A disciplined grid can feel impersonal. Test warmth through readable language and patient hierarchy rather than extra decoration."
+  },
+  "e": {
+    "name": "Human Clinical",
+    "idea": "Care that feels considered.",
+    "mood": "Attentive, confident, human.",
+    "logic": "Open horizontal navigation; asymmetric patient composition; one deep-green appointment anchor; quiet, generously spaced clinical sections.",
+    "type": "Manrope + IBM Plex Sans Arabic",
+    "primary": "#205c4e",
+    "colors": [
+      "#172b29",
+      "#536762",
+      "#ffffff",
+      "#e8f3ed",
+      "#205c4e"
+    ],
+    "alternate": [
+      "#203332",
+      "#566b66",
+      "#ffffff",
+      "#edf4f3",
+      "#31686c"
+    ],
+    "risk": "The softer rhythm costs vertical space. Dense clinician information must retain explicit grouping and strong local navigation."
+  },
+  "f": {
+    "name": "Next-Gen Health OS",
+    "idea": "Relevant context. Clear responsibility.",
+    "mood": "Focused, connected, digitally native.",
+    "logic": "Graphite horizontal workspace; a luminous appointment band; flat divided clinical panes; cyan used only for orientation and action.",
+    "type": "IBM Plex Sans + Noto Sans Arabic",
+    "primary": "#8bd9ea",
+    "colors": [
+      "#11171d",
+      "#182129",
+      "#a4b4c1",
+      "#e9f0f5",
+      "#8bd9ea"
+    ],
+    "alternate": [
+      "#151c23",
+      "#202c35",
+      "#b1bdc8",
+      "#edf2f6",
+      "#a8ccd9"
+    ],
+    "risk": "A dark workspace can feel technical and needs real-device glare testing. \u201cOS\u201d is a review label, never a claim of complete health coverage."
+  }
+}

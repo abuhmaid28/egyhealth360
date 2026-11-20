@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
+import {isolatedBookings} from '../tests/support/bookings.mjs';
+const manifest='eh-v3-i2-slice3-booking-proof-v1',cases=[];
+try{assert.ok(['development','test'].includes(process.env.NODE_ENV));await isolatedBookings(async f=>{
+ const write=async(path,body,who='patient',method='PUT')=>{const r=await f.http(path,body,who,method);assert.equal(r.response.status,200,r.raw);return r.json.data;};
+ const slot=await f.publish(),target=await f.publish(30),key=randomUUID(),input={slotId:slot.id,operationKey:key},b=await write('/me/bookings',input,'patient','POST');cases.push('patient booking');
+ assert.equal((await f.request(f.path)).json.meta.total,1);cases.push('occupied slot hidden publicly');
+ const replay=await write('/me/bookings',input,'patient','POST');assert.deepEqual(replay,b);cases.push('safe replay');
+ assert.equal((await f.http('/me/bookings',{slotId:target.id,operationKey:key},'patient','POST')).response.status,409);cases.push('changed payload conflict');
+ assert.equal((await f.http('/me/bookings',{slotId:slot.id,operationKey:randomUUID()},'other','POST')).response.status,409);cases.push('capacity conflict');
+ assert.equal((await f.request('/me/bookings',{headers:await f.login('patient')})).json.meta.total,1);cases.push('patient history');
+ assert.equal((await f.request('/me/schedule',{headers:await f.login('clinician')})).json.data[0].id,b.id);cases.push('exact clinician schedule');
+ for(const who of ['other','admin','lab','pharmacy'])assert.equal((await f.request('/me/bookings/'+b.id,{headers:await f.login(who)})).response.status,404);cases.push('participant privacy');
+ const next=await write('/me/bookings/'+b.id+'/reschedule',{slotId:target.id,expectedVersion:1,operationKey:randomUUID()});assert.equal(next.predecessorId,b.id);assert.equal((await f.request('/me/bookings/'+b.id,{headers:await f.login('patient')})).json.data.state,'RESCHEDULED');cases.push('atomic reschedule and provenance');
+ await write('/me/bookings/'+next.id+'/cancel',{expectedVersion:1,operationKey:randomUUID()});assert.equal((await f.request(f.path)).json.meta.total,2);cases.push('cancellation releases capacity');
+ const other=await f.otherClinician(),over=await f.publish(15,{},other.actor);await write('/me/bookings',{slotId:slot.id,operationKey:randomUUID()},'patient','POST');assert.equal((await f.http('/me/bookings',{slotId:over.id,operationKey:randomUUID()},'patient','POST')).response.status,409);cases.push('independent patient overlap');
+ const state=await f.counts();assert.equal(state.clinician_patient_assignments,0);assert.equal(state.relationship_requests,0);assert.equal(state.clinical_encounters,0);assert.equal((await f.request('/patients/'+f.users.patient.profileId+'/profile',{headers:await f.login('clinician')})).response.status,404);cases.push('zero clinical authority');
+ const raw=(await f.request('/me/schedule',{headers:await f.login('clinician')})).raw;for(const value of [f.users.patient.id,f.users.patient.profileId,f.users.clinician.id,f.users.clinician.profileId,f.hash,f.password,f.membership.id,input.operationKey])assert.ok(!raw.includes(value));cases.push('logistics canaries');
+ for(const path of ['/me/bookings','/me/bookings/'+b.id,'/me/schedule']){const r=await f.request(path,{method:'HEAD',headers:await f.login(path==='/me/schedule'?'clinician':'patient')});assert.equal(r.response.status,200);assert.equal(r.raw,'');assert.equal(r.response.headers.get('cache-control'),'no-store');}cases.push('HEAD no-store');
+ await f.availability.setConfiguration(f.actors.admin,{...f.settings,expectedVersion:1,durationMinutes:5});
+ const now=(await f.pool.query('SELECT clock_timestamp() now')).rows[0].now,start=new Date(now.getTime()+15000),end=new Date(start.getTime()+300000),publish={clinicId:f.clinic.publicId,startAt:start.toISOString(),endAt:end.toISOString()};
+ const attendedSlot=await f.availability.publish(f.actors.clinician,{...publish,operationKey:randomUUID()}),noShowSlot=await f.availability.publish(other.actor,{...publish,operationKey:randomUUID()});
+ const attended=await write('/me/bookings',{slotId:attendedSlot.id,operationKey:randomUUID()},'patient','POST'),noShow=await write('/me/bookings',{slotId:noShowSlot.id,operationKey:randomUUID()},'other','POST');
+ assert.equal((await f.http('/me/bookings/'+attended.id+'/attendance',{observation:'ATTENDED',expectedVersion:1,operationKey:randomUUID()},'clinician')).response.status,409);cases.push('attendance before start denied');
+ const waitUntil=async instant=>{for(;;){const remaining=Number((await f.pool.query('SELECT greatest(0,extract(epoch FROM $1::timestamptz-clock_timestamp())) seconds',[instant])).rows[0].seconds);if(remaining<=0)return;console.log(JSON.stringify({manifest,phase:'WAIT_FOR_REAL_DATABASE_TIME',remainingSeconds:Math.ceil(remaining)}));await new Promise(r=>setTimeout(r,Math.min(remaining*1000+10,15000)));}};
+ await waitUntil(start);const seen=await write('/me/bookings/'+attended.id+'/attendance',{observation:'ATTENDED',expectedVersion:1,operationKey:randomUUID()},'clinician');assert.equal(seen.attendance,'ATTENDED');cases.push('explicit attendance at real start');
+ assert.equal((await f.http('/me/bookings/'+noShow.id+'/attendance',{observation:'NO_SHOW',expectedVersion:1,operationKey:randomUUID()},'otherClinician')).response.status,409);cases.push('no-show before end denied');
+ await waitUntil(end);const stillUnknown=(await f.request('/me/bookings/'+noShow.id,{headers:await f.login('other')})).json.data;assert.equal(stillUnknown.state,'BOOKED');assert.equal(stillUnknown.attendance,'UNKNOWN');cases.push('no automatic no-show');
+ const missed=await write('/me/bookings/'+noShow.id+'/attendance',{observation:'NO_SHOW',expectedVersion:1,operationKey:randomUUID()},'otherClinician');assert.equal(missed.state,'NO_SHOW');cases.push('explicit no-show at real end');
+ const corrected=await write('/me/bookings/'+noShow.id+'/attendance/correct',{observation:'ATTENDED',reason:'Synthetic corrected attendance observation',expectedVersion:2,operationKey:randomUUID()},'otherClinician');assert.equal(corrected.state,'NO_SHOW');assert.equal(corrected.attendance,'ATTENDED');assert.deepEqual(corrected.attendanceHistory[0],missed.attendanceHistory[0]);assert.equal(corrected.attendanceHistory.length,2);cases.push('reasoned correction preserves terminal history');
+ assert.equal((await f.counts()).clinician_patient_assignments,0);cases.push('attendance grants no clinical authority');
+ });console.log(JSON.stringify({manifest,result:'PASS',cases:cases.length,caseNames:cases,realHttp:true,isolatedSyntheticDatabase:true,realClockAttendance:true}));
+}catch(e){console.error(JSON.stringify({manifest,result:'FAIL',cases:cases.length,error:e.code??e.message}));process.exitCode=1;}

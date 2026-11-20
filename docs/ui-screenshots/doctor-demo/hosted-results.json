@@ -1,0 +1,733 @@
+{
+  "origin": "https://egyhealth360-pre-final-staging-abuhmaid2810gmailcoms-projects.vercel.app",
+  "bookingId": "4458082d-4e71-4a1c-bd2b-697314801c94",
+  "checks": [
+    "frontend HTTPS, proxied API health, hosted login and secure sessions",
+    "CSRF-free mutation rejected",
+    "clinician availability publication and patient booking through public UI",
+    "clinician schedule shows the hosted booking",
+    "consultation opens with current treating authority",
+    "clinical drafts persist; reload recovers context without mutations",
+    "explicit summary release is independent of private note and follow-up",
+    "explicit FollowUpIntent release; private note remains private",
+    "Review & Close requires deliberate confirmation; EN, AR/RTL, desktop and mobile",
+    "CLOSED / CONSULTED survive reload; illegal post-close UI actions blocked; close leaks no unreleased content"
+  ],
+  "browserErrors": [],
+  "matrix": [
+    {
+      "screen": "01-login",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "01-login",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "01-login",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "01-login",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "01-login",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "01-login",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "01-login",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "01-login",
+      "locale": "ar",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "01-login",
+      "locale": "ar",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "01-login",
+      "locale": "ar",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "02-patient-dashboard",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "02-patient-dashboard",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "02-patient-dashboard",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "02-patient-dashboard",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "02-patient-dashboard",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "02-patient-dashboard",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "02-patient-dashboard",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "02-patient-dashboard",
+      "locale": "ar",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "02-patient-dashboard",
+      "locale": "ar",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "02-patient-dashboard",
+      "locale": "ar",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "03-clinician-home",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "03-clinician-home",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "03-clinician-home",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "03-clinician-home",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "03-clinician-home",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "03-clinician-home",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "03-clinician-home",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "03-clinician-home",
+      "locale": "ar",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "03-clinician-home",
+      "locale": "ar",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "03-clinician-home",
+      "locale": "ar",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "04-provider-discovery",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "04-provider-discovery",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "04-provider-discovery",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "04-provider-discovery",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "04-provider-discovery",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "04-provider-discovery",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "04-provider-discovery",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "05-provider-booking",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "05-provider-booking",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "05-provider-booking",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "05-provider-booking",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "05-provider-booking",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "05-provider-booking",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "05-provider-booking",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "05-provider-booking",
+      "locale": "ar",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "05-provider-booking",
+      "locale": "ar",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "05-provider-booking",
+      "locale": "ar",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "06-booking-review",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "06-booking-review",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "06-booking-review",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "06-booking-review",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "06-booking-review",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "06-booking-review",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "06-booking-review",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "07-clinician-schedule",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "07-clinician-schedule",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "07-clinician-schedule",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "07-clinician-schedule",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "07-clinician-schedule",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "07-clinician-schedule",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "07-clinician-schedule",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "08-booking-confirmed",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "08-booking-confirmed",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "08-booking-confirmed",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "08-booking-confirmed",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "08-booking-confirmed",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "08-booking-confirmed",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "08-booking-confirmed",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "09-documentation-drafts",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "09-documentation-drafts",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "09-documentation-drafts",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "09-documentation-drafts",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "09-documentation-drafts",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "09-documentation-drafts",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "09-documentation-drafts",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "09-documentation-drafts",
+      "locale": "ar",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "09-documentation-drafts",
+      "locale": "ar",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "09-documentation-drafts",
+      "locale": "ar",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "10-documentation-released",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "10-documentation-released",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "10-documentation-released",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "10-documentation-released",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "10-documentation-released",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "10-documentation-released",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "10-documentation-released",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "11-patient-released-summary",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "11-patient-released-summary",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "11-patient-released-summary",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "11-patient-released-summary",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "11-patient-released-summary",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "11-patient-released-summary",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "11-patient-released-summary",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "11-patient-released-summary",
+      "locale": "ar",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "11-patient-released-summary",
+      "locale": "ar",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "11-patient-released-summary",
+      "locale": "ar",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "12-patient-follow-up",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "12-patient-follow-up",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "12-patient-follow-up",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "12-patient-follow-up",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "12-patient-follow-up",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "12-patient-follow-up",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "12-patient-follow-up",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "13-review-close",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "13-review-close",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "13-review-close",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "13-review-close",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "13-review-close",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "13-review-close",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "13-review-close",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "14-closed-consultation",
+      "locale": "en",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "14-closed-consultation",
+      "locale": "en",
+      "width": 1200,
+      "overflow": false
+    },
+    {
+      "screen": "14-closed-consultation",
+      "locale": "en",
+      "width": 1024,
+      "overflow": false
+    },
+    {
+      "screen": "14-closed-consultation",
+      "locale": "en",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "14-closed-consultation",
+      "locale": "en",
+      "width": 768,
+      "overflow": false
+    },
+    {
+      "screen": "14-closed-consultation",
+      "locale": "en",
+      "width": 560,
+      "overflow": false
+    },
+    {
+      "screen": "14-closed-consultation",
+      "locale": "en",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "screen": "14-closed-consultation",
+      "locale": "ar",
+      "width": 1440,
+      "overflow": false
+    },
+    {
+      "screen": "14-closed-consultation",
+      "locale": "ar",
+      "width": 834,
+      "overflow": false
+    },
+    {
+      "screen": "14-closed-consultation",
+      "locale": "ar",
+      "width": 390,
+      "overflow": false
+    }
+  ]
+}

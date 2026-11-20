@@ -1,0 +1,227 @@
+{
+  "tables": [
+    "medication_operations",
+    "medication_versions",
+    "medications",
+    "prescription_items",
+    "prescription_operations",
+    "prescription_privacy_restrictions",
+    "prescription_version_items",
+    "prescription_versions",
+    "prescriptions"
+  ],
+  "checks": [
+    "medication_operations_fingerprint_check",
+    "medication_operations_operation_key_check",
+    "medication_versions_check",
+    "medication_versions_check1",
+    "medication_versions_display_name_check",
+    "medication_versions_version_check",
+    "prescription_items_instructions_check",
+    "prescription_items_medication_display_check",
+    "prescription_items_quantity_check",
+    "prescription_items_unit_check",
+    "prescription_operations_check",
+    "prescription_operations_check1",
+    "prescription_operations_command_check",
+    "prescription_operations_fingerprint_check",
+    "prescription_operations_operation_key_check",
+    "prescription_privacy_restrictions_reason_check",
+    "prescription_version_items_position_check",
+    "prescription_versions_check",
+    "prescription_versions_check1",
+    "prescription_versions_check2",
+    "prescription_versions_check3",
+    "prescription_versions_check4",
+    "prescription_versions_command_check",
+    "prescription_versions_reason_check",
+    "prescription_versions_state_check",
+    "prescription_versions_version_check",
+    "prescriptions_check",
+    "prescriptions_check1"
+  ],
+  "fk": [
+    "medication_operations_actor_user_id_fkey",
+    "medication_operations_audit_id_fkey",
+    "medication_operations_medication_id_fkey",
+    "medication_operations_result_version_id_fkey",
+    "medication_versions_actor_user_id_fkey",
+    "medication_versions_medication_id_fkey",
+    "medication_versions_operation_id_actor_user_id_fkey",
+    "prescription_items_medication_id_fkey",
+    "prescription_items_root_id_fkey",
+    "prescription_operations_actor_user_id_fkey",
+    "prescription_operations_audit_id_fkey",
+    "prescription_operations_result_root_id_fkey",
+    "prescription_operations_result_version_id_result_root_id_fkey",
+    "prescription_operations_target_root_id_fkey",
+    "prescription_privacy_restrict_target_root_id_lineage_id_pa_fkey",
+    "prescription_privacy_restrictio_operation_id_actor_user_id_fkey",
+    "prescription_privacy_restrictions_assignment_id_fkey",
+    "prescription_version_items_item_id_root_id_fkey",
+    "prescription_version_items_version_id_root_id_fkey",
+    "prescription_versions_actor_user_id_fkey",
+    "prescription_versions_assignment_id_fkey",
+    "prescription_versions_operation_id_actor_user_id_fkey",
+    "prescription_versions_replacement_id_fkey",
+    "prescription_versions_root_id_fkey",
+    "prescriptions_assignment_id_fkey",
+    "prescriptions_author_clinician_id_author_user_id_fkey",
+    "prescriptions_consultation_id_fkey",
+    "prescriptions_encounter_id_patient_id_fkey",
+    "prescriptions_lineage_id_patient_id_fkey",
+    "prescriptions_membership_id_fkey",
+    "prescriptions_organization_id_fkey",
+    "prescriptions_predecessor_id_lineage_id_patient_id_fkey"
+  ],
+  "triggers": [
+    {
+      "tgname": "i3_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_complete"
+    },
+    {
+      "tgname": "i3_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_complete"
+    },
+    {
+      "tgname": "i3_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_complete"
+    },
+    {
+      "tgname": "i3_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_complete"
+    },
+    {
+      "tgname": "i3_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_complete"
+    },
+    {
+      "tgname": "i3_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "i3_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "i3_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "i3_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "i3_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "i3_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "i3_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "i3_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "i3_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "i3_recorded_time",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_recorded_time"
+    },
+    {
+      "tgname": "i3_recorded_time",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_recorded_time"
+    },
+    {
+      "tgname": "i3_recorded_time",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_recorded_time"
+    },
+    {
+      "tgname": "medication_operation_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_catalog_complete"
+    },
+    {
+      "tgname": "medication_version_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_catalog_insert"
+    },
+    {
+      "tgname": "prescription_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_root_insert"
+    },
+    {
+      "tgname": "prescription_item_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_item_insert"
+    },
+    {
+      "tgname": "prescription_version_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_version_insert"
+    },
+    {
+      "tgname": "prescription_version_item_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_version_item_insert"
+    }
+  ],
+  "functions": [
+    "i3_catalog_complete",
+    "i3_catalog_insert",
+    "i3_complete",
+    "i3_item_insert",
+    "i3_recorded_time",
+    "i3_root_insert",
+    "i3_version_insert",
+    "i3_version_item_insert"
+  ]
+}

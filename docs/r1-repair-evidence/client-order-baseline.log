@@ -1,0 +1,31 @@
+Controlled baseline request order: [ 'B', 'A' ]
+✖ earlier concurrent success cannot erase changed command uncertain retry key (40.829388ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5004.251799
+
+✖ failing tests:
+
+test at ../../tmp/r1-documentation-order-probe.mjs:408:1
+✖ earlier concurrent success cannot erase changed command uncertain retry key (40.829388ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + '{"kind":"PRIVATE_NOTE","content":"B","patientInstructions":"","complaint":null,"problems":[],"diagnoses":[],"allergyReview":{"state":"NOT_REVIEWED","items":[]},"operationKey":"0e58f48f-2d61-4292-b360-b108501c5d46"}'
+  - '{"kind":"PRIVATE_NOTE","content":"B","patientInstructions":"","complaint":null,"problems":[],"diagnoses":[],"allergyReview":{"state":"NOT_REVIEWED","items":[]},"operationKey":"f4a15fb8-d353-4506-b40f-6f1c928fab26"}'
+
+      at TestContext.<anonymous> (file:///tmp/r1-documentation-order-probe.mjs:436:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '{"kind":"PRIVATE_NOTE","content":"B","patientInstructions":"","complaint":null,"problems":[],"diagnoses":[],"allergyReview":{"state":"NOT_REVIEWED","items":[]},"operationKey":"0e58f48f-2d61-4292-b360-b108501c5d46"}',
+    expected: '{"kind":"PRIVATE_NOTE","content":"B","patientInstructions":"","complaint":null,"problems":[],"diagnoses":[],"allergyReview":{"state":"NOT_REVIEWED","items":[]},"operationKey":"f4a15fb8-d353-4506-b40f-6f1c928fab26"}',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

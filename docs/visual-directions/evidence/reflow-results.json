@@ -1,0 +1,155 @@
+{
+  "width": 320,
+  "checks": [
+    {
+      "file": "direction-a/patient-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-a/appointment-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-a/schedule-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-a/consultation-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-a/states-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-a/patient-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-a/appointment-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-a/schedule-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-a/consultation-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-a/states-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-b/patient-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-b/appointment-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-b/schedule-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-b/consultation-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-b/states-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-b/patient-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-b/appointment-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-b/schedule-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-b/consultation-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-b/states-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-c/patient-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-c/appointment-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-c/schedule-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-c/consultation-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-c/states-ar.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-c/patient-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-c/appointment-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-c/schedule-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-c/consultation-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "file": "direction-c/states-en.html",
+      "width": 320,
+      "scrollWidth": 320
+    }
+  ]
+}

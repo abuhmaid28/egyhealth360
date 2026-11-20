@@ -1,0 +1,13 @@
+{
+  "accessed": "2026-11-02",
+  "purpose": "Local reproducible visual exploration only; no production dependency or font selection",
+  "sources": {
+    "manrope.ttf": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/Manrope[wght].ttf",
+    "plex-arabic-regular.ttf": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsansarabic/IBMPlexSansArabic-Regular.ttf",
+    "plex-arabic-semibold.ttf": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsansarabic/IBMPlexSansArabic-SemiBold.ttf",
+    "plex-sans.ttf": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsans/IBMPlexSans[wdth,wght].ttf",
+    "manrope-OFL.txt": "https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/OFL.txt",
+    "plex-arabic-OFL.txt": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsansarabic/OFL.txt",
+    "plex-sans-OFL.txt": "https://raw.githubusercontent.com/google/fonts/main/ofl/ibmplexsans/OFL.txt"
+  }
+}

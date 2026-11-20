@@ -1,0 +1,434 @@
+[
+  {
+    "direction": "d",
+    "screen": "patient",
+    "language": "en",
+    "path": "direction-d/patient-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "patient",
+    "language": "ar",
+    "path": "direction-d/patient-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "find",
+    "language": "en",
+    "path": "direction-d/find-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "find",
+    "language": "ar",
+    "path": "direction-d/find-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "patient-mobile",
+    "language": "en",
+    "path": "direction-d/patient-mobile-en.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "d",
+    "screen": "patient-mobile",
+    "language": "ar",
+    "path": "direction-d/patient-mobile-ar.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "d",
+    "screen": "appointment-mobile",
+    "language": "en",
+    "path": "direction-d/appointment-mobile-en.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "d",
+    "screen": "appointment-mobile",
+    "language": "ar",
+    "path": "direction-d/appointment-mobile-ar.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "d",
+    "screen": "schedule",
+    "language": "en",
+    "path": "direction-d/schedule-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "schedule",
+    "language": "ar",
+    "path": "direction-d/schedule-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "consultation",
+    "language": "en",
+    "path": "direction-d/consultation-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "consultation",
+    "language": "ar",
+    "path": "direction-d/consultation-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "doctor-mobile",
+    "language": "en",
+    "path": "direction-d/doctor-mobile-en.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "d",
+    "screen": "doctor-mobile",
+    "language": "ar",
+    "path": "direction-d/doctor-mobile-ar.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "d",
+    "screen": "states",
+    "language": "en",
+    "path": "direction-d/states-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "states",
+    "language": "ar",
+    "path": "direction-d/states-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "typography",
+    "language": "en",
+    "path": "direction-d/typography-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "d",
+    "screen": "typography",
+    "language": "ar",
+    "path": "direction-d/typography-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "patient",
+    "language": "en",
+    "path": "direction-e/patient-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "patient",
+    "language": "ar",
+    "path": "direction-e/patient-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "find",
+    "language": "en",
+    "path": "direction-e/find-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "find",
+    "language": "ar",
+    "path": "direction-e/find-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "patient-mobile",
+    "language": "en",
+    "path": "direction-e/patient-mobile-en.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "e",
+    "screen": "patient-mobile",
+    "language": "ar",
+    "path": "direction-e/patient-mobile-ar.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "e",
+    "screen": "appointment-mobile",
+    "language": "en",
+    "path": "direction-e/appointment-mobile-en.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "e",
+    "screen": "appointment-mobile",
+    "language": "ar",
+    "path": "direction-e/appointment-mobile-ar.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "e",
+    "screen": "schedule",
+    "language": "en",
+    "path": "direction-e/schedule-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "schedule",
+    "language": "ar",
+    "path": "direction-e/schedule-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "consultation",
+    "language": "en",
+    "path": "direction-e/consultation-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "consultation",
+    "language": "ar",
+    "path": "direction-e/consultation-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "doctor-mobile",
+    "language": "en",
+    "path": "direction-e/doctor-mobile-en.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "e",
+    "screen": "doctor-mobile",
+    "language": "ar",
+    "path": "direction-e/doctor-mobile-ar.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "e",
+    "screen": "states",
+    "language": "en",
+    "path": "direction-e/states-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "states",
+    "language": "ar",
+    "path": "direction-e/states-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "typography",
+    "language": "en",
+    "path": "direction-e/typography-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "e",
+    "screen": "typography",
+    "language": "ar",
+    "path": "direction-e/typography-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "patient",
+    "language": "en",
+    "path": "direction-f/patient-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "patient",
+    "language": "ar",
+    "path": "direction-f/patient-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "find",
+    "language": "en",
+    "path": "direction-f/find-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "find",
+    "language": "ar",
+    "path": "direction-f/find-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "patient-mobile",
+    "language": "en",
+    "path": "direction-f/patient-mobile-en.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "f",
+    "screen": "patient-mobile",
+    "language": "ar",
+    "path": "direction-f/patient-mobile-ar.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "f",
+    "screen": "appointment-mobile",
+    "language": "en",
+    "path": "direction-f/appointment-mobile-en.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "f",
+    "screen": "appointment-mobile",
+    "language": "ar",
+    "path": "direction-f/appointment-mobile-ar.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "f",
+    "screen": "schedule",
+    "language": "en",
+    "path": "direction-f/schedule-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "schedule",
+    "language": "ar",
+    "path": "direction-f/schedule-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "consultation",
+    "language": "en",
+    "path": "direction-f/consultation-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "consultation",
+    "language": "ar",
+    "path": "direction-f/consultation-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "doctor-mobile",
+    "language": "en",
+    "path": "direction-f/doctor-mobile-en.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "f",
+    "screen": "doctor-mobile",
+    "language": "ar",
+    "path": "direction-f/doctor-mobile-ar.html",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "direction": "f",
+    "screen": "states",
+    "language": "en",
+    "path": "direction-f/states-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "states",
+    "language": "ar",
+    "path": "direction-f/states-ar.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "typography",
+    "language": "en",
+    "path": "direction-f/typography-en.html",
+    "width": 1440,
+    "height": 900
+  },
+  {
+    "direction": "f",
+    "screen": "typography",
+    "language": "ar",
+    "path": "direction-f/typography-ar.html",
+    "width": 1440,
+    "height": 900
+  }
+]

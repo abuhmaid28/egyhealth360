@@ -1,0 +1,196 @@
+{
+  "tables": [
+    "pharmacy_dispense_corrections",
+    "pharmacy_dispenses",
+    "pharmacy_operations",
+    "pharmacy_route_items",
+    "pharmacy_route_versions",
+    "pharmacy_routes"
+  ],
+  "checks": [
+    "pharmacy_dispense_corrections_kind_check",
+    "pharmacy_dispense_corrections_reason_check",
+    "pharmacy_dispense_corrections_version_check",
+    "pharmacy_operations_check",
+    "pharmacy_operations_check1",
+    "pharmacy_operations_check2",
+    "pharmacy_operations_check3",
+    "pharmacy_operations_command_check",
+    "pharmacy_operations_fingerprint_check",
+    "pharmacy_operations_operation_key_check",
+    "pharmacy_route_items_sequence_check",
+    "pharmacy_route_versions_check",
+    "pharmacy_route_versions_check1",
+    "pharmacy_route_versions_check2",
+    "pharmacy_route_versions_check3",
+    "pharmacy_route_versions_command_check",
+    "pharmacy_route_versions_reason_check",
+    "pharmacy_route_versions_state_check",
+    "pharmacy_route_versions_version_check",
+    "pharmacy_routes_check"
+  ],
+  "fk": [
+    "pharmacy_dispense_corrections_actor_user_id_fkey",
+    "pharmacy_dispense_corrections_dispense_id_route_id_item_id_fkey",
+    "pharmacy_dispense_corrections_membership_id_fkey",
+    "pharmacy_dispense_corrections_operation_id_actor_user_id_fkey",
+    "pharmacy_dispense_corrections_predecessor_id_dispense_id_fkey",
+    "pharmacy_dispenses_actor_user_id_fkey",
+    "pharmacy_dispenses_medication_id_fkey",
+    "pharmacy_dispenses_membership_id_fkey",
+    "pharmacy_dispenses_operation_id_actor_user_id_fkey",
+    "pharmacy_dispenses_route_id_item_id_root_id_patient_id_fkey",
+    "pharmacy_dispenses_route_id_root_id_patient_id_pharmacy_id_fkey",
+    "pharmacy_operations_actor_user_id_fkey",
+    "pharmacy_operations_audit_id_fkey",
+    "pharmacy_operations_result_correction_id_fkey",
+    "pharmacy_operations_result_dispense_id_fkey",
+    "pharmacy_operations_result_route_id_fkey",
+    "pharmacy_operations_result_route_version_id_result_route_i_fkey",
+    "pharmacy_operations_target_route_id_fkey",
+    "pharmacy_route_items_item_id_root_id_fkey",
+    "pharmacy_route_items_predecessor_id_item_id_root_id_fkey",
+    "pharmacy_route_items_route_id_root_id_patient_id_fkey",
+    "pharmacy_route_versions_actor_user_id_fkey",
+    "pharmacy_route_versions_assignment_id_fkey",
+    "pharmacy_route_versions_membership_id_fkey",
+    "pharmacy_route_versions_operation_id_actor_user_id_fkey",
+    "pharmacy_route_versions_route_id_fkey",
+    "pharmacy_routes_assignment_id_fkey",
+    "pharmacy_routes_author_user_id_fkey",
+    "pharmacy_routes_pharmacy_id_fkey",
+    "pharmacy_routes_predecessor_id_root_id_patient_id_fkey",
+    "pharmacy_routes_root_id_patient_id_fkey"
+  ],
+  "triggers": [
+    {
+      "tgname": "pharmacy_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_complete"
+    },
+    {
+      "tgname": "pharmacy_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_complete"
+    },
+    {
+      "tgname": "pharmacy_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_complete"
+    },
+    {
+      "tgname": "pharmacy_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_complete"
+    },
+    {
+      "tgname": "pharmacy_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_complete"
+    },
+    {
+      "tgname": "pharmacy_complete",
+      "tgtype": 5,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_complete"
+    },
+    {
+      "tgname": "pharmacy_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "pharmacy_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "pharmacy_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "pharmacy_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "pharmacy_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "pharmacy_immutable",
+      "tgtype": 58,
+      "tgenabled": "O",
+      "proname": "i2_immutable"
+    },
+    {
+      "tgname": "pharmacy_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_insert"
+    },
+    {
+      "tgname": "pharmacy_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_insert"
+    },
+    {
+      "tgname": "pharmacy_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_insert"
+    },
+    {
+      "tgname": "pharmacy_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_insert"
+    },
+    {
+      "tgname": "pharmacy_insert",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_insert"
+    },
+    {
+      "tgname": "pharmacy_operation_time",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_recorded_time"
+    },
+    {
+      "tgname": "pharmacy_privacy_fence",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_source_fence"
+    },
+    {
+      "tgname": "pharmacy_source_fence",
+      "tgtype": 7,
+      "tgenabled": "O",
+      "proname": "i3_pharmacy_source_fence"
+    }
+  ],
+  "functions": [
+    "i3_pharmacy_complete",
+    "i3_pharmacy_insert",
+    "i3_pharmacy_item_projection",
+    "i3_pharmacy_member",
+    "i3_pharmacy_route_state",
+    "i3_pharmacy_source",
+    "i3_pharmacy_source_fence"
+  ]
+}

@@ -1,0 +1,480 @@
+{
+  "phase": "after",
+  "origin": "http://127.0.0.1:3102",
+  "evidence": "Demo fixtures + explicitly controlled Live responses; persistence is proved separately by the real browser suite",
+  "routes": [
+    {
+      "role": "PATIENT",
+      "path": "/patient",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/discover",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-discover-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/doctors/mariam-hassan",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-doctors-mariam-hassan-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/clinics/cairo-clinic",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-clinics-cairo-clinic-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/appointments",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-appointments-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/appointments/demo-my-care-visit",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-appointments-demo-my-care-visit-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/record",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-record-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/history",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-history-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/medications",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-medications-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/laboratory",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-laboratory-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/follow-up",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-follow-up-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/settings",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-settings-en-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient",
+      "locale": "ar",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-ar-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/discover",
+      "locale": "ar",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "patient-discover-ar-1440.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient",
+      "locale": "en",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "patient-en-390.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/discover",
+      "locale": "en",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "patient-discover-en-390.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient",
+      "locale": "ar",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "patient-ar-390.png"
+    },
+    {
+      "role": "PATIENT",
+      "path": "/patient/discover",
+      "locale": "ar",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "patient-discover-ar-390.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "doctor-en-1440.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/schedule",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "doctor-schedule-en-1440.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/availability",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "doctor-availability-en-1440.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/appointments/demo-my-care-visit",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "doctor-appointments-demo-my-care-visit-en-1440.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/consultation/demo-my-care-visit",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "doctor-consultation-demo-my-care-visit-en-1440.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/settings",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "doctor-settings-en-1440.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor",
+      "locale": "ar",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "doctor-ar-1440.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/schedule",
+      "locale": "ar",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "doctor-schedule-ar-1440.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor",
+      "locale": "en",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "doctor-en-390.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/schedule",
+      "locale": "en",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "doctor-schedule-en-390.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor",
+      "locale": "ar",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "doctor-ar-390.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/schedule",
+      "locale": "ar",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "doctor-schedule-ar-390.png"
+    },
+    {
+      "role": "PHARMACY_STAFF",
+      "path": "/pharmacy",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "pharmacy-en-1440.png"
+    },
+    {
+      "role": "PHARMACY_STAFF",
+      "path": "/pharmacy/settings",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "pharmacy-settings-en-1440.png"
+    },
+    {
+      "role": "PHARMACY_STAFF",
+      "path": "/pharmacy",
+      "locale": "ar",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "pharmacy-ar-1440.png"
+    },
+    {
+      "role": "PHARMACY_STAFF",
+      "path": "/pharmacy",
+      "locale": "en",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "pharmacy-en-390.png"
+    },
+    {
+      "role": "PHARMACY_STAFF",
+      "path": "/pharmacy",
+      "locale": "ar",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "pharmacy-ar-390.png"
+    },
+    {
+      "role": "LAB_STAFF",
+      "path": "/laboratory",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "laboratory-en-1440.png"
+    },
+    {
+      "role": "LAB_STAFF",
+      "path": "/laboratory/settings",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "laboratory-settings-en-1440.png"
+    },
+    {
+      "role": "LAB_STAFF",
+      "path": "/laboratory",
+      "locale": "ar",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "laboratory-ar-1440.png"
+    },
+    {
+      "role": "LAB_STAFF",
+      "path": "/laboratory",
+      "locale": "en",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "laboratory-en-390.png"
+    },
+    {
+      "role": "LAB_STAFF",
+      "path": "/laboratory",
+      "locale": "ar",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "laboratory-ar-390.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "admin-en-1440.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin/organizations",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "admin-organizations-en-1440.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin/users",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "admin-users-en-1440.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin/directory",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "admin-directory-en-1440.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin/scheduling",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "admin-scheduling-en-1440.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin/settings",
+      "locale": "en",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "admin-settings-en-1440.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin",
+      "locale": "ar",
+      "width": 1440,
+      "mode": "demo",
+      "screenshot": "admin-ar-1440.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin",
+      "locale": "en",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "admin-en-390.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin",
+      "locale": "ar",
+      "width": 390,
+      "mode": "demo",
+      "screenshot": "admin-ar-390.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/consultation/00000000-0000-4000-8000-000000000003/documentation",
+      "locale": "en",
+      "width": 1440,
+      "mode": "controlled Live signed projection",
+      "screenshot": "clinician-documentation-en-1440.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/consultation/00000000-0000-4000-8000-000000000003/documentation",
+      "locale": "en",
+      "width": 390,
+      "mode": "controlled Live signed projection",
+      "screenshot": "clinician-documentation-en-390.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/consultation/00000000-0000-4000-8000-000000000003/documentation",
+      "locale": "ar",
+      "width": 1440,
+      "mode": "controlled Live signed projection",
+      "screenshot": "clinician-documentation-ar-1440.png"
+    },
+    {
+      "role": "CLINICIAN",
+      "path": "/doctor/consultation/00000000-0000-4000-8000-000000000003/documentation",
+      "locale": "ar",
+      "width": 390,
+      "mode": "controlled Live signed projection",
+      "screenshot": "clinician-documentation-ar-390.png"
+    },
+    {
+      "role": "PHARMACY_STAFF",
+      "path": "/pharmacy",
+      "locale": "en",
+      "width": 1440,
+      "mode": "controlled Live unavailable scope",
+      "screenshot": "pharmacy_staff-live-en-1440.png"
+    },
+    {
+      "role": "PHARMACY_STAFF",
+      "path": "/pharmacy",
+      "locale": "ar",
+      "width": 390,
+      "mode": "controlled Live unavailable scope",
+      "screenshot": "pharmacy_staff-live-ar-390.png"
+    },
+    {
+      "role": "LAB_STAFF",
+      "path": "/laboratory",
+      "locale": "en",
+      "width": 1440,
+      "mode": "controlled Live unavailable scope",
+      "screenshot": "lab_staff-live-en-1440.png"
+    },
+    {
+      "role": "LAB_STAFF",
+      "path": "/laboratory",
+      "locale": "ar",
+      "width": 390,
+      "mode": "controlled Live unavailable scope",
+      "screenshot": "lab_staff-live-ar-390.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin",
+      "locale": "en",
+      "width": 1440,
+      "mode": "controlled Live unavailable scope",
+      "screenshot": "admin-live-en-1440.png"
+    },
+    {
+      "role": "ADMIN",
+      "path": "/admin",
+      "locale": "ar",
+      "width": 390,
+      "mode": "controlled Live unavailable scope",
+      "screenshot": "admin-live-ar-390.png"
+    }
+  ],
+  "errors": []
+}

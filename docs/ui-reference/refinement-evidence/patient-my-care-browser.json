@@ -1,0 +1,175 @@
+{
+  "desktop": {
+    "width": 1600,
+    "height": 1000
+  },
+  "mobile": {
+    "width": 390,
+    "height": 844
+  },
+  "screens": [
+    "patient-my-care-desktop-en.png",
+    "patient-my-care-320-en.png",
+    "patient-my-care-mobile-en.png",
+    "patient-my-care-mobile-en-full.png",
+    "patient-my-care-text-200-en.png",
+    "patient-my-care-focus-en.png",
+    "patient-my-care-loading-en.png",
+    "patient-my-care-empty-en.png",
+    "patient-my-care-error-en.png",
+    "patient-my-care-uncertain-en.png",
+    "patient-my-care-desktop-ar.png",
+    "patient-my-care-320-ar.png",
+    "patient-my-care-mobile-ar.png",
+    "patient-my-care-mobile-ar-full.png",
+    "patient-my-care-text-200-ar.png",
+    "patient-my-care-focus-ar.png",
+    "patient-my-care-loading-ar.png",
+    "patient-my-care-empty-ar.png",
+    "patient-my-care-error-ar.png",
+    "patient-my-care-uncertain-ar.png",
+    "patient-my-care-live-desktop-en.png",
+    "patient-my-care-live-error-en.png",
+    "patient-my-care-live-desktop-ar.png",
+    "patient-my-care-live-error-ar.png"
+  ],
+  "reflow": [
+    {
+      "locale": "en",
+      "width": 1440,
+      "scroll": 1440
+    },
+    {
+      "locale": "en",
+      "width": 1200,
+      "scroll": 1200
+    },
+    {
+      "locale": "en",
+      "width": 1024,
+      "scroll": 1024
+    },
+    {
+      "locale": "en",
+      "width": 834,
+      "scroll": 834
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "scroll": 320
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "scroll": 1440
+    },
+    {
+      "locale": "ar",
+      "width": 1200,
+      "scroll": 1200
+    },
+    {
+      "locale": "ar",
+      "width": 1024,
+      "scroll": 1024
+    },
+    {
+      "locale": "ar",
+      "width": 834,
+      "scroll": 834
+    },
+    {
+      "locale": "ar",
+      "width": 768,
+      "scroll": 768
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "scroll": 390
+    },
+    {
+      "locale": "ar",
+      "width": 320,
+      "scroll": 320
+    }
+  ],
+  "textResize": [
+    {
+      "locale": "en",
+      "width": 390,
+      "scale": 2
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "scale": 2
+    }
+  ],
+  "focus": [
+    {
+      "locale": "en",
+      "tag": "A",
+      "outline": "solid"
+    },
+    {
+      "locale": "ar",
+      "tag": "A",
+      "outline": "solid"
+    }
+  ],
+  "live": [
+    {
+      "locale": "en",
+      "profileFailureKeepsAppointments": true,
+      "sourceVerification": true,
+      "liveFailureStaysLive": true,
+      "expiredSessionRecovery": true,
+      "visibleModeAt320": true,
+      "methods": [
+        "GET"
+      ],
+      "paths": [
+        "/api/v1/auth/me",
+        "/api/v1/directory/providers",
+        "/api/v1/directory/clinics",
+        "/api/v1/me/profile",
+        "/api/v1/me/bookings",
+        "/api/v1/me/summaries",
+        "/api/v1/me/follow-up-intents"
+      ]
+    },
+    {
+      "locale": "ar",
+      "profileFailureKeepsAppointments": true,
+      "sourceVerification": true,
+      "liveFailureStaysLive": true,
+      "expiredSessionRecovery": true,
+      "visibleModeAt320": true,
+      "methods": [
+        "GET"
+      ],
+      "paths": [
+        "/api/v1/auth/me",
+        "/api/v1/directory/providers",
+        "/api/v1/directory/clinics",
+        "/api/v1/me/profile",
+        "/api/v1/me/bookings",
+        "/api/v1/me/summaries",
+        "/api/v1/me/follow-up-intents"
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,307 @@
+import { testR1OperationalPortals } from "./support/ui-r1-portals-real.mjs";
+import { r1Capture } from "./support/ui-r1-evidence.mjs";
+/** Opt-in synthetic PostgreSQL/browser proof using existing approved Slice 2 test fixtures. */
+import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import { createServer, request } from "node:http";
+import { chromium } from "playwright";
+import { isolatedBookings } from "../tests/support/bookings.mjs";
+import {
+  createDatabase,
+  createAuthorizationPersistence,
+  createBloodPressureMeasurementPersistence,
+  createFollowUpAppointmentPersistence,
+  createClinicalEncounterPersistence,
+  createPatientEntryPersistence,
+  createPrescriptionPersistence,
+  createRelationshipPersistence,
+  createDocumentationPersistence,
+  createFollowUpIntentPersistence,
+} from "../packages/db/dist/index.js";
+import { patientEntryRuntime } from "../apps/api/dist/patient-entry.js";
+import { createApp } from "../apps/api/dist/app.js";
+import { createPasswordVerifier } from "../apps/api/dist/password.js";
+import { testRealConsultation } from "./support/ui-consultation-opening-real.mjs";
+import { testRealDocumentation } from "./support/ui-documentation-real.mjs";
+import { testRealBooking } from "./support/ui-booking-real.mjs";
+assert.ok(
+  process.env.DATABASE_URL,
+  "A disposable PostgreSQL DATABASE_URL is required.",
+);
+let browser;
+try {
+  browser = await chromium.launch({
+    headless: true,
+    ...(process.env.EH_UI_CHROMIUM
+      ? { executablePath: process.env.EH_UI_CHROMIUM }
+      : {}),
+  });
+  await isolatedBookings(async (f) => {
+    // Current Nest directory/relationship/availability/Booking/opening wiring.
+    // Same isolated database; no HTTP stubs or direct assignment helper.
+    const database = createDatabase(f.url);
+    const relationships = createRelationshipPersistence(f.url);
+    const documentation = createDocumentationPersistence(f.url);
+    const intents = createFollowUpIntentPersistence(f.url);
+    // Same optional modules as the actual API entrypoint, including own profile/record
+    // readers. Missing test wiring must not masquerade as a product availability limit.
+    const authorization = createAuthorizationPersistence(f.url);
+    const bloodPressure = createBloodPressureMeasurementPersistence(f.url);
+    const appointments = createFollowUpAppointmentPersistence(f.url);
+    const encounters = createClinicalEncounterPersistence(f.url);
+    const patientEntry = createPatientEntryPersistence(f.url);
+    const prescriptions = createPrescriptionPersistence(f.url);
+    const api = await createApp(
+      database,
+      {
+        config: f.config,
+        store: f.auth,
+        passwords: await createPasswordVerifier(),
+      },
+      authorization,
+      bloodPressure,
+      { appointments, encounters },
+      patientEntryRuntime(patientEntry),
+      f.directory,
+      relationships,
+      f.availability,
+      f.bookings,
+      f.consultations,
+      documentation,
+      intents,
+      prescriptions,
+    );
+    await api.listen(0, "127.0.0.1");
+    const backend = await api.getUrl();
+    const networkFault = {
+      dropNextCloseSuccess: false,
+      closesDropped: 0,
+      dropNextOpeningSuccess: false,
+      dropped: 0,
+      dropDocumentSuffix: "",
+      documentsDropped: 0,
+      dropFollowUpSuffix: "",
+      followUpsDropped: 0,
+    };
+    const proxy = createServer((incoming, outgoing) => {
+      const upstream = request(
+        backend + incoming.url,
+        { method: incoming.method, headers: incoming.headers },
+        (r) => {
+          // A genuine committed response is lost once, not replaced by a fake
+          // backend outcome. The user must explicitly retry the same command.
+          if (networkFault.dropNextCloseSuccess && incoming.method === "PUT" && incoming.url.endsWith("/close") && r.statusCode === 200) {
+            networkFault.dropNextCloseSuccess = false;
+            networkFault.closesDropped++;
+            r.resume();
+            r.once("end", () => outgoing.destroy());
+            return;
+          }
+          if (
+            networkFault.dropNextOpeningSuccess &&
+            incoming.url.endsWith("/consultation") &&
+            r.statusCode === 200
+          ) {
+            networkFault.dropNextOpeningSuccess = false;
+            networkFault.dropped++;
+            r.resume();
+            r.once("end", () => outgoing.destroy());
+            return;
+          }
+          if (
+            networkFault.dropFollowUpSuffix &&
+            incoming.method === "POST" &&
+            incoming.url.endsWith(networkFault.dropFollowUpSuffix) &&
+            r.statusCode === 200
+          ) {
+            networkFault.dropFollowUpSuffix = "";
+            networkFault.followUpsDropped++;
+            r.resume();
+            r.once("end", () => outgoing.destroy());
+            return;
+          }
+          if (
+            networkFault.dropDocumentSuffix &&
+            incoming.method === "POST" &&
+            incoming.url.endsWith(networkFault.dropDocumentSuffix) &&
+            r.statusCode === 200
+          ) {
+            networkFault.dropDocumentSuffix = "";
+            networkFault.documentsDropped++;
+            r.resume();
+            r.once("end", () => outgoing.destroy());
+            return;
+          }
+          outgoing.writeHead(r.statusCode, r.headers);
+          r.pipe(outgoing);
+        },
+      );
+      upstream.on("error", () => {
+        outgoing.writeHead(503);
+        outgoing.end();
+      });
+      incoming.pipe(upstream);
+    });
+    await new Promise((resolve, reject) => {
+      proxy.once("error", reject);
+      proxy.listen(3001, "127.0.0.1", resolve);
+    });
+    const web = spawn(
+      process.execPath,
+      [
+        "apps/web/node_modules/next/dist/bin/next",
+        "start",
+        "apps/web",
+        "--hostname",
+        "127.0.0.1",
+        "--port",
+        "3000",
+      ],
+      {
+        env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1" },
+        stdio: "ignore",
+      },
+    );
+    const webExit = new Promise((resolve) => web.once("exit", resolve));
+    try {
+      let ready = false;
+      for (let i = 0; i < 100; i++) {
+        try {
+          if ((await fetch("http://localhost:3000")).ok) {
+            ready = true;
+            break;
+          }
+        } catch {
+          /* Startup. */
+        }
+        await new Promise((r) => setTimeout(r, 100));
+      }
+      assert.ok(ready, "Built web server must start on port 3000.");
+      const page = await browser.newPage({
+        viewport: { width: 1440, height: 1000 },
+        timezoneId: "Asia/Tokyo",
+      });
+      page.setDefaultTimeout(15000);
+      const errors = [];
+      page.on("pageerror", (e) => errors.push(e.message));
+      const login = async (key) => {
+        await page.goto("http://localhost:3000");
+        await page.getByLabel("Email address").fill(f.users[key].email);
+        await page.getByLabel("Password", { exact: true }).fill(f.password);
+        await page
+          .getByRole("button", { name: "Sign in with live account" })
+          .click();
+        await page.getByText("Live care", { exact: true }).waitFor();
+      };
+      await login("clinician");
+      await page.goto("http://localhost:3000/doctor/availability");
+      await page.getByText("No published intervals", { exact: true }).waitFor();
+      const input = f.input();
+      await page
+        .getByLabel("Publication clinic")
+        .selectOption(f.clinic.publicId);
+      await page.getByLabel("Starts at").fill(input.startAt);
+      await page.getByLabel("Ends at").fill(input.endAt);
+      await page
+        .getByRole("button", { name: "Publish interval", exact: true })
+        .click();
+      await page.getByText("Published", { exact: true }).waitFor();
+      assert.equal((await f.request(f.path)).json.meta.total, 1);
+      const overlap = f.input(15);
+      await page.getByLabel("Starts at").fill(overlap.startAt);
+      await page.getByLabel("Ends at").fill(overlap.endAt);
+      await page
+        .getByRole("button", { name: "Publish interval", exact: true })
+        .click();
+      await page.locator(".form-error[role=alert]").waitFor();
+      assert.ok(
+        (await page.locator(".form-error[role=alert]").innerText()).includes(
+          "conflicts",
+        ),
+      );
+      assert.equal((await f.request(f.path)).json.meta.total, 1);
+      const adjacent = f.input(30);
+      await page.getByLabel("Starts at").fill(adjacent.startAt);
+      await page.getByLabel("Ends at").fill(adjacent.endAt);
+      await page
+        .getByRole("button", { name: "Publish interval", exact: true })
+        .click();
+      await page
+        .getByText("Availability published.", { exact: true })
+        .waitFor();
+      await page
+        .getByRole("button", { name: "Withdraw interval", exact: true })
+        .first()
+        .click();
+      await page.getByText("Withdrawn", { exact: true }).waitFor();
+      assert.equal((await f.request(f.path)).json.meta.total, 1);
+      await page.getByRole("button", { name: "Sign out" }).click();
+      await page
+        .getByRole("button", { name: "Explore the patient demo" })
+        .waitFor();
+      await login("patient");
+      await r1Capture(page, "my-care-live-en");
+      await page.locator('header a[href="/patient/discover"]').click();
+      await page.locator(`a[href="/patient/doctors/${f.provider.publicId}"]`).last().click();
+      await page.locator(".live-slots button").first().waitFor();
+      await r1Capture(page, "provider-live-en");
+      await page.goBack();
+      await page.locator(".provider-grid").waitFor();
+      await r1Capture(page, "discovery-live-en");
+      await page.goForward();
+      await page.locator(".live-slots button").first().waitFor();
+      await page.getByRole("button", { name: "العربية", exact: true }).click();
+      await page.locator(".live-slots button").first().waitFor();
+      await r1Capture(page, "provider-live-ar");
+      const slotText = await page.locator(".live-slots button").first().innerText();
+      assert.ok(slotText.includes("بالتوقيت العالمي"));
+      // The human label still describes the real fixture zone; localize presentation only.
+      assert.ok(slotText.includes(new Intl.DateTimeFormat("en-GB", {
+        timeZone: f.settings.timeZone, hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+      }).format(new Date(adjacent.startAt))));
+      assert.ok(slotText.includes(new Intl.DateTimeFormat("ar-EG-u-nu-latn", {
+        timeZone: f.settings.timeZone, day: "numeric", month: "short", year: "numeric",
+      }).format(new Date(adjacent.startAt))));
+      const before = (await f.availability.history(f.actors.clinician, {}))
+        .data;
+      const { attended } = await testRealBooking(page, f);
+      await testRealConsultation(page, f, attended, networkFault);
+      await testRealDocumentation(
+        browser,
+        page,
+        { ...f, intents },
+        networkFault,
+      );
+      await testR1OperationalPortals(browser, f);
+      assert.deepEqual(
+        (await f.availability.history(f.actors.clinician, {})).data.filter(
+          (s) => before.some((v) => v.id === s.id),
+        ),
+        before,
+      );
+      assert.deepEqual(errors, []);
+      await page.close();
+      console.log(
+        "PASS: real Nest/PostgreSQL/browser availability list, finite publish, overlap error, terminal withdrawal, public clinic timezone, real Booking lifecycle; original availability publication history retained; separate relationship-gated Consultation Opening proof PASS.",
+      );
+    } finally {
+      web.kill("SIGTERM");
+      await webExit;
+      proxy.closeAllConnections();
+      await new Promise((resolve) => proxy.close(resolve));
+      await api.close();
+      await documentation.close();
+      await intents.close();
+      await relationships.close();
+      await database.close();
+      await authorization.close();
+      await bloodPressure.close();
+      await appointments.close();
+      await encounters.close();
+      await patientEntry.close();
+      await prescriptions.close();
+    }
+  });
+} finally {
+  await browser?.close();
+}

@@ -1,0 +1,370 @@
+[
+  {
+    "direction": "d",
+    "role": "ink/bg",
+    "foreground": "#17212b",
+    "background": "#f7f9fb",
+    "ratio": 15.44,
+    "target": 4.5
+  },
+  {
+    "direction": "d",
+    "role": "ink/surface",
+    "foreground": "#17212b",
+    "background": "#ffffff",
+    "ratio": 16.29,
+    "target": 4.5
+  },
+  {
+    "direction": "d",
+    "role": "muted/bg",
+    "foreground": "#536273",
+    "background": "#f7f9fb",
+    "ratio": 5.92,
+    "target": 4.5
+  },
+  {
+    "direction": "d",
+    "role": "muted/surface",
+    "foreground": "#536273",
+    "background": "#ffffff",
+    "ratio": 6.25,
+    "target": 4.5
+  },
+  {
+    "direction": "d",
+    "role": "accent/bg",
+    "foreground": "#155b83",
+    "background": "#f7f9fb",
+    "ratio": 6.97,
+    "target": 4.5
+  },
+  {
+    "direction": "d",
+    "role": "accent/soft",
+    "foreground": "#155b83",
+    "background": "#eaf3f8",
+    "ratio": 6.54,
+    "target": 4.5
+  },
+  {
+    "direction": "d",
+    "role": "on-accent/accent",
+    "foreground": "#ffffff",
+    "background": "#155b83",
+    "ratio": 7.35,
+    "target": 4.5
+  },
+  {
+    "direction": "d",
+    "role": "good/good-bg",
+    "foreground": "#216648",
+    "background": "#e9f5ee",
+    "ratio": 6.13,
+    "target": 4.5
+  },
+  {
+    "direction": "d",
+    "role": "warn/warn-bg",
+    "foreground": "#805614",
+    "background": "#fff5dc",
+    "ratio": 5.94,
+    "target": 4.5
+  },
+  {
+    "direction": "d",
+    "role": "error/surface",
+    "foreground": "#b33636",
+    "background": "#ffffff",
+    "ratio": 6.0,
+    "target": 4.5
+  },
+  {
+    "direction": "d",
+    "role": "line-strong/surface",
+    "foreground": "#8092a3",
+    "background": "#ffffff",
+    "ratio": 3.2,
+    "target": 3
+  },
+  {
+    "direction": "d",
+    "role": "line-strong/bg",
+    "foreground": "#8092a3",
+    "background": "#f7f9fb",
+    "ratio": 3.03,
+    "target": 3
+  },
+  {
+    "direction": "d",
+    "role": "focus/surface",
+    "foreground": "#006b99",
+    "background": "#ffffff",
+    "ratio": 5.89,
+    "target": 3
+  },
+  {
+    "direction": "e",
+    "role": "ink/bg",
+    "foreground": "#172b29",
+    "background": "#ffffff",
+    "ratio": 14.85,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "ink/surface",
+    "foreground": "#172b29",
+    "background": "#ffffff",
+    "ratio": 14.85,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "muted/bg",
+    "foreground": "#536762",
+    "background": "#ffffff",
+    "ratio": 6.03,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "muted/surface",
+    "foreground": "#536762",
+    "background": "#ffffff",
+    "ratio": 6.03,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "accent/bg",
+    "foreground": "#205c4e",
+    "background": "#ffffff",
+    "ratio": 7.77,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "accent/soft",
+    "foreground": "#205c4e",
+    "background": "#e8f3ed",
+    "ratio": 6.84,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "on-accent/accent",
+    "foreground": "#ffffff",
+    "background": "#205c4e",
+    "ratio": 7.77,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "good/good-bg",
+    "foreground": "#216648",
+    "background": "#e9f5ee",
+    "ratio": 6.13,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "warn/warn-bg",
+    "foreground": "#805614",
+    "background": "#fff5dc",
+    "ratio": 5.94,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "error/surface",
+    "foreground": "#b33636",
+    "background": "#ffffff",
+    "ratio": 6.0,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "line-strong/surface",
+    "foreground": "#768e83",
+    "background": "#ffffff",
+    "ratio": 3.52,
+    "target": 3
+  },
+  {
+    "direction": "e",
+    "role": "line-strong/bg",
+    "foreground": "#768e83",
+    "background": "#ffffff",
+    "ratio": 3.52,
+    "target": 3
+  },
+  {
+    "direction": "e",
+    "role": "focus/surface",
+    "foreground": "#006b56",
+    "background": "#ffffff",
+    "ratio": 6.49,
+    "target": 3
+  },
+  {
+    "direction": "f",
+    "role": "ink/bg",
+    "foreground": "#e9f0f5",
+    "background": "#11171d",
+    "ratio": 15.67,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "ink/surface",
+    "foreground": "#e9f0f5",
+    "background": "#182129",
+    "ratio": 14.16,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "muted/bg",
+    "foreground": "#a4b4c1",
+    "background": "#11171d",
+    "ratio": 8.48,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "muted/surface",
+    "foreground": "#a4b4c1",
+    "background": "#182129",
+    "ratio": 7.67,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "accent/bg",
+    "foreground": "#8bd9ea",
+    "background": "#11171d",
+    "ratio": 11.35,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "accent/soft",
+    "foreground": "#8bd9ea",
+    "background": "#233e49",
+    "ratio": 7.12,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "on-accent/accent",
+    "foreground": "#122831",
+    "background": "#8bd9ea",
+    "ratio": 9.62,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "good/good-bg",
+    "foreground": "#9adbb7",
+    "background": "#203e32",
+    "ratio": 7.34,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "warn/warn-bg",
+    "foreground": "#f1ca7c",
+    "background": "#3c3221",
+    "ratio": 8.07,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "error/surface",
+    "foreground": "#ff9e9e",
+    "background": "#182129",
+    "ratio": 8.26,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "line-strong/surface",
+    "foreground": "#647785",
+    "background": "#182129",
+    "ratio": 3.51,
+    "target": 3
+  },
+  {
+    "direction": "f",
+    "role": "line-strong/bg",
+    "foreground": "#647785",
+    "background": "#11171d",
+    "ratio": 3.88,
+    "target": 3
+  },
+  {
+    "direction": "f",
+    "role": "focus/surface",
+    "foreground": "#8bd9ea",
+    "background": "#182129",
+    "ratio": 10.25,
+    "target": 3
+  },
+  {
+    "direction": "e",
+    "role": "appointment muted",
+    "foreground": "#d7e9e1",
+    "background": "#205c4e",
+    "ratio": 6.15,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "appointment button",
+    "foreground": "#205c4e",
+    "background": "#ffffff",
+    "ratio": 7.77,
+    "target": 4.5
+  },
+  {
+    "direction": "e",
+    "role": "appointment avatar",
+    "foreground": "#ffffff",
+    "background": "#427768",
+    "ratio": 5.16,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "appointment ink",
+    "foreground": "#142831",
+    "background": "#e9f3f6",
+    "ratio": 13.51,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "appointment muted",
+    "foreground": "#455f6c",
+    "background": "#e9f3f6",
+    "ratio": 5.99,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "appointment action",
+    "foreground": "#ffffff",
+    "background": "#164f63",
+    "ratio": 9.0,
+    "target": 4.5
+  },
+  {
+    "direction": "f",
+    "role": "appointment status",
+    "foreground": "#20533e",
+    "background": "#d2e7dd",
+    "ratio": 6.85,
+    "target": 4.5
+  }
+]

@@ -1,0 +1,2125 @@
+{
+  "base": "47fa8e8bafaac1b96d4ba0065a65250f80448156",
+  "results": [
+    {
+      "kind": "desktop",
+      "locale": "en",
+      "viewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "scrollWidth": 1600,
+      "anchor": {
+        "x": 120,
+        "y": 211.390625,
+        "width": 890.65625,
+        "height": 210.53125
+      },
+      "main": {
+        "x": 80,
+        "y": 73,
+        "width": 1440,
+        "height": 756.765625
+      },
+      "gridColumns": "890.656px 445.344px",
+      "gridGap": "24px",
+      "shortcuts": {
+        "x": 120,
+        "y": 502.578125,
+        "width": 1360,
+        "height": 82
+      },
+      "shortcutItems": [
+        {
+          "x": 121,
+          "y": 503.578125,
+          "width": 339.5,
+          "height": 80
+        },
+        {
+          "x": 460.5,
+          "y": 503.578125,
+          "width": 339.5,
+          "height": 80
+        },
+        {
+          "x": 800,
+          "y": 503.578125,
+          "width": 339.5,
+          "height": 80
+        },
+        {
+          "x": 1139.5,
+          "y": 503.578125,
+          "width": 339.5,
+          "height": 80
+        }
+      ],
+      "labels": [
+        {
+          "text": "Prescriptions",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Prescriptions",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "16px",
+          "wrap": "normal",
+          "box": {
+            "x": 189,
+            "y": 521.6875,
+            "width": 251.5,
+            "height": 22.390625
+          }
+        },
+        {
+          "text": "Visit summaries",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Visit",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "summaries",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "16px",
+          "wrap": "normal",
+          "box": {
+            "x": 528.5,
+            "y": 521.6875,
+            "width": 251.5,
+            "height": 22.390625
+          }
+        },
+        {
+          "text": "Available history",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Available",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "history",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "16px",
+          "wrap": "normal",
+          "box": {
+            "x": 868,
+            "y": 521.6875,
+            "width": 251.5,
+            "height": 22.390625
+          }
+        },
+        {
+          "text": "Appointments",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Appointments",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "16px",
+          "wrap": "normal",
+          "box": {
+            "x": 1207.5,
+            "y": 521.6875,
+            "width": 251.5,
+            "height": 22.390625
+          }
+        }
+      ],
+      "bottomLabels": [
+        {
+          "text": "My care",
+          "lines": 0,
+          "words": [
+            {
+              "text": "My",
+              "lines": 0,
+              "contained": true
+            },
+            {
+              "text": "care",
+              "lines": 0,
+              "contained": true
+            }
+          ],
+          "fontSize": "15px",
+          "wrap": "normal",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "text": "Find care",
+          "lines": 0,
+          "words": [
+            {
+              "text": "Find",
+              "lines": 0,
+              "contained": true
+            },
+            {
+              "text": "care",
+              "lines": 0,
+              "contained": true
+            }
+          ],
+          "fontSize": "15px",
+          "wrap": "normal",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "text": "Available history",
+          "lines": 0,
+          "words": [
+            {
+              "text": "Available",
+              "lines": 0,
+              "contained": true
+            },
+            {
+              "text": "history",
+              "lines": 0,
+              "contained": true
+            }
+          ],
+          "fontSize": "15px",
+          "wrap": "normal",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "text": "Account",
+          "lines": 0,
+          "words": [
+            {
+              "text": "Account",
+              "lines": 0,
+              "contained": true
+            }
+          ],
+          "fontSize": "15px",
+          "wrap": "normal",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ],
+      "bottomItems": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        }
+      ],
+      "demoDisclosure": "Demo · synthetic data",
+      "demoDefaultClosed": true,
+      "demoInGreeting": false
+    },
+    {
+      "kind": "mobile",
+      "locale": "en",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "anchor": {
+        "x": 20,
+        "y": 179.796875,
+        "width": 350,
+        "height": 310.03125
+      },
+      "main": {
+        "x": 0,
+        "y": 73,
+        "width": 390,
+        "height": 1102.78125
+      },
+      "gridColumns": "minmax(0px, 1.7fr) minmax(250px, 1fr)",
+      "gridGap": "28px",
+      "shortcuts": {
+        "x": 20,
+        "y": 757.015625,
+        "width": 350,
+        "height": 114
+      },
+      "shortcutItems": [
+        {
+          "x": 25,
+          "y": 770.015625,
+          "width": 85,
+          "height": 88
+        },
+        {
+          "x": 110,
+          "y": 770.015625,
+          "width": 85,
+          "height": 88
+        },
+        {
+          "x": 195,
+          "y": 770.015625,
+          "width": 85,
+          "height": 88
+        },
+        {
+          "x": 280,
+          "y": 770.015625,
+          "width": 85,
+          "height": 88
+        }
+      ],
+      "labels": [
+        {
+          "text": "Prescriptions",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Prescriptions",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 29.8125,
+            "y": 818.015625,
+            "width": 75.375,
+            "height": 17.390625
+          }
+        },
+        {
+          "text": "Visit summaries",
+          "lines": 2,
+          "words": [
+            {
+              "text": "Visit",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "summaries",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 112,
+            "y": 818.015625,
+            "width": 81,
+            "height": 34.78125
+          }
+        },
+        {
+          "text": "Available history",
+          "lines": 2,
+          "words": [
+            {
+              "text": "Available",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "history",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 197,
+            "y": 818.015625,
+            "width": 81,
+            "height": 34.78125
+          }
+        },
+        {
+          "text": "Appointments",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Appointments",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 282.3125,
+            "y": 818.015625,
+            "width": 80.359375,
+            "height": 17.390625
+          }
+        }
+      ],
+      "bottomLabels": [
+        {
+          "text": "My care",
+          "lines": 1,
+          "words": [
+            {
+              "text": "My",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "care",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 34.015625,
+            "y": 802.8125,
+            "width": 44.453125,
+            "height": 15.59375
+          }
+        },
+        {
+          "text": "Find care",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Find",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "care",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 123.78125,
+            "y": 802.8125,
+            "width": 49.9375,
+            "height": 15.59375
+          }
+        },
+        {
+          "text": "Available history",
+          "lines": 2,
+          "words": [
+            {
+              "text": "Available",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "history",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 199,
+            "y": 802.8125,
+            "width": 84.5,
+            "height": 31.1875
+          }
+        },
+        {
+          "text": "Account",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Account",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 310.40625,
+            "y": 802.8125,
+            "width": 46.6875,
+            "height": 15.59375
+          }
+        }
+      ],
+      "bottomItems": [
+        {
+          "x": 12,
+          "y": 773.8125,
+          "width": 88.5,
+          "height": 64.1875
+        },
+        {
+          "x": 104.5,
+          "y": 773.8125,
+          "width": 88.5,
+          "height": 64.1875
+        },
+        {
+          "x": 197,
+          "y": 773.8125,
+          "width": 88.5,
+          "height": 64.1875
+        },
+        {
+          "x": 289.5,
+          "y": 773.8125,
+          "width": 88.5,
+          "height": 64.1875
+        }
+      ],
+      "demoDisclosure": "Demo · synthetic data",
+      "demoDefaultClosed": true,
+      "demoInGreeting": false
+    },
+    {
+      "kind": "320",
+      "locale": "en",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "scrollWidth": 320,
+      "anchor": {
+        "x": 20,
+        "y": 179.796875,
+        "width": 280,
+        "height": 310.03125
+      },
+      "main": {
+        "x": 0,
+        "y": 73,
+        "width": 320,
+        "height": 1228.5625
+      },
+      "gridColumns": "minmax(0px, 1.7fr) minmax(250px, 1fr)",
+      "gridGap": "28px",
+      "shortcuts": {
+        "x": 20,
+        "y": 775.609375,
+        "width": 280,
+        "height": 202
+      },
+      "shortcutItems": [
+        {
+          "x": 25,
+          "y": 788.609375,
+          "width": 135,
+          "height": 88
+        },
+        {
+          "x": 160,
+          "y": 788.609375,
+          "width": 135,
+          "height": 88
+        },
+        {
+          "x": 25,
+          "y": 876.609375,
+          "width": 135,
+          "height": 88
+        },
+        {
+          "x": 160,
+          "y": 876.609375,
+          "width": 135,
+          "height": 88
+        }
+      ],
+      "labels": [
+        {
+          "text": "Prescriptions",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Prescriptions",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 54.8125,
+            "y": 836.609375,
+            "width": 75.375,
+            "height": 17.390625
+          }
+        },
+        {
+          "text": "Visit summaries",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Visit",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "summaries",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 183.015625,
+            "y": 836.609375,
+            "width": 88.96875,
+            "height": 17.390625
+          }
+        },
+        {
+          "text": "Available history",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Available",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "history",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 46.671875,
+            "y": 924.609375,
+            "width": 91.65625,
+            "height": 17.390625
+          }
+        },
+        {
+          "text": "Appointments",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Appointments",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 187.3125,
+            "y": 924.609375,
+            "width": 80.359375,
+            "height": 17.390625
+          }
+        }
+      ],
+      "bottomLabels": [
+        {
+          "text": "My care",
+          "lines": 1,
+          "words": [
+            {
+              "text": "My",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "care",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 62.765625,
+            "y": 734.625,
+            "width": 44.453125,
+            "height": 15.59375
+          }
+        },
+        {
+          "text": "Find care",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Find",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "care",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 210.03125,
+            "y": 734.625,
+            "width": 49.9375,
+            "height": 15.59375
+          }
+        },
+        {
+          "text": "Available history",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Available",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "history",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 40.203125,
+            "y": 802.8125,
+            "width": 89.59375,
+            "height": 15.59375
+          }
+        },
+        {
+          "text": "Account",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Account",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 211.65625,
+            "y": 802.8125,
+            "width": 46.6875,
+            "height": 15.59375
+          }
+        }
+      ],
+      "bottomItems": [
+        {
+          "x": 12,
+          "y": 705.625,
+          "width": 146,
+          "height": 64.1875
+        },
+        {
+          "x": 162,
+          "y": 705.625,
+          "width": 146,
+          "height": 64.1875
+        },
+        {
+          "x": 12,
+          "y": 773.8125,
+          "width": 146,
+          "height": 64.1875
+        },
+        {
+          "x": 162,
+          "y": 773.8125,
+          "width": 146,
+          "height": 64.1875
+        }
+      ],
+      "demoDisclosure": "Demo · synthetic data",
+      "demoDefaultClosed": true,
+      "demoInGreeting": false
+    },
+    {
+      "kind": "200%",
+      "locale": "en",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "anchor": {
+        "x": 20,
+        "y": 349.78125,
+        "width": 350,
+        "height": 671.328125
+      },
+      "main": {
+        "x": 0,
+        "y": 132.1875,
+        "width": 390,
+        "height": 2290.03125
+      },
+      "gridColumns": "minmax(0px, 1.7fr) minmax(250px, 1fr)",
+      "gridGap": "28px",
+      "shortcuts": {
+        "x": 20,
+        "y": 1596.671875,
+        "width": 350,
+        "height": 261.1875
+      },
+      "shortcutItems": [
+        {
+          "x": 25,
+          "y": 1609.671875,
+          "width": 170,
+          "height": 117.59375
+        },
+        {
+          "x": 195,
+          "y": 1609.671875,
+          "width": 170,
+          "height": 117.59375
+        },
+        {
+          "x": 25,
+          "y": 1727.265625,
+          "width": 170,
+          "height": 117.59375
+        },
+        {
+          "x": 195,
+          "y": 1727.265625,
+          "width": 170,
+          "height": 117.59375
+        }
+      ],
+      "labels": [
+        {
+          "text": "Prescriptions",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Prescriptions",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 34.625,
+            "y": 1657.671875,
+            "width": 150.75,
+            "height": 34.796875
+          }
+        },
+        {
+          "text": "Visit summaries",
+          "lines": 2,
+          "words": [
+            {
+              "text": "Visit",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "summaries",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 197,
+            "y": 1657.671875,
+            "width": 166,
+            "height": 69.59375
+          }
+        },
+        {
+          "text": "Available history",
+          "lines": 2,
+          "words": [
+            {
+              "text": "Available",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "history",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 27,
+            "y": 1775.265625,
+            "width": 166,
+            "height": 69.59375
+          }
+        },
+        {
+          "text": "Appointments",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Appointments",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 199.640625,
+            "y": 1775.265625,
+            "width": 160.71875,
+            "height": 34.796875
+          }
+        }
+      ],
+      "bottomLabels": [
+        {
+          "text": "My care",
+          "lines": 1,
+          "words": [
+            {
+              "text": "My",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "care",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 58.046875,
+            "y": 672.21875,
+            "width": 88.890625,
+            "height": 31.1875
+          }
+        },
+        {
+          "text": "Find care",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Find",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "care",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 237.5625,
+            "y": 672.21875,
+            "width": 99.875,
+            "height": 31.1875
+          }
+        },
+        {
+          "text": "Available history",
+          "lines": 2,
+          "words": [
+            {
+              "text": "Available",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "history",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 14,
+            "y": 771.609375,
+            "width": 177,
+            "height": 62.375
+          }
+        },
+        {
+          "text": "Account",
+          "lines": 1,
+          "words": [
+            {
+              "text": "Account",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 240.8125,
+            "y": 771.609375,
+            "width": 93.375,
+            "height": 31.1875
+          }
+        }
+      ],
+      "bottomItems": [
+        {
+          "x": 12,
+          "y": 643.21875,
+          "width": 181,
+          "height": 95.390625
+        },
+        {
+          "x": 197,
+          "y": 643.21875,
+          "width": 181,
+          "height": 95.390625
+        },
+        {
+          "x": 12,
+          "y": 742.609375,
+          "width": 181,
+          "height": 95.390625
+        },
+        {
+          "x": 197,
+          "y": 742.609375,
+          "width": 181,
+          "height": 95.390625
+        }
+      ],
+      "demoDisclosure": "Demo · synthetic data",
+      "demoDefaultClosed": true,
+      "demoInGreeting": false
+    },
+    {
+      "kind": "desktop",
+      "locale": "ar",
+      "viewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "scrollWidth": 1600,
+      "anchor": {
+        "x": 589.34375,
+        "y": 221,
+        "width": 890.65625,
+        "height": 216.53125
+      },
+      "main": {
+        "x": 80,
+        "y": 73,
+        "width": 1440,
+        "height": 775.71875
+      },
+      "gridColumns": "890.656px 445.344px",
+      "gridGap": "24px",
+      "shortcuts": {
+        "x": 120,
+        "y": 521.53125,
+        "width": 1360,
+        "height": 82
+      },
+      "shortcutItems": [
+        {
+          "x": 1139.5,
+          "y": 522.53125,
+          "width": 339.5,
+          "height": 80
+        },
+        {
+          "x": 800,
+          "y": 522.53125,
+          "width": 339.5,
+          "height": 80
+        },
+        {
+          "x": 460.5,
+          "y": 522.53125,
+          "width": 339.5,
+          "height": 80
+        },
+        {
+          "x": 121,
+          "y": 522.53125,
+          "width": 339.5,
+          "height": 80
+        }
+      ],
+      "labels": [
+        {
+          "text": "الروشتات",
+          "lines": 1,
+          "words": [
+            {
+              "text": "الروشتات",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "16px",
+          "wrap": "normal",
+          "box": {
+            "x": 1159.5,
+            "y": 540.640625,
+            "width": 251.5,
+            "height": 22.390625
+          }
+        },
+        {
+          "text": "ملخصات الزيارات",
+          "lines": 1,
+          "words": [
+            {
+              "text": "ملخصات",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "الزيارات",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "16px",
+          "wrap": "normal",
+          "box": {
+            "x": 820,
+            "y": 540.640625,
+            "width": 251.5,
+            "height": 22.390625
+          }
+        },
+        {
+          "text": "السجل المتاح",
+          "lines": 1,
+          "words": [
+            {
+              "text": "السجل",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "المتاح",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "16px",
+          "wrap": "normal",
+          "box": {
+            "x": 480.5,
+            "y": 540.640625,
+            "width": 251.5,
+            "height": 22.390625
+          }
+        },
+        {
+          "text": "المواعيد",
+          "lines": 1,
+          "words": [
+            {
+              "text": "المواعيد",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "16px",
+          "wrap": "normal",
+          "box": {
+            "x": 141,
+            "y": 540.640625,
+            "width": 251.5,
+            "height": 22.390625
+          }
+        }
+      ],
+      "bottomLabels": [
+        {
+          "text": "متابعتي",
+          "lines": 0,
+          "words": [
+            {
+              "text": "متابعتي",
+              "lines": 0,
+              "contained": true
+            }
+          ],
+          "fontSize": "15px",
+          "wrap": "normal",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "text": "دور على دكتور",
+          "lines": 0,
+          "words": [
+            {
+              "text": "دور",
+              "lines": 0,
+              "contained": true
+            },
+            {
+              "text": "على",
+              "lines": 0,
+              "contained": true
+            },
+            {
+              "text": "دكتور",
+              "lines": 0,
+              "contained": true
+            }
+          ],
+          "fontSize": "15px",
+          "wrap": "normal",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "text": "السجل المتاح",
+          "lines": 0,
+          "words": [
+            {
+              "text": "السجل",
+              "lines": 0,
+              "contained": true
+            },
+            {
+              "text": "المتاح",
+              "lines": 0,
+              "contained": true
+            }
+          ],
+          "fontSize": "15px",
+          "wrap": "normal",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        },
+        {
+          "text": "الحساب",
+          "lines": 0,
+          "words": [
+            {
+              "text": "الحساب",
+              "lines": 0,
+              "contained": true
+            }
+          ],
+          "fontSize": "15px",
+          "wrap": "normal",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          }
+        }
+      ],
+      "bottomItems": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        }
+      ],
+      "demoDisclosure": "عرض تجريبي · بيانات افتراضية",
+      "demoDefaultClosed": true,
+      "demoInGreeting": false
+    },
+    {
+      "kind": "mobile",
+      "locale": "ar",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "anchor": {
+        "x": 20,
+        "y": 188.390625,
+        "width": 350,
+        "height": 296.640625
+      },
+      "main": {
+        "x": 0,
+        "y": 73,
+        "width": 390,
+        "height": 1077.59375
+      },
+      "gridColumns": "minmax(0px, 1.7fr) minmax(250px, 1fr)",
+      "gridGap": "28px",
+      "shortcuts": {
+        "x": 20,
+        "y": 758.21875,
+        "width": 350,
+        "height": 114
+      },
+      "shortcutItems": [
+        {
+          "x": 280,
+          "y": 771.21875,
+          "width": 85,
+          "height": 88
+        },
+        {
+          "x": 195,
+          "y": 771.21875,
+          "width": 85,
+          "height": 88
+        },
+        {
+          "x": 110,
+          "y": 771.21875,
+          "width": 85,
+          "height": 88
+        },
+        {
+          "x": 25,
+          "y": 771.21875,
+          "width": 85,
+          "height": 88
+        }
+      ],
+      "labels": [
+        {
+          "text": "الروشتات",
+          "lines": 1,
+          "words": [
+            {
+              "text": "الروشتات",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 300.96875,
+            "y": 819.21875,
+            "width": 43.078125,
+            "height": 19.1875
+          }
+        },
+        {
+          "text": "ملخصات الزيارات",
+          "lines": 2,
+          "words": [
+            {
+              "text": "ملخصات",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "الزيارات",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 199,
+            "y": 819.21875,
+            "width": 77,
+            "height": 38.375
+          }
+        },
+        {
+          "text": "السجل المتاح",
+          "lines": 1,
+          "words": [
+            {
+              "text": "السجل",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "المتاح",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 120.609375,
+            "y": 819.21875,
+            "width": 63.78125,
+            "height": 19.1875
+          }
+        },
+        {
+          "text": "المواعيد",
+          "lines": 1,
+          "words": [
+            {
+              "text": "المواعيد",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 47.859375,
+            "y": 819.21875,
+            "width": 39.28125,
+            "height": 19.1875
+          }
+        }
+      ],
+      "bottomLabels": [
+        {
+          "text": "متابعتي",
+          "lines": 1,
+          "words": [
+            {
+              "text": "متابعتي",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 316.625,
+            "y": 800.40625,
+            "width": 34.265625,
+            "height": 16.796875
+          }
+        },
+        {
+          "text": "دور على دكتور",
+          "lines": 1,
+          "words": [
+            {
+              "text": "دور",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "على",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "دكتور",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 211.484375,
+            "y": 800.40625,
+            "width": 59.546875,
+            "height": 16.796875
+          }
+        },
+        {
+          "text": "السجل المتاح",
+          "lines": 1,
+          "words": [
+            {
+              "text": "السجل",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "المتاح",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 118.09375,
+            "y": 800.40625,
+            "width": 61.3125,
+            "height": 16.796875
+          }
+        },
+        {
+          "text": "الحساب",
+          "lines": 1,
+          "words": [
+            {
+              "text": "الحساب",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 37.703125,
+            "y": 800.40625,
+            "width": 37.109375,
+            "height": 16.796875
+          }
+        }
+      ],
+      "bottomItems": [
+        {
+          "x": 289.5,
+          "y": 771.40625,
+          "width": 88.5,
+          "height": 66.59375
+        },
+        {
+          "x": 197,
+          "y": 771.40625,
+          "width": 88.5,
+          "height": 66.59375
+        },
+        {
+          "x": 104.5,
+          "y": 771.40625,
+          "width": 88.5,
+          "height": 66.59375
+        },
+        {
+          "x": 12,
+          "y": 771.40625,
+          "width": 88.5,
+          "height": 66.59375
+        }
+      ],
+      "demoDisclosure": "عرض تجريبي · بيانات افتراضية",
+      "demoDefaultClosed": true,
+      "demoInGreeting": false
+    },
+    {
+      "kind": "320",
+      "locale": "ar",
+      "viewport": {
+        "width": 320,
+        "height": 844
+      },
+      "scrollWidth": 320,
+      "anchor": {
+        "x": 20,
+        "y": 188.390625,
+        "width": 280,
+        "height": 315.828125
+      },
+      "main": {
+        "x": 0,
+        "y": 73,
+        "width": 320,
+        "height": 1214.171875
+      },
+      "gridColumns": "minmax(0px, 1.7fr) minmax(250px, 1fr)",
+      "gridGap": "28px",
+      "shortcuts": {
+        "x": 20,
+        "y": 777.40625,
+        "width": 280,
+        "height": 202
+      },
+      "shortcutItems": [
+        {
+          "x": 160,
+          "y": 790.40625,
+          "width": 135,
+          "height": 88
+        },
+        {
+          "x": 25,
+          "y": 790.40625,
+          "width": 135,
+          "height": 88
+        },
+        {
+          "x": 160,
+          "y": 878.40625,
+          "width": 135,
+          "height": 88
+        },
+        {
+          "x": 25,
+          "y": 878.40625,
+          "width": 135,
+          "height": 88
+        }
+      ],
+      "labels": [
+        {
+          "text": "الروشتات",
+          "lines": 1,
+          "words": [
+            {
+              "text": "الروشتات",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 205.96875,
+            "y": 838.40625,
+            "width": 43.078125,
+            "height": 19.1875
+          }
+        },
+        {
+          "text": "ملخصات الزيارات",
+          "lines": 1,
+          "words": [
+            {
+              "text": "ملخصات",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "الزيارات",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 52.1875,
+            "y": 838.40625,
+            "width": 80.640625,
+            "height": 19.1875
+          }
+        },
+        {
+          "text": "السجل المتاح",
+          "lines": 1,
+          "words": [
+            {
+              "text": "السجل",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "المتاح",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 195.609375,
+            "y": 926.40625,
+            "width": 63.78125,
+            "height": 19.1875
+          }
+        },
+        {
+          "text": "المواعيد",
+          "lines": 1,
+          "words": [
+            {
+              "text": "المواعيد",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 72.859375,
+            "y": 926.40625,
+            "width": 39.28125,
+            "height": 19.1875
+          }
+        }
+      ],
+      "bottomLabels": [
+        {
+          "text": "متابعتي",
+          "lines": 1,
+          "words": [
+            {
+              "text": "متابعتي",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 217.875,
+            "y": 729.8125,
+            "width": 34.265625,
+            "height": 16.796875
+          }
+        },
+        {
+          "text": "دور على دكتور",
+          "lines": 1,
+          "words": [
+            {
+              "text": "دور",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "على",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "دكتور",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 55.234375,
+            "y": 729.8125,
+            "width": 59.546875,
+            "height": 16.796875
+          }
+        },
+        {
+          "text": "السجل المتاح",
+          "lines": 1,
+          "words": [
+            {
+              "text": "السجل",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "المتاح",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 204.34375,
+            "y": 800.40625,
+            "width": 61.3125,
+            "height": 16.796875
+          }
+        },
+        {
+          "text": "الحساب",
+          "lines": 1,
+          "words": [
+            {
+              "text": "الحساب",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "12px",
+          "wrap": "normal",
+          "box": {
+            "x": 66.453125,
+            "y": 800.40625,
+            "width": 37.109375,
+            "height": 16.796875
+          }
+        }
+      ],
+      "bottomItems": [
+        {
+          "x": 162,
+          "y": 700.8125,
+          "width": 146,
+          "height": 66.59375
+        },
+        {
+          "x": 12,
+          "y": 700.8125,
+          "width": 146,
+          "height": 66.59375
+        },
+        {
+          "x": 162,
+          "y": 771.40625,
+          "width": 146,
+          "height": 66.59375
+        },
+        {
+          "x": 12,
+          "y": 771.40625,
+          "width": 146,
+          "height": 66.59375
+        }
+      ],
+      "demoDisclosure": "عرض تجريبي · بيانات افتراضية",
+      "demoDefaultClosed": true,
+      "demoInGreeting": false
+    },
+    {
+      "kind": "200%",
+      "locale": "ar",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scrollWidth": 390,
+      "anchor": {
+        "x": 20,
+        "y": 306.984375,
+        "width": 350,
+        "height": 553.328125
+      },
+      "main": {
+        "x": 0,
+        "y": 132.1875,
+        "width": 390,
+        "height": 1849.46875
+      },
+      "gridColumns": "minmax(0px, 1.7fr) minmax(250px, 1fr)",
+      "gridGap": "28px",
+      "shortcuts": {
+        "x": 20,
+        "y": 1272.6875,
+        "width": 350,
+        "height": 202
+      },
+      "shortcutItems": [
+        {
+          "x": 195,
+          "y": 1285.6875,
+          "width": 170,
+          "height": 88
+        },
+        {
+          "x": 25,
+          "y": 1285.6875,
+          "width": 170,
+          "height": 88
+        },
+        {
+          "x": 195,
+          "y": 1373.6875,
+          "width": 170,
+          "height": 88
+        },
+        {
+          "x": 25,
+          "y": 1373.6875,
+          "width": 170,
+          "height": 88
+        }
+      ],
+      "labels": [
+        {
+          "text": "الروشتات",
+          "lines": 1,
+          "words": [
+            {
+              "text": "الروشتات",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 236.9375,
+            "y": 1333.6875,
+            "width": 86.140625,
+            "height": 38.390625
+          }
+        },
+        {
+          "text": "ملخصات الزيارات",
+          "lines": 1,
+          "words": [
+            {
+              "text": "ملخصات",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "الزيارات",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 29.359375,
+            "y": 1333.6875,
+            "width": 161.28125,
+            "height": 38.390625
+          }
+        },
+        {
+          "text": "السجل المتاح",
+          "lines": 1,
+          "words": [
+            {
+              "text": "السجل",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "المتاح",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 216.234375,
+            "y": 1421.6875,
+            "width": 127.546875,
+            "height": 38.390625
+          }
+        },
+        {
+          "text": "المواعيد",
+          "lines": 1,
+          "words": [
+            {
+              "text": "المواعيد",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 70.71875,
+            "y": 1421.6875,
+            "width": 78.5625,
+            "height": 38.390625
+          }
+        }
+      ],
+      "bottomLabels": [
+        {
+          "text": "متابعتي",
+          "lines": 1,
+          "words": [
+            {
+              "text": "متابعتي",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 253.234375,
+            "y": 662.625,
+            "width": 68.53125,
+            "height": 33.59375
+          }
+        },
+        {
+          "text": "دور على دكتور",
+          "lines": 1,
+          "words": [
+            {
+              "text": "دور",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "على",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "دكتور",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 42.953125,
+            "y": 662.625,
+            "width": 119.09375,
+            "height": 33.59375
+          }
+        },
+        {
+          "text": "السجل المتاح",
+          "lines": 1,
+          "words": [
+            {
+              "text": "السجل",
+              "lines": 1,
+              "contained": true
+            },
+            {
+              "text": "المتاح",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 226.1875,
+            "y": 766.8125,
+            "width": 122.625,
+            "height": 33.59375
+          }
+        },
+        {
+          "text": "الحساب",
+          "lines": 1,
+          "words": [
+            {
+              "text": "الحساب",
+              "lines": 1,
+              "contained": true
+            }
+          ],
+          "fontSize": "24px",
+          "wrap": "normal",
+          "box": {
+            "x": 65.390625,
+            "y": 766.8125,
+            "width": 74.21875,
+            "height": 33.59375
+          }
+        }
+      ],
+      "bottomItems": [
+        {
+          "x": 197,
+          "y": 633.625,
+          "width": 181,
+          "height": 100.1875
+        },
+        {
+          "x": 12,
+          "y": 633.625,
+          "width": 181,
+          "height": 100.1875
+        },
+        {
+          "x": 197,
+          "y": 737.8125,
+          "width": 181,
+          "height": 100.1875
+        },
+        {
+          "x": 12,
+          "y": 737.8125,
+          "width": 181,
+          "height": 100.1875
+        }
+      ],
+      "demoDisclosure": "عرض تجريبي · بيانات افتراضية",
+      "demoDefaultClosed": true,
+      "demoInGreeting": false
+    }
+  ]
+}

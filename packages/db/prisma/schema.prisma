@@ -1,0 +1,1356 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  PATIENT
+  CLINICIAN
+  ADMIN
+  LAB_STAFF
+  PHARMACY_STAFF
+
+  @@map("user_role")
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+
+  @@map("user_status")
+}
+
+enum AssignmentStatus {
+  ACTIVE
+  ENDED
+
+  @@map("assignment_status")
+}
+
+enum RelationshipRequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  WITHDRAWN
+  @@map("relationship_request_status")
+}
+
+model User {
+  schedulingChanges ClinicSchedulingSettings[] @relation("SchedulingActor")
+  availabilityPublications AvailabilitySlot[] @relation("AvailabilityPublisher")
+  availabilityWithdrawals AvailabilitySlot[] @relation("AvailabilityWithdrawer")
+  availabilityOperations AvailabilityOperation[]
+  relationshipEnds AssignmentEndProvenance[]
+  relationshipAcceptances RelationshipRequest[] @relation("RelationshipAcceptor")
+  relationshipDeclines RelationshipRequest[] @relation("RelationshipDecliner")
+  relationshipWithdrawals RelationshipRequest[] @relation("RelationshipWithdrawer")
+  directorySpecialtyCreations Specialty[] @relation("SpecialtyCreator")
+  directorySpecialtyChanges Specialty[] @relation("SpecialtyActor")
+  directoryClinicDirectoryCreations ClinicDirectory[] @relation("ClinicDirectoryCreator")
+  directoryClinicDirectoryChanges ClinicDirectory[] @relation("ClinicDirectoryActor")
+  directoryClinicianDirectoryCreations ClinicianDirectory[] @relation("ClinicianDirectoryCreator")
+  directoryClinicianDirectoryChanges ClinicianDirectory[] @relation("ClinicianDirectoryActor")
+  directoryPublications DirectoryAffiliation[] @relation("DirectoryPublisher")
+  directoryWithdrawals DirectoryAffiliation[] @relation("DirectoryWithdrawer")
+  organizationCreations Organization[] @relation("OrganizationCreator")
+  organizationStatusChanges Organization[] @relation("OrganizationStatusActor")
+  organizationMemberships OrganizationMembership[] @relation("MembershipUser")
+  membershipGrants OrganizationMembership[] @relation("MembershipGrantActor")
+  membershipEnds OrganizationMembership[] @relation("MembershipEndActor")
+  careActionSelections CareActionDecision[]
+
+  bpAmendments BpAmendmentOperation[]
+  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email            String            @unique(map: "users_email_key") @db.Text
+  passwordHash     String            @map("password_hash") @db.Text
+  role             UserRole
+  status           UserStatus        @default(ACTIVE)
+  createdAt        DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  patientProfile   PatientProfile?
+  clinicianProfile ClinicianProfile?
+  auditLogs        AuditLog[]
+  sessions         Session[]
+  createdCarePlans CarePlan[]
+  recordedBloodPressureMeasurements BloodPressureMeasurement[]
+  createdFollowUpAppointments FollowUpAppointment[] @relation("AppointmentCreator")
+  cancelledFollowUpAppointments FollowUpAppointment[] @relation("AppointmentCanceller")
+  recordedClinicalEncounters ClinicalEncounter[]
+  recordedEncounterBloodPressureAssociations EncounterBloodPressureAssociation[]
+
+  @@unique([id, role], map: "users_id_role_key")
+  @@map("users")
+}
+
+model Session {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  tokenHash String    @unique(map: "sessions_token_hash_key") @map("token_hash") @db.Char(64)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz(3)
+  revokedAt DateTime? @map("revoked_at") @db.Timestamptz(3)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "sessions_user_fkey")
+
+  @@index([userId, expiresAt], map: "sessions_user_expiry_idx")
+  @@map("sessions")
+}
+
+model PatientProfile {
+  relationshipRequests RelationshipRequest[]
+  @@unique([id,userId],map:"patient_profiles_id_user_key")
+  bpAmendments BpAmendmentOperation[]
+  bpExclusions BpExclusion[]
+  bpPrivacyTargets BpPrivacyTarget[]
+  id          String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String                       @unique(map: "patient_profiles_user_id_key") @map("user_id") @db.Uuid
+  userRole    UserRole                     @default(PATIENT) @map("user_role")
+  displayName String                       @map("display_name") @db.Text
+  dateOfBirth DateTime?                    @map("date_of_birth") @db.Date
+  // Opaque optional profile text; no clinical/FHIR interpretation.
+  sex         String?                      @db.Text
+  createdAt   DateTime                     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime                     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  user        User                         @relation(fields: [userId, userRole], references: [id, role], onDelete: Restrict, onUpdate: Restrict, map: "patient_profiles_user_role_fkey")
+  assignments ClinicianPatientAssignment[]
+
+  carePlans   CarePlan[]
+  bloodPressureMeasurements BloodPressureMeasurement[]
+  followUpAppointments FollowUpAppointment[]
+  clinicalEncounters ClinicalEncounter[]
+  encounterBloodPressureAssociations EncounterBloodPressureAssociation[]
+  recordCoverageWindows RecordCoverageWindow[]
+  observedApplicabilitySnapshots ObservedClinicalApplicabilitySnapshot[]
+
+  // Prisma requires the full composite relation key to be marked unique.
+  @@unique([userId, userRole], map: "patient_profiles_user_role_key")
+  @@map("patient_profiles")
+}
+
+model ClinicianProfile {
+  availabilitySlots AvailabilitySlot[]
+  relationshipRequests RelationshipRequest[]
+  directory ClinicianDirectory?
+  @@unique([id,userId],map:"clinician_profiles_id_user_key")
+  id                     String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId                 String                       @unique(map: "clinician_profiles_user_id_key") @map("user_id") @db.Uuid
+  userRole               UserRole                     @default(CLINICIAN) @map("user_role")
+  displayName            String                       @map("display_name") @db.Text
+  specialty              String?                      @db.Text
+  professionalIdentifier String?                      @map("professional_identifier") @db.Text
+  createdAt              DateTime                     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt              DateTime                     @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(3)
+  user                   User                         @relation(fields: [userId, userRole], references: [id, role], onDelete: Restrict, onUpdate: Restrict, map: "clinician_profiles_user_role_fkey")
+  assignments            ClinicianPatientAssignment[]
+
+  @@unique([userId, userRole], map: "clinician_profiles_user_role_key")
+  @@map("clinician_profiles")
+}
+
+model ClinicianPatientAssignment {
+  relationshipRequests RelationshipRequest[] @relation("AcceptedAssignment")
+  authorizationContexts RelationshipRequest[] @relation("AuthorizationAssignment")
+  endProvenance AssignmentEndProvenance[]
+  @@unique([id,clinicianId,patientId],map:"assignments_relationship_scope_key")
+  careActionSelections CareActionDecision[]
+
+  id          String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clinicianId String           @map("clinician_id") @db.Uuid
+  patientId   String           @map("patient_id") @db.Uuid
+  status      AssignmentStatus @default(ACTIVE)
+  assignedAt  DateTime         @default(now()) @map("assigned_at") @db.Timestamptz(3)
+  endedAt     DateTime?        @map("ended_at") @db.Timestamptz(3)
+  clinician   ClinicianProfile @relation(fields: [clinicianId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "assignments_clinician_fkey")
+  patient     PatientProfile   @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "assignments_patient_fkey")
+
+  // Active-pair partial uniqueness and history guards live in migration SQL.
+  @@index([clinicianId, status, assignedAt], map: "assignments_clinician_history_idx")
+  @@index([patientId, status, assignedAt], map: "assignments_patient_history_idx")
+  @@map("clinician_patient_assignments")
+}
+
+model AuditLog {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actorUserId  String?  @map("actor_user_id") @db.Uuid
+  actionType   String   @map("action_type") @db.Text
+  entityType   String   @map("entity_type") @db.Text
+  entityId     String   @map("entity_id") @db.Uuid
+  timestamp    DateTime @default(now()) @db.Timestamptz(3)
+  safeMetadata Json     @default("{}") @map("safe_metadata") @db.JsonB
+  actor        User?    @relation(fields: [actorUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "audit_logs_actor_fkey")
+
+  @@index([actorUserId, timestamp], map: "audit_logs_actor_timestamp_idx")
+  @@index([entityType, entityId, timestamp], map: "audit_logs_entity_timestamp_idx")
+  @@map("audit_logs")
+}
+
+enum ClinicalDefinitionStatus {
+  DRAFT
+  PUBLISHED
+  RETIRED
+
+  @@map("clinical_definition_status")
+}
+
+model GuidelineSource {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sourceKey           String   @unique(map: "guideline_sources_source_key_key") @map("source_key") @db.Text
+  title               String   @db.Text
+  publisher           String   @db.Text
+  publicationIdentity String   @map("publication_identity") @db.Text
+  publicationYear     Int      @map("publication_year")
+  referenceIdentifier String?  @map("reference_identifier") @db.Text
+  referenceUrl        String?  @map("reference_url") @db.Text
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt           DateTime @default(now()) @map("updated_at") @db.Timestamptz(3)
+  templates           CarePlanTemplate[]
+
+  @@unique([publisher, title, publicationIdentity], map: "guideline_sources_publication_key")
+  @@map("guideline_sources")
+}
+
+model CarePlanTemplate {
+  id                String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  templateKey       String                   @map("template_key") @db.Text
+  name              String                   @db.Text
+  conditionDomain   String                   @map("condition_domain") @db.Text
+  version           String                   @db.Text
+  guidelineSourceId String                   @map("guideline_source_id") @db.Uuid
+  status            ClinicalDefinitionStatus @default(DRAFT)
+  publishedAt       DateTime?                 @map("published_at") @db.Timestamptz(3)
+  retiredAt         DateTime?                 @map("retired_at") @db.Timestamptz(3)
+  createdAt         DateTime                  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime                  @default(now()) @map("updated_at") @db.Timestamptz(3)
+  guidelineSource   GuidelineSource           @relation(fields: [guidelineSourceId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_plan_templates_source_fkey")
+  rules             CareRuleDefinition[]
+  carePlans         CarePlan[]
+
+  @@unique([templateKey, version], map: "care_plan_templates_key_version_key")
+  @@unique([name, version], map: "care_plan_templates_name_version_key")
+  @@index([guidelineSourceId], map: "care_plan_templates_source_idx")
+  @@map("care_plan_templates")
+}
+
+model CareRuleDefinition {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  templateId  String   @map("template_id") @db.Uuid
+  ruleKey     String   @map("rule_key") @db.Text
+  ruleVersion String   @map("rule_version") @db.Text
+  actionType  String   @map("action_type") @db.Text
+  definition  Json     @db.JsonB
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamptz(3)
+  template    CarePlanTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_rule_definitions_template_fkey")
+
+  carePlans   CarePlan[]
+
+  @@unique([id, templateId], map: "care_rule_definitions_id_template_key")
+  @@unique([templateId, ruleKey], map: "care_rule_definitions_template_rule_key")
+  @@unique([ruleKey, ruleVersion], map: "care_rule_definitions_key_version_key")
+  @@map("care_rule_definitions")
+}
+
+
+enum CarePlanStatus {
+  DRAFT
+  ACTIVE
+  CANCELLED
+
+  @@map("care_plan_status")
+}
+
+model CarePlan {
+  actions CareAction[] @relation("ActionPlan")
+  actionDecisions CareActionDecision[] @relation("DecisionPlan")
+
+  id               String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId        String @map("patient_id") @db.Uuid
+  templateId       String @map("template_id") @db.Uuid
+  ruleDefinitionId String @map("rule_definition_id") @db.Uuid
+  createdByUserId  String @map("created_by_user_id") @db.Uuid
+  status           CarePlanStatus @default(DRAFT)
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  startedAt        DateTime? @map("started_at") @db.Timestamptz(3)
+  cancelledAt      DateTime? @map("cancelled_at") @db.Timestamptz(3)
+  patient          PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_plans_patient_fkey")
+  template         CarePlanTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_plans_template_fkey")
+  ruleDefinition   CareRuleDefinition @relation(fields: [ruleDefinitionId, templateId], references: [id, templateId], onDelete: Restrict, onUpdate: Restrict, map: "care_plans_rule_template_fkey")
+  creator          User @relation(fields: [createdByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "care_plans_creator_fkey")
+
+  @@index([patientId, createdAt], map: "care_plans_patient_history_idx")
+  @@index([templateId], map: "care_plans_template_idx")
+  @@index([ruleDefinitionId, templateId], map: "care_plans_rule_template_idx")
+  @@index([createdByUserId], map: "care_plans_creator_idx")
+  @@unique([id,patientId,templateId,ruleDefinitionId], map: "care_plans_action_scope_key")
+  @@map("care_plans")
+}
+
+
+enum BloodPressureSourceKind {
+  PATIENT_SELF_ENTRY
+  CLINICIAN_ENTRY
+  @@map("bp_measurement_source_kind")
+}
+
+model BloodPressureMeasurement {
+  actionDecisions CareActionDecision[]
+
+  amendmentTargets BpAmendmentOperation[] @relation("BpAmendmentTarget")
+  duplicateReferences BpAmendmentOperation[] @relation("BpDuplicateReference")
+  originAmendment BpAmendmentOperation? @relation("BpFreshEvidence")
+  exclusion BpExclusion?
+  privacyRestriction BpPrivacyTarget?
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  systolic Int
+  diastolic Int
+  unit String @db.Text
+  measuredAt DateTime @map("measured_at") @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  recordedByUserId String @map("recorded_by_user_id") @db.Uuid
+  sourceKind BloodPressureSourceKind @map("source_kind")
+  patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "blood_pressure_measurements_patient_fkey")
+  recorder User @relation(fields: [recordedByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "blood_pressure_measurements_actor_fkey")
+  @@index([patientId, measuredAt(sort: Desc), id(sort: Desc)], map: "blood_pressure_measurements_patient_history_idx")
+  @@index([recordedByUserId], map: "blood_pressure_measurements_actor_idx")
+  encounterAssociation EncounterBloodPressureAssociation?
+  @@unique([id, patientId], map: "blood_pressure_measurements_id_patient_key")
+  @@map("blood_pressure_measurements")
+}
+
+
+enum FollowUpAppointmentStatus {
+  SCHEDULED
+  CANCELLED
+  @@map("follow_up_appointment_status")
+}
+
+model FollowUpAppointment {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  scheduledAt DateTime @map("scheduled_at") @db.Timestamptz(6)
+  purpose String @db.Text
+  status FollowUpAppointmentStatus @default(SCHEDULED)
+  createdByUserId String @map("created_by_user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  cancelledAt DateTime? @map("cancelled_at") @db.Timestamptz(3)
+  cancelledByUserId String? @map("cancelled_by_user_id") @db.Uuid
+  patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "follow_up_appointments_patient_fkey")
+  creator User @relation("AppointmentCreator", fields: [createdByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "follow_up_appointments_creator_fkey")
+  canceller User? @relation("AppointmentCanceller", fields: [cancelledByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "follow_up_appointments_canceller_fkey")
+  @@index([patientId, scheduledAt(sort: Desc), id(sort: Desc)], map: "follow_up_appointments_patient_history_idx")
+  @@index([createdByUserId], map: "follow_up_appointments_creator_idx")
+  @@index([cancelledByUserId], map: "follow_up_appointments_canceller_idx")
+  @@map("follow_up_appointments")
+}
+
+model ClinicalEncounter {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  occurredAt DateTime @map("occurred_at") @db.Timestamptz(6)
+  purpose String @db.Text
+  recordedByUserId String @map("recorded_by_user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "clinical_encounters_patient_fkey")
+  recorder User @relation(fields: [recordedByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "clinical_encounters_recorder_fkey")
+  bloodPressureAssociations EncounterBloodPressureAssociation[]
+  @@unique([id, patientId], map: "clinical_encounters_id_patient_key")
+  @@index([patientId, occurredAt(sort: Desc), id(sort: Desc)], map: "clinical_encounters_patient_history_idx")
+  @@index([recordedByUserId], map: "clinical_encounters_recorder_idx")
+  @@map("clinical_encounters")
+}
+
+model EncounterBloodPressureAssociation {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  encounterId String @map("encounter_id") @db.Uuid
+  bloodPressureMeasurementId String @unique(map: "encounter_bp_associations_measurement_key") @map("blood_pressure_measurement_id") @db.Uuid
+  recordedByUserId String @map("recorded_by_user_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "encounter_bp_associations_patient_fkey")
+  encounter ClinicalEncounter @relation(fields: [encounterId, patientId], references: [id, patientId], onDelete: Restrict, onUpdate: Restrict, map: "encounter_bp_associations_encounter_patient_fkey")
+  measurement BloodPressureMeasurement @relation(fields: [bloodPressureMeasurementId, patientId], references: [id, patientId], onDelete: Restrict, onUpdate: Restrict, map: "encounter_bp_associations_measurement_patient_fkey")
+  recorder User @relation(fields: [recordedByUserId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "encounter_bp_associations_recorder_fkey")
+  @@index([patientId, encounterId, createdAt(sort: Desc), id(sort: Desc)], map: "encounter_bp_associations_patient_history_idx")
+  @@index([encounterId, patientId], map: "encounter_bp_associations_encounter_idx")
+  @@index([recordedByUserId], map: "encounter_bp_associations_recorder_idx")
+  // Prisma requires the full composite defining relation key to be unique.
+  @@unique([bloodPressureMeasurementId, patientId], map: "encounter_bp_associations_measurement_patient_key")
+  @@map("encounter_bp_associations")
+}
+
+enum RecordCoverageSourceType {
+  SYNTHETIC_BENCHMARK
+  @@map("record_coverage_source_type")
+}
+
+enum RecordCoverageStatus {
+  COMPLETE
+  INCOMPLETE
+  UNKNOWN
+  @@map("record_coverage_status")
+}
+
+model RecordCoverageWindow {
+  id              String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId       String                   @map("patient_id") @db.Uuid
+  sourceType      RecordCoverageSourceType @map("source_type")
+  sourceReference String                   @map("source_reference") @db.Text
+  coverageStatus  RecordCoverageStatus     @map("coverage_status")
+  startAt         DateTime                 @map("start_at") @db.Timestamptz(6)
+  endAt           DateTime                 @map("end_at") @db.Timestamptz(6)
+  createdAt       DateTime                 @default(now()) @map("created_at") @db.Timestamptz(3)
+  patient         PatientProfile           @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "record_coverage_windows_patient_fkey")
+
+  @@unique([patientId, sourceType, sourceReference, coverageStatus, startAt, endAt], map: "record_coverage_windows_assertion_key")
+  @@index([patientId, sourceType, sourceReference, startAt, endAt], map: "record_coverage_windows_partition_idx")
+  @@map("record_coverage_windows")
+}
+
+enum ObservedApplicabilitySourceType {
+  SYNTHETIC_OBSERVED_INPUT
+
+  @@map("observed_applicability_source_type")
+}
+
+enum ObservedAgeAssertionState {
+  NO_ASSERTION
+  UNKNOWN
+  ASSERTED_VALUE
+
+  @@map("observed_age_assertion_state")
+}
+
+enum ObservedPregnancyStatus {
+  PREGNANT
+  NOT_PREGNANT
+  UNKNOWN
+
+  @@map("observed_pregnancy_status")
+}
+
+enum ObservedConditionStatus {
+  PRESENT
+  ABSENT
+  UNKNOWN
+
+  @@map("observed_condition_status")
+}
+
+model ObservedClinicalApplicabilitySnapshot {
+  actionDecisions CareActionDecision[]
+  actionMemberships CareActionApplicabilityInput[]
+
+  id                   String                          @id(map: "oa_snapshots_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId            String                          @map("patient_id") @db.Uuid
+  sourceType           ObservedApplicabilitySourceType @map("source_type")
+  sourceReference      String                          @map("source_reference") @db.Text
+  assertionReference   String                          @map("assertion_reference") @db.Text
+  effectiveAt          DateTime                        @map("effective_at") @db.Timestamptz(6)
+  assertedAt           DateTime                        @map("asserted_at") @db.Timestamptz(6)
+  recordedAt           DateTime                        @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  ageAssertionState    ObservedAgeAssertionState       @map("age_assertion_state")
+  ageYearsAtAssessment Int?                            @map("age_years_at_assessment")
+  pregnancyStatus      ObservedPregnancyStatus?        @map("pregnancy_status")
+  hypertensionStatus   ObservedConditionStatus?        @map("hypertension_status")
+  cvdStatus            ObservedConditionStatus?        @map("cvd_status")
+  diabetesStatus       ObservedConditionStatus?        @map("diabetes_status")
+  ckdStatus            ObservedConditionStatus?        @map("ckd_status")
+
+  patient              PatientProfile                  @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "oa_snapshots_patient_fkey")
+  retraction           ObservedClinicalApplicabilityRetraction?
+
+  @@unique([patientId, sourceType, sourceReference, assertionReference], map: "oa_snapshots_source_identity_key")
+  @@unique([id, patientId, sourceType, sourceReference], map: "oa_snapshots_scope_key")
+  @@index([patientId, effectiveAt, sourceType, sourceReference, assertionReference, id], map: "oa_snapshots_point_idx")
+  @@unique([id,patientId], map: "oa_action_scope_key")
+  @@map("observed_applicability_snapshots")
+}
+
+model ObservedClinicalApplicabilityRetraction {
+  id                  String                                @id(map: "oa_retractions_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  snapshotId          String                                @unique(map: "oa_retractions_target_key") @map("snapshot_id") @db.Uuid
+  patientId           String                                @map("patient_id") @db.Uuid
+  sourceType          ObservedApplicabilitySourceType       @map("source_type")
+  sourceReference     String                                @map("source_reference") @db.Text
+  retractionReference String                                @map("retraction_reference") @db.Text
+  assertedAt          DateTime                              @map("asserted_at") @db.Timestamptz(6)
+  recordedAt          DateTime                              @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  reasonCode          String                                @map("reason_code") @db.Text
+
+  snapshot            ObservedClinicalApplicabilitySnapshot @relation(fields: [snapshotId, patientId, sourceType, sourceReference], references: [id, patientId, sourceType, sourceReference], onDelete: Restrict, onUpdate: Restrict, map: "oa_retractions_snapshot_scope_fkey")
+
+  @@unique([patientId, sourceType, sourceReference, retractionReference], map: "oa_retractions_source_identity_key")
+  @@unique([snapshotId, patientId, sourceType, sourceReference], map: "oa_retractions_target_scope_key")
+  @@map("observed_applicability_retractions")
+}
+
+
+// Issue #31: immutable operation identity, clinical exclusion and disclosure are distinct.
+model BpAmendmentOperation {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  actorUserId String @map("actor_user_id") @db.Uuid
+  kind String @db.Text
+  operationKey String @map("operation_key") @db.Uuid
+  targetBpId String @map("target_bp_id") @db.Uuid
+  reasonCode String @map("reason_code") @db.Text
+  duplicateOfBpId String? @map("duplicate_of_bp_id") @db.Uuid
+  predecessorIds String[] @default([]) @map("predecessor_ids") @db.Uuid
+  newBpId String? @unique @map("new_bp_id") @db.Uuid
+  systolic Int?
+  diastolic Int?
+  measuredAt DateTime? @map("measured_at") @db.Timestamptz(6)
+  assertedAt DateTime @default(now()) @map("asserted_at") @db.Timestamptz(3)
+  recordedAt DateTime @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  patient PatientProfile @relation(fields:[patientId], references:[id], onUpdate:Restrict, onDelete:Restrict)
+  actor User @relation(fields:[actorUserId], references:[id], onUpdate:Restrict, onDelete:Restrict)
+  target BloodPressureMeasurement @relation("BpAmendmentTarget", fields:[targetBpId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  duplicateOf BloodPressureMeasurement? @relation("BpDuplicateReference", fields:[duplicateOfBpId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  newBp BloodPressureMeasurement? @relation("BpFreshEvidence", fields:[newBpId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  exclusions BpExclusion[]
+  privacyTargets BpPrivacyTarget[]
+  @@unique([actorUserId,kind,operationKey])
+  @@unique([id,patientId])
+  @@unique([newBpId,patientId])
+  @@index([patientId,recordedAt,id], map:"bp_operations_patient_history")
+  @@index([targetBpId], map:"bp_operations_target")
+  @@index([duplicateOfBpId], map:"bp_operations_duplicate")
+  @@index([predecessorIds], type: Gin, map:"bp_operations_predecessors")
+  @@map("bp_amendment_operations")
+}
+model BpExclusion {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  bpId String @unique @map("bp_id") @db.Uuid
+  operationId String @map("operation_id") @db.Uuid
+  reasonCode String @map("reason_code") @db.Text
+  assertedAt DateTime @default(now()) @map("asserted_at") @db.Timestamptz(3)
+  recordedAt DateTime @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  patient PatientProfile @relation(fields:[patientId], references:[id], onUpdate:Restrict, onDelete:Restrict)
+  bp BloodPressureMeasurement @relation(fields:[bpId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  operation BpAmendmentOperation @relation(fields:[operationId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  @@unique([bpId,patientId])
+  @@index([operationId], map:"bp_exclusions_operation")
+  @@index([patientId,recordedAt,id], map:"bp_exclusions_patient")
+  @@map("bp_exclusions")
+}
+model BpPrivacyTarget {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  bpId String @unique @map("bp_id") @db.Uuid
+  operationId String @map("operation_id") @db.Uuid
+  reasonCode String @default("WRONG_PATIENT") @map("reason_code") @db.Text
+  assertedAt DateTime @default(now()) @map("asserted_at") @db.Timestamptz(3)
+  recordedAt DateTime @default(now()) @map("recorded_at") @db.Timestamptz(3)
+  patient PatientProfile @relation(fields:[patientId], references:[id], onUpdate:Restrict, onDelete:Restrict)
+  bp BloodPressureMeasurement @relation(fields:[bpId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  operation BpAmendmentOperation @relation(fields:[operationId,patientId], references:[id,patientId], onUpdate:Restrict, onDelete:Restrict)
+  @@unique([bpId,patientId])
+  @@index([operationId], map:"bp_privacy_operation")
+  @@index([patientId,recordedAt,id], map:"bp_privacy_patient")
+  @@map("bp_privacy_targets")
+}
+
+// EH-014: SQL additionally owns deferred cyclic completeness and immutable guards.
+model CareAction {
+  plan CarePlan @relation("ActionPlan", fields:[carePlanId,patientId,templateId,ruleDefinitionId], references:[id,patientId,templateId,ruleDefinitionId], onUpdate:Restrict,onDelete:Restrict,map:"care_actions_plan_fk")
+  decision CareActionDecision @relation("ActionDecision",fields:[id,decisionId,patientId],references:[actionId,id,patientId],onUpdate:Restrict,onDelete:Restrict,map:"care_actions_decision_fk")
+  ownedDecision CareActionDecision? @relation("DecisionAction")
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  carePlanId String @map("care_plan_id") @db.Uuid
+  templateId String @map("template_id") @db.Uuid
+  ruleDefinitionId String @map("rule_definition_id") @db.Uuid
+  decisionId String @unique @map("decision_id") @db.Uuid
+  occurrence String @db.Text
+  actionType String @map("action_type") @db.Text
+  triggerAt DateTime @map("trigger_at") @db.Timestamptz(6)
+  recommendedAt DateTime @map("recommended_at") @db.Timestamptz(6)
+  dueBy DateTime @map("due_by") @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  @@unique([carePlanId,ruleDefinitionId,occurrence], map:"care_actions_occurrence_key")
+  @@unique([id,decisionId,patientId], map:"care_actions_pair_key")
+  @@index([patientId,createdAt(sort: Desc),id(sort: Desc)], map:"care_actions_history_idx")
+  @@map("care_actions")
+}
+model CareActionDecision {
+  plan CarePlan @relation("DecisionPlan",fields:[carePlanId,patientId,templateId,ruleDefinitionId],references:[id,patientId,templateId,ruleDefinitionId],onUpdate:Restrict,onDelete:Restrict,map:"care_decision_plan_fk")
+  bp BloodPressureMeasurement @relation(fields:[bpId,patientId],references:[id,patientId],onUpdate:Restrict,onDelete:Restrict,map:"care_decision_bp_fk")
+  applicability ObservedClinicalApplicabilitySnapshot @relation(fields:[applicabilityId,patientId],references:[id,patientId],onUpdate:Restrict,onDelete:Restrict,map:"care_decision_app_fk")
+  selectingUser User @relation(fields:[selectingUserId],references:[id],onUpdate:Restrict,onDelete:Restrict)
+  assignment ClinicianPatientAssignment @relation(fields:[assignmentId],references:[id],onUpdate:Restrict,onDelete:Restrict)
+  action CareAction @relation("DecisionAction",fields:[actionId,id,patientId],references:[id,decisionId,patientId],onUpdate:Restrict,onDelete:Restrict,map:"care_decision_action_fk")
+  ownedAction CareAction? @relation("ActionDecision")
+  members CareActionApplicabilityInput[]
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actionId String @unique @map("action_id") @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  carePlanId String @map("care_plan_id") @db.Uuid
+  templateId String @map("template_id") @db.Uuid
+  ruleDefinitionId String @map("rule_definition_id") @db.Uuid
+  bpId String @map("bp_id") @db.Uuid
+  applicabilityId String @map("applicability_id") @db.Uuid
+  selectingUserId String @map("selecting_user_id") @db.Uuid
+  assignmentId String @map("assignment_id") @db.Uuid
+  operationKey String @map("operation_key") @db.Uuid
+  selectorProvenance Json @map("selector_provenance") @db.JsonB
+  accepted Boolean
+  inputs Json @db.JsonB
+  triggerAt DateTime @map("trigger_at") @db.Timestamptz(6)
+  recommendedAt DateTime @map("recommended_at") @db.Timestamptz(6)
+  dueBy DateTime @map("due_by") @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  creationXid Unsupported("xid8") @default(dbgenerated("pg_current_xact_id()")) @map("creation_xid")
+  @@unique([carePlanId,ruleDefinitionId], map:"care_decision_occurrence_key")
+  @@unique([selectingUserId,operationKey], map:"care_decision_operation_key")
+  @@unique([id,patientId], map:"care_decision_scope_key")
+  @@unique([actionId,id,patientId], map:"care_decision_pair_key")
+  @@index([bpId,patientId], map:"care_decision_bp_idx")
+  @@index([applicabilityId,patientId], map:"care_decision_app_idx")
+  @@index([assignmentId], map:"care_decision_assignment_idx")
+  @@map("care_action_decisions")
+}
+model CareActionApplicabilityInput {
+  decision CareActionDecision @relation(fields:[decisionId,patientId],references:[id,patientId],onUpdate:Restrict,onDelete:Restrict)
+  snapshot ObservedClinicalApplicabilitySnapshot @relation(fields:[snapshotId,patientId],references:[id,patientId],onUpdate:Restrict,onDelete:Restrict)
+  decisionId String @map("decision_id") @db.Uuid
+  snapshotId String @map("snapshot_id") @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  @@id([decisionId,snapshotId])
+  @@index([snapshotId,patientId], map:"care_input_snapshot_idx")
+  @@map("care_action_applicability_inputs")
+}
+
+
+enum OrganizationKind {
+  CLINIC
+  LABORATORY
+  PHARMACY
+  @@map("organization_kind")
+}
+enum OrganizationStatus {
+  ACTIVE
+  SUSPENDED
+  @@map("organization_status")
+}
+enum OrganizationMembershipStatus {
+  ACTIVE
+  ENDED
+  @@map("organization_membership_status")
+}
+
+model Organization {
+  schedulingVersions ClinicSchedulingSettings[]
+  directory ClinicDirectory?
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  kind OrganizationKind
+  name String @db.VarChar(160)
+  status OrganizationStatus @default(ACTIVE)
+  statusVersion Int @default(0) @map("status_version")
+  createdByUserId String @map("created_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  statusChangedByUserId String @map("status_changed_by_user_id") @db.Uuid
+  statusChangedAt DateTime @default(now()) @map("status_changed_at") @db.Timestamptz(3)
+  creator User @relation("OrganizationCreator",fields:[createdByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"organizations_creator_fkey")
+  statusActor User @relation("OrganizationStatusActor",fields:[statusChangedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"organizations_status_actor_fkey")
+  memberships OrganizationMembership[]
+  @@unique([id,kind],map:"organizations_id_kind_key")
+  @@unique([createdByUserId,operationKey],map:"organizations_operation_key")
+  @@map("organizations")
+}
+
+model OrganizationMembership {
+  availabilitySlots AvailabilitySlot[]
+  directoryAffiliations DirectoryAffiliation[]
+  @@unique([id,userId,organizationId,userRole,organizationKind],map:"memberships_directory_scope_key")
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String @map("organization_id") @db.Uuid
+  organizationKind OrganizationKind @map("organization_kind")
+  userId String @map("user_id") @db.Uuid
+  userRole UserRole @map("user_role")
+  status OrganizationMembershipStatus @default(ACTIVE)
+  grantedByUserId String @map("granted_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  grantedAt DateTime @default(now()) @map("granted_at") @db.Timestamptz(3)
+  endedByUserId String? @map("ended_by_user_id") @db.Uuid
+  endedAt DateTime? @map("ended_at") @db.Timestamptz(3)
+  organization Organization @relation(fields:[organizationId,organizationKind],references:[id,kind],onUpdate:Restrict,onDelete:Restrict,map:"memberships_organization_kind_fkey")
+  user User @relation("MembershipUser",fields:[userId,userRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"memberships_user_role_fkey")
+  grantActor User @relation("MembershipGrantActor",fields:[grantedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"memberships_grant_actor_fkey")
+  endActor User? @relation("MembershipEndActor",fields:[endedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"memberships_end_actor_fkey")
+  @@unique([grantedByUserId,operationKey],map:"memberships_operation_key")
+  @@index([userId,organizationId,grantedAt],map:"memberships_user_history_idx")
+  @@map("organization_memberships")
+}
+
+model Specialty {
+  key String @unique(map:"directory_specialty_public_key") @db.VarChar(48)
+  displayName String @map("display_name") @db.VarChar(80)
+  @@index([isPublished,key],map:"directory_specialty_published_idx")
+  providers ClinicianDirectory[]
+  publications DirectoryAffiliation[]
+
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  isPublished Boolean @default(false) @map("is_published")
+  version Int @default(0)
+  createdByUserId String @map("created_by_user_id") @db.Uuid
+  changedByUserId String @map("changed_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  creationFingerprint String @map("creation_fingerprint") @db.Char(64)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  changedAt DateTime @default(now()) @map("changed_at") @db.Timestamptz(3)
+  creator User @relation("SpecialtyCreator",fields:[createdByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"specialties_creator_fk")
+  actor User @relation("SpecialtyActor",fields:[changedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"specialties_actor_fk")
+  @@unique([createdByUserId,operationKey],map:"specialties_operation_key")
+  @@map("specialties")
+}
+
+model ClinicDirectory {
+  @@unique([organizationId,organizationKind],map:"directory_clinic_org_kind_key")
+  @@index([isPublished,publicId],map:"directory_clinic_published_idx")
+  publicId String @unique(map:"directory_clinic_public_key") @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
+  organizationId String @unique(map:"directory_clinic_organization_key") @map("organization_id") @db.Uuid
+  organizationKind OrganizationKind @default(CLINIC) @map("organization_kind")
+  displayName String @map("display_name") @db.VarChar(160)
+  city String @db.VarChar(80)
+  address String @db.VarChar(240)
+  organization Organization @relation(fields:[organizationId,organizationKind],references:[id,kind],onUpdate:Restrict,onDelete:Restrict,map:"directory_clinic_organization_fk")
+  publications DirectoryAffiliation[]
+
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  isPublished Boolean @default(false) @map("is_published")
+  version Int @default(0)
+  createdByUserId String @map("created_by_user_id") @db.Uuid
+  changedByUserId String @map("changed_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  creationFingerprint String @map("creation_fingerprint") @db.Char(64)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  changedAt DateTime @default(now()) @map("changed_at") @db.Timestamptz(3)
+  creator User @relation("ClinicDirectoryCreator",fields:[createdByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"clinic_directory_creator_fk")
+  actor User @relation("ClinicDirectoryActor",fields:[changedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"clinic_directory_actor_fk")
+  @@unique([createdByUserId,operationKey],map:"clinic_directory_operation_key")
+  @@map("clinic_directory")
+}
+
+model ClinicianDirectory {
+  availabilitySlots AvailabilitySlot[]
+  relationshipRequests RelationshipRequest[]
+  @@unique([publicId,clinicianId,clinicianUserId],map:"directory_relationship_locator_key")
+  @@unique([clinicianId,clinicianUserId],map:"directory_provider_profile_key")
+  publicId String @unique(map:"directory_provider_public_key") @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
+  clinicianId String @unique(map:"directory_provider_clinician_key") @map("clinician_id") @db.Uuid
+  clinicianUserId String @map("clinician_user_id") @db.Uuid
+  specialtyId String @map("specialty_id") @db.Uuid
+  displayName String @map("display_name") @db.VarChar(160)
+  clinician ClinicianProfile @relation(fields:[clinicianId,clinicianUserId],references:[id,userId],onUpdate:Restrict,onDelete:Restrict,map:"directory_provider_profile_fk")
+  specialty Specialty @relation(fields:[specialtyId],references:[id],onUpdate:Restrict,onDelete:Restrict,map:"directory_provider_specialty_fk")
+  publications DirectoryAffiliation[]
+  @@unique([id,clinicianUserId],map:"directory_provider_user_key")
+  @@index([specialtyId,isPublished,publicId],map:"directory_provider_specialty_idx")
+
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  isPublished Boolean @default(false) @map("is_published")
+  version Int @default(0)
+  createdByUserId String @map("created_by_user_id") @db.Uuid
+  changedByUserId String @map("changed_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  creationFingerprint String @map("creation_fingerprint") @db.Char(64)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  changedAt DateTime @default(now()) @map("changed_at") @db.Timestamptz(3)
+  creator User @relation("ClinicianDirectoryCreator",fields:[createdByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"clinician_directory_creator_fk")
+  actor User @relation("ClinicianDirectoryActor",fields:[changedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"clinician_directory_actor_fk")
+  @@unique([createdByUserId,operationKey],map:"clinician_directory_operation_key")
+  @@map("clinician_directory")
+}
+
+model DirectoryAffiliation {
+  availabilitySlots AvailabilitySlot[]
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  providerId String @map("provider_id") @db.Uuid
+  clinicianUserId String @map("clinician_user_id") @db.Uuid
+  membershipId String @map("membership_id") @db.Uuid
+  organizationId String @map("organization_id") @db.Uuid
+  userRole UserRole @default(CLINICIAN) @map("user_role")
+  organizationKind OrganizationKind @default(CLINIC) @map("organization_kind")
+  specialtyId String @map("specialty_id") @db.Uuid
+  publishedByUserId String @map("published_by_user_id") @db.Uuid
+  adminRole UserRole @default(ADMIN) @map("admin_role")
+  operationKey String @map("operation_key") @db.Uuid
+  publishedAt DateTime @default(now()) @map("published_at") @db.Timestamptz(3)
+  withdrawnByUserId String? @map("withdrawn_by_user_id") @db.Uuid
+  withdrawnAt DateTime? @map("withdrawn_at") @db.Timestamptz(3)
+  provider ClinicianDirectory @relation(fields:[providerId,clinicianUserId],references:[id,clinicianUserId],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_provider_fk")
+  membership OrganizationMembership @relation(fields:[membershipId,clinicianUserId,organizationId,userRole,organizationKind],references:[id,userId,organizationId,userRole,organizationKind],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_membership_fk")
+  clinic ClinicDirectory @relation(fields:[organizationId],references:[organizationId],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_clinic_fk")
+  specialty Specialty @relation(fields:[specialtyId],references:[id],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_specialty_fk")
+  publisher User @relation("DirectoryPublisher",fields:[publishedByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_publisher_fk")
+  withdrawer User? @relation("DirectoryWithdrawer",fields:[withdrawnByUserId,adminRole],references:[id,role],onUpdate:Restrict,onDelete:Restrict,map:"directory_affiliation_withdrawer_fk")
+  @@unique([publishedByUserId,operationKey],map:"directory_affiliation_operation_key")
+  @@index([organizationId,providerId],map:"directory_affiliation_clinic_idx")
+  @@map("directory_affiliations")
+}
+
+// Bilateral provenance only. Clinical authorization continues to use Assignment.
+model RelationshipRequest {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  patientUserId String @map("patient_user_id") @db.Uuid
+  clinicianId String @map("clinician_id") @db.Uuid
+  clinicianUserId String @map("clinician_user_id") @db.Uuid
+  providerPublicId String? @map("provider_public_id") @db.Uuid
+  operationKey String @map("operation_key") @db.Uuid
+  status RelationshipRequestStatus @default(PENDING)
+  authorizedAt DateTime @map("authorized_at") @db.Timestamptz(3)
+  authorizedAssignmentId String? @map("authorized_assignment_id") @db.Uuid
+  assignmentCountAtAuthorization Int @map("assignment_count_at_authorization")
+  assignmentId String? @unique(map:"relationship_requests_assignment_key") @map("assignment_id") @db.Uuid
+  acceptedAt DateTime? @map("accepted_at") @db.Timestamptz(3)
+  acceptedByUserId String? @map("accepted_by_user_id") @db.Uuid
+  declinedAt DateTime? @map("declined_at") @db.Timestamptz(3)
+  declinedByUserId String? @map("declined_by_user_id") @db.Uuid
+  authorizationWithdrawnAt DateTime? @map("authorization_withdrawn_at") @db.Timestamptz(3)
+  withdrawnByUserId String? @map("withdrawn_by_user_id") @db.Uuid
+  patient PatientProfile @relation(fields:[patientId,patientUserId],references:[id,userId],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_patient_fk")
+  clinician ClinicianProfile @relation(fields:[clinicianId,clinicianUserId],references:[id,userId],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_clinician_fk")
+  provider ClinicianDirectory? @relation(fields:[providerPublicId,clinicianId,clinicianUserId],references:[publicId,clinicianId,clinicianUserId],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_provider_fk")
+  assignment ClinicianPatientAssignment? @relation("AcceptedAssignment",fields:[assignmentId,clinicianId,patientId],references:[id,clinicianId,patientId],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_assignment_fk")
+  authorizationAssignment ClinicianPatientAssignment? @relation("AuthorizationAssignment",fields:[authorizedAssignmentId,clinicianId,patientId],references:[id,clinicianId,patientId],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_context_fk")
+  acceptor User? @relation("RelationshipAcceptor",fields:[acceptedByUserId],references:[id],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_acceptor_fk")
+  decliner User? @relation("RelationshipDecliner",fields:[declinedByUserId],references:[id],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_decliner_fk")
+  withdrawer User? @relation("RelationshipWithdrawer",fields:[withdrawnByUserId],references:[id],onDelete:Restrict,onUpdate:Restrict,map:"relationship_requests_withdrawer_fk")
+  @@unique([patientUserId,operationKey],map:"relationship_requests_operation_key")
+  @@index([patientUserId,authorizedAt,id],map:"relationship_requests_patient_history_idx")
+  @@index([clinicianUserId,authorizedAt,id],map:"relationship_requests_clinician_history_idx")
+  @@map("relationship_requests")
+}
+
+// New participant endings only. Historical endings receive no invented actor.
+model AssignmentEndProvenance {
+  assignmentId String @id @map("assignment_id") @db.Uuid
+  clinicianId String @map("clinician_id") @db.Uuid
+  patientId String @map("patient_id") @db.Uuid
+  actorUserId String @map("actor_user_id") @db.Uuid
+  actorRole UserRole @map("actor_role")
+  endedAt DateTime @map("ended_at") @db.Timestamptz(3)
+  assignment ClinicianPatientAssignment @relation(fields:[assignmentId,clinicianId,patientId],references:[id,clinicianId,patientId],onDelete:Restrict,onUpdate:Restrict,map:"assignment_end_provenance_assignment_fk")
+  actor User @relation(fields:[actorUserId,actorRole],references:[id,role],onDelete:Restrict,onUpdate:Restrict,map:"assignment_end_provenance_actor_fk")
+  @@map("assignment_end_provenance")
+}
+
+// Slice 2 operational history. SQL owns composite FKs, exclusion and guards.
+model ClinicSchedulingSettings {
+ organization Organization @relation(fields:[organizationId,organizationKind],references:[id,kind],onDelete:Restrict,onUpdate:Restrict)
+ actor User @relation("SchedulingActor",fields:[changedByUserId,adminRole],references:[id,role],onDelete:Restrict,onUpdate:Restrict)
+ slots AvailabilitySlot[]
+ organizationId String @map("organization_id") @db.Uuid
+ organizationKind OrganizationKind @default(CLINIC) @map("organization_kind")
+ version Int
+ timeZone String @map("time_zone") @db.VarChar(100)
+ durationMinutes Int @map("duration_minutes")
+ minimumBookingLead Int @map("minimum_booking_lead")
+ publicationHorizonDays Int @map("publication_horizon_days")
+ changedByUserId String @map("changed_by_user_id") @db.Uuid
+ adminRole UserRole @default(ADMIN) @map("admin_role")
+ changedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("changed_at") @db.Timestamptz(3)
+ @@id([organizationId,version])
+ @@map("clinic_scheduling_settings")
+}
+model AvailabilitySlot {
+ clinician ClinicianProfile @relation(fields:[clinicianId,clinicianUserId],references:[id,userId],onDelete:Restrict,onUpdate:Restrict)
+ provider ClinicianDirectory @relation(fields:[providerId,clinicianUserId],references:[id,clinicianUserId],onDelete:Restrict,onUpdate:Restrict)
+ membership OrganizationMembership @relation(fields:[membershipId,clinicianUserId,organizationId,userRole,organizationKind],references:[id,userId,organizationId,userRole,organizationKind],onDelete:Restrict,onUpdate:Restrict)
+ affiliation DirectoryAffiliation @relation(fields:[affiliationId],references:[id],onDelete:Restrict,onUpdate:Restrict)
+ configuration ClinicSchedulingSettings @relation(fields:[organizationId,configurationVersion],references:[organizationId,version],onDelete:Restrict,onUpdate:Restrict)
+ publisher User @relation("AvailabilityPublisher",fields:[publishedByUserId,userRole],references:[id,role],onDelete:Restrict,onUpdate:Restrict)
+ withdrawer User? @relation("AvailabilityWithdrawer",fields:[withdrawnByUserId,userRole],references:[id,role],onDelete:Restrict,onUpdate:Restrict)
+ operations AvailabilityOperation[]
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ clinicianId String @map("clinician_id") @db.Uuid
+ clinicianUserId String @map("clinician_user_id") @db.Uuid
+ organizationId String @map("organization_id") @db.Uuid
+ providerId String @map("provider_id") @db.Uuid
+ membershipId String @map("membership_id") @db.Uuid
+ affiliationId String @map("affiliation_id") @db.Uuid
+ userRole UserRole @default(CLINICIAN) @map("user_role")
+ organizationKind OrganizationKind @default(CLINIC) @map("organization_kind")
+ startAt DateTime @map("start_at") @db.Timestamptz(3)
+ endAt DateTime @map("end_at") @db.Timestamptz(3)
+ timeZone String @map("time_zone") @db.VarChar(100)
+ configurationVersion Int @map("configuration_version")
+ durationMinutes Int @map("duration_minutes")
+ minimumBookingLead Int @map("minimum_booking_lead")
+ publicationHorizonDays Int @map("publication_horizon_days")
+ capacity Int @default(1)
+ state String @default("PUBLISHED")
+ version Int @default(1)
+ publishedByUserId String @map("published_by_user_id") @db.Uuid
+ publishedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("published_at") @db.Timestamptz(3)
+ operationKey String @map("operation_key") @db.Uuid
+ withdrawnByUserId String? @map("withdrawn_by_user_id") @db.Uuid
+ withdrawnAt DateTime? @map("withdrawn_at") @db.Timestamptz(3)
+ @@unique([publishedByUserId,operationKey])
+ @@index([clinicianUserId,startAt,id],map:"availability_history")
+ @@map("availability_slots")
+}
+model AvailabilityOperation {
+ actor User @relation(fields:[actorUserId],references:[id],onDelete:Restrict,onUpdate:Restrict)
+ slot AvailabilitySlot @relation(fields:[slotId],references:[id],onDelete:Restrict,onUpdate:Restrict)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.Char(64)
+ slotId String @map("slot_id") @db.Uuid
+ result Json @db.JsonB
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ @@id([actorUserId,command,operationKey])
+ @@map("availability_operations")
+}
+
+// Slice 3 logistics. SQL owns composite RESTRICT FKs, partial/exclusion constraints and history guards.
+model Booking {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ patientUserId String @map("patient_user_id") @db.Uuid
+ clinicianId String @map("clinician_id") @db.Uuid
+ clinicianUserId String @map("clinician_user_id") @db.Uuid
+ organizationId String @map("organization_id") @db.Uuid
+ slotId String @map("slot_id") @db.Uuid
+ startAt DateTime @map("start_at") @db.Timestamptz(3)
+ endAt DateTime @map("end_at") @db.Timestamptz(3)
+ timeZone String @map("time_zone") @db.VarChar(100)
+ slotConfigurationVersion Int @map("slot_configuration_version")
+ admissionConfigurationVersion Int @map("admission_configuration_version")
+ createdByUserId String @map("created_by_user_id") @db.Uuid
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ predecessorId String? @unique @map("predecessor_id") @db.Uuid
+ state String @default("BOOKED") @db.VarChar(16)
+ version Int @default(1)
+ @@index([patientUserId,startAt(sort:Desc),id],map:"booking_patient_history")
+ @@index([clinicianUserId,startAt(sort:Desc),id],map:"booking_clinician_history")
+ @@map("bookings")
+}
+model BookingOperation {
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String @db.VarChar(16)
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ bookingId String @map("booking_id") @db.Uuid
+ result Json
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@id([actorUserId,command,operationKey])
+ @@map("booking_operations")
+}
+model BookingEvent {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ bookingId String @map("booking_id") @db.Uuid
+ version Int
+ command String @db.VarChar(16)
+ fromState String? @map("from_state") @db.VarChar(16)
+ toState String @map("to_state") @db.VarChar(16)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ operationKey String @map("operation_key") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@unique([bookingId,version])
+ @@map("booking_events")
+}
+model BookingAttendance {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ bookingId String @map("booking_id") @db.Uuid
+ version Int
+ observation String @db.VarChar(16)
+ supersedesId String? @unique @map("supersedes_id") @db.Uuid
+ reason String? @db.VarChar(4000)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@unique([bookingId,version])
+ @@map("booking_attendance")
+}
+
+// Opening-only sidecar. Composite RESTRICT identities, provenance/terminal guards
+// and deferred atomic-link checks are enforced by the additive SQL migration.
+model Consultation {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ encounterId String @unique @map("encounter_id") @db.Uuid
+ bookingId String @unique @map("booking_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ patientUserId String @map("patient_user_id") @db.Uuid
+ bookedClinicianId String @map("booked_clinician_id") @db.Uuid
+ bookedClinicianUserId String @map("booked_clinician_user_id") @db.Uuid
+ treatingClinicianId String @map("treating_clinician_id") @db.Uuid
+ treatingClinicianUserId String @map("treating_clinician_user_id") @db.Uuid
+ openedByUserId String @map("opened_by_user_id") @db.Uuid
+ organizationId String @map("organization_id") @db.Uuid
+ slotId String @map("slot_id") @db.Uuid
+ providerId String @map("provider_id") @db.Uuid
+ membershipId String @map("membership_id") @db.Uuid
+ affiliationId String @map("affiliation_id") @db.Uuid
+ assignmentId String @map("assignment_id") @db.Uuid
+ scheduledStartAt DateTime @map("scheduled_start_at") @db.Timestamptz(3)
+ scheduledEndAt DateTime @map("scheduled_end_at") @db.Timestamptz(3)
+ timeZone String @map("time_zone") @db.VarChar(100)
+ openedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("opened_at") @db.Timestamptz(3)
+ state String @default("OPEN") @db.VarChar(16)
+ version Int @default(1)
+ closedAt DateTime? @map("closed_at") @db.Timestamptz(3)
+ closedByUserId String? @map("closed_by_user_id") @db.Uuid
+ closeAssignmentId String? @map("close_assignment_id") @db.Uuid
+ closeOperationKey String? @map("close_operation_key") @db.Uuid
+ closeCommand String? @map("close_command") @db.VarChar(16)
+ operationKey String @map("operation_key") @db.Uuid
+ command String @default("OPEN") @db.VarChar(16)
+ @@map("consultations")
+}
+
+// Slice 5 purpose-built immutable roots/versions/privacy/operation identities.
+// Composite RESTRICT FKs, immutable guards and transitions are SQL-enforced.
+model ConsultationDocument {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ consultationId String @map("consultation_id") @db.Uuid
+ encounterId String @map("encounter_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ authorClinicianId String @map("author_clinician_id") @db.Uuid
+ kind String @db.VarChar(24)
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ @@map("consultation_documents")
+}
+model ConsultationDocumentVersion {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ documentId String @map("document_id") @db.Uuid
+ consultationId String @map("consultation_id") @db.Uuid
+ encounterId String @map("encounter_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ authorClinicianId String @map("author_clinician_id") @db.Uuid
+ documentKind String @map("document_kind") @db.VarChar(24)
+ version Int
+ kind String @db.VarChar(24)
+ state String @db.VarChar(24)
+ predecessorId String? @unique @map("predecessor_id") @db.Uuid
+ content String
+ patientInstructions String @map("patient_instructions")
+ complaint String?
+ problems String[]
+ diagnoses String[]
+ allergyState String @map("allergy_state") @db.VarChar(24)
+ allergyItems Json @map("allergy_items")
+ reviewerUserId String? @map("reviewer_user_id") @db.Uuid
+ reviewedAt DateTime? @map("reviewed_at") @db.Timestamptz(3)
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ signedAt DateTime? @map("signed_at") @db.Timestamptz(3)
+ releasedAt DateTime? @map("released_at") @db.Timestamptz(3)
+ reason String?
+ operationId String @unique @map("operation_id") @db.Uuid
+ @@unique([documentId,version])
+ @@map("consultation_document_versions")
+}
+model ConsultationDocumentOperation {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String @db.VarChar(24)
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ documentId String @map("document_id") @db.Uuid
+ resultVersionId String? @map("result_version_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@unique([actorUserId,command,operationKey])
+ @@map("consultation_document_operations")
+}
+model ConsultationPrivacyRestriction {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ documentId String @map("document_id") @db.Uuid
+ versionId String @unique @map("version_id") @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String @default("PRIVACY") @db.VarChar(24)
+ operationId String @map("operation_id") @db.Uuid
+ reason String
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("consultation_privacy_restrictions")
+}
+
+// Slice 6: SQL owns exact composite RESTRICT FKs, deferred completeness and guards.
+model FollowUpIntent {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ consultationId String @map("consultation_id") @db.Uuid
+ encounterId String @map("encounter_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ authorClinicianId String @map("author_clinician_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ @@map("follow_up_intents")
+}
+model FollowUpIntentVersion {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ consultationId String @map("consultation_id") @db.Uuid
+ encounterId String @map("encounter_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ authorClinicianId String @map("author_clinician_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ version Int
+ command String
+ state String
+ instruction String
+ desiredStartAt DateTime? @map("desired_start_at") @db.Timestamptz(6)
+ desiredEndAt DateTime? @map("desired_end_at") @db.Timestamptz(6)
+ timeZone String? @map("time_zone") @db.VarChar(100)
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ reason String?
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ signedAt DateTime? @map("signed_at") @db.Timestamptz(3)
+ releasedAt DateTime? @map("released_at") @db.Timestamptz(3)
+ operationId String @map("operation_id") @db.Uuid
+ @@unique([rootId,version])
+ @@map("follow_up_intent_versions")
+}
+model FollowUpIntentBookingLink {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ bookingId String @map("booking_id") @db.Uuid
+ sequence Int
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String
+ operationId String @map("operation_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@unique([rootId,sequence])
+ @@map("follow_up_intent_booking_links")
+}
+model FollowUpIntentOperation {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ command String
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ resultVersionId String? @map("result_version_id") @db.Uuid
+ resultLinkId String? @map("result_link_id") @db.Uuid
+ auditId String @map("audit_id") @db.Uuid
+ versionLimit Int @map("version_limit")
+ linkLimit Int @map("link_limit")
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@unique([actorUserId,command,operationKey])
+ @@map("follow_up_intent_operations")
+}
+model FollowUpIntentPrivacyRestriction {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ versionId String @map("version_id") @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ operationId String @map("operation_id") @db.Uuid
+ command String
+ reason String
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("follow_up_intent_privacy_restrictions")
+}
+
+// I3 Slice 1 source foundation.
+model Medication {
+ id String @id @db.Uuid
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ @@map("medications")
+}
+
+model MedicationVersion {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ medicationId String @map("medication_id") @db.Uuid
+ version Int
+ displayName String @map("display_name")
+ isActive Boolean @map("is_active")
+ isPublished Boolean @map("is_published")
+ actorUserId String? @map("actor_user_id") @db.Uuid
+ operationId String? @unique @map("operation_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("medication_versions")
+}
+
+model Prescription {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ consultationId String @map("consultation_id") @db.Uuid
+ encounterId String @map("encounter_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ authorClinicianId String @map("author_clinician_id") @db.Uuid
+ organizationId String @map("organization_id") @db.Uuid
+ membershipId String @map("membership_id") @db.Uuid
+ assignmentId String @map("assignment_id") @db.Uuid
+ lineageId String @map("lineage_id") @db.Uuid
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ createdAt DateTime @default(dbgenerated("clock_timestamp()")) @map("created_at") @db.Timestamptz(3)
+ @@map("prescriptions")
+}
+
+model PrescriptionItem {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ medicationId String @map("medication_id") @db.Uuid
+ medicationDisplay String @map("medication_display")
+ quantity Decimal @db.Decimal(12,3)
+ unit String
+ instructions String
+ @@map("prescription_items")
+}
+
+model PrescriptionVersion {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ assignmentId String @map("assignment_id") @db.Uuid
+ version Int
+ command String @db.VarChar(12)
+ state String @db.VarChar(12)
+ validFrom DateTime @map("valid_from") @db.Timestamptz(3)
+ validUntil DateTime @map("valid_until") @db.Timestamptz(3)
+ signedAt DateTime? @map("signed_at") @db.Timestamptz(3)
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ reason String?
+ replacementId String? @map("replacement_id") @db.Uuid
+ operationId String @map("operation_id") @db.Uuid
+ @@map("prescription_versions")
+}
+
+model PrescriptionVersionItem {
+ versionId String @map("version_id") @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ itemId String @map("item_id") @db.Uuid
+ position Int
+ @@id([versionId,position])
+ @@map("prescription_version_items")
+}
+
+model PrescriptionOperation {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String @db.VarChar(12)
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ targetRootId String @map("target_root_id") @db.Uuid
+ resultRootId String @map("result_root_id") @db.Uuid
+ resultVersionId String? @map("result_version_id") @db.Uuid
+ auditId String @unique @map("audit_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("prescription_operations")
+}
+
+model PrescriptionPrivacyRestriction {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ lineageId String @unique @map("lineage_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ targetRootId String @map("target_root_id") @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ operationId String @unique @map("operation_id") @db.Uuid
+ assignmentId String @map("assignment_id") @db.Uuid
+ reason String
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("prescription_privacy_restrictions")
+}
+
+model MedicationOperation {
+ id String @id @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ medicationId String @map("medication_id") @db.Uuid
+ resultVersionId String @unique @map("result_version_id") @db.Uuid
+ auditId String @unique @map("audit_id") @db.Uuid
+ recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @map("recorded_at") @db.Timestamptz(3)
+ @@map("medication_operations")
+}
+
+// I3 Slice 2 pharmacy fulfillment.
+model PharmacyRoute {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ pharmacyId String @map("pharmacy_id") @db.Uuid
+ authorUserId String @map("author_user_id") @db.Uuid
+ assignmentId String @map("assignment_id") @db.Uuid
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ createdAt DateTime @map("created_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+ @@map("pharmacy_routes")
+}
+model PharmacyRouteItem {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ routeId String @map("route_id") @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ itemId String @map("item_id") @db.Uuid
+ sequence Int
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ @@map("pharmacy_route_items")
+}
+model PharmacyRouteVersion {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ routeId String @map("route_id") @db.Uuid
+ version Int
+ command String @db.VarChar(12)
+ state String @db.VarChar(12)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ assignmentId String? @map("assignment_id") @db.Uuid
+ membershipId String? @map("membership_id") @db.Uuid
+ reason String?
+ operationId String @map("operation_id") @db.Uuid
+ recordedAt DateTime @map("recorded_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+ @@map("pharmacy_route_versions")
+}
+model PharmacyDispense {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ routeId String @map("route_id") @db.Uuid
+ itemId String @map("item_id") @db.Uuid
+ rootId String @map("root_id") @db.Uuid
+ patientId String @map("patient_id") @db.Uuid
+ pharmacyId String @map("pharmacy_id") @db.Uuid
+ medicationId String @map("medication_id") @db.Uuid
+ medicationDisplay String @map("medication_display")
+ quantity Decimal @db.Decimal(12,3)
+ unit String
+ actorUserId String @map("actor_user_id") @db.Uuid
+ membershipId String @map("membership_id") @db.Uuid
+ operationId String @map("operation_id") @db.Uuid
+ recordedAt DateTime @map("recorded_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+ @@map("pharmacy_dispenses")
+}
+model PharmacyDispenseCorrection {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ dispenseId String @map("dispense_id") @db.Uuid
+ routeId String @map("route_id") @db.Uuid
+ itemId String @map("item_id") @db.Uuid
+ pharmacyId String @map("pharmacy_id") @db.Uuid
+ version Int
+ predecessorId String? @map("predecessor_id") @db.Uuid
+ kind String @db.VarChar(12)
+ actorUserId String @map("actor_user_id") @db.Uuid
+ membershipId String @map("membership_id") @db.Uuid
+ reason String
+ operationId String @map("operation_id") @db.Uuid
+ recordedAt DateTime @map("recorded_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+ @@map("pharmacy_dispense_corrections")
+}
+model PharmacyOperation {
+ id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+ actorUserId String @map("actor_user_id") @db.Uuid
+ command String @db.VarChar(12)
+ operationKey String @map("operation_key") @db.Uuid
+ fingerprint String @db.VarChar(64)
+ targetRouteId String @map("target_route_id") @db.Uuid
+ resultRouteId String @map("result_route_id") @db.Uuid
+ resultRouteVersionId String? @map("result_route_version_id") @db.Uuid
+ resultDispenseId String? @map("result_dispense_id") @db.Uuid
+ resultCorrectionId String? @map("result_correction_id") @db.Uuid
+ auditId String @map("audit_id") @db.Uuid
+ recordedAt DateTime @map("recorded_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+ @@map("pharmacy_operations")
+}

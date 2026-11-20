@@ -1,0 +1,364 @@
+# EgyHealth 360 — Decision Register V3
+
+> ACCEPTED CONTRACT / DECISION RECORD: ADR text retains its adoption context. Mutable status is in [CURRENT_STATUS](CURRENT_STATUS.md); issue #72 and the [charter](FOUNDATION_CHARTER.md) supersede historical final-design sequencing/freeze instructions. Clinical/security decisions are unchanged.
+
+AI agents must not silently reverse accepted decisions.
+
+## Historical 2026 reboot supersessions
+
+At the 2026 reboot, the original five-role continuity-of-care scope, separate FastAPI/Python prediction service, diabetes-risk model, pharmacy/lab portals and generic care-gap design were superseded. ADR-031 now approves a bounded integrated journey and lab/pharmacy workspaces; it does not restore ML/FastAPI, the diabetes-risk model or enterprise/production scope.
+
+## Current applicability and explicit supersession
+
+| Existing decision / planning area | Current applicability | Relationship to ADR-031 |
+|---|---|---|
+| ADR-001 chronic-care-first product center | Historical accepted scope; superseded as current positioning | Superseded by ADR-031/D01; integrated journey precedes continuity/research |
+| ADR-002 three-experience wording | Single frontend retained; future workspace list amended | Amended by ADR-031/D04 for five future workspaces |
+| ADR-019 three-role first persistence slice | Accepted implementation unchanged | Fixed staff/membership COMPLETE in Slice 2 and patient entry COMPLETE in Slice 3 under ADR-031/D05/06; no profile/role invariant bypass |
+| ADR-021 relationship-aware authorization | Accepted current enforcement unchanged | Bilateral relationship lifecycle COMPLETE in Slice 5 under ADR-031/D10/11, with assignment as the sole clinical grant; D36 pharmacy artifact authority is implemented through I3 Slice 2; Lab remains future; no booking-based clinical exception |
+| ADR-022 fixed M1 seed | Retained unchanged | Integrated fixture separately versioned under D02/06 |
+| ADR-026 EH-012 narrow scheduling/encounter scope | Accepted historical contract unchanged | I2 general booking/consultation and follow-up intent extend under D12/24; no retroactive patient mutation or new legacy statuses |
+| ADR-023–030 clinical/evidence/generation decisions | Accepted invariants and history retained | D15/26 preserve exact pins/immutability/privacy/INITIAL scope; no automatic diagnosis/result/dispense bridges |
+| Product V2 lab/pharmacy/booking and broad diagnosis/prescription exclusions | Superseded current scope statements | D01–36 permit bounded human-authored integrated journey; diagnostic AI/autonomous treatment/enterprise exclusions retained |
+| Old unstarted M3–M7 plan | Superseded/resequenced, IDs/history retained | Roadmap V3 under D32; EACCE moves to I5, design separate |
+
+The original ADR bodies below describe their accepted scope at the time; slice deferrals/old closeout status are historical. Current status is [CURRENT_STATUS](CURRENT_STATUS.md); M0–M2 and their accepted completion evidence remain preserved. No historical contract or validation report is rewritten to pretend it originally targeted V3.
+
+### ADR-031 — Approved Product V3 integrated journey and bounded authorization
+
+Status: Accepted at product-policy level and adopted as repository source of truth through the verified PR #36 merge; V3-G0 COMPLETE. No implementation authorization.
+
+Decision: adopt the [approved D01–D36 package](PRODUCT_V3_DECISIONS.md) and [Product V3](PRODUCT.md): integrated access/booking/consultation/prescribing/lab/dispensing/follow-up as Layer A, longitudinal continuity Layer B, bounded HTN EACCE Layer C. One current-stack application targets Patient, Doctor, Laboratory/Diagnostics, Pharmacy and Admin. Preserve M0–M2 invariants/evidence and the fixed M1 seed. Ordinary care requires no CarePlan/EACCE. Human clinical documentation is permitted; diagnostic AI/autonomous treatment is prohibited.
+
+Owner selections: D06-A patient-only bounded self-registration with managed privileged staff; D11-A explicit patient authorization + clinician acceptance, continuing until either ends, current checks/no permanent author rights; D18-A full-item dispensing with no partial/refill/substitution; D23-B laboratory MUST, imaging optional SHOULD.
+
+D36: current active user/org/membership/valid routed artifact authority governs lab/pharmacy; completed access only bounded source correction/audit, suspension blocks subsequent reads/writes, preserve history, doctor ending never silently cancels valid routed work, independent patient/current-doctor authority, cancellation prevents future fulfillment not prior history, ADMIN no clinical rights, no break-glass/forensic/author entitlement. See [SECURITY](SECURITY.md) for the consistent policy transcription.
+
+Consequences: version new V3 requirements and retain V2 evidence, separate implemented schema/API inventory from approved future concepts, adopt V3-G0/I1–I8 without renaming M0–M2, re-estimate actual capacity/deadline before commitments, keep design frozen until separate approval. Milestone-specific contracts/verification and explicit implementation authorization remain future work. No new database field/status, endpoint, technical permission engine or visual design is decided here.
+
+## Historical accepted ADRs and retained implementation decisions
+
+### ADR-001 — Focused chronic-care coordination
+Status: Superseded as current product positioning by ADR-031; historically Accepted
+
+Core V1 focuses on evidence-aware care-action closure, initially hypertension follow-up actions, rather than a generic healthcare super-app.
+
+### ADR-002 — One Next.js frontend
+Status: Accepted; workspace wording amended by ADR-031, single-application decision retained
+
+One responsive web application serves Patient, Clinician, and Admin experiences.
+
+### ADR-003 — NestJS modular monolith
+Status: Accepted
+
+Use one NestJS API application. Microservices are rejected for Core V1.
+
+### ADR-004 — PostgreSQL + Prisma
+Status: Accepted
+
+Use PostgreSQL 18 and Prisma 7.
+
+### ADR-005 — Shared pure-TypeScript EACCE
+Status: Accepted
+
+The product API and experiment worker use the same deterministic TypeScript Evidence-Aware Care Closure Engine.
+
+### ADR-006 — No FastAPI/Python runtime in Core V1
+Status: Accepted
+
+Python/ML is not required by the current research question and is removed from runtime architecture.
+
+### ADR-007 — REST + OpenAPI
+Status: Accepted
+
+GraphQL is not required.
+
+### ADR-008 — Server-side sessions
+Status: Accepted
+
+Use database-backed server sessions, secure HttpOnly cookies, CSRF protection, and Argon2id password hashing.
+
+### ADR-009 — Free-first / self-hostable
+Status: Accepted
+
+Core operation must not depend on paid external services.
+
+### ADR-010 — Monorepo
+Status: Accepted
+
+Web, API, worker, shared packages, research assets/config, and docs live in one repository.
+
+### ADR-011 — GitHub is operational source of truth
+Status: Accepted
+
+Issues, branches, PRs, docs, tests, and CI replace AI-chat memory.
+
+### ADR-012 — PRs are handoff points
+Status: Accepted
+
+Do not maintain a permanent HANDOFF.md. The current branch/PR must state completed work, checks, limitations, and remaining work.
+
+### ADR-013 — FHIR R4 adapter, not FHIR-native database
+Status: Accepted
+
+Use an internal relational domain model with FHIR R4 import/export mapping where useful.
+
+### ADR-014 — Immutable assessment history
+Status: Accepted
+
+Closure assessments are time-specific immutable records. New evidence creates/requires a new assessment rather than overwriting prior inference.
+
+### ADR-015 — Synthetic-only research benchmark
+Status: Accepted
+
+Research/evaluation uses Synthea synthetic data. Real patient data is prohibited in Core V1.
+
+### ADR-016 — No ML in Core V1
+Status: Accepted
+
+The primary method is deterministic and explainable. ML may only be a future extension after the core study is complete.
+
+### ADR-017 — PostgreSQL-backed experiment worker
+Status: Accepted
+
+Experiment runs use a TypeScript worker and database run states. Redis/BullMQ/Kafka/RabbitMQ are not required.
+
+### ADR-018 — Source-traceable clinical rules
+Status: Accepted
+
+Clinical rules must be versioned and tied to authoritative source/version/location plus tests. Agents must not invent medical logic.
+
+### ADR-019 — Identity and Core Persistence Foundation
+Status: Accepted (EH-005 final approval, Issue #8 comment 6129057503)
+
+The first persistence slice contains only users, patient/clinician profiles,
+clinician-patient assignments, and audit logs. PostgreSQL generates UUID v4 IDs
+with `gen_random_uuid()`; Prisma uses `String @db.Uuid` and snake_case mappings.
+Roles are PATIENT/CLINICIAN/ADMIN, user status ACTIVE/DISABLED, and assignment
+status ACTIVE/ENDED. No authentication or authorization behavior is implied.
+
+Email identity is bounded ASCII: trim outer ASCII whitespace and lowercase ASCII;
+store canonical values under a unique constraint and database canonical/shape
+CHECKs. This is not full RFC email validation. No provider-specific alias rules.
+
+Profiles have unique user IDs, fixed-role discriminator CHECKs, and composite
+RESTRICT FKs to users(id, role). Prisma requires redundant composite uniqueness
+on each profile's relation key in addition to unique user_id. Bound users cannot
+change to an incompatible role. Profileless-role transitions are deferred.
+User/profile provisioning is transactional through the package boundary; SQL
+does not require every applicable user to have a profile. No global role,
+user/profile deletion, ownership, or database timestamp trigger is introduced.
+Mutable user/profile timestamps use Prisma @updatedAt; raw SQL does not maintain it.
+
+An ACTIVE-pair partial unique index permits only one current assignment per pair.
+The lifecycle CHECK ties status to ended_at and enforces time ordering. Narrow
+history guards freeze IDs/endpoints/start time, permit ACTIVE→ENDED, retain ended
+rows, and reject history mutation/deletion/truncation. Reassignment inserts a new
+row. All FKs explicitly RESTRICT key updates/deletion; the normal boundary has no
+delete/role-change operation. Controlled maintenance/reset policy is deferred.
+
+Audit logs reject UPDATE/DELETE/TRUNCATE in PostgreSQL and expose only a typed
+append operation. The actor may explicitly be NULL for system/unattributed events.
+Entity references remain polymorphic without generic target validation/allowlists.
+Metadata is object-only JSONB; the initial append primitive accepts only empty
+metadata until event-specific safe fields are approved. Passwords, hashes, tokens,
+secrets, and arbitrary payloads are prohibited. This is ordinary-operation
+protection, not tamper-proof storage against database owners/superusers.
+
+Patient sex is nullable opaque text with no inferred clinical/FHIR meaning.
+Custom CHECKs, partial index, functions, and triggers are owned by the committed
+migration and verified by catalog and behavior tests. No db push, preview feature,
+new dependency, or production/container migration runner is introduced. Host/CI
+migrate deploy proves clean deployment and second-deploy behavior before Docker
+regression. Future migrations must preserve custom SQL deliberately.
+
+### ADR-020 — Authentication/session foundation
+Status: Accepted (EH-006 final approval, Issue #10 comment 6136179437)
+
+Use Node 24.21.0 built-in asynchronous Argon2id and the strict application-specific
+109-byte versioned encoding; no external dependency. Eight-hour opaque database
+sessions store only SHA-256 lookup hashes. Sessions rotate at successful relogin,
+remain retained, and have no sliding/last-used/cleanup machinery. Production
+__Host- cookie; session-derived CSRF; exact mandatory browser Origin and login
+custom-header controls. Successful session mutations append empty-metadata audit
+atomically. Only login/logout/me and minimal principal; authorization remains later.
+See `EH-006_AUTH.md` for the frozen contract and limitations.
+
+### ADR-021 — Relationship-aware authorization foundation
+Status: Accepted (Issue #12 final approval comment 6150370205)
+
+EH-006 server principal is the only actor source. Patient ownership uses
+patient_profiles.id and authenticated user_id mapping; clinician mapping uses
+its own user_id and requires ACTIVE/null-ended assignment. Missing profiles and
+ADMIN patient access fail closed. Only explicit actions can permit access.
+The minimal production proof route reads id/displayName only. Authorization and
+projection share one narrow parameterized SQL statement, rechecking session/user/
+role. No general client/read, cache, migration, dependency, write or audit expansion.
+Uniform object 404 covers malformed/nonexistent/forbidden targets; current-session
+failure remains 401. READ COMMITTED statement semantics do not retract in-flight
+responses after concurrent ending/revocation. Future clinical writes need separate
+transaction contracts. See EH-007_AUTHORIZATION.md.
+
+### ADR-022 — Deterministic logical demo identities and M1 verification
+Status: Accepted (Issue #14 final approval comment 6153695039)
+
+Dataset eh-m1-demo-v1 fixes five synthetic logical identities and one ACTIVE edge.
+UUIDs/timestamps/salts are naturally generated. Insert missing / validate existing
+only, with credential/profile/relationship conflicts rolling back; ENDED-only intended
+history never silently re-grants access. Narrow bootstrap helper; explicit local/test
+CLI opt-in; private injected password and existing EH-006 Argon2id; no production
+allowance, reset, HTTP administration, schema/dependency/pin/auth redesign.
+M1 verification inspects valid state before real HTTP and any repeat seed, accepts
+additional valid future migrations while requiring M1 checksums, and proves zero
+repeat inserts. It is not read-only: genuine login/logout history is retained.
+The original M1 completion gate was subsequently satisfied at `a4b2f2a4a496daba32aead5b612cb105e8873d27`; [recorded evidence](https://github.com/abuhmaid28/egyhealth360/issues/14#issuecomment-6154959884).
+See EH-008_DEMO_IDENTITIES.md and M1_DEMO_RUNBOOK.md.
+
+### ADR-023 — Source-traceable clinical definitions and explicit catalog bootstrap
+Status: Accepted (Issue #16 final approval comment 6157539102)
+
+Three catalog models only: immutable GuidelineSource, lifecycle-owning CarePlanTemplate,
+and CareRuleDefinition with exact specialized JSONB. WHO 2021 alone is authoritative;
+Egyptian 2014 remains documented corroboration. No free-form interpretation column.
+The approved 1.0.0-draft identity can have PUBLISHED lifecycle. Only the exact approved
+source/template/rule manifest and machine definition can publish, including through
+ordinary SQL/Prisma. Version regex validity alone never authorizes a new version.
+Future versions require explicit approval, manifest and validator support.
+
+Template aggregate transitions DRAFT -> PUBLISHED -> RETIRED only. Parent-row locks,
+CHECKs, migration-owned invoker functions/triggers, immutable identities/FKs and
+statement DELETE/TRUNCATE guards protect history. No-op updates preserve timestamps;
+new-model timestamps are database-owned. DRAFT display name may change but must match
+the approved name at publication. Source is immutable from insertion. No independent
+rule lifecycle, patient model, evaluator, expression language, or generic rules CRUD.
+
+Explicit pnpm clinical:bootstrap; fixed manifest in clinical-rules; narrow private
+DB boundary; one bounded atomic insert-missing/validate-existing/publish transaction.
+Exact repeat is zero-write. Conflicting/retired state fails closed; no force/reset.
+Genuine publication/retirement append empty-metadata system audits atomically. Only
+an internal workspace dependency is added. One additive migration; EH-005/006 SQL
+unchanged. No product endpoint or auth change. See EH-009_CLINICAL_DEFINITION_CONTRACT.md.
+
+### ADR-024 — Version-pinned CarePlan lifecycle and evidence-gated action generation
+Status: Accepted (Issue #18 final approval comment 6179110871)
+
+One CarePlan model only, with exact patient-profile/template/rule UUIDs and authenticated
+creator user identity. Composite rule/template FK; no copied versions/latest lookup.
+DRAFT/ACTIVE/CANCELLED only; completion is deferred. Pins immutable from insertion;
+one ACTIVE hypertension plan per patient; ordinary SQL guards restrict the exact
+approved EH-009 aggregate and reject DELETE/TRUNCATE. PUBLISHED required on creation
+and activation under retirement-conflicting locks; retirement retains historical plans.
+
+Narrow internal principal-checked operations, transactional session/user/profile/
+assignment/patient/plan/template locking and genuine atomic lifecycle audit. No HTTP
+route or EH-007 authorization ticket. Deterministic read-only deferred specification
+contains approved declarations and explicit gates only, never an action/occurrence/
+evidence identity, eligibility result or concrete timestamp. No CareAction table,
+generation writer, key encoder, BP/evidence, calendar arithmetic or EACCE. Activation
+is not trigger evidence. No new external dependency. One additive migration; prior
+migrations unchanged. FR-020 foundation only; FR-021 incomplete; M2 in progress.
+See EH-010_CARE_PLAN_CONTRACT.md and EH-010_VALIDATION.md.
+
+### ADR-025 — Immutable paired BP evidence and authenticated entry provenance
+Status: Accepted (Issue #20 final approval comment 6183982525)
+
+One nine-field paired BP row, int32 components and mmHg only; caller event time,
+database receipt time, patient-profile FK, authenticated recorder user FK and exactly
+PATIENT_SELF_ENTRY/CLINICIAN_ENTRY. No clinical plausibility bounds, qualifications,
+CarePlan/catalog dependency or external source identity. No correction workflow;
+all UPDATE/DELETE/TRUNCATE prohibited. Later evidence use requires correction-aware
+normalization and selection. Identical POSTs create distinct rows; no idempotency.
+
+Narrow principal-checked creation/history boundary, fixed current-authorization locks,
+final expiry recheck and atomic empty-metadata BP_MEASUREMENT_CREATED audit. SQL guards
+check structure, not authentication, with invoker/trusted search path/qualified lookups.
+POST and paginated GET/HEAD use existing session/Origin/CSRF and uniform object denial.
+Raw duplicate/token validation is confined to BP POST; global parser unchanged.
+HTTP explicitly omits recorder user UUID. No external dependency. One additive migration;
+four historical migrations unchanged. CareAction generation/FR-021 remain deferred;
+below-threshold BP and active plan do not establish clinical eligibility. M2 in progress.
+See EH-011_BP_PROVENANCE_CONTRACT.md and EH-011_VALIDATION.md.
+
+
+### ADR-026 — Operational follow-up and immutable encounter/BP evidence foundation
+Status: Accepted (Issue #22 final approval 6204890129)
+
+Three narrow models: SCHEDULED->CANCELLED operational appointments, immutable encounters, immutable BP associations. HTN_BP_FOLLOWUP is purpose only. No provider allocation/participant claim, rule/plan/action FK or clinical qualification. Preserve BP rows and guards; composite same-patient FKs plus unique BP prevent cross-patient/ambiguous association. Prisma requires a redundant composite unique for its one-to-one relation. Current session/user/profile/assignment transactions and final expiry recheck; genuine empty-metadata atomic audit. Patient own reads; assigned clinician writes; Admin denied. Non-idempotent creation; authorized cancellation/exact-pair retries preserve provenance without events. One additive migration, no external dependency. Corrected association-reference GET/HEAD ends blood-pressure-associations. CareAction/FR-021 deferred, FR-024 foundation-only, AC-004/005 unsatisfied, M2 in progress; EH-013 owns coverage/normalization. Exact contract: EH-012_FOLLOWUP_ENCOUNTER_CONTRACT.md.
+
+### ADR-027 — Record coverage windows and normalized evidence queries
+Status: Accepted (Issue #24 final approval comment 6223961083)
+
+One new model RecordCoverageWindow with immutable machine-process provenance. Source type is strictly SYNTHETIC_BENCHMARK; sourceReference is required opaque string (1..128 chars, regex ^[A-Za-z0-9_.-]+$). Status is COMPLETE | INCOMPLETE | UNKNOWN. No recordedByUserId; no DataSource table. Chronology check startAt < endAt. Assertion uniqueness on (patient_id, source_type, source_reference, status, start_at, end_at). Immutability enforced by database trigger rejecting all UPDATE, DELETE, and TRUNCATE.
+Internal insert-missing helper performs ON CONFLICT DO NOTHING without application audit events because EH-013 is an internal machine slice with no public HTTP endpoints.
+Coverage interval normalization is pure, in-memory, deterministic, and strictly partitioned by (patientId, sourceType, sourceReference). Overlap resolution precedence is INCOMPLETE > UNKNOWN > COMPLETE. Contributing raw window IDs are preserved on every segment. Adjacent identical-status intervals coalesce. Gaps with no assertions remain unasserted (silent missingness preserved; never synthesized as UNKNOWN).
+Normalized evidence queries execute as a single-statement transactional snapshot returning canonical coverage intervals, raw BP measurements, encounter-anchored BP candidates, and operational appointment candidates without clinical qualification. Zero HTTP endpoints.
+See EH-013_COVERAGE_NORMALIZED_EVIDENCE_CONTRACT.md and EH-013_VALIDATION.md.
+
+### ADR-028 — Observed clinical applicability persistence foundation
+Status: Accepted (Issue #29 authoritative review comments 6242326017 and 6242103787)
+
+Two new models: ObservedClinicalApplicabilitySnapshot (15 scalar fields) and ObservedClinicalApplicabilityRetraction (9 scalar fields).
+Source type is strictly SYNTHETIC_OBSERVED_INPUT; sourceReference, assertionReference, and retractionReference are required bounded ASCII strings (1..128 chars, regex ^[A-Za-z0-9_.-]+$) sorted using PostgreSQL C collation.
+Discriminated age assertion state machine: NO_ASSERTION and UNKNOWN enforce ageYearsAtAssessment IS NULL; ASSERTED_VALUE enforces ageYearsAtAssessment IS NOT NULL AND >= 0. Coercions (e.g. floats, strings, negative numbers) are strictly rejected.
+Clinical conditions (hypertension, CVD, diabetes, CKD) and pregnancy status are explicit four-state domains (NULL, PRESENT/PREGNANT, ABSENT/NOT_PREGNANT, UNKNOWN).
+Research noninterference: Complete ground truth is logically inaccessible; unasserted observed fields remain NULL and are never backfilled or inferred from ground truth.
+Terminal one-to-one retraction: A retraction locks its target snapshot FOR UPDATE, enforces composite partition key consistency (snapshot_id, patient_id, source_type, source_reference), and withdraws the snapshot permanently. Retraction retries are idempotent; conflicting attempts fail closed with APPLICABILITY_CONFLICT.
+Immutability: Database triggers reject all UPDATE, DELETE, and TRUNCATE operations unconditionally on both tables.
+Internal machine writer operates with zero application audit events.
+Authorized query service executes a single-statement parameterized LEFT JOIN snapshot under canonical user/session/assignment lock discipline, returning an ObservedApplicabilityPoint with mechanical tuple comparison (NO_NON_RETRACTED_ROWS, IDENTICAL_TUPLES, DIFFERING_TUPLES). Zero public HTTP routes.
+Slices B2 (BP qualification/selection), B3 (occurrence/retrigger), B4 (BP evidence invalidation/correction), and CareAction generation remain deferred. Milestone M2 remains in progress.
+See EH-015_OBSERVED_APPLICABILITY_CONTRACT.md and EH-015_VALIDATION.md.
+
+### ADR-029 — BP terminal exclusion and independent wrong-patient privacy
+Status: Accepted (Issue #31 complete frozen contract, final approval comment 6305526971)
+
+Immutable source BP remains intact. One terminal exclusion per BP; correction/restatement uses fresh full-pair same-patient evidence and truthful new provenance. Separate append-only wrong-patient privacy supports F1's already-excluded case without overwriting the original reason. Privacy targets are explicit frozen same-lineage identities, never dynamically propagated. Current assigned clinicians only; principal-checked internal service, canonical operation idempotency, locked atomic mutation/audit. Existing product reads mask private payload/references and effective normalized evidence removes every exclusion. D1 defers exact captured decision inputs to EH-014/B2 and guarantees no arbitrary historical transaction visibility. D2 adds no forensic role, raw endpoint or cross-patient transfer. One additive migration, no BP backfill or historical migration changes. No B2/B3/CareAction/EACCE implementation; M2 IN PROGRESS. See BP_CORRECTION_INVALIDATION_CONTRACT.md and BP_CORRECTION_INVALIDATION_VALIDATION.md. Issue #31 was independently reviewed, merged in PR #32 at `e83e9b3e0e6e42988cc4e4ba905d9bcc589b9adc` and post-merge validated; it is CLOSED/completed.
+
+### ADR-030 — Explicit immutable INITIAL CareAction generation
+Status: Accepted (Issue #28 frozen R1–R8 and implementation approval 6317196946)
+
+Both BP sources require explicit assigned-clinician admission/selection; measuredAt is triggerAt, exact complete non-retracted identical applicability at that point and triggerAt >= plan.startedAt. One INITIAL per exact plan/rule, with exact immutable protected replay and same-patient source membership. Current transactional revalidation under compatible locks; no stale substitution. Preserve history after later evidence changes while withholding now-private ordinary action projections. Independent original-trigger UTC Gregorian +3/+6 months with clamping. ACTIVE/PUBLISHED exact pins; retirement blocks new generation; authorized historical retries are no-ops. Explicit current clinician invocation only, truthful selection provenance, human selection audit plus NULL-actor derived creation audit, {} metadata, all atomic. No appointment coupling, recurrence, autonomous writer, EACCE or design. Implementation contract: EH-014_INITIAL_CARE_ACTION_CONTRACT.md. Implementation merged in [PR #33](https://github.com/abuhmaid28/egyhealth360/pull/33) at `4a717c4c6be5b1fa9d089823bb093eca43813853`, passed [exact-main CI 39664778127](https://github.com/abuhmaid28/egyhealth360/actions/runs/39664778127) and the [functional M2 exit review](https://github.com/abuhmaid28/egyhealth360/issues/28#issuecomment-6329641518). M2 functional exit gate PASS; final documentation/status closeout pending, Issue #28 OPEN. FR-021 satisfied only for the approved Core V1 bounded INITIAL scope; FR-024 incomplete, AC-004/005 unsatisfied; M3 NOT STARTED. Earlier ADR slice-status statements remain historical.
+
+### ADR-032 — Approved I1 contract and sole-assignment compatibility
+
+Status: Accepted contract ([Issue #39](https://github.com/abuhmaid28/egyhealth360/issues/39)); [Slice 1 authorization](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6356123914) covers documentation adoption only.
+
+Adopt [V3_I1_CONTRACT](V3_I1_CONTRACT.md): four minimum future concepts (Organization, Specialty, OrganizationMembership, RelationshipRequest), fixed future staff roles, patient-only registration with explicit login, allowlisted published directory and truthful bilateral provenance around the existing sole ClinicianPatientAssignment grant. Preserve terminal assignment/membership history, current-authority checks, minimized audit, M0–M2 behavior and deterministic M1 fixture. No fabricated consent/member/specialty backfills. D36 artifact authority remains I3; membership alone never permits patient browsing or fulfillment.
+
+This refines ADR-031's approved future I1 scope and ADR-019/021 compatibility without superseding their implemented historical invariants or changing D01–D36. No D37+ product decision. I1 runtime NOT STARTED; Slice 1 contract adoption in progress; Slice 2 NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN. Historical ADRs above remain unchanged. Independent Slice 1 review/CI/approved merge/exact-main verification precede separate Slice 2 authorization.
+
+### ADR-033 — Bounded organization/membership operational services
+
+Status: Slice 2 implementation in review under [Issue #39 authorization 6366843150](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6366843150).
+
+[Slice 2 implementation contract](V3_I1_SLICE2.md): add only fixed staff roles, Organization and OrganizationMembership, with declarative role/kind foreign keys, terminal grant/end history, current principal/organization/membership checks and atomic minimized audit. Internal operational services follow the existing narrow service pattern; no new HTTP routes. OpenAPI expands only the existing AuthSuccess role enum. Separate additive role-enum and organization migrations preserve historical SQL/checksums. Organization-before-membership locking extends the user/session prefix without clinical lock inversion. Membership never authorizes a patient or routed artifact. No D01–D36 change; D36 fulfillment remains I3.
+
+Slice 1 merged/verified; Slice 2 awaits independent review/CI/approved merge/exact-main verification. I1 NOT COMPLETE; Slice 3 NOT AUTHORIZED; EACCE NOT STARTED; design FROZEN. Earlier ADR status wording remains historical.
+
+
+### ADR-034 — Guarded patient registration and own profile
+
+Status: Slice 3 implementation in review under [Issue #39 authorization 6374281944](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6374281944). Slice 2 is COMPLETE through PR #41 at `2c96b2ce7cfd407a828f9ba510e563fe1e5983a9`, exact-main CI 40010140478 SUCCESS.
+
+Adopt [Slice 3 contract](V3_I1_SLICE3.md): anonymous patient-only registration with exact X-EH-Register: 1 plus Origin/Fetch Metadata/strict JSON guards, bounded local resource protection, atomic identity/profile/minimized anonymous audit, generic 202 duplicate-safe acknowledgement and explicit separate login. Reuse canonical email and the existing Argon2id codec/1–1024 UTF-8 byte password semantics. No schema/migration/dependency change.
+
+Own-profile GET/HEAD/PUT derive ownership from a current authenticated PATIENT, expose a read-only own profile ID locator plus existing displayName/dateOfBirth/sex context, and deny other roles. PUT is bounded full replacement under current user/session/profile locks, last serialized replacement wins, exact no-op adds no audit, and changed context/audit commit atomically. Legacy read context is preserved; it never becomes clinical applicability evidence. [Validation](V3_I1_SLICE3_VALIDATION.md) records actual proof.
+
+This implements the Slice 3 portion of ADR-032 without changing D01–D36 or historical ADR/M0–M2 invariants. Membership/ADMIN/registration do not create clinical authority; ClinicianPatientAssignment remains the sole grant. Slice 4+ NOT AUTHORIZED, I1 NOT COMPLETE, EACCE NOT STARTED, design FROZEN. Independent review, successful exact-head CI, explicit merge approval and exact-main verification remain mandatory.
+
+## Change process
+
+A major scope, architecture, security, or clinical-rule change requires a documented proposal and an explicit decision update before implementation.
+
+
+## ADR-035 — Curated public directory and independent publication
+
+Status: Accepted implementation design within approved Slice 4; PR review/merge still required. Authority: [Issue #39 comment 6391008285](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6391008285). Extends ADR-032/034 operationally; changes no D01–D36 product decision or historical ADR scope.
+
+Adopt [Slice 4](V3_I1_SLICE4.md): four minimal directory models, independent public IDs, explicit curated specialty (legacy free text unchanged), separate clinic operational/publication state, global provider switch and exact terminal membership-affiliation approvals. Internal current-ADMIN management follows Slice 2; four minimized public GET/HEAD resources only, current SQL/no-store, no clinical authority. Additive thirteenth migration with zero data backfill; retained history/atomic audit/current-source eligibility and real PostgreSQL concurrency proof. No directory UI, availability, RelationshipRequest, fulfillment or EACCE. [Validation](V3_I1_SLICE4_VALIDATION.md) supplies execution evidence, not I1 completion.
+
+## ADR-036 — Bilateral provenance around the sole assignment grant
+
+Status: Approved Slice 5 contract; implementation in review, not accepted milestone completion. Authority: [Issue #39 comment 6401378826](https://github.com/abuhmaid28/egyhealth360/issues/39#issuecomment-6401378826). Extends ADR-032 without changing D01–D36.
+
+Adopt [Slice 5](V3_I1_SLICE5.md): RelationshipRequest records patient authorization and designated clinician decision, binding the exact ACTIVE ClinicianPatientAssignment. It is never a second grant. Legacy assignments retain authority without fabricated consent. Separate append-only AssignmentEndProvenance records only actual new participant endings, preserving historical Prisma scalar queries. Accepted authorization withdrawal retains ACCEPTED history and atomically ends the exact bound grant; exact old-target retries never end a new grant. Additive fourteenth migration, zero backfill, participant-only HTTP, current actor/session locks, pair serialization, M1/M2 overlap proof and minimized audit. Slice 6 remains unauthorized; I1 incomplete; EACCE/design untouched.

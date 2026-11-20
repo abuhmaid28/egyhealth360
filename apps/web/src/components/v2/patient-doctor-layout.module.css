@@ -1,0 +1,135 @@
+/* Approved Navigation A: compact labelled top navigation, quiet task surfaces. */
+.root[data-frontend-v2] > header { background: var(--v2-canvas); }
+.root[data-frontend-v2] > header > div { max-inline-size: 1328px; gap: 24px; padding-block: 16px; }
+.root[data-frontend-v2] > header > div > a { color: var(--v2-ink); font-size: 18px; }
+.root[data-frontend-v2] > header nav a { font-size: 16px; }
+.root[data-frontend-v2] > header nav a[aria-current="page"] { color: var(--v2-action); background: var(--v2-raised); box-shadow: inset 0 -3px var(--v2-action); }
+.root[data-frontend-v2] > header details > div { background: var(--v2-surface); }
+.root[data-frontend-v2] > main { max-inline-size: 1328px; padding-block-start: 32px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.page-heading h1) { font-size: 30px; letter-spacing: -.6px; overflow-wrap: anywhere; }
+.root[data-frontend-v2][data-frontend-v2-content][dir="rtl"] :global(.page-heading h1) { letter-spacing: 0; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.card) { padding: 24px; border-radius: 20px; box-shadow: var(--v2-shadow); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.card-title) { gap: 16px; flex-wrap: wrap; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.card h2) { font-size: 20px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.card p) { line-height: 1.75; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.clinician-hero) { background: var(--v2-raised); color: var(--v2-ink); border: 1px solid var(--v2-line); border-radius: 20px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.clinician-hero h2) { color: var(--v2-ink); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.clinician-hero p) { color: var(--v2-muted); }
+.root[data-frontend-v2] > footer { background: var(--v2-canvas); color: var(--v2-muted); font-size: 14px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.progress-steps) { flex-wrap: wrap; min-inline-size: 0; }
+@media (max-width: 900px) {
+  .root[data-frontend-v2] > header > div { gap: 12px; padding-inline: 24px; }
+  .root[data-frontend-v2] > header > div > nav { order: 3; flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 12px; }
+  .root[data-frontend-v2] > header > div > nav a { flex: 1 1 120px; min-inline-size: 0; overflow-wrap: anywhere; min-block-size: 48px; border: 1px solid var(--v2-control); border-block-end-width: 3px; border-radius: 10px; text-align: center; }
+  .root[data-frontend-v2] > header > div > nav a[aria-current="page"] { border-color: var(--v2-action); box-shadow: none; }
+}
+@media (max-width: 600px) {
+  /* Doctor logistics: the action must not consume the patient's identity column.
+     Patient uses the same row component and retains its existing layout. */
+  .root[data-frontend-v2][data-frontend-v2-content][data-portal-shell="CLINICIAN"] :global(.appointment-row) { display: grid; grid-template-columns: 52px minmax(0, 1fr); align-items: start; }
+  .root[data-frontend-v2][data-frontend-v2-content][data-portal-shell="CLINICIAN"] :global(.appointment-row > .button) { grid-column: 2; margin-inline-start: 0; justify-self: start; max-inline-size: 100%; white-space: normal; }
+  .root[data-frontend-v2] > header > div { padding-inline: 16px; }
+  .root[data-frontend-v2] > header > div > a { font-size: 16px; }
+  .root[data-frontend-v2] > main { padding: 24px 16px 40px; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.card) { padding: 20px 16px; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.page-heading h1) { font-size: 26px; }
+}
+
+/* Supported selection, booking, released/history and professional operational destinations. */
+.root[data-frontend-v2][data-frontend-v2-content] :global(.provider-card) { border: 1px solid var(--v2-line); border-radius: 20px; background: var(--v2-surface); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.provider-card:hover) { border-color: var(--v2-control); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.doctor-profile) { background: var(--v2-raised); color: var(--v2-ink); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.avatar) { color: var(--v2-action); background: var(--v2-raised); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.slots button) { color: var(--v2-ink); background: var(--v2-surface); border: 1px solid var(--v2-control); min-block-size: 48px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.slots button.selected) { color: var(--v2-action); background: var(--v2-raised); border: 2px solid var(--v2-action); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.filter-chips button) { color: var(--v2-muted); background: var(--v2-surface); border: 1px solid var(--v2-control); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.filter-chips button.active) { color: var(--v2-action); background: var(--v2-raised); border-color: var(--v2-action); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.booking-time) { font-size: 16px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.booking-time small) { font-size: 14px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.live-booking-row) { gap: 24px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.booking-identity h3) { font-size: 20px; overflow-wrap: anywhere; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.error-panel p) { color: var(--v2-ink); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.modal) { border: 1px solid var(--v2-control); border-radius: 20px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.confirmation-details) { background: var(--v2-raised); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.detail-icon) { background: var(--v2-raised); color: var(--v2-action); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.empty .button) { font-size: 16px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.appointment-main h3) { white-space: normal; text-overflow: clip; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.patient-journey) { background: var(--v2-surface); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.patient-journey > a) { background: var(--v2-raised); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.journey-number) { background: var(--v2-surface); }
+
+/* Doctor source-led workspace: bounded adaptation of #107 to existing rich editors. */
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-context-ribbon) { background: var(--v2-raised); color: var(--v2-ink); border: 1px solid var(--v2-line); border-inline-start: 3px solid var(--v2-action); border-radius: 18px; padding: 12px 24px; }
+.root[data-frontend-v2][data-frontend-v2-content][dir] :global(.master-context-ribbon) { background: var(--v2-raised); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-context-ribbon h1) { color: var(--v2-ink); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-context-ribbon .eyebrow) { color: var(--v2-muted); opacity: 1; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-provider) { color: var(--v2-muted); font-size: 14px; opacity: 1; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-visit) { color: var(--v2-ink); font-size: 16px; border-color: var(--v2-control); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-visit small) { color: var(--v2-muted); font-size: 14px; opacity: 1; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-consultation-state) { color: var(--v2-ink); border-color: var(--v2-control); font-size: 16px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-back) { color: var(--v2-action); border-color: var(--v2-control); font-size: 14px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-local-tasks) { background: transparent; border: 0; border-block-end: 1px solid var(--v2-line); border-radius: 0; padding: 12px 0 0; gap: 24px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-local-tasks a) { font-size: 16px; min-block-size: 52px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-grid) { grid-template-columns: 176px minmax(0, 1fr) 260px; border: 0; padding: 16px 0; background: transparent; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-outline) { grid-column: 1; grid-row: 1; border: 0; padding: 0; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-outline a) { font-size: 16px; min-block-size: 48px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-content) { grid-column: 2; grid-row: 1; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-content > .card) { padding: 24px; border: 1px solid var(--v2-line); border-radius: 16px; margin-block-end: 24px; background: var(--v2-surface); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-content > .card > p) { font-size: 16px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-content h2) { font-size: 20px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-field label) { font-size: 16px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-counter) { font-size: 14px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-purpose) { font-size: 14px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.v2-source-context) { grid-column: 3; grid-row: 1; align-self: start; position: sticky; inset-block-start: var(--consultation-offset); min-inline-size: 0; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.v2-source-context > summary) { display: flex; align-items: center; gap: 10px; list-style: none; min-block-size: 48px; cursor: pointer; color: var(--v2-action); font-size: 16px; font-weight: 600; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.v2-source-context > summary::-webkit-details-marker) { display: none; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.v2-source-context > summary > span) { flex: 1; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-source-rail) { position: static; padding: 12px 0 0; border: 0; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-source-rail h2) { font-size: 16px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-source-rail dt),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-source-rail dd),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-source-rail .master-source-state) { font-size: 16px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-source-rail dl > div:nth-child(-n + 2)) { background: transparent; border: 0; border-block-end: 1px solid var(--v2-line); padding: 16px 0; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-warning) { background: var(--v2-raised); color: var(--v2-ink); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.scoped-consultation .consultation-ribbon) { box-shadow: none; }
+@media (min-width: 901px) { .root[data-frontend-v2] > header > div { padding-block: 11px; } }
+@media (max-width: 1099px) {
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-grid) { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-outline) { position: static; grid-column: 1; grid-row: auto; display: flex; flex-wrap: wrap; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.v2-source-context) { grid-column: 1; grid-row: auto; position: static; padding: 12px 16px; border: 1px solid var(--v2-control); border-radius: 14px; background: var(--v2-raised); }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-content) { grid-column: 1; grid-row: auto; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.master-source-rail h2) { display: none; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.master-context-ribbon) { flex-wrap: wrap; padding: 16px; gap: 12px; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.master-local-tasks) { gap: 8px; flex-wrap: wrap; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.master-local-tasks a) { flex: 1 1 12em; border: 1px solid var(--v2-control); border-block-end-width: 3px; padding: 10px 12px; border-radius: 10px; text-align: center; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.master-local-tasks a[aria-current]) { background: var(--v2-raised); border-color: var(--v2-action); }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.master-local-tasks a[aria-current]::after) { display: none; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.scoped-consultation .consultation-ribbon) { position: static; }
+}
+@media (max-width: 600px) {
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.documentation-content > .card) { padding: 20px 16px; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.master-visit) { padding: 0; border: 0; }
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.master-local-tasks a) { flex-basis: 100%; }
+}
+.root[data-frontend-v2][data-frontend-v2-content] :global(.body-copy) { color: var(--v2-muted); font-size: 16px; }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.availability-context),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.availability-note),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.public-availability-note),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.date-tile),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.directory-note),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.appointment-date),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.provider-clinic),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.detail .icon-tile),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.stat .icon-tile) { color: var(--v2-ink); background: var(--v2-raised); border-color: var(--v2-line); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.availability-context small),
+.root[data-frontend-v2][data-frontend-v2-content] :global(.availability-note small) { color: var(--v2-muted); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.master-consultation-state) { max-inline-size: 100%; flex-shrink: 1; white-space: normal; overflow-wrap: anywhere; }
+@media (min-width: 1600px) {
+  .root[data-frontend-v2] > main,
+  .root[data-frontend-v2] > header > div { max-inline-size: 1440px; }
+}
+.root[data-frontend-v2][data-frontend-v2-content] :global(.filter-chips button.selected) { color: var(--v2-on-action); background: var(--v2-action); border-color: var(--v2-action); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.boundary-notice) { background: var(--v2-raised); border-color: var(--v2-control); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.boundary-notice p) { color: var(--v2-muted); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.map-art) { color: var(--v2-ink); background: var(--v2-raised); border-color: var(--v2-line); }
+.root[data-frontend-v2][data-frontend-v2-content] :global(.tabs span) { color: inherit; background: var(--v2-raised); }

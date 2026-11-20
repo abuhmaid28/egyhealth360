@@ -1,0 +1,51 @@
+fatal: bad object ffffffffffffffffffffffffffffffffffffffff
+✔ push uses the complete before/after range, including earlier high-risk commits (505.426641ms)
+✔ PR uses merge-base and cannot hide deleted/renamed runtime paths behind Markdown (302.435489ms)
+✔ docs-only PR and main push select zero heavy lanes through the real CLI (242.105041ms)
+✔ unavailable ranges, initial push and manual/milestone controls select all historical gates (496.76231ms)
+SCENARIO README/docs only: {"version":1,"classes":["DOCS_GOVERNANCE"],"full":false,"modules":[],"runtime":[],"lanes":{"docs-check":true,"frontend-check":false,"backend-check":false,"postgres":false,"docker-runtime":false,"dependency-audit":false},"reasons":[]}
+SCENARIO UX Markdown only: {"version":1,"classes":["DOCS_GOVERNANCE"],"full":false,"modules":[],"runtime":[],"lanes":{"docs-check":true,"frontend-check":false,"backend-check":false,"postgres":false,"docker-runtime":false,"dependency-audit":false},"reasons":[]}
+SCENARIO component: {"version":1,"classes":["FRONTEND_ONLY"],"full":false,"modules":[],"runtime":[],"lanes":{"docs-check":true,"frontend-check":true,"backend-check":false,"postgres":false,"docker-runtime":false,"dependency-audit":false},"reasons":[]}
+SCENARIO UI package: {"version":1,"classes":["FRONTEND_ONLY"],"full":false,"modules":[],"runtime":[],"lanes":{"docs-check":true,"frontend-check":true,"backend-check":false,"postgres":false,"docker-runtime":false,"dependency-audit":false},"reasons":[]}
+SCENARIO booking API: {"version":1,"classes":["NORMAL_BACKEND"],"full":false,"modules":["bookings"],"runtime":["auth","authorization","availability","booking","consultation-opening"],"lanes":{"docs-check":true,"frontend-check":false,"backend-check":true,"postgres":true,"docker-runtime":true,"dependency-audit":false},"reasons":[]}
+SCENARIO prescription persistence: {"version":1,"classes":["DATABASE_HIGH_RISK"],"full":true,"modules":[],"runtime":["auth","authorization","m1","clinical","care-action","organization","patient-entry","directory","relationship","v3-i1-exit","availability","booking","consultation-opening","consultation-documentation","follow-up-intent","v3-i2-exit","prescription","pharmacy"],"lanes":{"docs-check":true,"frontend-check":true,"backend-check":true,"postgres":true,"docker-runtime":true,"dependency-audit":true},"reasons":["Persistence/schema/transaction boundary: packages/db/src/prescriptions.ts"]}
+SCENARIO migration: {"version":1,"classes":["DATABASE_HIGH_RISK"],"full":true,"modules":[],"runtime":["auth","authorization","m1","clinical","care-action","organization","patient-entry","directory","relationship","v3-i1-exit","availability","booking","consultation-opening","consultation-documentation","follow-up-intent","v3-i2-exit","prescription","pharmacy"],"lanes":{"docs-check":true,"frontend-check":true,"backend-check":true,"postgres":true,"docker-runtime":true,"dependency-audit":true},"reasons":["Persistence/schema/transaction boundary: packages/db/prisma/migrations/next/migration.sql"]}
+SCENARIO auth: {"version":1,"classes":["SECURITY_HIGH_RISK"],"full":true,"modules":[],"runtime":["auth","authorization","m1","clinical","care-action","organization","patient-entry","directory","relationship","v3-i1-exit","availability","booking","consultation-opening","consultation-documentation","follow-up-intent","v3-i2-exit","prescription","pharmacy"],"lanes":{"docs-check":true,"frontend-check":true,"backend-check":true,"postgres":true,"docker-runtime":true,"dependency-audit":true},"reasons":["Security/authority boundary: apps/api/src/auth.ts"]}
+SCENARIO CI workflow: {"version":1,"classes":["INFRASTRUCTURE"],"full":true,"modules":[],"runtime":["auth","authorization","m1","clinical","care-action","organization","patient-entry","directory","relationship","v3-i1-exit","availability","booking","consultation-opening","consultation-documentation","follow-up-intent","v3-i2-exit","prescription","pharmacy"],"lanes":{"docs-check":true,"frontend-check":true,"backend-check":true,"postgres":true,"docker-runtime":true,"dependency-audit":true},"reasons":["CI/build/tooling boundary: .github/workflows/ci.yml"]}
+SCENARIO frontend + migration union: {"version":1,"classes":["DATABASE_HIGH_RISK","FRONTEND_ONLY"],"full":true,"modules":[],"runtime":["auth","authorization","m1","clinical","care-action","organization","patient-entry","directory","relationship","v3-i1-exit","availability","booking","consultation-opening","consultation-documentation","follow-up-intent","v3-i2-exit","prescription","pharmacy"],"lanes":{"docs-check":true,"frontend-check":true,"backend-check":true,"postgres":true,"docker-runtime":true,"dependency-audit":true},"reasons":["Persistence/schema/transaction boundary: packages/db/prisma/migrations/next/migration.sql"]}
+SCENARIO docs + security union: {"version":1,"classes":["DOCS_GOVERNANCE","SECURITY_HIGH_RISK"],"full":true,"modules":[],"runtime":["auth","authorization","m1","clinical","care-action","organization","patient-entry","directory","relationship","v3-i1-exit","availability","booking","consultation-opening","consultation-documentation","follow-up-intent","v3-i2-exit","prescription","pharmacy"],"lanes":{"docs-check":true,"frontend-check":true,"backend-check":true,"postgres":true,"docker-runtime":true,"dependency-audit":true},"reasons":["Security/authority boundary: apps/api/src/authorization.ts"]}
+SCENARIO unknown critical path: {"version":1,"classes":["INFRASTRUCTURE"],"full":true,"modules":[],"runtime":["auth","authorization","m1","clinical","care-action","organization","patient-entry","directory","relationship","v3-i1-exit","availability","booking","consultation-opening","consultation-documentation","follow-up-intent","v3-i2-exit","prescription","pharmacy"],"lanes":{"docs-check":true,"frontend-check":true,"backend-check":true,"postgres":true,"docker-runtime":true,"dependency-audit":true},"reasons":["Unmapped path: apps/new-service/src/index.ts"]}
+✔ README/docs only (7.882915ms)
+✔ UX Markdown only (1.484624ms)
+✔ component (0.485105ms)
+✔ UI package (0.27807ms)
+✔ booking API (0.630971ms)
+✔ prescription persistence (0.241745ms)
+✔ migration (0.18086ms)
+✔ auth (0.139555ms)
+✔ CI workflow (0.365531ms)
+✔ frontend + migration union (2.068515ms)
+✔ docs + security union (0.271594ms)
+✔ unknown critical path (0.259982ms)
+✔ bounded booking runtime includes authority and affected dependencies, omits unrelated historical chains (0.347724ms)
+✔ explicit module mapping is complete and points to real suites and verifiers (137.470117ms)
+✔ full preserves every historical runtime, in historical execution order (10.449927ms)
+✔ manual full and multi-module unions never downgrade (0.471301ms)
+✔ sensitive paths, contract docs, shared packages, tooling and unknown API files fail safe (1.914232ms)
+✔ all tracked non-document source paths select real validation; unknown paths cannot get docs-only (13.381994ms)
+✔ gate accepts only successful selected lanes and explicit intentional skips (16.516707ms)
+✔ empty/malformed plans, lost outputs and internally inconsistent routing fail closed (0.628244ms)
+✔ unsafe repository paths rejected (1.328781ms)
+✔ workflow wires every lane, full controls, pinned actions, safe concurrency and caches (2.851019ms)
+✔ full selection plus frontend units exactly preserves the historical top-level suite (0.901802ms)
+✔ booking selection includes actual race, integrity and authority suites without unrelated pharmacy (1.205997ms)
+✔ every indexed accepted contract and new sensitive Markdown path selects deep validation (0.740363ms)
+✔ ordinary frontend filenames containing clock or block do not imply lockfile changes (0.200603ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2003.148509

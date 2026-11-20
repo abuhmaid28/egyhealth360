@@ -1,0 +1,161 @@
+/* Shared T1 values follow the sole layout-owned canonical theme attribute. */
+.root {
+  --staff-canvas:var(--v2-canvas); --staff-surface:var(--v2-surface); --staff-raised:var(--v2-raised);
+  --staff-ink:var(--v2-ink); --staff-muted:var(--v2-muted); --staff-line:var(--v2-line);
+  --staff-action:var(--v2-action); --staff-on-action:var(--v2-on-action); --staff-control:var(--v2-control);
+  /* Existing #109 decorative pair; conveys no new clinical status meaning. */
+  --staff-apricot:#ffe5cf;
+  background:var(--staff-canvas); color:var(--staff-ink); color-scheme:var(--v2-scheme); border-radius:24px;
+  padding:clamp(16px,2.5vw,36px); min-width:0; font-size:1rem; line-height:inherit;
+  --ink:var(--staff-ink); --muted:var(--staff-muted); --white:var(--staff-surface);
+  --canvas:var(--staff-canvas); --line:var(--staff-line); --blue:var(--staff-action);
+}
+@media(prefers-color-scheme:dark) {
+  :global(:root:not([data-frontend-v2-theme="light"])) .root { --staff-apricot:#4b3228; }
+}
+:global(:root[data-frontend-v2-theme="dark"]) .root { --staff-apricot:#4b3228; }
+.root * {box-sizing:border-box; min-width:0;}
+.root h1,.root h2,.root h3,.root p {margin:0; color:inherit; overflow-wrap:anywhere;}
+.root h1 {font-size:clamp(1.85rem,3vw,2.7rem); line-height:1.4; letter-spacing:-.035em;}
+.root h2 {font-size:1.25rem; line-height:1.6;}
+.root h3 {font-size:1.1rem; line-height:1.7;}
+.root button,.root a,.root summary {font:inherit; overflow-wrap:anywhere;}
+.root :is(button,a,summary) {min-height:44px;}
+.root button,.root summary {cursor:pointer;}
+.root button:disabled {cursor:wait; opacity:.65;}
+.root :is(button,a,summary):focus-visible {outline:3px solid var(--staff-action); outline-offset:4px;}
+.root svg {flex-shrink:0;}
+.notice {display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; font-size:.8125rem; padding:12px 16px; background:var(--staff-raised); border:1px solid var(--staff-line); border-radius:10px;}
+.notice span {margin-inline-start:auto; color:var(--staff-muted);}
+.heading {padding-block:28px; display:grid; gap:8px;}
+.heading>p:last-child,.muted {color:var(--staff-muted);}
+.eyebrow {font-size:.8125rem; font-weight:600; color:var(--staff-muted)!important;}
+.pharmacyGrid {display:grid; grid-template-columns:minmax(220px,.65fr) minmax(0,2fr); gap:28px; align-items:start;}
+.queue {padding-block:12px;}
+.queue>h2 {margin-block-end:8px;}
+.queue>p {font-size:.875rem; margin-block-end:16px;}
+.searchBox {margin-block-end:14px;}
+.searchInput {width:100%; min-height:44px; padding:10px 14px; border:1px solid var(--staff-line); border-radius:10px; background:var(--staff-surface); color:var(--staff-ink); font:inherit;}
+.searchInput:focus-visible {outline:3px solid var(--staff-action); outline-offset:2px;}
+.noResults {padding:14px 8px; color:var(--staff-muted); font-size:.875rem;}
+.queueRow,.personRow {width:100%; text-align:start; background:transparent; border:0; border-block-end:1px solid var(--staff-line); color:var(--staff-ink); display:flex; align-items:center; gap:14px; padding:20px 12px; min-height:80px;}
+.queueRow>span:nth-child(2),.personRow>span:nth-child(2) {flex:1;}
+.queueRow strong,.queueRow small,.personRow strong,.personRow small {display:block;}
+.queueRow small,.personRow small {font-size:.8125rem; color:var(--staff-muted);}
+.queueRow[aria-pressed=true],.personRow[aria-pressed=true] {background:var(--staff-raised); border-inline-start:3px solid var(--staff-action);}
+.symbol,.avatar {display:grid;place-items:center; width:44px; height:44px; border:1px solid var(--staff-line); border-radius:12px; color:var(--staff-action); flex-shrink:0;}
+.avatar {border-radius:50%; background:var(--staff-raised);}
+.panel,.people {border:1px solid var(--staff-line); border-radius:20px; background:var(--staff-surface); overflow:hidden;}
+.panelHead {padding:24px; display:flex; justify-content:space-between; align-items:start; gap:16px; border-block-end:1px solid var(--staff-line);}
+.panelHead h2 {margin-block-start:6px;}
+.content {padding:24px; display:grid; gap:24px;}
+.facts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px; padding-block:4px 20px; border-block-end:1px solid var(--staff-line);}
+.facts span,.facts strong {display:block; overflow-wrap:anywhere;}
+.facts span {font-size:.8125rem; color:var(--staff-muted);margin-block-end:6px;}
+.source {display:flex;gap:16px; padding-block:4px;}
+.source p {white-space:pre-wrap;}
+.source h3 {margin-block:4px 16px;}
+.itemNumber {background:var(--staff-raised);color:var(--staff-action);border-radius:8px; padding:4px 10px;align-self:start;}
+.boundary {padding:16px 20px; background:var(--staff-apricot);border-inline-start:3px solid var(--staff-control); border-radius:8px; font-size:.875rem;}
+.boundaryNotice {margin-block-start:12px; font-size:.8125rem; color:var(--staff-muted);}
+.status {display:inline-flex;align-items:center;gap:8px;border:1px solid var(--staff-control); padding:3px 10px;border-radius:8px;font-size:.8125rem;justify-self:start;align-self:center;}
+.steps {list-style:none;display:flex;flex-wrap:wrap;gap:16px;padding:0;margin:0;font-size:.8125rem;color:var(--staff-muted);}
+.steps li {display:flex;gap:8px;align-items:center;flex:1 1 110px;}
+.steps b {border:1px solid var(--staff-line);border-radius:50%;width:28px;height:28px;display:grid;place-items:center;flex-shrink:0;}
+.steps [aria-current=step] {color:var(--staff-action);font-weight:600;}
+.primary,.secondary {display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:10px;min-height:48px;padding:12px 20px;border:1px solid var(--staff-action);justify-self:start;}
+.root .primary {background:var(--staff-action);color:var(--staff-on-action);font-weight:600!important;}
+.root .secondary {background:var(--staff-surface);color:var(--staff-action);}
+.panelFoot {display:flex;align-items:start;gap:12px;padding:20px 24px;border-block-start:1px solid var(--staff-line);font-size:.8125rem;color:var(--staff-muted);}
+.history,.scope {border-block-start:1px solid var(--staff-line);padding-block-start:12px;}
+.root summary {min-height:44px;padding-block:8px;color:var(--staff-action);}
+.root details p {font-size:.875rem;color:var(--staff-muted);margin-block-start:12px;}
+.textLink {display:inline-flex;align-items:center;gap:12px;min-height:44px;color:var(--staff-action);text-decoration:underline;text-underline-offset:4px;}
+.queue .textLink {margin-block-start:16px;}
+.safe,.empty {padding:32px;display:grid;gap:16px;}
+.empty {min-height:320px;align-content:center;}
+.empty svg,.safe svg {color:var(--staff-action);}
+.tabs {display:flex;gap:8px;flex-wrap:wrap;border-block-end:1px solid var(--staff-line);margin-block-end:24px;padding-block-end:12px;}
+.tabs a {min-height:44px;padding:10px 16px;color:var(--staff-muted);border-radius:10px;text-decoration:none;}
+.tabs [aria-current=page] {background:var(--staff-raised);color:var(--staff-action);box-shadow:inset 0 -2px var(--staff-action);}
+.adminGrid {display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:start;}
+.personRow {padding:20px;flex-wrap:wrap;}
+.accountName {font-size:1.5rem!important;}
+.membership {border-inline-start:3px solid var(--staff-action);padding-inline-start:20px;display:grid;gap:8px;}
+.lower {margin-block-start:28px!important;border-block-start:1px solid var(--staff-line);padding-block:20px;font-size:.875rem;color:var(--staff-muted)!important;}
+.future {border-block-start:4px solid var(--staff-action);}
+.conceptIntro {display:flex;align-items:center;gap:24px;background:var(--staff-raised);padding:24px;border-radius:14px;}
+.conceptNumber {font-size:3rem;letter-spacing:-.06em;color:var(--staff-action);}
+.stages {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.stages button {display:grid;gap:6px;text-align:start;border:1px solid var(--staff-line);border-radius:12px;background:var(--staff-surface);color:var(--staff-ink);padding:20px;min-height:140px;}
+.stages button[aria-pressed=true] {background:var(--staff-raised);border-color:var(--staff-action);box-shadow:inset 0 -3px var(--staff-action);}
+.stages b {color:var(--staff-action);font-size:.8125rem;}
+.stages small {color:var(--staff-muted);font-size:.8125rem;}
+.resultPlane {display:grid;gap:12px;min-height:230px;align-content:center;padding:28px;border:1px dashed var(--staff-control);border-radius:14px;background:var(--staff-canvas);}
+.resultPlane svg {color:var(--staff-action);}
+.directory :global(.card) {background:var(--staff-surface);color:var(--staff-ink);}
+@media(max-width:1000px) {.pharmacyGrid,.adminGrid {grid-template-columns:minmax(0,1fr);} .queueRow {padding:14px;} .queue {padding:0;} .stages button {padding:16px;}}
+@media(max-width:600px) {.root {border-radius:16px;padding:16px;} .heading {padding-block:24px;} .panelHead,.content {padding:20px;} .facts,.stages {grid-template-columns:minmax(0,1fr);} .stages button {min-height:100px;} .panelFoot {padding:16px 20px;} .notice span {margin-inline-start:0;} .conceptIntro {padding:18px;gap:16px;} .personRow {padding:16px;} .primary {width:100%;} .source {gap:10px;} .resultPlane {padding:20px;} }
+@media(prefers-reduced-motion:reduce) {.root * {scroll-behavior:auto;}}
+
+/* Scope inherited Demo continuation, Live guards and directory to this palette. */
+.root :global(.card), .root :global(.journey-continuation) {background:var(--staff-surface);color:var(--staff-ink);border-color:var(--staff-line);}
+.root :global(.journey-continuation) {margin-block-start:24px;}
+.root :global(.journey-continuation) :is(h3,p) {color:var(--staff-ink);}
+.root :global(.button.secondary) {background:var(--staff-surface);color:var(--staff-action);border-color:var(--staff-control);white-space:normal;}
+.root :global(.badge) {background:var(--staff-raised);color:var(--staff-ink);border-color:var(--staff-line);}
+.root :global(.field textarea) {background:var(--staff-canvas);color:var(--staff-ink);border:1px solid var(--staff-control);border-radius:10px;min-height:100px;}
+.root :global(.field) :is(label,small) {color:var(--staff-muted);}
+
+:global([dir="rtl"]) .root :is(h1,h2,h3,p,span,strong,small,button,a,summary) {letter-spacing:0!important;}
+
+.conceptNumber {flex-shrink:0;line-height:1;}
+@media(max-width:600px) {.conceptIntro {flex-direction:column;align-items:start;}}
+.root [data-staff-status]:focus {outline:3px solid var(--staff-action);outline-offset:4px;}
+
+/* Operational layout. Apricot is decorative and carries no status meaning. */
+.root { padding: 0; }
+.notice { border-radius: 12px; font-size: .9rem; }
+.heading {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  padding: clamp(18px, 3vw, 38px);
+  margin-block: 12px 20px;
+  border: 1px solid var(--staff-line);
+  border-radius: 23px;
+  background: linear-gradient(120deg, color-mix(in srgb, var(--staff-raised), var(--staff-action) 8%), var(--staff-surface));
+}
+.heading::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset-block-start: -47px;
+  inset-inline-end: -32px;
+  inline-size: 175px;
+  block-size: 175px;
+  border: 16px solid color-mix(in srgb, var(--staff-action), transparent 91%);
+  outline: 1px solid color-mix(in srgb, var(--staff-action), transparent 78%);
+  border-radius: 50%;
+}
+.root[data-staff-role="LAB_STAFF"] .heading::after { border-radius: 32%; rotate: 28deg; }
+.root[data-staff-role="ADMIN"] .heading::after { border-radius: 15%; rotate: 22deg; }
+.heading h1 { font-weight: 700; font-size: clamp(1.85rem, 3.65vw, 3.25rem); line-height: 1.2; }
+:global([dir="rtl"]) .heading h1 { line-height: 1.55; }
+.heading > p:last-child { max-inline-size: 58ch; font-size: 1rem; }
+.pharmacyGrid { gap: 18px; grid-template-columns: minmax(235px, .75fr) minmax(0, 1.65fr); }
+.queue { border: 1px solid var(--staff-line); border-radius: 19px; padding: clamp(12px, 2vw, 23px); background: var(--staff-surface); }
+.queueRow, .personRow { transition: background-color .15s ease-out; }
+.queueRow:hover, .personRow:hover { background: var(--staff-raised); }
+.panel, .people { box-shadow: 0 12px 38px color-mix(in srgb, var(--staff-ink), transparent 94%); }
+.panelHead { background: var(--staff-raised); }
+.panelHead > svg { color: var(--staff-action); }
+.panelFoot { background: var(--staff-raised); }
+.stages button { min-block-size: 112px; }
+.resultPlane { min-block-size: 0; }
+.conceptIntro { border-inline-start: 3px solid var(--staff-action); }
+@media(max-width: 900px) { .pharmacyGrid { grid-template-columns: minmax(0, 1fr); } }
+@media(max-width: 600px) { .notice { padding: 10px; } .root { padding: 0; } }

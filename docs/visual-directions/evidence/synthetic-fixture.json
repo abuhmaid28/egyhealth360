@@ -1,0 +1,17 @@
+{
+  "patient": "Omar Abdelrahman",
+  "ref": "EH-DEMO-204",
+  "doctor_en": "Dr Mariam Hassan",
+  "doctor_ar": "د. مريم حسن",
+  "clinic_en": "Dokki Clinic",
+  "clinic_ar": "عيادة الدقي",
+  "date_en": "2 November 2026",
+  "date_ar": "2 نوفمبر 2026",
+  "time": "14:30",
+  "zone": "UTC+02:00",
+  "medicine": "Amoxicillin",
+  "quantity": "1.25 mL",
+  "validity_en": "2 November 2026, 14:20 → 5 November 2026, 14:20",
+  "summary_en": "Your visit summary was shared by Dr Mariam Hassan. Read the recorded instructions in the source.",
+  "summary_ar": "د. مريم حسن شاركت ملخص الزيارة معاك. اقرأ التعليمات زي ما اتسجّلت في المصدر."
+}
