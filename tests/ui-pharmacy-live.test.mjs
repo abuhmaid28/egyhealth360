@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync, statSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import ts from 'typescript';
 const compile=(p,imports={})=>{const out={};new Function('exports','require',ts.transpileModule(readFileSync(p,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText)(out,p=>imports[p]);return out;};
@@ -53,10 +53,14 @@ test('Combined keeps all original pins and reviewed overlays and bounds S0 activ
  const overlays={"apps/web/src/components/operations.tsx": "e51f634f1dfac48778b0b0d2050ba07bf433f400", "apps/web/src/components/v2/staff-workspace.tsx": "1b244354aec894e63495a164046bbc0569e9e8e3", "apps/web/src/components/v2/staff-copy.ts": "28cf7d49645068fd558797f22283dfc28cbf8518", "apps/web/src/components/v2/pharmacy-workspace.tsx": "737e998a3bda1f3deeafaa968e3cf44419ca2543", "apps/web/src/components/v2/admin-workspace.tsx": "317383ce833232984c2eed239b3cc0a8dc211c7e", "apps/web/src/components/application.tsx": "56682e0e560f08fc5c95a22c4304f53a1a29c35d", "scripts/support/ui-v2-patient-doctor-browser.mjs": "83a12bbd2f4ca4aba298c30374e6cbc830501625"}; const changed=new Set(Object.keys(overlays));
  assert.equal(pinned.length,44);assert.equal(changed.size,7);assert.ok([...changed].every(path=>pinned.some(p=>p.path===path)));
  const visualRecovery = JSON.parse(inherited.match(/const visualRecoveryOverlays = (\{[\s\S]*?\n\});/)[1]);
+ const expressiveDiscoveryOverlay = JSON.parse(inherited.match(/const expressiveDiscoveryOverlay = (\{[\s\S]*?\n\});/)[1]);
+ assert.deepEqual(Object.keys(expressiveDiscoveryOverlay), ['apps/web/src/components/patient.tsx']);
+ assert.equal(visualRecovery['apps/web/src/components/patient.tsx'], '507eef5fb8b76577850888ce438541da4cbfd75b');
  assert.equal(pinned.filter(p=>!changed.has(p.path)).length,37);
  for(const row of pinned) {
    const bytes=readFileSync(row.path);
-   assert.equal(createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),visualRecovery[row.path]??overlays[row.path]??row.blob,row.path);
+   assert.equal(createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),expressiveDiscoveryOverlay[row.path]??visualRecovery[row.path]??overlays[row.path]??row.blob,row.path);
+   assert.equal(statSync(row.path).mode&0o111?"100755":"100644",row.mode,row.path);
  }
  const transport=readFileSync('apps/web/src/lib/api/pharmacy-live.ts','utf8');assert.match(transport,/from '\.\/pharmacy-read'/);
  const entry=readFileSync('scripts/test-ui-browser.mjs','utf8');assert.ok(entry.includes('testCombinedV2'));assert.ok(entry.includes('--pharmacy-read-lab'));
