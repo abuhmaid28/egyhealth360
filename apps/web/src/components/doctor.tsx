@@ -5,7 +5,7 @@ import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import type { Appointment, Consultation, Session } from "../lib/api/contracts";
+import type { Appointment, Consultation } from "../lib/api/contracts";
 import { useApp } from "./context";
 import expressive from "./v2/doctor-schedule-signature.module.css";
 import recovery from "./v2/visual-recovery.module.css";
@@ -97,8 +97,8 @@ export function DoctorScreen({ path }: { path: string }) {
   );
 }
 const scheduleFilters = ["All", "Upcoming", "Completed"] as const;
-// Hold the opener only in memory, scoped to the current Demo session object.
-const scheduleOpener = new WeakMap<Session, string>();
+// Put only a row position on this browser history entry. No patient or booking data.
+const scheduleFocusKey = "ehDemoDoctorScheduleOpener";
 
 function ExpressiveSchedule() {
   const { t, locale } = useLocale();
@@ -109,13 +109,14 @@ function ExpressiveSchedule() {
   const { data, pending } = appointments;
   useEffect(() => {
     if (pending || preview !== "ready" || !data) return;
-    const href = scheduleOpener.get(session);
-    if (!href) return;
-    scheduleOpener.delete(session);
-    const opener = Array.from(agenda.current?.querySelectorAll("a") ?? [])
-      .find((link) => link.getAttribute("href") === href);
-    opener?.focus();
-  }, [data, pending, preview, session]);
+    const history = globalThis.history;
+    const position = history.state?.[scheduleFocusKey];
+    if (!Number.isInteger(position) || position < 0) return;
+    const state = { ...history.state };
+    delete state[scheduleFocusKey];
+    history.replaceState(state, "");
+    agenda.current?.querySelectorAll<HTMLAnchorElement>("li a")[position]?.focus();
+  }, [data, pending, preview]);
   const count = new Intl.NumberFormat(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", {
     minimumIntegerDigits: 2,
   });
@@ -149,7 +150,10 @@ function ExpressiveSchedule() {
                   <ul className={expressive.rows}>
                     {visible.map((appointment) => (
                       <DoctorScheduleRow key={appointment.id} appointment={appointment}
-                        onOpen={(href) => scheduleOpener.set(session, href)} />
+                        onOpen={() => {
+                          const history = globalThis.history;
+                          history.replaceState({ ...history.state, [scheduleFocusKey]: rows.indexOf(appointment) }, "");
+                        }} />
                     ))}
                   </ul>
                 ) : (
@@ -188,7 +192,7 @@ function ExpressiveSchedule() {
 
 function DoctorScheduleRow({ appointment: a, onOpen }: {
   appointment: Appointment;
-  onOpen: (href: string) => void;
+  onOpen: () => void;
 }) {
   const { t, locale } = useLocale();
   const { startAt, endAt, timeZone, clinicId } = a.slot;
@@ -208,7 +212,7 @@ function DoctorScheduleRow({ appointment: a, onOpen }: {
         <p><bdi>{directoryLabel(a.provider.specialty.displayName, t)}</bdi></p>
         <p><bdi dir="ltr">{time(startAt, timeZone, locale)}–{time(endAt, timeZone, locale)}</bdi> · <bdi>{timeZoneLabel(timeZone, t)}</bdi></p>
         {clinic && <p className={expressive.clinic}><Icon name="pin" size={16} /><bdi>{clinic.displayName}</bdi></p>}
-        <Link className={expressive.appointment} href={href} prefetch={false} onNavigate={() => onOpen(href)}>
+        <Link className={expressive.appointment} href={href} prefetch={false} onNavigate={onOpen}>
           {t("View appointment")} <Icon name="arrow" size={16} />
         </Link>
       </div>
