@@ -1,0 +1,636 @@
+{
+  "state": "original evidence",
+  "count": 30,
+  "images": [
+    {
+      "file": "admin-after-ar-dark-390.png",
+      "sha256": "82b8fbb4046341b531a45a64e88a5c656da636532f6c36e7c71387036a7e85f5",
+      "bytes": 158016,
+      "pngPx": [
+        390,
+        2206
+      ],
+      "portal": "Admin",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "admin-after-en-light-1440.png",
+      "sha256": "bb071907893f3d3f23fe2efbcfe5469443e8072e3bf483fd2595d0684232318a",
+      "bytes": 224634,
+      "pngPx": [
+        1440,
+        1403
+      ],
+      "portal": "Admin",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "admin-directory-after-en-dark-1440.png",
+      "sha256": "b2a43a8fe7c1349201e32678734b7e009b5a8bb4278aab7b9fd49bd0930fac7b",
+      "bytes": 165914,
+      "pngPx": [
+        1440,
+        1082
+      ],
+      "portal": "Admin",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "admin-directory-before-en-dark-1440.png",
+      "sha256": "79e70369e8d695a08bc1237b0a47c287a64eb0eea95b6ec9bdc70c5aadf3458b",
+      "bytes": 209747,
+      "pngPx": [
+        1440,
+        1091
+      ],
+      "portal": "Admin",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "before",
+      "sourceHead": "15ce0b379ee7f8430ae63cf1f159a6d480189b50",
+      "sourceTree": "5bd412d06e1f9b29de79471894e61337c7c03ea3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "doctor-appt-after-en-light-1440.png",
+      "sha256": "62ed66af81aebee92db72e6f2b6401f78763991045ab9ea78176877e527e9715",
+      "bytes": 150213,
+      "pngPx": [
+        1440,
+        1103
+      ],
+      "portal": "Doctor",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "doctor-availability-after-ar-dark-390.png",
+      "sha256": "380fa4ef26703ce9bdcf44f70a999276be74854a67badbc51ad9b607fc15d0cc",
+      "bytes": 184097,
+      "pngPx": [
+        390,
+        3033
+      ],
+      "portal": "Doctor",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "doctor-consult-after-ar-dark-390.png",
+      "sha256": "cbde4a33eb4b65084beca51053796fcaaa1b57e200d018f008c727fd191c7ad9",
+      "bytes": 214980,
+      "pngPx": [
+        390,
+        3736
+      ],
+      "portal": "Doctor",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "doctor-consult-after-en-dark-1440.png",
+      "sha256": "491b322618290fbf4ce9e399f1ebcf3aafb2aef27ed10edec373b71ef0e752a4",
+      "bytes": 257395,
+      "pngPx": [
+        1440,
+        2588
+      ],
+      "portal": "Doctor",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "doctor-consult-before-en-dark-1440.png",
+      "sha256": "d84ff22778185138c654e62f1bc55f585e48e3a0f2435f7c22fcaf8578e7bab8",
+      "bytes": 251315,
+      "pngPx": [
+        1440,
+        2470
+      ],
+      "portal": "Doctor",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "before",
+      "sourceHead": "15ce0b379ee7f8430ae63cf1f159a6d480189b50",
+      "sourceTree": "5bd412d06e1f9b29de79471894e61337c7c03ea3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "doctor-schedule-after-en-light-1440.png",
+      "sha256": "41116753fb928d8ec9a079a390c891eb3b2e8e59186186bac1b067f8d316b038",
+      "bytes": 154446,
+      "pngPx": [
+        1440,
+        1000
+      ],
+      "portal": "Doctor",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "lab-after-ar-dark-390.png",
+      "sha256": "bba94023d692bda409e5d7043c6b6338828e5c14efee5208caf62d4270cdc117",
+      "bytes": 177487,
+      "pngPx": [
+        390,
+        2442
+      ],
+      "portal": "FUTURE Laboratory",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "lab-after-en-light-1440.png",
+      "sha256": "52a2f9bc7905c4d4f64cb49e8d28789e3b905915632513c0ad0ae66ee8c63230",
+      "bytes": 233533,
+      "pngPx": [
+        1440,
+        1845
+      ],
+      "portal": "FUTURE Laboratory",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "lab-before-ar-dark-390.png",
+      "sha256": "4883f112711cc2a46169230e99a00f5cb17e044b80a6cec0485c2a676f8c76f0",
+      "bytes": 193879,
+      "pngPx": [
+        390,
+        2436
+      ],
+      "portal": "FUTURE Laboratory",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "before",
+      "sourceHead": "15ce0b379ee7f8430ae63cf1f159a6d480189b50",
+      "sourceTree": "5bd412d06e1f9b29de79471894e61337c7c03ea3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-appt-after-ar-light-390.png",
+      "sha256": "31455f960ace2e3ec5b95f2b83651ce059d97e1cdaa932b76799e57ef3f652bb",
+      "bytes": 101321,
+      "pngPx": [
+        390,
+        1860
+      ],
+      "portal": "Patient",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-appt-after-en-dark-1440.png",
+      "sha256": "300b63f5491a97ebb210560f3f9b6f7114c2e173b091285d080d60cbd24512ca",
+      "bytes": 127691,
+      "pngPx": [
+        1440,
+        1235
+      ],
+      "portal": "Patient",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-appt-before-en-dark-1440.png",
+      "sha256": "66f64d2ca5daed19e2294f76ad9525b68d29a34e37fbd6647d9bb61ad2d1f2d8",
+      "bytes": 126174,
+      "pngPx": [
+        1440,
+        1165
+      ],
+      "portal": "Patient",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "before",
+      "sourceHead": "15ce0b379ee7f8430ae63cf1f159a6d480189b50",
+      "sourceTree": "5bd412d06e1f9b29de79471894e61337c7c03ea3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-discover-after-ar-dark-390.png",
+      "sha256": "9ed471455390c26a3e6a6b48a5be2b1e5a67b8dbb6afd2bc025d65ded8a08eb5",
+      "bytes": 155579,
+      "pngPx": [
+        390,
+        1396
+      ],
+      "portal": "Patient",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-discover-after-en-light-1440.png",
+      "sha256": "c10ab85e71a15aec878a102736477c4e312e03486ccc9b1353e57ca75612b6a1",
+      "bytes": 421435,
+      "pngPx": [
+        1440,
+        1165
+      ],
+      "portal": "Patient",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-doctor-after-en-dark-1440.png",
+      "sha256": "6484f7a27c907d565ca7b3515b17b7aac796b19f373d0a6a08d6c340181c9498",
+      "bytes": 230982,
+      "pngPx": [
+        1440,
+        1569
+      ],
+      "portal": "Patient",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-doctor-before-en-dark-1440.png",
+      "sha256": "d70a4445d8a249534a5e0d0fff8f30fccbb6f9cad022cb264341c9d3ba7b4e87",
+      "bytes": 230483,
+      "pngPx": [
+        1440,
+        1520
+      ],
+      "portal": "Patient",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "before",
+      "sourceHead": "15ce0b379ee7f8430ae63cf1f159a6d480189b50",
+      "sourceTree": "5bd412d06e1f9b29de79471894e61337c7c03ea3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-lab-after-ar-dark-390.png",
+      "sha256": "1552c29313a1312e0092380bbdb32f4ec09fddabbba8580b8b9854099dad5c0f",
+      "bytes": 69649,
+      "pngPx": [
+        390,
+        1266
+      ],
+      "portal": "Patient",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-lab-after-en-dark-1440.png",
+      "sha256": "a26d01703ba659903dd283fba4e69594ea71c4a29e43d031b0dce0d7cad731ec",
+      "bytes": 87463,
+      "pngPx": [
+        1440,
+        1000
+      ],
+      "portal": "Patient",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-lab-before-en-dark-1440.png",
+      "sha256": "bc2abfd15751224e1c9dd149eff1e38c2646913feed070a59ab07988623ed2d7",
+      "bytes": 82587,
+      "pngPx": [
+        1440,
+        1000
+      ],
+      "portal": "Patient",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "before",
+      "sourceHead": "15ce0b379ee7f8430ae63cf1f159a6d480189b50",
+      "sourceTree": "5bd412d06e1f9b29de79471894e61337c7c03ea3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-mycare-after-ar-dark-390.png",
+      "sha256": "cc3fbfee25419f3c3bca8b85e9efab8aa8693d8464b022a06517947aa3345482",
+      "bytes": 133006,
+      "pngPx": [
+        390,
+        1955
+      ],
+      "portal": "Patient",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "patient-mycare-after-en-light-1440.png",
+      "sha256": "794edb39d874d500ad8318207cdde35ac049383e4a7cb09922a9ddef7d7345a0",
+      "bytes": 253561,
+      "pngPx": [
+        1440,
+        1221
+      ],
+      "portal": "Patient",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "pharmacy-after-ar-dark-390.png",
+      "sha256": "63bfb5c93d7a41e4741cbd986719e72855bddcdb4c8ffa73225cb4c3761d5df3",
+      "bytes": 174357,
+      "pngPx": [
+        390,
+        2482
+      ],
+      "portal": "Pharmacy",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "pharmacy-after-en-light-1440.png",
+      "sha256": "365edf85b46134c6af9fd0720f5d1a8f1329b24b11ee244a6014dfa459c91fca",
+      "bytes": 238391,
+      "pngPx": [
+        1440,
+        1603
+      ],
+      "portal": "Pharmacy",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "pharmacy-before-ar-dark-390.png",
+      "sha256": "aaf6e802becd1ad143a8555ab7785fec540cace1a574e9aebe94752f0c13e608",
+      "bytes": 194462,
+      "pngPx": [
+        390,
+        2476
+      ],
+      "portal": "Pharmacy",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "before",
+      "sourceHead": "15ce0b379ee7f8430ae63cf1f159a6d480189b50",
+      "sourceTree": "5bd412d06e1f9b29de79471894e61337c7c03ea3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "shared-login-after-ar-dark-390.png",
+      "sha256": "31c5eda7e54e5d786ef51e46a9df0e274ba4f9a2334af8efe41d6e971f12fb5c",
+      "bytes": 246735,
+      "pngPx": [
+        390,
+        1656
+      ],
+      "portal": "Shared",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    },
+    {
+      "file": "shared-login-after-en-light-1440.png",
+      "sha256": "9e2f90eafc1b40fee41e325630fff1bad7470b03bf828b10f31d1a56f80d38e4",
+      "bytes": 659636,
+      "pngPx": [
+        1440,
+        1105
+      ],
+      "portal": "Shared",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+      "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+      "reviewVerdict": "Original sanitized production-build capture. Owner final visual review pending."
+    }
+  ]
+}
