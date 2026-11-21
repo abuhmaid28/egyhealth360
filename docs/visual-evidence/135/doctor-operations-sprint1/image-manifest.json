@@ -196,8 +196,8 @@
       "theme": "System / light",
       "role": "before",
       "capture": "standard full-page",
-      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
-      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "sourceHead": "e07e0ae74b1fa6f709448a0305121e6f7663c2c9",
+      "sourceTree": "adbb786a252da2ec20cedf4a43c5cec9a67ff88b",
       "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
     },
     {
@@ -218,8 +218,8 @@
       "theme": "System / light",
       "role": "before",
       "capture": "standard full-page",
-      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
-      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "sourceHead": "e07e0ae74b1fa6f709448a0305121e6f7663c2c9",
+      "sourceTree": "adbb786a252da2ec20cedf4a43c5cec9a67ff88b",
       "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
     },
     {
@@ -240,8 +240,8 @@
       "theme": "System / light",
       "role": "before",
       "capture": "standard full-page",
-      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
-      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "sourceHead": "e07e0ae74b1fa6f709448a0305121e6f7663c2c9",
+      "sourceTree": "adbb786a252da2ec20cedf4a43c5cec9a67ff88b",
       "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
     },
     {
@@ -262,8 +262,8 @@
       "theme": "System / light",
       "role": "before",
       "capture": "standard full-page",
-      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
-      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "sourceHead": "e07e0ae74b1fa6f709448a0305121e6f7663c2c9",
+      "sourceTree": "adbb786a252da2ec20cedf4a43c5cec9a67ff88b",
       "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
     },
     {
@@ -322,7 +322,7 @@
       "locale": "ar",
       "direction": "rtl",
       "viewportCssPx": {
-        "width": 1280,
+        "width": 320,
         "height": 900
       },
       "theme": "System / light",
@@ -344,7 +344,7 @@
       "locale": "en",
       "direction": "ltr",
       "viewportCssPx": {
-        "width": 1280,
+        "width": 320,
         "height": 900
       },
       "theme": "System / light",
@@ -548,8 +548,8 @@
       "theme": "System / light",
       "role": "before",
       "capture": "standard full-page",
-      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
-      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "sourceHead": "e07e0ae74b1fa6f709448a0305121e6f7663c2c9",
+      "sourceTree": "adbb786a252da2ec20cedf4a43c5cec9a67ff88b",
       "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
     },
     {
@@ -570,8 +570,8 @@
       "theme": "System / light",
       "role": "before",
       "capture": "standard full-page",
-      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
-      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "sourceHead": "e07e0ae74b1fa6f709448a0305121e6f7663c2c9",
+      "sourceTree": "adbb786a252da2ec20cedf4a43c5cec9a67ff88b",
       "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
     },
     {
@@ -592,8 +592,8 @@
       "theme": "System / light",
       "role": "before",
       "capture": "standard full-page",
-      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
-      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "sourceHead": "e07e0ae74b1fa6f709448a0305121e6f7663c2c9",
+      "sourceTree": "adbb786a252da2ec20cedf4a43c5cec9a67ff88b",
       "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
     },
     {
@@ -614,8 +614,8 @@
       "theme": "System / light",
       "role": "before",
       "capture": "standard full-page",
-      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
-      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "sourceHead": "e07e0ae74b1fa6f709448a0305121e6f7663c2c9",
+      "sourceTree": "adbb786a252da2ec20cedf4a43c5cec9a67ff88b",
       "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
     },
     {
@@ -674,7 +674,7 @@
       "locale": "ar",
       "direction": "rtl",
       "viewportCssPx": {
-        "width": 1280,
+        "width": 320,
         "height": 900
       },
       "theme": "System / light",
@@ -696,7 +696,7 @@
       "locale": "en",
       "direction": "ltr",
       "viewportCssPx": {
-        "width": 1280,
+        "width": 320,
         "height": 900
       },
       "theme": "System / light",
