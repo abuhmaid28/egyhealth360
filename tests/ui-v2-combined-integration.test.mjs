@@ -254,7 +254,7 @@ const expressiveDiscoveryOverlay = {
   "apps/web/src/components/patient.tsx": "534bde544a3b5a29f198b706491ad1ec99c26e52"
 };
 const expressiveDoctorOverlay = {
-  "apps/web/src/components/doctor.tsx": { "blob": "9210544dbfd7f565a54173222ee0a4ebab600614", "mode": "100644" }
+  "apps/web/src/components/doctor.tsx": { "blob": "1950a7f50827ea05f43219e83fe763df883ed480", "mode": "100644" }
 };
 test("Combined pins and historical P2 overlays are retained, with explicit Visual Recovery overrides", () => {
   assert.equal(pinned.length,44);assert.equal(Object.keys(overlays).length,7);

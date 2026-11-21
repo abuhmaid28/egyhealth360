@@ -4,8 +4,8 @@ import { directoryLabel, timeZoneLabel } from "../lib/presentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
-import { useState } from "react";
-import type { Appointment, Consultation } from "../lib/api/contracts";
+import { useEffect, useRef, useState } from "react";
+import type { Appointment, Consultation, Session } from "../lib/api/contracts";
 import { useApp } from "./context";
 import expressive from "./v2/doctor-schedule-signature.module.css";
 import recovery from "./v2/visual-recovery.module.css";
@@ -97,12 +97,25 @@ export function DoctorScreen({ path }: { path: string }) {
   );
 }
 const scheduleFilters = ["All", "Upcoming", "Completed"] as const;
+// Hold the opener only in memory, scoped to the current Demo session object.
+const scheduleOpener = new WeakMap<Session, string>();
 
 function ExpressiveSchedule() {
   const { t, locale } = useLocale();
   const { booking, preview, refresh, session } = useApp();
   const [filter, setFilter] = useState<(typeof scheduleFilters)[number]>("All");
   const appointments = useResource(() => booking.clinicianSchedule(), [booking, refresh]);
+  const agenda = useRef<HTMLElement>(null);
+  const { data, pending } = appointments;
+  useEffect(() => {
+    if (pending || preview !== "ready" || !data) return;
+    const href = scheduleOpener.get(session);
+    if (!href) return;
+    scheduleOpener.delete(session);
+    const opener = Array.from(agenda.current?.querySelectorAll("a") ?? [])
+      .find((link) => link.getAttribute("href") === href);
+    opener?.focus();
+  }, [data, pending, preview, session]);
   const count = new Intl.NumberFormat(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", {
     minimumIntegerDigits: 2,
   });
@@ -123,7 +136,7 @@ function ExpressiveSchedule() {
           const visible = rows.filter((a) => filter === "All" || a.status === filter);
           return (
             <div className={expressive.layout}>
-              <section className={expressive.agenda} aria-labelledby="doctor-agenda">
+              <section ref={agenda} className={expressive.agenda} aria-labelledby="doctor-agenda">
                 <h2 id="doctor-agenda">{t("Patient appointments")}</h2>
                 <div className={expressive.filters} role="group" aria-label={t("Patient appointments")}>
                   {scheduleFilters.map((status) => (
@@ -135,7 +148,8 @@ function ExpressiveSchedule() {
                 {visible.length ? (
                   <ul className={expressive.rows}>
                     {visible.map((appointment) => (
-                      <DoctorScheduleRow key={appointment.id} appointment={appointment} />
+                      <DoctorScheduleRow key={appointment.id} appointment={appointment}
+                        onOpen={(href) => scheduleOpener.set(session, href)} />
                     ))}
                   </ul>
                 ) : (
@@ -172,12 +186,16 @@ function ExpressiveSchedule() {
   );
 }
 
-function DoctorScheduleRow({ appointment: a }: { appointment: Appointment }) {
+function DoctorScheduleRow({ appointment: a, onOpen }: {
+  appointment: Appointment;
+  onOpen: (href: string) => void;
+}) {
   const { t, locale } = useLocale();
   const { startAt, endAt, timeZone, clinicId } = a.slot;
   const format = (options: Intl.DateTimeFormatOptions) =>
     new Intl.DateTimeFormat(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { ...options, timeZone }).format(new Date(startAt));
   const clinic = a.provider.clinics.find((item) => item.id === clinicId);
+  const href = `/doctor/appointments/${a.id}`;
   return (
     <li className={expressive.row}>
       <time className={expressive.tile} dateTime={startAt}>
@@ -190,7 +208,7 @@ function DoctorScheduleRow({ appointment: a }: { appointment: Appointment }) {
         <p><bdi>{directoryLabel(a.provider.specialty.displayName, t)}</bdi></p>
         <p><bdi dir="ltr">{time(startAt, timeZone, locale)}–{time(endAt, timeZone, locale)}</bdi> · <bdi>{timeZoneLabel(timeZone, t)}</bdi></p>
         {clinic && <p className={expressive.clinic}><Icon name="pin" size={16} /><bdi>{clinic.displayName}</bdi></p>}
-        <Link className={expressive.appointment} href={`/doctor/appointments/${a.id}`} prefetch={false}>
+        <Link className={expressive.appointment} href={href} prefetch={false} onNavigate={() => onOpen(href)}>
           {t("View appointment")} <Icon name="arrow" size={16} />
         </Link>
       </div>

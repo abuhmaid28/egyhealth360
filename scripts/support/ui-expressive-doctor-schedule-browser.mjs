@@ -229,6 +229,7 @@ try {
     assert.equal(await page.locator(pilot).count(), 0);
     await page.goBack();
     await ready(page, "en");
+    await page.waitForFunction(() => globalThis.document.activeElement?.getAttribute("href") === "/doctor/appointments/demo-my-care-visit");
     await root.getByRole("link", { name: "Manage availability" }).click();
     await page.waitForURL("**/doctor/availability");
     assert.equal(await page.locator(pilot).count(), 0);
