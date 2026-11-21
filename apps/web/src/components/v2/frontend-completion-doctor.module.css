@@ -1,0 +1,161 @@
+/* Scoped Doctor V2 completion polish for /doctor dashboard, /doctor/consultation/:id demo workspace, and /doctor/settings. */
+.surface {
+  --doc-hero: #17142b;
+  --doc-hero-glow: #2d2248;
+  --doc-hero-ink: #f6f2ff;
+  --doc-hero-muted: #c2bed2;
+  --doc-accent-ink: #17142b;
+  display: grid;
+  gap: 1.25rem;
+  min-inline-size: 0;
+  color: var(--v2-ink);
+  overflow-wrap: anywhere;
+}
+
+.surface :is(h1, h2, h3, p) {
+  overflow-wrap: anywhere;
+}
+
+.patientStrip {
+  background-color: var(--doc-hero) !important;
+  background-image: radial-gradient(ellipse at bottom right, var(--doc-hero-glow), transparent 62%);
+  color: var(--doc-hero-ink) !important;
+  border: 0 !important;
+  border-radius: 1.5rem 1.5rem 0.5rem 1.5rem !important;
+  padding: clamp(1rem, 2.2vw, 1.5rem) !important;
+}
+
+.surface:dir(rtl) .patientStrip,
+:global([dir="rtl"]) .surface .patientStrip {
+  border-radius: 1.5rem 1.5rem 1.5rem 0.5rem !important;
+}
+
+.patientStrip :is(h2, p, .muted) {
+  color: var(--doc-hero-ink);
+}
+
+.patientStrip :global(.muted) {
+  color: var(--doc-hero-muted) !important;
+}
+
+.patientStrip :global(.badge) {
+  background: var(--v2-accent);
+  color: var(--doc-accent-ink);
+  border: 0;
+  font-weight: 700;
+}
+
+.patientStrip :global(.avatar) {
+  background: var(--v2-surface);
+  color: var(--v2-action);
+}
+
+.surface :global(.consultation-outline) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  margin-block-end: 1rem;
+  background: var(--v2-raised);
+  border: 1px solid var(--v2-line);
+  border-radius: 1rem;
+}
+
+.surface :global(.consultation-outline a) {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--v2-control);
+  background: var(--v2-surface);
+  color: var(--v2-ink);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: normal;
+}
+
+.surface :global(.consultation-outline a:hover) {
+  border-color: var(--v2-action);
+  color: var(--v2-action);
+}
+
+.surface :global(.fieldset) {
+  display: grid;
+  gap: 1rem;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.surface :global(.fieldset > .card) {
+  border: 1px solid var(--v2-line);
+  border-inline-start: 4px solid var(--v2-action);
+  border-radius: 1.25rem 1.25rem 0.5rem 1.25rem;
+  background: var(--v2-surface);
+}
+
+.surface:dir(rtl) :global(.fieldset > .card),
+:global([dir="rtl"]) .surface :global(.fieldset > .card) {
+  border-radius: 1.25rem 1.25rem 1.25rem 0.5rem;
+}
+
+.surface :global(.released-note) {
+  padding: 0.85rem 1rem;
+  border-radius: 0.85rem;
+  background: var(--v2-raised);
+  border: 1px solid var(--v2-control);
+  color: var(--v2-ink);
+  font-weight: 600;
+}
+
+.surface :global(.form-footer) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-block-start: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--v2-raised);
+  border: 1px solid var(--v2-line);
+  border-radius: 1rem;
+}
+
+.surface :global(.section-anchor) {
+  scroll-margin-block-start: 1.5rem;
+}
+
+.surface :global(:is(a, button, input, select, textarea):focus-visible) {
+  outline: 3px solid var(--v2-action);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .surface :global(.form-footer .button) {
+    inline-size: 100%;
+    justify-content: center;
+  }
+}
+
+@media (forced-colors: active) {
+  .patientStrip,
+  .surface :global(.consultation-outline),
+  .surface :global(.consultation-outline a),
+  .surface :global(.fieldset > .card),
+  .surface :global(.form-footer) {
+    border: 1px solid CanvasText !important;
+  }
+
+  .surface :global(:is(a, button, input, select, textarea):focus-visible) {
+    outline-color: Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surface * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

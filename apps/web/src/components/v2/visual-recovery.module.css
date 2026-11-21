@@ -109,7 +109,7 @@
   text-wrap: balance;
 }
 .entryMessage h1 em { display: block; color: var(--v2-action); font-style: normal; }
-.entry[dir="rtl"] .entryMessage h1 { line-height: 1.4; }
+.entry[dir="rtl"] .entryMessage h1 { line-height: 1.4; letter-spacing: 0; }
 .entryMessage > p:not(.entryKicker) { max-inline-size: 39ch; font-size: clamp(1rem, 1.4vw, 1.25rem); color: var(--v2-muted); }
 .entryImage {
   min-block-size: 390px;

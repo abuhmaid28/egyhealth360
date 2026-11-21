@@ -241,7 +241,7 @@ const overlays = {
 };
 
 const visualRecoveryOverlays = {
-  "apps/web/src/components/application.tsx": "82b403a8fa098488d6c03d7d4e98f836d36b39e8",
+  "apps/web/src/components/application.tsx": "5327813efdddf753b522bb36a36b3e73ebea8931",
   "apps/web/src/components/doctor.tsx": "41aeec758d5f4976592255d6db4fdff2b3528776",
   "apps/web/src/components/patient-my-care.module.css": "68e92d7589cd588872cbca8a43ba9b7464d410e6",
   "apps/web/src/components/patient-my-care.tsx": "7a13b5b5c42365c6ead57d6b1a24ffca18c0b562",
@@ -251,10 +251,10 @@ const visualRecoveryOverlays = {
   "tests/ui-v2-visual-integration.test.mjs": "61b1c645d2baf74ae075ded7d88fa4684f579b88"
 };
 const expressiveDiscoveryOverlay = {
-  "apps/web/src/components/patient.tsx": "534bde544a3b5a29f198b706491ad1ec99c26e52"
+  "apps/web/src/components/patient.tsx": "831f3c0e094ac66e24421588bf020f9fe30cf8d6"
 };
 const expressiveDoctorOverlay = {
-  "apps/web/src/components/doctor.tsx": { "blob": "9f2f0ead8dc2c1a35234dcd80ceb3f50c36b6096", "mode": "100644" }
+  "apps/web/src/components/doctor.tsx": { "blob": "cab39a6f3b87d4863789ad139d2e39449de7a08d", "mode": "100644" }
 };
 test("Combined pins and historical P2 overlays are retained, with explicit Visual Recovery overrides", () => {
   assert.equal(pinned.length,44);assert.equal(Object.keys(overlays).length,7);

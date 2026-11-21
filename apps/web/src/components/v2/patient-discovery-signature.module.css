@@ -55,9 +55,9 @@
   background: var(--v2-surface);
 }
 
-.field:focus-within {
-  outline: 2px solid var(--v2-action);
-  outline-offset: 1px;
+.field:has(:focus-visible) {
+  outline: 3px solid var(--v2-action);
+  outline-offset: 2px;
   z-index: 1;
 }
 
@@ -208,7 +208,7 @@
 }
 .action svg { flex: none; padding: 3px; border-radius: 50%; background: var(--v2-accent); color: var(--feature); }
 .root:dir(rtl) [data-signature-directional] { transform: scaleX(-1); }
-.root :is(a, button, summary):focus-visible { outline: 2px solid var(--v2-action); outline-offset: 2px; }
+.root :is(a, button, summary):focus-visible { outline: 3px solid var(--v2-action); outline-offset: 3px; }
 .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-block-start: 10px; }
 .chips button { color: var(--v2-ink); background: var(--v2-raised); border: 1px solid var(--v2-control); border-radius: 999px; padding-inline: 10px; }
 .chips button[aria-pressed="true"] { color: var(--v2-on-action); background: var(--v2-action); font-weight: 700; }
@@ -225,7 +225,7 @@
   .label { line-height: 1.22; }
   .root :is(a, button, input, select, summary) { scroll-margin-block-end: max(120px, 8em); }
   .headline h1 { font-size: clamp(1.45rem, 6.7vw, 2.2rem); }
-  .headline p { display: none; }
+  .headline p { font-size: .82rem; }
   .art { max-inline-size: 105px; }
   .fields { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; }
   .fields > :first-child { grid-column: 1/-1; }
@@ -243,7 +243,7 @@
 @media (forced-colors: active) {
   .art, .portrait::after { display: none; }
   .field select { appearance: auto; opacity: 0; }
-  .field:focus-within, .root :is(a, button, summary):focus-visible { outline-color: Highlight; }
+  .field:has(:focus-visible), .root :is(a, button, summary):focus-visible { outline-color: Highlight; }
   .chips button[aria-pressed="true"] { border: 2px solid Highlight; }
   .selectValue, .chevron { color: ButtonText; }
 }

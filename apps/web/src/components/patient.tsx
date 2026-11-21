@@ -8,7 +8,7 @@ import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type {
   Appointment,
   Availability,
@@ -19,6 +19,7 @@ import { useApp } from "./context";
 import { ProviderPortrait } from "./v2/demo-portrait";
 import recovery from "./v2/visual-recovery.module.css";
 import expressive from "./v2/patient-discovery-signature.module.css";
+import completion from "./v2/frontend-completion-patient.module.css";
 import { CareSignal, SignatureIcon } from "./v2/signature-icon";
 import {
   LiveBookingList,
@@ -48,11 +49,16 @@ export function PatientScreen({ path }: { path: string }) {
   const { t, locale } = useLocale();
 
   const { api, session } = useApp();
+  if (path === "/patient/discover" && api.mode === "demo" && session.mode === "demo") {
+    return <ExpressiveDiscovery />;
+  }
+
+  let body: React.ReactNode;
   if (
     api.mode === "live" &&
     ["/patient/medications", "/patient/laboratory"].includes(path)
   )
-    return (
+    body = (
       <>
         <Heading
           title={t(path.endsWith("medications") ? "Medications" : "Laboratory")}
@@ -81,43 +87,38 @@ export function PatientScreen({ path }: { path: string }) {
         </Card>
       </>
     );
-
-  if (
+  else if (
     api.mode === "live" &&
     (path === "/patient/appointments" ||
       path.startsWith("/patient/appointments/"))
   )
-    return path.split("/")[3] ? (
+    body = path.split("/")[3] ? (
       <LiveBookingDetail id={path.split("/")[3]} />
     ) : (
       <LiveBookingList />
     );
-  if (api.mode === "live" && path === "/patient/summaries")
-    return (
+  else if (api.mode === "live" && path === "/patient/summaries")
+    body = (
       <ReleasedSummariesScreen
         service={api.documentation ?? createUnavailableDocumentation()}
       />
     );
-  if (api.mode === "live" && path === "/patient/follow-up")
-    return <PatientFollowUps />;
-  if (path === "/patient" && api.mode === "live") return <LivePatientHome />;
-  if (path === "/patient") return <Dashboard />;
-  if (path === "/patient/discover") {
-    return api.mode === "demo" && session.mode === "demo"
-      ? <ExpressiveDiscovery />
-      : <Discovery />;
-  }
-  if (path.startsWith("/patient/doctors/"))
-    return <DoctorProfile id={path.split("/")[3]} />;
-  if (path.startsWith("/patient/clinics/"))
-    return <ClinicScreen id={path.split("/")[3]} />;
-  if (
+  else if (api.mode === "live" && path === "/patient/follow-up")
+    body = <PatientFollowUps />;
+  else if (path === "/patient" && api.mode === "live") body = <LivePatientHome />;
+  else if (path === "/patient") body = <Dashboard />;
+  else if (path === "/patient/discover") body = <Discovery />;
+  else if (path.startsWith("/patient/doctors/"))
+    body = <DoctorProfile id={path.split("/")[3]} />;
+  else if (path.startsWith("/patient/clinics/"))
+    body = <ClinicScreen id={path.split("/")[3]} />;
+  else if (
     path === "/patient/appointments" ||
     path.startsWith("/patient/appointments/")
   )
-    return <Appointments id={path.split("/")[3]} />;
-  if (path === "/patient/settings") return <Settings />;
-  if (
+    body = <Appointments id={path.split("/")[3]} />;
+  else if (path === "/patient/settings") body = <Settings />;
+  else if (
     [
       "/patient/record",
       "/patient/history",
@@ -126,13 +127,20 @@ export function PatientScreen({ path }: { path: string }) {
       "/patient/follow-up",
     ].includes(path)
   )
-    return <RecordScreen section={path.split("/")[2]} />;
+    body = <RecordScreen section={path.split("/")[2]} />;
+  else
+    body = (
+      <Empty
+        title={t("Page not found")}
+        href="/patient"
+        action={t("Back to overview")}
+      />
+    );
+
   return (
-    <Empty
-      title={t("Page not found")}
-      href="/patient"
-      action={t("Back to overview")}
-    />
+    <div className={completion.surface} data-frontend-completion-patient>
+      {body}
+    </div>
   );
 }
 function Dashboard() {
@@ -251,7 +259,7 @@ function Dashboard() {
                 }
                 note={
                   record.measurements[0]
-                    ? `mmHg · ${date(record.measurements[0].measuredAt, undefined, locale)}`
+                    ? `${t("mmHg")} · ${date(record.measurements[0].measuredAt, undefined, locale)}`
                     : "No measurements recorded"
                 }
               />
@@ -658,6 +666,7 @@ function Discovery() {
   const { t } = useLocale();
 
   const { api, preview } = useApp();
+  const searchRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [specialty, setSpecialty] = useState("");
   const [clinic, setClinic] = useState("");
@@ -693,6 +702,7 @@ function Discovery() {
                 <div className="search-input">
                   <Icon name="search" />
                   <input
+                    ref={searchRef}
                     aria-label={t("Search doctors")}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
@@ -731,6 +741,7 @@ function Discovery() {
                     setQuery("");
                     setSpecialty("");
                     setClinic("");
+                    searchRef.current?.focus();
                   }}
                 >
                   {t("Clear search & filters")}
@@ -1033,10 +1044,15 @@ function BookingDialog({
           <small className="muted">{timeZoneLabel(slot.timeZone, t)}</small>
         </Detail>
         <Detail icon="pin" title={t("Clinic")}>
-          {provider.clinics.find((c) => c.id === slot.clinicId)?.displayName}
+          <bdi>
+            {presentationName(
+              provider.clinics.find((c) => c.id === slot.clinicId)?.displayName ?? "",
+              t,
+            )}
+          </bdi>
         </Detail>
         <Detail icon="record" title={t("Reason for visit")}>
-          <bdi>{reason}</bdi>
+          <bdi dir="auto">{reason}</bdi>
         </Detail>
       </div>
       {error && (
@@ -1089,7 +1105,7 @@ function ClinicScreen({ id }: { id: string }) {
               />
               <Card className="map-art large-map">
                 <Icon name="pin" size={40} />
-                <strong>{presentationName(c.displayName, t)}</strong>
+                <strong><bdi>{presentationName(c.displayName, t)}</bdi></strong>
                 <span>{t("Address overview · illustrative map")}</span>
               </Card>
               <div className="section-heading">
@@ -1138,24 +1154,35 @@ export function AppointmentRow({
       </div>
       <div className="appointment-main">
         <Badge tone={a.status === "Completed" ? "soft" : "green"}>
-          {a.status}
+          {t(a.status)}
         </Badge>
-        <h3>{doctor ? a.patientName : a.provider.displayName}</h3>
+        <h3>
+          <bdi>
+            {doctor
+              ? a.patientName
+              : presentationName(a.provider.displayName, t)}
+          </bdi>
+        </h3>
         <p>
-          {directoryLabel(a.provider.specialty.displayName, t)} {t("·")}{" "}
-          {time(a.slot.startAt, a.slot.timeZone, locale)}
-          {t("–")}
-          {time(a.slot.endAt, a.slot.timeZone, locale)}
+          <bdi>{directoryLabel(a.provider.specialty.displayName, t)}</bdi> {t("·")}{" "}
+          <bdi dir="ltr">
+            {time(a.slot.startAt, a.slot.timeZone, locale)}
+            {t("–")}
+            {time(a.slot.endAt, a.slot.timeZone, locale)}
+          </bdi>
         </p>
         <small className="appointment-zone">
           <bdi>{timeZoneLabel(a.slot.timeZone, t)}</bdi>
         </small>
         <small>
           <Icon name="pin" size={13} />
-          {
-            a.provider.clinics.find((c) => c.id === a.slot.clinicId)
-              ?.displayName
-          }
+          <bdi>
+            {presentationName(
+              a.provider.clinics.find((c) => c.id === a.slot.clinicId)
+                ?.displayName ?? "",
+              t,
+            )}
+          </bdi>
         </small>
       </div>
       <Link
@@ -1218,7 +1245,7 @@ function Appointments({ id }: { id?: string }) {
                           )}
                     </p>
                   </div>
-                  <Badge>{a.status}</Badge>
+                  <Badge>{t(a.status)}</Badge>
                 </div>
                 {a.availabilitySource === "live" && (
                   <div className="boundary-notice">
@@ -1236,11 +1263,11 @@ function Appointments({ id }: { id?: string }) {
                   <Card>
                     <CardTitle title={t("Appointment details")} />
                     <div className="inline">
-                      <Avatar name={a.provider.displayName} large />
+                      <Avatar name={presentationName(a.provider.displayName, t)} large />
                       <div>
-                        <h2>{a.provider.displayName}</h2>
+                        <h2><bdi>{presentationName(a.provider.displayName, t)}</bdi></h2>
                         <p className="muted">
-                          {directoryLabel(a.provider.specialty.displayName, t)}
+                          <bdi>{directoryLabel(a.provider.specialty.displayName, t)}</bdi>
                         </p>
                       </div>
                     </div>
@@ -1252,14 +1279,17 @@ function Appointments({ id }: { id?: string }) {
                         <BookingTime booking={a.slot} patientDetail />
                       </Detail>
                       <Detail icon="pin" title={t("Location")}>
-                        {
-                          a.provider.clinics.find(
-                            (c) => c.id === a.slot.clinicId,
-                          )?.displayName
-                        }
+                        <bdi>
+                          {presentationName(
+                            a.provider.clinics.find(
+                              (c) => c.id === a.slot.clinicId,
+                            )?.displayName ?? "",
+                            t,
+                          )}
+                        </bdi>
                       </Detail>
                       <Detail icon="record" title={t("Reason for visit")}>
-                        {a.reason}
+                        <bdi dir="auto">{a.reason}</bdi>
                       </Detail>
                     </div>
                   </Card>

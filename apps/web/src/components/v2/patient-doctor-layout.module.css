@@ -117,7 +117,6 @@
 .root[data-frontend-v2][data-frontend-v2-content] :global(.public-availability-note),
 .root[data-frontend-v2][data-frontend-v2-content] :global(.date-tile),
 .root[data-frontend-v2][data-frontend-v2-content] :global(.directory-note),
-.root[data-frontend-v2][data-frontend-v2-content] :global(.appointment-date),
 .root[data-frontend-v2][data-frontend-v2-content] :global(.provider-clinic),
 .root[data-frontend-v2][data-frontend-v2-content] :global(.detail .icon-tile),
 .root[data-frontend-v2][data-frontend-v2-content] :global(.stat .icon-tile) { color: var(--v2-ink); background: var(--v2-raised); border-color: var(--v2-line); }
@@ -133,3 +132,72 @@
 .root[data-frontend-v2][data-frontend-v2-content] :global(.boundary-notice p) { color: var(--v2-muted); }
 .root[data-frontend-v2][data-frontend-v2-content] :global(.map-art) { color: var(--v2-ink); background: var(--v2-raised); border-color: var(--v2-line); }
 .root[data-frontend-v2][data-frontend-v2-content] :global(.tabs span) { color: inherit; background: var(--v2-raised); }
+
+/* Shared contrast, keyboard focus-only input ring, 44px back-link, RTL timeline, and 320px reflow fixes. */
+.root[data-frontend-v2][data-frontend-v2-content] :global(.slots.live-slots button:disabled) {
+  background: var(--v2-raised);
+  color: var(--v2-muted);
+  border-color: var(--v2-line);
+  opacity: 0.72;
+}
+.root[data-frontend-v2][data-frontend-v2-content] :global(.result-text) {
+  background: var(--v2-raised);
+  border-color: var(--v2-line);
+  color: var(--v2-ink);
+}
+.root[data-frontend-v2][data-frontend-v2-content] :global(.timeline-node) {
+  background: var(--v2-raised);
+  color: var(--v2-action);
+  border: 1px solid var(--v2-control);
+}
+.root[data-frontend-v2][data-frontend-v2-content] :global(.success-banner) {
+  background: var(--v2-raised);
+  color: var(--v2-ink);
+  border: 1px solid var(--v2-line);
+  border-inline-start: 4px solid var(--v2-action);
+}
+.root[data-frontend-v2][data-frontend-v2-content] :global(.success-banner > svg) {
+  background: var(--v2-surface);
+  color: var(--v2-action);
+}
+.root[data-frontend-v2] :global(input:focus:not(:focus-visible)),
+.root[data-frontend-v2] :global(select:focus:not(:focus-visible)),
+.root[data-frontend-v2] :global(textarea:focus:not(:focus-visible)) {
+  outline: none;
+  border-color: var(--v2-control);
+}
+.root[data-frontend-v2] :global(.back-link) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: var(--v2-raised);
+  color: var(--v2-action);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-block-end: 14px;
+}
+.root[data-frontend-v2] :global(.back-link:hover) {
+  text-decoration: underline;
+}
+.root[data-frontend-v2] :global(.tabs > a),
+.root[data-frontend-v2] :global(.tabs > button) {
+  white-space: normal;
+  min-block-size: 44px;
+  min-inline-size: 44px;
+}
+.root[data-frontend-v2] :global(.timeline) {
+  padding: 0;
+  padding-inline-start: 5px;
+}
+@media (max-width: 600px) {
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.clinic-detail > p),
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.success-banner .badge),
+  .root[data-frontend-v2][data-frontend-v2-content] :global(.followup > .button) {
+    margin-inline-start: 0;
+  }
+}

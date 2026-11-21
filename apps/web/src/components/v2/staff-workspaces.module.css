@@ -159,3 +159,98 @@
 .conceptIntro { border-inline-start: 3px solid var(--staff-action); }
 @media(max-width: 900px) { .pharmacyGrid { grid-template-columns: minmax(0, 1fr); } }
 @media(max-width: 600px) { .notice { padding: 10px; } .root { padding: 0; } }
+
+/* Unified 5-portal visual finish, directory/settings surface parity, and high-contrast/forced-colors support */
+.heading {
+  background-color: #17142b;
+  background-image: radial-gradient(ellipse at bottom right, #2d2248, transparent 58%);
+  color: #f6f2ff;
+  border: 0;
+  border-radius: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+:global([dir="rtl"]) .heading {
+  border-radius: 1.5rem 1.5rem 1.5rem 0.5rem;
+}
+.heading .eyebrow {
+  display: inline-flex;
+  justify-self: start;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background-color: var(--v2-accent);
+  color: #17142b !important;
+  font-weight: 700;
+}
+.heading h1 {
+  color: #f6f2ff;
+}
+.heading > p:last-child {
+  color: #c2bed2;
+}
+.heading::after {
+  border-color: color-mix(in srgb, var(--v2-accent), transparent 82%);
+  outline-color: color-mix(in srgb, #f6f2ff, transparent 84%);
+}
+.people > div:has(.searchInput) {
+  padding-block: 12px 4px !important;
+  padding-inline: 16px !important;
+}
+.panel, .people, .queue {
+  border-color: var(--staff-line);
+}
+.root :global(.page-heading) {
+  margin-block-end: 20px;
+}
+.root :global(.page-heading h1) {
+  color: var(--staff-ink);
+}
+.root :global(.page-heading p) {
+  color: var(--staff-muted);
+}
+.root :global(.detail-icon) {
+  background: var(--staff-raised);
+  color: var(--staff-action);
+  border-radius: 10px;
+}
+.root :global(.table-wrap) {
+  border: 1px solid var(--staff-line);
+  border-radius: 14px;
+  overflow-x: auto;
+  background: var(--staff-surface);
+}
+.root :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--staff-ink);
+}
+.root :global(th) {
+  background: var(--staff-raised);
+  color: var(--staff-ink);
+  font-weight: 700;
+  text-align: start;
+  padding: 12px 16px;
+  border-block-end: 1px solid var(--staff-line);
+}
+.root :global(td) {
+  padding: 12px 16px;
+  border-block-end: 1px solid var(--staff-line);
+  color: var(--staff-ink);
+  overflow-wrap: anywhere;
+}
+.root :global(tr:last-child td) {
+  border-block-end: 0;
+}
+.root :is(button, a, summary, input, textarea, select):focus-visible {
+  outline: 3px solid var(--staff-action);
+  outline-offset: 3px;
+}
+@media (forced-colors: active) {
+  .heading, .panel, .people, .queue, .notice, .stages button, .resultPlane, .root :global(.table-wrap) {
+    border: 1px solid CanvasText !important;
+  }
+  .stages button[aria-pressed="true"], .queueRow[aria-pressed="true"], .personRow[aria-pressed="true"] {
+    border: 2px solid Highlight !important;
+  }
+  .root :is(button, a, summary, input, textarea, select):focus-visible {
+    outline-color: Highlight;
+  }
+}

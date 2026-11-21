@@ -9,6 +9,7 @@ import type { Appointment, Consultation } from "../lib/api/contracts";
 import { useApp } from "./context";
 import expressive from "./v2/doctor-schedule-signature.module.css";
 import ops from "./v2/doctor-operations-signature.module.css";
+import completion from "./v2/frontend-completion-doctor.module.css";
 import recovery from "./v2/visual-recovery.module.css";
 import { LiveBookingList, LiveBookingDetail } from "./live-booking";
 import { LiveConsultationShell } from "./consultation-opening";
@@ -60,15 +61,23 @@ export function DoctorScreen({ path }: { path: string }) {
   )
     return <ExpressiveSchedule />;
   if (path === "/doctor" || path === "/doctor/schedule")
-    return <Schedule dashboard={path === "/doctor"} />;
+    return (
+      <div className={completion.surface} data-frontend-completion-doctor>
+        <Schedule dashboard={path === "/doctor"} />
+      </div>
+    );
   if (path === "/doctor/availability") return <DoctorAvailability />;
   if (path.startsWith("/doctor/appointments/"))
     return <PatientAppointment id={path.split("/")[3]} />;
   if (path.startsWith("/doctor/consultation/"))
-    return <Workspace id={path.split("/")[3]} />;
+    return (
+      <div className={completion.surface} data-frontend-completion-doctor>
+        <Workspace id={path.split("/")[3]} />
+      </div>
+    );
   if (path === "/doctor/settings")
     return (
-      <>
+      <div className={completion.surface} data-frontend-completion-doctor>
         <Heading
           title={t("Workspace settings")}
           description={t(
@@ -87,7 +96,7 @@ export function DoctorScreen({ path }: { path: string }) {
             )}
           </p>
         </Card>
-      </>
+      </div>
     );
   return (
     <Empty
@@ -625,16 +634,26 @@ function Workspace({ id }: { id: string }) {
       <Resource resource={data} preview={preview}>
         {([c, p, r]) => (
           <>
-            <Card className="patient-strip">
+            <Card className={`patient-strip ${completion.patientStrip}`}>
               <Avatar name={p.displayName} />
               <div>
-                <h2>{p.displayName}</h2>
+                <h2><bdi>{p.displayName}</bdi></h2>
                 <p className="muted">
                   {p.dateOfBirth
                     ? t("Born {date}", { date: date(p.dateOfBirth, undefined, locale) })
                     : t("Date of birth not recorded")}{" "}
-                  {t("·")}
-                  {p.sex ?? "Sex not recorded"}
+                  {t("·")}{" "}
+                  {p.sex === "MALE"
+                    ? locale === "ar"
+                      ? "ذكر"
+                      : "Male"
+                    : p.sex === "FEMALE"
+                      ? locale === "ar"
+                        ? "أنثى"
+                        : "Female"
+                      : p.sex
+                        ? t(p.sex)
+                        : t("Sex not recorded")}
                 </p>
               </div>
               <Badge tone="soft">{t("Synthetic active relationship")}</Badge>

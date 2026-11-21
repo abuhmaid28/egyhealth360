@@ -286,7 +286,14 @@ function Login({
         <BrandLogo language={locale} />
         <div className={recovery.entryTools}>
           <LanguageSwitch />
-          <details className={recovery.entryTheme}>
+          <details
+            className={recovery.entryTheme}
+            onKeyDown={(event) => {
+              if (event.key !== "Escape") return;
+              event.currentTarget.querySelector("summary")?.focus();
+              event.currentTarget.open = false;
+            }}
+          >
             <summary aria-label={ar ? "المظهر" : "Appearance"}><Icon name="settings" size={20} /></summary>
             <div><FrontendV2ThemeSwitch /></div>
           </details>

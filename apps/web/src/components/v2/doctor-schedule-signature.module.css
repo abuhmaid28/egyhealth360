@@ -13,8 +13,9 @@
   gap: 1rem;
 }
 .heading h1 {
-  font-size: clamp(2rem, 1.4rem + 3vw, 4rem);
-  line-height: 1.12;
+  font-size: clamp(1.65rem, 1.2rem + 2.6vw, 3.5rem);
+  line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 .root :is(h1, h2, h3, p, dl, dd) { margin: 0; }
 .layout {
@@ -27,10 +28,14 @@
   --agenda-muted: #c2bed2;
   --agenda-canvas: #17142b;
   --accent-ink: #17142b;
-  background: radial-gradient(ellipse at bottom right, #2d2248, transparent 55%), var(--agenda-canvas);
+  background-color: var(--agenda-canvas);
+  background-image: radial-gradient(ellipse at bottom right, #2d2248, transparent 55%);
   color: var(--agenda-ink);
   padding: clamp(1rem, 2vw, 1.5rem);
   border-radius: 1.5rem 1.5rem .5rem 1.5rem;
+}
+.root:dir(rtl) .agenda {
+  border-radius: 1.5rem 1.5rem 1.5rem .5rem;
 }
 .agenda h2 { font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem); }
 .filters {
