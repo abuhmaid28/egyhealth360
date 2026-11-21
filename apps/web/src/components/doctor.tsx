@@ -1,12 +1,13 @@
 "use client";
 import { LiveDocumentationWorkspace, RelatedSummaries } from "./live-documentation";
-import { timeZoneLabel } from "../lib/presentation";
+import { directoryLabel, timeZoneLabel } from "../lib/presentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { useState } from "react";
-import type { Consultation } from "../lib/api/contracts";
+import type { Appointment, Consultation } from "../lib/api/contracts";
 import { useApp } from "./context";
+import expressive from "./v2/doctor-schedule-signature.module.css";
 import recovery from "./v2/visual-recovery.module.css";
 import { LiveBookingList, LiveBookingDetail } from "./live-booking";
 import { LiveConsultationShell } from "./consultation-opening";
@@ -32,7 +33,7 @@ import {
 export function DoctorScreen({ path }: { path: string }) {
   const { t } = useLocale();
 
-  const { api } = useApp();
+  const { api, booking, session } = useApp();
   if (
     api.mode === "live" &&
     (path === "/doctor" || path === "/doctor/schedule")
@@ -49,6 +50,14 @@ export function DoctorScreen({ path }: { path: string }) {
   if (api.mode === "live" && path === "/doctor/summaries") return <RelatedSummaries />;
   if (api.mode === "live" && path.startsWith("/doctor/consultation/"))
     return <LiveConsultationShell bookingId={path.split("/")[3]} />;
+  if (
+    path === "/doctor/schedule" &&
+    session.role === "CLINICIAN" &&
+    session.mode === "demo" &&
+    api.mode === "demo" &&
+    booking.implementation === "demo"
+  )
+    return <ExpressiveSchedule />;
   if (path === "/doctor" || path === "/doctor/schedule")
     return <Schedule dashboard={path === "/doctor"} />;
   if (path === "/doctor/availability") return <DoctorAvailability />;
@@ -87,6 +96,108 @@ export function DoctorScreen({ path }: { path: string }) {
     />
   );
 }
+const scheduleFilters = ["All", "Upcoming", "Completed"] as const;
+
+function ExpressiveSchedule() {
+  const { t, locale } = useLocale();
+  const { booking, preview, refresh, session } = useApp();
+  const [filter, setFilter] = useState<(typeof scheduleFilters)[number]>("All");
+  const appointments = useResource(() => booking.clinicianSchedule(), [booking, refresh]);
+  const count = new Intl.NumberFormat(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", {
+    minimumIntegerDigits: 2,
+  });
+
+  return (
+    <div className={expressive.root} data-expressive-doctor-schedule>
+      <header className={expressive.heading}>
+        <div>
+          <h1>{t("My schedule")}</h1>
+          <p><bdi>{session.name}</bdi></p>
+        </div>
+        <Link className={expressive.availability} href="/doctor/availability">
+          {t("Manage availability")} <Icon name="arrow" size={16} />
+        </Link>
+      </header>
+      <Resource resource={appointments} preview={preview}>
+        {(rows) => {
+          const visible = rows.filter((a) => filter === "All" || a.status === filter);
+          return (
+            <div className={expressive.layout}>
+              <section className={expressive.agenda} aria-labelledby="doctor-agenda">
+                <h2 id="doctor-agenda">{t("Patient appointments")}</h2>
+                <div className={expressive.filters} role="group" aria-label={t("Patient appointments")}>
+                  {scheduleFilters.map((status) => (
+                    <button key={status} type="button" aria-pressed={filter === status} onClick={() => setFilter(status)}>
+                      {t(status)}
+                    </button>
+                  ))}
+                </div>
+                {visible.length ? (
+                  <ul className={expressive.rows}>
+                    {visible.map((appointment) => (
+                      <DoctorScheduleRow key={appointment.id} appointment={appointment} />
+                    ))}
+                  </ul>
+                ) : (
+                  <div className={expressive.empty} role="status">
+                    <h3>{t("A little space in your day")}</h3>
+                    {!rows.length && <p>{t("Demo appointments appear here after booking from the Patient workspace.")}</p>}
+                  </div>
+                )}
+              </section>
+              <dl className={expressive.stats}>
+                {([
+                  ["Scheduled visits", rows.filter((a) => a.status === "Upcoming").length],
+                  ["Completed visits", rows.filter((a) => a.status === "Completed").length],
+                  ["Patient appointments", rows.length],
+                ] as const).map(([label, value]) => (
+                  <div key={label}>
+                    <dt>{t(label)}</dt>
+                    <dd>{count.format(value)}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          );
+        }}
+      </Resource>
+      <aside className={expressive.notice}>
+        <Icon name="shield" />
+        <div>
+          <h2>{t("Clinical access is separate")}</h2>
+          <p>{t("The schedule provides logistics only. A booking does not establish patient authorization or clinician acceptance.")}</p>
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+function DoctorScheduleRow({ appointment: a }: { appointment: Appointment }) {
+  const { t, locale } = useLocale();
+  const { startAt, endAt, timeZone, clinicId } = a.slot;
+  const format = (options: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", { ...options, timeZone }).format(new Date(startAt));
+  const clinic = a.provider.clinics.find((item) => item.id === clinicId);
+  return (
+    <li className={expressive.row}>
+      <time className={expressive.tile} dateTime={startAt}>
+        <strong>{format({ day: "numeric" })}</strong>
+        <span>{format({ month: "short", year: "numeric" })}</span>
+      </time>
+      <div className={expressive.logistics}>
+        <p className={expressive.status}>{t(a.status)}</p>
+        <h3><bdi>{a.patientName}</bdi></h3>
+        <p><bdi>{directoryLabel(a.provider.specialty.displayName, t)}</bdi></p>
+        <p><bdi dir="ltr">{time(startAt, timeZone, locale)}–{time(endAt, timeZone, locale)}</bdi> · <bdi>{timeZoneLabel(timeZone, t)}</bdi></p>
+        {clinic && <p className={expressive.clinic}><Icon name="pin" size={16} /><bdi>{clinic.displayName}</bdi></p>}
+        <Link className={expressive.appointment} href={`/doctor/appointments/${a.id}`} prefetch={false}>
+          {t("View appointment")} <Icon name="arrow" size={16} />
+        </Link>
+      </div>
+    </li>
+  );
+}
+
 function Schedule({ dashboard }: { dashboard: boolean }) {
   const { locale, t } = useLocale();
 

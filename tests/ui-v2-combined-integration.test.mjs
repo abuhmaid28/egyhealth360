@@ -253,15 +253,21 @@ const visualRecoveryOverlays = {
 const expressiveDiscoveryOverlay = {
   "apps/web/src/components/patient.tsx": "534bde544a3b5a29f198b706491ad1ec99c26e52"
 };
+const expressiveDoctorOverlay = {
+  "apps/web/src/components/doctor.tsx": { "blob": "9210544dbfd7f565a54173222ee0a4ebab600614", "mode": "100644" }
+};
 test("Combined pins and historical P2 overlays are retained, with explicit Visual Recovery overrides", () => {
   assert.equal(pinned.length,44);assert.equal(Object.keys(overlays).length,7);
   assert.equal(pinned.filter(r=>!Object.hasOwn(overlays,r.path)).length,37);
   assert.equal(pinned.filter(r=>r.path.endsWith(".png")).length,17);
   assert.deepEqual(Object.keys(visualRecoveryOverlays), ["apps/web/src/components/application.tsx", "apps/web/src/components/doctor.tsx", "apps/web/src/components/patient-my-care.module.css", "apps/web/src/components/patient-my-care.tsx", "apps/web/src/components/patient.tsx", "scripts/support/ui-live-journey-browser.mjs", "scripts/support/ui-v2-patient-doctor-browser.mjs", "tests/ui-v2-visual-integration.test.mjs"]);
   assert.ok(pinned.filter(r=>r.path.endsWith(".png")).every(r=>!Object.hasOwn(visualRecoveryOverlays,r.path)));
+  assert.deepEqual(Object.keys(expressiveDoctorOverlay), ["apps/web/src/components/doctor.tsx"]);
+  assert.equal(visualRecoveryOverlays["apps/web/src/components/doctor.tsx"], "41aeec758d5f4976592255d6db4fdff2b3528776");
+  assert.equal(expressiveDoctorOverlay["apps/web/src/components/doctor.tsx"].mode, "100644");
   assert.deepEqual(Object.keys(expressiveDiscoveryOverlay), ["apps/web/src/components/patient.tsx"]);
   assert.equal(visualRecoveryOverlays["apps/web/src/components/patient.tsx"], "507eef5fb8b76577850888ce438541da4cbfd75b");
-  for(const r of pinned){const bytes=readFileSync(r.path);const hash=createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");assert.equal(hash,expressiveDiscoveryOverlay[r.path]??visualRecoveryOverlays[r.path]??overlays[r.path]??r.blob,r.path);assert.equal(statSync(r.path).mode&0o111?"100755":"100644",r.mode,r.path);}
+  for(const r of pinned){const bytes=readFileSync(r.path);const hash=createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");assert.equal(hash,expressiveDoctorOverlay[r.path]?.blob??expressiveDiscoveryOverlay[r.path]??visualRecoveryOverlays[r.path]??overlays[r.path]??r.blob,r.path);assert.equal(statSync(r.path).mode&0o111?"100755":"100644",r.mode,r.path);}
 });
 const webRequire = createRequire(resolve("apps/web/package.json"));
 const React = webRequire("react");

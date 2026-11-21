@@ -166,7 +166,7 @@ export async function testPolish(browser, origin, shots) {
     await ready();
     await responsive("doctor schedule");
     console.log(`Phase 3 ${locale}: consultation review and handoffs`);
-    await link("Open patient").click();
+    await link("View appointment").click();
     await link("Open consultation workspace").click();
     await ready();
     const complaint = "شكوى بشرية محفوظة without translation $&";
