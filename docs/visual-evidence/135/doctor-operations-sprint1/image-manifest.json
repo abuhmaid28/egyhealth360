@@ -1,0 +1,710 @@
+{
+  "state": "original evidence",
+  "count": 32,
+  "images": [
+    {
+      "file": "appt-after-ar-dark-1440.png",
+      "sha256": "6fb90152134788659cd8a1eccdff40538011c139c1f5e94ac21b38d147c5ac77",
+      "bytes": 144239,
+      "pngPx": [
+        1440,
+        1152
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-after-ar-dark-390.png",
+      "sha256": "640e0815aec48059495949e5231a12bd563a8ca62d704cb4cbe80c766e7ee892",
+      "bytes": 111673,
+      "pngPx": [
+        390,
+        1545
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-after-ar-light-1440.png",
+      "sha256": "f5088af46b6e3ff26f7c3d58a4c72589b17268ec3bab77100d36e1ba689a5826",
+      "bytes": 144627,
+      "pngPx": [
+        1440,
+        1152
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-after-ar-light-390.png",
+      "sha256": "ab5d11b025699eba14fefde6736c7432389fb48152f19392d1f9c36a42216d66",
+      "bytes": 111513,
+      "pngPx": [
+        390,
+        1545
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-after-en-dark-1440.png",
+      "sha256": "eb83b78c0fee2d4e131b34d2108f88f11f2a1244071884c6481f545f74564597",
+      "bytes": 151231,
+      "pngPx": [
+        1440,
+        1103
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-after-en-dark-390.png",
+      "sha256": "9a59e17d13311ec3dbe19e14b142249ead3ddd868a5f57612827dbc0260d84a3",
+      "bytes": 126962,
+      "pngPx": [
+        390,
+        1547
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-after-en-light-1440.png",
+      "sha256": "bf42f451c69504cfa471d82141d08871237e1affd78f21ed2f44161899584568",
+      "bytes": 151292,
+      "pngPx": [
+        1440,
+        1103
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-after-en-light-390.png",
+      "sha256": "db22ba5a20f50a0efdf5ae9fcb81bc4d54d5f8b8a9222d28e687975bb6c0f8ad",
+      "bytes": 126288,
+      "pngPx": [
+        390,
+        1547
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-before-ar-1440.png",
+      "sha256": "774bf202251cdebe18ff8e534cdde5e70f4c2b0da1bacf9f686e2e877b8d700b",
+      "bytes": 97502,
+      "pngPx": [
+        1440,
+        1038
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-before-ar-390.png",
+      "sha256": "2568068485c127a9118ff694de346e340cd6638647574b42b321d90399805b17",
+      "bytes": 83141,
+      "pngPx": [
+        390,
+        1354
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-before-en-1440.png",
+      "sha256": "08f3dab2a8b11d3018307e6561dc80f0cde0a2a3658ece23643124c53f91cd2c",
+      "bytes": 108634,
+      "pngPx": [
+        1440,
+        1009
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-before-en-390.png",
+      "sha256": "65690789dbf722cb5a583765d71444708644460f2f7fb3fc099fdd3e5ab91fda",
+      "bytes": 93511,
+      "pngPx": [
+        390,
+        1349
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-text-200-ar.png",
+      "sha256": "8826167be92be1bc964f65ceef269c112bf3afb090f8d7c8faaf9e5ee80bfc6e",
+      "bytes": 169414,
+      "pngPx": [
+        320,
+        3691
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 320,
+        "height": 1000
+      },
+      "theme": "System / light + forced-colors",
+      "role": "after",
+      "capture": "200% text + forced-colors + reduced-motion",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-text-200-en.png",
+      "sha256": "48f1e5f6573c6436af04fc2fedcdf9768b5aa4aa2d67b596199a7a63ce94387d",
+      "bytes": 209609,
+      "pngPx": [
+        320,
+        4256
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 320,
+        "height": 1000
+      },
+      "theme": "System / light + forced-colors",
+      "role": "after",
+      "capture": "200% text + forced-colors + reduced-motion",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-zoom-ar.png",
+      "sha256": "ecd3323e27979ee40e53250d8fb64573191184ec2f704e25e80402b259f44229",
+      "bytes": 226243,
+      "pngPx": [
+        640,
+        1653
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1280,
+        "height": 900
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "native 200% zoom",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "appt-zoom-en.png",
+      "sha256": "44a72f582b3b8abf81188a6a4dd3373f37078c7c4b6cb3ce70b7164d698242f5",
+      "bytes": 249847,
+      "pngPx": [
+        640,
+        1653
+      ],
+      "surface": "PatientAppointment (/doctor/appointments/:id)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1280,
+        "height": 900
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "native 200% zoom",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-after-ar-dark-1440.png",
+      "sha256": "b00d079cd1d56659703c4a5c82bff013535d3df438ff1b992ee20c59f5caf501",
+      "bytes": 152075,
+      "pngPx": [
+        1440,
+        1168
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-after-ar-dark-390.png",
+      "sha256": "cb42943b2fdd8531b58a09e4e752403c3240a9013b75d58d383178e537042ec8",
+      "bytes": 124806,
+      "pngPx": [
+        390,
+        1831
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-after-ar-light-1440.png",
+      "sha256": "8fc0e4c960ad34a4939bb91a089a3c7eee248a646755f396006b6df255791d9f",
+      "bytes": 153149,
+      "pngPx": [
+        1440,
+        1168
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-after-ar-light-390.png",
+      "sha256": "7c115ca6e095d2f1b139437538eeb058809858f09696611c5cb7b186e669d890",
+      "bytes": 124555,
+      "pngPx": [
+        390,
+        1831
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-after-en-dark-1440.png",
+      "sha256": "deb1e6ddc6737b8ade7b1fb5da529776f0817281d8e791481433cfb50d2500c0",
+      "bytes": 158781,
+      "pngPx": [
+        1440,
+        1132
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-after-en-dark-390.png",
+      "sha256": "58f8d937bc1e83192152f7b562317aacb6150b6ef7552d47a62c1067759c0468",
+      "bytes": 133862,
+      "pngPx": [
+        390,
+        1851
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-after-en-light-1440.png",
+      "sha256": "a136f98641bbf25a60a577a2f367e490438f6159f29cc08c7e34d9671327b2d9",
+      "bytes": 159153,
+      "pngPx": [
+        1440,
+        1132
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-after-en-light-390.png",
+      "sha256": "dc1181fd388b4f718bbd015b0f006b6129b9762ac5d87cf519a43b19ee88fc31",
+      "bytes": 133528,
+      "pngPx": [
+        390,
+        1851
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-before-ar-1440.png",
+      "sha256": "9dbda86d2bcf21fd2ca205b5e3b388da6d0aab80bd0bc36e551c1c7fe649f97a",
+      "bytes": 96652,
+      "pngPx": [
+        1440,
+        1001
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-before-ar-390.png",
+      "sha256": "a91e915610c9531b9f6bd8a5a521ea3f36b353ab42a6d4d62b6b43d83c5f0d06",
+      "bytes": 84360,
+      "pngPx": [
+        390,
+        1490
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-before-en-1440.png",
+      "sha256": "f6cecab3609339fa98836189fcb3450480a687a0b3c1b7aa44062bf4104e4ab3",
+      "bytes": 101726,
+      "pngPx": [
+        1440,
+        1000
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-before-en-390.png",
+      "sha256": "5bc658a2111c36f861b3c38e0e94d9b51ce52c740f9bb52a4cd995b16fda8e03",
+      "bytes": 89728,
+      "pngPx": [
+        390,
+        1484
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-text-200-ar.png",
+      "sha256": "16a249a6429bbc8e47c23565ee9450b84cbdb7c79c565f650f9fb006543c0832",
+      "bytes": 172528,
+      "pngPx": [
+        320,
+        3591
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 320,
+        "height": 1000
+      },
+      "theme": "System / light + forced-colors",
+      "role": "after",
+      "capture": "200% text + forced-colors + reduced-motion",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-text-200-en.png",
+      "sha256": "dc53be63efb448754e59bd688f7952b6b8aa013efabe40629938e47c3235ffe6",
+      "bytes": 200200,
+      "pngPx": [
+        320,
+        4099
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 320,
+        "height": 1000
+      },
+      "theme": "System / light + forced-colors",
+      "role": "after",
+      "capture": "200% text + forced-colors + reduced-motion",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-zoom-ar.png",
+      "sha256": "30c0e04c32568776ca4d9e53fccb0a955d713521482c5ee3bf6ccb9e4fb868e7",
+      "bytes": 111814,
+      "pngPx": [
+        640,
+        1653
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1280,
+        "height": 900
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "native 200% zoom",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    },
+    {
+      "file": "avail-zoom-en.png",
+      "sha256": "3b5797583283b50bc05ef6772ab4b4867b9d1c9c5ef89e04b1a29a4899df3dcd",
+      "bytes": 120072,
+      "pngPx": [
+        640,
+        1653
+      ],
+      "surface": "DoctorAvailability (/doctor/availability)",
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1280,
+        "height": 900
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "native 200% zoom",
+      "sourceHead": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+      "sourceTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+      "reviewVerdict": "Captured from production Next.js build at SOURCE_HEAD vs baseline e07e0ae7. Owner visual acceptance pending."
+    }
+  ]
+}
