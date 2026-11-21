@@ -46,6 +46,14 @@ This is a permanent execution requirement, not a message or chat-history prefere
 6. **Handoff:** Always return a durable GitHub Issue/PR link, exact published commit SHA (or explicitly `UNPUBLISHED`), a short verified outcome and outstanding decision. The Product Owner must not have to paste the whole agent transcript into ChatGPT.
 7. **Orchestration:** ChatGPT reads saved GitHub records directly during active chats. None of the agents may claim background/asynchronous ChatGPT review or silently approve its own merge/deployment. Each agent maintains only its authorized lane.
 
+### Visual, QA, and provenance evidence rules (all agents, temporary and final)
+
+1. **Every WIP checkpoint and final handoff:** Source commits, reviewed diffs, visual screenshots, test logs, accessibility evidence, manifests and recovery receipts must be durably reachable from GitHub **after exact scoped publication authorization and a proven safe route**. Neither an Issue summary nor local `/workspace` paths substitute for published GitHub source or artifacts; temporary designs are not exempt.
+2. **Visual evidence:** Store approved-for-disclosure, sanitized original before/after PNGs under `docs/visual-evidence/<issue>/<candidate>/` (or the canonical authorized evidence path) with a `README.md`/index recording locale, viewport, theme, source before/after `HEAD` and `tree`, exact PNG dimensions and SHA-256. Verify direct `raw.githubusercontent.com` URLs open as images and include immutable commit-pinned links in the Issue/PR handoff. Never regenerate or approximate evidence without explicit Owner instruction.
+3. **QA and provenance:** Store bounded sanitized test receipts stating exact commands, exit statuses, test counts, original-vs-rerun provenance, independent-review receipts and recovery verifications. Clearly distinguish agent-reported, independently verified and not-run results; do not repeat full campaigns solely to regenerate handoff notes.
+4. **Public safety and large/sensitive archives:** Never publish PHI/PII, tokens, secrets, internal credentials, unredacted logs or unlicensed assets to the public GitHub repository. Store large or sensitive recovery archives only in a specifically Owner-approved private location with verified access and checksums. If publication remains unsafe or blocked, keep local backups, report `SOURCE/EVIDENCE UNPUBLISHED`, and seek approval—**never route around Issue #149**.
+5. **Immutable handoff links:** Every final Issue receipt must link directly to immutable source commit(s), raw screenshots, the evidence index, recovery proof, remaining blockers, exact owner/branch scope and the recommended next action.
+
 Existing issue-specific deployment/Live restrictions take precedence. F06/E2 remains NO-GO until its own separately evidenced approval.
 
 ## Risk-based validation
