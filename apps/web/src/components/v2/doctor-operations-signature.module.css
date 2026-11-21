@@ -1,0 +1,412 @@
+/* Scoped Doctor Availability and Patient Appointment presentation.
+   Reuses Package A tokens and Doctor Schedule surface vocabulary. */
+.root {
+  --ops-hero: #17142b;
+  --ops-hero-ink: #f6f2ff;
+  --ops-hero-muted: #c2bed2;
+  --ops-accent-ink: #17142b;
+  display: grid;
+  gap: 1rem;
+  min-inline-size: 0;
+  color: var(--v2-ink);
+  overflow-wrap: break-word;
+}
+
+.root :is(h1, h2, h3, p, ul) {
+  margin: 0;
+}
+
+.root bdi {
+  overflow-wrap: anywhere;
+}
+
+.topBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.headingBody {
+  display: grid;
+  gap: 0.25rem;
+  min-inline-size: 0;
+}
+
+.eyebrow {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--v2-action);
+}
+
+.heading h1 {
+  font-size: clamp(1.75rem, 1.3rem + 2.2vw, 3rem);
+  line-height: 1.15;
+}
+
+.lead {
+  color: var(--v2-muted);
+  max-inline-size: 56ch;
+}
+
+.backLink,
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  max-inline-size: 100%;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--v2-control);
+  background: var(--v2-surface);
+  color: var(--v2-action);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.backLink:hover,
+.navLink:hover {
+  background: var(--v2-raised);
+  text-decoration: underline;
+}
+
+.root :is(a, button, input, select) {
+  scroll-margin-block: 1rem;
+}
+
+.root :is(a, button, input, select):focus-visible {
+  outline: 3px solid var(--v2-action);
+  outline-offset: 3px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.panel {
+  min-inline-size: 0;
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.4rem);
+  background: var(--v2-surface);
+  color: var(--v2-ink);
+  border: 1px solid var(--v2-line);
+  border-radius: 1.5rem 1.5rem 0.5rem 1.5rem;
+  box-shadow: var(--v2-shadow);
+}
+
+.root:dir(rtl) .panel,
+.root:dir(rtl) .publishHead,
+.root:dir(rtl) .detailHero,
+.root:dir(rtl) .tile {
+  border-radius: 1.5rem 1.5rem 1.5rem 0.5rem;
+}
+
+.panelHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.panelHead h2,
+.sectionTitle,
+.relationshipHead h2 {
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.45rem);
+  line-height: 1.25;
+}
+
+.slotList {
+  display: grid;
+  list-style: none;
+  padding: 0;
+  gap: 0.75rem;
+}
+
+.slotRow {
+  display: grid;
+  grid-template-columns: minmax(0, 5.25rem) minmax(0, 1fr) auto;
+  gap: 0.9rem;
+  align-items: center;
+  padding: 0.85rem;
+  background: var(--v2-raised);
+  border: 1px solid var(--v2-line);
+  border-radius: 1rem;
+}
+
+.tile {
+  display: grid;
+  text-align: center;
+  align-content: center;
+  background: var(--v2-accent);
+  color: var(--ops-accent-ink);
+  border-radius: 1rem 1rem 0.25rem 1rem;
+  padding: 0.5rem 0.45rem;
+  line-height: 1.15;
+}
+
+.tile strong {
+  font-size: 1.9rem;
+  font-weight: 800;
+}
+
+.tile span {
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.slotMeta {
+  display: grid;
+  justify-items: start;
+  gap: 0.3rem;
+  min-inline-size: 0;
+}
+
+.slotTime {
+  font-weight: 700;
+}
+
+.slotClinic {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  color: var(--v2-muted);
+  font-size: 0.92rem;
+}
+
+.slotClinic svg {
+  flex: none;
+  margin-block-start: 0.2rem;
+}
+
+.slotActions {
+  display: grid;
+  justify-items: end;
+  gap: 0.5rem;
+}
+
+.slotActions button {
+  min-block-size: 44px;
+  min-inline-size: 44px;
+}
+
+.publishPanel {
+  padding: 0;
+  overflow: hidden;
+}
+
+.publishHead {
+  display: grid;
+  gap: 0.35rem;
+  padding: clamp(1rem, 2vw, 1.35rem);
+  background: radial-gradient(ellipse at bottom right, #2d2248, transparent 60%), var(--ops-hero);
+  color: var(--ops-hero-ink);
+  border-radius: 1.5rem 1.5rem 0.5rem 0.5rem;
+}
+
+.publishTag {
+  justify-self: start;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: var(--v2-accent);
+  color: var(--ops-accent-ink);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.publishHead h2 {
+  font-size: clamp(1.2rem, 1rem + 0.7vw, 1.5rem);
+}
+
+.publishHead p {
+  color: var(--ops-hero-muted);
+  font-size: 0.92rem;
+}
+
+.publishBody {
+  display: grid;
+  gap: 0.9rem;
+  padding: 0 clamp(1rem, 2vw, 1.35rem) clamp(1rem, 2vw, 1.35rem);
+}
+
+.publishBody form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.publishBody :is(input, select, button) {
+  min-block-size: 44px;
+}
+
+.publishNotes {
+  display: grid;
+  gap: 0.35rem;
+  padding-block-start: 0.5rem;
+  border-block-start: 1px solid var(--v2-line);
+}
+
+.errorBanner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--v2-control);
+  background: var(--v2-surface);
+}
+
+.errorBanner button {
+  min-block-size: 44px;
+  min-inline-size: 44px;
+}
+
+.detailCard {
+  padding: 0;
+  overflow: hidden;
+}
+
+.detailHero {
+  display: grid;
+  grid-template-columns: minmax(0, 5.5rem) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  padding: clamp(1rem, 2vw, 1.4rem);
+  background: radial-gradient(ellipse at bottom right, #2d2248, transparent 60%), var(--ops-hero);
+  color: var(--ops-hero-ink);
+  border-radius: 1.5rem 1.5rem 0.5rem 0.5rem;
+}
+
+.heroIdentity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  min-inline-size: 0;
+}
+
+.heroText {
+  display: grid;
+  justify-items: start;
+  gap: 0.25rem;
+  min-inline-size: 0;
+}
+
+.heroStatus {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: var(--v2-accent);
+  color: var(--ops-accent-ink);
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.heroText h2 {
+  font-size: clamp(1.3rem, 1.05rem + 0.9vw, 1.75rem);
+  color: var(--ops-hero-ink);
+}
+
+.heroSub {
+  color: var(--ops-hero-muted);
+  font-size: 0.95rem;
+}
+
+.detailBody {
+  display: grid;
+  gap: 1rem;
+  padding: 0 clamp(1rem, 2vw, 1.4rem) clamp(1rem, 2vw, 1.4rem);
+}
+
+.primaryAction {
+  justify-self: start;
+  min-block-size: 44px;
+  min-inline-size: 44px;
+}
+
+.relationshipPanel {
+  background: var(--v2-raised);
+}
+
+.relationshipHead {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.relationshipHead svg {
+  flex: none;
+  color: var(--v2-action);
+}
+
+@media (max-width: 54rem) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 34rem) {
+  .slotRow {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .slotActions {
+    justify-items: start;
+  }
+
+  .tile {
+    justify-self: start;
+    min-inline-size: 4.5rem;
+  }
+
+  .detailHero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .primaryAction {
+    justify-self: stretch;
+  }
+}
+
+@media (forced-colors: active) {
+  .panel,
+  .publishHead,
+  .detailHero,
+  .slotRow,
+  .tile,
+  .backLink,
+  .navLink,
+  .errorBanner {
+    border: 1px solid CanvasText;
+  }
+
+  .root :is(a, button, input, select):focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

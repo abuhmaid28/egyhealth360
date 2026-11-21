@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Appointment, Consultation } from "../lib/api/contracts";
 import { useApp } from "./context";
 import expressive from "./v2/doctor-schedule-signature.module.css";
+import ops from "./v2/doctor-operations-signature.module.css";
 import recovery from "./v2/visual-recovery.module.css";
 import { LiveBookingList, LiveBookingDetail } from "./live-booking";
 import { LiveConsultationShell } from "./consultation-opening";
@@ -358,80 +359,226 @@ function Schedule({ dashboard }: { dashboard: boolean }) {
 function PatientAppointment({ id }: { id: string }) {
   const { t, locale } = useLocale();
 
-  const { booking, preview, refresh } = useApp();
+  const { api, booking, preview, refresh, session } = useApp();
   const data = useResource(async () => {
     const appointment = await booking.detail(id);
     return appointment ? [appointment] : [];
   }, [booking, id, refresh]);
+  const isExpressiveDemo =
+    api.mode === "demo" &&
+    session.mode === "demo" &&
+    session.role === "CLINICIAN" &&
+    booking.implementation === "demo";
+  const formatTile = (iso: string, timeZone: string, options: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", {
+      ...options,
+      timeZone,
+    }).format(new Date(iso));
+
+  if (!isExpressiveDemo) {
+    return (
+      <>
+        <Link href="/doctor/schedule" className="back-link">
+          {t("← Back to schedule")}
+        </Link>
+        <Heading
+          eyebrow={t("Prepare for your visit")}
+          title={t("Patient appointment")}
+          description={t(
+            "Confirm the patient and review the context before starting.",
+          )}
+        />
+        <Resource resource={data} preview={preview}>
+          {(rows) => {
+            const a = rows.find((a) => a.id === id);
+            return a ? (
+              <div className="two-column">
+                <Card>
+                  <CardTitle title={t("Appointment logistics")} />
+                  {a.availabilitySource === "live" && (
+                    <div className="boundary-notice">
+                      <Badge tone="amber">
+                        {t("Live-slot preview · synthetic clinical continuation")}
+                      </Badge>
+                      <p>
+                        {t(
+                          "This is not the live provider’s schedule. Synthetic Dr. Mariam simulates the continuation with Ahmed through their pre-existing demo relationship. No live booking or clinical authority was created.",
+                        )}
+                      </p>
+                    </div>
+                  )}
+                  <div className="inline">
+                    <Avatar name={a.patientName} large />
+                    <div>
+                      <h2>{a.patientName}</h2>
+                      <Badge>{a.status}</Badge>
+                    </div>
+                  </div>
+                  <div className="confirmation-details">
+                    <Detail icon="calendar" title={t("Visit time")}>
+                      {date(a.slot.startAt, a.slot.timeZone, locale)} {t("·")}{" "}
+                      {time(a.slot.startAt, a.slot.timeZone, locale)}
+                      <small className="muted">
+                        <bdi>{timeZoneLabel(a.slot.timeZone, t)}</bdi>
+                      </small>
+                    </Detail>
+                    <Detail icon="pin" title={t("Clinic")}>
+                      {
+                        a.provider.clinics.find(
+                          (clinic) => clinic.id === a.slot.clinicId,
+                        )?.displayName
+                      }
+                    </Detail>
+                    <Detail icon="record" title={t("Reason for visit")}>
+                      {a.reason}
+                    </Detail>
+                  </div>
+                  <Link
+                    className="button primary"
+                    href={`/doctor/consultation/${a.id}`}
+                  >
+                    {a.status === "Completed"
+                      ? t("View consultation")
+                      : t("Open consultation workspace")}
+                    <Icon name="arrow" size={18} />
+                  </Link>
+                </Card>
+                <Card className="tinted">
+                  <CardTitle title={t("Separate relationship check")} />
+                  <Detail icon="shield" title={t("Synthetic fixture")}>
+                    {t(
+                      "The patient and this clinician have a pre-existing active demo care relationship.",
+                    )}
+                  </Detail>
+                  <p className="body-copy">
+                    {t(
+                      "This synthetic relationship is independent of the booking. No assignment, consent, or acceptance is created by this frontend.",
+                    )}
+                  </p>
+                  <p className="muted">
+                    {t(
+                      "This is a separate Demo consultation. Use your Live account for connected care.",
+                    )}
+                  </p>
+                </Card>
+              </div>
+            ) : (
+              <Empty title={t("Appointment not found")} />
+            );
+          }}
+        </Resource>
+      </>
+    );
+  }
+
   return (
-    <>
-      <Link href="/doctor/schedule" className="back-link">
-        {t("← Back to schedule")}
-      </Link>
-      <Heading
-        eyebrow={t("Prepare for your visit")}
-        title={t("Patient appointment")}
-        description={t(
-          "Confirm the patient and review the context before starting.",
-        )}
-      />
+    <div className={ops.root} data-expressive-doctor-appointment>
+      <div className={ops.topBar}>
+        <Link href="/doctor/schedule" className={ops.backLink}>
+          {t("← Back to schedule")}
+        </Link>
+      </div>
+      <header className={ops.heading}>
+        <div className={ops.headingBody}>
+          <p className={ops.eyebrow}>{t("Prepare for your visit")}</p>
+          <h1>{t("Patient appointment")}</h1>
+          <p className={ops.lead}>
+            {t("Confirm the patient and review the context before starting.")}
+          </p>
+        </div>
+      </header>
       <Resource resource={data} preview={preview}>
         {(rows) => {
-          const a = rows.find((a) => a.id === id);
-          return a ? (
-            <div className="two-column">
-              <Card>
-                <CardTitle title={t("Appointment logistics")} />
-                {a.availabilitySource === "live" && (
-                  <div className="boundary-notice">
-                    <Badge tone="amber">
-                      {t("Live-slot preview · synthetic clinical continuation")}
-                    </Badge>
-                    <p>
-                      {t(
-                        "This is not the live provider’s schedule. Synthetic Dr. Mariam simulates the continuation with Ahmed through their pre-existing demo relationship. No live booking or clinical authority was created.",
-                      )}
-                    </p>
-                  </div>
-                )}
-                <div className="inline">
-                  <Avatar name={a.patientName} large />
-                  <div>
-                    <h2>{a.patientName}</h2>
-                    <Badge>{a.status}</Badge>
+          const a = rows.find((item) => item.id === id);
+          if (!a) return <Empty title={t("Appointment not found")} />;
+          const clinic = a.provider.clinics.find(
+            (item) => item.id === a.slot.clinicId,
+          );
+          return (
+            <div className={ops.layout}>
+              <section
+                className={`${ops.panel} ${ops.detailCard}`}
+                aria-labelledby="doctor-appointment-logistics"
+              >
+                <div className={ops.detailHero}>
+                  <time className={ops.tile} dateTime={a.slot.startAt}>
+                    <strong>{formatTile(a.slot.startAt, a.slot.timeZone, { day: "numeric" })}</strong>
+                    <span>
+                      {formatTile(a.slot.startAt, a.slot.timeZone, {
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </time>
+                  <div className={ops.heroIdentity}>
+                    <Avatar name={a.patientName} large />
+                    <div className={ops.heroText}>
+                      <span className={ops.heroStatus}>{t(a.status)}</span>
+                      <h2>
+                        <bdi>{a.patientName}</bdi>
+                      </h2>
+                      <p className={ops.heroSub}>
+                        <bdi>{directoryLabel(a.provider.specialty.displayName, t)}</bdi>
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="confirmation-details">
-                  <Detail icon="calendar" title={t("Visit time")}>
-                    {date(a.slot.startAt, a.slot.timeZone, locale)} {t("·")}{" "}
-                    {time(a.slot.startAt, a.slot.timeZone, locale)}
-                    <small className="muted">
-                      <bdi>{timeZoneLabel(a.slot.timeZone, t)}</bdi>
-                    </small>
-                  </Detail>
-                  <Detail icon="pin" title={t("Clinic")}>
-                    {
-                      a.provider.clinics.find(
-                        (clinic) => clinic.id === a.slot.clinicId,
-                      )?.displayName
-                    }
-                  </Detail>
-                  <Detail icon="record" title={t("Reason for visit")}>
-                    {a.reason}
-                  </Detail>
+                <div className={ops.detailBody}>
+                  {a.availabilitySource === "live" && (
+                    <div className="boundary-notice">
+                      <Badge tone="amber">
+                        {t("Live-slot preview · synthetic clinical continuation")}
+                      </Badge>
+                      <p>
+                        {t(
+                          "This is not the live provider’s schedule. Synthetic Dr. Mariam simulates the continuation with Ahmed through their pre-existing demo relationship. No live booking or clinical authority was created.",
+                        )}
+                      </p>
+                    </div>
+                  )}
+                  <h3 id="doctor-appointment-logistics" className={ops.sectionTitle}>
+                    {t("Appointment logistics")}
+                  </h3>
+                  <div className="confirmation-details">
+                    <Detail icon="calendar" title={t("Visit time")}>
+                      <bdi>{date(a.slot.startAt, a.slot.timeZone, locale)}</bdi> {t("·")}{" "}
+                      <bdi dir="ltr">
+                        {time(a.slot.startAt, a.slot.timeZone, locale)}
+                        {t("–")}
+                        {time(a.slot.endAt, a.slot.timeZone, locale)}
+                      </bdi>
+                      <small className="muted">
+                        <bdi>{timeZoneLabel(a.slot.timeZone, t)}</bdi>
+                      </small>
+                    </Detail>
+                    <Detail icon="pin" title={t("Clinic")}>
+                      <bdi>{clinic?.displayName ?? t("Clinic unavailable")}</bdi>
+                    </Detail>
+                    <Detail icon="record" title={t("Reason for visit")}>
+                      <bdi>{a.reason}</bdi>
+                    </Detail>
+                  </div>
+                  <Link
+                    className={`button primary ${ops.primaryAction}`}
+                    href={`/doctor/consultation/${a.id}`}
+                  >
+                    {a.status === "Completed"
+                      ? t("View consultation")
+                      : t("Open consultation workspace")}
+                    <Icon name="arrow" size={18} />
+                  </Link>
                 </div>
-                <Link
-                  className="button primary"
-                  href={`/doctor/consultation/${a.id}`}
-                >
-                  {a.status === "Completed"
-                    ? t("View consultation")
-                    : t("Open consultation workspace")}
-                  <Icon name="arrow" size={18} />
-                </Link>
-              </Card>
-              <Card className="tinted">
-                <CardTitle title={t("Separate relationship check")} />
+              </section>
+              <aside
+                className={`${ops.panel} ${ops.relationshipPanel}`}
+                aria-labelledby="doctor-appointment-relationship"
+              >
+                <div className={ops.relationshipHead}>
+                  <Icon name="shield" size={20} />
+                  <h2 id="doctor-appointment-relationship">
+                    {t("Separate relationship check")}
+                  </h2>
+                </div>
                 <Detail icon="shield" title={t("Synthetic fixture")}>
                   {t(
                     "The patient and this clinician have a pre-existing active demo care relationship.",
@@ -447,14 +594,12 @@ function PatientAppointment({ id }: { id: string }) {
                     "This is a separate Demo consultation. Use your Live account for connected care.",
                   )}
                 </p>
-              </Card>
+              </aside>
             </div>
-          ) : (
-            <Empty title={t("Appointment not found")} />
           );
         }}
       </Resource>
-    </>
+    </div>
   );
 }
 function Workspace({ id }: { id: string }) {
