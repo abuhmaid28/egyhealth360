@@ -440,17 +440,72 @@
     row-gap: 0;
   }
   .secondaryNav a { text-align: center; overflow-wrap: anywhere; }
-  .shell .mobileNav.mobileNav {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 2px;
-  }
-  .shell .mobileNav a { inline-size: auto; padding-inline: 3px; }
-  .shell .mobileNav span { font-size: .85rem; white-space: normal; overflow-wrap: anywhere; }
 }
 
-@media (min-width: 601px) and (max-width: 760px) {
-  .shell .mobileNav.mobileNav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+/* Keep the existing destinations and source order. This space belongs to the
+   shared shell, while the opted-in My Care and consultation layouts own theirs. */
+@media (max-width: 600px) {
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) > .header > div {
+    gap: 4px;
+    padding-block: 4px;
+  }
+
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) > .header > div > nav,
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) > .header > .secondaryNav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) .secondaryNav {
+    padding-block: 3px;
+  }
+
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) > .header nav a {
+    flex: 1 0 auto;
+    max-inline-size: 100%;
+    min-inline-size: 44px;
+    min-block-size: 44px;
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    line-height: 1.18;
+  }
+
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) .workspace > summary {
+    flex-wrap: wrap;
+    overflow-wrap: normal;
+  }
+}
+
+@media (max-width: 760px) {
+  .shell[data-portal-shell="PATIENT"] > .mobileNav.mobileNav {
+    display: grid;
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .shell[data-portal-shell="PATIENT"] > .mobileNav a {
+    grid-template-rows: auto auto;
+    min-inline-size: 44px;
+    min-block-size: 44px;
+    inline-size: auto;
+    padding-inline: 3px;
+  }
+
+  .shell[data-portal-shell="PATIENT"] > .mobileNav span {
+    font-size: .85rem;
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  .shell[data-portal-shell="PATIENT"]:has(> .mobileNav) > footer {
+    padding-block-end: 20px;
+  }
 }
 
 @media (max-width: 600px) {
