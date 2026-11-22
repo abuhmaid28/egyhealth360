@@ -81,3 +81,23 @@ for(const kind of ['ROUTE','DISPENSE'])for(const terminate of [false,true])test(
  const retryStop=observeApplicabilityQueries((q,next)=>{assert.notEqual(q.pid,failedPid,'Explicit retry must never reuse the uncertain connection');return next();});
  try{const receipt=await op.run();assert.equal(receipt.status,200);assert.equal(receipt.data.items[0].fulfillmentState,kind==='DISPENSE'?'FULLY_DISPENSED':'NOT_DISPENSED');assert.deepEqual(await pharmacyCounts(f),committed);}finally{retryStop();}
 }));
+
+for(const change of ['MEMBERSHIP','ORG','SESSION','USER'])for(const revokeFirst of [false,true])test(`S1 context vs ${change} revokeFirst=${revokeFirst} actual writer barriers`,()=>isolatedPharmacy(async f=>{
+ const update=async(sql,values)=>{const x=await f.pool.connect();try{await x.query('BEGIN');await x.query(sql,values);await x.query('COMMIT');}finally{await x.query('ROLLBACK');x.release();}};
+ const revoke=()=>change==='MEMBERSHIP'?f.store.endMembership(f.actors.admin2,{organizationId:f.pharmacyOrg.id,membershipId:f.pharmacyMember.id}):change==='ORG'?f.store.setOrganizationStatus(f.actors.admin2,{organizationId:f.pharmacyOrg.id,status:'SUSPENDED',expectedVersion:0}):change==='SESSION'?update('UPDATE public.sessions SET revoked_at=clock_timestamp() WHERE id=$1',[f.actors.pharmacy.sessionId]):update("UPDATE public.users SET status='DISABLED' WHERE id=$1",[f.users.pharmacy.id]);
+ const pattern=change==='MEMBERSHIP'?/UPDATE "public"\."organization_memberships"/:change==='ORG'?/UPDATE "public"\."organizations"/:change==='SESSION'?/UPDATE public\.sessions/:/UPDATE public\.users/;
+ const context=()=>f.pharmacy.context(f.actors.pharmacy),identity=['SESSION','USER'].includes(change);
+ const values=await pharmacyRace(f,revokeFirst?revoke:context,revokeFirst?context:revoke,{name:'context/'+change,pattern:revokeFirst?pattern:/WITH pharmacy_context AS MATERIALIZED/,expected:revokeFirst&&identity?['COMMIT','PHARMACY_UNAUTHENTICATED']:['COMMIT','COMMIT']});
+ if(!revokeFirst)assert.equal(values[0].value.meta.total,2);
+ if(identity)await pharmacyReject(context(),'PHARMACY_UNAUTHENTICATED');else{
+  const after=await context();assert.equal(after.meta.total,1);assert.ok(after.data.every(o=>o.id!==f.pharmacyOrg.id));
+  if(revokeFirst)assert.deepEqual(values[1].value,after);
+ }
+ await pharmacyReject(f.pharmacy.read(f.actors.pharmacy,f.pharmacyOrg.id),identity?'PHARMACY_UNAUTHENTICATED':'PHARMACY_NOT_FOUND');
+}));
+
+test('S1 context session expiry after projection denies before commit without payload',()=>isolatedPharmacy(async f=>{
+ await f.pool.query("UPDATE public.sessions SET expires_at=clock_timestamp()+interval '1 second' WHERE id=$1",[f.actors.pharmacy.sessionId]);
+ let held=false;const stop=observeApplicabilityQueries((q,next)=>!held&&/WITH pharmacy_context AS MATERIALIZED/.test(q.text)?(held=true,Promise.resolve(next()).then(async r=>{await f.pool.query('SELECT pg_sleep(1.1)');return r;})):next());
+ try{await pharmacyReject(f.pharmacy.context(f.actors.pharmacy),'PHARMACY_UNAUTHENTICATED');assert.ok(held);}finally{stop();}
+}));

@@ -23535,6 +23535,157 @@
           }
         }
       }
+    },
+    "/api/v1/pharmacies/context": {
+      "get": {
+        "summary": "Current PHARMACY_STAFF own active pharmacy organization context; not an artifact grant",
+        "description": "Current active user/session and exact active unended PHARMACY_STAFF memberships in active PHARMACY organizations only. No-store; canonical GET/HEAD, no body, only bounded page/pageSize; reject purpose, selectors and unknown/duplicate queries. Current authority rechecked after locks and before commit. Only id/name; no membership identities or clinical counts. Empty success means an authorized completed query with no eligible organizations; failures never become empty success. Artifact reads independently reauthorize.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "data",
+                    "meta"
+                  ],
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PharmacyDestination"
+                      },
+                      "maxItems": 100
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "page",
+                        "pageSize",
+                        "total"
+                      ],
+                      "properties": {
+                        "page": {
+                          "type": "integer"
+                        },
+                        "pageSize": {
+                          "type": "integer"
+                        },
+                        "total": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Request security defense denied; no credentials or clinical payload"
+          },
+          "404": {
+            "description": "Wrong role; uniform denial"
+          },
+          "503": {
+            "description": "Service unavailable; no context payload"
+          },
+          "405": {
+            "description": "GET and HEAD only"
+          }
+        }
+      },
+      "head": {
+        "summary": "Current PHARMACY_STAFF own active pharmacy organization context; not an artifact grant",
+        "description": "Current active user/session and exact active unended PHARMACY_STAFF memberships in active PHARMACY organizations only. No-store; canonical GET/HEAD, no body, only bounded page/pageSize; reject purpose, selectors and unknown/duplicate queries. Current authority rechecked after locks and before commit. Only id/name; no membership identities or clinical counts. Empty success means an authorized completed query with no eligible organizations; failures never become empty success. Artifact reads independently reauthorize.",
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Strict bounded input invalid"
+          },
+          "401": {
+            "description": "Current session/user invalid"
+          },
+          "403": {
+            "description": "Request security defense denied; no credentials or clinical payload"
+          },
+          "404": {
+            "description": "Wrong role; uniform denial"
+          },
+          "503": {
+            "description": "Service unavailable; no context payload"
+          },
+          "405": {
+            "description": "GET and HEAD only"
+          }
+        }
+      }
     }
   },
   "components": {
