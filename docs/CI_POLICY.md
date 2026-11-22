@@ -52,6 +52,8 @@ Multiple modules take the union; verifiers run once in historical order. Persist
 
 ## Full regression and main policy
 
+[Bootstrap CI](../.github/workflows/ci.yml) limits normal PR and push events to `main`. Stacked Drafts targeting another branch can have a valid local classification without an automatic run. The #165 stacked review uses local docs gates and records actual exact-head remote results if available. #165 does not authorize dispatch.
+
 Use **Actions → Bootstrap CI → Run workflow → select branch → Run workflow**, or `gh workflow run ci.yml --ref <branch>`. Dispatch always selects full regression. For PRs, add `ci:full` or `milestone-exit`; labeled/unlabeled events recalculate routing. These controls can elevate any bounded change. High-risk/infrastructure/unknown paths select full automatically. A milestone exit requires full validation on its candidate; no nightly schedule is added.
 
 Main pushes use the same path contract over the complete push range. Docs merges stay lightweight; frontend merges stay frontend; bounded backend merges get relevant proof; high-risk changes get full proof. PR labels are not inherited by a main push, so a release/milestone requiring a fresh main proof uses manual dispatch on main. This policy retains separate PR/main assurance where selected, while removing indiscriminate full repetition after trivial merges.

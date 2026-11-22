@@ -10,6 +10,8 @@ Docs/governance-only changes run local-reference/source-index/repository sanity 
 
 PRs and main pushes use the same complete-diff contract. Superseded PR runs cancel; main/manual runs are not actively cancelled. pnpm store and exact-revision Chromium caches reduce repeat setup; one local Compose image build avoids repeated application builds; job artifacts/databases remain isolated. Manual dispatch always runs full; `ci:full` or `milestone-exit` PR labels elevate routing. No nightly schedule is added. See the policy for paths, targeted module dependencies, historical timing evidence, limits and maintenance commands. There is no implemented EACCE golden or research experiment lane.
 
+The workflow listens for PRs targeting `main` and pushes to `main`. A docs-only Draft stacked on the protected preview branch does not trigger that workflow through its PR or push events. Use the local docs and CI policy gates on the exact reviewed diff and record remote exact-head evidence only if observed. See [CI policy](CI_POLICY.md#full-regression-and-main-policy).
+
 ## Validation by risk
 
 Use focused affected checks during implementation; run the required final CI once the candidate is stable. Docs-only work proves exact diff scope, local links/anchors and consistency, plus unchanged runtime/schema/migrations/OpenAPI/lockfile/screenshots; do not rebuild the entire runtime locally repeatedly without cause. Runtime/API changes need appropriate build/type/lint/unit/integration/browser checks. Clinical/security/migration changes additionally need actual PostgreSQL constraints, current authority/privacy, audit rollback, replay, revocation and real lock-barrier races. Never weaken accepted tests to match an implementation defect.

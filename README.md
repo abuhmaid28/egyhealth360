@@ -4,9 +4,9 @@ An integrated synthetic graduation healthcare platform connecting patient access
 
 Start with [CURRENT_STATUS](docs/CURRENT_STATUS.md), [stable charter](docs/FOUNDATION_CHARTER.md) and [source index](docs/SOURCE_OF_TRUTH.md). Agents follow [AGENTS](AGENTS.md) and current GitHub authorization first.
 
-Accepted complete: M0/M1/M2, V3-G0, I1, I2, I3 contract, I3 Slice 1 Prescription and Slice 2 Pharmacy. Stage 0+1, CI Accelerator V2 and Stage 2 Product UX are accepted/merged. Active: Foundation Reboot V2 Stage 3, Information Architecture documentation/proposal only; [IA reading path](docs/INFORMATION_ARCHITECTURE.md). Material IA choices require independent review and owner acceptance. Content/Arabic, Brand/Design, frontend implementation, Lab and I4/I5/EACCE remain paused. [Roadmap](docs/IMPLEMENTATION_ROADMAP.md).
+Accepted foundations include M0/M1/M2, V3-G0, V3-I1/I2, the I3 contract and the first two I3 slices. See the [roadmap](docs/IMPLEMENTATION_ROADMAP.md) for sequencing and [current status](docs/CURRENT_STATUS.md) for scoped work and owner gates.
 
-The functional V1 web UI includes separate Demo and Live adapters. [Pre-final Live](https://egyhealth360-pre-final-staging-abuhmaid2810gmailcoms-projects.vercel.app/) evidences the I2 patient/clinician journey through explicit close; I3 cloud/UI parity is not verified. Current UI/logo/design are not final. `egyhealth360.vercel.app` remains protected.
+The [protected synthetic Demo V1](https://egyhealth360-v1.vercel.app/) runs from pinned [Draft #158](https://github.com/abuhmaid28/egyhealth360/pull/158). The [earlier pre-final Live evidence](docs/PRE_FINAL_LIVE_STAGING.md) covers I2 within its recorded scope. Public/production release and hosted F06/E2 acceptance remain gated. The reserved final domain is `egyhealth360.vercel.app`.
 
 Runtime: Next.js/TypeScript → NestJS modular monolith → PostgreSQL 18/Prisma 7; pnpm monorepo, REST/OpenAPI, Docker and GitHub Actions. Hosted pre-final uses Vercel web/API and Neon. [Architecture](docs/ARCHITECTURE.md). Backend authority, current assignments, exact staff artifact scope, immutable source history and wrong-patient privacy are preserved.
 
@@ -14,11 +14,11 @@ Synthetic/free-first/self-hostable scope only. No real-patient deployment, diagn
 
 ## Local setup and retained runbooks
 
-The web/API now implement the accepted slices above. Only closure-engine, FHIR adapter, shared UI package and research worker capability remain scaffolds; clinical-rules contains the exact accepted definition. Commands below are local/disposable workflows, not permission to initialize/migrate hosted staging or the final domain.
+See the [architecture](docs/ARCHITECTURE.md) for implemented boundaries and deferred capabilities. Commands below are local/disposable workflows, not permission to initialize/migrate hosted staging or the final domain.
 
 ### Pinned toolchain
 
-Node **24.22.3**, pnpm **10.34.6**, TypeScript **5.9.3**, Next.js **16.4.1**, React **19.3.0**, NestJS **11.2.7**, Prisma **7.10.0**, PostgreSQL **18.6**. Root `packageManager`, `.nvmrc`, CI, and Docker fix the runtime/toolchain versions. Direct dependencies are exact and transitive resolutions are in `pnpm-lock.yaml`.
+Node **24.22.3**, pnpm **10.34.6**, TypeScript **5.9.3**, Next.js **16.4.6**, React **19.3.0**, NestJS **11.2.7**, Prisma **7.10.0**, PostgreSQL **18.6**. Root `packageManager`, `.nvmrc`, CI, and Docker fix the runtime/toolchain versions. Direct dependencies are exact and transitive resolutions are in `pnpm-lock.yaml`.
 
 ### Local startup
 

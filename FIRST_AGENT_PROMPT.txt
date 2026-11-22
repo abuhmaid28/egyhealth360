@@ -3,4 +3,5 @@ Then read the current GitHub issue and latest applicable explicit Product Owner 
 Read only task-relevant accepted contracts and current implementation/tests after that path.
 Do not infer authorization or delivery state from this starter prompt, historical PRs or chat memory.
 Apply the charter's preservation boundaries, Product/Design owner gates and milestone health-review rule.
-Complete the authorized task through its required validation and reviewable PR; never merge or promote without authorization.
+Confirm the active writer and collision boundaries. For design work, use the relevant skill linked from AGENTS.md.
+Complete authorized validation and verify publication safety before a push or Draft PR. Merge and promotion require separate authorization.

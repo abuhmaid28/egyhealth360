@@ -1,12 +1,16 @@
-Current verified combined candidate: [Draft PR #154](https://github.com/abuhmaid28/egyhealth360/pull/154) (`integrate/135-149-final-candidate` @ `14694a7e0aff9cccae8eef3c53a6f537d7568764`, official CI Run [`45043757862`](https://github.com/abuhmaid28/egyhealth360/actions/runs/45043757862) **8/8 SUCCESS**) and [Product Acceptance & Release Readiness Report](RELEASE_READINESS_135_149.md). *(Historical pre-publication combined local receipt: [Frontend V2 Combined Integration receipt](frontend-v2-slices/FRONTEND_V2_COMBINED_INTEGRATION.md), under [Owner GO](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900321063) and [14/44 scope amendment](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900745939).)*
-
 # Source of truth and document index
 
-Current Package A reference: [Patient/Doctor V2 receipt](frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md), under [Issue #136](https://github.com/abuhmaid28/egyhealth360/issues/136). This is a bounded stacked Draft candidate, not merged/deployed or final Design System approval.
+Use [CURRENT_STATUS](CURRENT_STATUS.md) for the protected #158 baseline, active writers and Phase 0 gate. [#167](https://github.com/abuhmaid28/egyhealth360/issues/167) records the proposed Simple Care target. The accepted clinical contracts below continue to govern current behavior.
+
+The [four shared project skills](../AGENTS.md#design-to-code-skills) are scoped workflow references. Their [verification handoff](../.agents/skills/creative-direction/references/shared-agent-verification.md) distinguishes runtime discovery from invocation. The original [#159](https://github.com/abuhmaid28/egyhealth360/pull/159) and [#160](https://github.com/abuhmaid28/egyhealth360/pull/160) drafts retain their source and review evidence.
+
+Preserved combined candidate: [Draft PR #154](https://github.com/abuhmaid28/egyhealth360/pull/154) (`integrate/135-149-final-candidate` @ `14694a7e0aff9cccae8eef3c53a6f537d7568764`, official CI Run [`45043757862`](https://github.com/abuhmaid28/egyhealth360/actions/runs/45043757862) **8/8 SUCCESS**) and [Product Acceptance & Release Readiness Report](RELEASE_READINESS_135_149.md). *(Historical pre-publication combined local receipt: [Frontend V2 Combined Integration receipt](frontend-v2-slices/FRONTEND_V2_COMBINED_INTEGRATION.md), under [Owner GO](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900321063) and [14/44 scope amendment](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900745939).)*
+
+Preserved Package A reference: [Patient/Doctor V2 receipt](frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md), under [Issue #136](https://github.com/abuhmaid28/egyhealth360/issues/136). This is a bounded stacked Draft candidate, not merged/deployed or final Design System approval.
 
 Preserved integration reference: [Issue #133 unified receipt](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md#unified-integration--issue-133). [CURRENT_STATUS](CURRENT_STATUS.md) owns integrated delivery; source-candidate reports retain their historical provenance and limits.
 
-Preserved staging reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
+Preserved staging reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
 
@@ -16,9 +20,9 @@ CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutab
 
 **Preserved Patient visual foundation:** My Care final baseline `f0d94e7e2579dc9bd1e2ef87ba493172b0f4cfb0`, with [final optical evidence](ui-reference/PATIENT_MY_CARE_POLISH.md), follows the original [owner gate 6574268901](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6574268901). Earlier implementation/refinement/composition reports retain their point-in-time evidence. Patient PR #79 and its source/assets/evidence remain unchanged; no wider rollout is authorized.
 
-Read [AGENTS](../AGENTS.md) → current issue/latest applicable explicit authorization → [CURRENT_STATUS](CURRENT_STATUS.md) → [FOUNDATION_CHARTER](FOUNDATION_CHARTER.md) + this index → task-relevant contracts/references → implementation/tests. PROJECT/history is optional context, not mandatory archaeology. Earlier V2 D/E/F exploration followed the [explicit owner re-exploration request](visual-directions-v2/evidence/owner-request.txt), superseding A/B/C as candidates. Accepted BR01–BR08 and preserved scope/gates follow [issue #72 comment 6568574368](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568574368). Brand Research is accepted/merged at `0a0e9c2038ecad420e95c2c67ae367129e195839`; no logo, palette, font or winning direction is accepted. Accepted CD01–CD07 follow comment 6568210676. Content/Arabic is accepted/merged at `80cb2bc27d9439f0e57e5bec320ac9bde0121e87`; older pending language is adoption-time context. [Stage 3 acceptance 6567526978](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567526978) accepts IA01–IA05, Patient B and Clinician B at main `86cc044314c865404a114903bbe417fde00e10ec`; old IA pending-gate language is adoption-time context, not a reopened decision. [Stage 2 acceptance 6565530772](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565530772) supersedes adoption-time pending language for accepted UXD10–UXD16 and role/task/journey foundations; UXD19 remains planning only. Earlier 6563757904 established Stage 0+1/charter and superseded 6563631251; it is not today's task scope.
+Read [AGENTS](../AGENTS.md) → current issue/latest applicable explicit authorization → [CURRENT_STATUS](CURRENT_STATUS.md) → [FOUNDATION_CHARTER](FOUNDATION_CHARTER.md) + this index → task-relevant contracts/references → implementation/tests. PROJECT/history is optional context, not mandatory archaeology. Earlier V2 D/E/F exploration followed the [explicit owner re-exploration request](visual-directions-v2/evidence/owner-request.txt), superseding A/B/C as candidates. Accepted BR01–BR08 and preserved scope/gates follow [issue #72 comment 6568574368](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6568574368). Brand Research is accepted/merged at `0a0e9c2038ecad420e95c2c67ae367129e195839`; the Brand Research decision alone selected no identity. Later accepted DP02, Violet × Apricot A, AP01 typography and T1 remain in their recorded scope. Accepted CD01–CD07 follow comment 6568210676. Content/Arabic is accepted/merged at `80cb2bc27d9439f0e57e5bec320ac9bde0121e87`; older pending language is adoption-time context. [Stage 3 acceptance 6567526978](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6567526978) accepts IA01–IA05, Patient B and Clinician B at main `86cc044314c865404a114903bbe417fde00e10ec`; old IA pending-gate language is adoption-time context, not a reopened decision. [Stage 2 acceptance 6565530772](https://github.com/abuhmaid28/egyhealth360/issues/72#issuecomment-6565530772) supersedes adoption-time pending language for accepted UXD10–UXD16 and role/task/journey foundations; UXD19 remains planning only. Earlier 6563757904 established Stage 0+1/charter and superseded 6563631251; it is not today's task scope.
 
-Product/design reading path: [UX_FOUNDATION](UX_FOUNDATION.md) → [USER_JOURNEYS](USER_JOURNEYS.md) → [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md), with [PRODUCT_UX_INVENTORY](PRODUCT_UX_INVENTORY.md) as evidence and [PRODUCT_UX_VALIDATION](PRODUCT_UX_VALIDATION.md) as the point-in-time validation record. Then read [INFORMATION_ARCHITECTURE](INFORMATION_ARCHITECTURE.md) → [IA_SITEMAPS](IA_SITEMAPS.md) → [IA_DECISION_REGISTER](IA_DECISION_REGISTER.md) → [IA_VALIDATION](IA_VALIDATION.md). Then read [CONTENT_SYSTEM](CONTENT_SYSTEM.md) → [ARABIC_UX](ARABIC_UX.md) → [TERMINOLOGY_GLOSSARY](TERMINOLOGY_GLOSSARY.md) → [CONTENT_DECISION_REGISTER](CONTENT_DECISION_REGISTER.md) → [CONTENT_VALIDATION](CONTENT_VALIDATION.md). Stage 3 IA and CD01–CD07 content choices are accepted. Then read [Brand research](BRAND_RESEARCH.md) → [reference map](BRAND_REFERENCE_MAP.md) → [strategy](BRAND_STRATEGY.md) → [future brief](BRAND_EXPLORATION_BRIEF.md) → [brand decisions](BRAND_DECISION_REGISTER.md) → [validation](BRAND_RESEARCH_VALIDATION.md). BR01–BR08 strategy is accepted; older pending wording records adoption-time context. Retain the [three earlier V2 directions](visual-directions-v2/README.md), [unranked comparison](visual-directions-v2/COMPARISON.md), [six new logo proofs](visual-directions-v2/logos.html) and [validation](visual-directions-v2/VALIDATION.md). A/B/C are rejected visual history; no final visual choice is accepted. CURRENT_STATUS records current acceptance. Mutable task sentences in older product/contract/audit snapshots never override CURRENT_STATUS or newer explicit authorization; in particular PRODUCT.md's Stage 0+1 opening sentence is retained historical task context, not a current task blocker.
+Product/design reading path: [UX_FOUNDATION](UX_FOUNDATION.md) → [USER_JOURNEYS](USER_JOURNEYS.md) → [UX_DECISION_REGISTER](UX_DECISION_REGISTER.md), with [PRODUCT_UX_INVENTORY](PRODUCT_UX_INVENTORY.md) as evidence and [PRODUCT_UX_VALIDATION](PRODUCT_UX_VALIDATION.md) as the point-in-time validation record. Then read [INFORMATION_ARCHITECTURE](INFORMATION_ARCHITECTURE.md) → [IA_SITEMAPS](IA_SITEMAPS.md) → [IA_DECISION_REGISTER](IA_DECISION_REGISTER.md) → [IA_VALIDATION](IA_VALIDATION.md). Then read [CONTENT_SYSTEM](CONTENT_SYSTEM.md) → [ARABIC_UX](ARABIC_UX.md) → [TERMINOLOGY_GLOSSARY](TERMINOLOGY_GLOSSARY.md) → [CONTENT_DECISION_REGISTER](CONTENT_DECISION_REGISTER.md) → [CONTENT_VALIDATION](CONTENT_VALIDATION.md). Stage 3 IA and CD01–CD07 content choices are accepted. Then read [Brand research](BRAND_RESEARCH.md) → [reference map](BRAND_REFERENCE_MAP.md) → [strategy](BRAND_STRATEGY.md) → [future brief](BRAND_EXPLORATION_BRIEF.md) → [brand decisions](BRAND_DECISION_REGISTER.md) → [validation](BRAND_RESEARCH_VALIDATION.md). BR01–BR08 strategy is accepted; older pending wording records adoption-time context. Retain the [three earlier V2 directions](visual-directions-v2/README.md), [unranked comparison](visual-directions-v2/COMPARISON.md), [six new logo proofs](visual-directions-v2/logos.html) and [validation](visual-directions-v2/VALIDATION.md). A/B/C are rejected visual history. D/E/F remain unselected specimens. CURRENT_STATUS records current acceptance. Mutable task sentences in older product/contract/audit snapshots never override CURRENT_STATUS or newer explicit authorization; in particular PRODUCT.md's Stage 0+1 opening sentence is retained historical task context, not a current task blocker.
 
 ## Priority and classification rules
 
@@ -48,41 +52,25 @@ All tracked documentation Markdown paths are classified below. Research files ar
 
 ## CURRENT AUTHORITATIVE
 
-| Combined PR #154 Release Readiness | Responsibility / limits |
+| Protected Demo V1 specification | Responsibility / limits |
 | --- | --- |
-| [RELEASE_READINESS_135_149.md](RELEASE_READINESS_135_149.md) | Consolidated Product Acceptance, complete AP05 asset-rights inventory, five-portal visual/UX/responsive/a11y audit, CI pin-coupling disclosure, hosting/F06-E2 prerequisites, acceptance tier distinction matrix and release sequence for PR `#154` (`14694a7e`); read-only audit only. |
 | [SAFE_DEMO_PREVIEW_DEPLOYMENT.md](SAFE_DEMO_PREVIEW_DEPLOYMENT.md) | Access-protected synthetic Demo preview branch (`preview/egyhealth360-safe-demo`, Draft PR `#158` -> PR `#155`) specification: restores all 12 original DP02 & WebP assets byte-identically under Owner attestation (`OWNER-ATTESTED / PERMITTED FOR PREVIEW`, zero asset deletions, production AP05 still open), locks `EH_PREVIEW_DEMO_ONLY=1` fail-closed isolation, and forbids Live/production/domain reuse. |
-
-| Package A candidate | Responsibility / limits |
-| --- | --- |
-| [frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md](frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md) | Exact source/scope, current Patient/Doctor visual integration, T1, real-browser evidence, independent agent reviews, validation, handoff and rollback; no release or Package B authorization. |
-
-| Integrated candidate and preserved source receipts | Responsibility / limits |
-| --- | --- |
-| [frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md) | Issue #133 current unified provenance, 28-path inventory, four collisions, actual combined tests/E1 health-only evidence and limits, independent reviews, exact-head CI/rollback receipt and open gates; below it, preserved Issue #127 source-specific history. |
-| [frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md](frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md) | Preserved #130 booking-create-only critical-copy/outcome contract plus current #133 integration evidence; no global F03 or release acceptance. |
-| [frontend-v2-slices/F04_INITIAL_LOCALE.md](frontend-v2-slices/F04_INITIAL_LOCALE.md) | Preserved #132 neutral startup/no-JS contract plus current #133 joint tests; no personalized Arabic SSR, cookies or release acceptance. |
-
-| Current staging polish reference | Responsibility / limits |
-| --- | --- |
-| [STAGING_UI_POLISH.md](STAGING_UI_POLISH.md) | Current bounded fix inventory, deployed candidate attribution, validation, time-display review corrections, remaining issues and source alignment recommendation; original captures retain their point-in-time provenance. No release/merge approval or Final V2 design acceptance. |
 
 | Clinician master implementation reference | Responsibility / limits |
 | --- | --- |
 | [ui-reference/CLINICIAN_ACTIVE_CONSULTATION_MASTER_SPEC.md](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_MASTER_SPEC.md) | Controlling owner visual/product specification for the exact Live Active Consultation documentation shell; accepted clinical/security contracts remain binding. |
 | [ui-reference/CLINICIAN_ACTIVE_CONSULTATION_CODEX_PROMPT.md](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_CODEX_PROMPT.md) | Exact route, inheritance, forbidden invention, source/command preservation and required evidence. |
 | [ui-reference/CLINICIAN_ACTIVE_CONSULTATION_IMPLEMENTATION.md](ui-reference/CLINICIAN_ACTIVE_CONSULTATION_IMPLEMENTATION.md) | Original master implementation/evidence at e28dbfb, now approved under 6603761429; earlier pending language is adoption-time context. |
-| [ui-reference/CLINICIAN_PATIENT_DNA_PREMIUM.md](ui-reference/CLINICIAN_PATIENT_DNA_PREMIUM.md) | Current one-pass visual inventory, fresh before/after/EN/AR/state/reflow/dialog evidence, source provenance and strict CSS-only preservation; visual review pending. |
 
 | Preserved My Care implementation reference | Responsibility / limits |
 | --- | --- |
-| [ui-reference/README_START_HERE.md](ui-reference/README_START_HERE.md) | Current owner handoff and precedence for the Patient My Care implementation gate only. |
+| [ui-reference/README_START_HERE.md](ui-reference/README_START_HERE.md) | Preserved owner handoff and precedence for the Patient My Care implementation gate only. |
 | [ui-reference/PREMIUM_SYNTHESIS_SPEC.md](ui-reference/PREMIUM_SYNTHESIS_SPEC.md) | Owner tokens, composition, responsive/RTL/accessibility and engineering contract; Clinician content is reference-only. No final Brand/Design System freeze. |
 | [ui-reference/CODEX_PROMPT.md](ui-reference/CODEX_PROMPT.md) | Explicit implementation task, checks, preservation and required review handoff. |
 | [ui-reference/PATIENT_MY_CARE_IMPLEMENTATION.md](ui-reference/PATIENT_MY_CARE_IMPLEMENTATION.md) | Exact implementation base, intentional deviations, screenshots, validation and limitations. |
 | [ui-reference/PATIENT_MY_CARE_REFINEMENT.md](ui-reference/PATIENT_MY_CARE_REFINEMENT.md) | Preserved first refinement at b1421ec: neutral greeting, density, shortcuts, initials and contrast; before baseline for the current composition pass. |
 | [ui-reference/PATIENT_MY_CARE_POLISH.md](ui-reference/PATIENT_MY_CARE_POLISH.md) | Final owner-directed optical pass only, with fresh EN/AR mobile/desktop/reflow/text evidence and scope preservation. |
-| [ui-reference/PATIENT_MY_CARE_COMPOSITION.md](ui-reference/PATIENT_MY_CARE_COMPOSITION.md) | Current owner-directed premium composition pass: centered container, full-width connected quick access/recent care, truthful metadata omission, collapsed Demo utility and scoped mobile/RTL polish. |
+| [ui-reference/PATIENT_MY_CARE_COMPOSITION.md](ui-reference/PATIENT_MY_CARE_COMPOSITION.md) | Preserved owner-directed premium composition pass: centered container, full-width connected quick access/recent care, truthful metadata omission, collapsed Demo utility and scoped mobile/RTL polish. |
 | `ui-reference/reference/patient-my-care-reference.svg` | Original owner visual reference, preserved byte-for-byte. |
 
 
@@ -181,6 +169,28 @@ The table below classifies **HISTORICAL EVIDENCE — REJECTED VISUAL CANDIDATES*
 | `visual-directions/**/*.html`, CSS, SVG, PNG, JSON, Python/MJS | Static review, 42 screen exports, three overview boards, vector proofs, shared synthetic fixture, render/check tools and evidence; no production imports. Existing repository fonts are referenced, never redistributed. |
 
 ## HISTORICAL EVIDENCE
+
+| Earlier Clinician premium pass | Responsibility / limits |
+| --- | --- |
+| [ui-reference/CLINICIAN_PATIENT_DNA_PREMIUM.md](ui-reference/CLINICIAN_PATIENT_DNA_PREMIUM.md) | Historical one-pass visual inventory, fresh before/after/EN/AR/state/reflow/dialog evidence, source provenance and strict CSS-only preservation; visual review pending at the evidence cutoff. |
+
+| Historical staging polish reference | Responsibility / limits |
+| --- | --- |
+| [STAGING_UI_POLISH.md](STAGING_UI_POLISH.md) | Historical bounded fix inventory, deployed candidate attribution, validation, time-display review corrections, remaining issues and source alignment recommendation; original captures retain their point-in-time provenance. No release/merge approval or Final V2 design acceptance. |
+
+| Earlier integration source receipts | Responsibility / limits |
+| --- | --- |
+| [frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md) | Issue #133 unified provenance, 28-path inventory, four collisions, actual combined tests/E1 health-only evidence and limits, independent reviews, exact-head CI/rollback receipt and open gates; below it, preserved Issue #127 source-specific history. |
+| [frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md](frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md) | Preserved #130 booking-create-only critical-copy/outcome contract plus then-current #133 integration evidence; no global F03 or release acceptance. |
+| [frontend-v2-slices/F04_INITIAL_LOCALE.md](frontend-v2-slices/F04_INITIAL_LOCALE.md) | Preserved #132 neutral startup/no-JS contract plus then-current #133 joint tests; no personalized Arabic SSR, cookies or release acceptance. |
+
+| Historical Package A candidate | Responsibility / limits |
+| --- | --- |
+| [frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md](frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md) | Exact source/scope, the Patient/Doctor visual integration, T1, real-browser evidence, independent agent reviews, validation, handoff and rollback; no release or Package B authorization. |
+
+| Preserved release audit | Responsibility / limits |
+| --- | --- |
+| [RELEASE_READINESS_135_149.md](RELEASE_READINESS_135_149.md) | Consolidated Product Acceptance, complete AP05 asset-rights inventory, five-portal visual/UX/responsive/a11y audit, CI pin-coupling disclosure, hosting/F06-E2 prerequisites, acceptance tier distinction matrix and release sequence for PR `#154` (`14694a7e`); read-only audit only. |
 
 | Document | Responsibility / limits |
 | --- | --- |
