@@ -29,6 +29,10 @@ export function LiveSessionProvider({ children }: { children: ReactNode }) {
   const value = useMemo<LiveSession>(
     () => ({
       mode: (liveConfigured) => {
+        if (!liveConfigured) {
+          selectedMode.current = "demo";
+          return "demo";
+        }
         if (!selectedMode.current) {
           let stored: string | null = null;
           try {
@@ -36,12 +40,7 @@ export function LiveSessionProvider({ children }: { children: ReactNode }) {
           } catch {
             /* Use configured mode. */
           }
-          selectedMode.current =
-            stored === "demo"
-              ? "demo"
-              : stored === "live" || liveConfigured
-                ? "live"
-                : "demo";
+          selectedMode.current = stored === "demo" ? "demo" : "live";
         }
         return selectedMode.current;
       },

@@ -28,12 +28,30 @@ export function apiOrigin(
   return url.origin;
 }
 
-const origin = apiOrigin(
-  process.env.EH_UI_API_ORIGIN,
-  process.env.VERCEL === "1",
-);
+export function isPreviewDemoOnly(
+  env: Record<string, string | undefined> = process.env,
+): boolean {
+  return (
+    env.EH_PREVIEW_DEMO_ONLY === "1" ||
+    (env.VERCEL === "1" && !env.EH_UI_API_ORIGIN)
+  );
+}
+
+if (process.env.EH_PREVIEW_DEMO_ONLY === "1" && process.env.EH_UI_API_ORIGIN) {
+  throw new Error(
+    "EH_PREVIEW_DEMO_ONLY=1 forbids EH_UI_API_ORIGIN; isolated demo previews cannot proxy or connect to a Live API backend.",
+  );
+}
+
+const previewDemoOnly = isPreviewDemoOnly(process.env);
+const origin = previewDemoOnly
+  ? null
+  : apiOrigin(process.env.EH_UI_API_ORIGIN, process.env.VERCEL === "1");
 const config: NextConfig = {
-  env: { EH_UI_LIVE_CONFIGURED: origin ? "1" : "0" },
+  env: {
+    EH_UI_LIVE_CONFIGURED: origin ? "1" : "0",
+    EH_UI_PREVIEW_DEMO_ONLY: previewDemoOnly ? "1" : "0",
+  },
   async rewrites() {
     return origin
       ? [
@@ -43,6 +61,23 @@ const config: NextConfig = {
           },
         ]
       : [];
+  },
+  async headers() {
+    if (!previewDemoOnly) return [];
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "no-referrer" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
   },
 };
 export default config;
