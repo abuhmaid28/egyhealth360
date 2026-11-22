@@ -256,6 +256,9 @@ const expressiveDiscoveryOverlay = {
 const expressiveDoctorOverlay = {
   "apps/web/src/components/doctor.tsx": { "blob": "cab39a6f3b87d4863789ad139d2e39449de7a08d", "mode": "100644" }
 };
+const qaRecoveryOverlay = {
+  "scripts/support/ui-v2-patient-doctor-browser.mjs": "56ef00878d1d0da45a6ae0cea42c761810b19a10"
+};
 test("Combined pins and historical P2 overlays are retained, with explicit Visual Recovery overrides", () => {
   assert.equal(pinned.length,44);assert.equal(Object.keys(overlays).length,7);
   assert.equal(pinned.filter(r=>!Object.hasOwn(overlays,r.path)).length,37);
@@ -267,7 +270,9 @@ test("Combined pins and historical P2 overlays are retained, with explicit Visua
   assert.equal(expressiveDoctorOverlay["apps/web/src/components/doctor.tsx"].mode, "100644");
   assert.deepEqual(Object.keys(expressiveDiscoveryOverlay), ["apps/web/src/components/patient.tsx"]);
   assert.equal(visualRecoveryOverlays["apps/web/src/components/patient.tsx"], "507eef5fb8b76577850888ce438541da4cbfd75b");
-  for(const r of pinned){const bytes=readFileSync(r.path);const hash=createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");assert.equal(hash,expressiveDoctorOverlay[r.path]?.blob??expressiveDiscoveryOverlay[r.path]??visualRecoveryOverlays[r.path]??overlays[r.path]??r.blob,r.path);assert.equal(statSync(r.path).mode&0o111?"100755":"100644",r.mode,r.path);}
+  assert.deepEqual(Object.keys(qaRecoveryOverlay), ["scripts/support/ui-v2-patient-doctor-browser.mjs"]);
+  assert.equal(visualRecoveryOverlays["scripts/support/ui-v2-patient-doctor-browser.mjs"], "b8a19cd02beb019ff9d1314a2955e5406a36cf6c");
+  for(const r of pinned){const bytes=readFileSync(r.path);const hash=createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");assert.equal(hash,qaRecoveryOverlay[r.path]??expressiveDoctorOverlay[r.path]?.blob??expressiveDiscoveryOverlay[r.path]??visualRecoveryOverlays[r.path]??overlays[r.path]??r.blob,r.path);assert.equal(statSync(r.path).mode&0o111?"100755":"100644",r.mode,r.path);}
 });
 const webRequire = createRequire(resolve("apps/web/package.json"));
 const React = webRequire("react");
@@ -345,11 +350,16 @@ const frozenB4 = {
 const sessionFenceRepairSHA256 = "357e5bc20ccba7662dec6a78893af72b801bb863ede64a289e6ce1a5dbbde786";
 // The original browser entrypoint still owns all B4 cases and invokes the original pharmacy runner.
 const visualBrowserRunnerSHA256 = "6233cf2bc2c002b624194d019d182a649b197d4f05d7177496cbc0f342a179cd";
+// C3c reconciled governance/index docs for the canonical dd08b738 bridge while preserving all B4 runtime/test bytes.
+const currentStatusBridgeSHA256 = "a4d5844482f2181e9fc1393d972756b95bd6316d50a10353b6deec9ada780767";
+const sourceOfTruthBridgeSHA256 = "62532af5af2bf0c7d94db72cc8b58cb98d93604b146e0f8e1c237fa91a06f330";
 test("Visual Recovery keeps B4 runtime and Pharmacy runner pinned, adding one explicit UI test-entrypoint overlay",()=>{
   assert.equal(Object.keys(frozenB4).length,12);
   for(const[path,hash]of Object.entries(frozenB4)) {
     const expected = path === "apps/web/src/lib/api/live.ts" ? sessionFenceRepairSHA256
-      : path === "scripts/test-ui-browser.mjs" ? visualBrowserRunnerSHA256 : hash;
+      : path === "scripts/test-ui-browser.mjs" ? visualBrowserRunnerSHA256
+      : path === "docs/CURRENT_STATUS.md" ? currentStatusBridgeSHA256
+      : path === "docs/SOURCE_OF_TRUTH.md" ? sourceOfTruthBridgeSHA256 : hash;
     assert.equal(createHash("sha256").update(readFileSync(path)).digest("hex"),expected,path);
   }
 });

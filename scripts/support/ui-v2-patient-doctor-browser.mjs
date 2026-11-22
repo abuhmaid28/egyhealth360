@@ -190,9 +190,22 @@ async function doctorSchedule(browser, origin, locale, receipt, out) {
             const bounds = el => { const b = el.getBoundingClientRect(); return { width: b.width, height: b.height, left: b.left, right: b.right, top: b.top, bottom: b.bottom }; };
             const style = globalThis.getComputedStyle(h3), ctx = globalThis.document.createElement("canvas").getContext("2d");
             ctx.font = style.font;
+            const walker = globalThis.document.createTreeWalker(h3, globalThis.NodeFilter.SHOW_TEXT);
+            const spans = [];
+            let pos = 0;
+            for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+              const len = n.nodeValue?.length ?? 0;
+              if (len) { spans.push({ node: n, start: pos, end: pos + len }); pos += len; }
+            }
+            const loc = (offset, isEnd) => {
+              const s = spans.find(x => isEnd ? offset > x.start && offset <= x.end : offset >= x.start && offset < x.end) ?? spans[spans.length - 1];
+              return [s.node, Math.max(0, Math.min(s.node.nodeValue.length, offset - s.start))];
+            };
             const wordLines = [...h3.textContent.matchAll(/\S+/gu)].map(match => {
               const range = globalThis.document.createRange();
-              range.setStart(h3.firstChild, match.index); range.setEnd(h3.firstChild, match.index + match[0].length);
+              const [sn, so] = loc(match.index, false);
+              const [en, eo] = loc(match.index + match[0].length, true);
+              range.setStart(sn, so); range.setEnd(en, eo);
               return { fits: ctx.measureText(match[0]).width <= h3.clientWidth - 1, lines: new Set([...range.getClientRects()].map(r => Math.round(r.top))).size };
             });
             return { row: bounds(row), identity: bounds(main), name: bounds(h3), action: bounds(action), text: h3.textContent, wordLines, scrollHeight: h3.scrollHeight, clientHeight: h3.clientHeight, overflow: style.overflow, textOverflow: style.textOverflow, lineClamp: style.webkitLineClamp };
