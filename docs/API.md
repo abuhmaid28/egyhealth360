@@ -1,6 +1,6 @@
 # Current API boundary
 
-CURRENT AUTHORITATIVE overview at the [CURRENT_STATUS](CURRENT_STATUS.md) baseline. [OpenAPI](openapi.json) contains **82 distinct path templates**, including prescription/catalog and pharmacy. These are implemented repository routes, not proof that every route is deployed or integrated into the Live UI. No OpenAPI bytes or API behavior change in this reboot.
+CURRENT AUTHORITATIVE overview at the [CURRENT_STATUS](CURRENT_STATUS.md) baseline. [OpenAPI](openapi.json) contains **82 distinct path templates**, including prescription/catalog and pharmacy. These are implemented repository routes, not proof that every route is deployed or integrated into the Live UI. Use the checked-in OpenAPI for exact methods and behavior at the source revision being reviewed.
 
 ## Implemented HTTP groups
 

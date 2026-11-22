@@ -29,7 +29,7 @@ Explicit Product Owner approval is required for product scope, user journeys, in
 
 **NO IMPLEMENTATION FROM UNDEFINED PRODUCT OR DESIGN DECISIONS.**
 
-Codex is an implementation engineer for final UI work; it does not own final product design. Future final UI implementation requires approved UX + Content System + Brand + Design System + high-fidelity prototype. CI Green proves technical validation. It does not prove Product correctness, UX, visual, branding or terminology quality.
+The explicitly authorized frontend executor implements final UI work. The Product Owner retains final product design decisions. Future final UI implementation requires approved UX + Content System + Brand + Design System + high-fidelity prototype. CI Green proves technical validation. It does not prove Product correctness, UX, visual, branding or terminology quality.
 
 ## Ready, done, and milestone health gate
 

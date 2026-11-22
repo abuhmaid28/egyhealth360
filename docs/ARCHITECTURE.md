@@ -4,7 +4,7 @@ CURRENT AUTHORITATIVE reference at the [CURRENT_STATUS](CURRENT_STATUS.md) imple
 
 ## System context
 
-One integrated synthetic healthcare platform targets **Patient, Clinician, Pharmacy, Laboratory and Admin** workspaces. These are domain experiences in one web application and one API, not five microservices. Patient/clinician I2 Live journeys exist; pharmacy backend is implemented through I3 Slice 2, while pharmacy/lab frontend shells are Demo/unsupported. Laboratory backend is future and unauthorized. ADMIN is operational, without blanket clinical access.
+One integrated synthetic healthcare platform targets **Patient, Clinician, Pharmacy, Laboratory and Admin** workspaces. These are domain experiences in one web application and one API, not five microservices. Patient and clinician I2 journeys have historical pre-final hosted evidence; pharmacy backend is implemented through I3 Slice 2, while pharmacy/lab frontend shells are Demo/unsupported. Laboratory backend is future and unauthorized. ADMIN is operational, without blanket clinical access.
 
 ## Runtime and deployment
 
@@ -18,7 +18,7 @@ One integrated synthetic healthcare platform targets **Patient, Clinician, Pharm
 
 Pre-final hosting is **Browser → Vercel Next.js → Vercel NestJS API → Neon PostgreSQL 18**. Next rewrites same-origin `/api/v1/:path*` to a server-only configured HTTPS API origin. Secure HttpOnly host cookies and exact browser Origin/CSRF checks remain; no permissive CORS bridge is assumed. Prisma does not replace explicit PostgreSQL concurrency semantics.
 
-[Staging evidence](PRE_FINAL_LIVE_STAGING.md) identifies the two Vercel projects, Neon project/branch/database, pooled TLS API connection and explicit initializer off switch. Builds do not migrate. Historical hosted proof covers I2 and migrations through 20, not verified I3 cloud parity. Current observed deployment IDs/readiness and health checks are in the audit. `egyhealth360.vercel.app` remains protected. Docker is the local/CI alternative: PostgreSQL 18.6, API, web and a health-only worker, with persistent disposable volumes; it is not the current hosted deployment topology.
+[Staging evidence](PRE_FINAL_LIVE_STAGING.md) identifies the two Vercel projects, Neon project/branch/database, pooled TLS API connection and explicit initializer off switch. Builds do not migrate. Historical hosted proof covers I2 and migrations through 20, not verified I3 cloud parity. The audit records deployment IDs, readiness and health checks at its evidence cutoff. Check current authorized GitHub records for deployment status. `egyhealth360.vercel.app` remains protected. Docker is the local/CI alternative: PostgreSQL 18.6, API, web and a health-only worker, with persistent disposable volumes; it is not the current hosted deployment topology.
 
 ## Composition and backend boundaries
 
@@ -67,7 +67,7 @@ Reuse sorted user/session/profile/assignment/operational scope locks, existing p
 
 Localization uses an English-string-key Arabic catalog, React context/localStorage preference, document `lang`/`dir`, RTL CSS and Intl formatting. Missing translations fall back to English. Some date/time calls omit locale and default to English; clinician-authored clinical text and proper nouns are preserved. This is implemented bilingual V1 support, not a complete Arabic Content System.
 
-V1 is a **FUNCTIONAL PROTOTYPE / BEFORE BASELINE**. Frontend Architecture V2 and final design are future owner-gated work; the current layout, logo, colors and fonts are not final decisions. Preserve current safety/client contracts and historical screenshots while later architecture is approved.
+V1 is a **FUNCTIONAL PROTOTYPE / BEFORE BASELINE**. The integrated Frontend V2 candidate is under [Draft #154](https://github.com/abuhmaid28/egyhealth360/pull/154). Its candidate code and accepted Brand inputs do not establish merge, deployment, final visual acceptance or asset clearance. Preserve current safety/client contracts and historical screenshots while later architecture is approved.
 
 ## Other packages and future boundaries
 

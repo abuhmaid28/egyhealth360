@@ -32,3 +32,5 @@ The pinned #154 source contains existing Patient Discovery components and Playwr
 | #156 1dcc003cc8a2caf0dd54f35373c0cf52f8d1c697 | Verified Draft and exact-head run 45052377315 completed successfully. Preserve its files. |
 | #158 1eaac036683e6bfc04f7dc9d07fc1bcf92553a8c | Verified separate preview Draft. AP05 removals and Demo fail-closed changes are candidate-specific and confer no publication or release authority. |
 | #149 | Prior provider exclusions and smoke checks are bounded evidence. Any new push and Draft PR need applicable publication safety. |
+
+For the broader follow-up, see the [repository documentation audit](documentation-audit.md) and [shared agent verification handoff](shared-agent-verification.md).
