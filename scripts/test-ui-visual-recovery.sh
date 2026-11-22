@@ -38,7 +38,7 @@ unset EH_UI_API_ORIGIN VERCEL
 export NEXT_TELEMETRY_DISABLED=1
 export EH_UI_CHROMIUM="${EH_UI_CHROMIUM:-/usr/bin/chromium}"
 export UI_SCREENSHOT_DIR="$receipts/screens"
-test "$(node -v)" = v24.21.0
+test "$(node -v)" = v24.22.3
 test "$(pnpm -v)" = 10.34.6
 pnpm install --offline --frozen-lockfile --ignore-scripts > "$receipts/install.log" 2>&1
 pnpm --filter @egyhealth/web build > "$receipts/build.log" 2>&1
