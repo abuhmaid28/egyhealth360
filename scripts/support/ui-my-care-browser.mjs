@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
+import { createHash } from "node:crypto";
 import ts from "typescript";
 
 function moduleValue(path) {
@@ -18,22 +19,27 @@ function moduleValue(path) {
   return exports;
 }
 const fixture = moduleValue("apps/web/src/lib/mock/fixtures.ts");
-export async function openDemoUtility(page) {
-  await page
-    .locator(
-      'select[aria-label="Demo workspace"], select[aria-label="مساحة العرض التجريبي"]',
-    )
-    .first()
-    .waitFor({ state: "attached" });
-  const utility = page.locator("[data-demo-utility]");
-  if ((await utility.count()) && !(await utility.evaluate((el) => el.open))) {
-    await utility.locator("summary").click();
+export async function openWorkspaceSwitch(page) {
+  const switcher = page.locator("header [data-workspace-switch]");
+  await switcher.waitFor({ state: "visible" });
+  if (!(await switcher.evaluate((element) => element.open))) {
+    await switcher.locator("summary").click();
   }
+  return switcher;
 }
-export async function toggleDemoControls(page, legacyLabel = "Demo controls") {
-  const utility = page.locator("[data-demo-utility]");
-  if (await utility.count()) await utility.locator("summary").click();
-  else await page.getByText(legacyLabel, { exact: true }).click();
+export async function switchDemoWorkspace(page, role) {
+  const menu = await openWorkspaceSwitch(page);
+  assert.equal(await menu.getByRole("button").count(), 5);
+  await menu.locator(`[data-workspace-role="${role}"]`).click();
+}
+export async function setDemoScenario(page, state) {
+  await page.evaluate((value) => {
+    const url = new URL(globalThis.location.href);
+    if (value === "ready") url.searchParams.delete("__eh_ui_test_scenario");
+    else url.searchParams.set("__eh_ui_test_scenario", value);
+    globalThis.history.replaceState(globalThis.history.state, "", url);
+    globalThis.dispatchEvent(new globalThis.Event("eh-visual-test-scenario"));
+  }, state);
 }
 export const { myCareCopy } = moduleValue(
   "apps/web/src/lib/patient-my-care-copy.ts",
@@ -82,20 +88,67 @@ const booking = {
 };
 
 // Controlled browser measurements, not a WCAG certification or hosted/clinical acceptance.
+// Independent constants from the approved source-exact DP02 handoff, not hashes
+// computed from whatever happens to be in the candidate's public directory.
+const dp02Hashes = {
+  "compact-ar-dark": "bbed526c401f31fefdd1b98d8ab62c64663f2b03b1b8b0ef24a5f81498ea922d",
+  "compact-ar-light": "d83098460ac57d43801314dd5a8f96fa40b72268ae27893b302a0661e8ca89ff",
+  "compact-en-dark": "6ad7f9b61b1a43308e16e8d0a6a4bf80c389bac29d46d292eef938af8e2120c3",
+  "compact-en-light": "e49f02c9e4a7619ca8265d9d01e8e8a3b52176ec4654658b72e2cac6bf60b887",
+  "primary-ar-dark": "f96e38a2a6e1e7273edd57b8e98005f28b0894efa03ffba41ef2c0394a5196da",
+  "primary-ar-light": "76d14637666b2d9aadbdc211223454c3f216bff38927c11577ed4d77abce4fa4",
+  "primary-en-dark": "eaa33073140aff82d87d34e134157671f7f8d38ac625618a26b69978641bddd5",
+  "primary-en-light": "f6935c1441d2e68092109425d31f707621f6ec33b405d6ceb00fc0876f53b54e",
+};
+export async function verifyDp02Brand(page, locale) {
+  const homes = { PATIENT: "/patient", CLINICIAN: "/doctor", PHARMACY_STAFF: "/pharmacy", ADMIN: "/admin", LAB_STAFF: "/laboratory" };
+  const role = await page.locator("[data-portal-shell]").getAttribute("data-portal-shell");
+  const link = page.getByRole("link", { name: "EgyHealth 360", exact: true });
+  assert.equal(await link.count(), 1);
+  assert.equal(await link.getAttribute("href"), homes[role]);
+  assert.equal(await link.locator("[data-dp02-logo]").getAttribute("aria-hidden"), "true");
+  const rendered = await link.locator("picture:visible img").evaluate(async img => {
+    await img.decode();
+    const r = img.getBoundingClientRect();
+    const theme = globalThis.document.documentElement.getAttribute("data-frontend-v2-theme") ?? (globalThis.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    return { src: img.currentSrc, width: r.width, height: r.height, naturalWidth: img.naturalWidth, naturalHeight: img.naturalHeight, theme, compact: globalThis.innerWidth <= 480, alt: img.alt };
+  });
+  const variant = `${rendered.compact ? "compact" : "primary"}-${locale}-${rendered.theme}`;
+  const asset = new URL(`/brand/dp02/${variant}.svg`, page.url());
+  assert.ok(["127.0.0.1", "localhost"].includes(asset.hostname), "Brand verification is local-only");
+  assert.equal(rendered.src, asset.href);
+  assert.equal(rendered.alt, "");
+  assert.ok(rendered.width >= 100 && rendered.height >= 20 && rendered.naturalWidth > 0, JSON.stringify({ variant, width: rendered.width, height: rendered.height }));
+  const response = await page.request.get(asset.href, { maxRedirects: 0 });
+  assert.equal(response.status(), 200);
+  const bytes = await response.body();
+  assert.equal(createHash("sha256").update(bytes).digest("hex"), dp02Hashes[variant]);
+  assert.match(bytes.toString("utf8"), /viewBox="0 0 780 145"/);
+  // Dimensionless SVG naturalHeight is integer-rounded (300x56), not the
+  // artwork's exact780:145 geometry. Allow only one CSS layout quantum.
+  assert.ok(Math.abs(rendered.height - rendered.width * 145 / 780) <= 1 / 64, "Original verified SVG aspect ratio");
+  await link.focus();
+  assert.equal(await link.evaluate(el => el === globalThis.document.activeElement), true);
+  await link.press("Enter");
+  await page.waitForURL(asset.origin + homes[role]);
+  return { variant, sha256: dp02Hashes[variant], width: rendered.width, height: rendered.height, accessibleHomeLink: true };
+}
 async function measurePresentation(page, locale) {
   const cdp = await page.context().newCDPSession(page);
   await cdp.send("DOM.enable"); await cdp.send("CSS.enable");
   const { root } = await cdp.send("DOM.getDocument");
   const fonts = [];
-  for (const selector of ["[data-appointment-anchor] h3", "[data-appointment-anchor] bdi[dir]", "header bdi[dir=ltr]"]) {
+  for (const selector of ["[data-appointment-anchor] h3", "[data-appointment-anchor] bdi[dir]", "header nav a[aria-current=page]"]) {
     const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: root.nodeId, selector });
+    assert.ok(nodeId, `Required typography node: ${selector}`);
     const result = await cdp.send("CSS.getPlatformFontsForNode", { nodeId });
     fonts.push({ selector, fonts: result.fonts.filter(f => f.glyphCount > 0).map(f => f.familyName) });
   }
   assert.ok(fonts[0].fonts.some(f => f.includes(locale === "ar" ? "Plex" : "Inter")), JSON.stringify(fonts));
   assert.ok(fonts[1].fonts.some(f => f.includes(locale === "ar" ? "Plex" : "Inter")), JSON.stringify(fonts));
-  assert.ok(fonts[2].fonts.some(f => f.includes("Inter")), JSON.stringify(fonts));
+  assert.ok(fonts[2].fonts.some(f => f.includes(locale === "ar" ? "Plex" : "Inter")), JSON.stringify(fonts));
   await cdp.detach();
+  await verifyDp02Brand(page, locale);
   const contrast = await page.evaluate(() => {
     const rgb = s => s.match(/[\d.]+/g)?.map(Number);
     const lum = c => c.slice(0, 3).map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }).reduce((n,v,i) => n + v * [.2126,.7152,.0722][i], 0);
@@ -165,15 +218,9 @@ export async function testPatientMyCare(browser, origin, shots) {
       .getByRole("heading", { name: c.recentCare, exact: true })
       .waitFor();
     await page.evaluate(() => globalThis.document.fonts.ready);
-    assert.equal(await page.locator("[data-demo-utility][open]").count(), 0);
-    assert.equal(
-      await page.getByLabel(c.demoWorkspace, { exact: true }).isVisible(),
-      false,
-    );
-    assert.equal(
-      await page.getByLabel(c.screenState, { exact: true }).isVisible(),
-      false,
-    );
+    assert.equal(await page.locator("[data-workspace-switch][open]").count(), 0);
+    assert.equal(await page.locator("footer [data-workspace-switch], [data-demo-utility]").count(), 0);
+    assert.equal(await page.getByLabel(c.screenState, { exact: true }).count(), 0);
     assert.equal(
       await page
         .locator("#main")
@@ -355,7 +402,7 @@ export async function testPatientMyCare(browser, origin, shots) {
     assert.equal(await page.locator('a[href="#main"]').evaluate(el => el === globalThis.document.activeElement), true);
     await page.keyboard.press("Enter");
     assert.equal(await page.locator('#main').evaluate(el => el === globalThis.document.activeElement), true);
-    await page.locator('header summary').click();
+    await page.getByLabel(c.account, { exact: true }).click();
     await page.keyboard.press("Escape");
     assert.equal(await page.locator('header details[open]').count(), 0);
     await page.locator('header nav a[href="/patient/discover"]').click();
@@ -375,28 +422,19 @@ export async function testPatientMyCare(browser, origin, shots) {
     assert.equal(focus.outline, "solid");
     report.focus.push({ locale, ...focus });
     await capture(`patient-my-care-focus-${locale}`);
-    await openDemoUtility(page);
-    assert.ok(
-      await page.getByLabel(c.demoWorkspace, { exact: true }).isVisible(),
-    );
-    await page.getByLabel(c.screenState, { exact: true }).focus();
+    const workspace = await openWorkspaceSwitch(page);
+    assert.ok(await workspace.locator('[data-workspace-role="PATIENT"]').isVisible());
+    await workspace.locator('[data-workspace-role="PATIENT"]').focus();
     await page.keyboard.press("Escape");
-    assert.equal(await page.locator("[data-demo-utility][open]").count(), 0);
-    assert.equal(
-      await page
-        .locator("[data-demo-utility] summary")
-        .evaluate((el) => el === globalThis.document.activeElement),
-      true,
-    );
+    assert.equal(await page.locator("[data-workspace-switch][open]").count(), 0);
+    assert.equal(await workspace.locator("summary").evaluate((element) => element === globalThis.document.activeElement), true);
     for (const [state, key] of [
       ["loading", "loading"],
       ["empty", "empty"],
       ["error", "error"],
       ["uncertain", "unverified"],
     ]) {
-      await openDemoUtility(page);
-      await page.getByLabel(c.screenState, { exact: true }).selectOption(state);
-      await toggleDemoControls(page);
+      await setDemoScenario(page, state);
       if (state === "loading")
         await page
           .getByRole("status", { name: c.loading, exact: true })
@@ -443,6 +481,7 @@ export async function testPatientMyCare(browser, origin, shots) {
           json: {
             data: {
               user: {
+                id: id(accountB ? 109 : 108),
                 role: "PATIENT",
                 email: accountB ? "synthetic-b@example.invalid" : "synthetic-live@example.invalid",
               },
@@ -534,7 +573,7 @@ export async function testPatientMyCare(browser, origin, shots) {
       );
     }
     await page.setViewportSize({ width: 1600, height: 1000 });
-    assert.equal(await page.locator("[data-demo-utility]").count(), 0);
+    assert.equal(await page.locator("[data-demo-utility], [data-workspace-switch]").count(), 0);
     assert.equal(await page.locator("[data-demo-indication]").count(), 0);
     assert.equal(await page.getByText(c.demo, { exact: true }).count(), 0);
     assert.equal(await page.getByLabel(c.demoWorkspace).count(), 0);

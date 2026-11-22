@@ -413,7 +413,7 @@ export async function testLiveBooking(browser, origin, shots) {
           await page.locator("#main .error-panel[role=alert]").innerText()
         ).includes("PRIVATE"),
       );
-      assert.equal(await page.getByLabel(t("Demo workspace")).count(), 0);
+      assert.equal(await page.locator("[data-workspace-switch]").count(), 0);
     }
     readError = 0;
     empty = true;

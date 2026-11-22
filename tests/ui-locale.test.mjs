@@ -1,8 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import ts from "typescript";
-import { readFileSync, readdirSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { createRequire } from "node:module";
+import { dirname, resolve } from "node:path";
 const folder = "apps/web/src/lib/i18n/";
 const dictionary = {};
 new Function(
@@ -38,15 +39,30 @@ test("neutral locale SSR does not mount task children or consult browser storage
   const require = createRequire(new URL("../apps/web/package.json", import.meta.url));
   const React = require("react");
   const { renderToString } = require("react-dom/server");
-  const context = {};
-  new Function("exports", "require", ts.transpileModule(
-    readFileSync(folder + "context.tsx", "utf8"),
-    { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } },
-  ).outputText)(context, (name) => {
-    if (name === "./catalog") return catalog;
-    if (name.endsWith(".css")) return { default: { root: "root", wordmark: "wordmark" } };
-    return require(name);
-  });
+  // Evaluate the real source graph, including the approved logo. Relative imports
+  // belong to their importing file, never to apps/web/package.json.
+  const cache = new Map();
+  function load(file) {
+    if (cache.has(file)) return cache.get(file);
+    const exports = {};
+    cache.set(file, exports);
+    const sourceRequire = createRequire(file);
+    new Function("exports", "require", ts.transpileModule(
+      readFileSync(file, "utf8"),
+      { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } },
+    ).outputText)(exports, name => {
+      if (name.endsWith(".css")) return { default: new Proxy({}, { get: (_, key) => String(key) }) };
+      if (name.startsWith(".")) {
+        const base = resolve(dirname(file), name);
+        const target = [base, base + ".ts", base + ".tsx"].find(existsSync);
+        assert.ok(target, `Unresolved source-relative module: ${name}`);
+        return load(target);
+      }
+      return sourceRequire(name);
+    });
+    return exports;
+  }
+  const context = load(resolve(folder + "context.tsx"));
   let mounted = 0;
   function Task() { mounted++; return React.createElement("button", null, "PRIVATE_TASK_CANARY"); }
   const html = renderToString(React.createElement(context.LocaleProvider, null, React.createElement(Task)));
@@ -57,6 +73,9 @@ test("neutral locale SSR does not mount task children or consult browser storage
   assert.match(html, /lang="en" dir="ltr">Loading your workspace…/);
   assert.match(html, /lang="ar" dir="rtl">بنجهّز مساحة العمل…/);
   assert.ok(!/<button|<input/.test(html));
+  assert.match(html, /data-dp02-logo/);
+  assert.match(html, /role="img" aria-label="EgyHealth 360"/);
+  assert.match(html, /src="\/brand\/dp02\/primary-en-light.svg"/);
   const layout = readFileSync("apps/web/app/layout.tsx", "utf8");
   assert.match(layout, /<html lang="en" dir="ltr">/);
   assert.match(layout, /<noscript>[\s\S]*lang="en" dir="ltr"[\s\S]*JavaScript is needed to open this workspace\.[\s\S]*lang="ar" dir="rtl"[\s\S]*فتح مساحة العمل دي محتاج JavaScript\.[\s\S]*<\/noscript>/);

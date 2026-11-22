@@ -1,0 +1,535 @@
+/* Shared visual treatments use the existing AP01/AP04 roles and the T1 provider. */
+.entry,
+.shell {
+  --recovery-surface: var(--v2-surface);
+  --recovery-tint: color-mix(in srgb, var(--v2-raised), var(--v2-action) 7%);
+  --recovery-shadow: 0 14px 36px color-mix(in srgb, var(--v2-ink) 6%, transparent);
+  --recovery-radius: 22px;
+}
+
+.entry.entry {
+  --navy: var(--v2-ink);
+  --ink: var(--v2-ink);
+  --muted: var(--v2-muted);
+  color: var(--v2-ink);
+  background: var(--v2-canvas);
+  color-scheme: var(--v2-scheme);
+  padding: 0 max(20px, calc((100% - 1260px) / 2)) 38px;
+  font: 400 1rem/1.6 Inter, "EH My Care Arabic", sans-serif;
+}
+
+.entry.entry[dir="rtl"] { font-family: "EH My Care Arabic", Inter, sans-serif; }
+.entry :is(p, h1, h2) { overflow-wrap: anywhere; }
+
+.entryHeader,
+.entryTools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.entryHeader { min-block-size: 78px; padding-block: 12px; }
+.entryHeader > span { max-inline-size: min(190px, 100%); }
+.entryTools :global(.language-switch) {
+  display: flex;
+  flex-wrap: wrap;
+  max-inline-size: 100%;
+  border: 1px solid var(--v2-line);
+  border-radius: 12px;
+  background: var(--v2-surface);
+  padding: 3px;
+}
+.entryTools :global(.language-switch button) { min-block-size: 44px; font-size: .875rem; }
+.entryTheme { position: relative; }
+.entryTheme summary {
+  display: grid;
+  place-items: center;
+  inline-size: 46px;
+  block-size: 46px;
+  cursor: pointer;
+  border: 1px solid var(--v2-control);
+  border-radius: 12px;
+  background: var(--v2-surface);
+  color: var(--v2-action);
+  list-style: none;
+}
+.entryTheme summary::-webkit-details-marker,
+.workspace summary::-webkit-details-marker { display: none; }
+.entryTheme > div {
+  position: absolute;
+  inset-inline-end: 0;
+  inset-block-start: calc(100% + 8px);
+  inline-size: min(250px, calc(100vw - 40px));
+  z-index: 6;
+  padding: 16px;
+  border: 1px solid var(--v2-control);
+  border-radius: 16px;
+  background: var(--v2-surface);
+  box-shadow: var(--recovery-shadow);
+  overflow-wrap: anywhere;
+}
+
+.entryHero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, .98fr) minmax(0, 1.02fr);
+  border-radius: 30px;
+  background: linear-gradient(143deg, var(--recovery-tint), var(--v2-surface) 83%);
+  overflow: hidden;
+  border: 1px solid var(--v2-line);
+  box-shadow: var(--recovery-shadow);
+}
+.entryMessage { padding: clamp(30px, 5vw, 74px); align-self: center; }
+.entryMessage .entryKicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--v2-action);
+  font-size: .9rem;
+  font-weight: 700;
+}
+.entryKicker::before {
+  content: "";
+  inline-size: 9px;
+  block-size: 9px;
+  border-radius: 50%;
+  background: var(--v2-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--v2-action), transparent 80%);
+}
+.entryMessage h1 {
+  margin-block: 15px 18px;
+  color: var(--v2-ink);
+  font-size: clamp(2.45rem, 4.6vw, 4.35rem);
+  line-height: 1.02;
+  letter-spacing: -.055em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.entryMessage h1 em { display: block; color: var(--v2-action); font-style: normal; }
+.entry[dir="rtl"] .entryMessage h1 { line-height: 1.4; letter-spacing: 0; }
+.entryMessage > p:not(.entryKicker) { max-inline-size: 39ch; font-size: clamp(1rem, 1.4vw, 1.25rem); color: var(--v2-muted); }
+.entryImage {
+  min-block-size: 390px;
+  background: #a88487 url("/visual-recovery/care-encounter.webp") 52% 48% / cover no-repeat;
+}
+.entryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-block-size: 50px;
+  border-radius: 12px;
+  background: var(--v2-action);
+  color: var(--v2-on-action);
+  padding: 10px 19px;
+  margin-block-start: 25px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.entryAction:hover { background: var(--v2-hover); color: var(--v2-on-action); }
+.entry[dir="rtl"] .entryAction svg,
+.entry[dir="rtl"] .entryPortalGrid button > svg { transform: scaleX(-1); }
+.entryContent { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 22px; margin-block-start: 30px; }
+.entryPortals { flex: 1 1 650px; scroll-margin-block-start: 18px; }
+.entryPortalHeading { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-block-end: 15px; }
+.entryPortalHeading h2,
+.entrySignIn h2 { font-size: clamp(1.35rem, 2.4vw, 2rem); font-weight: 700; }
+.entryPortalHeading p { color: var(--v2-muted); margin-block-start: 4px; }
+.entryDemoMark {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--v2-action);
+  font-size: .875rem;
+  font-weight: 600;
+  background: var(--v2-raised);
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+.entryPortalGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(174px, 100%), 1fr)); gap: 11px; }
+.entryPortalGrid button {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18px;
+  grid-template-rows: auto auto 1fr;
+  gap: 5px 8px;
+  border: 1px solid var(--v2-control);
+  border-radius: 17px;
+  padding: 15px;
+  background: var(--v2-surface);
+  color: var(--v2-ink);
+  text-align: start;
+  align-items: start;
+  transition: border-color .18s, background-color .18s, box-shadow .18s;
+}
+.entryPortalGrid button:enabled:hover { border-color: var(--v2-action); background: var(--recovery-tint); box-shadow: var(--recovery-shadow); }
+.entryPortalGrid button > strong { font-size: 1.06rem; grid-column: 1; overflow-wrap: anywhere; }
+.entryPortalGrid button > span:not(.entryPortalIcon) { grid-column: 1 / -1; font-size: .9rem; color: var(--v2-muted); overflow-wrap: anywhere; }
+.entryPortalGrid button > svg { grid-row: 2; grid-column: 2; align-self: center; color: var(--v2-action); }
+.entryPortalIcon, .heroGlyph {
+  inline-size: 46px;
+  block-size: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: var(--v2-raised);
+  color: var(--v2-action);
+}
+.entryDisclosure { display: flex; align-items: flex-start; gap: 8px; color: var(--v2-muted); padding-block-start: 17px; font-size: .9rem; }
+.entryDisclosure svg { flex: none; margin-block-start: 3px; color: var(--v2-action); }
+.entrySignIn { flex: 1 1 300px; background: var(--v2-surface); padding: 20px; border: 1px solid var(--v2-line); border-radius: var(--recovery-radius); }
+.entrySignIn form { display: grid; gap: 12px; margin-block-start: 12px; }
+.entrySignIn :global(.field input) { min-block-size: 46px; }
+.entrySignIn :global(.button.primary) { background: var(--v2-action); border-color: var(--v2-action); color: var(--v2-on-action); }
+
+.header.header {
+  background: var(--v2-surface);
+  border-block-end: 1px solid var(--v2-line);
+}
+.shell[data-portal-shell] > .header nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.header nav svg { color: var(--v2-action); flex: none; }
+.header [data-session-mode] {
+  border: 1px solid var(--v2-line);
+  border-radius: 9px;
+  color: var(--v2-action);
+  background: var(--v2-raised);
+  padding: 3px 8px;
+  font-size: .84rem;
+  white-space: normal;
+}
+.workspace { position: relative; }
+.workspace > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--v2-control);
+  border-radius: 11px;
+  min-block-size: 44px;
+  padding: 7px 11px;
+  background: var(--v2-surface);
+  color: var(--v2-action);
+  font-size: .9rem;
+  font-weight: 600;
+  list-style: none;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.workspace svg { flex: none; }
+.workspace[open] > summary { background: var(--v2-raised); }
+.workspace[open] > summary > svg:last-child { transform: rotate(180deg); }
+.workspaceList {
+  position: absolute;
+  inset-block-start: calc(100% + 8px);
+  inset-inline-end: 0;
+  z-index: 35;
+  inline-size: min(240px, calc(100vw - 40px));
+  display: grid;
+  gap: 3px;
+  padding: 6px;
+  border: 1px solid var(--v2-control);
+  border-radius: 13px;
+  box-shadow: var(--recovery-shadow);
+  background: var(--v2-surface);
+}
+.workspaceList button {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  min-block-size: 44px;
+  background: none;
+  border: 0;
+  color: var(--v2-ink);
+  text-align: start;
+  border-radius: 8px;
+  padding: 8px 10px;
+  overflow-wrap: anywhere;
+}
+.workspaceList button svg { color: var(--v2-action); }
+.workspaceList button[aria-current], .workspaceList button:hover { background: var(--v2-raised); }
+.shell[data-portal-shell] > footer {
+  border-color: var(--v2-line);
+  background: var(--v2-surface);
+}
+.shell :global(.card), .shell :global(.modal) { box-shadow: var(--recovery-shadow); }
+.shell :global(.page-heading) { align-items: flex-end; gap: 15px; }
+.shell[data-frontend-v2-content] :global(.page-heading h1) {
+  font-size: clamp(1.95rem, 3.15vw, 3.15rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.045em;
+}
+.shell[dir="rtl"][data-frontend-v2-content] :global(.page-heading h1) { letter-spacing: 0; line-height: 1.45; }
+.shell :global(.page-heading p) { max-inline-size: 59ch; }
+
+.shell .careIntro,
+.shell .discoveryHeading,
+.shell .doctorHero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  overflow: hidden;
+  border: 1px solid var(--v2-line);
+  border-radius: var(--recovery-radius);
+  background: linear-gradient(120deg, var(--recovery-tint), var(--v2-surface));
+  color: var(--v2-ink);
+  padding: clamp(19px, 3vw, 40px);
+  margin-block-end: 22px;
+}
+.shell .careIntro h1 { font-size: clamp(2.05rem, 4vw, 3.6rem); font-weight: 700; }
+.careIntro p { color: var(--v2-muted); margin-block-start: .45rem; }
+.discoveryHeading :global(.page-heading) { margin: 0; }
+.heroGlyph {
+  position: relative;
+  isolation: isolate;
+  inline-size: clamp(70px, 10vw, 125px);
+  block-size: clamp(70px, 10vw, 125px);
+  background: color-mix(in srgb, var(--v2-raised), var(--v2-action) 12%);
+  border: 1px solid color-mix(in srgb, var(--v2-line), var(--v2-action) 26%);
+  border-radius: 35%;
+  transform: rotate(-8deg);
+  margin-inline-end: clamp(6px, 3vw, 38px);
+}
+.heroGlyph::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inline-size: 72%;
+  block-size: 72%;
+  inset: 14%;
+  border: 1px solid color-mix(in srgb, var(--v2-action), transparent 70%);
+  border-radius: 37%;
+  transform: rotate(24deg);
+}
+.heroGlyph::before {
+  content: "";
+  position: absolute;
+  inset-inline-end: -8%;
+  inset-block-start: 4%;
+  inline-size: 18%;
+  block-size: 18%;
+  border-radius: 50%;
+  background: var(--v2-accent);
+}
+.heroGlyph svg { max-inline-size: 58%; transform: rotate(8deg); }
+
+.shell .providerCard { display: flex; flex-direction: column; gap: 8px; }
+.providerCard :global(.provider-top) { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; }
+.providerCard :global(.provider-top):has(.portrait) { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: start; }
+.providerCard :global(.provider-top .badge) { white-space: normal; }
+.providerCard :global(.button) { margin-block-start: auto; }
+.portrait { position: relative; isolation: isolate; margin: 0; max-inline-size: 100%; }
+.portrait img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 1.6;
+  object-fit: cover;
+  object-position: center 34%;
+  border-radius: 14px;
+}
+.portrait figcaption { color: var(--v2-muted); font-size: .8125rem; margin-block-start: 4px; }
+.providerCard .portrait { inline-size: 100%; }
+.shell .providerProfile {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(16px, 3vw, 40px);
+  background: linear-gradient(120deg, var(--recovery-tint), var(--v2-surface));
+}
+.providerProfile h1 { font-weight: 700; font-size: clamp(1.65rem, 3vw, 3rem); overflow-wrap: anywhere; }
+.providerProfile .portrait img { aspect-ratio: 1.25; }
+.providerProfile > :global(.avatar) { justify-self: start; }
+.shell .bookingColumns { grid-template-columns: minmax(0, 1.18fr) minmax(0, .82fr); align-items: start; }
+.bookingColumns > :first-child { border-block-start: 3px solid var(--v2-action); }
+.shell :global(.search-card) { gap: 12px; margin-block-end: 14px; }
+.shell :global(.search-card select) { min-block-size: 48px; }
+.shell :global(.search-input) { background: var(--v2-surface); border: 1px solid var(--v2-control); border-radius: 12px; }
+.shell :global(.search-input svg) { color: var(--v2-action); }
+.shell :global(.search-input input) { min-block-size: 46px; }
+.shell .doctorHero h2 { font-size: clamp(1.38rem, 2.65vw, 2.55rem); line-height: 1.22; font-weight: 700; }
+.shell[dir="rtl"] .doctorHero h2 { line-height: 1.5; }
+.scheduleStats :global(.stat) { min-block-size: 112px; border-block-start: 2px solid var(--v2-action); }
+.scheduleColumns :global(.appointment-row) { border-radius: 0; }
+.shell :global(.master-context-ribbon) { box-shadow: var(--recovery-shadow); }
+.shell .consultationColumns { gap: clamp(14px, 2vw, 30px); }
+.shell :global(.consultation-section) { scroll-margin-block-start: 2rem; }
+
+@media (max-width: 900px) {
+  .entryHero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .entryMessage { padding: 28px; }
+  .entryImage { min-block-size: 330px; }
+  .shell .bookingColumns { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .entry.entry { padding-inline: 14px; }
+  .entryHero { grid-template-columns: minmax(0, 1fr); border-radius: 20px; }
+  .entryMessage { padding: 20px; }
+  .entryMessage h1 { font-size: clamp(1.85rem, 9vw, 3rem); }
+  .entryImage { min-block-size: clamp(144px, 44vw, 240px); }
+  .entryPortalGrid { grid-template-columns: repeat(auto-fit, minmax(min(8.15em, 100%), 1fr)); }
+  .entryPortalGrid button { padding: 12px; }
+  .workspaceList {
+    position: fixed;
+    inset-inline: 16px;
+    inset-block-start: auto;
+    margin-block-start: 8px;
+    inline-size: auto;
+  }
+  .shell .providerProfile { grid-template-columns: minmax(0, 1fr); }
+  .providerProfile .portrait { max-inline-size: 220px; }
+  .shell .careIntro, .shell .discoveryHeading, .shell .doctorHero { gap: 10px; padding: 17px; }
+  .heroGlyph { inline-size: 49px; block-size: 49px; margin-inline-end: 3px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .workspaceList { animation: reveal .16s ease-out both; }
+  .entryAction, .workspace > summary, .workspaceList button { transition: background-color .18s, color .18s; }
+}
+
+@keyframes reveal {
+  from { opacity: 0; translate: 0 -4px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.shell[data-portal-shell] > .header > div { gap: 13px; }
+.shell[data-portal-shell] > .header nav { gap: 5px; }
+.shell[data-portal-shell] > .header nav a { padding-inline: 11px; }
+.headerUtilities.headerUtilities { gap: 8px; }
+.shell .doctorHero :global(.page-heading) { margin: 0; align-items: start; flex-direction: column; }
+
+@media (min-width: 901px) {
+  .shell[data-portal-shell="ADMIN"] > .header > div > nav { flex: 1 1 auto; }
+  .shell[data-portal-shell="ADMIN"] > .header > div > nav a { font-size: .925rem; }
+}
+
+@media (max-width: 600px) {
+  .shell[data-portal-shell] > .header > div { gap: 7px; padding-block: 9px; }
+  .shell[data-portal-shell] > .header > div:has([data-workspace-switch]) {
+    display: grid;
+    grid-template-columns: minmax(112px, 1fr) minmax(0, max-content) auto;
+  }
+  .header div:has(> .headerUtilities [data-workspace-switch]) > .headerUtilities { display: contents; }
+  .headerUtilities:has([data-workspace-switch]) :global(.language-switch) { grid-row: 1; grid-column: 2; flex-wrap: wrap; }
+  .headerUtilities:has([data-workspace-switch]) > details:not(.workspace) { grid-row: 1; grid-column: 3; }
+  .headerUtilities:has([data-workspace-switch]) > [data-session-mode] { grid-row: 2; grid-column: 1; justify-self: start; }
+  .headerUtilities > .workspace { grid-row: 2; grid-column: 2 / span 2; justify-self: end; }
+  .shell[data-portal-shell] > .header > div > nav {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(136px, 100%), 1fr));
+  }
+  .shell[data-portal-shell="ADMIN"] > .header > div > nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .shell[data-portal-shell] > .header nav a { font-size: .94rem; padding: 5px; min-block-size: 44px; }
+  .shell[data-portal-shell] > .header nav a > svg { display: none; }
+  .shell > .header > .secondaryNav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 0;
+  }
+  .secondaryNav a { text-align: center; overflow-wrap: anywhere; }
+}
+
+/* Keep the existing destinations and source order. This space belongs to the
+   shared shell, while the opted-in My Care and consultation layouts own theirs. */
+@media (max-width: 600px) {
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) > .header > div {
+    gap: 4px;
+    padding-block: 4px;
+  }
+
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) > .header > div > nav,
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) > .header > .secondaryNav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) .secondaryNav {
+    padding-block: 3px;
+  }
+
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) > .header nav a {
+    flex: 1 0 auto;
+    max-inline-size: 100%;
+    min-inline-size: 44px;
+    min-block-size: 44px;
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    line-height: 1.18;
+  }
+
+  .shell[data-portal-shell]:not([data-patient-my-care-v2], :global([data-clinician-master]) *) .workspace > summary {
+    flex-wrap: wrap;
+    overflow-wrap: normal;
+  }
+}
+
+@media (max-width: 760px) {
+  .shell[data-portal-shell="PATIENT"] > .mobileNav.mobileNav {
+    display: grid;
+    position: static;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .shell[data-portal-shell="PATIENT"] > .mobileNav a {
+    grid-template-rows: auto auto;
+    min-inline-size: 44px;
+    min-block-size: 44px;
+    inline-size: auto;
+    padding-inline: 3px;
+  }
+
+  .shell[data-portal-shell="PATIENT"] > .mobileNav span {
+    font-size: .85rem;
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+  }
+
+  .shell[data-portal-shell="PATIENT"]:has(> .mobileNav) > footer {
+    padding-block-end: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .workspaceList { max-block-size: 45dvh; overflow-y: auto; overscroll-behavior: contain; }
+}
+
+.shell :global(.booking-identity h3),
+.shell :global(.appointment-main h3) { font-weight: 700; }
+.shell :global(.appointment-date) { border-radius: 12px; }
+.shell :global(.record-section) { border-radius: var(--recovery-radius); }
+.shell :global(.master-context-ribbon) { background: linear-gradient(120deg, var(--recovery-tint), var(--v2-surface)); }
+.shell :global(.documentation-content > .card) { box-shadow: var(--recovery-shadow); }
+.shell :global(.consultation-outline),
+.shell :global(.v2-source-context) { color: var(--v2-ink); }
+.shell :global(.confirmation-details) { border-radius: 14px; padding: clamp(12px, 2vw, 20px); }
+
+@media (min-width: 360px) and (max-width: 600px) {
+  .shell .providerProfile:has(.portrait) { grid-template-columns: minmax(84px, .76fr) minmax(0, 1.24fr); }
+  .scheduleStats.scheduleStats { grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.2em), 1fr)); }
+}
+
+.careIntro h1 { overflow-wrap: anywhere; }
+.shell [data-care-shortcuts] small { overflow-wrap: break-word; }
+@media (max-width: 359px) {
+  .shell .careIntro { grid-template-columns: minmax(0, 1fr); }
+  .careIntro > .heroGlyph { display: none; }
+}

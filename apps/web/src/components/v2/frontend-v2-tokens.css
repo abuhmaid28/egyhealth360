@@ -1,0 +1,189 @@
+/* Package A candidate: exact #101 audited pairs, scoped to Patient/Doctor.
+   System CSS is available before hydration; explicit T1 selection is memory-only. */
+:root {
+  --v2-accent: #ffb88b;
+  --v2-canvas: #f8f7fb;
+  --v2-surface: #fff;
+  --v2-raised: #efeaf7;
+  --v2-ink: #17142b;
+  --v2-muted: #595269;
+  --v2-action: #6240b8;
+  --v2-on-action: #fff;
+  --v2-hover: #50309d;
+  --v2-control: #787084;
+  --v2-line: #ddd7e9;
+  --v2-disabled: #e5e0ec;
+  --v2-error: #9f2638;
+  --v2-warning: #695100;
+  --v2-success: #226346;
+  --v2-scheme: light;
+  --v2-shadow: 0 12px 36px #17142b06;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-frontend-v2-theme="light"]) {
+    --v2-canvas: #10121d;
+    --v2-surface: #1d2030;
+    --v2-raised: #262a3c;
+    --v2-ink: #f6f2ff;
+    --v2-muted: #c2bed2;
+    --v2-action: #a78bfa;
+    --v2-on-action: #17142b;
+    --v2-hover: #bda7ff;
+    --v2-control: #85839c;
+    --v2-line: #36394e;
+    --v2-disabled: #36394e;
+    --v2-error: #ffb4b8;
+    --v2-warning: #f1de91;
+    --v2-success: #9cd9be;
+    --v2-scheme: dark;
+    --v2-shadow: none;
+  }
+}
+:root[data-frontend-v2-theme="dark"] {
+  --v2-canvas: #10121d;
+  --v2-surface: #1d2030;
+  --v2-raised: #262a3c;
+  --v2-ink: #f6f2ff;
+  --v2-muted: #c2bed2;
+  --v2-action: #a78bfa;
+  --v2-on-action: #17142b;
+  --v2-hover: #bda7ff;
+  --v2-control: #85839c;
+  --v2-line: #36394e;
+  --v2-disabled: #36394e;
+  --v2-error: #ffb4b8;
+  --v2-warning: #f1de91;
+  --v2-success: #9cd9be;
+  --v2-scheme: dark;
+  --v2-shadow: none;
+}
+/* Higher specificity than historical local tokens; no staff portal rollout. */
+[data-frontend-v2][data-portal-shell][lang][dir] {
+  --care-navy: var(--v2-ink);
+  --care-teal: var(--v2-action);
+  --care-teal-dark: var(--v2-hover);
+  --care-blue: var(--v2-action);
+  --care-canvas: var(--v2-canvas);
+  --care-surface: var(--v2-surface);
+  --care-alt: var(--v2-raised);
+  --care-ink: var(--v2-ink);
+  --care-secondary: var(--v2-muted);
+  --care-muted: var(--v2-muted);
+  --care-border: var(--v2-line);
+  --care-border-strong: var(--v2-control);
+  --care-info: var(--v2-action);
+  --care-info-surface: var(--v2-raised);
+  --care-warning: var(--v2-warning);
+  --care-warning-surface: var(--v2-surface);
+  --care-error: var(--v2-error);
+  --care-error-surface: var(--v2-surface);
+  --care-success: var(--v2-success);
+  --care-success-surface: var(--v2-surface);
+  --care-shadow: var(--v2-shadow);
+  --navy: var(--v2-ink);
+  --blue: var(--v2-action);
+  --blue-dark: var(--v2-hover);
+  --blue-soft: var(--v2-raised);
+  --teal: var(--v2-action);
+  --teal-dark: var(--v2-hover);
+  --teal-soft: var(--v2-raised);
+  --ink: var(--v2-ink);
+  --muted: var(--v2-muted);
+  --line: var(--v2-line);
+  --canvas: var(--v2-canvas);
+  --white: var(--v2-surface);
+  --amber: var(--v2-warning);
+  --shadow: var(--v2-shadow);
+  font: 400 16px/1.65 Inter, "EH My Care Arabic", sans-serif;
+  color-scheme: var(--v2-scheme);
+  color: var(--v2-ink);
+  background: var(--v2-canvas);
+}
+[data-frontend-v2][data-portal-shell][lang][dir="rtl"] {
+  font-family: "EH My Care Arabic", Inter, sans-serif;
+  line-height: 1.85;
+}
+[data-frontend-v2] bdi[dir="ltr"] { font-family: Inter, "EH My Care Arabic", sans-serif; }
+[data-frontend-v2] :is(input, textarea, select) {
+  color: var(--v2-ink);
+  background: var(--v2-surface);
+  border-color: var(--v2-control);
+  font: inherit;
+}
+[data-frontend-v2] :is(input, textarea)::placeholder { color: var(--v2-muted); opacity: 1; }
+[data-frontend-v2] :is(a, button, summary, input, select, textarea):focus-visible {
+  outline: 3px solid var(--v2-action);
+  outline-offset: 4px;
+}
+[data-frontend-v2] .button { white-space: normal; border-radius: 12px; font-size: 16px; padding: 12px 20px; }
+[data-frontend-v2][data-portal-shell] .button.primary { color: var(--v2-on-action); background: var(--v2-action); border-color: var(--v2-action); }
+[data-frontend-v2][data-portal-shell] .button.primary:hover { color: var(--v2-on-action); background: var(--v2-hover); border-color: var(--v2-hover); }
+[data-frontend-v2] :is(.button.secondary, .button.white) { background: var(--v2-surface); color: var(--v2-action); border-color: var(--v2-control); }
+[data-frontend-v2] :is(.button.secondary, .button.white):hover { background: var(--v2-raised); }
+[data-frontend-v2] button:disabled { opacity: 1; color: var(--v2-muted); background: var(--v2-disabled); }
+[data-frontend-v2] :is(.badge, .status-badge) { color: var(--v2-ink); background: var(--v2-raised); border: 1px solid var(--v2-control); white-space: normal; }
+[data-frontend-v2] :is(.form-error, .field-error) { color: var(--v2-error); }
+[data-frontend-v2] :is(.alert, .notice, .info-box, .warning-box, .entry-mode-note) { color: var(--v2-ink); background: var(--v2-raised); border-color: var(--v2-control); }
+[data-frontend-v2] :is(.card, .modal) { background: var(--v2-surface); color: var(--v2-ink); border-color: var(--v2-line); }
+[data-frontend-v2] :is(.tinted, .icon-tile, .tabs button.active, .filter-chips button.active, .slots button.selected) { background: var(--v2-raised); color: var(--v2-action); }
+[data-frontend-v2] .tabs { flex-wrap: wrap; }
+[data-frontend-v2] :is(.text-link, .back-link) { color: var(--v2-action); }
+[data-frontend-v2] .v2-theme-switch { display: grid; gap: 8px; font-size: 16px; }
+[data-frontend-v2] .v2-theme-switch select { min-block-size: 44px; inline-size: 100%; border: 1px solid var(--v2-control); border-radius: 8px; padding: 8px; }
+[data-frontend-v2] .v2-theme-switch small { color: var(--v2-muted); font-size: 14px; }
+/* F04 stays neutral bilingual and CSS-only until the original locale resolves. */
+[data-initial-locale][data-initial-locale] { color: var(--v2-ink); background: var(--v2-canvas); color-scheme: var(--v2-scheme); }
+@media (prefers-reduced-motion: reduce) {
+  [data-frontend-v2] *, [data-frontend-v2] *::before, [data-frontend-v2] *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+}
+@media (forced-colors: active) {
+  [data-frontend-v2] :is(.button, input, textarea, select, .card) { border: 1px solid CanvasText; }
+  [data-frontend-v2] :focus-visible { outline-color: Highlight; }
+}
+
+[data-frontend-v2] [data-read-context]:not([data-read-appearance]) {
+  --read-canvas: var(--v2-canvas); --read-surface: var(--v2-surface);
+  --read-raised: var(--v2-raised); --read-ink: var(--v2-ink);
+  --read-secondary: var(--v2-muted); --read-action: var(--v2-action);
+  --read-on-action: var(--v2-on-action); --read-hover: var(--v2-hover);
+  --read-border: var(--v2-control); color-scheme: var(--v2-scheme);
+}
+[data-frontend-v2] :is(.error-panel, .documentation-warning, .documentation-release-preview, .logistics-boundary, .booking-disclosure, .released-note, .close-ack, .consultation-ribbon, .confirmation-details, .next-visit-card) {
+  background: var(--v2-surface); color: var(--v2-ink); border-color: var(--v2-control);
+}
+[data-frontend-v2] .error-panel { color: var(--v2-error); }
+[data-frontend-v2] .button.danger { color: var(--v2-error); background: var(--v2-surface); border-color: var(--v2-control); }
+[data-frontend-v2] .button.danger:hover { background: var(--v2-raised); }
+[data-frontend-v2] .skeleton { background: var(--v2-disabled); }
+[data-frontend-v2] .workflow-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+[data-frontend-v2] .workflow-steps li { min-inline-size: 0; overflow-wrap: anywhere; }
+@media (max-width: 600px) { [data-frontend-v2] .workflow-steps { grid-template-columns: minmax(0, 1fr); } }
+
+[data-frontend-v2] .language-switch button { color: var(--v2-muted); background: transparent; }
+[data-frontend-v2] .language-switch button[aria-pressed="true"] { color: var(--v2-action); background: var(--v2-raised); }
+/* The locale shell and session-restoration shells form one neutral first-paint path. */
+main.boot.boot,
+[data-clinician-master-boot][data-clinician-master-boot] {
+  --care-canvas: var(--v2-canvas);
+  --care-surface: var(--v2-surface);
+  --care-navy: var(--v2-ink);
+  --care-ink: var(--v2-ink);
+  --care-muted: var(--v2-muted);
+  --care-border: var(--v2-line);
+  color: var(--v2-ink);
+  background: var(--v2-canvas);
+  color-scheme: var(--v2-scheme);
+  font-family: Inter, "EH My Care Arabic", sans-serif;
+}
+main.boot.boot bdi[dir="ltr"],
+[data-clinician-master-boot][data-clinician-master-boot] bdi[dir="ltr"] { font-family: Inter, "EH My Care Arabic", sans-serif; }
+main.boot .skeleton,
+[data-clinician-master-boot] .skeleton { background: var(--v2-disabled); }
+body:has([data-initial-locale], main.boot, [data-clinician-master-boot]) {
+  background: var(--v2-canvas);
+  color: var(--v2-ink);
+  color-scheme: var(--v2-scheme);
+  font-family: Inter, "EH My Care Arabic", sans-serif;
+}
+noscript .boot { color: var(--v2-ink); background: var(--v2-canvas); }
+noscript [lang="ar"] { font-family: "EH My Care Arabic", Inter, sans-serif; }

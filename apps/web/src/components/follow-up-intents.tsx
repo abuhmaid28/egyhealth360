@@ -110,6 +110,7 @@ function FollowUpScope({
   return (
     <section
       id={author ? "live-follow-up" : undefined}
+      tabIndex={author ? -1 : undefined}
       className="follow-up-workspace"
       aria-label={t("Follow-up instructions")}
     >

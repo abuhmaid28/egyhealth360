@@ -152,7 +152,7 @@ export async function testStagingTime(browser, origin, shots) {
       for (const value of ["DENIED_TIME_CANARY", "WRONG_PATIENT_TIME_CANARY", "Synthetic Long Recorded Name Without Truncation", id(1)]) {
         assert.ok(!body.includes(value) && !accessible.includes(value), "denied synthetic payload/reference absent");
       }
-      assert.equal(await page.locator("[data-demo-utility]").count(), 0);
+      assert.equal(await page.locator("[data-demo-utility], [data-workspace-switch]").count(), 0);
     }
     denied = 0;
     role = "CLINICIAN";
@@ -162,7 +162,7 @@ export async function testStagingTime(browser, origin, shots) {
     assert.equal(await page.locator("[data-patient-detail-time]").count(), 0);
     assert.match(await page.locator(".booking-time").first().innerText(), /15:00.*15:30/);
     assert.ok(calls.every(call => call.method === "GET"), "time display must not issue commands");
-    assert.equal(await page.locator("[data-demo-utility]").count(), 0);
+    assert.equal(await page.locator("[data-demo-utility], [data-workspace-switch]").count(), 0);
     assert.deepEqual(errors, []);
     await page.close();
 

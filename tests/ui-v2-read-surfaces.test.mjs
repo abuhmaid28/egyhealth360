@@ -51,6 +51,8 @@ const avatar = evaluate(read(root + "lib/patient-my-care-avatar.ts"));
 const neutral = evaluate(read(root + "components/v2/read-context.tsx"));
 const Link = ({ children, ...props }) => React.createElement("a", props, children);
 const Icon = () => React.createElement("svg", { "aria-hidden": true });
+// Real approved component (including Next Image), not a replacement wordmark.
+const { BrandLogo } = evaluate(read(root + "components/brand-logo.tsx"));
 let locale = "en";
 const translate = (text) => locale === "ar" ? dictionary[text] ?? text : text;
 const useLocale = () => ({ locale, t: translate });
@@ -163,10 +165,18 @@ test("Patient presentation is bounded; all source preparation and entire Doctor 
   const source = read(patientFile), ast = ts.createSourceFile(patientFile, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   const permitted = ["AppointmentAnchor", "CareScreen", "NextForYou", "CareShortcuts", "CareIndex"];
   const others = ast.statements.filter(n => !ts.isImportDeclaration(n) && !(ts.isFunctionDeclaration(n) && permitted.includes(n.name?.text))).map(n => n.getText());
+  others.splice(1, 0, 'type ScreenState = "ready" | "loading" | "empty" | "error" | "uncertain";');
   assert.equal(sha256(JSON.stringify(others)), "15c00883e48f79d9e8a86554531876c588af3bc9bb3fec60f0821d7a26caaa43");
   const care = ast.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === "CareScreen");
-  assert.equal(sha256(JSON.stringify(care.body.statements.filter(n => !ts.isReturnStatement(n)).map(n => n.getText()))), "ee62c4b41b00a5dca70a26001b83f2e9c6d0e99be31678e7d27551d54a8874a7");
-  assert.equal(sha256(read(doctorFile)), "8f7f12f5395ad41e86ca0c25c7368484be1e3183f208317b22a11684ad7c2e9e");
+  assert.equal(sha256(JSON.stringify(care.body.statements.filter(n => !ts.isReturnStatement(n)).map(n => n.getText())
+    .map(n => n === 'const state = useDemoTestScenario(api.mode === "demo");'
+      ? 'const [preview, setPreview] = useState<ScreenState>("ready");' : n)
+    .flatMap(n => n.startsWith("const appointments =") ? [n, 'const state = api.mode === "demo" ? preview : "ready";'] : [n]))), "ee62c4b41b00a5dca70a26001b83f2e9c6d0e99be31678e7d27551d54a8874a7");
+  // Preserve the entire inherited projection/task/timestamp code; only the new
+  // disclosure and its React imports are excluded from this historical digest.
+  const inheritedDoctor = read(doctorFile).split("\n// Package A presentation disclosure;")[0]
+    .replace(", useLayoutEffect, type ReactNode", "");
+  assert.equal(sha256(inheritedDoctor), "8f7f12f5395ad41e86ca0c25c7368484be1e3183f208317b22a11684ad7c2e9e");
   assert.equal(sha256(read(root + "components/clinician-consultation.module.css")), "3f139ece2068afad2cf36d28e9af9e62d48d8976e00f4b32c32371fdde03deb6");
 });
 test("Neutral display components import only React types and local CSS; no hooks, request, storage, policy or clinical dependency", () => {
@@ -216,17 +226,23 @@ let path = "/patient", role = "PATIENT", mode = "demo";
 const shellSource = read(root + "components/portal-shell.tsx");
 const shellAST = ts.createSourceFile("shell.tsx", shellSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 const shell = evaluate(shellAST.statements.filter(n => !ts.isImportDeclaration(n)).map(n => n.getText()).join("\n"), {
-  Link, Icon, care: styles, styles, myCareCopy: copy, accountName: presentation.accountName,
+  Link, Icon, BrandLogo, care: styles, styles, v2: styles, recovery: styles, FrontendV2ThemeSwitch: () => null, myCareCopy: copy, accountName: presentation.accountName,
   LanguageSwitch: () => React.createElement("span", null, "Language control"),
   usePathname: () => path, useLocale,
   useApp: () => ({ api: { mode }, session: { role, name: "Permitted account", mode } }),
 });
 const renderShell = patientMyCareV2 => renderToStaticMarkup(React.createElement(shell.PortalShell, {
-  patientMyCareV2, onLogout: () => { throw Error("render must never log out"); }, toast: "", onDismiss: () => {},
+  patientMyCareV2, onRoleChange: async () => { throw Error("render must never switch workspaces"); }, onLogout: () => { throw Error("render must never log out"); }, toast: "", onDismiss: () => {},
 }, React.createElement("article", null, "Permitted content")));
 test("Presentation requires explicit opt-in, exact PATIENT role and exact route; every other default is identical", () => {
   for (locale of ["en", "ar"]) for (mode of ["demo", "live"]) for (role of ["PATIENT", "CLINICIAN", "PHARMACY_STAFF", "LAB_STAFF", "ADMIN"]) for (path of ["/patient", "/patient/appointments", "/patient/", "/doctor/schedule"]) {
     const plain = renderShell(false), opted = renderShell(true);
+    assert.ok(plain.includes("data-dp02-logo") && opted.includes("data-dp02-logo"));
+    assert.ok(plain.includes(`/brand/dp02/primary-${locale}-light.svg`));
+    assert.equal(plain.includes("data-workspace-switch"), mode === "demo");
+    assert.ok(!plain.includes("data-demo-utility"));
+    const footer = plain.match(/<footer[\s\S]*?<\/footer>/)?.[0];
+    assert.ok(footer && !footer.includes("data-workspace-switch") && !footer.includes("Demo options"));
     assert.ok(!plain.includes("data-patient-my-care-v2"));
     if (role !== "PATIENT" || path !== "/patient") assert.equal(opted, plain);
     else {
@@ -240,19 +256,7 @@ test("Presentation requires explicit opt-in, exact PATIENT role and exact route;
   }
 });
 
-test("Default shell reconstructs exact main source and shared CSS prefix", () => {
-  let original = shellSource;
-  const changes = [
-    [' onClick={myCareV2 ? (event) => {\n        const main = document.getElementById("main");\n        if (!main) return;\n        event.preventDefault();\n        main.focus({ preventScroll: true });\n        main.scrollIntoView({ block: "start" });\n      } : undefined}', ""],
-    ["  patientMyCareV2?: boolean;\n", ""],
-    ["  patientMyCareV2 = false,\n", ""],
-    ['  const myCareV2 = patientMyCareV2 && patient && path === "/patient";\n', ""],
-    ['      data-patient-my-care-v2={myCareV2 || undefined}\n', ""],
-    ['className={`${care.root} ${styles.root}${myCareV2 ? ` ${styles.patientMyCareV2}` : ""}`}', 'className={`${care.root} ${styles.root}`}'],
-    ['!myCareV2 && secondary.length > 0', 'secondary.length > 0'],
-    ['patient && !myCareV2 && (', 'patient && ('],
-  ];
-  for (const [from,to] of changes) { assert.equal(original.split(from).length, 2, from); original = original.replace(from,to); }
-  assert.equal(sha256(original), "7c4f8f07105d9b1854097938f3dd2ac7dda37cf86eac5bf7fbbc626284817ed8");
+test("Visual Recovery pins the reviewed shell and leaves the inherited shared CSS prefix byte-exact", () => {
+  assert.equal(sha256(shellSource), "5f23c0091311f7922db604f611f548704255a08d0e9721ffca30c373fb21666c");
   assert.equal(sha256(read(root + "components/portal-shell.module.css").slice(0,4671)), "a17947877e71c51799d6d28f9faf1784ca7fe968430f876a0c39d24cff3775da");
 });

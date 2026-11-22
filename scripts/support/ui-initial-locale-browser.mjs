@@ -8,6 +8,7 @@ import { clinicianMasterPage, masterTranslate } from "./ui-clinician-master-brow
 const loading = ["Loading your workspace…", "بنجهّز مساحة العمل…"];
 const canary = "F04_PRIVATE_PAYLOAD_CANARY";
 const login = { en: "Explore the patient demo", ar: "استكشف تجربة المريض" };
+const patientTile = { en: "Patient", ar: "المريض" };
 const direction = locale => locale === "ar" ? "rtl" : "ltr";
 
 // Runs before application JS. Captures only locale enums and synthetic presentation evidence.
@@ -16,12 +17,13 @@ function observeStartup({ storage }) {
   const trace = win.__f04 = { storage: [], samples: [], reads: [] };
   const sample = source => {
     if (!doc.body) return;
-    const controls = [...doc.querySelectorAll("button")].map(node => node.textContent.trim());
+    const controls = [...doc.querySelectorAll("button")].map(node => node.getAttribute("aria-label") ?? node.textContent.trim());
     const shell = doc.querySelector("[data-initial-locale]");
     const record = {
       source, time: win.performance.now(), lang: doc.documentElement.lang,
       dir: doc.documentElement.dir, computed: win.getComputedStyle(doc.body).direction,
       shell: !!shell, controls, text: doc.body.innerText,
+      patientTile: doc.querySelector(".demo-button strong")?.textContent,
     };
     if (trace.samples.length < 400) trace.samples.push(record);
   };
@@ -197,7 +199,10 @@ export async function testInitialLocale(browser, origin, shots) {
           assert.equal(sample.lang, expected, scenario.name);
           assert.equal(sample.dir, direction(expected));
           assert.equal(sample.computed, direction(expected));
-          if (!scenario.role && !scenario.liveRole) assert.ok(sample.controls.includes(login[expected]));
+          if (!scenario.role && !scenario.liveRole) {
+            assert.ok(sample.controls.includes(login[expected]));
+            assert.equal(sample.patientTile, patientTile[expected]);
+          }
           assert.ok(!sample.text.includes(canary));
         }
         if (!scenario.storage || scenario.storage === "setter-denied") {
@@ -239,7 +244,7 @@ export async function testInitialLocale(browser, origin, shots) {
           assert.ok((await page.locator("body").ariaSnapshot()).includes('group "Language / اللغة"'));
         }
         assert.ok(!(await page.locator("body").innerText()).includes(canary));
-        if (!scenario.role) assert.equal(await page.locator("[data-demo-utility]").count(), 0);
+        if (!scenario.role) assert.equal(await page.locator("[data-demo-utility], [data-workspace-switch]").count(), 0);
         results.push({ name: scenario.name, expected, storage: trace.storage, firstContent: content[0], samples: trace.samples.length });
       } else results.push({ name: scenario.name, noJS: true });
       assert.deepEqual(unexpected, []);
@@ -388,7 +393,7 @@ export async function testUnifiedPatientFlow(browser, origin) {
       assert.deepEqual(await page.locator('[data-appointment-endpoint]').allTextContents(), ["12 مساءً", "12:30 مساءً"]);
       for (const text of ["PRIVATE_INTEGRATED_CANARY", "WRONG_PATIENT_INTEGRATED_CANARY"])
         assert.ok(!(await page.locator("body").ariaSnapshot()).includes(text) && !(await page.locator("body").innerText()).includes(text));
-      assert.equal(await page.locator("[data-demo-utility]").count(), 0);
+      assert.equal(await page.locator("[data-demo-utility], [data-workspace-switch]").count(), 0);
       assert.deepEqual(unexpected, []); assert.deepEqual(errors, []); assert.deepEqual(await context.cookies(), []);
     } finally { release(); await context.close(); }
   }

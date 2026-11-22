@@ -1,4 +1,5 @@
 "use client";
+import { BrandLogo } from "./brand-logo";
 import { safeErrorMessage } from "../lib/api/errors";
 import { LanguageSwitch, useLocale } from "../lib/i18n/context";
 import Link from "next/link";
@@ -14,10 +15,12 @@ import { createDemoAdapter } from "../lib/mock/adapter";
 import { useLiveSession } from "./live-session";
 import { createBookingService } from "../lib/api/booking";
 import { Context } from "./context";
-import { Field, Icon, Loading, type Preview } from "./ui";
+import { Field, Icon, Loading, type IconName, type Preview } from "./ui";
 import { PortalShell } from "./portal-shell";
 import care from "./patient-my-care.module.css";
-import portal from "./portal-shell.module.css";
+import recovery from "./v2/visual-recovery.module.css";
+import { useDemoTestScenario } from "./v2/demo-test-scenario";
+import { FrontendV2ThemeSwitch, useFrontendV2Theme } from "./v2/frontend-v2-theme";
 import { PatientScreen } from "./patient";
 import { PatientMyCare } from "./patient-my-care";
 import {
@@ -33,29 +36,45 @@ export const homes: Record<Role, string> = {
   LAB_STAFF: "/laboratory",
   ADMIN: "/admin",
 };
-const roles: { role: Role; name: string }[] = [
-  { role: "PATIENT", name: "Patient" },
-  { role: "CLINICIAN", name: "Doctor" },
-  { role: "PHARMACY_STAFF", name: "Pharmacy" },
-  { role: "LAB_STAFF", name: "Laboratory" },
-  { role: "ADMIN", name: "Admin" },
+const roles: { role: Role; name: string; icon: IconName; description: [string, string] }[] = [
+  { role: "PATIENT", name: "Patient", icon: "heart", description: ["Find care and manage visits", "دور على رعاية وتابع زياراتك"] },
+  { role: "CLINICIAN", name: "Doctor", icon: "calendar", description: ["Schedule and consultations", "المواعيد والاستشارات"] },
+  { role: "PHARMACY_STAFF", name: "Pharmacy", icon: "pill", description: ["Prescription workspace", "مساحة عمل الروشتات"] },
+  { role: "LAB_STAFF", name: "Laboratory", icon: "lab", description: ["Future concept", "تصوّر مستقبلي"] },
+  { role: "ADMIN", name: "Admin", icon: "building", description: ["People and organizations", "الأشخاص والجهات"] },
 ];
+
+// Only explicit browser Demo transitions set this presentation target.
+let demoFocusDestination: string | null = null;
+
 export function Application({
   liveConfigured = true,
 }: {
   liveConfigured?: boolean;
 }) {
   const liveSession = useLiveSession();
-  const { t } = useLocale();
+  const { reset: resetTheme } = useFrontendV2Theme();
+  const { locale, t } = useLocale();
 
   const pathname = usePathname();
   const router = useRouter();
   const [api, setApi] = useState<HealthcareAdapter>();
   const [session, setSession] = useState<Session | null>(null);
   const [ready, setReady] = useState(false);
-  const [preview, setPreview] = useState<Preview>("ready");
+  const scenario = useDemoTestScenario(api?.mode === "demo");
+  const preview: Preview = scenario === "uncertain" ? "ready" : scenario;
   const [refresh, setRefresh] = useState(0);
   const [toast, setToast] = useState("");
+  useEffect(() => {
+    if (api?.mode !== "live" || !api.documentation) return;
+    const source = api.documentation;
+    if (!source.subscribe) return;
+    let stamp = source.scopeStamp();
+    return source.subscribe(() => {
+      const next = source.scopeStamp();
+      if (next !== stamp) { stamp = next; resetTheme(); }
+    });
+  }, [api, resetTheme]);
   const booking = useMemo(() => api && createBookingService(api), [api]);
   useEffect(() => {
     let active = true;
@@ -69,6 +88,7 @@ export function Application({
         : adapter.session();
     restored.then((s) => {
       if (active) {
+        if (!s) resetTheme();
         setSession(s);
         setReady(true);
       }
@@ -76,16 +96,22 @@ export function Application({
     return () => {
       active = false;
     };
-  }, [liveSession, liveConfigured]);
+  }, [liveSession, liveConfigured, resetTheme]);
   useEffect(() => {
     if (!toast) return;
     const timer = setTimeout(() => setToast(""), 4500);
     return () => clearTimeout(timer);
   }, [toast]);
   useEffect(() => {
-    setPreview("ready");
-  }, [pathname]);
+    if (!ready || !booking || session?.mode !== "demo" || pathname !== demoFocusDestination) return;
+    const target = document.getElementById("main");
+    if (!target) return;
+    demoFocusDestination = null;
+    target.focus({ preventScroll: true });
+  }, [booking, pathname, ready, session]);
   const chooseMode = (mode: Mode) => {
+    demoFocusDestination = null;
+    resetTheme();
     liveSession.clear();
     liveSession.selectMode(mode);
     const adapter =
@@ -99,11 +125,15 @@ export function Application({
     const s = await demo.enter(role);
     setSession(s);
     setRefresh((v) => v + 1);
-    router.push(path?.startsWith(`${homes[role]}/`) ? path : homes[role]);
+    const destination = path?.startsWith(`${homes[role]}/`) ? path : homes[role];
+    demoFocusDestination = destination;
+    router.push(destination);
   };
   const logout = async () => {
     try {
       await api?.logout();
+      demoFocusDestination = null;
+      resetTheme();
       setSession(null);
       router.push("/login");
     } catch (e) {
@@ -118,9 +148,7 @@ export function Application({
   if (!ready || !api || !booking)
     return (
       <main className={`${care.root} boot`}>
-        <bdi className={care.wordmark} dir="ltr">
-          EgyHealth 360
-        </bdi>
+        <span className={care.wordmark}><BrandLogo language={locale} /></span>
         <Loading />
       </main>
     );
@@ -211,16 +239,6 @@ export function Application({
         onRoleChange={enter}
         toast={toast}
         onDismiss={() => setToast("")}
-        screenState={{
-          value: preview,
-          change: (v) => setPreview(v as Preview),
-          items: [
-            ["ready", "Populated"],
-            ["loading", "Loading"],
-            ["empty", "Empty"],
-            ["error", "Error"],
-          ],
-        }}
       >
         {!allowed ? (
           <div className="empty">
@@ -255,81 +273,49 @@ function Login({
   onLive: (email: string, password: string) => Promise<void>;
   liveConfigured: boolean;
 }) {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
+  const ar = locale === "ar";
   return (
-    <main className={`${care.root} ${portal.login} login`}>
-      <section className="login-story">
-        <bdi className={care.wordmark} dir="ltr">
-          EgyHealth 360
-        </bdi>
-        <div>
-          <p className="eyebrow">{t("A healthier journey starts here")}</p>
-          <h1>
-            {t("All your care.")}
-            <br />
-            {t("One connected")}
-            <br />
-            <em>{t("experience.")}</em>
-          </h1>
-          <p>
-            {t(
-              "Find a doctor, manage your visit and read the care information your clinician shares.",
-            )}
-          </p>
-          <div className="journey-art">
-            <span>
-              <Icon name="search" size={30} />
-            </span>
-            <i />
-            <span>
-              <Icon name="heart" size={30} />
-            </span>
-            <i />
-            <span>
-              <Icon name="record" size={30} />
-            </span>
-          </div>
-          <div className="login-points">
-            <span>
-              <Icon name="check" />
-              {t("Find your care team")}
-            </span>
-            <span>
-              <Icon name="check" />
-              {t("Keep your health story together")}
-            </span>
-            <span>
-              <Icon name="check" />
-              {t("Stay connected after your visit")}
-            </span>
-          </div>
-        </div>
-        <small>{t("Designed for the EgyHealth 360 graduation project.")}</small>
-      </section>
-      <section className="login-form">
-        <div className="login-box">
+    <main className={`${care.root} ${recovery.entry}`} lang={locale} dir={ar ? "rtl" : "ltr"} data-frontend-v2>
+      <header className={recovery.entryHeader}>
+        <BrandLogo language={locale} />
+        <div className={recovery.entryTools}>
           <LanguageSwitch />
-          <span className="eyebrow">{t("Welcome to EgyHealth 360")}</span>
-          <h2>{t("Good to see you.")}</h2>
-          <p className="muted">
-            {t("Sign in to continue your healthcare journey.")}
-          </p>
-          <div className="entry-mode-note">
-            <Icon name="shield" size={18} />
-            <p>
-              {t(
-                liveConfigured
-                  ? "Sign in to your live care account. The demonstration portals below use separate fictional data."
-                  : "Explore the fictional demonstration below. Live sign-in is not available in this preview.",
-              )}
-            </p>
-          </div>
-          {liveConfigured && (
+          <details
+            className={recovery.entryTheme}
+            onKeyDown={(event) => {
+              if (event.key !== "Escape") return;
+              event.currentTarget.querySelector("summary")?.focus();
+              event.currentTarget.open = false;
+            }}
+          >
+            <summary aria-label={ar ? "المظهر" : "Appearance"}><Icon name="settings" size={20} /></summary>
+            <div><FrontendV2ThemeSwitch /></div>
+          </details>
+        </div>
+      </header>
+
+      <section className={recovery.entryHero} aria-labelledby="entry-title">
+        <div className={recovery.entryMessage}>
+          <p className={recovery.entryKicker}>{ar ? "رعاية متصلة" : "Connected healthcare"}</p>
+          <h1 id="entry-title">{t("All your care.")} <em>{ar ? "في مكان واحد." : "In one place."}</em></h1>
+          <p>{t("Find a doctor, manage your visit and read the care information your clinician shares.")}</p>
+          <a className={recovery.entryAction} href="#demo-workspaces">
+            {ar ? "استكشف البوابات" : "Explore workspaces"}<Icon name="arrow" size={20} />
+          </a>
+        </div>
+        <div className={recovery.entryImage} aria-hidden="true" />
+      </section>
+
+      <div className={recovery.entryContent}>
+        {liveConfigured && (
+          <section className={recovery.entrySignIn} aria-labelledby="live-sign-in">
+            <h2 id="live-sign-in">{t("Sign in with live account")}</h2>
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
@@ -378,44 +364,38 @@ function Login({
                 <Icon name="arrow" size={18} />
               </button>
             </form>
-          )}
-          <div className="divider">
-            <span>{t("Here for the presentation?")}</span>
+          </section>
+        )}
+        <section className={recovery.entryPortals} id="demo-workspaces" aria-labelledby="demo-workspaces-heading">
+          <div className={recovery.entryPortalHeading}>
+            <div>
+              <h2 id="demo-workspaces-heading">{ar ? "اختار مساحة العرض التجريبي" : "Choose a demo workspace"}</h2>
+              <p>{ar ? "خمس بوابات لاستكشاف رحلة الرعاية ببيانات تجريبية." : "Five workspaces to explore the care journey with fictional data."}</p>
+            </div>
+            <span className={recovery.entryDemoMark}><Icon name="shield" size={17} />{ar ? "عرض تجريبي" : "Synthetic demo"}</span>
           </div>
-          <button
-            className="button demo-button full"
-            disabled={pending}
-            onClick={() => {
-              void enter("PATIENT");
-            }}
-          >
-            {t("Explore the patient demo")}
-            <Icon name="arrow" size={18} />
-          </button>
-          <p className="demo-portals-note">
-            {t("Preview a portal with fictional data")}
-          </p>
-          <div className="demo-role-links">
-            {roles.slice(1).map((r) => (
+          <div className={recovery.entryPortalGrid}>
+            {roles.map(({ role, name, icon, description }) => (
               <button
-                key={r.role}
+                key={role}
+                className={role === "PATIENT" ? "demo-button" : undefined}
+                aria-label={t(role === "PATIENT" ? "Explore the patient demo" : name)}
                 disabled={pending}
-                onClick={() => {
-                  void enter(r.role);
-                }}
+                onClick={() => void enter(role)}
               >
-                {t(r.name)}
+                <span className={recovery.entryPortalIcon}><Icon name={icon} size={22} /></span>
+                <strong>{t(name)}</strong>
+                <span>{description[ar ? 1 : 0]}</span>
+                <Icon name="arrow" size={18} />
               </button>
             ))}
           </div>
-          <p className="login-disclosure">
-            <Icon name="shield" size={16} />
-            {t(
-              "The demo uses synthetic data saved only in this browser. It does not create a live session or backend clinical records.",
-            )}
+          <p className={recovery.entryDisclosure}>
+            <Icon name="shield" size={18} />
+            {t("The demo uses synthetic data saved only in this browser. It does not create a live session or backend clinical records.")}
           </p>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   );
 }

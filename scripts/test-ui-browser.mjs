@@ -1,10 +1,16 @@
+if (process.argv.includes("--pharmacy-read-lab")) {
+  await import("./support/ui-pharmacy-live-browser.mjs");
+  process.exit(0);
+}
+import { testCombinedV2 } from "./support/ui-v2-combined-browser.mjs";
+import { testV2PatientDoctor } from "./support/ui-v2-patient-doctor-browser.mjs";
 import { testR1Mode } from "./support/ui-r1-mode-browser.mjs";
 import { testInitialLocale } from "./support/ui-initial-locale-browser.mjs";
 import { testStagingTime } from "./support/ui-staging-time-browser.mjs";
 import {
   testPatientMyCare,
-  openDemoUtility,
-  toggleDemoControls,
+  switchDemoWorkspace,
+  setDemoScenario,
 } from "./support/ui-my-care-browser.mjs";
 import { testConsultationClose } from "./support/ui-consultation-close-browser.mjs";
 import { testClinicianMaster } from "./support/ui-clinician-master-browser.mjs";
@@ -94,8 +100,7 @@ try {
       .waitFor({ state: "visible" });
   };
   const switchRole = async (role) => {
-    await openDemoUtility(page);
-    await page.getByLabel("Demo workspace").selectOption(role);
+    await switchDemoWorkspace(page, role);
     await page.waitForURL(
       `**/${{ PATIENT: "patient", CLINICIAN: "doctor", PHARMACY_STAFF: "pharmacy", LAB_STAFF: "laboratory", ADMIN: "admin" }[role]}`,
     );
@@ -239,9 +244,8 @@ try {
     await page.goto(origin + route);
     await page.locator("#main").waitFor();
     await page.locator("#main .loading").first().waitFor({ state: "hidden" });
-    await toggleDemoControls(page);
     for (const state of ["loading", "empty", "error", "ready"]) {
-      await page.getByLabel("Screen state").selectOption(state);
+      await setDemoScenario(page, state);
       if (state === "loading")
         assert.ok(
           await page
@@ -264,7 +268,6 @@ try {
             : "We couldn’t load this view",
         );
     }
-    await toggleDemoControls(page);
   }
 
   const workspaceRoutes = [
@@ -297,9 +300,8 @@ try {
       await page.goto(origin + route);
       await page.locator("#main").waitFor();
       await page.locator("#main .loading").first().waitFor({ state: "hidden" });
-      await toggleDemoControls(page);
       for (const state of ["loading", "empty", "error", "ready"]) {
-        await page.getByLabel("Screen state").selectOption(state);
+        await setDemoScenario(page, state);
         if (state === "empty")
           await visible(
             route === "/patient"
@@ -313,7 +315,6 @@ try {
               : "We couldn’t load this view",
           );
       }
-      await toggleDemoControls(page);
     }
   }
   await switchRole("PATIENT");
@@ -411,7 +412,7 @@ try {
   await live.getByText("Live care", { exact: true }).waitFor();
   await live.getByText("Unavailable in the current Live interface", { exact: true }).waitFor();
   assert.equal(await live.locator(".error-panel").count(), 0);
-  assert.equal(await live.getByLabel("Demo workspace").count(), 0);
+  assert.equal(await live.locator("[data-workspace-switch]").count(), 0);
   assert.equal(
     await live
       .getByRole("navigation")
@@ -437,6 +438,8 @@ try {
   await testLiveAvailability(browser, origin, shots);
   await testPatientMyCare(browser, origin, shots);
   await testClinicianMaster(browser, origin);
+  await testV2PatientDoctor(browser, origin, shots);
+  await testCombinedV2(browser, origin, process.env.UI_V2_COMBINED_EVIDENCE_DIR);
   await testArabic(browser, origin, shots);
   await testPolish(browser, origin, shots);
   await testLiveJourney(browser, origin, shots);
@@ -445,6 +448,11 @@ try {
   await testConsultationOpening(browser, origin, shots);
   await testDocumentation(browser, origin, shots);
   await testConsultationClose(browser, origin);
+  await new Promise((done,reject) => {
+    const staff=spawn(process.execPath,["scripts/support/ui-v2-staff-browser.mjs"],{stdio:["ignore","pipe","pipe"]});
+    let output="";staff.stdout.on("data",chunk=>{output+=chunk;});staff.stderr.on("data",chunk=>{output+=chunk;});
+    staff.on("error",reject);staff.on("close",code=>code===0?(console.log(output.trim()),done()):reject(new Error("Staff browser proof failed: "+output)));
+  });
   assert.deepEqual(errors, []);
   console.log(
     "PASS: browser Golden Demo, role boundaries, patient privacy, reload continuity, 23 route state variants + live HTTP contract probe, desktop/tablet/mobile navigation and overflow; no browser exceptions.",

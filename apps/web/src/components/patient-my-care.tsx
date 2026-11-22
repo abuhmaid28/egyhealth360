@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   useEffect,
   useMemo,
-  useState,
   useSyncExternalStore,
   type ReactNode,
 } from "react";
@@ -29,8 +28,9 @@ import { Icon, useResource, type IconName } from "./ui";
 import styles from "./patient-my-care.module.css";
 import { PortalShell } from "./portal-shell";
 import { ReadContextCard, ReadStatusLabel } from "./v2/read-context";
+import { useDemoTestScenario } from "./v2/demo-test-scenario";
+import recovery from "./v2/visual-recovery.module.css";
 
-type ScreenState = "ready" | "loading" | "empty" | "error" | "uncertain";
 const noSubscribe = () => () => {};
 const demoStamp = () => "demo";
 type Copy = { [K in keyof MyCareCopy]: string };
@@ -67,7 +67,7 @@ function CareScreen({
   const { api, session, booking, refresh } = useApp();
   const { locale, t } = useLocale();
   const c: Copy = myCareCopy[locale];
-  const [preview, setPreview] = useState<ScreenState>("ready");
+  const state = useDemoTestScenario(api.mode === "demo");
   const names = useDirectoryNames();
   const profile = useResource(() => api.profile(), [api, refresh]);
   const visits = useResource<
@@ -139,7 +139,6 @@ function CareScreen({
           ownLiveAppointment(r, names?.providers ?? [], names?.clinics ?? []),
         )
       : (visits.data?.rows.map(ownDemoAppointment) ?? []);
-  const state = api.mode === "demo" ? preview : "ready";
   const next =
     state === "empty" ? undefined : nextCareAppointment(appointments);
   const recent =
@@ -175,25 +174,13 @@ function CareScreen({
         toast={toast}
         onDismiss={onDismiss}
         mainClassName={styles.main}
-        screenState={{
-          value: preview,
-          change: (v) => setPreview(v as ScreenState),
-          items: [
-            ["ready", c.populated],
-            ["loading", c.loadingState],
-            ["empty", c.emptyState],
-            ["error", c.errorState],
-            ["uncertain", c.uncertainState],
-          ],
-        }}
       >
-        <div className={styles.intro}>
-          <h1>
-            {c.greeting} <bdi>{firstName}</bdi>
-          </h1>
-          <p>
-            <span>{c.support}</span>
-          </p>
+        <div className={`${styles.intro} ${recovery.careIntro}`}>
+          <div>
+            <h1>{c.greeting} <bdi>{firstName}</bdi></h1>
+            <p>{c.support}</p>
+          </div>
+          <span className={recovery.heroGlyph} aria-hidden="true"><Icon name="heart" size={54} /></span>
         </div>
         {profile.error && (
           <p className={styles.profileError} role="alert" data-profile-error>
@@ -213,10 +200,7 @@ function CareScreen({
               visits.error ===
                 "Request verification failed. Refresh your session before retrying."
             }
-            retry={() => {
-              if (state === "error") setPreview("ready");
-              visits.retry();
-            }}
+            retry={visits.retry}
             translate={t}
           />
           <CareIndex
@@ -358,6 +342,9 @@ function AppointmentAnchor({
         </div>
       ) : a ? (
         <>
+          <time className={styles.dateTile} dateTime={a.startAt}>
+            <bdi>{careDate(a.startAt, a.timeZone, locale)}</bdi>
+          </time>
           <div className={styles.appointmentDetails}>
             <span
               className={styles.doctorAvatar}
@@ -385,7 +372,6 @@ function AppointmentAnchor({
             </div>
             <div className={styles.appointmentWhen}>
               <p>
-                <bdi>{careDate(a.startAt, a.timeZone, locale)}</bdi>{" "}
                 <bdi dir={locale === "ar" ? "rtl" : "ltr"}>
                   {new Intl.DateTimeFormat(
                     locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB",

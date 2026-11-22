@@ -1,4 +1,5 @@
 "use client";
+import { BrandLogo } from "../../components/brand-logo";
 import {
   createContext,
   useContext,
@@ -50,7 +51,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   if (locale === null)
     return (
       <main className={`${care.root} boot`} data-initial-locale>
-        <bdi className={care.wordmark} lang="en" dir="ltr">EgyHealth 360</bdi>
+        <span className={care.wordmark}><BrandLogo /></span>
         <div role="status" aria-live="polite" aria-atomic="true">
           <p lang="en" dir="ltr">Loading your workspace…</p>
           <p lang="ar" dir="rtl">بنجهّز مساحة العمل…</p>

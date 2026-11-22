@@ -1,4 +1,5 @@
 "use client";
+import { BrandLogo } from "./brand-logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
@@ -12,6 +13,10 @@ import { Icon, type IconName } from "./ui";
 import care from "./patient-my-care.module.css";
 import styles from "./portal-shell.module.css";
 
+import { FrontendV2ThemeSwitch } from "./v2/frontend-v2-theme";
+import v2 from "./v2/patient-doctor-layout.module.css";
+import recovery from "./v2/visual-recovery.module.css";
+
 type Destination = [string, string, IconName];
 const homes: Record<Role, string> = {
   PATIENT: "/patient",
@@ -20,12 +25,12 @@ const homes: Record<Role, string> = {
   LAB_STAFF: "/laboratory",
   ADMIN: "/admin",
 };
-const roles: [Role, string][] = [
-  ["PATIENT", "Patient"],
-  ["CLINICIAN", "Doctor"],
-  ["PHARMACY_STAFF", "Pharmacy"],
-  ["LAB_STAFF", "Laboratory"],
-  ["ADMIN", "Admin"],
+const roles: [Role, string, IconName][] = [
+  ["PATIENT", "Patient", "heart"],
+  ["CLINICIAN", "Doctor", "calendar"],
+  ["PHARMACY_STAFF", "Pharmacy", "pill"],
+  ["LAB_STAFF", "Laboratory", "lab"],
+  ["ADMIN", "Admin", "building"],
 ];
 export interface PortalShellProps {
   children: ReactNode;
@@ -36,11 +41,6 @@ export interface PortalShellProps {
   mainClassName?: string;
   footerNote?: string;
   patientMyCareV2?: boolean;
-  screenState?: {
-    value: string;
-    change: (value: string) => void;
-    items: [string, string][];
-  };
 }
 /** Presentation only: destinations remain role scoped; screens retain their own Live readers and commands. */
 export function PortalShell({
@@ -52,7 +52,6 @@ export function PortalShell({
   mainClassName,
   footerNote,
   patientMyCareV2 = false,
-  screenState,
 }: PortalShellProps) {
   const { api, session } = useApp();
   const { locale, t } = useLocale();
@@ -129,21 +128,24 @@ export function PortalShell({
       (path === "/doctor" ||
         /^\/doctor\/(appointments|consultation)\//.test(path)));
   const links = (items: Destination[]) =>
-    items.map(([href, label]) => (
+    items.map(([href, label, icon]) => (
       <Link
         key={href}
         href={href}
         aria-current={active(href) ? "page" : undefined}
       >
-        {label}
+        <Icon name={icon} size={17} />
+        <span>{label}</span>
       </Link>
     ));
   return (
     <div
-      className={`${care.root} ${styles.root}${myCareV2 ? ` ${styles.patientMyCareV2}` : ""}`}
+      className={`${care.root} ${styles.root} ${v2.root} ${recovery.shell}${myCareV2 ? ` ${styles.patientMyCareV2}` : ""}`}
       lang={locale}
       dir={locale === "ar" ? "rtl" : "ltr"}
       data-portal-shell={session.role}
+      data-frontend-v2
+      data-frontend-v2-content={patient || clinician || undefined}
       data-patient-my-care-v2={myCareV2 || undefined}
     >
       <a className={care.skip} href="#main" onClick={myCareV2 ? (event) => {
@@ -155,14 +157,14 @@ export function PortalShell({
       } : undefined}>
         {c.skip}
       </a>
-      <header className={care.header}>
+      <header className={`${care.header} ${recovery.header}`}>
         <div className={`${care.headerInner} ${styles.header}`}>
           <Link
             href={home}
             className={care.wordmark}
             aria-label="EgyHealth 360"
           >
-            <bdi dir="ltr">EgyHealth 360</bdi>
+            <BrandLogo decorative language={locale} />
           </Link>
           <nav
             className={`${care.primaryNav} ${styles.primary}`}
@@ -183,14 +185,53 @@ export function PortalShell({
               </span>
             )}
           </nav>
-          <div className={`${care.utilities} ${styles.utilities}`}>
-            <span className={styles.mode} data-session-mode={api.mode}>
+          <div className={`${care.utilities} ${styles.utilities} ${recovery.headerUtilities}`}>
+            <span className={styles.mode} data-session-mode={api.mode} data-demo-indication={api.mode === "demo" || undefined}>
               {api.mode === "live"
                 ? c.live
                 : locale === "ar"
                   ? "وضع التجربة"
                   : "Demo mode"}
             </span>
+            {api.mode === "demo" && session.mode === "demo" && onRoleChange && (
+              <details
+                className={recovery.workspace}
+                data-workspace-switch
+                onKeyDown={(event) => {
+                  if (event.key !== "Escape") return;
+                  event.currentTarget.querySelector("summary")?.focus();
+                  event.currentTarget.open = false;
+                }}
+              >
+                <summary>
+                  <Icon name="grid" size={17} />
+                  <span>{locale === "ar" ? "بدّل مساحة العمل" : "Switch workspace"}</span>
+                  <Icon name="chevron" size={15} />
+                </summary>
+                <div className={recovery.workspaceList}>
+                  {roles.map(([role, label, icon]) => (
+                    <button
+                      key={role}
+                      type="button"
+                      data-workspace-role={role}
+                      aria-current={role === session.role ? "true" : undefined}
+                      onClick={(event) => {
+                        const menu = event.currentTarget.closest("details");
+                        if (menu) {
+                          menu.querySelector("summary")?.focus();
+                          menu.open = false;
+                        }
+                        if (role !== session.role) void onRoleChange(role);
+                      }}
+                    >
+                      <Icon name={icon} size={19} />
+                      <span>{t(label)}</span>
+                      {role === session.role && <Icon name="check" size={16} />}
+                    </button>
+                  ))}
+                </div>
+              </details>
+            )}
             <LanguageSwitch />
             <details
               className={styles.account}
@@ -206,7 +247,19 @@ export function PortalShell({
               </summary>
               <div>
                 <bdi>{name}</bdi>
+                <FrontendV2ThemeSwitch />
                 <Link href={settings}>{c.settings}</Link>
+                {api.mode === "demo" && session.mode === "demo" && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      (api as ReturnType<typeof createDemoAdapter>).reset();
+                      void onLogout();
+                    }}
+                  >
+                    {t("Reset demo journey")}
+                  </button>
+                )}
                 <button onClick={() => void onLogout()}>{c.signOut}</button>
               </div>
             </details>
@@ -214,7 +267,7 @@ export function PortalShell({
         </div>
         {!myCareV2 && secondary.length > 0 && (
           <nav
-            className={styles.secondary}
+            className={`${styles.secondary} ${recovery.secondaryNav}`}
             aria-label={
               locale === "ar" ? "روابط مساحة العمل" : "Workspace navigation"
             }
@@ -236,75 +289,10 @@ export function PortalShell({
         <bdi dir="ltr">© 2026 EgyHealth 360</bdi>
         {footerNote && <span>{footerNote}</span>}
         <button onClick={() => void onLogout()}>{c.signOut}</button>
-        {api.mode === "demo" && (
-          <details
-            className={care.demoTools}
-            data-demo-utility
-            onKeyDown={(e) => {
-              if (e.key === "Escape") {
-                e.currentTarget.open = false;
-                e.currentTarget.querySelector("summary")?.focus();
-              }
-            }}
-          >
-            <summary>
-              <span className={care.demoLabel}>
-                {c.demoUtility}
-                <small className={care.demoIndication} data-demo-indication>
-                  {c.demo}
-                </small>
-              </span>
-              <Icon name="chevron" size={16} />
-            </summary>
-            <div className={care.demoPanel}>
-              {onRoleChange && (
-                <label>
-                  {c.demoWorkspace}
-                  <select
-                    aria-label={c.demoWorkspace}
-                    value={session.role}
-                    onChange={(e) => void onRoleChange(e.target.value as Role)}
-                  >
-                    {roles.map(([role, label]) => (
-                      <option key={role} value={role}>
-                        {t(label)}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              )}
-              {screenState && (
-                <label>
-                  {c.screenState}
-                  <select
-                    aria-label={c.screenState}
-                    value={screenState.value}
-                    onChange={(e) => screenState.change(e.target.value)}
-                  >
-                    {screenState.items.map(([value, label]) => (
-                      <option key={value} value={value}>
-                        {t(label)}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              )}
-              <button
-                type="button"
-                onClick={() => {
-                  (api as ReturnType<typeof createDemoAdapter>).reset();
-                  void onLogout();
-                }}
-              >
-                {t("Reset demo journey")}
-              </button>
-            </div>
-          </details>
-        )}
       </footer>
       {patient && !myCareV2 && (
         <nav
-          className={care.bottomNav}
+          className={`${care.bottomNav} ${recovery.mobileNav}`}
           aria-label={c.primary}
           data-bottom-navigation
         >
