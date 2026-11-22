@@ -62,3 +62,35 @@ Focused tests: `tests/pharmacy.test.mjs` and `tests/integration/pharmacy*.test.m
 `node scripts/verify-pharmacy-runtime.mjs` runs an isolated actual HTTP journey: clinician login/draft/sign, active pharmacy selection, explicit routing, staff login/queue/accept/dispense, patient FULLY_DISPENSED history, reversal, duplicate prevention, source replacement/cancellation, privacy and membership/org revocation. CI invokes it inside the built Docker runtime alongside preserved Slice 1 and I2 verifiers. Final test counts and exact-head CI evidence are recorded in the PR handoff.
 
 No laboratory implementation, partial dispense, refill, substitution, inventory/payment/delivery, actual-use/adherence inference, notifications, I4/I5/EACCE/AI, unrelated UI or production promotion is included. `egyhealth360.vercel.app` is untouched.
+
+## S1 backend readiness — own pharmacy organization context
+
+GET/HEAD `/api/v1/pharmacies/context` returns only the current authenticated
+PHARMACY_STAFF user's active PHARMACY organizations with active, unended, matching
+memberships: `{data:[{id,name}],meta:{page,pageSize,total}}`. This is operational
+context discovery, never a clinical or routed-artifact grant. Every queue/detail
+request independently reauthorizes its exact current organization, membership,
+artifact and privacy. The clinician-only destinations endpoint is not staff discovery.
+
+Only canonical GET/HEAD and page/pageSize are accepted (page 1–10000, size 1–100).
+Purpose, selectors, search, duplicate/unknown queries, bodies and aliases are rejected.
+Responses are no-store; HEAD runs identical checks with no body. Invalid sessions
+return 401, wrong roles 404, malformed requests 400 and unavailable queries 503.
+An authorized successful query with zero eligible memberships returns an empty array;
+errors never become empty success. No membership, user, patient or artifact identifiers
+or clinical counts are disclosed; total counts only eligible own organizations.
+
+Discovery locks the current user/session before own organization and membership rows
+in deterministic order, coordinates with actual revocation writers, and rechecks
+current authority after waits and before projection/commit. Discovery-first may finish
+before revocation; revocation-first excludes revoked context or denies invalid identity.
+It does not recall already authorized responses or create a reusable authorization ticket.
+
+History Route.items is always an array, including `[]` when an otherwise visible,
+authorized ACCEPTED terminal route has no actual dispense facts. Only the nested
+aggregate's zero-row representation changes: eligibility, privacy, counts, pagination,
+recorded/derived states, immutable dispensing/corrections and quantity strings remain
+unchanged. Null/malformed responses remain invalid for the inactive S0 frontend parser.
+
+This candidate does not activate frontend Live, authorize clinical commands, establish
+hosted source/database/session parity, or clear F06/E2 or any release gate.
