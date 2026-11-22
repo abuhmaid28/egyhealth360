@@ -113,9 +113,10 @@ export function Application({
     demoFocusDestination = null;
     resetTheme();
     liveSession.clear();
-    liveSession.selectMode(mode);
+    const effective: Mode = mode === "live" && !liveConfigured ? "demo" : mode;
+    liveSession.selectMode(effective);
     const adapter =
-      mode === "live" ? liveSession.adapter() : liveSession.demo();
+      effective === "live" ? liveSession.adapter() : liveSession.demo();
     setApi(adapter);
     return adapter;
   };
@@ -158,6 +159,11 @@ export function Application({
         liveConfigured={liveConfigured}
         enter={enter}
         onLive={async (email, password) => {
+          if (!liveConfigured) {
+            throw new Error(
+              "This preview offers the browser-only demo. Live sign-in is unavailable until a backend is connected.",
+            );
+          }
           const live = chooseMode("live");
           const s = await live.login(email, password);
           setSession(s);
@@ -313,7 +319,7 @@ function Login({
       </section>
 
       <div className={recovery.entryContent}>
-        {liveConfigured && (
+        {liveConfigured ? (
           <section className={recovery.entrySignIn} aria-labelledby="live-sign-in">
             <h2 id="live-sign-in">{t("Sign in with live account")}</h2>
             <form
@@ -365,6 +371,15 @@ function Login({
               </button>
             </form>
           </section>
+        ) : (
+          <aside className={`entry-mode-note ${recovery.entrySignIn}`} role="status">
+            <Icon name="shield" size={18} />
+            <p>
+              {t(
+                "This preview offers the browser-only demo. Live sign-in is unavailable until a backend is connected.",
+              )}
+            </p>
+          </aside>
         )}
         <section className={recovery.entryPortals} id="demo-workspaces" aria-labelledby="demo-workspaces-heading">
           <div className={recovery.entryPortalHeading}>

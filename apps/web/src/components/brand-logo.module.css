@@ -1,11 +1,31 @@
-.logo { display: inline-block; inline-size: 220px; max-inline-size: 100%; vertical-align: middle; line-height: 0; flex-shrink: 0; }
-.logo picture { display: block; }
-.logo img { display: block; inline-size: 100%; block-size: auto; }
-.logo .dark { display: none; }
-:global(html[data-frontend-v2-theme="dark"]) .logo .light { display: none; }
-:global(html[data-frontend-v2-theme="dark"]) .logo .dark { display: block; }
-@media (prefers-color-scheme: dark) {
-  :global(html:not([data-frontend-v2-theme="light"])) .logo .light { display: none; }
-  :global(html:not([data-frontend-v2-theme="light"])) .logo .dark { display: block; }
+.logo {
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: 100%;
+  vertical-align: middle;
+  line-height: 1.1;
+  flex-shrink: 0;
 }
-@media (max-width: 480px) { .logo { inline-size: 168px; } }
+.wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.34em;
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--v2-ink, var(--ink, #17142b));
+  border-block-end: 2px solid var(--v2-accent, #dd9c70);
+  padding-block-end: 2px;
+  white-space: nowrap;
+}
+.logo[dir="rtl"] .wordmark {
+  letter-spacing: 0;
+  font-size: 1.05rem;
+}
+.accent {
+  color: var(--v2-action, var(--teal-dark, #5b48b8));
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 480px) {
+  .wordmark { font-size: 0.96rem; }
+}

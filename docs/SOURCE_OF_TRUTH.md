@@ -51,6 +51,7 @@ All tracked documentation Markdown paths are classified below. Research files ar
 | Combined PR #154 Release Readiness | Responsibility / limits |
 | --- | --- |
 | [RELEASE_READINESS_135_149.md](RELEASE_READINESS_135_149.md) | Consolidated Product Acceptance, complete AP05 asset-rights inventory, five-portal visual/UX/responsive/a11y audit, CI pin-coupling disclosure, hosting/F06-E2 prerequisites, acceptance tier distinction matrix and release sequence for PR `#154` (`14694a7e`); read-only audit only. |
+| [SAFE_DEMO_PREVIEW_DEPLOYMENT.md](SAFE_DEMO_PREVIEW_DEPLOYMENT.md) | Isolated synthetic Demo preview branch (`preview/egyhealth360-safe-demo` -> PR `#155`) specification: deletes 12 AP05-unverified assets, substitutes text wordmark/CSS gradients/initials, locks `EH_PREVIEW_DEMO_ONLY=1` fail-closed isolation, and forbids Live/production/domain reuse. |
 
 | Package A candidate | Responsibility / limits |
 | --- | --- |

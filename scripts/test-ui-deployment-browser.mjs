@@ -121,7 +121,7 @@ try {
       })
       .click();
     await page.waitForURL("**/patient");
-    await page.locator(".patient-journey").waitFor();
+    await page.locator('[data-portal-shell="PATIENT"], .patient-journey').first().waitFor();
     assert.deepEqual(calls, []);
     assert.deepEqual(errors, []);
     await page.close();

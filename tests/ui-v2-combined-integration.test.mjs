@@ -260,6 +260,9 @@ const expressiveDoctorOverlay = {
 const qaRecoveryOverlay = {
   "scripts/support/ui-v2-patient-doctor-browser.mjs": "56ef00878d1d0da45a6ae0cea42c761810b19a10"
 };
+const safeDemoPreviewOverlay = {
+  "apps/web/src/components/application.tsx": "eb5814cecead642c2215a93fd499bd19221862fb"
+};
 test("Combined pins and historical P2 overlays are retained, with explicit Visual Recovery overrides", () => {
   assert.equal(pinned.length,44);assert.equal(Object.keys(overlays).length,7);
   assert.equal(pinned.filter(r=>!Object.hasOwn(overlays,r.path)).length,37);
@@ -273,7 +276,9 @@ test("Combined pins and historical P2 overlays are retained, with explicit Visua
   assert.equal(visualRecoveryOverlays["apps/web/src/components/patient.tsx"], "507eef5fb8b76577850888ce438541da4cbfd75b");
   assert.deepEqual(Object.keys(qaRecoveryOverlay), ["scripts/support/ui-v2-patient-doctor-browser.mjs"]);
   assert.equal(visualRecoveryOverlays["scripts/support/ui-v2-patient-doctor-browser.mjs"], "b8a19cd02beb019ff9d1314a2955e5406a36cf6c");
-  for(const r of pinned){const bytes=readFileSync(r.path);const hash=createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");assert.equal(hash,qaRecoveryOverlay[r.path]??expressiveDoctorOverlay[r.path]?.blob??expressiveDiscoveryOverlay[r.path]??visualRecoveryOverlays[r.path]??overlays[r.path]??r.blob,r.path);assert.equal(statSync(r.path).mode&0o111?"100755":"100644",r.mode,r.path);}
+  assert.deepEqual(Object.keys(safeDemoPreviewOverlay), ["apps/web/src/components/application.tsx"]);
+  assert.equal(visualRecoveryOverlays["apps/web/src/components/application.tsx"], "5327813efdddf753b522bb36a36b3e73ebea8931");
+  for(const r of pinned){const bytes=readFileSync(r.path);const hash=createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");assert.equal(hash,safeDemoPreviewOverlay[r.path]??qaRecoveryOverlay[r.path]??expressiveDoctorOverlay[r.path]?.blob??expressiveDiscoveryOverlay[r.path]??visualRecoveryOverlays[r.path]??overlays[r.path]??r.blob,r.path);assert.equal(statSync(r.path).mode&0o111?"100755":"100644",r.mode,r.path);}
 });
 const webRequire = createRequire(resolve("apps/web/package.json"));
 const React = webRequire("react");

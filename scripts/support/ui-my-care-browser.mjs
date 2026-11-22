@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { createHash } from "node:crypto";
 import ts from "typescript";
 
 function moduleValue(path) {
@@ -88,50 +87,35 @@ const booking = {
 };
 
 // Controlled browser measurements, not a WCAG certification or hosted/clinical acceptance.
-// Independent constants from the approved source-exact DP02 handoff, not hashes
-// computed from whatever happens to be in the candidate's public directory.
-const dp02Hashes = {
-  "compact-ar-dark": "bbed526c401f31fefdd1b98d8ab62c64663f2b03b1b8b0ef24a5f81498ea922d",
-  "compact-ar-light": "d83098460ac57d43801314dd5a8f96fa40b72268ae27893b302a0661e8ca89ff",
-  "compact-en-dark": "6ad7f9b61b1a43308e16e8d0a6a4bf80c389bac29d46d292eef938af8e2120c3",
-  "compact-en-light": "e49f02c9e4a7619ca8265d9d01e8e8a3b52176ec4654658b72e2cac6bf60b887",
-  "primary-ar-dark": "f96e38a2a6e1e7273edd57b8e98005f28b0894efa03ffba41ef2c0394a5196da",
-  "primary-ar-light": "76d14637666b2d9aadbdc211223454c3f216bff38927c11577ed4d77abce4fa4",
-  "primary-en-dark": "eaa33073140aff82d87d34e134157671f7f8d38ac625618a26b69978641bddd5",
-  "primary-en-light": "f6935c1441d2e68092109425d31f707621f6ec33b405d6ceb00fc0876f53b54e",
-};
+// Preview-only verification: DP02 SVGs were removed under AP05 remediation and replaced by an
+// accessible text-only wordmark until rights/trademark proofs close.
 export async function verifyDp02Brand(page, locale) {
   const homes = { PATIENT: "/patient", CLINICIAN: "/doctor", PHARMACY_STAFF: "/pharmacy", ADMIN: "/admin", LAB_STAFF: "/laboratory" };
   const role = await page.locator("[data-portal-shell]").getAttribute("data-portal-shell");
   const link = page.getByRole("link", { name: "EgyHealth 360", exact: true });
   assert.equal(await link.count(), 1);
   assert.equal(await link.getAttribute("href"), homes[role]);
-  assert.equal(await link.locator("[data-dp02-logo]").getAttribute("aria-hidden"), "true");
-  const rendered = await link.locator("picture:visible img").evaluate(async img => {
-    await img.decode();
-    const r = img.getBoundingClientRect();
+  const wordmark = link.locator('[data-preview-brand="text-only"]');
+  assert.equal(await wordmark.count(), 1);
+  assert.equal(await wordmark.getAttribute("aria-hidden"), "true");
+  assert.equal(await link.locator("img, svg").count(), 0);
+  const rendered = await wordmark.evaluate(el => {
+    const r = el.getBoundingClientRect();
     const theme = globalThis.document.documentElement.getAttribute("data-frontend-v2-theme") ?? (globalThis.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    return { src: img.currentSrc, width: r.width, height: r.height, naturalWidth: img.naturalWidth, naturalHeight: img.naturalHeight, theme, compact: globalThis.innerWidth <= 480, alt: img.alt };
+    return { text: el.textContent.trim(), width: r.width, height: r.height, theme, compact: globalThis.innerWidth <= 480 };
   });
+  assert.match(rendered.text, locale === "ar" ? /إيجي هيلث\s*360/ : /EgyHealth\s*360/);
+  assert.ok(rendered.width >= 70 && rendered.height >= 16, JSON.stringify(rendered));
   const variant = `${rendered.compact ? "compact" : "primary"}-${locale}-${rendered.theme}`;
-  const asset = new URL(`/brand/dp02/${variant}.svg`, page.url());
-  assert.ok(["127.0.0.1", "localhost"].includes(asset.hostname), "Brand verification is local-only");
-  assert.equal(rendered.src, asset.href);
-  assert.equal(rendered.alt, "");
-  assert.ok(rendered.width >= 100 && rendered.height >= 20 && rendered.naturalWidth > 0, JSON.stringify({ variant, width: rendered.width, height: rendered.height }));
-  const response = await page.request.get(asset.href, { maxRedirects: 0 });
-  assert.equal(response.status(), 200);
-  const bytes = await response.body();
-  assert.equal(createHash("sha256").update(bytes).digest("hex"), dp02Hashes[variant]);
-  assert.match(bytes.toString("utf8"), /viewBox="0 0 780 145"/);
-  // Dimensionless SVG naturalHeight is integer-rounded (300x56), not the
-  // artwork's exact780:145 geometry. Allow only one CSS layout quantum.
-  assert.ok(Math.abs(rendered.height - rendered.width * 145 / 780) <= 1 / 64, "Original verified SVG aspect ratio");
+  const removedAsset = new URL(`/brand/dp02/${variant}.svg`, page.url());
+  assert.ok(["127.0.0.1", "localhost"].includes(removedAsset.hostname), "Brand verification is local-only");
+  const response = await page.request.get(removedAsset.href, { maxRedirects: 0 });
+  assert.equal(response.status(), 404, "Unverified DP02 asset must remain removed on preview");
   await link.focus();
   assert.equal(await link.evaluate(el => el === globalThis.document.activeElement), true);
   await link.press("Enter");
-  await page.waitForURL(asset.origin + homes[role]);
-  return { variant, sha256: dp02Hashes[variant], width: rendered.width, height: rendered.height, accessibleHomeLink: true };
+  await page.waitForURL(removedAsset.origin + homes[role]);
+  return { variant: `text-only-${variant}`, sha256: null, width: rendered.width, height: rendered.height, accessibleHomeLink: true };
 }
 async function measurePresentation(page, locale) {
   const cdp = await page.context().newCDPSession(page);
