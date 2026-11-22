@@ -1,4 +1,4 @@
-Current combined local candidate: [Frontend V2 Combined Integration receipt](frontend-v2-slices/FRONTEND_V2_COMBINED_INTEGRATION.md), under [Owner GO](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900321063) and [14/44 scope amendment](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900745939). Local validation/reviews PASS;publication blocked by deployment-trigger visibility.58-path ceiling;no combined remoteCI,merge,deployment,Live or release acceptance.
+Current verified combined candidate: [Draft PR #154](https://github.com/abuhmaid28/egyhealth360/pull/154) (`integrate/135-149-final-candidate` @ `14694a7e0aff9cccae8eef3c53a6f537d7568764`, official CI Run [`45043757862`](https://github.com/abuhmaid28/egyhealth360/actions/runs/45043757862) **8/8 SUCCESS**) and [Product Acceptance & Release Readiness Report](RELEASE_READINESS_135_149.md). *(Historical pre-publication combined local receipt: [Frontend V2 Combined Integration receipt](frontend-v2-slices/FRONTEND_V2_COMBINED_INTEGRATION.md), under [Owner GO](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900321063) and [14/44 scope amendment](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900745939).)*
 
 # Source of truth and document index
 
@@ -47,6 +47,10 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| Combined PR #154 Release Readiness | Responsibility / limits |
+| --- | --- |
+| [RELEASE_READINESS_135_149.md](RELEASE_READINESS_135_149.md) | Consolidated Product Acceptance, complete AP05 asset-rights inventory, five-portal visual/UX/responsive/a11y audit, CI pin-coupling disclosure, hosting/F06-E2 prerequisites, acceptance tier distinction matrix and release sequence for PR `#154` (`14694a7e`); read-only audit only. |
 
 | Package A candidate | Responsibility / limits |
 | --- | --- |
