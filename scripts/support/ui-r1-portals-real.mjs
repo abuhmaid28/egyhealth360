@@ -36,7 +36,16 @@ export async function testR1OperationalPortals(browser, f) {
       await page.locator(`[data-portal-shell="${role}"]`).waitFor();
       await page.locator("#main .loading").first().waitFor({ state: "hidden" });
       assert.equal(await page.getByLabel("Demo workspace").count(), 0);
-      if (!path.endsWith("/settings"))
+      if (role === "PHARMACY_STAFF" && !path.endsWith("/settings")) {
+        await page
+          .getByRole("heading", {
+            name: "Pharmacy permitted reads",
+            exact: true,
+          })
+          .waitFor();
+        await page.locator("[data-read-status][role=alert]").waitFor();
+        assert.equal(await page.locator("[data-pharmacy-read] select").count(), 0);
+      } else if (!path.endsWith("/settings"))
         await page
           .getByText("Unavailable in the current Live interface", {
             exact: true,
