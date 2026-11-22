@@ -43,8 +43,25 @@ export async function testR1OperationalPortals(browser, f) {
             exact: true,
           })
           .waitFor();
-        await page.locator("[data-read-status][role=alert]").waitFor();
-        assert.equal(await page.locator("[data-pharmacy-read] select").count(), 0);
+        await page
+          .locator('[data-read-status][role="status"]')
+          .filter({ hasText: "No permitted rows on this page" })
+          .waitFor();
+        await page
+          .getByText("Own organizations: 0; page 1", { exact: true })
+          .waitFor();
+        assert.equal(
+          await page
+            .locator('[data-pharmacy-read] select[aria-label="Pharmacy organization"] option')
+            .count(),
+          1,
+        );
+        assert.equal(
+          await page
+            .locator('[data-pharmacy-read] select[aria-label="Purpose"], [data-queue-meta], [data-route-detail]')
+            .count(),
+          0,
+        );
       } else if (!path.endsWith("/settings"))
         await page
           .getByText("Unavailable in the current Live interface", {
