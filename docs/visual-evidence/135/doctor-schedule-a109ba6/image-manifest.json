@@ -1,0 +1,341 @@
+{
+  "state": "original evidence",
+  "images": [
+    {
+      "file": "after-ar-dark-1440.png",
+      "sha256": "c10691769e0a4d2ccc4b49e13bf7f277137ae5192c52cdc9f8af0e2d766740f5",
+      "bytes": 231999,
+      "pngPx": [
+        1440,
+        1205
+      ],
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "after-ar-dark-390.png",
+      "sha256": "4f68821a7d1e77c2a9676eaa99526096020e49167b746aa6fd006d59280eb752",
+      "bytes": 148124,
+      "pngPx": [
+        390,
+        1721
+      ],
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "after-ar-light-1440.png",
+      "sha256": "2a4872dc011e7048a10cbe27bd13577d9e032b1a360c52a930caa1257fdf9ee5",
+      "bytes": 231771,
+      "pngPx": [
+        1440,
+        1205
+      ],
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "after-ar-light-390.png",
+      "sha256": "36d3c954e0cce0d8c10deceb2010b899ec353aa10cd98ef3f901ceb127f29000",
+      "bytes": 149298,
+      "pngPx": [
+        390,
+        1721
+      ],
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "after-en-dark-1440.png",
+      "sha256": "2210178e245dc71ac866f4d2fee945be5eb0769bf4bf73482903c03793ebeec7",
+      "bytes": 244161,
+      "pngPx": [
+        1440,
+        1122
+      ],
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "after-en-dark-390.png",
+      "sha256": "0fe97209ccf4ff8b223608a1e281e9d07942c77550182d4d37e512e9e3e2499c",
+      "bytes": 160699,
+      "pngPx": [
+        390,
+        1629
+      ],
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / dark",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "after-en-light-1440.png",
+      "sha256": "e6a0e12dfcebd2eaaa88a7d445080d325ab900267ffb28d3101be0b9146be254",
+      "bytes": 243012,
+      "pngPx": [
+        1440,
+        1122
+      ],
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "after-en-light-390.png",
+      "sha256": "878f10826e03ef41ead39730e99304a77f7d0cdf8298ef5cd3be2cefeb207dca",
+      "bytes": 161204,
+      "pngPx": [
+        390,
+        1629
+      ],
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "standard full-page",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "before-ar-1440.png",
+      "sha256": "f4dcaa8772f4a3aeee9d6dcc9df047c19c6a78b561cc3c17e2b5d8c7c3ff46a0",
+      "bytes": 109506,
+      "pngPx": [
+        1440,
+        1000
+      ],
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "7b5973b85a458d6603ca944b401f6444985244ed",
+      "sourceTree": "2dcfa1024d2e2a3e0e5004a162d830440fa91d6c",
+      "reviewVerdict": "Reference baseline"
+    },
+    {
+      "file": "before-ar-390.png",
+      "sha256": "d71e8732c7b89dfb627dddd9739d542bdca5bae53e9f381a3fb49e115a4dbc22",
+      "bytes": 96284,
+      "pngPx": [
+        390,
+        1599
+      ],
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "7b5973b85a458d6603ca944b401f6444985244ed",
+      "sourceTree": "2dcfa1024d2e2a3e0e5004a162d830440fa91d6c",
+      "reviewVerdict": "Reference baseline"
+    },
+    {
+      "file": "before-en-1440.png",
+      "sha256": "00a3a7d3a5be251584df54d401c3c9880acc944f92b0b6ea7401aed491704f41",
+      "bytes": 118778,
+      "pngPx": [
+        1440,
+        1000
+      ],
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "7b5973b85a458d6603ca944b401f6444985244ed",
+      "sourceTree": "2dcfa1024d2e2a3e0e5004a162d830440fa91d6c",
+      "reviewVerdict": "Reference baseline"
+    },
+    {
+      "file": "before-en-390.png",
+      "sha256": "ec08331ad3090e52eb34ad370cccd6e4fc84523d5c44729dcb4da6657c9b6993",
+      "bytes": 104434,
+      "pngPx": [
+        390,
+        1609
+      ],
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 390,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "before",
+      "capture": "standard full-page",
+      "sourceHead": "7b5973b85a458d6603ca944b401f6444985244ed",
+      "sourceTree": "2dcfa1024d2e2a3e0e5004a162d830440fa91d6c",
+      "reviewVerdict": "Reference baseline"
+    },
+    {
+      "file": "text-200-ar.png",
+      "sha256": "8c33521ff02cb4f22328f49d25bb637c6fb6d5c93005e631a7bef24f3b100863",
+      "bytes": 178016,
+      "pngPx": [
+        320,
+        4080
+      ],
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 320,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "200% text / Forced Colors / reduced motion",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "text-200-en.png",
+      "sha256": "7e27b6bfa21e97b325f2426ba16d64c25e9699ca5c7b73535b8d0a3841b5495a",
+      "bytes": 210484,
+      "pngPx": [
+        320,
+        4508
+      ],
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 320,
+        "height": 1000
+      },
+      "theme": "System / light",
+      "role": "after",
+      "capture": "200% text / Forced Colors / reduced motion",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "zoom-ar.png",
+      "sha256": "4cb4ecc0e13cf646d8cc1e714aa4721bfeb48c2109479cfddee794bbeb389f3f",
+      "bytes": 161142,
+      "pngPx": [
+        640,
+        1653
+      ],
+      "locale": "ar",
+      "direction": "rtl",
+      "viewportCssPx": {
+        "width": 320,
+        "height": null
+      },
+      "theme": "System / browser default",
+      "role": "after",
+      "capture": "Chromium native page zoom 200%",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    },
+    {
+      "file": "zoom-en.png",
+      "sha256": "acb1612845f5ec4b446b8ca563f07aee59cd3cc977a0ffdaff7391192bb6b456",
+      "bytes": 155359,
+      "pngPx": [
+        640,
+        1653
+      ],
+      "locale": "en",
+      "direction": "ltr",
+      "viewportCssPx": {
+        "width": 320,
+        "height": null
+      },
+      "theme": "System / browser default",
+      "role": "after",
+      "capture": "Chromium native page zoom 200%",
+      "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+      "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+      "reviewVerdict": "Candidate-level UX and security PASS. Owner visual acceptance pending."
+    }
+  ]
+}

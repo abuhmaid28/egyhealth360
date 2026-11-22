@@ -1,0 +1,54 @@
+{
+  "baseHead": "15ce0b379ee7f8430ae63cf1f159a6d480189b50",
+  "baseTree": "5bd412d06e1f9b29de79471894e61337c7c03ea3",
+  "sourceHead": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+  "sourceTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+  "diffSha256": "0e42a62fe3b500aea51c199ee5ce353fae0b43d766c50c1585f2de979992f434",
+  "eslint": "PASS (6 JS/TS source and test files)",
+  "build": "PASS (@egyhealth/ui tsc + @egyhealth/web next build 16.4.1; existing security advisory noted, deps untouched)",
+  "typecheck": "PASS (@egyhealth/web tsc --noEmit)",
+  "uiUnitAndGovernance": {
+    "command": "node --test tests/ui*.test.mjs",
+    "passed": 361,
+    "failed": 0,
+    "skipped": 0
+  },
+  "focusedBrowser": {
+    "command": "node scripts/support/ui-frontend-completion-browser.mjs",
+    "passed": 18,
+    "failed": 0,
+    "unexpectedRequests": 0,
+    "pageErrors": 0,
+    "cases": [
+      "Login EN Light 1440 + Escape theme menu",
+      "Login AR Dark 390 + RTL letterSpacing 0",
+      "Patient MyCare EN Light 1440 & AR Dark 390",
+      "Patient Discover mobile subtitle preserved + EN/AR captures",
+      "Patient DoctorProfile Before vs After EN Dark 1440 + back-link >=44px",
+      "Patient Appointments Before vs After (success-banner Dark fix + 320px reflow)",
+      "Patient Laboratory Dark .result-text contrast + tabs >=44px",
+      "Doctor Schedule + Availability + Appointment captures",
+      "Doctor Demo Consultation Workspace Before vs After + localized Sex not recorded",
+      "Pharmacy Before vs After EN Light 1440 & AR Dark 390",
+      "Admin People + Directory Before vs After",
+      "FUTURE Laboratory Before vs After EN Light 1440 & AR Dark 390 + interactive stage",
+      "320px 200%-text forced-colors reflow patient-appt",
+      "320px 200%-text forced-colors reflow doctor-consult",
+      "320px 200%-text forced-colors reflow pharmacy",
+      "320px 200%-text forced-colors reflow admin",
+      "320px 200%-text forced-colors reflow lab",
+      "Live boundary preserves honest unavailable UI across Pharmacy/Admin/Lab/Patient"
+    ]
+  },
+  "separateGatedDebt": {
+    "nextjsSecurityAdvisory": "Next.js 16.4.1 upstream advisory notice logged during build; package.json/pnpm-lock.yaml untouched per allowlist",
+    "checkDocsBaseline": "scripts/ci/check-docs.mjs fails on pre-existing baseline docs (docs/agent-handoffs/135-b5.md); docs/SOURCE_OF_TRUTH.md untouched per allowlist",
+    "policyTestShallowRef": "tests/ci/policy.test.mjs:45 requires historical object 2fb940c2 absent in single-branch clone",
+    "appErrorBoundary": "apps/web/src/app/error.tsx omitted from file allowlist (left untouched)"
+  },
+  "review": {
+    "IndependentSecondPassInitial": "CAUGHT Dark .date-tile/.appointment-date specificity collision and MALE/FEMALE i18n enum fallback (ad0ac52f0357e667553e3c9aa220a5cd)",
+    "IndependentSecondPassVerify": "PASS — verified repaired source 2e030545 and 30-PNG pack (ad0ac52f0357e667553e3c9aa220a5cd)",
+    "OwnerFinalVisual": "PENDING"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "sourceHead": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+  "sourceTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+  "provenance": "Preserved local execution logs and exact-tree independent reviewer records. This handoff rechecked source, receipt contents, scope and hashes.",
+  "ui": {
+    "passed": 353,
+    "failed": 0
+  },
+  "provenanceTests": {
+    "passed": 16,
+    "failed": 0
+  },
+  "focusedBrowser": {
+    "passed": 39,
+    "cases": [
+      "before en 390",
+      "before en 1440",
+      "en 320 system light",
+      "en 320 system dark",
+      "en 390 system light",
+      "en 390 system dark",
+      "en 768 system light",
+      "en 768 system dark",
+      "en 1440 system light",
+      "en 1440 system dark",
+      "en actual 200% Chromium page zoom",
+      "en text 200%, forced colors and reduced motion",
+      "before ar 390",
+      "before ar 1440",
+      "ar 320 system light",
+      "ar 320 system dark",
+      "ar 390 system light",
+      "ar 390 system dark",
+      "ar 768 system light",
+      "ar 768 system dark",
+      "ar 1440 system light",
+      "ar 1440 system dark",
+      "ar actual 200% Chromium page zoom",
+      "ar text 200%, forced colors and reduced motion",
+      "Filters, keyboard reverse traversal, Escape, destination, Back and availability",
+      "Empty schedule",
+      "Demo read error hides rows and explicit retry restores them",
+      "Portal boundary CLINICIAN /doctor",
+      "Portal boundary PATIENT /patient",
+      "Portal boundary PHARMACY_STAFF /pharmacy",
+      "Portal boundary ADMIN /admin",
+      "Portal boundary LAB_STAFF /laboratory",
+      "Portal boundary PATIENT /doctor/schedule",
+      "Demo role switch clears Schedule and restores it only for Doctor",
+      "Live 200 request parity",
+      "Live 401 request parity",
+      "Live 403 request parity",
+      "Live 503 request parity",
+      "Wrong-role Live access never reads Doctor Schedule"
+    ],
+    "failures": [],
+    "unexpected": [],
+    "pageErrors": []
+  },
+  "originalRunner": {
+    "exit": 0,
+    "candidateEntrypointIdenticalToBaseline": true,
+    "disposableHarnessOverlay": "Existing Demo scenario fixture only",
+    "earlierArchiveWrapperExit": 1,
+    "earlierFailure": "git status required repository metadata"
+  },
+  "buildTypecheckLint": "PASS in preserved execution records",
+  "review": {
+    "UXAccessibility": "PASS exact tree, bounded Chromium scope",
+    "SecurityClinicalPrivacy": "PASS exact tree, source review",
+    "OwnerVisual": "PENDING"
+  },
+  "bundleSha256": "3739825e0616a5194afea6e628122c148dac52b95aa9fa013f1620f859ccc326",
+  "sixFileDiffSha256": "1eabcdfa2c5686eb227d9a335132c4172f76c341f714e7d7ba386e6eaa7f288b"
+}
