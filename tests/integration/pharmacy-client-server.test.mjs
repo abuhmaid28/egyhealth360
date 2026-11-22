@@ -76,6 +76,7 @@ test('Combined client-server: GET/HEAD context, org discovery, selection, fulfil
     engine.selectOrganization('00000000-0000-4000-8000-000000000099');
     assert.equal(engine.snapshot().status, 'denied');
     assert.equal(engine.snapshot().scope, undefined);
+    assert.equal(engine.snapshot().contexts, undefined);
 
     // Non-member staff sees empty context (total 0) and is denied on f.pharmacyOrg.
     const outsider = await f.addStaff('outsiderPharmacy');
@@ -95,6 +96,8 @@ test('Combined client-server: GET/HEAD context, org discovery, selection, fulfil
 
     // 4. Create + accept a route, read via PharmacyEngine (fulfillment), then cancel prescription -> history with items: [].
     const accepted = await f.readyPharmacy();
+    await engine.contexts(1, 20);
+    assert.equal(engine.snapshot().status, 'ready');
     engine.selectOrganization(f.pharmacyOrg.id);
     assert.equal(engine.snapshot().scope.orgId, f.pharmacyOrg.id);
     await engine.queue(1, 1);
@@ -166,7 +169,11 @@ test('Combined client-server: wrong-patient privacy restriction yields zero tota
     assert.equal(engine.snapshot().status, 'denied');
     assert.equal(engine.snapshot().detail, undefined);
     assert.equal(engine.snapshot().queue, undefined);
+    assert.equal(engine.snapshot().scope, undefined);
+    assert.equal(engine.snapshot().contexts, undefined);
 
+    await engine.contexts(1, 20);
+    engine.selectOrganization(f.pharmacyOrg.id);
     await engine.queue(1, 1);
     assert.equal(engine.snapshot().status, 'empty');
     assert.equal(engine.snapshot().queue.meta.total, 0);
