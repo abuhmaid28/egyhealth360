@@ -1,9 +1,11 @@
 # EgyHealth 360 — Product Acceptance, AP05 Asset Rights, and Release Readiness Report (PR #154 / `14694a7e`)
 
-Status: `CURRENT AUTHORITATIVE` — Read-only Product Acceptance, Asset Rights (`AP05`), UX/Visual QA, and Release Readiness audit of the combined integration candidate [PR #154](https://github.com/abuhmaid28/egyhealth360/pull/154).
+Status: `HISTORICAL EVIDENCE` — Read-only Product Acceptance, Asset Rights (`AP05`), UX/Visual QA, and Release Readiness audit of the combined integration candidate [PR #154](https://github.com/abuhmaid28/egyhealth360/pull/154).
 Owner review state: **Consolidated Product Owner review pending · Technical CI Green (`45043757862`) does NOT equal visual, legal, hosting, or clinical acceptance.**
 
 ---
+
+**Later source disposition:** [CURRENT_STATUS](CURRENT_STATUS.md) records the deployed protected #158 Demo V1 and current gates. The 12 original assets in that preview are owner-attested for protected synthetic use. AP05 production and commercial clearance remains open. [Run08 recovery](https://github.com/abuhmaid28/egyhealth360/issues/124#issuecomment-7083243880) identifies failure at R05/R06 with the exact case, assertion, status and root cause unknown. F06/E2 remains NO-GO. Sections below retain the original read-only #154 audit and its recommendations.
 
 ## 1. Final Source Identity & Lane Separation
 

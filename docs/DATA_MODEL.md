@@ -1,6 +1,6 @@
 # Current data model
 
-CURRENT AUTHORITATIVE inventory at baseline `eb61da263ce44db5ca71ffdfea6a87309c8e17ef`. Exactly **63 Prisma models/domain tables, 22 additive migrations**; the migration ledger is one additional table (64 public tables in accepted migration/runtime evidence). [Schema](../packages/db/prisma/schema.prisma), [SQL migrations](../packages/db/prisma/migrations) and accepted contracts govern executable constraints. The earlier 31/34/39/43-model inventories were slice snapshots, not today's schema.
+CURRENT AUTHORITATIVE inventory for the checked-in schema. The inventory recorded at `eb61da263ce44db5ca71ffdfea6a87309c8e17ef` matches both pinned main `dd08b738` and protected #158 `42bfcfbe`: **63 Prisma models/domain tables, 22 additive migrations**; the migration ledger is one additional table (64 public tables in accepted migration/runtime evidence). [Schema](../packages/db/prisma/schema.prisma), [SQL migrations](../packages/db/prisma/migrations) and accepted contracts govern executable constraints. The earlier 31/34/39/43-model inventories were slice snapshots, not the current schema inventory.
 
 ## Implemented model inventory
 
