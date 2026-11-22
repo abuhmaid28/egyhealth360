@@ -35,6 +35,7 @@ export interface PortalShellProps {
   onDismiss: () => void;
   mainClassName?: string;
   footerNote?: string;
+  patientMyCareV2?: boolean;
   screenState?: {
     value: string;
     change: (value: string) => void;
@@ -50,6 +51,7 @@ export function PortalShell({
   onDismiss,
   mainClassName,
   footerNote,
+  patientMyCareV2 = false,
   screenState,
 }: PortalShellProps) {
   const { api, session } = useApp();
@@ -57,6 +59,7 @@ export function PortalShell({
   const path = usePathname();
   const c = myCareCopy[locale];
   const patient = session.role === "PATIENT";
+  const myCareV2 = patientMyCareV2 && patient && path === "/patient";
   const clinician = session.role === "CLINICIAN";
   const home = homes[session.role];
   const name = accountName(session, t);
@@ -137,12 +140,19 @@ export function PortalShell({
     ));
   return (
     <div
-      className={`${care.root} ${styles.root}`}
+      className={`${care.root} ${styles.root}${myCareV2 ? ` ${styles.patientMyCareV2}` : ""}`}
       lang={locale}
       dir={locale === "ar" ? "rtl" : "ltr"}
       data-portal-shell={session.role}
+      data-patient-my-care-v2={myCareV2 || undefined}
     >
-      <a className={care.skip} href="#main">
+      <a className={care.skip} href="#main" onClick={myCareV2 ? (event) => {
+        const main = document.getElementById("main");
+        if (!main) return;
+        event.preventDefault();
+        main.focus({ preventScroll: true });
+        main.scrollIntoView({ block: "start" });
+      } : undefined}>
         {c.skip}
       </a>
       <header className={care.header}>
@@ -202,7 +212,7 @@ export function PortalShell({
             </details>
           </div>
         </div>
-        {secondary.length > 0 && (
+        {!myCareV2 && secondary.length > 0 && (
           <nav
             className={styles.secondary}
             aria-label={
@@ -292,7 +302,7 @@ export function PortalShell({
           </details>
         )}
       </footer>
-      {patient && (
+      {patient && !myCareV2 && (
         <nav
           className={care.bottomNav}
           aria-label={c.primary}
