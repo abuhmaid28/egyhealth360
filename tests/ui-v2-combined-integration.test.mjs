@@ -4,6 +4,7 @@ import { readFileSync, statSync, readdirSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
 import { resolve, dirname } from "node:path";
+import { execFileSync, spawnSync } from "node:child_process";
 import ts from "typescript";
 const pinned = [
   {
@@ -346,20 +347,39 @@ const frozenB4 = {
   "scripts/support/ui-pharmacy-live-browser.mjs": "d1966f8a9922521ea55e381d259d7cc0fb5f4b2f8a68d9fbeab80e7cea4c65a7",
   "scripts/test-ui-browser.mjs": "c34e2dc9fd11e01e4fcae42b87b95924b0cc0b8e770d453986afc7e65d7cddf3"
 };
-// Original12-owner manifest retained. This remediation explicitly owns shared live.ts; every other file remains pinned.
+// Original12-owner manifest retained. This remediation explicitly owns shared live.ts; runtime/script/historical receipt entries remain byte-pinned.
 const sessionFenceRepairSHA256 = "357e5bc20ccba7662dec6a78893af72b801bb863ede64a289e6ce1a5dbbde786";
 // The original browser entrypoint still owns all B4 cases and invokes the original pharmacy runner.
 const visualBrowserRunnerSHA256 = "6233cf2bc2c002b624194d019d182a649b197d4f05d7177496cbc0f342a179cd";
-// C3c reconciled governance/index docs for the canonical dd08b738 bridge while preserving all B4 runtime/test bytes.
+// Historical immutable C3c snapshot identity (reconciled dd08b738 bridge at commit 8adbe131).
+const historicalBridgeCommitC3c = "8adbe1314b190f52b8725d86f62e9db4eb075212";
 const currentStatusBridgeSHA256 = "a4d5844482f2181e9fc1393d972756b95bd6316d50a10353b6deec9ada780767";
 const sourceOfTruthBridgeSHA256 = "62532af5af2bf0c7d94db72cc8b58cb98d93604b146e0f8e1c237fa91a06f330";
+const mutableCurrentDocs = new Set(["docs/CURRENT_STATUS.md", "docs/SOURCE_OF_TRUTH.md"]);
 test("Visual Recovery keeps B4 runtime and Pharmacy runner pinned, adding one explicit UI test-entrypoint overlay",()=>{
   assert.equal(Object.keys(frozenB4).length,12);
   for(const[path,hash]of Object.entries(frozenB4)) {
+    if (mutableCurrentDocs.has(path)) continue;
     const expected = path === "apps/web/src/lib/api/live.ts" ? sessionFenceRepairSHA256
-      : path === "scripts/test-ui-browser.mjs" ? visualBrowserRunnerSHA256
-      : path === "docs/CURRENT_STATUS.md" ? currentStatusBridgeSHA256
-      : path === "docs/SOURCE_OF_TRUTH.md" ? sourceOfTruthBridgeSHA256 : hash;
+      : path === "scripts/test-ui-browser.mjs" ? visualBrowserRunnerSHA256 : hash;
     assert.equal(createHash("sha256").update(readFileSync(path)).digest("hex"),expected,path);
   }
+  // Verify the preserved C3c baseline snapshot bytes when full commit history is present in the checkout.
+  const hasC3cHistory = spawnSync("git", ["cat-file", "-e", `${historicalBridgeCommitC3c}^{commit}`]).status === 0;
+  if (hasC3cHistory) {
+    assert.equal(createHash("sha256").update(execFileSync("git", ["show", `${historicalBridgeCommitC3c}:docs/CURRENT_STATUS.md`])).digest("hex"), currentStatusBridgeSHA256);
+    assert.equal(createHash("sha256").update(execFileSync("git", ["show", `${historicalBridgeCommitC3c}:docs/SOURCE_OF_TRUTH.md`])).digest("hex"), sourceOfTruthBridgeSHA256);
+  }
+  // Verify currently maintained status/index documents retain core governance structure and pass live link/classification validation.
+  const currentStatus = readFileSync("docs/CURRENT_STATUS.md", "utf8");
+  assert.match(currentStatus, /^# Current status/m);
+  assert.ok(currentStatus.includes("dd08b7380083f7cd4ef0340a25384cb32ff67f1a"));
+  assert.ok(currentStatus.includes("frontend-v2-slices/PHARMACY_LIVE_READ_INTEGRATION.md"));
+  assert.ok(currentStatus.includes("FOUNDATION_CHARTER.md"));
+  const sourceOfTruth = readFileSync("docs/SOURCE_OF_TRUTH.md", "utf8");
+  for (const marker of ["## CURRENT AUTHORITATIVE", "## ACCEPTED CONTRACT", "## HISTORICAL EVIDENCE", "CURRENT_STATUS.md", "PHARMACY_LIVE_READ_INTEGRATION.md"]) {
+    assert.ok(sourceOfTruth.includes(marker), `Missing SOURCE_OF_TRUTH marker: ${marker}`);
+  }
+  const docCheck = execFileSync(process.execPath, ["scripts/ci/check-docs.mjs"], { encoding: "utf8" });
+  assert.match(docCheck, /: PASS$/m);
 });
