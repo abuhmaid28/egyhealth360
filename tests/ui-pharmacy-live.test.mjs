@@ -55,6 +55,9 @@ test('Combined keeps all original pins and reviewed overlays and bounds S0 activ
  const visualRecovery = JSON.parse(inherited.match(/const visualRecoveryOverlays = (\{[\s\S]*?\n\});/)[1]);
  const expressiveDiscoveryOverlay = JSON.parse(inherited.match(/const expressiveDiscoveryOverlay = (\{[\s\S]*?\n\});/)[1]);
  const expressiveDoctorOverlay = JSON.parse(inherited.match(/const expressiveDoctorOverlay = (\{[\s\S]*?\n\});/)[1]);
+ const qaRecoveryOverlay = JSON.parse(inherited.match(/const qaRecoveryOverlay = (\{[\s\S]*?\n\});/)[1]);
+ assert.deepEqual(Object.keys(qaRecoveryOverlay), ['scripts/support/ui-v2-patient-doctor-browser.mjs']);
+ assert.equal(visualRecovery['scripts/support/ui-v2-patient-doctor-browser.mjs'], 'b8a19cd02beb019ff9d1314a2955e5406a36cf6c');
  assert.deepEqual(Object.keys(expressiveDoctorOverlay), ['apps/web/src/components/doctor.tsx']);
  assert.equal(expressiveDoctorOverlay['apps/web/src/components/doctor.tsx'].mode, '100644');
  assert.equal(visualRecovery['apps/web/src/components/doctor.tsx'], '41aeec758d5f4976592255d6db4fdff2b3528776');
@@ -63,7 +66,7 @@ test('Combined keeps all original pins and reviewed overlays and bounds S0 activ
  assert.equal(pinned.filter(p=>!changed.has(p.path)).length,37);
  for(const row of pinned) {
    const bytes=readFileSync(row.path);
-   assert.equal(createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),expressiveDoctorOverlay[row.path]?.blob??expressiveDiscoveryOverlay[row.path]??visualRecovery[row.path]??overlays[row.path]??row.blob,row.path);
+   assert.equal(createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'),qaRecoveryOverlay[row.path]??expressiveDoctorOverlay[row.path]?.blob??expressiveDiscoveryOverlay[row.path]??visualRecovery[row.path]??overlays[row.path]??row.blob,row.path);
    assert.equal(statSync(row.path).mode&0o111?"100755":"100644",row.mode,row.path);
  }
  const transport=readFileSync('apps/web/src/lib/api/pharmacy-live.ts','utf8');assert.match(transport,/from '\.\/pharmacy-read'/);

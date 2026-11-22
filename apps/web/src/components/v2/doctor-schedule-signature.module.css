@@ -127,3 +127,12 @@
   .root .filters button[aria-pressed="true"] { border: 3px solid Highlight; }
   .root :is(a, button):focus-visible { outline-color: Highlight; }
 }
+
+:global([data-frontend-completion-doctor] .appointment-date) {
+  background: var(--v2-accent);
+  border-color: var(--v2-accent);
+  color: #17142b;
+}
+:global([data-frontend-completion-doctor] .appointment-date :is(strong, span)) {
+  color: inherit;
+}
