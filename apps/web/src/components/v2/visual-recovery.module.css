@@ -113,28 +113,7 @@
 .entryMessage > p:not(.entryKicker) { max-inline-size: 39ch; font-size: clamp(1rem, 1.4vw, 1.25rem); color: var(--v2-muted); }
 .entryImage {
   min-block-size: 390px;
-  position: relative;
-  background:
-    radial-gradient(circle at 72% 28%, color-mix(in srgb, var(--v2-accent, #dd9c70) 56%, transparent) 0 92px, transparent 93px),
-    radial-gradient(circle at 26% 74%, color-mix(in srgb, var(--v2-action, #5b48b8) 42%, transparent) 0 128px, transparent 129px),
-    linear-gradient(135deg, #1d173d 0%, #3d2e7c 54%, #6a4c7a 100%);
-}
-.entryImage::before {
-  content: "";
-  position: absolute;
-  inset: 14% 12%;
-  border-radius: 24px;
-  border: 1px solid color-mix(in srgb, var(--v2-accent, #dd9c70) 38%, transparent);
-}
-.entryImage::after {
-  content: "";
-  position: absolute;
-  inset-inline-end: 18%;
-  inset-block-end: 16%;
-  inline-size: 46%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #a88487 url("/visual-recovery/care-encounter.webp") 52% 48% / cover no-repeat;
 }
 .entryAction {
   display: inline-flex;
@@ -368,9 +347,6 @@
   align-items: center;
   gap: clamp(16px, 3vw, 40px);
   background: linear-gradient(120deg, var(--recovery-tint), var(--v2-surface));
-}
-.shell .providerProfile:not(:has(.portrait)) {
-  grid-template-columns: auto minmax(0, 1fr);
 }
 .providerProfile h1 { font-weight: 700; font-size: clamp(1.65rem, 3vw, 3rem); overflow-wrap: anywhere; }
 .providerProfile .portrait img { aspect-ratio: 1.25; }

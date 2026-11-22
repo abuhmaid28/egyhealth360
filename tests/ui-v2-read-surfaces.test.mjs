@@ -237,9 +237,8 @@ const renderShell = patientMyCareV2 => renderToStaticMarkup(React.createElement(
 test("Presentation requires explicit opt-in, exact PATIENT role and exact route; every other default is identical", () => {
   for (locale of ["en", "ar"]) for (mode of ["demo", "live"]) for (role of ["PATIENT", "CLINICIAN", "PHARMACY_STAFF", "LAB_STAFF", "ADMIN"]) for (path of ["/patient", "/patient/appointments", "/patient/", "/doctor/schedule"]) {
     const plain = renderShell(false), opted = renderShell(true);
-    assert.ok(plain.includes('data-preview-brand="text-only"') && opted.includes('data-preview-brand="text-only"'));
-    assert.ok(plain.includes(locale === "ar" ? "إيجي هيلث" : "EgyHealth") && plain.includes("360"));
-    assert.ok(!plain.includes("/brand/dp02/") && !opted.includes("/brand/dp02/"));
+    assert.ok(plain.includes("data-dp02-logo") && opted.includes("data-dp02-logo"));
+    assert.ok(plain.includes(`/brand/dp02/primary-${locale}-light.svg`));
     assert.equal(plain.includes("data-workspace-switch"), mode === "demo");
     assert.ok(!plain.includes("data-demo-utility"));
     const footer = plain.match(/<footer[\s\S]*?<\/footer>/)?.[0];

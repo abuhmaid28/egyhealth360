@@ -1,6 +1,7 @@
 /** Synthetic HTTP presentation proof through the current Live adapters, never real persistence proof. */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import ts from "typescript";
 import { myCareDemoState } from "./ui-my-care-browser.mjs";
 
@@ -247,9 +248,19 @@ export async function clinicianMasterPage(
   return { page, state };
 }
 
-// Verification is read-only and must not activate Home while
+// Independent approved asset identities; never derive expected hashes from the
+// candidate's files. Verification is read-only and must not activate Home while
 // an editor or an uncertain clinical command belongs to this consultation.
-// On this preview branch DP02 SVGs are removed under AP05 remediation and replaced by a text wordmark.
+const dp02Hashes = {
+  "compact-ar-dark": "bbed526c401f31fefdd1b98d8ab62c64663f2b03b1b8b0ef24a5f81498ea922d",
+  "compact-ar-light": "d83098460ac57d43801314dd5a8f96fa40b72268ae27893b302a0661e8ca89ff",
+  "compact-en-dark": "6ad7f9b61b1a43308e16e8d0a6a4bf80c389bac29d46d292eef938af8e2120c3",
+  "compact-en-light": "e49f02c9e4a7619ca8265d9d01e8e8a3b52176ec4654658b72e2cac6bf60b887",
+  "primary-ar-dark": "f96e38a2a6e1e7273edd57b8e98005f28b0894efa03ffba41ef2c0394a5196da",
+  "primary-ar-light": "76d14637666b2d9aadbdc211223454c3f216bff38927c11577ed4d77abce4fa4",
+  "primary-en-dark": "eaa33073140aff82d87d34e134157671f7f8d38ac625618a26b69978641bddd5",
+  "primary-en-light": "f6935c1441d2e68092109425d31f707621f6ec33b405d6ceb00fc0876f53b54e",
+};
 async function assertClinicianBrand(page) {
   const beforeURL = page.url();
   const editor = await page.locator(".documentation-content textarea").first().elementHandle();
@@ -258,30 +269,49 @@ async function assertClinicianBrand(page) {
   assert.equal(await home.count(), 1, "One accessible Doctor home brand");
   assert.equal(await home.getAttribute("href"), "/doctor");
   assert.ok(await home.isVisible());
-  const logo = home.locator('[data-preview-brand="text-only"]');
+  const logo = home.locator("[data-dp02-logo]");
   assert.equal(await logo.count(), 1);
   assert.equal(await logo.getAttribute("aria-hidden"), "true");
-  const state = await logo.evaluate(el => {
+  const state = await logo.evaluate(() => {
     const html = globalThis.document.documentElement;
-    const rect = el.getBoundingClientRect();
-    return {
-      locale: html.lang,
-      theme: html.getAttribute("data-frontend-v2-theme") ?? (globalThis.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"),
-      compact: globalThis.innerWidth <= 480,
-      text: el.textContent.trim(),
-      width: rect.width,
-      height: rect.height,
-    };
+    return { locale: html.lang, theme: html.getAttribute("data-frontend-v2-theme") ?? (globalThis.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"), compact: globalThis.innerWidth <= 480 };
   });
   assert.ok(["en", "ar"].includes(state.locale));
   assert.ok(["light", "dark"].includes(state.theme));
-  assert.match(state.text, state.locale === "ar" ? /إيجي هيلث\s*360/ : /EgyHealth\s*360/);
-  assert.ok(state.width >= 70 && state.height >= 16);
-  const variant = `${state.compact ? "compact" : "primary"}-${state.locale}-${state.theme}`;
-  const removedAsset = new URL(`/brand/dp02/${variant}.svg`, beforeURL);
-  const response = await page.request.get(removedAsset.href, { maxRedirects: 0 });
-  assert.equal(response.status(), 404, "Unverified DP02 asset must remain removed on preview");
-  assert.equal(await root.locator("img").count(), 0, "Zero unverified clinical/brand images");
+  assert.equal(await logo.locator("picture").count(), 2);
+  assert.equal(await logo.locator("img").count(), 2);
+  assert.equal(await logo.locator("picture:visible img").count(), 1);
+  for (const [index, theme] of ["light", "dark"].entries()) {
+    const picture = logo.locator("picture").nth(index), image = picture.locator("img");
+    assert.equal(await image.getAttribute("src"), `/brand/dp02/primary-${state.locale}-${theme}.svg`);
+    assert.equal(await image.getAttribute("alt"), "");
+    assert.equal(await picture.locator("source").count(), 1);
+    assert.equal(await picture.locator("source").getAttribute("media"), "(max-width: 480px)");
+    assert.equal(await picture.locator("source").getAttribute("srcset"), `/brand/dp02/compact-${state.locale}-${theme}.svg`);
+    const variant = `${state.compact ? "compact" : "primary"}-${state.locale}-${theme}`;
+    const asset = new URL(`/brand/dp02/${variant}.svg`, beforeURL);
+    assert.equal(asset.protocol, "http:");
+    assert.ok(["127.0.0.1", "localhost"].includes(asset.hostname), "Local synthetic verification only");
+    const response = await page.request.get(asset.href, { maxRedirects: 0 });
+    assert.equal(response.status(), 200);
+    const bytes = await response.body();
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), dp02Hashes[variant]);
+    assert.match(bytes.toString("utf8"), /viewBox="0 0 780 145"/);
+    if (theme === state.theme) {
+      const visible = await image.evaluate(img => {
+        const b = img.getBoundingClientRect();
+        return { src: img.currentSrc, width: b.width, height: b.height, loaded: img.complete && img.naturalWidth > 0 };
+      });
+      assert.equal(visible.src, asset.href);
+      assert.ok(visible.loaded && visible.width >= 100 && visible.height >= 20);
+      assert.ok(Math.abs(visible.height - visible.width * 145 / 780) <= 1 / 64, "Source-exact SVG geometry");
+    }
+  }
+  assert.ok(await root.evaluate(el => {
+    const homeLogo = el.querySelector('header a[href="/doctor"] [data-dp02-logo]');
+    return [...el.querySelectorAll("img")].every(img => homeLogo?.contains(img));
+  }), "No clinical/content images outside the verified header lockup");
+  assert.equal(await root.locator("img").count(), 2, "Only the two verified theme images");
   assert.equal(page.url(), beforeURL, "Brand verification never leaves the active consultation");
   assert.ok(await page.locator(".documentation-content textarea").first().evaluate((el, original) => el === original, editor), "Brand verification preserves editor identity");
 }

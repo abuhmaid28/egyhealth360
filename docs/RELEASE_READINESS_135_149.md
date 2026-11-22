@@ -138,7 +138,7 @@ Evidence examined directly: visual inspection of PNG captures in `docs/visual-ev
 ### Synthetic-Only Preview Feasibility
 - **Local Docker Compose Synthetic Stack:** **READY technically** (proven in CI `docker-runtime` + `postgres` `1,304/1,304` + `test:ui:real`).
 - **Public / Hosted Synthetic Preview:** **NO-GO on raw PR #154/#155 until 2 prerequisites close (or via temporary preview substitutions):**
-  1. **AP05 Asset Clearance / Preview Substitution:** Resolve creator/copyright rights for all 8 DP02 SVGs + 4 `.webp` files (`care-encounter.webp`, `mariam/omar/sara.webp`), OR strip unverified bitmaps/brand marks in an explicitly isolated synthetic preview branch (`preview/egyhealth360-safe-demo`).
+  1. **AP05 Asset Clearance / Protected Preview Attestation:** Resolve third-party creator/copyright rights for all 8 DP02 SVGs + 4 `.webp` files before public/production launch; for an access-protected isolated synthetic preview only, Draft PR `#158` ([SAFE_DEMO_PREVIEW_DEPLOYMENT.md](SAFE_DEMO_PREVIEW_DEPLOYMENT.md)) restores all 12 original approved assets byte-identically under [Product Owner attestation 7083992813](https://github.com/abuhmaid28/egyhealth360/pull/158#issuecomment-7083992813).
   2. **Hosting & Secret Boundary Isolation:** Dedicated synthetic Neon/Postgres DB (`scripts/staging-seed.mjs` with `EH_STAGING_SEED_ENABLED=1` for hosted synthetic setup — never `EH_DEMO_SEED_ENABLED`, which is local dev/test only and rejected under `NODE_ENV=production` — separate from protected `egyhealth360.vercel.app`, with Vercel/Render build hooks and `AUTH_BROWSER_ORIGIN` verified by the owner).
 
 ### Distinct Acceptance States (Must Not Be Conflated)

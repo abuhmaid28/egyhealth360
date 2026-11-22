@@ -29,7 +29,7 @@ async function attempt(name, task) {
   catch (error) { failures.push({ name, message: error.message }); console.error(name, error.stack); }
 }
 
-async function prepare(context, origin, { lang = "en", role = "PATIENT", live = "", calls = [] } = {}) {
+async function prepare(context, origin, { lang = "en", role = "PATIENT", broken = false, live = "", calls = [] } = {}) {
   const state = myCareDemoState();
   state.session.role = role;
   if (role === "CLINICIAN") state.session.name = state.appointments[0].provider.displayName;
@@ -60,6 +60,7 @@ async function prepare(context, origin, { lang = "en", role = "PATIENT", live = 
       if (data && !(live === "failure" && target.pathname.endsWith("/providers"))) return route.fulfill({ json: { data } });
       return route.fulfill({ status: 503, json: { error: { message: "CONTROLLED_PRIVATE_CANARY" } } });
     }
+    if (broken && target.pathname.endsWith("/sara.webp")) return route.abort();
     return route.continue();
   });
 }
@@ -228,12 +229,11 @@ try {
     }, full);
     assert.ok(fragments.length > 1 && fragments.every(Boolean));
   }));
-  await attempt("native Forced Colors, reduced motion, initials fallback and profile navigation", () => at(after, discovery, {
-    lang: "ar", forcedColors: "active", width: 320,
+  await attempt("native Forced Colors, reduced motion, portrait failure and profile navigation", () => at(after, discovery, {
+    lang: "ar", forcedColors: "active", width: 320, broken: true,
   }, async (p) => {
-    await p.locator("[data-discovery-initials]").first().waitFor();
-    assert.equal(await p.locator("[data-discovery-initials]").count(), 3);
-    assert.equal(await p.locator("[data-discovery-initials]").nth(2).innerText(), "سع");
+    await p.locator("[data-discovery-initials]").waitFor();
+    assert.equal(await p.locator("[data-discovery-initials]").innerText(), "سع");
     assert.equal(await p.locator("#expressive-clinic").evaluate((e) => globalThis.getComputedStyle(e).appearance), "auto");
     assert.ok(await p.evaluate(() => globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches));
     await p.locator("#expressive-doctor-search").fill("عُمَر");

@@ -73,10 +73,9 @@ test("neutral locale SSR does not mount task children or consult browser storage
   assert.match(html, /lang="en" dir="ltr">Loading your workspace…/);
   assert.match(html, /lang="ar" dir="rtl">بنجهّز مساحة العمل…/);
   assert.ok(!/<button|<input/.test(html));
-  assert.match(html, /data-preview-brand="text-only"/);
+  assert.match(html, /data-dp02-logo/);
   assert.match(html, /role="img" aria-label="EgyHealth 360"/);
-  assert.match(html, /EgyHealth.*360/);
-  assert.ok(!html.includes("/brand/dp02/"));
+  assert.match(html, /src="\/brand\/dp02\/primary-en-light.svg"/);
   const layout = readFileSync("apps/web/app/layout.tsx", "utf8");
   assert.match(layout, /<html lang="en" dir="ltr">/);
   assert.match(layout, /<noscript>[\s\S]*lang="en" dir="ltr"[\s\S]*JavaScript is needed to open this workspace\.[\s\S]*lang="ar" dir="rtl"[\s\S]*فتح مساحة العمل دي محتاج JavaScript\.[\s\S]*<\/noscript>/);
