@@ -453,6 +453,30 @@ try {
     let output="";staff.stdout.on("data",chunk=>{output+=chunk;});staff.stderr.on("data",chunk=>{output+=chunk;});
     staff.on("error",reject);staff.on("close",code=>code===0?(console.log(output.trim()),done()):reject(new Error("Staff browser proof failed: "+output)));
   });
+  await new Promise((done, reject) => {
+    const v2 = spawn(
+      process.execPath,
+      [
+        "scripts/support/ui-v2-verification-browser.mjs",
+        "--mode=normal",
+        "--report=/tmp/eh-v2-ci-browser-report.json",
+      ],
+      { stdio: ["ignore", "pipe", "pipe"] },
+    );
+    let output = "";
+    v2.stdout.on("data", (chunk) => {
+      output += chunk;
+    });
+    v2.stderr.on("data", (chunk) => {
+      output += chunk;
+    });
+    v2.on("error", reject);
+    v2.on("close", (code) =>
+      code === 0
+        ? (console.log("PASS: G2-F1 Demo V2 5-portal/contrast/responsive suite."), done())
+        : reject(new Error("G2-F1 V2 browser proof failed: " + output)),
+    );
+  });
   assert.deepEqual(errors, []);
   console.log(
     "PASS: browser Golden Demo, role boundaries, patient privacy, reload continuity, 23 route state variants + live HTTP contract probe, desktop/tablet/mobile navigation and overflow; no browser exceptions.",

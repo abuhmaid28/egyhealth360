@@ -228,7 +228,7 @@ const shellAST = ts.createSourceFile("shell.tsx", shellSource, ts.ScriptTarget.L
 const shell = evaluate(shellAST.statements.filter(n => !ts.isImportDeclaration(n)).map(n => n.getText()).join("\n"), {
   Link, Icon, BrandLogo, care: styles, styles, v2: styles, recovery: styles, FrontendV2ThemeSwitch: () => null, myCareCopy: copy, accountName: presentation.accountName,
   LanguageSwitch: () => React.createElement("span", null, "Language control"),
-  usePathname: () => path, useLocale,
+  usePathname: () => path, useLocale, useState: React.useState, useEffect: React.useEffect,
   useApp: () => ({ api: { mode }, session: { role, name: "Permitted account", mode } }),
 });
 const renderShell = patientMyCareV2 => renderToStaticMarkup(React.createElement(shell.PortalShell, {
@@ -257,6 +257,6 @@ test("Presentation requires explicit opt-in, exact PATIENT role and exact route;
 });
 
 test("Visual Recovery pins the reviewed shell and leaves the inherited shared CSS prefix byte-exact", () => {
-  assert.equal(sha256(shellSource), "4c9a0a5d4f514f238cdbf683b89cd3bdb4669b68cbdf26134453a3608fd8cd3d");
+  assert.equal(sha256(shellSource), "5159119f69a1070a72ee72bd33190726d9ec185d52e28384ae5c75b2e38a927d");
   assert.equal(sha256(read(root + "components/portal-shell.module.css").slice(0,4671)), "a17947877e71c51799d6d28f9faf1784ca7fe968430f876a0c39d24cff3775da");
 });

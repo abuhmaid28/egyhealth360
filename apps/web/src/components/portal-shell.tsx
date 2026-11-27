@@ -2,7 +2,7 @@
 import { BrandLogo } from "./brand-logo";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { createDemoAdapter } from "../lib/mock/adapter";
 import type { Role } from "../lib/api/contracts";
 import { accountName } from "../lib/presentation";
@@ -57,7 +57,26 @@ export function PortalShell({
   const { api, session } = useApp();
   const { locale, t } = useLocale();
   const path = usePathname();
-  if (api.mode === "demo" && session.mode === "demo" && typeof DemoV2Router === "function") {
+  const [v2OptIn, setV2OptIn] = useState(
+    process.env.EH_UI_PREVIEW_DEMO_ONLY === "1" ||
+      process.env.EH_UI_LIVE_CONFIGURED !== "1",
+  );
+  useEffect(() => {
+    if (typeof globalThis.window === "undefined") return;
+    const search = new URLSearchParams(globalThis.window.location.search);
+    if (
+      search.get("v2") === "1" ||
+      globalThis.window.sessionStorage?.getItem("eh360-v2-demo") === "1"
+    ) {
+      setV2OptIn(true);
+    }
+  }, []);
+  if (
+    v2OptIn &&
+    api.mode === "demo" &&
+    session.mode === "demo" &&
+    typeof DemoV2Router === "function"
+  ) {
     return (
       <DemoV2Router
         path={path}

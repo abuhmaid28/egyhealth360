@@ -355,7 +355,7 @@ const frozenB4 = {
 // Original12-owner manifest retained. This remediation explicitly owns shared live.ts; runtime/script/historical receipt entries remain byte-pinned.
 const sessionFenceRepairSHA256 = "357e5bc20ccba7662dec6a78893af72b801bb863ede64a289e6ce1a5dbbde786";
 // The original browser entrypoint still owns all B4 cases and invokes the original pharmacy runner.
-const visualBrowserRunnerSHA256 = "6233cf2bc2c002b624194d019d182a649b197d4f05d7177496cbc0f342a179cd";
+const visualBrowserRunnerSHA256 = "5ed4e4bd19a44f8c30410507622243d68856cd0419b7dfe9e21dd5ac6d064757";
 // Historical immutable C3c snapshot identity (reconciled dd08b738 bridge at commit 8adbe131).
 const historicalBridgeCommitC3c = "8adbe1314b190f52b8725d86f62e9db4eb075212";
 const currentStatusBridgeSHA256 = "a4d5844482f2181e9fc1393d972756b95bd6316d50a10353b6deec9ada780767";

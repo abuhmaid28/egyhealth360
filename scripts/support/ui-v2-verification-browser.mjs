@@ -189,10 +189,13 @@ async function runSuite(kind) {
       if (req.url().includes("/api/v1/")) apiRequests.push(req.url());
     });
 
-    // Tampered live mode check under preview build; normal demo session under normal build
+    // Tampered live mode check under preview build; normal demo session with V2 opt-in under normal build
     await page.addInitScript((previewFlag) => {
       globalThis.localStorage.setItem("eh360-ui-mode", previewFlag ? "live" : "demo");
       globalThis.localStorage.setItem("eh360-locale", "en");
+      if (!previewFlag) {
+        globalThis.sessionStorage.setItem("eh360-v2-demo", "1");
+      }
     }, isPreview);
 
     const t0 = Date.now();
