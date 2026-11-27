@@ -24,12 +24,14 @@ import {
   assertLoopbackHttpUrl,
   assertObserverQuiescent,
   assertOwnedProject,
+  buildDomScanPolicy,
   cookieAttributes,
   createBudgetTracker,
   createObserverMetrics,
   finalizeSafeReceipt,
   inspectAuthResponse,
   parseOptions,
+  scanAuthorizedResponse,
   scanSensitiveText,
   sha256Hex,
   summarizeBrowserCookieState,
@@ -104,9 +106,10 @@ test('enforces unique owned project names and isolated tmpfs Compose config', ()
     name: validProject,
     volumes: {},
     services: {
-      postgres: { volumes: [{ type: 'tmpfs' }] },
+      postgres: { volumes: [{ type: 'tmpfs', target: '/var/lib/postgresql' }] },
       api: { build: { args: { EH_UI_API_ORIGIN: 'http://api:3001' } }, ports: [{ host_ip: '127.0.0.1', published: 23001 }] },
       web: { ports: [{ host_ip: '127.0.0.1', published: 23000 }] },
+      worker: {},
     },
   };
   assertIsolatedComposeConfig(validConfig, validProject, 23001, 23000);
@@ -117,7 +120,31 @@ test('enforces unique owned project names and isolated tmpfs Compose config', ()
 
   const exposedPg = JSON.parse(JSON.stringify(validConfig));
   exposedPg.services.postgres.ports = [{ host_ip: '127.0.0.1', published: 5432 }];
-  assert.throws(() => assertIsolatedComposeConfig(exposedPg, validProject, 23001, 23000));
+  assert.throws(() => assertIsolatedComposeConfig(exposedPg, validProject, 23001, 23000), /POSTGRES_PORT_PUBLICATION_FORBIDDEN/);
+
+  const workerPorts = JSON.parse(JSON.stringify(validConfig));
+  workerPorts.services.worker.ports = [{ host_ip: '127.0.0.1', published: 23002 }];
+  assert.throws(() => assertIsolatedComposeConfig(workerPorts, validProject, 23001, 23000), /WORKER_PORT_PUBLICATION_FORBIDDEN/);
+
+  const wrongPgMount = JSON.parse(JSON.stringify(validConfig));
+  wrongPgMount.services.postgres.volumes = [{ type: 'tmpfs', target: '/tmp/pg' }];
+  assert.throws(() => assertIsolatedComposeConfig(wrongPgMount, validProject, 23001, 23000), /POSTGRES_TMPFS_REQUIRED/);
+
+  const extraPgMount = JSON.parse(JSON.stringify(validConfig));
+  extraPgMount.services.postgres.volumes.push({ type: 'tmpfs', target: '/var/lib/postgresql/extra' });
+  assert.throws(() => assertIsolatedComposeConfig(extraPgMount, validProject, 23001, 23000), /POSTGRES_TMPFS_REQUIRED/);
+
+  const appMount = JSON.parse(JSON.stringify(validConfig));
+  appMount.services.api.volumes = [{ type: 'bind', source: '/tmp', target: '/mnt' }];
+  assert.throws(() => assertIsolatedComposeConfig(appMount, validProject, 23001, 23000), /APP_VOLUME_MOUNTS_FORBIDDEN/);
+
+  const privilegedSvc = JSON.parse(JSON.stringify(validConfig));
+  privilegedSvc.services.web.privileged = true;
+  assert.throws(() => assertIsolatedComposeConfig(privilegedSvc, validProject, 23001, 23000), /PRIVILEGED_CONTAINER_FORBIDDEN/);
+
+  const customNet = JSON.parse(JSON.stringify(validConfig));
+  customNet.services.api.network_mode = 'host';
+  assert.throws(() => assertIsolatedComposeConfig(customNet, validProject, 23001, 23000), /CUSTOM_NETWORK_MODE_FORBIDDEN/);
 });
 
 test('positive and negative/mutation HTTP projections classify cache, JSON shape, and status accurately', () => {
@@ -386,4 +413,338 @@ test('cleanup fails closed on leftover resources or browser close failure, and r
   } finally {
     await new Promise(resolveClose => server.close(resolveClose));
   }
+});
+
+test('allows active actor auth/profile 200 payloads while failing closed on wrong actor, misplaced CSRF, or credentials', () => {
+  const patientA = {
+    id: '11111111-1111-4111-8111-111111111111',
+    profileId: '22222222-2222-4222-8222-222222222222',
+    email: 'patienta-0123456789ab@q1.example.invalid',
+    displayName: 'Synthetic Q1 patientA 0123456789ab',
+  };
+  const patientB = {
+    id: '33333333-3333-4333-8333-333333333333',
+    profileId: '44444444-4444-4444-8444-444444444444',
+    email: 'patientb-0123456789ab@q1.example.invalid',
+    displayName: 'Synthetic Q1 patientB 0123456789ab',
+  };
+  const allUsers = { patientA, patientB };
+  const allUserMarkers = Object.values(allUsers).flatMap(u => [u.id, u.profileId, u.email, u.displayName]);
+  const csrfA = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+  const csrfB = 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB';
+  const sessionSecret = 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC';
+  const pwHash = 'eh-pw-v1$argon2id$v=19$m=65536,t=3,p=1$s=aaaaaaaaaaaaaaaaaaaaaa$h=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb';
+  const credentialSecrets = ['SYNTHETIC_PASSWORD_VALUE_XYZ', pwHash, sessionSecret];
+
+  const loginBodyA = JSON.stringify({
+    data: {
+      user: { id: patientA.id, email: patientA.email, role: 'PATIENT' },
+      session: { expiresAt: '2026-11-28T00:00:00.000Z' },
+      csrfToken: csrfA,
+    },
+  });
+  const loginProj = inspectAuthResponse({
+    caseId: 'LOGIN_RAW_A',
+    phase: 'R05/R06',
+    endpoint: 'AUTH_LOGIN',
+    method: 'POST',
+    callSite: 'rawLogin:patientA',
+    expectedStatus: 200,
+    expectSetCookie: true,
+    response: {
+      status: 200,
+      headers: {
+        'cache-control': 'no-store',
+        'set-cookie': `eh_session=${sessionSecret}; Path=/; HttpOnly; SameSite=Lax; Max-Age=28800`,
+      },
+      text: loginBodyA,
+    },
+    activeActor: patientA,
+    allUserMarkers,
+    credentialSecrets,
+    allowFreshCsrf: true,
+  });
+  assert.equal(loginProj.successShapeValid, true);
+  assert.equal(loginProj.actorIdentityMatch, true);
+  assert.equal(loginProj.csrfTokenMatch, true);
+  assert.equal(loginProj.scanCoverage.leaksDetected, 0);
+
+  const meBodyB = JSON.stringify({
+    data: {
+      user: { id: patientB.id, email: patientB.email, role: 'PATIENT' },
+      session: { expiresAt: '2026-11-28T00:00:00.000Z' },
+      csrfToken: csrfB,
+    },
+  });
+  const meProjB = inspectAuthResponse({
+    caseId: 'ME_ACTIVE_B',
+    phase: 'R05/R06',
+    endpoint: 'AUTH_ME',
+    method: 'GET',
+    callSite: 'meRaw:ME_ACTIVE_B',
+    expectedStatus: 200,
+    expectNoSetCookie: true,
+    response: { status: 200, headers: { 'cache-control': 'no-store' }, text: meBodyB },
+    activeActor: patientB,
+    allUserMarkers,
+    credentialSecrets,
+    staleCsrfTokens: [csrfA],
+    currentCsrfToken: csrfB,
+  });
+  assert.equal(meProjB.successShapeValid, true);
+  assert.equal(meProjB.actorIdentityMatch, true);
+  assert.equal(meProjB.csrfTokenMatch, true);
+
+  // Positive ME_PROFILE for active patientA
+  const profileScanA = scanAuthorizedResponse({
+    text: JSON.stringify({ data: { id: patientA.profileId, displayName: patientA.displayName, dateOfBirth: null, sex: null } }),
+    status: 200,
+    endpoint: 'ME_PROFILE',
+    method: 'GET',
+    activeActor: patientA,
+    allUserMarkers,
+    credentialSecrets,
+    staleCsrfTokens: [csrfA],
+    currentCsrfToken: csrfB,
+  });
+  assert.equal(profileScanA.scan.clean, true);
+  assert.equal(profileScanA.shapeValid, true);
+  assert.equal(profileScanA.actorMatch, true);
+
+  // Negative 1: unexpected Set-Cookie on ME_ACTIVE_B fails SET_COOKIE_ABSENT
+  assert.throws(
+    () => inspectAuthResponse({
+      caseId: 'ME_ACTIVE_B',
+      phase: 'R05/R06',
+      endpoint: 'AUTH_ME',
+      method: 'GET',
+      callSite: 'meRaw:ME_ACTIVE_B',
+      expectedStatus: 200,
+      expectNoSetCookie: true,
+      response: {
+        status: 200,
+        headers: { 'cache-control': 'no-store', 'set-cookie': `eh_session=${sessionSecret}; Path=/; HttpOnly` },
+        text: meBodyB,
+      },
+      activeActor: patientB,
+      allUserMarkers,
+      credentialSecrets,
+      currentCsrfToken: csrfB,
+    }),
+    err => err instanceof DiagnosticAssertionError && err.failedPredicates.includes('SET_COOKIE_ABSENT'),
+  );
+
+  // Negative 2: wrong actor (patientA returned when patientB expected)
+  assert.throws(
+    () => inspectAuthResponse({
+      caseId: 'ME_ACTIVE_B',
+      phase: 'R05/R06',
+      endpoint: 'AUTH_ME',
+      method: 'GET',
+      callSite: 'meRaw:ME_ACTIVE_B',
+      expectedStatus: 200,
+      response: { status: 200, headers: { 'cache-control': 'no-store' }, text: loginBodyA },
+      activeActor: patientB,
+      allUserMarkers,
+      credentialSecrets,
+      staleCsrfTokens: [csrfA],
+      currentCsrfToken: csrfB,
+    }),
+    err => err instanceof DiagnosticAssertionError
+      && err.failedPredicates.includes('ACTOR_IDENTITY_MATCH')
+      && err.failedPredicates.includes('CSRF_TOKEN_MATCH')
+      && err.failedPredicates.includes('PRIVACY_CLEAN'),
+  );
+
+  // Negative 3: stale CSRF returned on ME_ACTIVE_B
+  const staleMeBody = JSON.stringify({
+    data: {
+      user: { id: patientB.id, email: patientB.email, role: 'PATIENT' },
+      session: { expiresAt: '2026-11-28T00:00:00.000Z' },
+      csrfToken: csrfA,
+    },
+  });
+  assert.throws(
+    () => inspectAuthResponse({
+      caseId: 'ME_ACTIVE_B',
+      phase: 'R05/R06',
+      endpoint: 'AUTH_ME',
+      method: 'GET',
+      callSite: 'meRaw:ME_ACTIVE_B',
+      expectedStatus: 200,
+      response: { status: 200, headers: { 'cache-control': 'no-store' }, text: staleMeBody },
+      activeActor: patientB,
+      allUserMarkers,
+      credentialSecrets,
+      staleCsrfTokens: [csrfA],
+      currentCsrfToken: csrfB,
+    }),
+    err => err instanceof DiagnosticAssertionError
+      && err.failedPredicates.includes('CSRF_TOKEN_MATCH')
+      && err.failedPredicates.includes('PRIVACY_CLEAN'),
+  );
+
+  // Negative 4: current CSRF placed in extra JSON field or misplaced in session/ME_PROFILE/OTHER_API/error
+  const extraFieldCsrf = JSON.stringify({
+    data: {
+      user: { id: patientB.id, email: patientB.email, role: 'PATIENT' },
+      session: { expiresAt: '2026-11-28T00:00:00.000Z' },
+      csrfToken: csrfB,
+      extra: csrfB,
+    },
+  });
+  assert.throws(
+    () => inspectAuthResponse({
+      caseId: 'ME_ACTIVE_B',
+      phase: 'R05/R06',
+      endpoint: 'AUTH_ME',
+      method: 'GET',
+      callSite: 'meRaw:ME_ACTIVE_B',
+      expectedStatus: 200,
+      response: { status: 200, headers: { 'cache-control': 'no-store' }, text: extraFieldCsrf },
+      activeActor: patientB,
+      allUserMarkers,
+      credentialSecrets,
+      currentCsrfToken: csrfB,
+    }),
+    err => err instanceof DiagnosticAssertionError
+      && err.failedPredicates.includes('SUCCESS_SHAPE_VALID')
+      && err.failedPredicates.includes('PRIVACY_CLEAN'),
+  );
+
+  const profileLeakingCsrf = scanAuthorizedResponse({
+    text: JSON.stringify({ data: { id: patientA.profileId, displayName: patientA.displayName, dateOfBirth: null, sex: csrfB } }),
+    status: 200,
+    endpoint: 'ME_PROFILE',
+    method: 'GET',
+    activeActor: patientA,
+    allUserMarkers,
+    credentialSecrets,
+    currentCsrfToken: csrfB,
+  });
+  assert.equal(profileLeakingCsrf.scan.clean, false);
+
+  const unrelatedApiLeak = scanAuthorizedResponse({
+    text: JSON.stringify({ data: [{ patientEmail: patientA.email, csrf: csrfB }] }),
+    status: 200,
+    endpoint: 'OTHER_API',
+    method: 'GET',
+    activeActor: patientA,
+    allUserMarkers,
+    credentialSecrets,
+    currentCsrfToken: csrfB,
+  });
+  assert.equal(unrelatedApiLeak.scan.clean, false);
+  assert.equal(unrelatedApiLeak.successScoped, false);
+
+  // Negative 5: credential/session/active-actor leak in 4xx/5xx error or inside 200 expiresAt fails closed
+  const credInSuccess = JSON.stringify({
+    data: {
+      user: { id: patientB.id, email: patientB.email, role: 'PATIENT' },
+      session: { expiresAt: sessionSecret },
+      csrfToken: csrfB,
+    },
+  });
+  assert.throws(
+    () => inspectAuthResponse({
+      caseId: 'ME_ACTIVE_B',
+      phase: 'R05/R06',
+      endpoint: 'AUTH_ME',
+      method: 'GET',
+      callSite: 'meRaw:ME_ACTIVE_B',
+      expectedStatus: 200,
+      response: { status: 200, headers: { 'cache-control': 'no-store' }, text: credInSuccess },
+      activeActor: patientB,
+      allUserMarkers,
+      credentialSecrets,
+      currentCsrfToken: csrfB,
+    }),
+    err => err instanceof DiagnosticAssertionError && err.failedPredicates.includes('PRIVACY_CLEAN'),
+  );
+
+  assert.throws(
+    () => inspectAuthResponse({
+      caseId: 'CSRF_ABSENT',
+      phase: 'R05/R06',
+      endpoint: 'AUTH_LOGOUT',
+      method: 'POST',
+      callSite: 'rawLogout:CSRF_ABSENT',
+      expectedStatus: 403,
+      expectedCode: 'AUTH_CSRF_INVALID',
+      response: {
+        status: 403,
+        headers: { 'cache-control': 'no-store' },
+        text: JSON.stringify({ error: { code: 'AUTH_CSRF_INVALID', message: `bad ${patientB.email} ${csrfB}` } }),
+      },
+      activeActor: patientB,
+      allUserMarkers,
+      credentialSecrets,
+      currentCsrfToken: csrfB,
+    }),
+    err => err instanceof DiagnosticAssertionError && err.failedPredicates.includes('PRIVACY_CLEAN'),
+  );
+});
+
+test('enforces DOM/AX/visible/storage/cookie active-actor boundaries and JSON-body correspondence', () => {
+  const patientA = {
+    id: '11111111-1111-4111-8111-111111111111',
+    profileId: '22222222-2222-4222-8222-222222222222',
+    email: 'patienta-0123456789ab@q1.example.invalid',
+    displayName: 'Synthetic Q1 patientA 0123456789ab',
+  };
+  const patientB = {
+    id: '33333333-3333-4333-8333-333333333333',
+    profileId: '44444444-4444-4444-8444-444444444444',
+    email: 'patientb-0123456789ab@q1.example.invalid',
+    displayName: 'Synthetic Q1 patientB 0123456789ab',
+  };
+  const csrfA = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+  const staleCsrf = 'ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ';
+  const sessionSecret = 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC';
+  const policy = buildDomScanPolicy({
+    activeActor: patientA,
+    allUsers: { patientA, patientB },
+    runtimeSecrets: ['SYNTHETIC_PW', sessionSecret, csrfA],
+    staleCsrfTokens: [staleCsrf],
+  });
+
+  // Permitted own DOM (email, displayName, CSS class "stack", English "Update")
+  const okDom = `<div class="stack"><p>Update status</p><bdi>${patientA.email}</bdi><span>${patientA.displayName}</span></div>`;
+  assert.equal(scanSensitiveText(okDom, policy.domMarkers, policy.patterns).clean, true);
+
+  // Forbidden in DOM: active id, active profileId, other actor fields, current/stale CSRF, session secret
+  for (const leakedValue of [patientA.id, patientA.profileId, patientB.email, patientB.displayName, csrfA, staleCsrf, sessionSecret, 'postgresql://u:p@postgres:5432/db']) {
+    assert.equal(scanSensitiveText(`<div class="stack">${leakedValue}</div>`, policy.domMarkers, policy.patterns).clean, false);
+  }
+
+  // Forbidden in storage: ALL user markers including activeActor.email & displayName, plus CSRF
+  for (const leakedStorage of [patientA.email, patientA.displayName, patientA.id, patientB.id, csrfA]) {
+    assert.equal(scanSensitiveText(JSON.stringify({ local: { k: leakedStorage } }), policy.storageMarkers, policy.patterns).clean, false);
+  }
+
+  // Supplied response.json cannot diverge from response.text to bypass byte scan
+  const allUserMarkers = [patientA, patientB].flatMap(u => [u.id, u.profileId, u.email, u.displayName]);
+  assert.throws(
+    () => inspectAuthResponse({
+      caseId: 'ME_ACTIVE_B',
+      phase: 'R05/R06',
+      endpoint: 'AUTH_ME',
+      method: 'GET',
+      callSite: 'meRaw:ME_ACTIVE_B',
+      expectedStatus: 200,
+      response: {
+        status: 200,
+        headers: { 'cache-control': 'no-store' },
+        text: '',
+        json: { data: { user: { id: patientB.id, email: patientB.email, role: 'PATIENT' }, session: { expiresAt: '2026-11-28T00:00:00.000Z' }, csrfToken: csrfA } },
+      },
+      activeActor: patientB,
+      allUserMarkers,
+      credentialSecrets: [sessionSecret],
+      currentCsrfToken: csrfA,
+    }),
+    err => err instanceof DiagnosticAssertionError
+      && err.failedPredicates.includes('JSON_BODY_MATCH')
+      && err.failedPredicates.includes('JSON_PARSED'),
+  );
 });

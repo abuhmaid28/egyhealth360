@@ -28,12 +28,14 @@ import {
   assertLoopbackHttpUrl,
   assertObserverQuiescent,
   assertOwnedProject,
+  buildDomScanPolicy,
   cookieAttributes,
   createBudgetTracker,
   createObserverMetrics,
   finalizeSafeReceipt,
   inspectAuthResponse,
   parseOptions,
+  scanAuthorizedResponse,
   scanSensitiveText,
   sha256Hex,
   summarizeBrowserCookieState,
@@ -243,37 +245,40 @@ export async function cleanupOwnedResources({ browser, compose, docker, listReso
     }
   }
   let remaining = { container: 0, network: 0, volume: 0 };
+  let composeDownOk = !compose;
   let uniqueTagRemoved = !imageBuilt;
   let portsReleased = false;
-  try {
-    if (compose) {
+  if (compose) {
+    try {
       docker(...compose, 'down', '--volumes', '--remove-orphans', '--timeout', '10');
       remaining = Object.fromEntries(['container', 'network', 'volume'].map(kind => [kind, listResources(kind).length]));
-      assert.ok(Object.values(remaining).every(n => n === 0), 'OWNED_RESOURCES_REMAIN');
+      composeDownOk = Object.values(remaining).every(n => n === 0);
+    } catch {
+      composeDownOk = false;
     }
-    if (imageBuilt) {
+  }
+  if (imageBuilt) {
+    try {
       docker('image', 'rm', `${project}:local`);
       uniqueTagRemoved = true;
+    } catch {
+      uniqueTagRemoved = false;
     }
+  }
+  try {
     for (const p of ports ?? []) await verifyPortFree(p);
     portsReleased = true;
-    assert.ok(browserClosed, 'BROWSER_NOT_CLOSED');
-    return {
-      result: 'PASS',
-      remaining,
-      browserClosed,
-      portsReleased,
-      uniqueTagRemoved,
-    };
   } catch {
-    return {
-      result: 'FAIL',
-      remaining,
-      browserClosed,
-      portsReleased,
-      uniqueTagRemoved,
-    };
+    portsReleased = false;
   }
+  const ok = composeDownOk && uniqueTagRemoved && portsReleased && browserClosed;
+  return {
+    result: ok ? 'PASS' : 'FAIL',
+    remaining,
+    browserClosed,
+    portsReleased,
+    uniqueTagRemoved,
+  };
 }
 
 export async function runAuthContextDiagnostic(args) {
@@ -435,6 +440,23 @@ export async function runAuthContextDiagnostic(args) {
     containers = identify();
     assert.deepEqual(Object.keys(containers).sort(), ['api', 'postgres', 'web', 'worker']);
     assert.equal(containers.postgres.Image, inspect('image', 'postgres:18.6-bookworm').Id);
+    for (const [svcName, c] of Object.entries(containers)) {
+      assert.equal(c.State.Running, true, `CONTAINER_NOT_RUNNING:${svcName}`);
+      assert.equal(c.HostConfig.Privileged, false, `PRIVILEGED_CONTAINER:${svcName}`);
+      assert.equal(c.HostConfig.NetworkMode, `${project}_default`, `NETWORK_MODE_DRIFT:${svcName}`);
+      assert.equal(Object.keys(c.NetworkSettings.Networks).length, 1, `NETWORK_COUNT_DRIFT:${svcName}`);
+      assert.ok(c.Mounts.every(m => m.Type === 'tmpfs'), `NON_TMPFS_MOUNT:${svcName}`);
+      if (svcName !== 'postgres') {
+        assert.equal(c.Image, imageId, `IMAGE_MISMATCH:${svcName}`);
+        assert.equal(c.Mounts.length, 0, `UNEXPECTED_MOUNT:${svcName}`);
+      }
+    }
+    assert.equal(containers.postgres.Mounts.length, 1, 'POSTGRES_MOUNT_COUNT');
+    assert.equal(containers.postgres.Mounts[0].Destination, '/var/lib/postgresql', 'POSTGRES_MOUNT_DEST');
+    assert.ok(Object.values(containers.postgres.NetworkSettings.Ports).every(v => v === null), 'POSTGRES_PORT_EXPOSED');
+    assert.ok(Object.values(containers.worker.NetworkSettings.Ports).every(v => v === null), 'WORKER_PORT_EXPOSED');
+    assert.deepEqual(containers.api.NetworkSettings.Ports['3001/tcp'], [{ HostIp: '127.0.0.1', HostPort: String(apiPort) }]);
+    assert.deepEqual(containers.web.NetworkSettings.Ports['3000/tcp'], [{ HostIp: '127.0.0.1', HostPort: String(webPort) }]);
 
     const paths = entries.map(e => e.split('\t')[1]);
     const expectedFiles = Object.fromEntries(paths.map(p => [p, sha256Hex(readFileSync(resolve(contextDir, p)))]));
@@ -507,9 +529,11 @@ export async function runAuthContextDiagnostic(args) {
     const inflight = new Set();
     const scans = new Set();
     const drains = new Set();
+    const staleCsrfTokens = [];
+    let currentBrowserCsrf = null;
     let authWindow = false;
-    const assertClean = (text, markers) => {
-      const scan = scanSensitiveText(text, markers);
+    const assertClean = (text, markers, patterns) => {
+      const scan = scanSensitiveText(text, markers, patterns);
       receipt.leaks += scan.leaksDetected;
       assert.equal(scan.leaksDetected, 0, 'PROTECTED_DATA');
     };
@@ -562,12 +586,17 @@ export async function runAuthContextDiagnostic(args) {
       const cdp = await page.context().newCDPSession(page);
       const ax = await cdp.send('Accessibility.getFullAXTree');
       await cdp.detach();
-      const markers = [...userMarkers, ...runtimeSecrets];
-      assertClean(value.html, markers);
-      assertClean(JSON.stringify(ax), markers);
-      assertClean(value.visible, markers);
-      assertClean(value.storage, markers);
-      assertClean(value.cookie, runtimeSecrets);
+      const policy = buildDomScanPolicy({
+        activeActor: users[alias],
+        allUsers: users,
+        runtimeSecrets,
+        staleCsrfTokens,
+      });
+      assertClean(value.html, policy.domMarkers, policy.patterns);
+      assertClean(JSON.stringify(ax), policy.domMarkers, policy.patterns);
+      assertClean(value.visible, policy.domMarkers, policy.patterns);
+      assertClean(value.storage, policy.storageMarkers, policy.patterns);
+      assertClean(value.cookie, policy.cookieMarkers, policy.patterns);
       assert.ok(!value.cookie.includes('eh_session='), 'HTTPONLY_COOKIE_EXPOSED_TO_DOM');
       assert.equal(value.mode, 'live');
       assert.equal(await page.locator('[data-session-mode="live"]').count(), 1);
@@ -652,9 +681,17 @@ export async function runAuthContextDiagnostic(args) {
         if (req.method() === 'POST' && isAuth) recordAuth(url.pathname);
         await route.continue();
       });
+      const requestMeta = new WeakMap();
       context.on('request', req => {
         inflight.add(req);
         observer.requestsStarted += 1;
+        const reqPath = new URL(req.url()).pathname;
+        requestMeta.set(req, {
+          method: req.method(),
+          path: reqPath,
+          actor: users.patientA,
+          allowFreshCsrf: authWindow && req.method() === 'POST' && reqPath === '/api/v1/auth/login' && currentBrowserCsrf === null,
+        });
       });
       context.on('requestfinished', req => {
         inflight.delete(req);
@@ -667,14 +704,43 @@ export async function runAuthContextDiagnostic(args) {
       context.on('response', res => {
         const path = new URL(res.url()).pathname;
         if (!path.startsWith('/api/v1/')) return;
+        const meta = requestMeta.get(res.request()) ?? {
+          method: res.request().method(),
+          path,
+          actor: users.patientA,
+          allowFreshCsrf: false,
+        };
+        const endpoint = meta.method === 'POST' && path === '/api/v1/auth/login'
+          ? 'AUTH_LOGIN'
+          : meta.method === 'GET' && path === '/api/v1/auth/me'
+            ? 'AUTH_ME'
+            : meta.method === 'GET' && path === '/api/v1/me/profile'
+              ? 'ME_PROFILE'
+              : 'OTHER_API';
         observer.scansStarted += 1;
         const pending = (async () => {
           const text = await res.text();
-          const isAuthOk = /^\/api\/v1\/auth\/(login|me)$/.test(path) && res.status() === 200;
-          assertClean(text, [...userMarkers, ...(isAuthOk ? credentialSecrets : runtimeSecrets)]);
-          if (isAuthOk) {
-            const csrf = JSON.parse(text).data?.csrfToken;
-            if (csrf) { runtimeSecrets.push(csrf); allSecrets.push(csrf); }
+          const result = scanAuthorizedResponse({
+            text,
+            status: res.status(),
+            endpoint,
+            method: meta.method,
+            activeActor: meta.actor,
+            allUserMarkers: userMarkers,
+            credentialSecrets,
+            staleCsrfTokens,
+            currentCsrfToken: currentBrowserCsrf,
+            allowFreshCsrf: meta.allowFreshCsrf,
+          });
+          receipt.leaks += result.scan.leaksDetected;
+          assert.ok(result.scan.clean, 'PROTECTED_DATA');
+          if (res.status() === 200 && result.successScoped) {
+            assert.ok(result.shapeValid && result.actorMatch && result.csrfMatch, 'AUTH_OBSERVER_SHAPE_INVALID');
+            if (endpoint === 'AUTH_LOGIN' && result.extractedCsrf) {
+              currentBrowserCsrf = result.extractedCsrf;
+              runtimeSecrets.push(currentBrowserCsrf);
+              allSecrets.push(currentBrowserCsrf);
+            }
           }
           if (/^\/api\/v1\/(auth|me|patients)(\/|$)/.test(path)) {
             assert.equal(res.headers()['cache-control'], 'no-store');
@@ -725,6 +791,7 @@ export async function runAuthContextDiagnostic(args) {
         receipt.browserLoginHeaders = [{ actor: 'patientA', requestOriginMatches: reqHeaders.origin === origin, ...wire[0] }];
       });
       await network.detach();
+      assert.ok(typeof currentBrowserCsrf === 'string' && currentBrowserCsrf.length === 43, 'BROWSER_CSRF_NOT_REGISTERED');
 
       const cookies = await context.cookies();
       const sessionCookie = cookies.find(c => c.name === 'eh_session');
@@ -744,18 +811,40 @@ export async function runAuthContextDiagnostic(args) {
         const meInBrowser = await patientPage.evaluate(async () => {
           const r = await globalThis.fetch('/api/v1/auth/me', { credentials: 'same-origin', cache: 'no-store' });
           const text = await r.text();
-          return { status: r.status, text, json: JSON.parse(text), cache: r.headers.get('cache-control') };
+          return { status: r.status, text, headers: { 'cache-control': r.headers.get('cache-control') ?? undefined } };
         });
-        assert.equal(meInBrowser.status, 200);
-        assert.equal(meInBrowser.cache, 'no-store');
-        assert.deepEqual(Object.keys(meInBrowser.json.data).sort(), ['csrfToken', 'session', 'user']);
-        assert.deepEqual(Object.keys(meInBrowser.json.data.user).sort(), ['email', 'id', 'role']);
-        assert.deepEqual(Object.keys(meInBrowser.json.data.session), ['expiresAt']);
-        assert.equal(meInBrowser.json.data.user.id, users.patientA.id);
-        assert.match(meInBrowser.json.data.csrfToken, /^[A-Za-z0-9_-]{43}$/);
+        inspectAuthResponse({
+          caseId: 'ME_BROWSER_A',
+          phase: 'R04',
+          endpoint: 'AUTH_ME',
+          method: 'GET',
+          callSite: 'browserMe:patientA',
+          expectedStatus: 200,
+          response: meInBrowser,
+          activeActor: users.patientA,
+          allUserMarkers: userMarkers,
+          credentialSecrets,
+          staleCsrfTokens,
+          currentCsrfToken: currentBrowserCsrf,
+        });
         const meRawCheck = await rawHttpRequest(origin, '/api/v1/auth/me', { headers: { Cookie: `eh_session=${sessionCookie.value}` } });
-        assert.equal(meRawCheck.headers['set-cookie'], undefined);
-        assert.equal((await context.cookies()).find(c => c.name === 'eh_session')?.expires, sessionCookie.expires);
+        inspectAuthResponse({
+          caseId: 'ME_BROWSER_A',
+          phase: 'R04',
+          endpoint: 'AUTH_ME',
+          method: 'GET',
+          callSite: 'browserMeRaw:patientA',
+          expectedStatus: 200,
+          expectNoSetCookie: true,
+          response: meRawCheck,
+          activeActor: users.patientA,
+          allUserMarkers: userMarkers,
+          credentialSecrets,
+          staleCsrfTokens,
+          currentCsrfToken: currentBrowserCsrf,
+        });
+        const refreshedCookie = (await context.cookies()).find(c => c.name === 'eh_session');
+        assert.ok(Boolean(refreshedCookie && refreshedCookie.expires === sessionCookie.expires), 'SESSION_EXPIRES_CHANGED');
         return scanDom(patientPage, 'patientA');
       });
     });
@@ -773,10 +862,16 @@ export async function runAuthContextDiagnostic(args) {
             expectedStatus: params.expectedStatus,
             expectedCode: params.expectedCode ?? null,
             expectSetCookie: params.expectSetCookie ?? false,
+            expectNoSetCookie: params.expectNoSetCookie ?? false,
             expectClearedCookie: params.expectClearedCookie ?? false,
             expectEmptyBody: params.expectEmptyBody ?? false,
             response,
-            secretMarkers: allSecrets,
+            activeActor: params.activeActor ?? null,
+            allUserMarkers: userMarkers,
+            credentialSecrets,
+            staleCsrfTokens,
+            currentCsrfToken: params.currentCsrfToken ?? null,
+            allowFreshCsrf: params.allowFreshCsrf ?? false,
           });
           receipt.rawCases.push(projection);
           return { response, projection };
@@ -796,6 +891,8 @@ export async function runAuthContextDiagnostic(args) {
           callSite: 'rawLogin:patientA',
           expectedStatus: 200,
           expectSetCookie: true,
+          activeActor: users.patientA,
+          allowFreshCsrf: true,
           requestInit: {
             method: 'POST',
             headers: { Origin: origin, 'X-EH-Login': '1', 'Content-Type': 'application/json' },
@@ -828,10 +925,12 @@ export async function runAuthContextDiagnostic(args) {
             expectedStatus: 401,
             expectedCode: 'AUTH_UNAUTHENTICATED',
             expectClearedCookie: true,
+            currentCsrfToken: csrfA,
             requestInit: { headers: token ? { Cookie: token } : {} },
           });
         }
 
+        staleCsrfTokens.push(csrfA);
         recordAuth('/login');
         const loginB = await rawCase({
           caseId: 'LOGIN_RAW_B_ROTATE',
@@ -841,6 +940,8 @@ export async function runAuthContextDiagnostic(args) {
           callSite: 'rawLogin:patientB:rotate',
           expectedStatus: 200,
           expectSetCookie: true,
+          activeActor: users.patientB,
+          allowFreshCsrf: true,
           requestInit: {
             method: 'POST',
             headers: { Origin: origin, 'X-EH-Login': '1', 'Content-Type': 'application/json', Cookie: cookieA },
@@ -852,7 +953,8 @@ export async function runAuthContextDiagnostic(args) {
         runtimeSecrets.push(cookieB.split('=')[1], csrfB);
         credentialSecrets.push(cookieB.split('=')[1]);
         allSecrets.push(cookieB.split('=')[1], csrfB);
-        assert.notEqual(csrfB, csrfA);
+        assert.ok(sha256Hex(cookieB.split('=')[1]) !== sha256Hex(cookieA.split('=')[1]), 'SESSION_COOKIE_NOT_ROTATED');
+        assert.ok(sha256Hex(csrfB) !== sha256Hex(csrfA), 'CSRF_NOT_ROTATED');
 
         await rawCase({
           caseId: 'ME_ROTATED',
@@ -863,6 +965,7 @@ export async function runAuthContextDiagnostic(args) {
           expectedStatus: 401,
           expectedCode: 'AUTH_UNAUTHENTICATED',
           expectClearedCookie: true,
+          currentCsrfToken: csrfB,
           requestInit: { headers: { Cookie: cookieA } },
         });
 
@@ -881,6 +984,7 @@ export async function runAuthContextDiagnostic(args) {
             callSite: `rawLogout:${caseId}`,
             expectedStatus: 403,
             expectedCode: 'AUTH_CSRF_INVALID',
+            currentCsrfToken: csrfB,
             requestInit: {
               method: 'POST',
               headers: { Origin: origin, Cookie: cookieB, 'Content-Type': 'application/json', ...(csrf === undefined ? {} : { 'X-CSRF-Token': csrf }) },
@@ -898,6 +1002,7 @@ export async function runAuthContextDiagnostic(args) {
           callSite: 'rawLogout:CSRF_DUPLICATE',
           expectedStatus: 403,
           expectedCode: 'AUTH_CSRF_INVALID',
+          currentCsrfToken: csrfB,
           requestInit: {
             method: 'POST',
             headers: ['Origin', origin, 'Cookie', cookieB, 'X-CSRF-Token', csrfB, 'X-CSRF-Token', csrfB, 'Content-Type', 'application/json'],
@@ -912,6 +1017,9 @@ export async function runAuthContextDiagnostic(args) {
           method: 'GET',
           callSite: 'meRaw:ME_ACTIVE_B',
           expectedStatus: 200,
+          expectNoSetCookie: true,
+          activeActor: users.patientB,
+          currentCsrfToken: csrfB,
           requestInit: { headers: { Cookie: cookieB } },
         });
 
@@ -925,12 +1033,14 @@ export async function runAuthContextDiagnostic(args) {
           expectedStatus: 204,
           expectClearedCookie: true,
           expectEmptyBody: true,
+          currentCsrfToken: csrfB,
           requestInit: {
             method: 'POST',
             headers: { Origin: origin, Cookie: cookieB, 'Content-Type': 'application/json', 'X-CSRF-Token': csrfB },
             body: '{}',
           },
         });
+        staleCsrfTokens.push(csrfB);
 
         await rawCase({
           caseId: 'ME_LOGGED_OUT',
@@ -968,11 +1078,22 @@ export async function runAuthContextDiagnostic(args) {
         const browserAfter = await patientPage.evaluate(async () => {
           const r = await globalThis.fetch('/api/v1/auth/me', { credentials: 'same-origin', cache: 'no-store' });
           const text = await r.text();
-          return { status: r.status, json: JSON.parse(text), cache: r.headers.get('cache-control') };
+          return { status: r.status, text, headers: { 'cache-control': r.headers.get('cache-control') ?? undefined } };
         });
-        assert.equal(browserAfter.status, 200);
-        assert.equal(browserAfter.cache, 'no-store');
-        assert.equal(browserAfter.json.data.user.id, users.patientA.id);
+        inspectAuthResponse({
+          caseId: 'ME_BROWSER_A',
+          phase: 'R05/R06',
+          endpoint: 'AUTH_ME',
+          method: 'GET',
+          callSite: 'browserMeAfter:patientA',
+          expectedStatus: 200,
+          response: browserAfter,
+          activeActor: users.patientA,
+          allUserMarkers: userMarkers,
+          credentialSecrets,
+          staleCsrfTokens,
+          currentCsrfToken: currentBrowserCsrf,
+        });
       });
     });
 

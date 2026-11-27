@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
 import { createHash } from 'node:crypto';
 import { isAbsolute, resolve } from 'node:path';
+import { isDeepStrictEqual } from 'node:util';
 
 export const APPLICATION = '94f3b75476a43ac0118665aecf75a2ce471190b0';
 export const HARNESS_BASE = '781e92bffea26f79c5a89abab79158072383feda';
@@ -68,6 +69,7 @@ export const DIAGNOSTIC_PREDICATES = Object.freeze([
   'STATUS_MATCH',
   'NO_STORE_HEADER',
   'JSON_PARSED',
+  'JSON_BODY_MATCH',
   'TOP_OBJECT',
   'TOP_ERROR_ONLY',
   'ERROR_OBJECT',
@@ -75,7 +77,11 @@ export const DIAGNOSTIC_PREDICATES = Object.freeze([
   'ERROR_CODE_STRING',
   'ERROR_MESSAGE_STRING',
   'ERROR_CODE_MATCH',
+  'SUCCESS_SHAPE_VALID',
+  'ACTOR_IDENTITY_MATCH',
+  'CSRF_TOKEN_MATCH',
   'SET_COOKIE_PRESENT',
+  'SET_COOKIE_ABSENT',
   'SET_COOKIE_CLEARED',
   'EMPTY_BODY',
   'PRIVACY_CLEAN',
@@ -95,8 +101,25 @@ export const ALLOWLISTED_ERROR_CODES = Object.freeze([
   'DATABASE_UNAVAILABLE',
 ]);
 
+export const AUTHORIZED_SUCCESS_ENDPOINTS = Object.freeze([
+  'AUTH_LOGIN',
+  'AUTH_ME',
+  'ME_PROFILE',
+]);
+
+const ALLOWED_ROLES = new Set(['PATIENT', 'CLINICIAN', 'PHARMACY_STAFF', 'LAB_STAFF', 'ADMIN']);
+const CSRF_TOKEN_PATTERN = /^[A-Za-z0-9_-]{43}$/;
 const PROJECT_PATTERN = /^eh203-q1-[a-f0-9]{12}$/;
-const RESPONSE_LEAK_PATTERNS = [
+
+export const DOM_LEAK_PATTERNS = Object.freeze([
+  /postgresql:\/\//i,
+  /postgres:/i,
+  /password_hash/i,
+  /eh-pw-v1\$/i,
+  /(?:__Host-)?eh_session=[A-Za-z0-9_=-]{8,}/i,
+]);
+
+export const RESPONSE_LEAK_PATTERNS = Object.freeze([
   /postgresql:\/\//i,
   /postgres:/i,
   /\bSELECT\s+/i,
@@ -108,14 +131,14 @@ const RESPONSE_LEAK_PATTERNS = [
   /(?:__Host-)?eh_session=[A-Za-z0-9_=-]{8,}/i,
   /\bx-csrf-token\b/i,
   /\bstack\b/i,
-];
+]);
 
-const RECEIPT_LEAK_PATTERNS = [
+const RECEIPT_LEAK_PATTERNS = Object.freeze([
   /postgresql:\/\//i,
   /eh-pw-v1\$/i,
   /(?:__Host-)?eh_session=[A-Za-z0-9_=-]{8,}/i,
   /password_hash/i,
-];
+]);
 
 export class DiagnosticAssertionError extends Error {
   constructor(caseId, failedPredicates, projection) {
@@ -168,8 +191,19 @@ export function assertIsolatedComposeConfig(config, project, apiPort, webPort) {
   assert.notEqual(apiPort, webPort, 'DUPLICATE_LOOPBACK_PORTS');
   assert.equal(config?.name, project, 'COMPOSE_PROJECT_MISMATCH');
   assert.equal(Object.keys(config?.volumes ?? {}).length, 0, 'NAMED_VOLUMES_FORBIDDEN');
-  assert.equal(config?.services?.postgres?.volumes?.[0]?.type, 'tmpfs', 'POSTGRES_TMPFS_REQUIRED');
+  const pgVolumes = config?.services?.postgres?.volumes ?? [];
+  assert.equal(pgVolumes.length, 1, 'POSTGRES_TMPFS_REQUIRED');
+  assert.equal(pgVolumes[0]?.type, 'tmpfs', 'POSTGRES_TMPFS_REQUIRED');
+  assert.equal(pgVolumes[0]?.target, '/var/lib/postgresql', 'POSTGRES_TMPFS_REQUIRED');
   assert.ok(!config?.services?.postgres?.ports, 'POSTGRES_PORT_PUBLICATION_FORBIDDEN');
+  assert.ok(!config?.services?.worker?.ports || config.services.worker.ports.length === 0, 'WORKER_PORT_PUBLICATION_FORBIDDEN');
+  for (const svcName of ['api', 'web', 'worker']) {
+    assert.ok(!config?.services?.[svcName]?.volumes?.length, 'APP_VOLUME_MOUNTS_FORBIDDEN');
+  }
+  for (const svcName of ['api', 'web', 'worker', 'postgres']) {
+    assert.ok(!config?.services?.[svcName]?.privileged, 'PRIVILEGED_CONTAINER_FORBIDDEN');
+    assert.ok(!config?.services?.[svcName]?.network_mode, 'CUSTOM_NETWORK_MODE_FORBIDDEN');
+  }
   assert.deepEqual(config?.services?.api?.build?.args, { EH_UI_API_ORIGIN: 'http://api:3001' });
   const apiPorts = config?.services?.api?.ports ?? [];
   const webPorts = config?.services?.web?.ports ?? [];
@@ -219,6 +253,209 @@ function isPlainRecord(value) {
     && [Object.prototype, null].includes(Object.getPrototypeOf(value));
 }
 
+function exactSortedKeys(obj, expectedSorted) {
+  if (!isPlainRecord(obj)) return false;
+  const actual = Object.keys(obj).sort();
+  return actual.length === expectedSorted.length && actual.every((k, idx) => k === expectedSorted[idx]);
+}
+
+function isValidActorRecord(actor) {
+  return isPlainRecord(actor)
+    && typeof actor.id === 'string' && actor.id.length > 0
+    && typeof actor.profileId === 'string' && actor.profileId.length > 0
+    && typeof actor.email === 'string' && actor.email.length > 0
+    && typeof actor.displayName === 'string' && actor.displayName.length > 0;
+}
+
+function countOccurrences(haystack, needle) {
+  if (!needle) return 0;
+  let count = 0;
+  let offset = 0;
+  for (;;) {
+    const idx = haystack.indexOf(needle, offset);
+    if (idx === -1) return count;
+    count += 1;
+    offset = idx + needle.length;
+  }
+}
+
+export function buildDomScanPolicy({ activeActor, allUsers, runtimeSecrets = [], staleCsrfTokens = [] }) {
+  assert.ok(isValidActorRecord(activeActor), 'INVALID_ACTIVE_ACTOR');
+  const allMarkers = [...new Set(
+    Object.values(allUsers ?? {}).flatMap(u => [u?.id, u?.profileId, u?.email, u?.displayName]),
+  )].filter(v => typeof v === 'string' && v.length > 0);
+  const activeVisibleAllowed = new Set([activeActor.email, activeActor.displayName]);
+  const secretSet = [...new Set([...runtimeSecrets, ...staleCsrfTokens])].filter(v => typeof v === 'string' && v.length > 0);
+  return {
+    domMarkers: [...new Set([...allMarkers.filter(m => !activeVisibleAllowed.has(m)), ...secretSet])],
+    storageMarkers: [...new Set([...allMarkers, ...secretSet])],
+    cookieMarkers: secretSet,
+    patterns: DOM_LEAK_PATTERNS,
+  };
+}
+
+/**
+ * Field-aware, fail-closed scanner for HTTP API responses.
+ * Active actor fields are exempted ONLY when status === 200, endpoint + method
+ * match a source-supported auth/profile response, exact JSON shape and actor
+ * identity validate, and no extra/stale/credential leaks occur anywhere else.
+ */
+export function scanAuthorizedResponse({
+  text,
+  status,
+  endpoint,
+  method,
+  activeActor = null,
+  allUserMarkers = [],
+  credentialSecrets = [],
+  staleCsrfTokens = [],
+  currentCsrfToken = null,
+  allowFreshCsrf = false,
+  expectEmptyBody = false,
+}) {
+  const source = typeof text === 'string' ? text : '';
+  const strictMarkers = [...new Set([
+    ...allUserMarkers,
+    ...credentialSecrets,
+    ...staleCsrfTokens,
+    ...(currentCsrfToken ? [currentCsrfToken] : []),
+  ])].filter(v => typeof v === 'string' && v.length > 0);
+
+  const methodMatches = (endpoint === 'AUTH_LOGIN' && method === 'POST')
+    || ((endpoint === 'AUTH_ME' || endpoint === 'ME_PROFILE') && method === 'GET');
+  const eligibleForSuccessScope = !expectEmptyBody
+    && status === 200
+    && AUTHORIZED_SUCCESS_ENDPOINTS.includes(endpoint)
+    && methodMatches
+    && isValidActorRecord(activeActor);
+
+  if (!eligibleForSuccessScope) {
+    return {
+      scan: scanSensitiveText(source, strictMarkers, RESPONSE_LEAK_PATTERNS),
+      jsonParsed: false,
+      parsedJson: null,
+      shapeValid: false,
+      actorMatch: false,
+      csrfMatch: false,
+      extractedCsrf: null,
+      successScoped: false,
+    };
+  }
+
+  let parsed = null;
+  let jsonParsed = false;
+  try {
+    parsed = JSON.parse(source);
+    jsonParsed = isPlainRecord(parsed) || Array.isArray(parsed);
+  } catch {
+    jsonParsed = false;
+  }
+
+  if (!jsonParsed || !exactSortedKeys(parsed, ['data']) || !isPlainRecord(parsed.data)) {
+    return {
+      scan: scanSensitiveText(source, strictMarkers, RESPONSE_LEAK_PATTERNS),
+      jsonParsed,
+      parsedJson: parsed,
+      shapeValid: false,
+      actorMatch: false,
+      csrfMatch: false,
+      extractedCsrf: null,
+      successScoped: true,
+    };
+  }
+
+  const data = parsed.data;
+  let shapeKeysOk = false;
+  let actorMatch = false;
+  let csrfMatch = false;
+  let extractedCsrf = null;
+
+  if (endpoint === 'AUTH_LOGIN' || endpoint === 'AUTH_ME') {
+    shapeKeysOk = exactSortedKeys(data, ['csrfToken', 'session', 'user'])
+      && exactSortedKeys(data.user, ['email', 'id', 'role'])
+      && exactSortedKeys(data.session, ['expiresAt'])
+      && typeof data.session.expiresAt === 'string' && data.session.expiresAt.length > 0
+      && typeof data.user.role === 'string' && ALLOWED_ROLES.has(data.user.role)
+      && data.user.role === (activeActor.role ?? 'PATIENT');
+    actorMatch = shapeKeysOk
+      && data.user.id === activeActor.id
+      && data.user.email === activeActor.email;
+    const csrfWellFormed = shapeKeysOk && typeof data.csrfToken === 'string' && CSRF_TOKEN_PATTERN.test(data.csrfToken);
+    const csrfNotForbidden = csrfWellFormed
+      && !staleCsrfTokens.includes(data.csrfToken)
+      && !credentialSecrets.includes(data.csrfToken)
+      && !allUserMarkers.includes(data.csrfToken);
+    const csrfExpectedOk = csrfWellFormed
+      && (allowFreshCsrf || currentCsrfToken === null || data.csrfToken === currentCsrfToken);
+    csrfMatch = csrfWellFormed && csrfNotForbidden && csrfExpectedOk;
+    if (shapeKeysOk && actorMatch && csrfMatch) extractedCsrf = data.csrfToken;
+  } else if (endpoint === 'ME_PROFILE') {
+    shapeKeysOk = exactSortedKeys(data, ['dateOfBirth', 'displayName', 'id', 'sex'])
+      && (data.dateOfBirth === null || typeof data.dateOfBirth === 'string')
+      && (data.sex === null || typeof data.sex === 'string');
+    actorMatch = shapeKeysOk
+      && data.id === activeActor.profileId
+      && data.displayName === activeActor.displayName;
+    csrfMatch = true;
+  }
+
+  const shapeValid = Boolean(shapeKeysOk && actorMatch && csrfMatch);
+  if (!shapeValid) {
+    return {
+      scan: scanSensitiveText(source, strictMarkers, RESPONSE_LEAK_PATTERNS),
+      jsonParsed,
+      parsedJson: parsed,
+      shapeValid: false,
+      actorMatch,
+      csrfMatch,
+      extractedCsrf: null,
+      successScoped: true,
+    };
+  }
+
+  const redacted = JSON.parse(JSON.stringify(parsed));
+  let exemptValues;
+  if (endpoint === 'AUTH_LOGIN' || endpoint === 'AUTH_ME') {
+    redacted.data.user.id = '<ACTIVE_ID>';
+    redacted.data.user.email = '<ACTIVE_EMAIL>';
+    redacted.data.csrfToken = '<ACTIVE_CSRF>';
+    exemptValues = [activeActor.id, activeActor.email, data.csrfToken];
+  } else {
+    redacted.data.id = '<ACTIVE_PROFILE_ID>';
+    redacted.data.displayName = '<ACTIVE_DISPLAY_NAME>';
+    exemptValues = [activeActor.profileId, activeActor.displayName];
+  }
+
+  const allMarkersWithExtractedCsrf = [...new Set([
+    ...strictMarkers,
+    ...(extractedCsrf ? [extractedCsrf] : []),
+  ])].filter(v => typeof v === 'string' && v.length > 0);
+  const redactedScan = scanSensitiveText(JSON.stringify(redacted), allMarkersWithExtractedCsrf, RESPONSE_LEAK_PATTERNS);
+  const nonExemptMarkers = allMarkersWithExtractedCsrf.filter(m => !exemptValues.includes(m));
+  const rawScan = scanSensitiveText(source, nonExemptMarkers, RESPONSE_LEAK_PATTERNS);
+  const duplicateExemptHits = exemptValues.filter(v => countOccurrences(source, v) > 1).length;
+  const markerHits = redactedScan.markerHits + rawScan.markerHits + duplicateExemptHits;
+  const patternHits = Math.max(redactedScan.patternHits, rawScan.patternHits);
+
+  return {
+    scan: {
+      scanned: true,
+      markerCount: allMarkersWithExtractedCsrf.length,
+      markerHits,
+      patternHits,
+      leaksDetected: markerHits + patternHits,
+      clean: markerHits === 0 && patternHits === 0,
+    },
+    jsonParsed,
+    parsedJson: parsed,
+    shapeValid: true,
+    actorMatch: true,
+    csrfMatch: true,
+    extractedCsrf,
+    successScoped: true,
+  };
+}
+
 function classifyErrorCategory(status, errorCode) {
   if (errorCode === 'AUTH_CSRF_INVALID') return 'CSRF';
   if (errorCode && errorCode.startsWith('AUTH_')) return 'AUTH';
@@ -251,32 +488,58 @@ export function inspectAuthResponse({
   expectedStatus,
   expectedCode = null,
   expectSetCookie = false,
+  expectNoSetCookie = false,
   expectClearedCookie = false,
   expectEmptyBody = false,
   response,
   secretMarkers = [],
+  activeActor = null,
+  allUserMarkers = [],
+  credentialSecrets = [],
+  staleCsrfTokens = [],
+  currentCsrfToken = null,
+  allowFreshCsrf = false,
 }) {
   assert.ok(DIAGNOSTIC_CASES.includes(caseId), 'INVALID_DIAGNOSTIC_CASE');
   assert.ok(DIAGNOSTIC_PHASES.includes(phase), 'INVALID_DIAGNOSTIC_PHASE');
 
   const text = typeof response?.text === 'string' ? response.text : '';
-  const scan = scanSensitiveText(text, secretMarkers);
+  const combinedCredentials = [...new Set([...secretMarkers, ...credentialSecrets])];
+  const actualStatus = Number(response?.status ?? 0);
+
+  const scanResult = scanAuthorizedResponse({
+    text,
+    status: actualStatus,
+    endpoint,
+    method,
+    activeActor,
+    allUserMarkers,
+    credentialSecrets: combinedCredentials,
+    staleCsrfTokens,
+    currentCsrfToken,
+    allowFreshCsrf,
+    expectEmptyBody,
+  });
+  const scan = scanResult.scan;
+
   const cacheControl = headerValue(response?.headers, 'cache-control');
   const setCookie = firstSetCookie(response?.headers);
   const cookieAttrs = typeof setCookie === 'string' ? cookieAttributes(setCookie) : null;
 
-  let json = response?.json;
-  let jsonParsed = isPlainRecord(json) || Array.isArray(json);
-  if (json === undefined && text.length > 0 && !expectEmptyBody) {
+  let json = scanResult.parsedJson;
+  let jsonParsed = scanResult.jsonParsed;
+  if (!scanResult.successScoped && text.length > 0 && !expectEmptyBody) {
     try {
       json = JSON.parse(text);
-      jsonParsed = true;
+      jsonParsed = isPlainRecord(json) || Array.isArray(json);
     } catch {
       jsonParsed = false;
     }
   }
+  const jsonBodyMatch = response?.json === undefined
+    ? true
+    : Boolean(jsonParsed && isDeepStrictEqual(json, response.json));
 
-  const actualStatus = Number(response?.status ?? 0);
   const cachePresent = typeof cacheControl === 'string' && cacheControl.length > 0;
   const noStore = cacheControl === 'no-store';
   const topObject = isPlainRecord(json);
@@ -306,6 +569,7 @@ export function inspectAuthResponse({
   if (scan.patternHits > 0) failedPredicates.push('DRIVER_PATTERN_ABSENT');
   if (!statusMatch) failedPredicates.push('STATUS_MATCH');
   if (!noStore) failedPredicates.push('NO_STORE_HEADER');
+  if (!jsonBodyMatch) failedPredicates.push('JSON_BODY_MATCH');
   if (expectEmptyBody) {
     if (!emptyBody) failedPredicates.push('EMPTY_BODY');
   } else {
@@ -319,9 +583,17 @@ export function inspectAuthResponse({
       if (!messageString) failedPredicates.push('ERROR_MESSAGE_STRING');
       if (!errorCodeMatch) failedPredicates.push('ERROR_CODE_MATCH');
     }
+    if (expectedStatus === 200 && scanResult.successScoped) {
+      if (!scanResult.shapeValid) failedPredicates.push('SUCCESS_SHAPE_VALID');
+      if (!scanResult.actorMatch) failedPredicates.push('ACTOR_IDENTITY_MATCH');
+      if (!scanResult.csrfMatch) failedPredicates.push('CSRF_TOKEN_MATCH');
+    }
   }
   if (expectSetCookie && !setCookiePresent) {
     failedPredicates.push('SET_COOKIE_PRESENT');
+  }
+  if (expectNoSetCookie && setCookiePresent) {
+    failedPredicates.push('SET_COOKIE_ABSENT');
   }
   if (expectClearedCookie) {
     if (!setCookiePresent) failedPredicates.push('SET_COOKIE_PRESENT');
@@ -339,6 +611,7 @@ export function inspectAuthResponse({
     cachePresent,
     noStore,
     jsonParsed,
+    jsonBodyMatch,
     topObject,
     topErrorOnly,
     errorObject,
@@ -348,6 +621,9 @@ export function inspectAuthResponse({
     errorCodeMatch,
     errorCode,
     errorCategory: classifyErrorCategory(actualStatus, errorCode),
+    successShapeValid: scanResult.successScoped ? scanResult.shapeValid : null,
+    actorIdentityMatch: scanResult.successScoped ? scanResult.actorMatch : null,
+    csrfTokenMatch: scanResult.successScoped ? scanResult.csrfMatch : null,
     setCookiePresent,
     setCookieCleared,
     emptyBody,
