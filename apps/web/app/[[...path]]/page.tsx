@@ -15,6 +15,7 @@ export default async function Page({
   if (
     first === "brand" ||
     first === "visual-recovery" ||
+    first === "v2-foundation" ||
     ASSET_EXTENSION.test(last)
   ) {
     notFound();

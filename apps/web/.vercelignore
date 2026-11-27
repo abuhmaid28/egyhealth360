@@ -1,0 +1,10 @@
+.env
+.env.*
+*.pem
+*.key
+*.log
+.next
+node_modules
+playwright-report
+test-results
+tmp

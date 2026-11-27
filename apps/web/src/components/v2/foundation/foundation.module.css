@@ -1,0 +1,164 @@
+@font-face {
+  font-family: "EH Foundation Arabic";
+  src: url("/fonts/my-care/plex-arabic-regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EH Foundation Arabic";
+  src: url("/fonts/my-care/plex-arabic-semibold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+}
+
+/* Clean-room G2-F1 dark-first + Light parity tokens scoped strictly under .scope. */
+.scope {
+  --eh-bg-canvas: #0e0b1a;
+  --eh-bg-surface: #171329;
+  --eh-bg-raised: #221c3d;
+  --eh-bg-inset: #130f23;
+  --eh-bg-tint: #1d1736;
+  --eh-border-subtle: #393061;
+  --eh-border-strong: #5c4f94;
+
+  --eh-ink-primary: #f5f2ff;
+  --eh-ink-secondary: #cbc3e6;
+  --eh-ink-muted: #b5aad9;
+  --eh-ink-accent: #ffcca8;
+
+  --eh-action-bg: #613dc8;
+  --eh-action-bg-hover: #5433b5;
+  --eh-action-ink: #ffffff;
+  --eh-accent-fill: #ffb88b;
+  --eh-accent-ink: #150e24;
+  --eh-focus-ring: #ffc9a3;
+
+  --eh-success-bg: #0f3328;
+  --eh-success-border: #228562;
+  --eh-success-ink: #8ef0c7;
+
+  --eh-warning-bg: #33210b;
+  --eh-warning-border: #a66d20;
+  --eh-warning-ink: #ffd188;
+
+  --eh-danger-bg: #3c1420;
+  --eh-danger-border: #b84463;
+  --eh-danger-ink: #ffb8c9;
+
+  --eh-info-bg: #1e1842;
+  --eh-info-border: #6e57b8;
+  --eh-info-ink: #dcd3ff;
+
+  --eh-shadow-card: 0 18px 40px -24px rgba(4, 2, 12, 0.72);
+  --eh-radius-lg: 20px;
+  --eh-radius-md: 14px;
+  --eh-radius-sm: 10px;
+  --eh-font-sans: "Inter", "EH Foundation Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --eh-font-ar: "EH Foundation Arabic", "Noto Sans Arabic", "Inter", system-ui, sans-serif;
+
+  /* Compatible bridge variables for existing V2 modules */
+  --v2-canvas: var(--eh-bg-canvas);
+  --v2-surface: var(--eh-bg-surface);
+  --v2-raised: var(--eh-bg-raised);
+  --v2-ink: var(--eh-ink-primary);
+  --v2-muted: var(--eh-ink-secondary);
+  --v2-action: #7c58e6;
+  --v2-action-ink: #ffffff;
+  --v2-accent: var(--eh-accent-fill);
+  --v2-accent-ink: var(--eh-accent-ink);
+  --v2-line: var(--eh-border-subtle);
+
+  color-scheme: dark;
+  background-color: var(--eh-bg-canvas);
+  color: var(--eh-ink-primary);
+  font-family: var(--eh-font-sans);
+  line-height: 1.55;
+  min-block-size: 100%;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.scope[dir="rtl"] {
+  font-family: var(--eh-font-ar);
+}
+
+.scope[data-foundation-theme="light"] {
+  --eh-bg-canvas: #f6f4fb;
+  --eh-bg-surface: #ffffff;
+  --eh-bg-raised: #eeebf8;
+  --eh-bg-inset: #ffffff;
+  --eh-bg-tint: #f3f0fc;
+  --eh-border-subtle: #cbc2e0;
+  --eh-border-strong: #7b6ea3;
+
+  --eh-ink-primary: #141024;
+  --eh-ink-secondary: #41385c;
+  --eh-ink-muted: #50466e;
+  --eh-ink-accent: #7b3400;
+
+  --eh-action-bg: #5b37c2;
+  --eh-action-bg-hover: #4928a8;
+  --eh-action-ink: #ffffff;
+  --eh-accent-fill: #ffe6d4;
+  --eh-accent-ink: #5e2500;
+  --eh-focus-ring: #4827a8;
+
+  --eh-success-bg: #e3f8ef;
+  --eh-success-border: #1c7a57;
+  --eh-success-ink: #0b4f36;
+
+  --eh-warning-bg: #fff3dc;
+  --eh-warning-border: #9e6214;
+  --eh-warning-ink: #5c3704;
+
+  --eh-danger-bg: #fdecef;
+  --eh-danger-border: #a82946;
+  --eh-danger-ink: #75122b;
+
+  --eh-info-bg: #efebff;
+  --eh-info-border: #6c4ec4;
+  --eh-info-ink: #371e80;
+
+  --eh-shadow-card: 0 12px 28px -20px rgba(24, 16, 54, 0.16);
+  --v2-action: #5b37c2;
+
+  color-scheme: light;
+}
+
+.scope *,
+.scope *::before,
+.scope *::after {
+  box-sizing: border-box;
+}
+
+.scope :is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--eh-focus-ring);
+  outline-offset: 2px;
+}
+
+.scope :is(h1, h2, h3, h4, p) {
+  margin: 0;
+}
+
+.scope :is(ul, ol) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scope *,
+  .scope *::before,
+  .scope *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

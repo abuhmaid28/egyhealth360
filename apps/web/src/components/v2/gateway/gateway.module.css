@@ -1,0 +1,369 @@
+.page {
+  min-block-size: 100vh;
+  padding: clamp(0.875rem, 2.5vw, 1.75rem) clamp(0.875rem, 3vw, 2rem) 2.5rem;
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  justify-items: center;
+}
+
+.container {
+  inline-size: min(100%, 1120px);
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  min-inline-size: 0;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--eh-bg-surface);
+  border: 1px solid var(--eh-border-subtle);
+  border-radius: var(--eh-radius-lg);
+}
+
+.brandWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-inline-size: 0;
+}
+
+.brandWrap img {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.controls :global(button),
+.controls :global(summary) {
+  min-block-size: 44px;
+  min-inline-size: 44px;
+  border-radius: var(--eh-radius-sm);
+  border: 1px solid var(--eh-border-strong);
+  background: var(--eh-bg-raised);
+  color: var(--eh-ink-primary);
+  font: inherit;
+  font-weight: 600;
+  padding: 0.5rem 0.85rem;
+  cursor: pointer;
+}
+
+.controls :global(button[aria-pressed="true"]) {
+  background: var(--eh-action-bg);
+  border-color: var(--eh-action-bg);
+  color: var(--eh-action-ink);
+}
+
+.themeDetails {
+  position: relative;
+}
+
+.themeDetails > summary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.themePanel {
+  position: absolute;
+  inset-block-start: calc(100% + 0.5rem);
+  inset-inline-end: 0;
+  z-index: 20;
+  padding: 0.65rem;
+  min-inline-size: 220px;
+  background: var(--eh-bg-surface);
+  border: 1px solid var(--eh-border-strong);
+  border-radius: var(--eh-radius-md);
+  box-shadow: var(--eh-shadow-card);
+  display: grid;
+  gap: 0.45rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(1rem, 2.5vw, 2rem);
+  align-items: center;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  background: var(--eh-bg-surface);
+  border: 1px solid var(--eh-border-subtle);
+  border-radius: var(--eh-radius-lg);
+  box-shadow: var(--eh-shadow-card);
+}
+
+.heroCopy {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: start;
+  min-inline-size: 0;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--eh-accent-fill);
+  color: var(--eh-accent-ink);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.heroTitle {
+  font-size: clamp(1.75rem, 1.2rem + 2.1vw, 2.85rem);
+  line-height: 1.14;
+  font-weight: 800;
+  color: var(--eh-ink-primary);
+}
+
+.heroTitleEm {
+  font-style: normal;
+  color: var(--eh-ink-accent);
+}
+
+.heroLead {
+  font-size: clamp(1rem, 0.96rem + 0.25vw, 1.125rem);
+  color: var(--eh-ink-secondary);
+  max-inline-size: 56ch;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-block-start: 0.25rem;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-block-size: 48px;
+  padding: 0.75rem 1.35rem;
+  border-radius: var(--eh-radius-md);
+  border: 1px solid var(--eh-action-bg);
+  background: var(--eh-action-bg);
+  color: var(--eh-action-ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primaryCta:hover {
+  background: var(--eh-action-bg-hover);
+}
+
+.secondaryLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-block-size: 44px;
+  padding: 0.65rem 1.05rem;
+  border-radius: var(--eh-radius-md);
+  border: 1px solid var(--eh-border-strong);
+  background: var(--eh-bg-raised);
+  color: var(--eh-ink-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.heroVisualPane {
+  display: grid;
+  gap: 0.75rem;
+  min-inline-size: 0;
+}
+
+.heroSvg {
+  inline-size: 100%;
+  block-size: auto;
+  display: block;
+  color: var(--eh-ink-primary);
+}
+
+.previewFrame {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.65rem 0.8rem;
+  border-radius: var(--eh-radius-md);
+  background: var(--eh-bg-inset);
+  border: 1px solid var(--eh-border-subtle);
+}
+
+.previewThumb {
+  inline-size: 76px;
+  block-size: 56px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.previewCaption {
+  display: grid;
+  gap: 0.15rem;
+  font-size: 0.875rem;
+  color: var(--eh-ink-secondary);
+}
+
+.previewCaption strong {
+  color: var(--eh-ink-primary);
+  font-size: 0.9375rem;
+}
+
+.rolesSection {
+  display: grid;
+  gap: 1rem;
+}
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+}
+
+.sectionHead h2 {
+  font-size: 1.35rem;
+  font-weight: 750;
+  color: var(--eh-ink-primary);
+}
+
+.sectionHead p {
+  font-size: 0.9375rem;
+  color: var(--eh-ink-secondary);
+}
+
+.roleGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.roleCard {
+  display: grid;
+  gap: 0.75rem;
+  align-content: space-between;
+  padding: 1rem;
+  background: var(--eh-bg-surface);
+  border: 1px solid var(--eh-border-subtle);
+  border-radius: var(--eh-radius-md);
+  min-inline-size: 0;
+}
+
+.roleTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.roleBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--eh-info-bg);
+  border: 1px solid var(--eh-info-border);
+  color: var(--eh-info-ink);
+}
+
+.roleBadgeFuture {
+  background: var(--eh-warning-bg);
+  border-color: var(--eh-warning-border);
+  color: var(--eh-warning-ink);
+}
+
+.roleCard h3 {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--eh-ink-primary);
+}
+
+.roleCard p {
+  font-size: 0.9rem;
+  color: var(--eh-ink-secondary);
+}
+
+.roleButton {
+  inline-size: 100%;
+  min-block-size: 44px;
+  padding: 0.6rem 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border-radius: var(--eh-radius-sm);
+  border: 1px solid var(--eh-border-strong);
+  background: var(--eh-bg-raised);
+  color: var(--eh-ink-primary);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.roleButton:hover {
+  background: var(--eh-action-bg);
+  border-color: var(--eh-action-bg);
+  color: var(--eh-action-ink);
+}
+
+.modeNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.95rem 1.1rem;
+  border-radius: var(--eh-radius-md);
+  background: var(--eh-bg-surface);
+  border: 1px solid var(--eh-border-subtle);
+  color: var(--eh-ink-secondary);
+  font-size: 0.9375rem;
+}
+
+.errorNote {
+  padding: 0.85rem 1rem;
+  border-radius: var(--eh-radius-sm);
+  background: var(--eh-danger-bg);
+  border: 1px solid var(--eh-danger-border);
+  color: var(--eh-danger-ink);
+  font-weight: 600;
+}
+
+@media (max-width: 980px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .roleGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .roleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .themePanel {
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+  }
+}
