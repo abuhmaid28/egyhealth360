@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+Current bounded NOVA refinement: [one Patient-only refined A package](nova-evolution-refinement/README.md), [independent critique](nova-evolution-refinement/INDEPENDENT_REVIEW.md), [technical/governance evidence](nova-evolution-refinement/VALIDATION.md). The latest direct owner brief provisionally selects A from unchanged PR #90 for refinement only. CURRENT_STATUS owns mutable scope/delivery state; final identity and implementation remain owner-gated.
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
@@ -41,6 +43,12 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| NOVA Patient refinement | Responsibility / limits |
+| --- | --- |
+| [Refined A owner package](nova-evolution-refinement/README.md) | One Arabic Patient My Care refinement, two primary browser PNGs, before/after, rationale, loading/interaction concepts and pinned provenance; no final design approval. |
+| [Independent refined-A critique](nova-evolution-refinement/INDEPENDENT_REVIEW.md) | Separate reviewer findings and fresh screenshot verification, with visual/technical/governance conclusions separated. |
+| [Refinement validation](nova-evolution-refinement/VALIDATION.md) | Browser/text/focus/contrast/motion, original evidence and source preservation, exact-head CI reporting boundaries and untested finalist work. |
 
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |

@@ -1,0 +1,120 @@
+{
+  "files": [
+    {
+      "path": "docs/nova-evolution-refinement/INDEPENDENT_REVIEW.md",
+      "sha256": "a70812ed6ae6886432fddb2d22485cb3953aaeb4c24f05f0a97025f46b6b549a"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/README.md",
+      "sha256": "d895fc647936eb6421b919a622fe4544d94e7329af1b8ec0da5538027b7bb7a9"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/VALIDATION.md",
+      "sha256": "c3e361306d711b47b1fc42a5605540252be537d8d2235f9890009fc3ab0760ec"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/assets/manrope-OFL.txt",
+      "sha256": "d6a309fcfb963d329a93baf9df66fa5f3c23a4be2b5f67edf24d6cafecde12ac"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/assets/manrope.ttf",
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/assets/plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/before-after.html",
+      "sha256": "74a55dda9ebcb9dc57d82d6db426cef969509de42b421035007c6f55c4c170fb"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/before-after.png",
+      "sha256": "0d21e6500161429d99bbee95d23df6e8c9c6a022bad09a4f4fb1e1abc3b0f84a"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/before-ar-1440.png",
+      "sha256": "22db9a9ab681083094ead4682a835e2a24cc59ad2cc018e4a5d9bced5697210d"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/before-ar-390.png",
+      "sha256": "4cda24560c336af0f647f1df043b8ce3a6fbccf146c6306746857f8ed158bde2"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/browser-results.json",
+      "sha256": "814c574ee69b9b3cdd882d4bf6ae9c825549fa21caa9b5646670b3e4b471e2c8"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/comparison-metrics.json",
+      "sha256": "4433d2c0b721b5609a7b35bddb0a10cfbb4170bf1d24782a9c881e050a8c4f2f"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/contrast.json",
+      "sha256": "7cfae2807070571935ccee7003b68e41dd8b5f97302ae3d3e5c869411c67055c"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/initial-measurements.json",
+      "sha256": "cfa1ef3cb5738afe9262c02b4d2a4c60c2d93b1d5081b9aa47c8f049221456e3"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/motion.json",
+      "sha256": "3f7f345a2f5a19aa033824612c4e2d990c60e239c882f53d30d6ad15383e5a84"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/preservation.json",
+      "sha256": "50a19ad23624a926c0793712b269fb4151bb2ea320fddb325aef83cb0e6a08d2"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/provenance.json",
+      "sha256": "e67e3ee1654b4120c6ba7b750088592b4e2da15ef8d9c7ba64a6deb0bb6b029c"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/refined-ar-1440-full.png",
+      "sha256": "8c979ecb91e5855670bee0fcec97c0441bf148425e2635a868557f81d2f97b1b"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/evidence/refined-ar-390-full.png",
+      "sha256": "bfe0a35a45d424ee5add3804c69501919cee7a707ddc5eba4c97da4b53e09589"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/index.html",
+      "sha256": "81b2c22b16017b97d1806a95054dcc1be14b991aca931a57ced08fe1cfdfadd4"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/nova.css",
+      "sha256": "ddce50350cd63a32a20bbeffe7c52790dfe1639b12abab315cbe19a05d199863"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/specimen.js",
+      "sha256": "a1fbcd8c8dc576a2fdce92e5aa5e9795221b69c6575048f2e741d5d26388a0ef"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/tools/comparison.mjs",
+      "sha256": "ba59dd513ca1bd4d3738df40f1a2eeb9e41ccf32bd2feaf73f5fb640e5abcbd6"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/tools/contrast.mjs",
+      "sha256": "a5d90cd2f53aab25bf7304fd4a197a4f1b343bd274a2b1eecb99d43ab5daa7f2"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/tools/motion.mjs",
+      "sha256": "845648309c8fbfe3c805a7b345c8ba03f296c937f028791615304c8c81e58309"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/tools/render.mjs",
+      "sha256": "9b3b017d7b2cb5e153d1771c1f12cae76efdc34cf655dee92611193e9806a3a8"
+    },
+    {
+      "path": "docs/nova-evolution-refinement/tools/verify.mjs",
+      "sha256": "de984dc3939009c9940be9db54ccff9cee4ebbdceac04126c4455eb46720173f"
+    }
+  ]
+}

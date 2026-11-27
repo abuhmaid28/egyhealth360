@@ -1,0 +1,35 @@
+{
+  "observations": [
+    {
+      "reducedMotion": "no-preference",
+      "scroll": "smooth",
+      "buttonTransition": "0.14s, 0.14s, 0.14s",
+      "arrowTransition": "0.14s",
+      "hover": {
+        "background": "rgb(237, 255, 191)"
+      },
+      "paperFocus": {
+        "style": "solid",
+        "width": "3px",
+        "color": "rgb(73, 53, 88)",
+        "gap": "rgb(250, 248, 255) 0px 0px 0px 2px"
+      }
+    },
+    {
+      "reducedMotion": "reduce",
+      "scroll": "auto",
+      "buttonTransition": "0s",
+      "arrowTransition": "0s",
+      "hover": {
+        "background": "rgb(237, 255, 191)"
+      },
+      "paperFocus": {
+        "style": "solid",
+        "width": "3px",
+        "color": "rgb(73, 53, 88)",
+        "gap": "rgb(250, 248, 255) 0px 0px 0px 2px"
+      }
+    }
+  ],
+  "loading": "Specified as a later static-to-loaded geometry-preserving transition in README; no loading or clinical-state screen is implemented in this bounded refinement."
+}

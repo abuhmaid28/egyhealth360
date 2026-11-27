@@ -1,0 +1,111 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "primary_visual_source": "5aad95092a74e5818214c71d4263451b9d28eb86",
+  "mode": "EXPLICIT_AUDITED_PLAYBOOK_LOADING",
+  "native_activation_verified": false,
+  "native_discovery": "No new availability check; earlier session catalog did not expose these resources. Explicit Git reading only.",
+  "owner_brief_sha256": "383dca45ea6085cc25a23c93ed7749d54f8d4d7d0418f32655a33fcd2f9fe633",
+  "authorization": "Direct owner brief selects A provisionally for ONE Patient-only refinement. No final identity/system/implementation approval.",
+  "resources": [
+    {
+      "commit": "5aad95092a74e5818214c71d4263451b9d28eb86",
+      "path": "docs/patient-three-directions/evidence/a-ar-390-full.png",
+      "sha256": "4cda24560c336af0f647f1df043b8ce3a6fbccf146c6306746857f8ed158bde2"
+    },
+    {
+      "commit": "5aad95092a74e5818214c71d4263451b9d28eb86",
+      "path": "docs/patient-three-directions/evidence/a-ar-1440-full.png",
+      "sha256": "22db9a9ab681083094ead4682a835e2a24cc59ad2cc018e4a5d9bced5697210d"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/PLAYBOOK.md",
+      "sha256": "c6e33163ee61345ad528533f71c42c31dd2c21d7214cd5bf784654b1ff87cb52",
+      "loading": "explicit file reading before authoring"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/AUDIT.md",
+      "sha256": "b57049cf1681662084e6a85639e3e200348b2f0dcce6ced8552a2ecf370266da",
+      "loading": "explicit file reading before authoring"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/basic-ux-excerpts.json",
+      "sha256": "f54216357069593405470e09cffe4d34169c83c92f2d0e067ca34e5ef4a871c5",
+      "loading": "explicit file reading before authoring"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/upstream-lock.json",
+      "sha256": "a2d399a0f43b6bb6f90cf9908435f2f4c7be1c3b6b67c829299bf35c749f69df",
+      "loading": "explicit file reading before authoring"
+    },
+    {
+      "commit": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/LICENSE",
+      "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014",
+      "loading": "explicit file reading before authoring"
+    },
+    {
+      "commit": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": ".agents/skills/eh360-visual-exploration/SKILL.md",
+      "sha256": "63cc0b2c92a94b8bb7ad7a6ebd616113113a4d4319db571de5b3a6387294a6df",
+      "loading": "explicit file reading before authoring"
+    },
+    {
+      "commit": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": ".agents/skills/eh360-visual-qa/SKILL.md",
+      "sha256": "d204ed472c7467bbfb73f8b220b9008569a5d233a56699ef2e794e55d47d1160",
+      "loading": "explicit file reading before authoring"
+    },
+    {
+      "commit": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": "docs/skills-pilot/REFERENCE_MAP.md",
+      "sha256": "504d8827e3d0e1081f9714f00bd165b068ba50d65eb52a457acbe9038381fd6e",
+      "loading": "explicit file reading before authoring"
+    },
+    {
+      "commit": "5aad95092a74e5818214c71d4263451b9d28eb86",
+      "path": "docs/patient-three-directions/README.md",
+      "sha256": "f12655971db104ef1f6aff45d637ae8445e9296c67286dd745c09382b7a32bde",
+      "role": "Pinned original visual/behavior reference; preserved unchanged"
+    },
+    {
+      "commit": "5aad95092a74e5818214c71d4263451b9d28eb86",
+      "path": "docs/patient-three-directions/INDEPENDENT_REVIEW.md",
+      "sha256": "3acbb8b131a73ae9a5892db2124041190b782e45825614d88e5f5b6ea53367eb",
+      "role": "Pinned original visual/behavior reference; preserved unchanged"
+    },
+    {
+      "commit": "5aad95092a74e5818214c71d4263451b9d28eb86",
+      "path": "docs/patient-three-directions/VALIDATION.md",
+      "sha256": "082e4f50d77127868813a648be66f2aac5941d3c1e5f3a064218abdddc1b059f",
+      "role": "Pinned original visual/behavior reference; preserved unchanged"
+    },
+    {
+      "commit": "5aad95092a74e5818214c71d4263451b9d28eb86",
+      "path": "docs/patient-three-directions/a.html",
+      "sha256": "d6cafc7da427f15444ebfa1762e82c67fae76ffaf2876ff7c1131f2948e1a668",
+      "role": "Pinned original visual/behavior reference; preserved unchanged"
+    },
+    {
+      "commit": "5aad95092a74e5818214c71d4263451b9d28eb86",
+      "path": "docs/patient-three-directions/a.css",
+      "sha256": "55266bf9bc9f04238fc6f0841330ba78fc9229a50c8314e754406d991d1fb262",
+      "role": "Pinned original visual/behavior reference; preserved unchanged"
+    },
+    {
+      "commit": "5aad95092a74e5818214c71d4263451b9d28eb86",
+      "path": "docs/patient-three-directions/common.css",
+      "sha256": "c2736a164d532e708cb59c2a2116a8f6c5f6b33a2c1647b2f92e7cff644df794",
+      "role": "Pinned original visual/behavior reference; preserved unchanged"
+    },
+    {
+      "commit": "5aad95092a74e5818214c71d4263451b9d28eb86",
+      "path": "docs/patient-three-directions/specimen.js",
+      "sha256": "a1fbcd8c8dc576a2fdce92e5aa5e9795221b69c6575048f2e741d5d26388a0ef",
+      "role": "Pinned original visual/behavior reference; preserved unchanged"
+    }
+  ]
+}
