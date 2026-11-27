@@ -475,3 +475,116 @@ test('runPreflightCli returns deterministic exit codes 0, 1, 2, 3 without networ
     console.error = origErr;
   }
 });
+
+test('fail-closed on null local headSha, null baseIsAncestorOfHead, missing remote task ancestry, and incomplete concurrency', () => {
+  const nullHead = evaluatePreflight({
+    input: makeBaseInput(),
+    github: makeGitHub(),
+    local: makeLocal({ headSha: null }),
+  });
+  assert.equal(nullHead.verdict, VERDICT.BLOCKED);
+  assert.ok(nullHead.reasonCodes.includes('MISSING_LOCAL_HEAD'));
+
+  const nullAncestry = evaluatePreflight({
+    input: makeBaseInput(),
+    github: makeGitHub({ targetBranch: { name: 'task/g2-d1-workspace-preflight', state: 'EXISTS', headSha: SHA_C } }),
+    local: makeLocal({ headSha: SHA_C, hasRemoteTaskObject: true, baseIsAncestorOfHead: null }),
+  });
+  assert.equal(nullAncestry.verdict, VERDICT.REVIEW_REQUIRED);
+  assert.ok(nullAncestry.reasonCodes.includes('BASE_ANCESTRY_UNKNOWN'));
+
+  const missingRemoteTaskObj = evaluatePreflight({
+    input: makeBaseInput(),
+    github: makeGitHub({ targetBranch: { name: 'task/g2-d1-workspace-preflight', state: 'EXISTS', headSha: SHA_C } }),
+    local: makeLocal({ headSha: SHA_C, hasRemoteTaskObject: false }),
+  });
+  assert.equal(missingRemoteTaskObj.verdict, VERDICT.REVIEW_REQUIRED);
+  assert.equal(missingRemoteTaskObj.branchRelation, 'MISSING_ANCESTRY');
+  assert.ok(missingRemoteTaskObj.reasonCodes.includes('MISSING_REMOTE_TASK_ANCESTRY'));
+
+  const missingExecutorType = evaluatePreflight({
+    input: makeBaseInput({ executorType: undefined, codexLocal: undefined }),
+    github: makeGitHub(),
+    local: makeLocal(),
+  });
+  assert.equal(missingExecutorType.verdict, VERDICT.REVIEW_REQUIRED);
+  assert.ok(missingExecutorType.reasonCodes.includes('EXECUTOR_TYPE_UNKNOWN'));
+  assert.ok(missingExecutorType.reasonCodes.includes('CONCURRENCY_COUNTS_UNKNOWN'));
+
+  const badSum = evaluatePreflight({
+    input: makeBaseInput({ totalExecutors: 4, codexCloud: 2, agRemote: 1, agLocal: 3, codexLocal: 0 }),
+    github: makeGitHub(),
+    local: makeLocal(),
+  });
+  assert.equal(badSum.verdict, VERDICT.BLOCKED);
+  assert.ok(badSum.reasonCodes.includes('CONCURRENCY_SUM_INCONSISTENT'));
+});
+
+test('preserves full path for unstaged tracked modifications, checks pushurl, ssh://git@, and worktree fetch without peers', () => {
+  const sshOk = validateRemoteOriginUrl('ssh://git@github.com/abuhmaid28/egyhealth360.git');
+  assert.equal(sshOk.valid, true);
+  assert.equal(sshOk.trusted, true);
+  assert.equal(sshOk.hasEmbeddedCredentials, false);
+
+  const sshPass = validateRemoteOriginUrl('ssh://git:secret@github.com/abuhmaid28/egyhealth360.git');
+  assert.equal(sshPass.valid, false);
+  assert.equal(sshPass.hasEmbeddedCredentials, true);
+  assert.ok(!sshPass.sanitizedUrl.includes('secret'));
+
+  assert.throws(() => parseCliArgs(['--issue', '204', '--branch', 'task/ok', '--base', SHA_A, '--total-executors', '   ']));
+
+  const tmpRoot = mkdtempSync(path.join(os.tmpdir(), 'eh204-pushurl-'));
+  try {
+    const mainDir = path.join(tmpRoot, 'main');
+    const wtDir = path.join(tmpRoot, 'wt');
+    const git = (cwd, ...args) =>
+      execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+
+    execFileSync('git', ['init', '-b', 'main', mainDir], { encoding: 'utf8' });
+    git(mainDir, 'config', 'user.email', 'test@example.invalid');
+    git(mainDir, 'config', 'user.name', 'Test User');
+    writeFileSync(path.join(mainDir, 'tracked.txt'), 'v1\n');
+    git(mainDir, 'add', 'tracked.txt');
+    git(mainDir, 'commit', '-m', 'init');
+    git(mainDir, 'remote', 'add', 'origin', 'https://github.com/abuhmaid28/egyhealth360.git');
+    git(mainDir, 'remote', 'set-url', '--push', 'origin', 'https://evil.example/fork.git');
+    const baseSha = git(mainDir, 'rev-parse', 'HEAD');
+
+    // Unstaged modification on tracked.txt produces ' M tracked.txt' in git status --porcelain=v1.
+    writeFileSync(path.join(mainDir, 'tracked.txt'), 'v2\n');
+    const localMain = inspectLocalGitWorkspace({
+      workspacePath: mainDir,
+      authorizedBaseSha: baseSha,
+      remoteTaskSha: null,
+      mode: 'verify',
+    });
+    assert.equal(localMain.dirtyCount, 1);
+    assert.deepEqual(localMain.dirtySamplePaths, ['tracked.txt']);
+    assert.equal(localMain.pushOriginValidation?.trusted, false);
+
+    const pushCheck = evaluatePreflight({
+      input: makeBaseInput({ base: baseSha, peerWorkspaces: [], redactPaths: true }),
+      github: makeGitHub({ mainHeadSha: baseSha }),
+      local: localMain,
+    });
+    assert.equal(pushCheck.verdict, VERDICT.BLOCKED);
+    assert.ok(pushCheck.reasonCodes.includes('UNTRUSTED_REMOTE_ORIGIN'));
+    assert.equal(pushCheck.local.workspacePath, '<REDACTED_LOCAL_PATH>');
+
+    // Restore trusted pushurl before testing worktree isolation in fetch mode.
+    git(mainDir, 'remote', 'set-url', '--push', 'origin', 'https://github.com/abuhmaid28/egyhealth360.git');
+    git(mainDir, 'worktree', 'add', '-b', 'task/wt-test', wtDir);
+    const wtFetch = inspectLocalGitWorkspace({
+      workspacePath: wtDir,
+      authorizedBaseSha: baseSha,
+      remoteTaskSha: null,
+      peerWorkspaces: [],
+      mode: 'fetch',
+      fetchRefs: ['main'],
+    });
+    assert.equal(wtFetch.fetchPerformed, false);
+    assert.equal(wtFetch.fetchErrorCode, 'FETCH_REFUSED_SHARED_GIT_COMMON_DIR');
+  } finally {
+    rmSync(tmpRoot, { recursive: true, force: true });
+  }
+});

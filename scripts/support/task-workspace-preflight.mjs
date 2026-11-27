@@ -50,7 +50,11 @@ const REPO_RE = /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/;
 export function redactSecrets(input) {
   if (typeof input !== 'string') return '';
   let text = input;
-  text = text.replace(/([a-z][a-z0-9+.-]*:\/\/)([^/\s@]+)@/gi, '$1<REDACTED>@');
+  // Exempt passwordless ssh://git@host while redacting all other userinfo credentials (including ssh://git:pass@ or https://user:token@).
+  text = text.replace(/([a-z][a-z0-9+.-]*:\/\/)([^/\s@]+)@/gi, (full, scheme, userinfo) => {
+    if (scheme.toLowerCase() === 'ssh://' && userinfo.toLowerCase() === 'git') return full;
+    return `${scheme}<REDACTED>@`;
+  });
   text = text.replace(/\b(gh[pousr]_[A-Za-z0-9_]{8,}|github_pat_[A-Za-z0-9_]{12,})\b/g, '<REDACTED_TOKEN>');
   text = text.replace(/\b(Authorization\s*:\s*(?:Bearer|Basic|Token)\s+)([^\s,;]+)/gi, '$1<REDACTED>');
   text = text.replace(/\b(Bearer|Basic)\s+[A-Za-z0-9._~+/-]{12,}=*/gi, '$1 <REDACTED>');
@@ -156,7 +160,10 @@ export function validateRemoteOriginUrl(rawUrl, expectedRepo = OFFICIAL_REPO) {
   if (!trimmed) {
     return { valid: false, trusted: false, hasEmbeddedCredentials: false, sanitizedUrl: '', reasonCode: 'MISSING_REMOTE_ORIGIN' };
   }
-  const hasEmbeddedCredentials = /^[a-z][a-z0-9+.-]*:\/\/[^/\s@]+@/i.test(trimmed);
+  const urlCredMatch = /^([a-z][a-z0-9+.-]*:\/\/)([^/\s@]+)@/i.exec(trimmed);
+  const hasEmbeddedCredentials = Boolean(
+    urlCredMatch && !(urlCredMatch[1].toLowerCase() === 'ssh://' && urlCredMatch[2].toLowerCase() === 'git'),
+  );
   const sanitizedUrl = redactSecrets(trimmed);
 
   if (hasEmbeddedCredentials) {
@@ -180,8 +187,10 @@ export function validateRemoteOriginUrl(rawUrl, expectedRepo = OFFICIAL_REPO) {
 }
 
 function parseOptionalInt(value, flagName) {
-  if (value === undefined || value === null || value === '') return undefined;
-  const num = Number(value);
+  if (value === undefined || value === null) return undefined;
+  const trimmed = String(value).trim();
+  if (!trimmed) throw new Error(`Invalid integer for ${flagName}`);
+  const num = Number(trimmed);
   if (!Number.isInteger(num) || num < 0 || num > 1000) {
     throw new Error(`Invalid integer for ${flagName}`);
   }
@@ -204,6 +213,7 @@ export function parseCliArgs(argv) {
     repo: OFFICIAL_REPO,
     workspace: process.cwd(),
     json: false,
+    redactPaths: false,
     help: false,
     historicalBase: false,
     confirmScope: false,
@@ -222,6 +232,10 @@ export function parseCliArgs(argv) {
     }
     if (arg === '--json') {
       opts.json = true;
+      continue;
+    }
+    if (arg === '--redact-paths') {
+      opts.redactPaths = true;
       continue;
     }
     if (arg === '--historical-base') {
@@ -340,7 +354,8 @@ export function createExecRunner() {
         maxBuffer: 8 * 1024 * 1024,
         stdio: ['ignore', 'pipe', 'pipe'],
       });
-      return { ok: true, code: 0, stdout: stdout.trim(), stderr: '' };
+      // Preserve leading spaces on stdout (required by `git status --porcelain=v1`); only trim trailing line breaks.
+      return { ok: true, code: 0, stdout: stdout.replace(/[\r\n]+$/, ''), stderr: '' };
     } catch (error) {
       return {
         ok: false,
@@ -387,7 +402,9 @@ export function readGitHubState({ repo = OFFICIAL_REPO, issueNumber, targetBranc
     return { reachable: false, errorCode: 'GITHUB_ISSUE_UNREACHABLE', error: issueRes.error || 'Missing issue metadata' };
   }
 
-  const commentsRes = api(`repos/${repo}/issues/${issueNumber}/comments?per_page=100`);
+  const totalComments = Number(issueRes.data.comments ?? 0);
+  const latestPage = totalComments > 0 ? Math.ceil(totalComments / 100) : 1;
+  const commentsRes = api(`repos/${repo}/issues/${issueNumber}/comments?per_page=100&page=${latestPage}`);
   if (!commentsRes.ok || !Array.isArray(commentsRes.data)) {
     return { reachable: false, errorCode: 'GITHUB_COMMENTS_UNREACHABLE', error: commentsRes.error || 'Missing comments' };
   }
@@ -400,25 +417,27 @@ export function readGitHubState({ repo = OFFICIAL_REPO, issueNumber, targetBranc
   if (branchRes.ok) {
     try {
       const parsed = JSON.parse(branchRes.stdout);
-      if (parsed?.object?.sha && SHA_RE.test(parsed.object.sha)) {
+      // GitHub returns an array when targetBranch is a prefix of other refs; only accept exact single ref object.
+      if (!Array.isArray(parsed) && parsed?.object?.sha && SHA_RE.test(parsed.object.sha)) {
         branchState = 'EXISTS';
         remoteTaskSha = parsed.object.sha.toLowerCase();
       }
     } catch {
       branchState = 'UNKNOWN';
     }
-  } else {
-    // Check ls-remote explicitly when ref endpoint returns 404 to distinguish absent branch vs network failure.
+  }
+
+  if (branchState === 'UNKNOWN') {
     const lsRes = runner('git', ['ls-remote', '--exit-code', `https://github.com/${repo}.git`, `refs/heads/${targetBranch}`], process.cwd());
     if (lsRes.ok && lsRes.stdout) {
-      const sha = lsRes.stdout.split(/\s+/)[0]?.toLowerCase();
+      const sha = lsRes.stdout.trim().split(/\s+/)[0]?.toLowerCase();
       if (SHA_RE.test(sha ?? '')) {
         branchState = 'EXISTS';
         remoteTaskSha = sha;
       }
     } else if (lsRes.code === 2 && !lsRes.stderr) {
       branchState = 'ABSENT';
-    } else if (/404|Not Found/i.test(branchRes.stderr)) {
+    } else if (!branchRes.ok && /404|Not Found/i.test(branchRes.stderr)) {
       branchState = 'ABSENT';
     } else {
       return { reachable: false, errorCode: 'GITHUB_BRANCH_REF_UNREACHABLE', error: branchRes.stderr || lsRes.stderr };
@@ -440,7 +459,7 @@ export function readGitHubState({ repo = OFFICIAL_REPO, issueNumber, targetBranc
       number: issueRes.data.number,
       state: String(issueRes.data.state ?? '').toUpperCase(),
       assigneesCount: Array.isArray(issueRes.data.assignees) ? issueRes.data.assignees.length : 0,
-      commentsCount: comments.length,
+      commentsCount: totalComments || comments.length,
       latestCommentId: latestComment?.id ?? null,
       latestCommentCreatedAt: latestComment?.created_at ?? null,
       updatedAt: issueRes.data.updated_at ?? null,
@@ -477,29 +496,40 @@ export function inspectLocalGitWorkspace({
     return { exists: true, isGitRepo: false, errorCode: 'NOT_A_GIT_REPOSITORY' };
   }
 
-  const gitRoot = rootRes.stdout;
+  const gitRoot = rootRes.stdout.trim();
   const gitDirRes = git('rev-parse', '--git-dir');
   const commonDirRes = git('rev-parse', '--git-common-dir');
-  const gitDir = gitDirRes.ok ? path.resolve(workspacePath, gitDirRes.stdout) : '';
-  const gitCommonDir = commonDirRes.ok ? path.resolve(workspacePath, commonDirRes.stdout) : '';
+  const gitDir = gitDirRes.ok ? path.resolve(workspacePath, gitDirRes.stdout.trim()) : '';
+  const gitCommonDir = commonDirRes.ok ? path.resolve(workspacePath, commonDirRes.stdout.trim()) : '';
   const isWorktree = normalizePathString(gitDir) !== normalizePathString(gitCommonDir);
+  const worktreeListRes = git('worktree', 'list', '--porcelain');
+  const worktreeCount = worktreeListRes.ok
+    ? worktreeListRes.stdout.split(/\r?\n/).filter((l) => l.startsWith('worktree ')).length
+    : 1;
 
   const remotesRes = git('remote');
-  const remoteNames = remotesRes.ok ? remotesRes.stdout.split(/\r?\n/).filter(Boolean) : [];
+  const remoteNames = remotesRes.ok ? remotesRes.stdout.trim().split(/\r?\n/).filter(Boolean) : [];
   const originUrlsRes = git('remote', 'get-url', '--all', 'origin');
-  const originUrls = originUrlsRes.ok ? originUrlsRes.stdout.split(/\r?\n/).filter(Boolean) : [];
+  const originUrls = originUrlsRes.ok ? originUrlsRes.stdout.trim().split(/\r?\n/).filter(Boolean) : [];
+  const pushUrlsRes = git('remote', 'get-url', '--all', '--push', 'origin');
+  const pushUrls = pushUrlsRes.ok ? pushUrlsRes.stdout.trim().split(/\r?\n/).filter(Boolean) : [];
   const primaryOrigin = originUrls[0] ?? '';
   const originValidation = allowTrustedRemoteCheck(primaryOrigin, expectedRepo);
+  const pushValidations = pushUrls.map((u) => allowTrustedRemoteCheck(u, expectedRepo));
+  const invalidPushValidation = pushValidations.find((v) => !v.trusted) ?? null;
 
   const branchRes = git('branch', '--show-current');
-  const currentBranch = branchRes.ok ? branchRes.stdout : '';
+  const currentBranch = branchRes.ok ? branchRes.stdout.trim() : '';
   const headRes = git('rev-parse', 'HEAD');
-  const headSha = headRes.ok && SHA_RE.test(headRes.stdout) ? headRes.stdout.toLowerCase() : null;
+  const headShaStr = headRes.stdout.trim();
+  const headSha = headRes.ok && SHA_RE.test(headShaStr) ? headShaStr.toLowerCase() : null;
   const treeRes = git('rev-parse', 'HEAD^{tree}');
-  const headTreeSha = treeRes.ok && SHA_RE.test(treeRes.stdout) ? treeRes.stdout.toLowerCase() : null;
+  const treeShaStr = treeRes.stdout.trim();
+  const headTreeSha = treeRes.ok && SHA_RE.test(treeShaStr) ? treeShaStr.toLowerCase() : null;
 
   const statusRes = git('status', '--porcelain=v1');
-  const dirtyEntries = statusRes.ok && statusRes.stdout
+  const gitStatusFailed = !statusRes.ok;
+  const dirtyEntries = !gitStatusFailed && statusRes.stdout
     ? statusRes.stdout.split(/\r?\n/).filter(Boolean).map((line) => sanitizeText(line.slice(3), 120))
     : [];
 
@@ -510,14 +540,16 @@ export function inspectLocalGitWorkspace({
     const sharesCommonDirWithPeer = peerWorkspaces.some((peer) => {
       const peerCommon = runner('git', ['rev-parse', '--git-common-dir'], peer);
       if (!peerCommon.ok) return false;
-      return normalizePathString(path.resolve(peer, peerCommon.stdout)) === normalizePathString(gitCommonDir);
+      return normalizePathString(path.resolve(peer, peerCommon.stdout.trim())) === normalizePathString(gitCommonDir);
     });
 
-    if (dirtyEntries.length > 0) {
+    if (gitStatusFailed) {
+      fetchErrorCode = 'GIT_STATUS_FAILED';
+    } else if (dirtyEntries.length > 0) {
       fetchErrorCode = 'FETCH_REFUSED_DIRTY_WORKSPACE';
-    } else if (remoteNames.length !== 1 || originUrls.length !== 1 || !originValidation.trusted) {
+    } else if (remoteNames.length !== 1 || originUrls.length !== 1 || pushUrls.length > 1 || !originValidation.trusted || invalidPushValidation) {
       fetchErrorCode = 'FETCH_REFUSED_UNTRUSTED_OR_DUPLICATE_REMOTE';
-    } else if (sharesCommonDirWithPeer) {
+    } else if (isWorktree || worktreeCount > 1 || sharesCommonDirWithPeer) {
       fetchErrorCode = 'FETCH_REFUSED_SHARED_GIT_COMMON_DIR';
     } else {
       const refsToFetch = fetchRefs.length > 0 ? fetchRefs : ['main'];
@@ -533,7 +565,11 @@ export function inspectLocalGitWorkspace({
     }
   }
 
-  const hasObject = (sha) => (sha ? git('cat-file', '-t', sha).ok : false);
+  const hasCommitObject = (sha) => {
+    if (!sha) return false;
+    const res = git('cat-file', '-t', sha);
+    return res.ok && res.stdout.trim() === 'commit';
+  };
   const isAncestor = (ancestorSha, descendantSha) => {
     if (!ancestorSha || !descendantSha) return null;
     const res = git('merge-base', '--is-ancestor', ancestorSha, descendantSha);
@@ -542,8 +578,8 @@ export function inspectLocalGitWorkspace({
     return null;
   };
 
-  const hasBaseObject = hasObject(authorizedBaseSha);
-  const hasRemoteTaskObject = remoteTaskSha ? hasObject(remoteTaskSha) : null;
+  const hasBaseObject = hasCommitObject(authorizedBaseSha);
+  const hasRemoteTaskObject = remoteTaskSha ? hasCommitObject(remoteTaskSha) : null;
 
   return {
     exists: true,
@@ -552,13 +588,17 @@ export function inspectLocalGitWorkspace({
     gitRoot: normalizePathString(gitRoot),
     gitCommonDir: normalizePathString(gitCommonDir),
     isWorktree,
+    worktreeCount,
     remoteNames,
     originUrlCount: originUrls.length,
+    pushUrlCount: pushUrls.length,
     originSanitized: originValidation.sanitizedUrl,
     originValidation,
+    pushOriginValidation: invalidPushValidation,
     currentBranch: currentBranch || '(detached)',
     headSha,
     headTreeSha,
+    gitStatusFailed,
     dirtyCount: dirtyEntries.length,
     dirtySamplePaths: dirtyEntries.slice(0, 10),
     hasBaseObject,
@@ -636,7 +676,14 @@ export function evaluatePreflight({
   const disjointPaths = concurrency.disjointPaths ?? input.disjointPaths;
   const peerWorkspaces = concurrency.peerWorkspaces ?? input.peerWorkspaces ?? [];
 
-  if (executorType === 'codex-local' || (typeof codexLocal === 'number' && codexLocal > CONCURRENCY_POLICY.maxCodexLocal)) {
+  const agLocal = concurrency.agLocal ?? input.agLocal;
+
+  if (!executorType || !VALID_EXECUTOR_TYPES.has(executorType)) {
+    review('EXECUTOR_TYPE_UNKNOWN');
+  } else if (executorType === 'codex-local') {
+    block('CODEX_LOCAL_PROHIBITED');
+  }
+  if (typeof codexLocal === 'number' && codexLocal > CONCURRENCY_POLICY.maxCodexLocal) {
     block('CODEX_LOCAL_PROHIBITED');
   }
   if (sameTaskActiveWriter === true) {
@@ -648,13 +695,17 @@ export function evaluatePreflight({
   if (
     typeof totalExecutors !== 'number' ||
     typeof codexCloud !== 'number' ||
-    typeof antigravityRemote !== 'number'
+    typeof antigravityRemote !== 'number' ||
+    typeof codexLocal !== 'number'
   ) {
     review('CONCURRENCY_COUNTS_UNKNOWN');
   } else {
     if (totalExecutors > CONCURRENCY_POLICY.maxTotalExecutors) block('CONCURRENCY_CAP_EXCEEDED');
     if (codexCloud > CONCURRENCY_POLICY.maxCodexCloud) block('CODEX_CLOUD_CAP_EXCEEDED');
     if (antigravityRemote > CONCURRENCY_POLICY.maxAntigravityRemote) block('ANTIGRAVITY_REMOTE_CAP_EXCEEDED');
+    const sum = codexCloud + antigravityRemote + (typeof agLocal === 'number' ? agLocal : 0) + codexLocal;
+    if (sum > totalExecutors) block('CONCURRENCY_SUM_INCONSISTENT');
+    if (sum > CONCURRENCY_POLICY.maxTotalExecutors) block('CONCURRENCY_CAP_EXCEEDED');
   }
 
   if (isolatedResources !== true) {
@@ -684,14 +735,23 @@ export function evaluatePreflight({
     if (local.fetchErrorCode) {
       block(local.fetchErrorCode);
     }
-    if ((local.remoteNames?.length ?? 0) > 1 || (local.originUrlCount ?? 0) > 1) {
+    if (local.gitStatusFailed) {
+      block('GIT_STATUS_FAILED');
+    }
+    if ((local.remoteNames?.length ?? 0) > 1 || (local.originUrlCount ?? 0) > 1 || (local.pushUrlCount ?? 0) > 1) {
       block('DUPLICATE_REMOTE');
     }
     if (!local.originValidation?.trusted) {
       block(local.originValidation?.reasonCode || 'UNTRUSTED_REMOTE_ORIGIN');
     }
+    if (local.pushOriginValidation && !local.pushOriginValidation.trusted) {
+      block(local.pushOriginValidation.reasonCode || 'UNTRUSTED_PUSH_REMOTE_ORIGIN');
+    }
     if ((local.dirtyCount ?? 0) > 0) {
       block('DIRTY_WORKSPACE');
+    }
+    if (!local.headSha) {
+      block('MISSING_LOCAL_HEAD');
     }
     if (!local.hasBaseObject) {
       branchRelation = 'MISSING_ANCESTRY';
@@ -699,14 +759,16 @@ export function evaluatePreflight({
     }
 
     const remoteBranch = github?.reachable ? github.targetBranch : null;
-    if (remoteBranch?.state === 'ABSENT') {
+    if (!local.headSha) {
+      branchRelation = 'MISSING_LOCAL_HEAD';
+    } else if (remoteBranch?.state === 'ABSENT') {
       const onTargetOrDetachedAtBase =
         local.currentBranch === input.branch || local.currentBranch === 'main' || local.currentBranch === '(detached)';
       if (!onTargetOrDetachedAtBase) {
         if (local.hasBaseObject) branchRelation = 'WRONG_REF';
         review('WRONG_LOCAL_REF');
       }
-      if (local.headSha && local.headSha !== input.base) {
+      if (local.headSha !== input.base) {
         if (local.hasBaseObject && onTargetOrDetachedAtBase) branchRelation = 'STALE_OR_MISMATCHED_BASE_HEAD';
         block('LOCAL_HEAD_NOT_AT_AUTHORIZED_BASE');
       } else if (local.hasBaseObject && onTargetOrDetachedAtBase && local.headSha === input.base) {
@@ -714,7 +776,7 @@ export function evaluatePreflight({
       }
     } else if (remoteBranch?.state === 'EXISTS' && remoteBranch.headSha) {
       if (local.currentBranch !== input.branch) {
-        branchRelation = 'WRONG_REF';
+        if (local.hasBaseObject) branchRelation = 'WRONG_REF';
         review('WRONG_LOCAL_REF');
       } else if (!local.hasRemoteTaskObject) {
         branchRelation = 'MISSING_ANCESTRY';
@@ -722,6 +784,9 @@ export function evaluatePreflight({
       } else if (local.baseIsAncestorOfHead === false) {
         branchRelation = 'BASE_NOT_IN_ANCESTRY';
         block('BASE_NOT_IN_ANCESTRY');
+      } else if (local.baseIsAncestorOfHead !== true) {
+        branchRelation = 'MISSING_ANCESTRY';
+        review('BASE_ANCESTRY_UNKNOWN');
       } else if (local.headSha === remoteBranch.headSha) {
         branchRelation = 'CURRENT';
       } else if (local.headIsAncestorOfRemoteTask === true) {
@@ -739,8 +804,8 @@ export function evaluatePreflight({
       review('REMOTE_BRANCH_STATE_UNKNOWN');
     }
 
-    if (local.isWorktree) {
-      warnings.push('Workspace is a git worktree sharing gitCommonDir; use a fresh clone for fetch operations.');
+    if (local.isWorktree || (local.worktreeCount ?? 1) > 1) {
+      warnings.push('Workspace shares gitCommonDir with worktree(s); use a dedicated standalone clone for fetch operations.');
     }
   }
 
@@ -799,8 +864,8 @@ export function evaluatePreflight({
         },
     local: local
       ? {
-          workspacePath: local.workspacePath ?? null,
-          gitRoot: local.gitRoot ?? null,
+          workspacePath: input.redactPaths ? '<REDACTED_LOCAL_PATH>' : (local.workspacePath ?? null),
+          gitRoot: input.redactPaths ? '<REDACTED_LOCAL_PATH>' : (local.gitRoot ?? null),
           isWorktree: Boolean(local.isWorktree),
           currentBranch: local.currentBranch ?? null,
           headSha: local.headSha ?? null,
@@ -875,6 +940,7 @@ export function runPreflightCli(argv = process.argv.slice(2), deps = {}) {
         '  --disjoint-paths bool           true if task file paths do not overlap active peers',
         '  --peer-workspace <path>         Active peer workspace path (repeatable)',
         '  --fetch-ref <branch>            Exact ref to fetch when --mode fetch (repeatable)',
+        '  --redact-paths                  Redact local workspace/gitRoot paths in JSON output',
         '  --json                          Emit sanitized JSON output',
       ].join('\n'),
     );

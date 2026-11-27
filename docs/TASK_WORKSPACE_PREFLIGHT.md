@@ -5,7 +5,7 @@ Status: **OPT-IN CANDIDATE** (Issue `#204` / `G2-D1`).
 Until separately reviewed and accepted by the Product Owner, **canonical G1 manual preflight remains binding**. This helper (`scripts/support/task-workspace-preflight.mjs`) is explicitly invoked; it installs no git hooks, modifies no `AGENTS.md` or CI workflows, and never auto-remediates, auto-pushes, merges, or deploys.
 
 > [!IMPORTANT]
-> A `PASS_FOR_SOURCE_CHECK` result verifies point-in-time source freshness and isolation only. It **never** authorizes edits, commits, pushes, PR creation, merges, CI dispatch, or deployments, and it is not an atomic distributed lock. Always re-read live GitHub state immediately before any edit, claim, or push.
+> A `PASS_FOR_SOURCE_CHECK` result verifies point-in-time source freshness and isolation only. It **never** authorizes edits, commits, pushes, PR creation, merges, CI dispatch, or deployments, and it is not an atomic distributed lock. Always re-read live GitHub state immediately before any edit, claim, or push. When posting `--json` output to public GitHub Issues, pass `--redact-paths` (or redact `local.workspacePath` and `local.gitRoot`) so personal OS usernames/paths are never disclosed.
 
 ## Controlling Governance Reconciled (as of 2026-11-27)
 
@@ -17,6 +17,9 @@ Until separately reviewed and accepted by the Product Owner, **canonical G1 manu
 3. **Mandatory GitHub-Only Durable Handoff & Reporting** ([#198 comment `7209770604`](https://github.com/abuhmaid28/egyhealth360/issues/198#issuecomment-7209770604), [#204 comment `7209774584`](https://github.com/abuhmaid28/egyhealth360/issues/204#issuecomment-7209774584)):
    - GitHub is the sole durable source of truth — never leave essential source, design decisions, test receipts, reviews, or handoffs only in local workspaces or chat.
    - Persist screened task-branch commits frequently, verify remote SHA/tree readback, and post sanitized receipts directly on the task Issue so any successor or reviewer can inspect GitHub without manual log forwarding.
+   - Where a compact durable evidence file is genuinely required beyond Issue comments, `7209770604`/`7209774584` provide a narrow additive exception for NEW screened evidence-only files under `docs/task-evidence/<issue-number>/` (or the canonical `docs/visual-evidence/<issue>/<candidate>/` path for cleared PNGs and hash indexes) on an already authorized task branch.
+4. **Adoption & Merge Gates (Opt-In Candidate Status):**
+   - Future adoption or merge of this tool requires separate explicit Owner approval, classifying `docs/TASK_WORKSPACE_PREFLIGHT.md` in `docs/SOURCE_OF_TRUTH.md` (so `scripts/ci/check-docs.mjs` passes), and full CI validation (`scripts/ci/policy.mjs` classifies `scripts/support/*` and `tests/*` as `INFRASTRUCTURE`).
 
 ## Exact Invocations
 
