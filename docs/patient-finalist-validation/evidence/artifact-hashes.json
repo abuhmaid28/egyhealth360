@@ -1,0 +1,142 @@
+{
+  "algorithm": "SHA256",
+  "excludes": "This manifest itself",
+  "files": [
+    {
+      "path": "ar.html",
+      "sha256": "5865389d8775e2a03d9c1b4dc3092f69a88986b4e291bb893b5f42faadf2a1b6"
+    },
+    {
+      "path": "assets/manrope-OFL.txt",
+      "sha256": "d6a309fcfb963d329a93baf9df66fa5f3c23a4be2b5f67edf24d6cafecde12ac"
+    },
+    {
+      "path": "assets/manrope.ttf",
+      "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6"
+    },
+    {
+      "path": "assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    },
+    {
+      "path": "assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "path": "assets/plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "path": "en.html",
+      "sha256": "d892f8910e02fe85b2f8e437c6171fb06293a430d1eb7ea4055fbe0a2d9a7410"
+    },
+    {
+      "path": "evidence/assessment.json",
+      "sha256": "23344adc7621ceace984686b8470858fe7f39223a961d0ed37a90e96b43a688f"
+    },
+    {
+      "path": "evidence/browser-results.json",
+      "sha256": "4f0823381633222604beba1e881e241ec5e3c01292cf1d1dae2ef7010e09706a"
+    },
+    {
+      "path": "evidence/contrast.json",
+      "sha256": "85c7873a11f73248963c860f3491ae588773a5c8b9b7ad2a195f23c8cc8711f1"
+    },
+    {
+      "path": "evidence/normal-ar-1440-full.png",
+      "sha256": "a564a11cc03211228e6387622e5f1658d658b092271b1fe6991211120c5077b9"
+    },
+    {
+      "path": "evidence/normal-ar-390-full.png",
+      "sha256": "07a19d005361088e3263f34fc498af62e1f2de4e2463b494294f6b8bfa10bb89"
+    },
+    {
+      "path": "evidence/normal-en-1440-full.png",
+      "sha256": "73a17879bb00f037d017f5cc9959d9631dd81f9929e2b2f8d5521a8e88acc269"
+    },
+    {
+      "path": "evidence/normal-en-390-full.png",
+      "sha256": "9ea1720024bde70cc731be98b4c532dcb3cfe0cb5cacf4de69f0f1ba136c3bd0"
+    },
+    {
+      "path": "evidence/parity-catalog.json",
+      "sha256": "428027a59adff9e0a8ac70d6ce4d7c2c369aad1ccc0e8e2c832a9fcc27be57cf"
+    },
+    {
+      "path": "evidence/preservation.json",
+      "sha256": "e2656d01e97f28403faa88f0d4e0fadf6eaf002c0418d1282d9116248ebdc3c2"
+    },
+    {
+      "path": "evidence/provenance.json",
+      "sha256": "a8a31d07b6c0d6bb2d1f4a36edd6b59e5abe70a57ff721c7eb959bbe781f59cf"
+    },
+    {
+      "path": "evidence/runtime.json",
+      "sha256": "c2c2fb38dfa3d033dbcd490afc9b34b2c8de12f9e4405438a0cf5c156318a23e"
+    },
+    {
+      "path": "evidence/states-ar.png",
+      "sha256": "d164fe576262db1fdc0b47e4a438cfa774cf24158c723e8774518a91bbe1154e"
+    },
+    {
+      "path": "evidence/states-en.png",
+      "sha256": "fa25695c58ae4bdbc8c0adb14903094a4172410c8fa923eac2310efb701a1716"
+    },
+    {
+      "path": "INDEPENDENT_REVIEW.md",
+      "sha256": "d391c6ec1682e64dbecfd6415cf3c5430b8771aff4fe9f70e89dbef964b3efd0"
+    },
+    {
+      "path": "NOVA_BRAND_LOGO_NEXT_GATE.md",
+      "sha256": "a5794a5c56181fdc2e9f9ed4888c8996a19e51a096b0a40cc9c71084beed29f2"
+    },
+    {
+      "path": "nova.css",
+      "sha256": "4d370bfd45eecf725db30a22099c8be1a903da82fda300e8344815e4b934b35a"
+    },
+    {
+      "path": "README.md",
+      "sha256": "91c65a60a7712c1194c530a92be3ef56cbfc3d02e67b48c03f1707aa3e09e8c1"
+    },
+    {
+      "path": "specimen.js",
+      "sha256": "62e9ef51a0fc6480ccd66fd139bcaca01dffb863a9fdd847aaf216ade0cb5609"
+    },
+    {
+      "path": "tools/assess.mjs",
+      "sha256": "8c563ea74677022e0ef39671e207d2cc4ab18f5cf710f91821422203d348e239"
+    },
+    {
+      "path": "tools/boards.mjs",
+      "sha256": "d40f7aa6dabbdb8fc21863830475f4466a105735f8bddb120beffc87f276273e"
+    },
+    {
+      "path": "tools/contrast.mjs",
+      "sha256": "1c69aad3d889978aab08a1e33ddd4e1efd2c1773291996dee4abc6a4020ebd1f"
+    },
+    {
+      "path": "tools/preserve.mjs",
+      "sha256": "d84eb1964bc462d9cf8e882f79832567357fe288ff6a99c822ffeb4dab017d41"
+    },
+    {
+      "path": "tools/report.mjs",
+      "sha256": "0c13502502fa2256594976cffc00517d57c20281cb6b8d881c4b141dbe2c8ed0"
+    },
+    {
+      "path": "tools/runtime.mjs",
+      "sha256": "a9f10444cd295dd8f9f76b02065870a4a0e97c9f7aba6e50b9cf51ed868682f6"
+    },
+    {
+      "path": "tools/validate.mjs",
+      "sha256": "967a6fcc481b0e2ecbbb20b8af111c2f14fbdd8953473f1c974ef8646fda960f"
+    },
+    {
+      "path": "validation.css",
+      "sha256": "f010593c00b2f01c9de0f82ff853cb9e67337ebfd7db702598ee70224ed84e9f"
+    },
+    {
+      "path": "VALIDATION.md",
+      "sha256": "4fe9283ef45a632b18314ff810fc79bd00499a29f006be83eb02a55c425778a3"
+    }
+  ]
+}

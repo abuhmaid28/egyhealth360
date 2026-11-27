@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+**Current scoped reference — 8 November 2026:** [Patient finalist validation](patient-finalist-validation/README.md), sole visual source PR #93 at `459037baa0d7c2e67fd95715bfca7999592dfd45`. [CURRENT_STATUS](CURRENT_STATUS.md) and the [restored Patient → Logo → Brand → Design System → final acceptance → authorized execution sequence](IMPLEMENTATION_ROADMAP.md#current-patient-to-brand-sequence) control this bounded task. Older active-task wording below is retained historical context. No final logo, Brand V2 or system freeze is inferred.
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
@@ -24,6 +26,15 @@ The charter defines precedence: current explicit owner scope, stable governance,
 - **SUPERSEDED / LEGACY REFERENCE:** earlier scope/design/process direction; never a final implementation specification or current execution grant.
 
 Within current documents, explicitly labeled historical sections retain that classification even though the file has a current reference opening. V1 visual evidence is not final Product/Brand/Design approval. A planned clinical/research contract does not authorize execution. Check task authorization for amendments rather than resolving a conflict by guessing.
+
+## Patient finalist package classification
+
+| Path | Class and responsibility |
+| --- | --- |
+| [patient-finalist-validation/README.md](patient-finalist-validation/README.md) | CURRENT scoped candidate review entry, parity/state matrices, provisional system compatibility; no final acceptance or implementation authority |
+| [patient-finalist-validation/VALIDATION.md](patient-finalist-validation/VALIDATION.md) | HISTORICAL EVIDENCE at this candidate: actual browser checks, preservation, limits; final-head CI in Draft PR handoff |
+| [patient-finalist-validation/INDEPENDENT_REVIEW.md](patient-finalist-validation/INDEPENDENT_REVIEW.md) | HISTORICAL EVIDENCE: independent Visual / Functional UX / Technical verdicts and reviewed artifact hashes |
+| [patient-finalist-validation/NOVA_BRAND_LOGO_NEXT_GATE.md](patient-finalist-validation/NOVA_BRAND_LOGO_NEXT_GATE.md) | CURRENT next-gate requirements only; logo creation separately authorized, Final Brand blocked, Design System cannot freeze before Brand |
 
 ## Repository entrypoints and executable evidence
 
