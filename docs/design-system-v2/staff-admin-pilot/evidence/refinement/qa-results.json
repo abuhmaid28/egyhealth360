@@ -1,0 +1,1800 @@
+{
+  "browser": "154.0.8037.57",
+  "matrix": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1628,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 1582,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1312,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1163,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1134,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1628,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 1582,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1312,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1163,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1134,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1764,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 1596,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1316,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1138,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1088,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1764,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 1596,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1316,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1138,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1088,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1764,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 1663,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1319,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1153,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1097,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1764,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 1663,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1319,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1153,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1097,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1914,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 1627,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1320,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1136,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1063,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1914,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 1627,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1320,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1136,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1063,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1677,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 1596,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1468,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1198,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1172,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1677,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 1596,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1468,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1198,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1172,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1931,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 1580,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1460,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1198,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1122,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1931,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 1580,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1460,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1198,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1122,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    }
+  ],
+  "text200": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 3461,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 3461,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 3850,
+      "dir": "ltr",
+      "overflow": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 3850,
+      "dir": "ltr",
+      "overflow": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 3660,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 3660,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 3839,
+      "dir": "ltr",
+      "overflow": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 3839,
+      "dir": "ltr",
+      "overflow": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 3772,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 3772,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 4310,
+      "dir": "ltr",
+      "overflow": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 4310,
+      "dir": "ltr",
+      "overflow": []
+    }
+  ],
+  "states": [
+    {
+      "role": "pharmacy",
+      "state": "empty",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "empty",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "denied",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "denied",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "revoked",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "revoked",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "error",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "error",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "uncertain",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "uncertain",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "history",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1230,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "history",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1230,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "accepted",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1628,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 1
+    },
+    {
+      "role": "pharmacy",
+      "state": "accepted",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1628,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 1
+    },
+    {
+      "role": "laboratory",
+      "state": "empty",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "empty",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "denied",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "denied",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "revoked",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "revoked",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "error",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "error",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "uncertain",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "uncertain",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "history",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1042,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "history",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1042,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "empty",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "empty",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "denied",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "denied",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "revoked",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "revoked",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "error",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "error",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "uncertain",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "uncertain",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1000,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "organizations",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1677,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "organizations",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1677,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    }
+  ],
+  "dialogs": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    }
+  ],
+  "axe": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "fonts": [
+    {
+      "selector": "h1",
+      "fonts": [
+        {
+          "familyName": "IBM Plex Sans Arabic SemiBold",
+          "postScriptName": "IBMPlexSansArabic-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 12
+        }
+      ]
+    },
+    {
+      "selector": ".big",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Regular",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    }
+  ],
+  "screenshots": [],
+  "contrast": [
+    {
+      "theme": "light",
+      "pairs": [
+        {
+          "name": "body",
+          "foreground": "#17142B",
+          "background": "#F8F7FB",
+          "minimum": 4.5,
+          "ratio": 16.80807600132796,
+          "pass": true
+        },
+        {
+          "name": "secondary",
+          "foreground": "#595269",
+          "background": "#F8F7FB",
+          "minimum": 4.5,
+          "ratio": 6.943190859885116,
+          "pass": true
+        },
+        {
+          "name": "surface text",
+          "foreground": "#17142B",
+          "background": "#FFFFFF",
+          "minimum": 4.5,
+          "ratio": 17.927608745600075,
+          "pass": true
+        },
+        {
+          "name": "surface secondary",
+          "foreground": "#595269",
+          "background": "#FFFFFF",
+          "minimum": 4.5,
+          "ratio": 7.405654827608615,
+          "pass": true
+        },
+        {
+          "name": "raised text",
+          "foreground": "#17142B",
+          "background": "#EFEAF7",
+          "minimum": 4.5,
+          "ratio": 15.180716614741913,
+          "pass": true
+        },
+        {
+          "name": "raised secondary",
+          "foreground": "#595269",
+          "background": "#EFEAF7",
+          "minimum": 4.5,
+          "ratio": 6.270950514363131,
+          "pass": true
+        },
+        {
+          "name": "action",
+          "foreground": "#6240B8",
+          "background": "#F8F7FB",
+          "minimum": 4.5,
+          "ratio": 6.685818690198745,
+          "pass": true
+        },
+        {
+          "name": "button",
+          "foreground": "#FFFFFF",
+          "background": "#6240B8",
+          "minimum": 4.5,
+          "ratio": 7.13113991229178,
+          "pass": true
+        },
+        {
+          "name": "button hover",
+          "foreground": "#FFFFFF",
+          "background": "#50309D",
+          "minimum": 4.5,
+          "ratio": 9.330265144455119,
+          "pass": true
+        },
+        {
+          "name": "control boundary",
+          "foreground": "#787084",
+          "background": "#FFFFFF",
+          "minimum": 3,
+          "ratio": 4.719662452636552,
+          "pass": true
+        },
+        {
+          "name": "control raised",
+          "foreground": "#787084",
+          "background": "#EFEAF7",
+          "minimum": 3,
+          "ratio": 3.9965094747116012,
+          "pass": true
+        },
+        {
+          "name": "focus canvas",
+          "foreground": "#6240B8",
+          "background": "#F8F7FB",
+          "minimum": 3,
+          "ratio": 6.685818690198745,
+          "pass": true
+        },
+        {
+          "name": "focus surface",
+          "foreground": "#6240B8",
+          "background": "#FFFFFF",
+          "minimum": 3,
+          "ratio": 7.13113991229178,
+          "pass": true
+        },
+        {
+          "name": "focus raised",
+          "foreground": "#6240B8",
+          "background": "#EFEAF7",
+          "minimum": 3,
+          "ratio": 6.038497140626518,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "pairs": [
+        {
+          "name": "body",
+          "foreground": "#F6F2FF",
+          "background": "#10121D",
+          "minimum": 4.5,
+          "ratio": 16.92576217397838,
+          "pass": true
+        },
+        {
+          "name": "secondary",
+          "foreground": "#C2BED2",
+          "background": "#10121D",
+          "minimum": 4.5,
+          "ratio": 10.290259109746236,
+          "pass": true
+        },
+        {
+          "name": "surface text",
+          "foreground": "#F6F2FF",
+          "background": "#1D2030",
+          "minimum": 4.5,
+          "ratio": 14.646963891117313,
+          "pass": true
+        },
+        {
+          "name": "surface secondary",
+          "foreground": "#C2BED2",
+          "background": "#1D2030",
+          "minimum": 4.5,
+          "ratio": 8.904831112563558,
+          "pass": true
+        },
+        {
+          "name": "raised text",
+          "foreground": "#F6F2FF",
+          "background": "#262A3C",
+          "minimum": 4.5,
+          "ratio": 12.890718192324519,
+          "pass": true
+        },
+        {
+          "name": "raised secondary",
+          "foreground": "#C2BED2",
+          "background": "#262A3C",
+          "minimum": 4.5,
+          "ratio": 7.837096430060492,
+          "pass": true
+        },
+        {
+          "name": "action",
+          "foreground": "#A78BFA",
+          "background": "#10121D",
+          "minimum": 4.5,
+          "ratio": 6.851281513251919,
+          "pass": true
+        },
+        {
+          "name": "button",
+          "foreground": "#17142B",
+          "background": "#A78BFA",
+          "minimum": 4.5,
+          "ratio": 6.587603133088349,
+          "pass": true
+        },
+        {
+          "name": "button hover",
+          "foreground": "#17142B",
+          "background": "#BDA7FF",
+          "minimum": 4.5,
+          "ratio": 8.652418880381937,
+          "pass": true
+        },
+        {
+          "name": "control boundary",
+          "foreground": "#85839C",
+          "background": "#1D2030",
+          "minimum": 3,
+          "ratio": 4.397825893013651,
+          "pass": true
+        },
+        {
+          "name": "control raised",
+          "foreground": "#85839C",
+          "background": "#262A3C",
+          "minimum": 3,
+          "ratio": 3.870504130902334,
+          "pass": true
+        },
+        {
+          "name": "focus canvas",
+          "foreground": "#A78BFA",
+          "background": "#10121D",
+          "minimum": 3,
+          "ratio": 6.851281513251919,
+          "pass": true
+        },
+        {
+          "name": "focus surface",
+          "foreground": "#A78BFA",
+          "background": "#1D2030",
+          "minimum": 3,
+          "ratio": 5.928859917856991,
+          "pass": true
+        },
+        {
+          "name": "focus raised",
+          "foreground": "#A78BFA",
+          "background": "#262A3C",
+          "minimum": 3,
+          "ratio": 5.2179593648901035,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

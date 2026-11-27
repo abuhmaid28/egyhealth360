@@ -1,0 +1,1041 @@
+{
+  "browser": "154.0.8037.57",
+  "height": 900,
+  "metrics": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "before": {
+        "pageHeight": 2195,
+        "selectedTop": 739,
+        "actionTop": 1535,
+        "actionBottom": 1587,
+        "actionFullyVisible": false,
+        "scrollToReveal": 687,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 7
+      },
+      "after": {
+        "pageHeight": 1628,
+        "selectedTop": 342,
+        "actionTop": 687,
+        "actionBottom": 736,
+        "actionFullyVisible": true,
+        "scrollToReveal": 0,
+        "headingsBeforeAction": 2,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 848,
+        "actionPercent": 55,
+        "pagePx": 567
+      }
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "before": {
+        "pageHeight": 2094,
+        "selectedTop": 739,
+        "actionTop": 1486,
+        "actionBottom": 1537,
+        "actionFullyVisible": false,
+        "scrollToReveal": 638,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 7
+      },
+      "after": {
+        "pageHeight": 1582,
+        "selectedTop": 342,
+        "actionTop": 687,
+        "actionBottom": 736,
+        "actionFullyVisible": true,
+        "scrollToReveal": 0,
+        "headingsBeforeAction": 2,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 799,
+        "actionPercent": 54,
+        "pagePx": 512
+      }
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "before": {
+        "pageHeight": 2195,
+        "selectedTop": 739,
+        "actionTop": 1535,
+        "actionBottom": 1587,
+        "actionFullyVisible": false,
+        "scrollToReveal": 687,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 7
+      },
+      "after": {
+        "pageHeight": 1628,
+        "selectedTop": 342,
+        "actionTop": 687,
+        "actionBottom": 736,
+        "actionFullyVisible": true,
+        "scrollToReveal": 0,
+        "headingsBeforeAction": 2,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 848,
+        "actionPercent": 55,
+        "pagePx": 567
+      }
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "before": {
+        "pageHeight": 2094,
+        "selectedTop": 739,
+        "actionTop": 1486,
+        "actionBottom": 1537,
+        "actionFullyVisible": false,
+        "scrollToReveal": 638,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 7
+      },
+      "after": {
+        "pageHeight": 1582,
+        "selectedTop": 342,
+        "actionTop": 687,
+        "actionBottom": 736,
+        "actionFullyVisible": true,
+        "scrollToReveal": 0,
+        "headingsBeforeAction": 2,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 799,
+        "actionPercent": 54,
+        "pagePx": 512
+      }
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "before": {
+        "pageHeight": 2395,
+        "selectedTop": 810,
+        "actionTop": 1698,
+        "actionBottom": 1750,
+        "actionFullyVisible": false,
+        "scrollToReveal": 850,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 7
+      },
+      "after": {
+        "pageHeight": 1764,
+        "selectedTop": 351,
+        "actionTop": 729,
+        "actionBottom": 778,
+        "actionFullyVisible": true,
+        "scrollToReveal": 0,
+        "headingsBeforeAction": 2,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 969,
+        "actionPercent": 57,
+        "pagePx": 631
+      }
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "before": {
+        "pageHeight": 2118,
+        "selectedTop": 738,
+        "actionTop": 1490,
+        "actionBottom": 1542,
+        "actionFullyVisible": false,
+        "scrollToReveal": 642,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 7
+      },
+      "after": {
+        "pageHeight": 1596,
+        "selectedTop": 332,
+        "actionTop": 656,
+        "actionBottom": 705,
+        "actionFullyVisible": true,
+        "scrollToReveal": 0,
+        "headingsBeforeAction": 2,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 834,
+        "actionPercent": 56,
+        "pagePx": 522
+      }
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "before": {
+        "pageHeight": 2395,
+        "selectedTop": 810,
+        "actionTop": 1698,
+        "actionBottom": 1750,
+        "actionFullyVisible": false,
+        "scrollToReveal": 850,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 7
+      },
+      "after": {
+        "pageHeight": 1764,
+        "selectedTop": 351,
+        "actionTop": 729,
+        "actionBottom": 778,
+        "actionFullyVisible": true,
+        "scrollToReveal": 0,
+        "headingsBeforeAction": 2,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 969,
+        "actionPercent": 57,
+        "pagePx": 631
+      }
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "before": {
+        "pageHeight": 2118,
+        "selectedTop": 738,
+        "actionTop": 1490,
+        "actionBottom": 1542,
+        "actionFullyVisible": false,
+        "scrollToReveal": 642,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 7
+      },
+      "after": {
+        "pageHeight": 1596,
+        "selectedTop": 332,
+        "actionTop": 656,
+        "actionBottom": 705,
+        "actionFullyVisible": true,
+        "scrollToReveal": 0,
+        "headingsBeforeAction": 2,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 834,
+        "actionPercent": 56,
+        "pagePx": 522
+      }
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "before": {
+        "pageHeight": 2305,
+        "selectedTop": 736,
+        "actionTop": 1622,
+        "actionBottom": 1673,
+        "actionFullyVisible": false,
+        "scrollToReveal": 774,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1764,
+        "selectedTop": 401,
+        "actionTop": 1038,
+        "actionBottom": 1087,
+        "actionFullyVisible": false,
+        "scrollToReveal": 188,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 584,
+        "actionPercent": 36,
+        "pagePx": 541
+      }
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "before": {
+        "pageHeight": 2133,
+        "selectedTop": 645,
+        "actionTop": 1502,
+        "actionBottom": 1553,
+        "actionFullyVisible": false,
+        "scrollToReveal": 654,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1663,
+        "selectedTop": 383,
+        "actionTop": 989,
+        "actionBottom": 1038,
+        "actionFullyVisible": false,
+        "scrollToReveal": 138,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 513,
+        "actionPercent": 34,
+        "pagePx": 470
+      }
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "before": {
+        "pageHeight": 2305,
+        "selectedTop": 736,
+        "actionTop": 1622,
+        "actionBottom": 1673,
+        "actionFullyVisible": false,
+        "scrollToReveal": 774,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1764,
+        "selectedTop": 401,
+        "actionTop": 1038,
+        "actionBottom": 1087,
+        "actionFullyVisible": false,
+        "scrollToReveal": 188,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 584,
+        "actionPercent": 36,
+        "pagePx": 541
+      }
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "before": {
+        "pageHeight": 2133,
+        "selectedTop": 645,
+        "actionTop": 1502,
+        "actionBottom": 1553,
+        "actionFullyVisible": false,
+        "scrollToReveal": 654,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1663,
+        "selectedTop": 383,
+        "actionTop": 989,
+        "actionBottom": 1038,
+        "actionFullyVisible": false,
+        "scrollToReveal": 138,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 513,
+        "actionPercent": 34,
+        "pagePx": 470
+      }
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "before": {
+        "pageHeight": 2436,
+        "selectedTop": 788,
+        "actionTop": 1733,
+        "actionBottom": 1811,
+        "actionFullyVisible": false,
+        "scrollToReveal": 912,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1914,
+        "selectedTop": 440,
+        "actionTop": 1124,
+        "actionBottom": 1201,
+        "actionFullyVisible": false,
+        "scrollToReveal": 301,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 609,
+        "actionPercent": 35,
+        "pagePx": 522
+      }
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "before": {
+        "pageHeight": 2179,
+        "selectedTop": 713,
+        "actionTop": 1549,
+        "actionBottom": 1601,
+        "actionFullyVisible": false,
+        "scrollToReveal": 701,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1627,
+        "selectedTop": 391,
+        "actionTop": 963,
+        "actionBottom": 1012,
+        "actionFullyVisible": false,
+        "scrollToReveal": 113,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 586,
+        "actionPercent": 38,
+        "pagePx": 552
+      }
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "before": {
+        "pageHeight": 2436,
+        "selectedTop": 788,
+        "actionTop": 1733,
+        "actionBottom": 1811,
+        "actionFullyVisible": false,
+        "scrollToReveal": 912,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1914,
+        "selectedTop": 440,
+        "actionTop": 1124,
+        "actionBottom": 1201,
+        "actionFullyVisible": false,
+        "scrollToReveal": 301,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 609,
+        "actionPercent": 35,
+        "pagePx": 522
+      }
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "before": {
+        "pageHeight": 2179,
+        "selectedTop": 713,
+        "actionTop": 1549,
+        "actionBottom": 1601,
+        "actionFullyVisible": false,
+        "scrollToReveal": 701,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1627,
+        "selectedTop": 391,
+        "actionTop": 963,
+        "actionBottom": 1012,
+        "actionFullyVisible": false,
+        "scrollToReveal": 113,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 586,
+        "actionPercent": 38,
+        "pagePx": 552
+      }
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "before": {
+        "pageHeight": 2135,
+        "selectedTop": 931,
+        "actionTop": 1556,
+        "actionBottom": 1607,
+        "actionFullyVisible": false,
+        "scrollToReveal": 708,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1677,
+        "selectedTop": 562,
+        "actionTop": 968,
+        "actionBottom": 1017,
+        "actionFullyVisible": false,
+        "scrollToReveal": 117,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 588,
+        "actionPercent": 38,
+        "pagePx": 458
+      }
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "before": {
+        "pageHeight": 1958,
+        "selectedTop": 809,
+        "actionTop": 1404,
+        "actionBottom": 1455,
+        "actionFullyVisible": false,
+        "scrollToReveal": 556,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1596,
+        "selectedTop": 536,
+        "actionTop": 942,
+        "actionBottom": 991,
+        "actionFullyVisible": false,
+        "scrollToReveal": 92,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 462,
+        "actionPercent": 33,
+        "pagePx": 362
+      }
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "before": {
+        "pageHeight": 2135,
+        "selectedTop": 931,
+        "actionTop": 1556,
+        "actionBottom": 1607,
+        "actionFullyVisible": false,
+        "scrollToReveal": 708,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1677,
+        "selectedTop": 562,
+        "actionTop": 968,
+        "actionBottom": 1017,
+        "actionFullyVisible": false,
+        "scrollToReveal": 117,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 588,
+        "actionPercent": 38,
+        "pagePx": 458
+      }
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "before": {
+        "pageHeight": 1958,
+        "selectedTop": 809,
+        "actionTop": 1404,
+        "actionBottom": 1455,
+        "actionFullyVisible": false,
+        "scrollToReveal": 556,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1596,
+        "selectedTop": 536,
+        "actionTop": 942,
+        "actionBottom": 991,
+        "actionFullyVisible": false,
+        "scrollToReveal": 92,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 462,
+        "actionPercent": 33,
+        "pagePx": 362
+      }
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "before": {
+        "pageHeight": 2400,
+        "selectedTop": 1004,
+        "actionTop": 1730,
+        "actionBottom": 1808,
+        "actionFullyVisible": false,
+        "scrollToReveal": 909,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1931,
+        "selectedTop": 656,
+        "actionTop": 1095,
+        "actionBottom": 1171,
+        "actionFullyVisible": false,
+        "scrollToReveal": 272,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 635,
+        "actionPercent": 37,
+        "pagePx": 469
+      }
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "before": {
+        "pageHeight": 1986,
+        "selectedTop": 826,
+        "actionTop": 1436,
+        "actionBottom": 1487,
+        "actionFullyVisible": false,
+        "scrollToReveal": 588,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1580,
+        "selectedTop": 534,
+        "actionTop": 915,
+        "actionBottom": 965,
+        "actionFullyVisible": false,
+        "scrollToReveal": 65,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 521,
+        "actionPercent": 36,
+        "pagePx": 406
+      }
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "before": {
+        "pageHeight": 2400,
+        "selectedTop": 1004,
+        "actionTop": 1730,
+        "actionBottom": 1808,
+        "actionFullyVisible": false,
+        "scrollToReveal": 909,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1931,
+        "selectedTop": 656,
+        "actionTop": 1095,
+        "actionBottom": 1171,
+        "actionFullyVisible": false,
+        "scrollToReveal": 272,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 320,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 635,
+        "actionPercent": 37,
+        "pagePx": 469
+      }
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "before": {
+        "pageHeight": 1986,
+        "selectedTop": 826,
+        "actionTop": 1436,
+        "actionBottom": 1487,
+        "actionFullyVisible": false,
+        "scrollToReveal": 588,
+        "headingsBeforeAction": 5,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "after": {
+        "pageHeight": 1580,
+        "selectedTop": 534,
+        "actionTop": 915,
+        "actionBottom": 965,
+        "actionFullyVisible": false,
+        "scrollToReveal": 65,
+        "headingsBeforeAction": 4,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "actionTabPresses": 6
+      },
+      "improvement": {
+        "actionPx": 521,
+        "actionPercent": 36,
+        "pagePx": 406
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "file": "pharmacy-ar-light-390-comparison.png",
+      "width": 804,
+      "height": 2142,
+      "viewportWidth": 390,
+      "lang": "ar",
+      "theme": "light",
+      "role": "pharmacy",
+      "sha256": "6910a638d1299a9245e60ed43c11494a3e90b894d576fba22f18d4d00767445f"
+    },
+    {
+      "file": "pharmacy-ar-dark-390-comparison.png",
+      "width": 804,
+      "height": 2142,
+      "viewportWidth": 390,
+      "lang": "ar",
+      "theme": "dark",
+      "role": "pharmacy",
+      "sha256": "cf6473068c4255e03b3cc61eae992d12d36c7b32de520f9370217ebcee3946f1"
+    },
+    {
+      "file": "laboratory-ar-light-390-comparison.png",
+      "width": 804,
+      "height": 2181,
+      "viewportWidth": 390,
+      "lang": "ar",
+      "theme": "light",
+      "role": "laboratory",
+      "sha256": "cb892d29b0d0882192117075e16eacda838d4f4e3e8f53a4ab3435a6661b727a"
+    },
+    {
+      "file": "admin-ar-dark-390-comparison.png",
+      "width": 804,
+      "height": 2006,
+      "viewportWidth": 390,
+      "lang": "ar",
+      "theme": "dark",
+      "role": "admin",
+      "sha256": "9a21df39c173a356130509829bf4c0652bfa4e42963749c46bd9444857bd2308"
+    },
+    {
+      "file": "laboratory-ar-dark-768-comparison.png",
+      "width": 1560,
+      "height": 1745,
+      "viewportWidth": 768,
+      "lang": "ar",
+      "theme": "dark",
+      "role": "laboratory",
+      "sha256": "ec704fe91de4984cc1be94d479cb90835058bb747187fd67cce8697be459821b"
+    },
+    {
+      "file": "admin-en-light-1440-comparison.png",
+      "width": 2904,
+      "height": 1351,
+      "viewportWidth": 1440,
+      "lang": "en",
+      "theme": "light",
+      "role": "admin",
+      "sha256": "3fc008c01361d1af70d5b5145f1204617befeba98b4df4e67db76b5e961455b5"
+    }
+  ],
+  "interactions": [
+    {
+      "role": "pharmacy",
+      "trapped": true,
+      "reverseTrapped": true,
+      "focusReturn": true
+    },
+    {
+      "role": "laboratory",
+      "trapped": true,
+      "reverseTrapped": true,
+      "focusReturn": true
+    },
+    {
+      "role": "admin",
+      "trapped": true,
+      "reverseTrapped": true,
+      "focusReturn": true
+    },
+    {
+      "role": "pharmacy",
+      "acceptedHeading": "Route B · remaining item",
+      "action": "dispense"
+    },
+    {
+      "historyNoPatient": true,
+      "historyNoAction": true
+    }
+  ],
+  "network": {
+    "requests": 624,
+    "localGetOnly": true
+  },
+  "storage": {
+    "local": 0,
+    "session": 0
+  }
+}

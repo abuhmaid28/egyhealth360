@@ -1,0 +1,1071 @@
+{
+  "keyboard": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "order": [
+        {
+          "tag": "A",
+          "text": "انتقل لمساحة العمل",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "العمل المسند",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "سجل الصرف",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "مسار توضيحي Aمستني قبول الصيدلية · 14:20",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "مسار توضيحي Bمقبول · بند متبقي",
+          "outline": "3px"
+        },
+        {
+          "tag": "SUMMARY",
+          "text": "الصلاحية الحالية، في كل مرة",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "راجع قبول الوصفة المسندة",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "order": [
+        {
+          "tag": "A",
+          "text": "انتقل لمساحة العمل",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "العمل المسند",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "سجل الصرف",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "مسار توضيحي Aمستني قبول الصيدلية · 14:20",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "مسار توضيحي Bمقبول · بند متبقي",
+          "outline": "3px"
+        },
+        {
+          "tag": "SUMMARY",
+          "text": "الصلاحية الحالية، في كل مرة",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "راجع قبول الوصفة المسندة",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "order": [
+        {
+          "tag": "A",
+          "text": "Skip to workspace",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Assigned work",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Dispense history",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Illustrative route AAwaiting acceptance · 14:20",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Illustrative route BAccepted · remaining item",
+          "outline": "3px"
+        },
+        {
+          "tag": "SUMMARY",
+          "text": "Current scope, every time",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Review acceptance",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "order": [
+        {
+          "tag": "A",
+          "text": "Skip to workspace",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Assigned work",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Dispense history",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Illustrative route AAwaiting acceptance · 14:20",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Illustrative route BAccepted · remaining item",
+          "outline": "3px"
+        },
+        {
+          "tag": "SUMMARY",
+          "text": "Current scope, every time",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Review acceptance",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "order": [
+        {
+          "tag": "A",
+          "text": "انتقل لمساحة العمل",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "الفحوصات المسندة",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "سجل مستقبلي",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "نموذج طلب مستقبليتصوّر فقط · مفيش طلب فعلي",
+          "outline": "3px"
+        },
+        {
+          "tag": "SUMMARY",
+          "text": "الصلاحية الحالية، في كل مرة",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "راجع حدود التحقّق والاعتماد",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "سجل التصحيحات المستقبلي",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "order": [
+        {
+          "tag": "A",
+          "text": "انتقل لمساحة العمل",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "الفحوصات المسندة",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "سجل مستقبلي",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "نموذج طلب مستقبليتصوّر فقط · مفيش طلب فعلي",
+          "outline": "3px"
+        },
+        {
+          "tag": "SUMMARY",
+          "text": "الصلاحية الحالية، في كل مرة",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "راجع حدود التحقّق والاعتماد",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "سجل التصحيحات المستقبلي",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "order": [
+        {
+          "tag": "A",
+          "text": "Skip to workspace",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Assigned diagnostics",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Future history",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Future order specimenConcept only · no active order",
+          "outline": "3px"
+        },
+        {
+          "tag": "SUMMARY",
+          "text": "Current scope, every time",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Review verification boundary",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Future correction history",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "order": [
+        {
+          "tag": "A",
+          "text": "Skip to workspace",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Assigned diagnostics",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Future history",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Future order specimenConcept only · no active order",
+          "outline": "3px"
+        },
+        {
+          "tag": "SUMMARY",
+          "text": "Current scope, every time",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Review verification boundary",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Future correction history",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "order": [
+        {
+          "tag": "A",
+          "text": "انتقل لمساحة العمل",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "الأشخاص",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "الجهات",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "حساب فريق توضيحي Aفريق الصيدلية · الحساب نشط",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "حساب فريق توضيحي Bفريق المعمل · الحساب نشط",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "راجع إنهاء العضوية دي",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "نموذج العرض غير المتاح",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "order": [
+        {
+          "tag": "A",
+          "text": "انتقل لمساحة العمل",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "الأشخاص",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "الجهات",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "حساب فريق توضيحي Aفريق الصيدلية · الحساب نشط",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "حساب فريق توضيحي Bفريق المعمل · الحساب نشط",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "راجع إنهاء العضوية دي",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "نموذج العرض غير المتاح",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "order": [
+        {
+          "tag": "A",
+          "text": "Skip to workspace",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "People",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Organizations",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Illustrative staff account APharmacy staff · account active",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Illustrative staff account BLaboratory staff · account active",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Review ending this membership",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Unavailable-state specimen",
+          "outline": "3px"
+        }
+      ]
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "order": [
+        {
+          "tag": "A",
+          "text": "Skip to workspace",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "People",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Organizations",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Illustrative staff account APharmacy staff · account active",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Illustrative staff account BLaboratory staff · account active",
+          "outline": "3px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Review ending this membership",
+          "outline": "3px"
+        },
+        {
+          "tag": "A",
+          "text": "Unavailable-state specimen",
+          "outline": "3px"
+        }
+      ]
+    }
+  ],
+  "longLabels": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "overflow": false
+    }
+  ],
+  "spacing": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "overflow": false
+    }
+  ],
+  "details": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "overflow": false
+    }
+  ],
+  "privacy": [
+    {
+      "role": "pharmacy",
+      "state": "denied",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "empty",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "error",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "uncertain",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "history",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "denied",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "empty",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "error",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "uncertain",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "admin",
+      "state": "denied",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "admin",
+      "state": "empty",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "admin",
+      "state": "error",
+      "patientName": 0,
+      "sourceInstructions": 0
+    },
+    {
+      "role": "admin",
+      "state": "uncertain",
+      "patientName": 0,
+      "sourceInstructions": 0
+    }
+  ],
+  "gallery": [
+    {
+      "src": "screen.html?role=laboratory&lang=ar&theme=dark&state=work&text=100",
+      "open": "screen.html?role=laboratory&lang=ar&theme=dark&state=work&text=100"
+    }
+  ],
+  "media": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "forcedColors": true,
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "reducedMotion": "reduce",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "reducedMotion": "no-preference",
+      "overflow": false
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "forcedColors": true,
+      "overflow": false
+    }
+  ],
+  "pass": true
+}

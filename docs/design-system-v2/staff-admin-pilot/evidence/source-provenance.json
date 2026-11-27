@@ -1,0 +1,74 @@
+[
+  {
+    "file": "icon-paths.js",
+    "sha256": "3c73d5349b1da3551cb5d10ea7381053779bc3bf5d6efac1544ceaf58bd1ce3e",
+    "source_ref": "56f4f700aa83297c9f5c164a5304135303137f75",
+    "byte_identical": true
+  },
+  {
+    "file": "icons/LICENSE",
+    "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
+    "source_ref": "56f4f700aa83297c9f5c164a5304135303137f75",
+    "byte_identical": true
+  },
+  {
+    "file": "icons/manifest.json",
+    "sha256": "cb4567633979120a25ffc75e71b92eb92ba0c998b144875b69be2cc57059b0d0",
+    "source_ref": "56f4f700aa83297c9f5c164a5304135303137f75",
+    "byte_identical": true
+  },
+  {
+    "file": ".reference/inter.ttf",
+    "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+    "source_ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "verified": true
+  },
+  {
+    "file": ".reference/plex-400.ttf",
+    "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9",
+    "source_ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "verified": true
+  },
+  {
+    "file": ".reference/plex-600.ttf",
+    "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467",
+    "source_ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "verified": true
+  },
+  {
+    "file": ".reference/ar-light.svg",
+    "sha256": "76d14637666b2d9aadbdc211223454c3f216bff38927c11577ed4d77abce4fa4",
+    "source_ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "verified": true
+  },
+  {
+    "file": ".reference/ar-dark.svg",
+    "sha256": "f96e38a2a6e1e7273edd57b8e98005f28b0894efa03ffba41ef2c0394a5196da",
+    "source_ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "verified": true
+  },
+  {
+    "file": ".reference/en-light.svg",
+    "sha256": "f6935c1441d2e68092109425d31f707621f6ec33b405d6ceb00fc0876f53b54e",
+    "source_ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "verified": true
+  },
+  {
+    "file": ".reference/en-dark.svg",
+    "sha256": "eaa33073140aff82d87d34e134157671f7f8d38ac625618a26b69978641bddd5",
+    "source_ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "verified": true
+  },
+  {
+    "file": ".reference/inter-OFL.txt",
+    "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39",
+    "source_ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "verified": true
+  },
+  {
+    "file": ".reference/ibmplexsansarabic-OFL.txt",
+    "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f",
+    "source_ref": "687f94074c0ac4d45610546517ea6aa228d36183",
+    "verified": true
+  }
+]

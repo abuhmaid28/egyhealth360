@@ -1,0 +1,1897 @@
+{
+  "browser": "154.0.8037.57",
+  "matrix": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 2195,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 2094,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1603,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1363,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1333,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 2195,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 2094,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1603,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1363,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1333,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 2395,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 2118,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1640,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1377,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1328,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 2395,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 2118,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1640,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1377,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1328,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 2305,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 2133,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1697,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1360,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1334,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 2305,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 2133,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1697,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1360,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1334,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 2436,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 2179,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1669,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1390,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1344,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 2436,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 2179,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1669,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1390,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1344,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 2135,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 1958,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1690,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1338,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1312,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 2135,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 1958,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1690,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1338,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1312,
+      "dir": "rtl",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 2400,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 1986,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "height": 1715,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1379,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1303,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 2400,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 1986,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "height": 1715,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1024,
+      "scroll": 1024,
+      "height": 1379,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "height": 1303,
+      "dir": "ltr",
+      "overflow": [],
+      "networkLocal": true
+    }
+  ],
+  "text200": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 4654,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 4654,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 5191,
+      "dir": "ltr",
+      "overflow": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 5191,
+      "dir": "ltr",
+      "overflow": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 4734,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 4734,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 5011,
+      "dir": "ltr",
+      "overflow": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 5011,
+      "dir": "ltr",
+      "overflow": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 4556,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 4556,
+      "dir": "rtl",
+      "overflow": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "height": 5058,
+      "dir": "ltr",
+      "overflow": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "height": 5058,
+      "dir": "ltr",
+      "overflow": []
+    }
+  ],
+  "states": [
+    {
+      "role": "pharmacy",
+      "state": "empty",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1062,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "empty",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1062,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "denied",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1027,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "denied",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1027,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "error",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1027,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "error",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1027,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "uncertain",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1057,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "uncertain",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1057,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "history",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1629,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "history",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1629,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "pharmacy",
+      "state": "accepted",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 2222,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 1
+    },
+    {
+      "role": "pharmacy",
+      "state": "accepted",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 2222,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 1
+    },
+    {
+      "role": "laboratory",
+      "state": "empty",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1111,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "empty",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1111,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "denied",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1076,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "denied",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1076,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "error",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1076,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "error",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1076,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "uncertain",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1106,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "uncertain",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1106,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "history",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1460,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "laboratory",
+      "state": "history",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1460,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "empty",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1062,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "empty",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1062,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "denied",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1027,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "denied",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1027,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "error",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1027,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "error",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1027,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "uncertain",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 1057,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "uncertain",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 1057,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "organizations",
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "height": 2069,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    },
+    {
+      "role": "admin",
+      "state": "organizations",
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "height": 2069,
+      "lang": "ar",
+      "dir": "rtl",
+      "overflow": [],
+      "hasPatientName": 0
+    }
+  ],
+  "dialogs": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "open": true,
+      "returned": true,
+      "requests": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "open": true,
+      "returned": true,
+      "requests": []
+    }
+  ],
+  "axe": [
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 390,
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": []
+    }
+  ],
+  "fonts": [
+    {
+      "selector": "h1",
+      "fonts": [
+        {
+          "familyName": "IBM Plex Sans Arabic SemiBold",
+          "postScriptName": "IBMPlexSansArabic-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 23
+        }
+      ]
+    },
+    {
+      "selector": ".big",
+      "fonts": [
+        {
+          "familyName": "Inter",
+          "postScriptName": "Inter-Regular",
+          "isCustomFont": true,
+          "glyphCount": 2
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "pharmacy-ar-light-390.png",
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "state": "work",
+      "sha256": "009372a41c1285b8179988b19b542b0e8f5e596099cb751b428ac3a578ec4733"
+    },
+    {
+      "file": "pharmacy-ar-light-1440.png",
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "state": "work",
+      "sha256": "779f4260167649a769447d66e5d4b85f0fbdd2ce787c8338cfe951cf97c1d5e2"
+    },
+    {
+      "file": "pharmacy-ar-dark-390.png",
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "state": "work",
+      "sha256": "dc4ab232b450088783353f7f78cad2cf80a3da4ed8b44e8dd6a197eb5f48e43c"
+    },
+    {
+      "file": "pharmacy-ar-dark-1440.png",
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "state": "work",
+      "sha256": "c80bfb69da6327a71c00928eb8d3ac27d4cf2a47d0030d0803c2ead055ac04bd"
+    },
+    {
+      "file": "laboratory-ar-light-390.png",
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "state": "work",
+      "sha256": "e1617cb236496fb8d819945bff9f9a9fb1d65d38977c138a12f7bcfe8a143f6b"
+    },
+    {
+      "file": "laboratory-ar-light-1440.png",
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "state": "work",
+      "sha256": "b9333b69c86d01fce5ea815794fa49d177bf285a005fee9b455768d9c47e73d6"
+    },
+    {
+      "file": "laboratory-ar-dark-390.png",
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "state": "work",
+      "sha256": "f11adf5017f6684f911b4b1b1b893c3cc771944e33aa391e158e718620ab7179"
+    },
+    {
+      "file": "laboratory-ar-dark-1440.png",
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "state": "work",
+      "sha256": "90c3d50af38aef526008bd5ef31cb8e0fda71d3a17c29743d424b337c28c0882"
+    },
+    {
+      "file": "admin-ar-light-390.png",
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 390,
+      "state": "work",
+      "sha256": "0d5e235ee1f10b7455b9f90c96614e868e7b8f119159e81bbc24bc4cdd628e16"
+    },
+    {
+      "file": "admin-ar-light-1440.png",
+      "role": "admin",
+      "lang": "ar",
+      "theme": "light",
+      "width": 1440,
+      "state": "work",
+      "sha256": "bde9e7ebc1e17e7cd1d8402fb2a74f0da7749278210ddc1652a6fab50a5f87df"
+    },
+    {
+      "file": "admin-ar-dark-390.png",
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "state": "work",
+      "sha256": "3b84d0dc9b57ed67269fab788b54c625dba47443d040307fe79377a6f657726a"
+    },
+    {
+      "file": "admin-ar-dark-1440.png",
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 1440,
+      "state": "work",
+      "sha256": "3fe58d892fb083ad43a1a7a5a8e91251e47ae76d109ef95f0527509e4dd9459a"
+    },
+    {
+      "file": "pharmacy-en-dark-1440-accepted.png",
+      "role": "pharmacy",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "state": "accepted",
+      "text": 100,
+      "sha256": "6eb0f1a1ee4d53f87ec6d08de5c7525e27a6ba856de60ab7b857c57433c60402"
+    },
+    {
+      "file": "laboratory-en-light-390-work.png",
+      "role": "laboratory",
+      "lang": "en",
+      "theme": "light",
+      "width": 390,
+      "state": "work",
+      "text": 100,
+      "sha256": "7816613f3660b8edeec658d01af02ad4c91ef7d8563d713f7fbb96712c4b0911"
+    },
+    {
+      "file": "admin-en-dark-1440-organizations.png",
+      "role": "admin",
+      "lang": "en",
+      "theme": "dark",
+      "width": 1440,
+      "state": "organizations",
+      "text": 100,
+      "sha256": "2e47954672810fe8f0cfb74e95dba5f9c559c5424ea38e66e77ed6a86611da08"
+    },
+    {
+      "file": "laboratory-ar-light-768-work.png",
+      "role": "laboratory",
+      "lang": "ar",
+      "theme": "light",
+      "width": 768,
+      "state": "work",
+      "text": 100,
+      "sha256": "bccc650c7ccd3b45aa325c6086155ec8d7c56567cc8eed904cf8ad49d63affb0"
+    },
+    {
+      "file": "pharmacy-ar-light-320-history.png",
+      "role": "pharmacy",
+      "lang": "ar",
+      "theme": "light",
+      "width": 320,
+      "state": "history",
+      "text": 100,
+      "sha256": "e0bc2a14540ecf4808ed20759dbc4e417440fa53885d4022eaf92e63e1608d71"
+    },
+    {
+      "file": "admin-ar-dark-390-work-text200.png",
+      "role": "admin",
+      "lang": "ar",
+      "theme": "dark",
+      "width": 390,
+      "state": "work",
+      "text": 200,
+      "sha256": "06f7f167b053ae9c309f4b074d98c5e1da36020c33276bb5d92371813eaf7f3a"
+    }
+  ],
+  "contrast": [
+    {
+      "theme": "light",
+      "pairs": [
+        {
+          "name": "body",
+          "foreground": "#17142B",
+          "background": "#F8F7FB",
+          "minimum": 4.5,
+          "ratio": 16.80807600132796,
+          "pass": true
+        },
+        {
+          "name": "secondary",
+          "foreground": "#595269",
+          "background": "#F8F7FB",
+          "minimum": 4.5,
+          "ratio": 6.943190859885116,
+          "pass": true
+        },
+        {
+          "name": "surface text",
+          "foreground": "#17142B",
+          "background": "#FFFFFF",
+          "minimum": 4.5,
+          "ratio": 17.927608745600075,
+          "pass": true
+        },
+        {
+          "name": "surface secondary",
+          "foreground": "#595269",
+          "background": "#FFFFFF",
+          "minimum": 4.5,
+          "ratio": 7.405654827608615,
+          "pass": true
+        },
+        {
+          "name": "raised text",
+          "foreground": "#17142B",
+          "background": "#EFEAF7",
+          "minimum": 4.5,
+          "ratio": 15.180716614741913,
+          "pass": true
+        },
+        {
+          "name": "raised secondary",
+          "foreground": "#595269",
+          "background": "#EFEAF7",
+          "minimum": 4.5,
+          "ratio": 6.270950514363131,
+          "pass": true
+        },
+        {
+          "name": "action",
+          "foreground": "#6240B8",
+          "background": "#F8F7FB",
+          "minimum": 4.5,
+          "ratio": 6.685818690198745,
+          "pass": true
+        },
+        {
+          "name": "button",
+          "foreground": "#FFFFFF",
+          "background": "#6240B8",
+          "minimum": 4.5,
+          "ratio": 7.13113991229178,
+          "pass": true
+        },
+        {
+          "name": "button hover",
+          "foreground": "#FFFFFF",
+          "background": "#50309D",
+          "minimum": 4.5,
+          "ratio": 9.330265144455119,
+          "pass": true
+        },
+        {
+          "name": "control boundary",
+          "foreground": "#787084",
+          "background": "#FFFFFF",
+          "minimum": 3,
+          "ratio": 4.719662452636552,
+          "pass": true
+        },
+        {
+          "name": "control raised",
+          "foreground": "#787084",
+          "background": "#EFEAF7",
+          "minimum": 3,
+          "ratio": 3.9965094747116012,
+          "pass": true
+        },
+        {
+          "name": "focus canvas",
+          "foreground": "#6240B8",
+          "background": "#F8F7FB",
+          "minimum": 3,
+          "ratio": 6.685818690198745,
+          "pass": true
+        },
+        {
+          "name": "focus surface",
+          "foreground": "#6240B8",
+          "background": "#FFFFFF",
+          "minimum": 3,
+          "ratio": 7.13113991229178,
+          "pass": true
+        },
+        {
+          "name": "focus raised",
+          "foreground": "#6240B8",
+          "background": "#EFEAF7",
+          "minimum": 3,
+          "ratio": 6.038497140626518,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "pairs": [
+        {
+          "name": "body",
+          "foreground": "#F6F2FF",
+          "background": "#10121D",
+          "minimum": 4.5,
+          "ratio": 16.92576217397838,
+          "pass": true
+        },
+        {
+          "name": "secondary",
+          "foreground": "#C2BED2",
+          "background": "#10121D",
+          "minimum": 4.5,
+          "ratio": 10.290259109746236,
+          "pass": true
+        },
+        {
+          "name": "surface text",
+          "foreground": "#F6F2FF",
+          "background": "#1D2030",
+          "minimum": 4.5,
+          "ratio": 14.646963891117313,
+          "pass": true
+        },
+        {
+          "name": "surface secondary",
+          "foreground": "#C2BED2",
+          "background": "#1D2030",
+          "minimum": 4.5,
+          "ratio": 8.904831112563558,
+          "pass": true
+        },
+        {
+          "name": "raised text",
+          "foreground": "#F6F2FF",
+          "background": "#262A3C",
+          "minimum": 4.5,
+          "ratio": 12.890718192324519,
+          "pass": true
+        },
+        {
+          "name": "raised secondary",
+          "foreground": "#C2BED2",
+          "background": "#262A3C",
+          "minimum": 4.5,
+          "ratio": 7.837096430060492,
+          "pass": true
+        },
+        {
+          "name": "action",
+          "foreground": "#A78BFA",
+          "background": "#10121D",
+          "minimum": 4.5,
+          "ratio": 6.851281513251919,
+          "pass": true
+        },
+        {
+          "name": "button",
+          "foreground": "#17142B",
+          "background": "#A78BFA",
+          "minimum": 4.5,
+          "ratio": 6.587603133088349,
+          "pass": true
+        },
+        {
+          "name": "button hover",
+          "foreground": "#17142B",
+          "background": "#BDA7FF",
+          "minimum": 4.5,
+          "ratio": 8.652418880381937,
+          "pass": true
+        },
+        {
+          "name": "control boundary",
+          "foreground": "#85839C",
+          "background": "#1D2030",
+          "minimum": 3,
+          "ratio": 4.397825893013651,
+          "pass": true
+        },
+        {
+          "name": "control raised",
+          "foreground": "#85839C",
+          "background": "#262A3C",
+          "minimum": 3,
+          "ratio": 3.870504130902334,
+          "pass": true
+        },
+        {
+          "name": "focus canvas",
+          "foreground": "#A78BFA",
+          "background": "#10121D",
+          "minimum": 3,
+          "ratio": 6.851281513251919,
+          "pass": true
+        },
+        {
+          "name": "focus surface",
+          "foreground": "#A78BFA",
+          "background": "#1D2030",
+          "minimum": 3,
+          "ratio": 5.928859917856991,
+          "pass": true
+        },
+        {
+          "name": "focus raised",
+          "foreground": "#A78BFA",
+          "background": "#262A3C",
+          "minimum": 3,
+          "ratio": 5.2179593648901035,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "pass": true
+}
