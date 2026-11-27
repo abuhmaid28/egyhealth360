@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+Current bounded Patient-only visual comparison: [three-direction owner package](patient-three-directions/README.md), [independent rendered review](patient-three-directions/INDEPENDENT_REVIEW.md), [technical/governance evidence](patient-three-directions/VALIDATION.md). Direct 7 November 2026 owner authorization permits isolated design exploration only; no production or final-identity approval. CURRENT_STATUS owns mutable delivery state.
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
@@ -41,6 +43,12 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| Patient-only design experiment | Responsibility / limits |
+| --- | --- |
+| [Three-direction package](patient-three-directions/README.md) | Unselected A/B/C Patient My Care proposals, six Arabic browser screenshots, boards, rationale, exact pinned resource loading and owner choices. |
+| [Independent visual findings](patient-three-directions/INDEPENDENT_REVIEW.md) | Separate reviewer's rendered-image V/T/G findings and verification; no owner design approval. |
+| [Focused validation](patient-three-directions/VALIDATION.md) | Browser, text stress, keyboard, contrast and source preservation evidence, costs and untested finalist work. |
 
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |
