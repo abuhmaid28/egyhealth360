@@ -1,0 +1,23 @@
+{
+  "screens": 26,
+  "localHtmlReferences": 355,
+  "tokens": 98,
+  "knownAcyclicTypeCorrectAliases": true,
+  "generatedOutputsReproducible": true,
+  "screenshotHashes": 105,
+  "browserSummary": {
+    "measurements": 192,
+    "screenCaptures": 105,
+    "contrastPairs": 590,
+    "contrastFailures": 0,
+    "reflowFailures": 0
+  },
+  "preservation": {
+    "existingFilesByteIdentical": 1421,
+    "permittedExistingChanges": [
+      "docs/CURRENT_STATUS.md",
+      "docs/SOURCE_OF_TRUTH.md"
+    ],
+    "runtimeChanged": false
+  }
+}

@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+Current bounded exploration: [Human Precision visual selection package](human-precision/README.md). The current owner brief authorizes comparison and a provisional system proposal only. [CURRENT_STATUS](CURRENT_STATUS.md) records the freshly verified merged baseline; older open-PR handoff language is historical. Final identity and adoption remain owner-gated.
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
@@ -41,6 +43,15 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| Document | Responsibility / limits |
+| --- | --- |
+| [Human Precision review](human-precision/README.md) | Current unselected visual package, navigable H/P finalists and reproduction. |
+| [Visual rationale](human-precision/RATIONALE.md) | D/E/F evidence, expert scorecard and non-binding H recommendation. |
+| [System foundation proposal](human-precision/SYSTEM_FOUNDATION.md) | Provisional DTCG layers, component taxonomy and healthcare interaction patterns; no production API freeze. |
+| [Accessibility evidence](human-precision/ACCESSIBILITY.md) | Measured browser/contrast/reflow evidence and explicit untested limits; no WCAG certification. |
+| [Implementation proposal](human-precision/IMPLEMENTATION_PLAN.md) | Sequenced owner-gated next execution, no automatic implementation authorization. |
+
 
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |

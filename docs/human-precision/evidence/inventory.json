@@ -1,0 +1,135 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "screens": [
+    {
+      "path": "h-patient-ar.html",
+      "language": "ar",
+      "class": "product candidate-h role-patient"
+    },
+    {
+      "path": "h-clinician-ar.html",
+      "language": "ar",
+      "class": "product candidate-h role-clinician"
+    },
+    {
+      "path": "h-pharmacy-ar.html",
+      "language": "ar",
+      "class": "product candidate-h role-pharmacy"
+    },
+    {
+      "path": "h-laboratory-ar.html",
+      "language": "ar",
+      "class": "product candidate-h role-laboratory"
+    },
+    {
+      "path": "h-admin-ar.html",
+      "language": "ar",
+      "class": "product candidate-h role-admin"
+    },
+    {
+      "path": "h-patient-en.html",
+      "language": "en",
+      "class": "product candidate-h role-patient"
+    },
+    {
+      "path": "h-clinician-en.html",
+      "language": "en",
+      "class": "product candidate-h role-clinician"
+    },
+    {
+      "path": "h-pharmacy-en.html",
+      "language": "en",
+      "class": "product candidate-h role-pharmacy"
+    },
+    {
+      "path": "h-laboratory-en.html",
+      "language": "en",
+      "class": "product candidate-h role-laboratory"
+    },
+    {
+      "path": "h-admin-en.html",
+      "language": "en",
+      "class": "product candidate-h role-admin"
+    },
+    {
+      "path": "p-patient-ar.html",
+      "language": "ar",
+      "class": "product candidate-p role-patient"
+    },
+    {
+      "path": "p-clinician-ar.html",
+      "language": "ar",
+      "class": "product candidate-p role-clinician"
+    },
+    {
+      "path": "p-pharmacy-ar.html",
+      "language": "ar",
+      "class": "product candidate-p role-pharmacy"
+    },
+    {
+      "path": "p-laboratory-ar.html",
+      "language": "ar",
+      "class": "product candidate-p role-laboratory"
+    },
+    {
+      "path": "p-admin-ar.html",
+      "language": "ar",
+      "class": "product candidate-p role-admin"
+    },
+    {
+      "path": "p-patient-en.html",
+      "language": "en",
+      "class": "product candidate-p role-patient"
+    },
+    {
+      "path": "p-clinician-en.html",
+      "language": "en",
+      "class": "product candidate-p role-clinician"
+    },
+    {
+      "path": "p-pharmacy-en.html",
+      "language": "en",
+      "class": "product candidate-p role-pharmacy"
+    },
+    {
+      "path": "p-laboratory-en.html",
+      "language": "en",
+      "class": "product candidate-p role-laboratory"
+    },
+    {
+      "path": "p-admin-en.html",
+      "language": "en",
+      "class": "product candidate-p role-admin"
+    },
+    {
+      "path": "specimen-ar.html",
+      "language": "ar",
+      "class": "review"
+    },
+    {
+      "path": "specimen-en.html",
+      "language": "en",
+      "class": "review"
+    },
+    {
+      "path": "index.html",
+      "language": "en",
+      "class": "review"
+    },
+    {
+      "path": "compare.html",
+      "language": "en",
+      "class": "review"
+    },
+    {
+      "path": "typography.html",
+      "language": "en",
+      "class": "review"
+    },
+    {
+      "path": "system.html",
+      "language": "en",
+      "class": "review"
+    }
+  ]
+}
