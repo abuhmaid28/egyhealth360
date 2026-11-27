@@ -1,0 +1,1166 @@
+{
+  "schemaVersion": "1.0.0",
+  "issue": 210,
+  "parentIssue": 200,
+  "candidateIssue": 202,
+  "repository": "abuhmaid28/egyhealth360",
+  "repositoryId": 1414824472,
+  "branch": "task/g2-f2-visual-acceptance-evidence",
+  "sourcePins": {
+    "canonicalMainAnchor": "407ca42b8b1f71bf9020367d581124b95989df57",
+    "agentsMdBlob": "8f4642868f6147411e3e6e03582d95540872a2e9",
+    "beforeBaseline158Commit": "42bfcfbe0f4ba4b3b14408befbc1545f1c9c668a",
+    "beforeBaseline158Tree": "24bba04069b7097b97e7caa1719fb4b03c1cbae0",
+    "candidate202Commit": "750b7b93c0e0142ac0cf7ed07b4f2aa79a9f3e35",
+    "candidate202Tree": "b193c7da3f0cd89223d2153fe1132d8b9e609c77",
+    "priorCiRunId": 45944466941,
+    "priorCiRunConclusion": "success",
+    "priorCiJobsPassed": 8,
+    "priorCiJobsTotal": 8
+  },
+  "environment": {
+    "executionHost": "local_windows_device",
+    "platform": "win32",
+    "nodeVersion": "v24.22.3",
+    "pnpmVersion": "10.34.6",
+    "browserEngine": "playwright@1.64.1 / chromium-1248 (headless, DPR=1)",
+    "canonicalParityNote": "Non-Linux local Windows execution; canonical Linux CI parity belongs to run 45944466941 (8/8 success)."
+  },
+  "publicationAndRights": {
+    "publicVisualAcceptanceStatus": "HOLD",
+    "holdReason": "All 12 #158 DP02 SVG and visual-recovery WebP assets are classified PREVIEW_ATTESTED_REUSED (previewOnly=true, productionReady=false) with AP05 clearance open; canonical evidence does not authorize publishing full-screen public derivative PNGs containing those visible assets.",
+    "publishedCapturePolicy": "cropped_partial_region_clips_excluding_all_12_previewOnly_assets",
+    "fullScreenFidelityClaimed": false,
+    "assetClasses": [
+      {
+        "group": "apps/web/public/brand/dp02/*.svg (8 files)",
+        "rights": "PREVIEW_ATTESTED_REUSED",
+        "previewOnly": true,
+        "productionReady": false,
+        "publicCaptureIncluded": false
+      },
+      {
+        "group": "apps/web/public/visual-recovery/{care-encounter,mariam,omar,sara}.webp (4 files)",
+        "rights": "PREVIEW_ATTESTED_REUSED",
+        "previewOnly": true,
+        "productionReady": false,
+        "publicCaptureIncluded": false
+      },
+      {
+        "group": "apps/web/public/fonts/* (OFL fonts & notices)",
+        "rights": "OFL_FONT_REUSED",
+        "previewOnly": false,
+        "productionReady": true,
+        "publicCaptureIncluded": true
+      },
+      {
+        "group": "apps/web/src/components/v2/foundation inline TSX SVGs",
+        "rights": "CLEAN_ROOM_ORIGINAL_202",
+        "previewOnly": false,
+        "productionReady": true,
+        "publicCaptureIncluded": true
+      },
+      {
+        "group": "Private archive art/*, illustrations/*, icons.js",
+        "rights": "EXCLUDED_PUBLIC_AP05_PENDING",
+        "previewOnly": false,
+        "productionReady": false,
+        "publicCaptureIncluded": false
+      }
+    ],
+    "captureCount": 22,
+    "maxCaptureCount": 32,
+    "totalPngBytes": 1628935,
+    "maxTotalPngBytes": 15728640
+  },
+  "reproductionCommand": "node docs/visual-evidence/202/g2-f2-750b7b93/capture.mjs --target=202-preview",
+  "captures": [
+    {
+      "id": "before-entry-en-dark-1440",
+      "baseline": "158",
+      "role": "ENTRY",
+      "route": "/",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/01-before-158-entry-workspaces-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 2,
+      "clip": {
+        "x": 556,
+        "y": 584,
+        "width": 794,
+        "height": 316
+      },
+      "dimensions": {
+        "width": 794,
+        "height": 316
+      },
+      "bytes": 35937,
+      "sha256": "f4b0e5c21d99290c988b9d4ca7e8f0b27348a1d7cde539797672fea382741ac5"
+    },
+    {
+      "id": "after-gateway-roles-en-dark-1440",
+      "baseline": "202",
+      "role": "GATEWAY",
+      "route": "/",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/02-after-202-gateway-roles-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 3,
+      "clip": {
+        "x": 160,
+        "y": 616,
+        "width": 1120,
+        "height": 284
+      },
+      "dimensions": {
+        "width": 1120,
+        "height": 284
+      },
+      "bytes": 66127,
+      "sha256": "cadfe0450165bae327c89b50062ee75d5c330178cac284e98e02f17ea5d6ff40"
+    },
+    {
+      "id": "after-gateway-roles-ar-dark-390",
+      "baseline": "202",
+      "role": "GATEWAY",
+      "route": "/",
+      "locale": "ar",
+      "theme": "dark",
+      "viewport": "390x844",
+      "file": "captures/03-after-202-gateway-roles-ar-dark-390.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 3,
+      "clip": {
+        "x": 14,
+        "y": 2,
+        "width": 362,
+        "height": 760
+      },
+      "dimensions": {
+        "width": 362,
+        "height": 760
+      },
+      "bytes": 31335,
+      "sha256": "5e071c496808d9fe5e87f1ae4658ff6e27e746dfe9de739d83e825de88c67f08"
+    },
+    {
+      "id": "after-gateway-roles-en-light-1440",
+      "baseline": "202",
+      "role": "GATEWAY",
+      "route": "/",
+      "locale": "en",
+      "theme": "light",
+      "viewport": "1440x900",
+      "file": "captures/04-after-202-gateway-roles-en-light-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 3,
+      "clip": {
+        "x": 160,
+        "y": 616,
+        "width": 1120,
+        "height": 284
+      },
+      "dimensions": {
+        "width": 1120,
+        "height": 284
+      },
+      "bytes": 65189,
+      "sha256": "1839dd44ac9ea08f4b0c8d81728595ebe85385dd73e448e116f724c06c6bf74a"
+    },
+    {
+      "id": "before-patient-home-en-dark-1440",
+      "baseline": "158",
+      "role": "PATIENT",
+      "route": "/patient",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/05-before-158-patient-home-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 56,
+        "y": 73,
+        "width": 1328,
+        "height": 760
+      },
+      "dimensions": {
+        "width": 1328,
+        "height": 760
+      },
+      "bytes": 177309,
+      "sha256": "503653547b6dc135bee2ca8b5f16ceecfb9c5e5c28ee1e4ee63d5ab9cc838718"
+    },
+    {
+      "id": "after-patient-home-en-dark-1440",
+      "baseline": "202",
+      "role": "PATIENT",
+      "route": "/patient",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/06-after-202-patient-home-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 120,
+        "y": 123,
+        "width": 1200,
+        "height": 723
+      },
+      "dimensions": {
+        "width": 1200,
+        "height": 723
+      },
+      "bytes": 75815,
+      "sha256": "6d3627f2b57c8a9496a3a83e55d1d3f554caeacefab9a9f0788a246b56089865"
+    },
+    {
+      "id": "after-patient-home-ar-dark-390",
+      "baseline": "202",
+      "role": "PATIENT",
+      "route": "/patient",
+      "locale": "ar",
+      "theme": "dark",
+      "viewport": "390x844",
+      "file": "captures/07-after-202-patient-home-ar-dark-390.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 0,
+        "y": 307,
+        "width": 390,
+        "height": 537
+      },
+      "dimensions": {
+        "width": 390,
+        "height": 537
+      },
+      "bytes": 21018,
+      "sha256": "6a0a42bec43a552566400ffde2d3fdc2cf204e149c96e48680b78ccdcf85fdaa"
+    },
+    {
+      "id": "after-patient-booking-consent-en-dark-1440",
+      "baseline": "202",
+      "role": "PATIENT",
+      "route": "/patient/discover",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/08-after-202-patient-booking-consent-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 4,
+      "clip": {
+        "x": 166,
+        "y": 405,
+        "width": 1107,
+        "height": 378
+      },
+      "dimensions": {
+        "width": 1107,
+        "height": 378
+      },
+      "bytes": 51623,
+      "sha256": "2dbfa28881ac2d0c8080b9b85f5f3e5c89369b52e2afbf93653704b8325622a4"
+    },
+    {
+      "id": "after-patient-appointments-en-light-1440",
+      "baseline": "202",
+      "role": "PATIENT",
+      "route": "/patient/appointments",
+      "locale": "en",
+      "theme": "light",
+      "viewport": "1440x900",
+      "file": "captures/09-after-202-patient-appointments-en-light-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 120,
+        "y": 123,
+        "width": 1200,
+        "height": 723
+      },
+      "dimensions": {
+        "width": 1200,
+        "height": 723
+      },
+      "bytes": 45838,
+      "sha256": "459661bed2f6894d03b5829fb28a88e563e275c5aa801cb969c96ccaf7f85b3b"
+    },
+    {
+      "id": "after-patient-settings-en-dark-1440",
+      "baseline": "202",
+      "role": "PATIENT",
+      "route": "/patient/settings",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/10-after-202-patient-settings-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 120,
+        "y": 123,
+        "width": 1200,
+        "height": 723
+      },
+      "dimensions": {
+        "width": 1200,
+        "height": 723
+      },
+      "bytes": 40493,
+      "sha256": "c4aaba45b54cd32dfa615ea1170d0e1694effcaeba914483d3f68a6c8c028483"
+    },
+    {
+      "id": "158-doctor-schedule-en-dark-1440",
+      "baseline": "158",
+      "role": "CLINICIAN",
+      "route": "/doctor/schedule",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/11-before-158-doctor-schedule-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 56,
+        "y": 134,
+        "width": 1328,
+        "height": 760
+      },
+      "dimensions": {
+        "width": 1328,
+        "height": 760
+      },
+      "bytes": 72477,
+      "sha256": "6bd030e02706add4f1510e99bf753d56b073958fb38ec7219b97c7da1da79b94"
+    },
+    {
+      "id": "after-doctor-schedule-en-dark-1440",
+      "baseline": "202",
+      "role": "CLINICIAN",
+      "route": "/doctor/schedule",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/12-after-202-doctor-schedule-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 120,
+        "y": 123,
+        "width": 1200,
+        "height": 760
+      },
+      "dimensions": {
+        "width": 1200,
+        "height": 760
+      },
+      "bytes": 82649,
+      "sha256": "51f91246851d64479ba2546004e9d8e1df1cb6030b0f455ad442b35cb68c7260"
+    },
+    {
+      "id": "after-doctor-schedule-ar-dark-390",
+      "baseline": "202",
+      "role": "CLINICIAN",
+      "route": "/doctor/schedule",
+      "locale": "ar",
+      "theme": "dark",
+      "viewport": "390x844",
+      "file": "captures/13-after-202-doctor-schedule-ar-dark-390.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 0,
+        "y": 307,
+        "width": 390,
+        "height": 537
+      },
+      "dimensions": {
+        "width": 390,
+        "height": 537
+      },
+      "bytes": 24185,
+      "sha256": "b909c6a2a9c3cb1bab05f2cffd0175c0d2b3830909691c251dde7996e6fd91da"
+    },
+    {
+      "id": "after-doctor-consultation-en-dark-1440",
+      "baseline": "202",
+      "role": "CLINICIAN",
+      "route": "/doctor/consultation",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/14-after-202-doctor-consultation-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 120,
+        "y": 123,
+        "width": 1200,
+        "height": 760
+      },
+      "dimensions": {
+        "width": 1200,
+        "height": 760
+      },
+      "bytes": 80290,
+      "sha256": "443eed288409f98453b51b8b19f31b7640ba271c32d21cd87642317fc436c11e"
+    },
+    {
+      "id": "158-pharmacy-en-dark-1440",
+      "baseline": "158",
+      "role": "PHARMACY_STAFF",
+      "route": "/pharmacy",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/15-before-158-pharmacy-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 56,
+        "y": 73,
+        "width": 1328,
+        "height": 760
+      },
+      "dimensions": {
+        "width": 1328,
+        "height": 760
+      },
+      "bytes": 140095,
+      "sha256": "aceb71360a4af92f04c32e4e5373e948f0272094672dc3b51a2f9caf3c5cfa49"
+    },
+    {
+      "id": "after-pharmacy-en-dark-1440",
+      "baseline": "202",
+      "role": "PHARMACY_STAFF",
+      "route": "/pharmacy",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/16-after-202-pharmacy-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 120,
+        "y": 123,
+        "width": 1200,
+        "height": 723
+      },
+      "dimensions": {
+        "width": 1200,
+        "height": 723
+      },
+      "bytes": 64508,
+      "sha256": "bf3fe9d181014699a507c00c0663ea7b0c629184677e6acc2c2a3a5da6e73e51"
+    },
+    {
+      "id": "after-pharmacy-ar-dark-390",
+      "baseline": "202",
+      "role": "PHARMACY_STAFF",
+      "route": "/pharmacy",
+      "locale": "ar",
+      "theme": "dark",
+      "viewport": "390x844",
+      "file": "captures/17-after-202-pharmacy-ar-dark-390.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 0,
+        "y": 255,
+        "width": 390,
+        "height": 589
+      },
+      "dimensions": {
+        "width": 390,
+        "height": 589
+      },
+      "bytes": 28385,
+      "sha256": "2947e28d122f73c3ec51fa4acbf2d4ba16ad7c30d1dc877f9f7acd5d55607225"
+    },
+    {
+      "id": "158-lab-future-en-dark-1440",
+      "baseline": "158",
+      "role": "LAB_STAFF",
+      "route": "/laboratory",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/18-before-158-lab-future-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 56,
+        "y": 73,
+        "width": 1328,
+        "height": 760
+      },
+      "dimensions": {
+        "width": 1328,
+        "height": 760
+      },
+      "bytes": 129681,
+      "sha256": "1192e72a884b2ff838e84d1499a2a461b30e5632d46b1e63693e96cb419a000d"
+    },
+    {
+      "id": "after-lab-future-en-dark-1440",
+      "baseline": "202",
+      "role": "LAB_STAFF",
+      "route": "/laboratory",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/19-after-202-lab-future-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 120,
+        "y": 123,
+        "width": 1200,
+        "height": 723
+      },
+      "dimensions": {
+        "width": 1200,
+        "height": 723
+      },
+      "bytes": 64874,
+      "sha256": "f389434bba807523188496ea3bf0a44e9a42417e8e3bbf476493c000f674f174"
+    },
+    {
+      "id": "158-admin-en-dark-1440",
+      "baseline": "158",
+      "role": "ADMIN",
+      "route": "/admin",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/20-before-158-admin-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 56,
+        "y": 134,
+        "width": 1328,
+        "height": 760
+      },
+      "dimensions": {
+        "width": 1328,
+        "height": 760
+      },
+      "bytes": 138204,
+      "sha256": "c14122a87674799b91a4b5b4313d96d7985d4fc7a304abdca076c4ead77cb329"
+    },
+    {
+      "id": "after-admin-en-dark-1440",
+      "baseline": "202",
+      "role": "ADMIN",
+      "route": "/admin",
+      "locale": "en",
+      "theme": "dark",
+      "viewport": "1440x900",
+      "file": "captures/21-after-202-admin-en-dark-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 120,
+        "y": 123,
+        "width": 1200,
+        "height": 760
+      },
+      "dimensions": {
+        "width": 1200,
+        "height": 760
+      },
+      "bytes": 96828,
+      "sha256": "d16eb4bd2dc1cd90fcb41bd43a78bb152df9f9f2656f3a6977d62b3fd5e6c562"
+    },
+    {
+      "id": "after-admin-en-light-1440",
+      "baseline": "202",
+      "role": "ADMIN",
+      "route": "/admin",
+      "locale": "en",
+      "theme": "light",
+      "viewport": "1440x900",
+      "file": "captures/22-after-202-admin-en-light-1440.png",
+      "captureKind": "cropped_partial_region_clip",
+      "fullScreenFidelityClaimed": false,
+      "excludedRestrictedAssetsVerified": true,
+      "restrictedBoxesOnPage": 1,
+      "clip": {
+        "x": 120,
+        "y": 123,
+        "width": 1200,
+        "height": 760
+      },
+      "dimensions": {
+        "width": 1200,
+        "height": 760
+      },
+      "bytes": 96075,
+      "sha256": "362cbe3744d447ba1db0d3b002e20f9de1494e879fc5d3b2723bf6a19a79fc97"
+    }
+  ],
+  "stateCoverage": {
+    "captured_cropped_partial_clips": [
+      "before-entry-en-dark-1440",
+      "after-gateway-roles-en-dark-1440",
+      "after-gateway-roles-ar-dark-390",
+      "after-gateway-roles-en-light-1440",
+      "before-patient-home-en-dark-1440",
+      "after-patient-home-en-dark-1440",
+      "after-patient-home-ar-dark-390",
+      "after-patient-booking-consent-en-dark-1440",
+      "after-patient-appointments-en-light-1440",
+      "after-patient-settings-en-dark-1440",
+      "158-doctor-schedule-en-dark-1440",
+      "after-doctor-schedule-en-dark-1440",
+      "after-doctor-schedule-ar-dark-390",
+      "after-doctor-consultation-en-dark-1440",
+      "158-pharmacy-en-dark-1440",
+      "after-pharmacy-en-dark-1440",
+      "after-pharmacy-ar-dark-390",
+      "158-lab-future-en-dark-1440",
+      "after-lab-future-en-dark-1440",
+      "158-admin-en-dark-1440",
+      "after-admin-en-dark-1440",
+      "after-admin-en-light-1440"
+    ],
+    "measured_only_no_public_png": [
+      "gateway-en-dark-1440-full-metrics",
+      "gateway-en-light-1440-contrast",
+      "gateway-ar-dark-390-full-metrics",
+      "gateway-200pct-text-zoom-1440-and-390",
+      "gateway-theme-escape-focus-and-system-parity",
+      "patient-home-200pct-text-zoom-1440",
+      "patient-discover-12h-and-unchecked-1a2a",
+      "doctor-fresh-gateway-consultation-empty-state",
+      "normal-build-default-v1-compat",
+      "normal-build-query-opt-in-probe",
+      "normal-build-session-storage-opt-in",
+      "normal-build-session-storage-denial-probe"
+    ],
+    "not_captured_rights_hold": [
+      "Full-screen Gateway with DP02 primary mark and care-encounter.webp",
+      "Full-screen V2DemoShell / PortalShell topbar with DP02 compact mark",
+      "Patient Discover doctor list cards with mariam.webp, omar.webp, sara.webp",
+      "Patient Doctor Profile /patient/doctors/:id with mariam.webp"
+    ],
+    "not_applicable_or_deferred_by_contract": [
+      "Clinician My patients directory (disabled Planned pill)",
+      "Patient cancel/reschedule appointment (explicitly deferred to Live backend)",
+      "Laboratory live orders/results (FUTURE CONCEPT NOT LIVE; #124 NO-GO)",
+      "Formal WCAG AA/AAA legal certification (automated contrast/reflow checks only)"
+    ]
+  },
+  "measuredResults": {
+    "preview202": {
+      "security": {
+        "rootStatus": 200,
+        "headers": {
+          "xRobotsTag": "noindex, nofollow, noarchive",
+          "xContentTypeOptions": "nosniff",
+          "referrerPolicy": "no-referrer",
+          "permissionsPolicy": "camera=(), microphone=(), geolocation=()",
+          "xFrameOptions": "DENY",
+          "csp": "frame-ancestors 'none'"
+        },
+        "v2Foundation404": {
+          "get": 404,
+          "head": 404
+        }
+      },
+      "metrics": [
+        {
+          "label": "202-gateway-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "dark",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 10,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 14.4,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "202-gateway-ar-dark-390",
+          "dir": "rtl",
+          "lang": "ar",
+          "theme": "dark",
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflowPx": 0,
+          "interactiveCount": 10,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 14.4,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "202-patient-home-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "dark",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 20,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 15,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "202-patient-discover-12h-and-1a2a",
+          "has12hPatient": true,
+          "consentUncheckedDefault": true
+        },
+        {
+          "label": "202-patient-home-ar-dark-390",
+          "dir": "rtl",
+          "lang": "ar",
+          "theme": "dark",
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflowPx": 0,
+          "interactiveCount": 19,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 15,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "202-doctor-schedule-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "dark",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 15,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 15,
+          "hasArabicIndicDigits": false,
+          "has24hProfessional": true
+        },
+        {
+          "label": "202-doctor-schedule-ar-dark-390",
+          "dir": "rtl",
+          "lang": "ar",
+          "theme": "dark",
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflowPx": 0,
+          "interactiveCount": 15,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 15,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "202-pharmacy-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "dark",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 10,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 14,
+          "hasArabicIndicDigits": false,
+          "pharmacyTerminalLockVisible": true
+        },
+        {
+          "label": "202-pharmacy-ar-dark-390",
+          "dir": "rtl",
+          "lang": "ar",
+          "theme": "dark",
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflowPx": 0,
+          "interactiveCount": 10,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 14,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "202-lab-future-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "dark",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 11,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 14,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "202-admin-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "dark",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 9,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 15,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "202-doctor-fresh-gateway-consultation-empty-state",
+          "emptyConsultationMessagePresent": true
+        }
+      ],
+      "contrast": [
+        {
+          "label": "202-gateway-en-dark-1440",
+          "checked": 33,
+          "minNormal": 6.98,
+          "minLarge": 12.44,
+          "failures": []
+        },
+        {
+          "label": "202-gateway-en-light-1440",
+          "checked": 33,
+          "minNormal": 7.58,
+          "minLarge": 9,
+          "failures": []
+        },
+        {
+          "label": "202-gateway-ar-dark-390",
+          "checked": 33,
+          "minNormal": 6.98,
+          "minLarge": 12.44,
+          "failures": []
+        },
+        {
+          "label": "202-patient-home-en-dark-1440",
+          "checked": 41,
+          "minNormal": 6.98,
+          "minLarge": 16.38,
+          "failures": []
+        },
+        {
+          "label": "202-patient-appointments-en-light-1440",
+          "checked": 28,
+          "minNormal": 7.58,
+          "minLarge": 18.59,
+          "failures": []
+        },
+        {
+          "label": "202-patient-home-ar-dark-390",
+          "checked": 44,
+          "minNormal": 6.98,
+          "minLarge": 16.38,
+          "failures": []
+        },
+        {
+          "label": "202-doctor-schedule-en-dark-1440",
+          "checked": 67,
+          "minNormal": 6.98,
+          "minLarge": 16.38,
+          "failures": []
+        },
+        {
+          "label": "202-pharmacy-en-dark-1440",
+          "checked": 30,
+          "minNormal": 6.98,
+          "minLarge": 16.38,
+          "failures": []
+        },
+        {
+          "label": "202-lab-future-en-dark-1440",
+          "checked": 24,
+          "minNormal": 6.98,
+          "minLarge": 16.38,
+          "failures": []
+        },
+        {
+          "label": "202-admin-en-dark-1440",
+          "checked": 48,
+          "minNormal": 6.98,
+          "minLarge": 16.38,
+          "failures": []
+        },
+        {
+          "label": "202-admin-en-light-1440",
+          "checked": 48,
+          "minNormal": 7.58,
+          "minLarge": 18.59,
+          "failures": []
+        }
+      ],
+      "zoom200Checks": [
+        {
+          "label": "202-gateway-en-dark-1440-text200",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "dark",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 10,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 24,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "202-gateway-en-dark-390-text200",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "dark",
+          "scrollWidth": 390,
+          "clientWidth": 390,
+          "overflowPx": 0,
+          "interactiveCount": 10,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 24,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "202-patient-home-en-dark-1440-text200",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "dark",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 20,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 30,
+          "hasArabicIndicDigits": false
+        }
+      ],
+      "keyboardAndFocus": {
+        "gatewayThemeEscape": {
+          "openBefore": true,
+          "openAfter": false,
+          "focusReturned": true
+        },
+        "systemThemeParity": {
+          "systemResolvedLight": "light",
+          "systemResolvedDark": "dark"
+        }
+      },
+      "externalRequestsCount": 0,
+      "apiRequestsCount": 0,
+      "errors": []
+    },
+    "normal202": {
+      "security": {
+        "rootStatus": 200,
+        "headers": {
+          "xRobotsTag": null,
+          "xContentTypeOptions": null,
+          "referrerPolicy": null,
+          "permissionsPolicy": null,
+          "xFrameOptions": null,
+          "csp": null
+        }
+      },
+      "normalBuildChecks": {
+        "defaultWithoutOptIn": {
+          "entryTextboxes": 2,
+          "hasV2Portal": false,
+          "hasLegacyMyCare": true
+        },
+        "queryOptInV2": {
+          "entryQuerySurvivedRouterPush": false,
+          "directPatientQueryActivatedV2": true
+        },
+        "sessionStorageOptInV2": true,
+        "sessionStorageDenialProbe": {
+          "pageErrorsTriggered": [],
+          "shellMounted": false,
+          "bodyTextLength": 62
+        }
+      },
+      "externalRequestsCount": 0,
+      "apiRequestsCount": 0,
+      "errors": []
+    },
+    "before158": {
+      "security": {
+        "rootStatus": 200,
+        "headers": {
+          "xRobotsTag": "noindex, nofollow, noarchive",
+          "xContentTypeOptions": "nosniff",
+          "referrerPolicy": "no-referrer",
+          "permissionsPolicy": "camera=(), microphone=(), geolocation=()",
+          "xFrameOptions": null,
+          "csp": null
+        }
+      },
+      "metrics": [
+        {
+          "label": "158-entry-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "unknown",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 10,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 14.4,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "158-patient-home-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "unknown",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 27,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 16,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "158-doctor-schedule-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "unknown",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 23,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 13,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "158-pharmacy-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "unknown",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 21,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 14,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "158-lab-future-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "unknown",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 22,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 12,
+          "medianBodyFontPx": 14.4,
+          "hasArabicIndicDigits": false
+        },
+        {
+          "label": "158-admin-en-dark-1440",
+          "dir": "ltr",
+          "lang": "en",
+          "theme": "unknown",
+          "scrollWidth": 1440,
+          "clientWidth": 1440,
+          "overflowPx": 0,
+          "interactiveCount": 32,
+          "under44pxCount": 0,
+          "under44pxSample": [],
+          "minBodyFontPx": 13,
+          "medianBodyFontPx": 14.4,
+          "hasArabicIndicDigits": false
+        }
+      ],
+      "externalRequestsCount": 0,
+      "apiRequestsCount": 0,
+      "errors": []
+    }
+  }
+}

@@ -1,0 +1,276 @@
+{
+  "schemaVersion": "1.0.0",
+  "issue": 210,
+  "parentIssue": 200,
+  "candidateIssue": 202,
+  "branch": "task/g2-f2-visual-acceptance-evidence",
+  "auditedCandidate": {
+    "commit": "750b7b93c0e0142ac0cf7ed07b4f2aa79a9f3e35",
+    "tree": "b193c7da3f0cd89223d2153fe1132d8b9e609c77",
+    "beforeBaselineCommit": "42bfcfbe0f4ba4b3b14408befbc1545f1c9c668a",
+    "beforeBaselineTree": "24bba04069b7097b97e7caa1719fb4b03c1cbae0",
+    "checkpoint4Commit": "2921c52fd8659ee50b8222d48f2cd54a00fee8f2",
+    "canonicalMainAnchor": "407ca42b8b1f71bf9020367d581124b95989df57",
+    "priorCiRunId": 45944466941,
+    "priorCiRunConclusion": "success",
+    "priorCiJobs": "8/8"
+  },
+  "acceptanceMatrix": {
+    "issue210ExecutionStatus": "DONE",
+    "publicVisualAcceptance": "HOLD",
+    "publicVisualHoldReason": "All 12 #158 DP02 SVG and visual-recovery WebP assets are PREVIEW_ATTESTED_REUSED (previewOnly=true, productionReady=false) with AP05 clearance pending; public captures are cropped_partial_region_clip PNGs excluding those assets and cannot prove full-screen DP02 or portrait fidelity.",
+    "candidate202TechnicalAcceptance": "HOLD_FOR_BOUNDED_REMEDIATION",
+    "candidate202ScopeDisposition": "PENDING_OWNER_DECISION (narrow path exception vs rename for scripts/support/ui-v2-verification-browser.mjs + /tmp report portability fix)",
+    "clinicalAndLabGate": "NO_GO (#124 F06/E2 remains NO-GO; Lab remains FUTURE / CONCEPT / NOT LIVE)",
+    "mergeAndProductionDeploymentGate": "NO_GO (not authorized; AP05, normal-build P1 defects, and scope disposition unresolved)"
+  },
+  "scopeReconciliation": {
+    "totalChangedPaths158To202": 40,
+    "addedPaths": 32,
+    "modifiedPaths": 8,
+    "deletedPaths": 0,
+    "excludedPathsUntouched": true,
+    "prior202CommitsPreserved": true,
+    "checkpoint5Delta": "2921c52fd8659ee50b8222d48f2cd54a00fee8f2..750b7b93c0e0142ac0cf7ed07b4f2aa79a9f3e35",
+    "pathGroups": [
+      {
+        "group": "apps/web/src/components/v2/{foundation,shell,demo-v2,gateway}/**",
+        "count": 22,
+        "change": "A",
+        "allowlistStatus": "IN_ALLOWLIST"
+      },
+      {
+        "group": "apps/web/src/components/{application.tsx,portal-shell.tsx}",
+        "count": 2,
+        "change": "M",
+        "allowlistStatus": "IN_ALLOWLIST",
+        "notes": "Checkpoint 5 added v2OptIn state/effect in portal-shell.tsx with P1/P2 defects"
+      },
+      {
+        "group": "apps/web/app/v2-foundation/[...slug]/route.ts, [[...path]]/page.tsx, next.config.ts, .vercelignore",
+        "count": 4,
+        "change": "2A,2M",
+        "allowlistStatus": "IN_ALLOWLIST"
+      },
+      {
+        "group": "docs/SAFE_DEMO_PREVIEW_DEPLOYMENT.md",
+        "count": 1,
+        "change": "M",
+        "allowlistStatus": "IN_ALLOWLIST"
+      },
+      {
+        "group": "tests/ui-v2-{contrast,demo-v2-integration,foundation-integrity,functional,premium-gateway,preview-hardening,shell-integration}.test.mjs",
+        "count": 7,
+        "change": "A",
+        "allowlistStatus": "IN_ALLOWLIST"
+      },
+      {
+        "group": "tests/ui-v2-{combined-integration,read-surfaces}.test.mjs",
+        "count": 2,
+        "change": "M",
+        "allowlistStatus": "IN_ALLOWLIST",
+        "notes": "Updated exact SHA pins and useState/useEffect mock bindings; read-surfaces L1-224 preserved"
+      },
+      {
+        "group": "scripts/test-ui-browser.mjs",
+        "count": 1,
+        "change": "M",
+        "allowlistStatus": "PATH_IN_ALLOWLIST_CONTENT_COUPLED",
+        "notes": "Checkpoint 5 chains ui-v2-verification-browser.mjs --mode=normal --report=/tmp/eh-v2-ci-browser-report.json"
+      },
+      {
+        "group": "scripts/support/ui-v2-verification-browser.mjs",
+        "count": 1,
+        "change": "A",
+        "allowlistStatus": "OUTSIDE_SECTION_B_NAMED_FAMILIES",
+        "notes": "Filename verification-browser is outside ui-v2-{foundation,shell,demo-v2,preview-hardening,premium,functional,contrast}*.mjs; CI 45944466941 does not implicitly approve it."
+      }
+    ],
+    "proposedOwnerDispositions": [
+      {
+        "option": "Option A (Recommended smallest): Explicit Narrow Single-Path Exception + Portability Patch",
+        "summary": "Owner explicitly ratifies scripts/support/ui-v2-verification-browser.mjs as a narrow single-path exception under #202, paired with a small remediation PR fixing P1/P2 findings and replacing /tmp/eh-v2-ci-browser-report.json with os.tmpdir()."
+      },
+      {
+        "option": "Option B: Strict Naming Rename",
+        "summary": "Rename scripts/support/ui-v2-verification-browser.mjs to scripts/support/ui-v2-functional-verification-browser.mjs, update scripts/test-ui-browser.mjs, and refresh visualBrowserRunnerSHA256 in tests/ui-v2-combined-integration.test.mjs."
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "F-01",
+      "severity": "P1",
+      "domain": "security_reliability_checkpoint5",
+      "title": "Uncaught sessionStorage SecurityError in PortalShell crashes portal into Next.js ErrorPage",
+      "sourceRefs": [
+        "apps/web/src/components/portal-shell.tsx:64-73",
+        "apps/web/app/error.tsx:5-18"
+      ],
+      "evidenceRefs": [
+        "docs/visual-evidence/202/g2-f2-750b7b93/manifest.json (normal202.sessionStorageDenialProbe: shellMounted=false, bodyTextLength=62)"
+      ],
+      "proposedFix": "Wrap sessionStorage access inside try { ... } catch { /* ignore storage denial */ } matching live-session.tsx."
+    },
+    {
+      "id": "F-02",
+      "severity": "P1",
+      "domain": "functional_routing_checkpoint5",
+      "title": "?v2=1 entry query opt-in does not survive Login router.push('/patient') or subroute navigation",
+      "sourceRefs": [
+        "apps/web/src/components/portal-shell.tsx:66-72",
+        "apps/web/src/components/application.tsx:124-133",
+        "apps/web/src/components/application.tsx:180-200"
+      ],
+      "evidenceRefs": [
+        "docs/visual-evidence/202/g2-f2-750b7b93/manifest.json (normal202.queryOptInV2: entryQuerySurvivedRouterPush=false, directPatientQueryActivatedV2=true)"
+      ],
+      "proposedFix": "Persist ?v2=1 to guarded sessionStorage on entry/PortalShell mount or remove query-param opt-in and document sessionStorage-only activation."
+    },
+    {
+      "id": "F-03",
+      "severity": "P1",
+      "domain": "functional_data_handoff",
+      "title": "DoctorDemoV2 consultation summary writes to Consultation.notes, which createDemoAdapter.record() strips for Patient",
+      "sourceRefs": [
+        "apps/web/src/components/v2/demo-v2/DoctorDemoV2.tsx:181-201",
+        "apps/web/src/components/v2/demo-v2/DoctorDemoV2.tsx:397-404",
+        "apps/web/src/lib/mock/adapter.ts:333-336",
+        "apps/web/src/components/v2/demo-v2/PatientDemoV2.tsx:645,853-861"
+      ],
+      "evidenceRefs": [
+        "docs/visual-evidence/202/g2-f2-750b7b93/captures/14-after-202-doctor-consultation-en-dark-1440.png"
+      ],
+      "proposedFix": "Map released patient summary to a shareable Consultation field (e.g. instructions/followUp/diagnosis) or add an explicit shareable summary input distinct from private notes."
+    },
+    {
+      "id": "F-04",
+      "severity": "P2",
+      "domain": "test_integrity_and_portability",
+      "title": "ui-v2-read-surfaces.test.mjs silently bypasses DemoV2Router handoff; test-ui-browser.mjs hardcodes /tmp report path",
+      "sourceRefs": [
+        "tests/ui-v2-read-surfaces.test.mjs:228-233",
+        "scripts/test-ui-browser.mjs:459"
+      ],
+      "evidenceRefs": [
+        "Static AST evaluation omits DemoV2Router binding so typeof DemoV2Router === 'function' evaluates false; /tmp/eh-v2-ci-browser-report.json is POSIX-specific."
+      ],
+      "proposedFix": "Bind DemoV2Router or add explicit V2 handoff assertion in read-surfaces/shell-integration, and use os.tmpdir() in test-ui-browser.mjs."
+    },
+    {
+      "id": "F-05",
+      "severity": "P2",
+      "domain": "i18n_pluralization_and_status",
+      "title": "Fixed plural labels for count=1 and unlocalized appointment/availability status pills in Arabic",
+      "sourceRefs": [
+        "apps/web/src/components/v2/demo-v2/PatientDemoV2.tsx:567,777-788,809",
+        "apps/web/src/components/v2/demo-v2/DoctorDemoV2.tsx:313,537"
+      ],
+      "evidenceRefs": [
+        "docs/visual-evidence/202/g2-f2-750b7b93/captures/06-after-202-patient-home-en-dark-1440.png",
+        "docs/visual-evidence/202/g2-f2-750b7b93/captures/07-after-202-patient-home-ar-dark-390.png"
+      ],
+      "proposedFix": "Use count-aware singular/plural EN/AR copy and pass Patient/Doctor statuses through localized label mapping."
+    },
+    {
+      "id": "F-06",
+      "severity": "P2",
+      "domain": "i18n_stale_toast",
+      "title": "Active toast message stays in prior locale after switching EN <-> AR",
+      "sourceRefs": [
+        "apps/web/src/components/v2/demo-v2/PharmacyDemoV2.tsx:88-92",
+        "apps/web/src/components/v2/shell/V2DemoShell.tsx:228-235"
+      ],
+      "evidenceRefs": [
+        "docs/visual-evidence/202/g2-f2-750b7b93/captures/17-after-202-pharmacy-ar-dark-390.png"
+      ],
+      "proposedFix": "Clear toast on locale change or store locale-independent message keys."
+    },
+    {
+      "id": "F-07",
+      "severity": "P2",
+      "domain": "routing_subroute_fallback",
+      "title": "Unknown /patient/doctors/:id falls back to first provider's slots; /doctor/consultation/:id ignores :id; unmatched subroutes fall through to Home",
+      "sourceRefs": [
+        "apps/web/src/components/v2/demo-v2/PatientDemoV2.tsx:104-113,138-141,240-273,740",
+        "apps/web/src/components/v2/demo-v2/DoctorDemoV2.tsx:339,461"
+      ],
+      "evidenceRefs": [
+        "Source audit of PatientDemoV2 and DoctorDemoV2 routing conditions."
+      ],
+      "proposedFix": "Suppress selectedProvider fallback when doctorRouteId does not match any provider; initialize selectedId from /doctor/consultation/:id."
+    },
+    {
+      "id": "F-08",
+      "severity": "P2",
+      "domain": "accessibility_semantics",
+      "title": "Heading level skips (h1 -> h3) on card lists and missing ArrowLeft/ArrowRight navigation on Lab tablist",
+      "sourceRefs": [
+        "apps/web/src/components/v2/demo-v2/PatientDemoV2.tsx:358,771,776,784,792",
+        "apps/web/src/components/v2/demo-v2/DoctorDemoV2.tsx:528,554",
+        "apps/web/src/components/v2/demo-v2/PharmacyDemoV2.tsx:167",
+        "apps/web/src/components/v2/demo-v2/LaboratoryDemoV2.tsx:51-85"
+      ],
+      "evidenceRefs": [
+        "Source audit of JSX heading hierarchy and ARIA tablist controls."
+      ],
+      "proposedFix": "Add section headings (h2) or normalize card headings, and add Left/Right arrow key roving focus on LaboratoryDemoV2 tabs."
+    },
+    {
+      "id": "F-09",
+      "severity": "P2",
+      "domain": "visual_contrast_and_fixture_sync",
+      "title": "Gateway .heroSvg lacks dark fallback background if care-encounter.webp fails in Light mode; Doctor schedule shows booking-time patientName after Settings edit; fresh Gateway->Doctor Consultation has empty appointments",
+      "sourceRefs": [
+        "apps/web/src/components/v2/gateway/gateway.module.css:186-206",
+        "apps/web/src/lib/mock/adapter.ts:314-322",
+        "apps/web/src/lib/mock/fixtures.ts:56-94"
+      ],
+      "evidenceRefs": [
+        "docs/visual-evidence/202/g2-f2-750b7b93/captures/12-after-202-doctor-schedule-en-dark-1440.png",
+        "docs/visual-evidence/202/g2-f2-750b7b93/manifest.json (202-doctor-fresh-gateway-consultation-empty-state: emptyConsultationMessagePresent=true)"
+      ],
+      "proposedFix": "Add dark fallback background-color on .heroVisualPane; optionally document fixture separation vs dynamic profile."
+    }
+  ],
+  "independentReviewers": [
+    {
+      "reviewer": "Reviewer A — Visual, UX, Accessibility & Functional",
+      "conversationId": "c3f421dd-23ae-4133-9739-b5b30deccef1",
+      "independenceDisclosure": "Distinct read-only research subagent conversation invoked after capture completion with zero write tools, inspecting exact source at 750b7b93, manifest.json, and all 22 original PNG captures directly on the same local device/session.",
+      "visualBytesInspectedCount": 22,
+      "verdict": {
+        "previewDemoOnly": "CONDITIONAL_FAIL (fix P1 F-03 and P2 UX/i18n findings)",
+        "normalConfiguredBuild": "NO_GO (blocked by P1 F-01 and P1 F-02 in portal-shell.tsx)",
+        "publicVisualAcceptance": "HOLD (rights-constrained cropped clips only; AP05 clearance open)"
+      }
+    },
+    {
+      "reviewer": "Reviewer B — Security, Scope Reconciliation, Asset Rights & Test Integrity",
+      "conversationId": "4ce69027-f5d6-4188-b3b1-3cdb6c714231",
+      "independenceDisclosure": "Distinct read-only research subagent conversation invoked after capture completion with zero write tools, inspecting git diff 42bfcfbe..750b7b93, Checkpoint 5 delta 2921c52..750b7b93, test/CI suites, capture.mjs, manifest.json, and sample PNG captures.",
+      "verdict": {
+        "securityAndPreviewIsolation": "PASS_IN_PREVIEW_WITH_CHECKPOINT5_NORMAL_P1 (dual Demo gate, 404 guard, anti-frame headers, zero rewrites, #124 NO-GO preserved; P1 F-01 sessionStorage unguarded access in portal-shell.tsx)",
+        "scopeReconciliation": "REQUIRES_OWNER_DISPOSITION (39/40 paths in allowlist/family; scripts/support/ui-v2-verification-browser.mjs requires explicit narrow exception or rename)",
+        "assetRightsAndPublicSafety": "PASS_FOR_CROPPED_DELIVERABLE (zero private archive bytes, zero previewOnly assets in 22 PNGs, zero secrets/personal paths)",
+        "overallCandidate": "HOLD_FOR_BOUNDED_REMEDIATION_AND_OWNER_DISPOSITION"
+      }
+    }
+  ],
+  "verificationProvenance": {
+    "priorCanonicalCi": {
+      "runId": 45944466941,
+      "headCommit": "750b7b93c0e0142ac0cf7ed07b4f2aa79a9f3e35",
+      "host": "ubuntu-latest (Node v24.22.3, pnpm 10.34.6)",
+      "conclusion": "success (8/8 jobs)",
+      "note": "Reused without rerunning full CI per Issue #210; frontend-check ran 376/376 UI tests and test:ui:browser (--mode=normal); docs-check ran 30/30 CI tests and 1035 doc references."
+    },
+    "localBoundedVerification": {
+      "host": "Windows local device (Node v24.22.3 via pnpm shim, pnpm 10.34.6, chromium-1248, noncanonical OS vs Linux CI)",
+      "v2UnitTests": "10/10 PASS (ui-v2-{foundation-integrity,shell-integration,demo-v2-integration,preview-hardening,premium-gateway,functional,contrast}.test.mjs)",
+      "existingPreviewBrowserScripts": "PASS (ui-v2-verification-browser.mjs --mode=preview, ui-safe-demo-preview-browser.mjs [12 assets 200, 4 untrusted 404, 0 rewrites], test-ui-deployment-browser.mjs)",
+      "existingNormalBrowserScript": "PASS (ui-v2-verification-browser.mjs --mode=normal)",
+      "issue210CaptureCampaign": "PASS on 202-preview (16 clips, 12 metric sets, 11 contrast checks 0 failures minNormal>=6.98 dark / >=7.58 light, 3 zoom-200% checks 0px overflow), 158-before (6 clips, 6 metric sets), and 202-normal (4 targeted opt-in/denial probes surfacing F-01 & F-02)."
+    }
+  }
+}
