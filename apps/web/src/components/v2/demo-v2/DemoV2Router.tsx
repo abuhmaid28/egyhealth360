@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useApp } from "../../context";
 import { useLocale } from "../../../lib/i18n/context";
-import { V2DemoShell } from "../shell";
+import { V2DemoShell } from "../shell/index";
 import { PatientDemoV2 } from "./PatientDemoV2";
 import { DoctorDemoV2 } from "./DoctorDemoV2";
 import { PharmacyDemoV2 } from "./PharmacyDemoV2";
@@ -28,7 +28,7 @@ export function DemoV2Router({
   onDismiss,
 }: {
   path: string;
-  onRoleChange: (role: Role) => Promise<void>;
+  onRoleChange?: (role: Role) => Promise<void>;
   onLogout: () => void;
   toast: string;
   onDismiss: () => void;

@@ -16,7 +16,7 @@ import {
   FoundationIcon,
   FoundationPortalEmblem,
   FoundationPortrait,
-} from "../foundation";
+} from "../foundation/index";
 import { formatDayMonthTile, formatFullDate, formatTimeDisplay, toLatinDigits } from "./format";
 import styles from "./demo-v2.module.css";
 

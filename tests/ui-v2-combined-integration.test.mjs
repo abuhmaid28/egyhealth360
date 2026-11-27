@@ -261,7 +261,7 @@ const qaRecoveryOverlay = {
   "scripts/support/ui-v2-patient-doctor-browser.mjs": "56ef00878d1d0da45a6ae0cea42c761810b19a10"
 };
 const safeDemoPreviewOverlay = {
-  "apps/web/src/components/application.tsx": "eb5814cecead642c2215a93fd499bd19221862fb"
+  "apps/web/src/components/application.tsx": "d07e7feb971b8967f87af75d2ed7d57c66c9079f"
 };
 test("Combined pins and historical P2 overlays are retained, with explicit Visual Recovery overrides", () => {
   assert.equal(pinned.length,44);assert.equal(Object.keys(overlays).length,7);

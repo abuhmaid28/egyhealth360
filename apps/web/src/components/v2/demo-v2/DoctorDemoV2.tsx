@@ -6,7 +6,7 @@ import type { Appointment, Clinic, Consultation, OwnAvailability } from "../../.
 import { safeErrorMessage } from "../../../lib/api/errors";
 import { useLocale } from "../../../lib/i18n/context";
 import { useApp } from "../../context";
-import { FoundationIcon, FoundationPortalEmblem } from "../foundation";
+import { FoundationIcon, FoundationPortalEmblem } from "../foundation/index";
 import { formatDayMonthTile, formatFullDate, formatTimeDisplay } from "./format";
 import styles from "./demo-v2.module.css";
 

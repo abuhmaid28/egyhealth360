@@ -21,6 +21,7 @@ import care from "./patient-my-care.module.css";
 import recovery from "./v2/visual-recovery.module.css";
 import { useDemoTestScenario } from "./v2/demo-test-scenario";
 import { FrontendV2ThemeSwitch, useFrontendV2Theme } from "./v2/frontend-v2-theme";
+import { V2EntryGateway } from "./v2/gateway/V2EntryGateway";
 import { PatientScreen } from "./patient";
 import { PatientMyCare } from "./patient-my-care";
 import {
@@ -285,6 +286,9 @@ function Login({
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
+  if (!liveConfigured) {
+    return <V2EntryGateway enter={enter} />;
+  }
   const ar = locale === "ar";
   return (
     <main className={`${care.root} ${recovery.entry}`} lang={locale} dir={ar ? "rtl" : "ltr"} data-frontend-v2>

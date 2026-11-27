@@ -14,6 +14,7 @@ import care from "./patient-my-care.module.css";
 import styles from "./portal-shell.module.css";
 
 import { FrontendV2ThemeSwitch } from "./v2/frontend-v2-theme";
+import { DemoV2Router } from "./v2/demo-v2/DemoV2Router";
 import v2 from "./v2/patient-doctor-layout.module.css";
 import recovery from "./v2/visual-recovery.module.css";
 
@@ -56,6 +57,17 @@ export function PortalShell({
   const { api, session } = useApp();
   const { locale, t } = useLocale();
   const path = usePathname();
+  if (api.mode === "demo" && session.mode === "demo" && typeof DemoV2Router === "function") {
+    return (
+      <DemoV2Router
+        path={path}
+        onRoleChange={onRoleChange}
+        onLogout={() => void onLogout()}
+        toast={toast}
+        onDismiss={onDismiss}
+      />
+    );
+  }
   const c = myCareCopy[locale];
   const patient = session.role === "PATIENT";
   const myCareV2 = patientMyCareV2 && patient && path === "/patient";

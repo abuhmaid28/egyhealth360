@@ -12,7 +12,7 @@ import {
   useFoundationTheme,
   verifyPublicAssetPath,
   type FoundationIconName,
-} from "../foundation";
+} from "../foundation/index";
 import styles from "./gateway.module.css";
 
 interface RoleTile {

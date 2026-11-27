@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useLocale } from "../../../lib/i18n/context";
-import { FoundationIcon, FoundationPortalEmblem } from "../foundation";
+import { FoundationIcon, FoundationPortalEmblem } from "../foundation/index";
 import styles from "./demo-v2.module.css";
 
 type ConceptTab = "orders" | "specimens" | "reports";

@@ -5,7 +5,7 @@ import type { Fulfillment } from "../../../lib/api/contracts";
 import { safeErrorMessage } from "../../../lib/api/errors";
 import { useLocale } from "../../../lib/i18n/context";
 import { useApp } from "../../context";
-import { FoundationIcon, FoundationPortalEmblem } from "../foundation";
+import { FoundationIcon, FoundationPortalEmblem } from "../foundation/index";
 import { useStaffCopy } from "../staff-copy";
 import styles from "./demo-v2.module.css";
 

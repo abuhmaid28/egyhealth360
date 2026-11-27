@@ -13,7 +13,7 @@ import {
   FoundationScope,
   useFoundationTheme,
   type FoundationIconName,
-} from "../foundation";
+} from "../foundation/index";
 import styles from "./shell.module.css";
 
 interface NavItem {
@@ -72,7 +72,7 @@ export function V2DemoShell({
   onDismiss,
 }: {
   children: ReactNode;
-  onRoleChange: (role: Role) => Promise<void>;
+  onRoleChange?: (role: Role) => Promise<void>;
   onLogout: () => void;
   toast: string;
   onDismiss: () => void;
@@ -154,12 +154,12 @@ export function V2DemoShell({
                 </div>
               </details>
 
-              {api.mode === "demo" && session.mode === "demo" ? (
+              {api.mode === "demo" && session.mode === "demo" && onRoleChange ? (
                 <label className="sr-only" htmlFor="v2-workspace-select">
                   {ar ? "تبديل مساحة الدور التجريبية" : "Switch demo workspace"}
                 </label>
               ) : null}
-              {api.mode === "demo" && session.mode === "demo" ? (
+              {api.mode === "demo" && session.mode === "demo" && onRoleChange ? (
                 <select
                   id="v2-workspace-select"
                   data-workspace-switch

@@ -257,6 +257,6 @@ test("Presentation requires explicit opt-in, exact PATIENT role and exact route;
 });
 
 test("Visual Recovery pins the reviewed shell and leaves the inherited shared CSS prefix byte-exact", () => {
-  assert.equal(sha256(shellSource), "5f23c0091311f7922db604f611f548704255a08d0e9721ffca30c373fb21666c");
+  assert.equal(sha256(shellSource), "4c9a0a5d4f514f238cdbf683b89cd3bdb4669b68cbdf26134453a3608fd8cd3d");
   assert.equal(sha256(read(root + "components/portal-shell.module.css").slice(0,4671)), "a17947877e71c51799d6d28f9faf1784ca7fe968430f876a0c39d24cff3775da");
 });

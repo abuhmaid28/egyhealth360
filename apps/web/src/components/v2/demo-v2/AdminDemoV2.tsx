@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Operations } from "../../../lib/api/contracts";
 import { safeErrorMessage } from "../../../lib/api/errors";
 import { useApp } from "../../context";
-import { FoundationIcon, FoundationPortalEmblem } from "../foundation";
+import { FoundationIcon, FoundationPortalEmblem } from "../foundation/index";
 import { useStaffCopy } from "../staff-copy";
 import styles from "./demo-v2.module.css";
 
