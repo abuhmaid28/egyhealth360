@@ -42,6 +42,10 @@ All tracked documentation Markdown paths are classified below. Research files ar
 
 ## CURRENT AUTHORITATIVE
 
+| Current Patient V2 integration | Responsibility / limits |
+| --- | --- |
+| [Patient MyCare integration receipt](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md) | Issue127 explicitly authorized14-path UI candidate; R0/R1 source ledger, actual local QA, evidence and rollback boundary. Final DraftPR/exact-head CI/reviewer verdicts in Issue127 delivery comment. No Live/release/FinalDS acceptance; preserve open gates and historical reference PRs. |
+
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |
 | [STAGING_UI_POLISH.md](STAGING_UI_POLISH.md) | Current bounded fix inventory, deployed candidate attribution, validation, time-display review corrections, remaining issues and source alignment recommendation; original captures retain their point-in-time provenance. No release/merge approval or Final V2 design acceptance. |
