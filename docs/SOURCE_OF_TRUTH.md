@@ -42,6 +42,10 @@ All tracked documentation Markdown paths are classified below. Research files ar
 
 ## CURRENT AUTHORITATIVE
 
+| Bounded F03 implementation reference | Responsibility / limits |
+| --- | --- |
+| [frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md](frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md) | Issue #129's eight-file LiveCreateReview critical-Arabic-copy candidate, synthetic proof, original-outcome/key preservation, rollback and residual gates. Final exact-head CI and disposition belong to the Draft PR / Issue #129 receipt; no global F03 closure, F04, F06/E2 or release acceptance. |
+
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |
 | [STAGING_UI_POLISH.md](STAGING_UI_POLISH.md) | Current bounded fix inventory, deployed candidate attribution, validation, time-display review corrections, remaining issues and source alignment recommendation; original captures retain their point-in-time provenance. No release/merge approval or Final V2 design acceptance. |

@@ -6,16 +6,18 @@ import {
   OpeningScheduleStatus,
 } from "./consultation-opening";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Availability, Provider } from "../lib/api/contracts";
 import {
   bookingEligibility,
   correctionReasonValid,
   type LiveBooking,
+  type LiveBookingApi,
   type Observation,
 } from "../lib/api/live-booking";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
+import { bookingCopySafety, criticalCopyState } from "../lib/i18n/critical-copy";
 import { useApp } from "./context";
 import {
   Badge,
@@ -282,6 +284,38 @@ export function LiveBookingList({
     </>
   );
 }
+interface CreateReviewOutcome {
+  slotId: string;
+  provider: Provider;
+  pending: boolean;
+  uncertain: boolean;
+  unrecoverable: boolean;
+  handedOff: boolean;
+  receipt: LiveBooking | null;
+  failure: string;
+  listeners: Set<() => void>;
+}
+// Dialog close/reopen must not forget a submitted outcome. Weak session/adapter keys
+// isolate viewers; no persistent storage, command/key reset, or clinical authority cache.
+const createReviewOutcomes = new WeakMap<LiveBookingApi, WeakMap<object, CreateReviewOutcome>>();
+function createReviewOutcome(live: LiveBookingApi, session: object, slotId: string, provider: Provider): CreateReviewOutcome {
+  let sessions = createReviewOutcomes.get(live);
+  if (!sessions) { sessions = new WeakMap(); createReviewOutcomes.set(live, sessions); }
+  let outcome = sessions.get(session);
+  // The existing adapter has ONE CREATE command slot. Never overwrite an unresolved
+  // original with another availability slot and then promise unchanged recovery.
+  if (!outcome || (outcome.slotId !== slotId && !outcome.pending && !outcome.receipt &&
+    !outcome.uncertain)) {
+    outcome = { slotId, provider, pending: false, uncertain: false, unrecoverable: false,
+      handedOff: false, receipt: null, failure: "", listeners: new Set() };
+    sessions.set(session, outcome);
+  }
+  return outcome;
+}
+function forgetCreateReviewOutcome(live: LiveBookingApi, session: object, slotId: string, outcome: CreateReviewOutcome) {
+  const sessions = createReviewOutcomes.get(live);
+  if (sessions?.get(session) === outcome && outcome.slotId === slotId) sessions.delete(session);
+}
 export function LiveCreateReview({
   provider,
   slot,
@@ -291,12 +325,68 @@ export function LiveCreateReview({
   slot: Availability;
   close: () => void;
 }) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const live = useLiveBookings();
   const router = useRouter();
-  const { notify, changed } = useApp();
-  const [busy, setBusy] = useState(false),
-    [error, setError] = useState("");
+  const { session, notify, changed } = useApp();
+  const scopeRef = useRef<{ live: LiveBookingApi; session: object; slotId: string; active: boolean; outcome: CreateReviewOutcome } | null>(null);
+  if (!scopeRef.current || scopeRef.current.live !== live || scopeRef.current.session !== session || scopeRef.current.slotId !== slot.id) {
+    if (scopeRef.current) scopeRef.current.active = false;
+    scopeRef.current = { live, session, slotId: slot.id, active: true,
+      outcome: createReviewOutcome(live, session, slot.id, provider) };
+  }
+  const scope = scopeRef.current;
+  const outcome = scope.outcome;
+  const otherTask = outcome.slotId !== slot.id;
+  // A retained receipt always describes the original target, never a newly selected slot.
+  const displayProvider = outcome.receipt ? outcome.provider : provider;
+  const displayTime = outcome.receipt ?? slot;
+  useEffect(() => {
+    scope.active = true;
+    return () => { scope.active = false; };
+  }, [scope]);
+  const [, renderOutcome] = useState(0);
+  useEffect(() => {
+    const update = () => renderOutcome((v) => v + 1);
+    outcome.listeners.add(update);
+    return () => { outcome.listeners.delete(update); };
+  }, [outcome]);
+  const publishOutcome = () => outcome.listeners.forEach((update) => update());
+  const busy = outcome.pending && !otherTask;
+  const error = outcome.failure;
+  const confirmed = !!outcome.receipt;
+  const checkCopy = () => {
+    // Probe only authored aliases/zone labels, including a newly received actual receipt.
+    const selectedKeys: string[] = [];
+    const probe = (key: string) => { selectedKeys.push(key); return key; };
+    const person = outcome.receipt ? outcome.provider : provider;
+    const target = outcome.receipt ?? slot;
+    presentationName(person.displayName, probe);
+    presentationName(person.clinics.find((c) => c.id === target.clinicId)?.displayName ?? "", probe);
+    timeZoneLabel(target.timeZone, probe);
+    return criticalCopyState(locale, "bookingCreate", [...selectedKeys, ...(outcome.failure ? [outcome.failure] : [])]);
+  };
+  const copy = checkCopy();
+  const currentCopy = useRef(checkCopy);
+  currentCopy.current = checkCopy;
+  const originalPending = otherTask && !confirmed;
+  const blocked = !copy.ready || originalPending || outcome.unrecoverable;
+  const blockedMessage = outcome.unrecoverable
+    ? locale === "ar" ? bookingCopySafety.unrecoverable : bookingCopySafety.unrecoverableEnglish
+    : originalPending
+    ? locale === "ar" ? bookingCopySafety.uncertain : bookingCopySafety.uncertainEnglish
+    : bookingCopySafety.unavailable;
+  const uncertain = outcome.uncertain && !confirmed;
+  const sessionRecovery = error === "Your session has ended. Please sign in again." ||
+    error === "Request verification failed. Refresh your session before retrying.";
+  const handOff = (booking: LiveBooking) => {
+    outcome.handedOff = true;
+    changed();
+    notify("Your live booking is confirmed.");
+    router.push(`/patient/appointments/${booking.id}`);
+    // A later independently chosen booking is not blocked by historical task state.
+    forgetCreateReviewOutcome(live, session, outcome.slotId, outcome);
+  };
   return (
     <Modal
       className="modal"
@@ -314,57 +404,74 @@ export function LiveCreateReview({
         <button
           className="icon-button"
           disabled={busy}
-          aria-label={t("Close booking")}
+          aria-label={blocked && locale === "ar" ? bookingCopySafety.close : t("Close booking")}
           onClick={close}
         >
           <Icon name="close" />
         </button>
       </div>
-      <p className="eyebrow">{t("Live booking")}</p>
-      <h2 id="live-booking-title">{t("Confirm your booking")}</h2>
-      <p className="muted" id="live-booking-description">
-        {t(
+      {!blocked && <p className="eyebrow">{t("Live booking")}</p>}
+      <h2 id="live-booking-title">{!copy.ready ? bookingCopySafety.unavailable : confirmed ? t("Booking details") : t("Confirm your booking")}</h2>
+      <p className="muted" id="live-booking-description" role={blocked ? "status" : undefined}
+        aria-live={blocked ? "polite" : undefined} aria-atomic={blocked ? "true" : undefined}>
+        {blocked ? blockedMessage : t(
           "Check your doctor, clinic and appointment time before confirming your booking.",
         )}
       </p>
-      <ol className="workflow-steps" aria-label={t("Booking progress")}>
+      {!blocked && copy.optionalReady && <ol className="workflow-steps" aria-label={t("Booking progress")}>
         <li>{t("Choose a time")}</li>
         <li aria-current="step">{t("Review details")}</li>
         <li>{t("Booking confirmation")}</li>
-      </ol>
-      <div className="confirmation-details">
+      </ol>}
+      {!blocked && <div className="confirmation-details">
         <Detail icon="user" title={t("Your doctor")}>
-          <bdi>{presentationName(provider.displayName, t)}</bdi>
+          <bdi>{presentationName(displayProvider.displayName, t)}</bdi>
         </Detail>
         <Detail icon="pin" title={t("Clinic")}>
           <bdi>
-            {presentationName(provider.clinics.find((c) => c.id === slot.clinicId)
+            {presentationName(displayProvider.clinics.find((c) => c.id === displayTime.clinicId)
               ?.displayName ?? t("Clinic unavailable"), t)}
           </bdi>
         </Detail>
-        <BookingTime booking={slot} />
+        <BookingTime booking={displayTime} />
+      </div>}
+      {!blocked && <BookingBoundary />}
+      <div role="status" aria-live="polite" aria-atomic="true">
+        {confirmed && <p>{locale === "ar" ? bookingCopySafety.confirmed : "Your live booking is confirmed."}</p>}
       </div>
-      <BookingBoundary />
-      {error && <BookingError message={error} />}
+      {blocked && uncertain && !otherTask && <p role="alert">{locale === "ar" ? bookingCopySafety.uncertain : bookingCopySafety.uncertainEnglish}</p>}
+      {blocked && sessionRecovery && <button type="button" className="button secondary" disabled={busy}
+        onClick={() => window.location.reload()}>{locale === "ar" ? bookingCopySafety.refreshSession : t("Refresh session")}</button>}
+      {!blocked && error && <BookingError message={error} />}
       <button
         className="button primary full"
-        disabled={busy}
+        disabled={busy || blocked || outcome.handedOff}
+        aria-describedby={blocked ? "live-booking-description" : undefined}
         onClick={async () => {
-          setBusy(true);
-          setError("");
+          if (!scope.active || scopeRef.current !== scope || originalPending || outcome.unrecoverable || outcome.pending || outcome.handedOff || !currentCopy.current().ready) return;
+          if (outcome.receipt) { handOff(outcome.receipt); publishOutcome(); return; }
+          outcome.pending = true;
+          outcome.failure = "";
+          publishOutcome();
           try {
             const booking = await live.create(slot.id);
-            changed();
-            notify("Your live booking is confirmed.");
-            router.push(`/patient/appointments/${booking.id}`);
+            // A language change cannot undo a real receipt. Keep it without unsafe navigation/toast.
+            outcome.receipt = booking;
+            outcome.uncertain = false;
+            if (!scope.active || scopeRef.current !== scope) return;
+            if (!currentCopy.current().ready) return;
+            handOff(booking);
           } catch (e) {
-            setError(safeErrorMessage(e));
+            outcome.failure = safeErrorMessage(e);
+            if (outcome.failure === criticalCopyTasksBookingUncertain) outcome.uncertain = true;
+            if (outcome.uncertain && outcome.failure === "Your session has ended. Please sign in again.") outcome.unrecoverable = true;
           } finally {
-            setBusy(false);
+            outcome.pending = false;
+            publishOutcome();
           }
         }}
       >
-        {busy
+        {!copy.ready ? bookingCopySafety.unavailable : confirmed ? t("View booking") : busy
           ? t("Confirming…")
           : error
             ? t("Retry unchanged booking")
@@ -372,11 +479,12 @@ export function LiveCreateReview({
         <Icon name="check" size={16} />
       </button>
       <button className="button subtle full" disabled={busy} onClick={close}>
-        {t("Go back")}
+        {blocked && locale === "ar" ? bookingCopySafety.back : t("Go back")}
       </button>
     </Modal>
   );
 }
+const criticalCopyTasksBookingUncertain = "The booking service is unavailable. Your request may not have completed. Retry the unchanged command to check its outcome.";
 function BookingError({ message }: { message: string }) {
   const { t } = useLocale();
   return (
