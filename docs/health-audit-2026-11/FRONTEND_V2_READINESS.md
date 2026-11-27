@@ -1,0 +1,48 @@
+# Frontend V2 readiness: equal A/B evaluation, no selection
+
+[Fresh baseline/test evidence](BASELINE_AND_TEST_MATRIX.md), [findings and conditional proposal gate](HEALTH_FINDINGS.md), [review/handoff](INDEPENDENT_REVIEW_AND_HANDOFF.md). This assessment executes the readiness part of Issue #114; it does not implement or choose either architecture. The accepted [#113 comparison plan](https://github.com/abuhmaid28/egyhealth360/blob/9ba6ea54a0ca2facd75bc962b953d62a2df75449/docs/design-system-v2/architecture-readiness/HEALTH_AND_FRONTEND_ARCHITECTURE_REVIEW_PLAN.md) remains the planning reference.
+
+## Measured current seams
+
+At exact base5355ae5, `apps/web` has **26 TSX files,23 client directives**. [Application:17–28,43–243](https://github.com/abuhmaid28/egyhealth360/blob/5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3/apps/web/src/components/application.tsx#L17) eagerly imports role screens and dispatches path/role/mode/session. App Router has one optional catch-all plus not-found, not five separately deployed frontends. The [layout](https://github.com/abuhmaid28/egyhealth360/blob/5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3/apps/web/app/layout.tsx#L12) wraps LocaleProvider then LiveSessionProvider. App-local [ui.tsx](https://github.com/abuhmaid28/egyhealth360/blob/5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3/apps/web/src/components/ui.tsx#L17) contains Modal/Icon/Logo/Badge/Avatar/Card/Heading/Resource/SessionRecovery/Field, mixing neutral primitives with translation/resource/session recovery concerns.
+
+`rg` finds **zero `@egyhealth/ui` consumer imports** in app/package source; web has no package dependency. [packages/ui/src/index.ts:1](https://github.com/abuhmaid28/egyhealth360/blob/5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3/packages/ui/src/index.ts#L1) is `export {};`. Five role screens do not establish five package consumers. Large `documentation.tsx`/`patient.tsx` modules indicate coupling, not a measured speed or correctness failure.
+
+Fresh successful build output: dynamic `/[[...path]]`, static not-found. One build's `.next/static` contains **17 JS files,974090 raw bytes,284908 bytes summed after individual gzip**. These are all static chunks, **not** route-transfer, first-load-JS, real-user performance or A/B measurements. No extraction saving is established. Build, lint, workspace typecheck and336 unit tests pass. Database/browser/runtime evidence and its limitations are in the baseline; docs CI cannot replace them.
+
+Global CSS owns light navy/teal Inter/Noto; scoped My Care CSS owns Manrope/Plex and different local tokens (`globals.css:15–33`, `patient-my-care.module.css:1–65`). This is mixed V1 ownership, not integration of owner-selected Violet × Apricot/Inter/Plex. Source-exact logo/fonts from pinned references need an explicit later import allowlist and notices; do not copy historical galleries wholesale.
+
+## Option matrix — same acceptance bar
+
+| Criterion / actual evidence | A: incremental evolution inside `apps/web` | B: extract shared UI into `packages/ui` | Required fair comparison evidence |
+| --- | --- | --- | --- |
+| Existing consumers/boundaries | Reuses real app-local primitives, providers and adapters; must separate neutral presentation from clinical/resource state. | Starts from empty export/no consumer; must establish genuine consumer need and neutral package API. | Exact import graph, ownership map and same Patient/Doctor task slice; no assumed reuse score. |
+| Routes, deep links, session | Preserves current catch-all and role dispatch but existing coupling must be evaluated. | Package must not own routes, role decisions, authorization, API calls, sessions, Demo storage or clinical operation keys. | Deep-link/reload/Back/unsaved/expiry/account-switch/no-auto-retry behavior under identical fixtures. |
+| SSR/client and first paint | Existing23/26 client-module baseline and effect-based locale need explicit boundaries. | New exports must state server/client compatibility; wrapping everything in client code can worsen baseline. | Same initial HTML/locale/T1/FOUC traces, hydration errors, slow/storage-denied behavior; do not compare a static gallery with runtime. |
+| CSS, typography, tokens/assets | Can scope tokens and migrate allowlisted screens locally; risk old/global leakage. | Must define CSS import order, semantic-token ownership, fonts and source-exact assets without bundled duplication. | Computed fonts/colors, dark/light/forced colors, AR/EN overflow/zoom, source asset hashes and rights/notices. No candidate token promoted to final. |
+| Accessibility/content | Existing dialog focus, status/recovery and literal-key tests are useful baselines; F03/F04 remain. | Explicit semantic DOM and focus contracts across consumers; package boundary does not supply accessibility automatically. | Identical tasks, keyboard/dialog return/status, critical Arabic missing-copy behavior, contrast/axe plus real AT/platform gates. |
+| Build/bundle/dependencies | Existing pinned full build and chunks measured; no new package publishing/build contract needed for baseline. | Needs exports/type/build/tree-shaking/dependency/CSS contracts and a real app consumer; could add rather than reduce bytes. | Same source/toolchain/fixtures/cache conditions; route JS/transfers, navigation and CI wall-time repeated only after separate prototype authorization. |
+| Cost/risk/free budget | Smaller initial ownership change is plausible, not a measured win; screen and state coupling remains. | More boundary/tooling work is evident; no claimed long-term saving without consumers. | Inventory changed files/maintainers/test lanes and free CI budget; no services, paid tooling or implementation under this issue. |
+| Rollback | Revert a bounded later app slice without data/schema changes. | Must revert both new package API and app consumer atomically; avoid irreversible workspace-wide switch. | Known previous app candidate, source/asset allowlist, reversible commits and same untouched APIs/contracts. No deployment or rollback executed now. |
+
+## Clinical/session constraints apply equally
+
+The current ACTIVE unended assignment is the only clinician grant; booking, membership, directory publication, authorship and ADMIN role confer none. Current session/source/privacy must be rechecked on replay. Private signing, summary release, follow-up release and consultation close remain separate. Unknown input is not FALSE/TRUE_GAP or an invented clinical result. Exact Pharmacy route/org/member/item authorization, acceptance versus dispensing, reduced history and terminal reversal semantics stay server-owned. Lab remains FUTURE; Admin cannot acquire charts or unsupported management operations through a UI abstraction.
+
+Live transport is same-origin/no-store with HttpOnly session handling and memory-only command state; expiry clears scope. Explicit Demo storage cannot become Live recovery/fallback. Neither A nor B may put clinical/session data into theme preferences or generic UI state. Keep source-exact bilingual identities and explicit Latin digits/clinical free text semantics.
+
+## Accepted design direction and open gates
+
+Retain the seven exact pinned references in the baseline. **T1 is selected behavior direction only:** System default; in-memory session System/Light/Dark override; reset at logout/account switch/session end/new session/reload. No runtime theme implementation, persistence choice or cookie/API is approved here. Define readable initial paint before JS and failure behavior in a later proposal.
+
+CD07 future V2 **patient appointment overview/details only** use localized12h with explicit period/endpoints. Professional/consequential/clinical/audit timestamps remain24h, actual IANA event zone, date-specific offset/DST and seconds/subseconds when relevant. Repeated hours need disambiguation; cross-midnight retains both dates. Storage/eligibility/parsers are unchanged. #113 reconciliation is accepted but unmerged; current runtime remains24h. Do not amend canonical docs in this audit.
+
+AP03 real devices/PWA/actual supported browsers/native400%/AT/physical print and five Type3 warnings remain OPEN. AP05 original creator/rights/derivative/trademark evidence remains OPEN. Pharmacy hosted Live UI, Lab backend/results and Admin public management gaps remain separate capability gates. None is closed by preferred screenshots, axe or a package decision.
+
+## Safe future sequence — proposal first
+
+1. **Owner accepts audit findings/limitations** and dispositions F01–F06/U01–U04; any demonstrated future P0/P1 requires a separately approved bounded Stage1.5 proposal.
+2. **Owner authorizes documentation-only architecture comparison** with current baseline, exact already-implemented Patient/Doctor slice, accepted visual/copy/asset allowlist, open-gate list and free-budget ceiling. Evaluate A against current app-local seams first as a baseline, then B with the same acceptance criteria; this evaluation order selects neither option.
+3. Produce a boundary/ownership proposal with measured evidence requirements, tradeoffs, source/hosted alignment and rollback. Owner separately chooses an architecture or requests more evidence. No provisional recommendation becomes final by default.
+4. Only after a separate prototype/integration authorization, measure both permitted candidates equally. Preserve API/DB/security/clinical contracts and retained evidence. Require exact-head selected CI and independent clinical/privacy/UX review before owner decides any implementation slice.
+5. A later release additionally needs capability-specific hosted parity, operational/rollback/free-budget proof and applicable AP03/AP05 disposition. No release, architecture choice or final Design System approval is granted by this report.
