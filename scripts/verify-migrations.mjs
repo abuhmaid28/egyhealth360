@@ -27,7 +27,7 @@ try {
   prisma('deploy');
   prisma('status');
   const before = (await connection.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows;
-  assert.deepEqual(before.map(row => row.migration_name), ['20261012200810_eh005_identity_core_foundation', '20261013014000_eh006_auth_sessions', '20261013235221_eh009_clinical_definition_foundation', '20261016000000_eh010_care_plan_lifecycle', '20261017000000_eh011_bp_provenance', '20261018000000_eh012_followup_encounters', '20261019000000_eh013_record_coverage_windows', '20261020000000_eh015_observed_clinical_applicability', '20261021000000_bp_correction_invalidation', '20261022000000_eh014_initial_care_action', '20261023000000_v3_i1_staff_roles', '20261023000100_v3_i1_organizations', '20261024000000_v3_i1_directory','20261025190000_v3_i1_relationships','20261027210000_v3_i2_availability','20261028090000_v3_i2_bookings','20261029090000_v3_i2_consultation_opening','20261030090000_v3_i2_consultation_documentation','20261030120000_v3_i2_follow_up_intent','20261031140000_v3_i2_consultation_close','20261101150000_v3_i3_prescription_source','20261101170000_v3_i3_pharmacy_fulfillment']);
+  assert.deepEqual(before.map(row => row.migration_name), ['20261012200810_eh005_identity_core_foundation', '20261013014000_eh006_auth_sessions', '20261013235221_eh009_clinical_definition_foundation', '20261016000000_eh010_care_plan_lifecycle', '20261017000000_eh011_bp_provenance', '20261018000000_eh012_followup_encounters', '20261019000000_eh013_record_coverage_windows', '20261020000000_eh015_observed_clinical_applicability', '20261021000000_bp_correction_invalidation', '20261022000000_eh014_initial_care_action', '20261023000000_v3_i1_staff_roles', '20261023000100_v3_i1_organizations', '20261024000000_v3_i1_directory','20261025190000_v3_i1_relationships','20261027210000_v3_i2_availability','20261028090000_v3_i2_bookings','20261029090000_v3_i2_consultation_opening','20261030090000_v3_i2_consultation_documentation','20261030120000_v3_i2_follow_up_intent','20261031140000_v3_i2_consultation_close','20261101150000_v3_i3_prescription_source','20261101170000_v3_i3_pharmacy_fulfillment', '20261123000000_cjp_expand_dark']);
   for (const row of before) assert.equal(row.checksum, createHash('sha256').update(await readFile(`packages/db/prisma/migrations/${row.migration_name}/migration.sql`)).digest('hex'));
   assert.equal(before[0].checksum, 'd8396ed97e82550866a44055f308fb039ed29d6c8cdcdd74d95da060f441749a');
   assert.equal(before[1].checksum, '2fb1704ab28b698bfcf6995f6120cb1b1f0138ab18fcf7db562517f47d53b79b');
@@ -38,12 +38,23 @@ try {
   assert.equal(before[6].checksum, 'f59b690059bcb2cd99a9b67dc55c2f84758c495c90b218f52c1c75f54f770d1b');
   assert.equal(before[7].checksum, '49b5afca8d394e7f501a111409eb39dcba65166f8ef22f39a954028de8f9ea69');
   assert.ok(before.every(row => row.finished_at && row.rolled_back_at === null));
+  assert.equal(before.at(-1).checksum, 'ccbb29cbc564495d827cc3018e169d97e6cbe482511c92c31c64607db6c8536e');
+  const darkTables = ['care_journey_pairs', 'care_journeys', 'care_journey_bookings',
+    'care_journey_events', 'care_journey_clinic_admissions'];
+  async function assertDark() {
+    for (const name of [...darkTables, 'clinician_patient_assignments']) {
+      assert.equal((await connection.query(`SELECT EXISTS (SELECT FROM public.${name}) AS populated`))
+        .rows[0].populated, false, `Fresh baseline unexpectedly contains rows in ${name}`);
+    }
+  }
+  await assertDark();
   await connection.query('BEGIN');
   const sentinel = (await connection.query(`INSERT INTO users(email, password_hash, role)
     VALUES ('migration-sentinel@example.invalid', 'synthetic-test-hash', 'ADMIN') RETURNING *`)).rows[0];
   prisma('deploy');
   prisma('status');
   assert.deepEqual((await connection.query('SELECT * FROM _prisma_migrations ORDER BY migration_name')).rows, before);
+  await assertDark();
   assert.deepEqual((await connection.query('SELECT * FROM users WHERE id = $1', [sentinel.id])).rows[0], sentinel);
   await connection.query('ROLLBACK');
   console.log('Fresh migration and second deploy verified; sentinel rolled back');
