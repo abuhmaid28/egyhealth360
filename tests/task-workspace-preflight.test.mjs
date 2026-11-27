@@ -588,3 +588,48 @@ test('preserves full path for unstaged tracked modifications, checks pushurl, ss
     rmSync(tmpRoot, { recursive: true, force: true });
   }
 });
+
+test('gitRoot overlap detection and antigravityLocal concurrency receipt', () => {
+  const subdirOverlap = evaluatePreflight({
+    input: makeBaseInput({ peerWorkspaces: ['c:/work/egyhealth360-g2-d1'] }),
+    github: makeGitHub(),
+    local: makeLocal({
+      workspacePath: 'c:/work/egyhealth360-g2-d1/apps/web',
+      gitRoot: 'c:/work/egyhealth360-g2-d1',
+    }),
+  });
+  assert.equal(subdirOverlap.verdict, VERDICT.BLOCKED);
+  assert.ok(subdirOverlap.reasonCodes.includes('WORKSPACE_PATH_OVERLAP'));
+
+  const gitRootOverlap = evaluatePreflight({
+    input: makeBaseInput({ peerWorkspaces: ['c:/work/repo-root'] }),
+    github: makeGitHub(),
+    local: makeLocal({
+      workspacePath: 'c:/work/symlink-alias',
+      gitRoot: 'c:/work/repo-root',
+    }),
+  });
+  assert.equal(gitRootOverlap.verdict, VERDICT.BLOCKED);
+  assert.ok(gitRootOverlap.reasonCodes.includes('WORKSPACE_PATH_OVERLAP'));
+
+  const report = evaluatePreflight({
+    input: makeBaseInput({ totalExecutors: 4, codexCloud: 1, agRemote: 1, agLocal: 2, codexLocal: 0 }),
+    github: makeGitHub(),
+    local: makeLocal(),
+  });
+  assert.equal(report.concurrency.antigravityLocal, 2);
+  assert.equal(report.sourceCheckOnly, true);
+  assert.equal(report.authorizesEditsOrMergeOrDeploy, false);
+
+  const scpOk = validateRemoteOriginUrl('git@github.com:abuhmaid28/egyhealth360.git');
+  assert.equal(scpOk.valid, true);
+  assert.equal(scpOk.trusted, true);
+  assert.equal(scpOk.hasEmbeddedCredentials, false);
+
+  const scpCred = validateRemoteOriginUrl('git:secret_value@github.com:abuhmaid28/egyhealth360.git');
+  assert.equal(scpCred.valid, false);
+  assert.equal(scpCred.hasEmbeddedCredentials, true);
+  assert.equal(scpCred.reasonCode, 'REMOTE_CREDENTIAL_DETECTED');
+  assert.ok(!scpCred.sanitizedUrl.includes('secret_value'));
+  assert.ok(scpCred.sanitizedUrl.startsWith('<REDACTED>@github.com:'));
+});

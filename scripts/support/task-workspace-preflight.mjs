@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Opt-in, fail-closed GitHub-first workspace freshness & preflight helper (G2-D1 / Issue #204).
+ * Fail-closed GitHub-first workspace freshness & preflight helper (G2-D1 / Issue #204; G1.1 adoption candidate / Issue #205).
  * Uses Node built-ins, Git CLI, and GitHub CLI (`gh`) read-only APIs with zero shell interpolation.
  * A PASS_FOR_SOURCE_CHECK result never authorizes edits, merge, CI dispatch, or deployment.
  */
@@ -55,6 +55,8 @@ export function redactSecrets(input) {
     if (scheme.toLowerCase() === 'ssh://' && userinfo.toLowerCase() === 'git') return full;
     return `${scheme}<REDACTED>@`;
   });
+  // Also redact SCP-style user:secret@host:path credentials while preserving passwordless git@host:path.
+  text = text.replace(/(^|[\s"'(=])([^/\s@:]+:[^/\s@]+)@([A-Za-z0-9.-]+:)/g, '$1<REDACTED>@$3');
   text = text.replace(/\b(gh[pousr]_[A-Za-z0-9_]{8,}|github_pat_[A-Za-z0-9_]{12,})\b/g, '<REDACTED_TOKEN>');
   text = text.replace(/\b(Authorization\s*:\s*(?:Bearer|Basic|Token)\s+)([^\s,;]+)/gi, '$1<REDACTED>');
   text = text.replace(/\b(Bearer|Basic)\s+[A-Za-z0-9._~+/-]{12,}=*/gi, '$1 <REDACTED>');
@@ -161,8 +163,10 @@ export function validateRemoteOriginUrl(rawUrl, expectedRepo = OFFICIAL_REPO) {
     return { valid: false, trusted: false, hasEmbeddedCredentials: false, sanitizedUrl: '', reasonCode: 'MISSING_REMOTE_ORIGIN' };
   }
   const urlCredMatch = /^([a-z][a-z0-9+.-]*:\/\/)([^/\s@]+)@/i.exec(trimmed);
+  const scpCredMatch = !urlCredMatch && /^([^/\s@:]+:[^/\s@]+)@[A-Za-z0-9.-]+:/i.exec(trimmed);
   const hasEmbeddedCredentials = Boolean(
-    urlCredMatch && !(urlCredMatch[1].toLowerCase() === 'ssh://' && urlCredMatch[2].toLowerCase() === 'git'),
+    (urlCredMatch && !(urlCredMatch[1].toLowerCase() === 'ssh://' && urlCredMatch[2].toLowerCase() === 'git')) ||
+      scpCredMatch,
   );
   const sanitizedUrl = redactSecrets(trimmed);
 
@@ -371,6 +375,10 @@ export function createExecRunner() {
  * Read live GitHub repository, main/AGENTS.md pins, issue state, and target branch ref (read-only).
  */
 export function readGitHubState({ repo = OFFICIAL_REPO, issueNumber, targetBranch, runner = createExecRunner() }) {
+  repo = validateRepoSlug(repo);
+  issueNumber = validateIssueNumber(issueNumber);
+  targetBranch = validateBranchName(targetBranch);
+
   const api = (endpoint) => {
     const res = runner('gh', ['api', endpoint], process.cwd());
     if (!res.ok) return { ok: false, error: res.stderr || res.stdout || 'gh api failed' };
@@ -715,10 +723,13 @@ export function evaluatePreflight({
     review('DISJOINT_PATHS_UNVERIFIED');
   }
 
-  // Check physical workspace overlap against peer active workspaces (Windows & POSIX safe).
-  if (local?.workspacePath && Array.isArray(peerWorkspaces)) {
+  // Check physical workspace and gitRoot overlap against peer active workspaces (Windows & POSIX safe).
+  if ((local?.workspacePath || local?.gitRoot) && Array.isArray(peerWorkspaces)) {
     for (const peer of peerWorkspaces) {
-      if (pathsOverlap(local.workspacePath, peer)) {
+      if (
+        (local.workspacePath && pathsOverlap(local.workspacePath, peer)) ||
+        (local.gitRoot && pathsOverlap(local.gitRoot, peer))
+      ) {
         block('WORKSPACE_PATH_OVERLAP');
         break;
       }
@@ -834,7 +845,7 @@ export function evaluatePreflight({
     caveats: [
       'Point-in-time snapshot; recheck remote refs immediately before any edit, claim, or push.',
       'Issue claims are procedural coordination, not atomic distributed locks.',
-      'Opt-in standalone preflight candidate; G1 manual preflight remains canonical until reviewed/accepted.',
+      'Preflight adoption candidate; does not activate or replace manual G1 preflight until reviewed, accepted, and merged.',
     ],
     input: {
       mode: input.mode,
@@ -882,6 +893,7 @@ export function evaluatePreflight({
       totalExecutors: totalExecutors ?? null,
       codexCloud: codexCloud ?? null,
       antigravityRemote: antigravityRemote ?? null,
+      antigravityLocal: agLocal ?? null,
       codexLocal: codexLocal ?? null,
       sameTaskActiveWriter: sameTaskActiveWriter ?? null,
       isolatedResources: isolatedResources ?? null,

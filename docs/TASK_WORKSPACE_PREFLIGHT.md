@@ -1,8 +1,8 @@
 # Task Workspace Preflight & GitHub-First Freshness Guide
 
-Status: **OPT-IN CANDIDATE** (Issue `#204` / `G2-D1`).
+Status: **ADOPTION CANDIDATE — UNMERGED** (Issue `#205` / `G1.1 / G2-D2`, building on `#204` / `G2-D1`).
 
-Until separately reviewed and accepted by the Product Owner, **canonical G1 manual preflight remains binding**. This helper (`scripts/support/task-workspace-preflight.mjs`) is explicitly invoked; it installs no git hooks, modifies no `AGENTS.md` or CI workflows, and never auto-remediates, auto-pushes, merges, or deploys.
+This guide and helper (`scripts/support/task-workspace-preflight.mjs`) remain an unmerged candidate until independently reviewed, validated in Linux CI, explicitly accepted by the Product Owner, and merged to `main`. No activation or merge is implied by Issue `#205` or its branch alone; until merged, existing canonical `AGENTS.md` and controlling `#198` amendments remain binding. This helper is explicitly invoked; it installs no git hooks, modifies no CI workflows, and never auto-remediates, auto-pushes, merges, or deploys.
 
 > [!IMPORTANT]
 > A `PASS_FOR_SOURCE_CHECK` result verifies point-in-time source freshness and isolation only. It **never** authorizes edits, commits, pushes, PR creation, merges, CI dispatch, or deployments, and it is not an atomic distributed lock. Always re-read live GitHub state immediately before any edit, claim, or push. When posting `--json` output to public GitHub Issues, pass `--redact-paths` (or redact `local.workspacePath` and `local.gitRoot`) so personal OS usernames/paths are never disclosed.
@@ -18,12 +18,13 @@ Until separately reviewed and accepted by the Product Owner, **canonical G1 manu
    - GitHub is the sole durable source of truth — never leave essential source, design decisions, test receipts, reviews, or handoffs only in local workspaces or chat.
    - Persist screened task-branch commits frequently, verify remote SHA/tree readback, and post sanitized receipts directly on the task Issue so any successor or reviewer can inspect GitHub without manual log forwarding.
    - Where a compact durable evidence file is genuinely required beyond Issue comments, `7209770604`/`7209774584` provide a narrow additive exception for NEW screened evidence-only files under `docs/task-evidence/<issue-number>/` (or the canonical `docs/visual-evidence/<issue>/<candidate>/` path for cleared PNGs and hash indexes) on an already authorized task branch.
-4. **Adoption & Merge Gates (Opt-In Candidate Status):**
-   - Future adoption or merge of this tool requires separate explicit Owner approval, classifying `docs/TASK_WORKSPACE_PREFLIGHT.md` in `docs/SOURCE_OF_TRUTH.md` (so `scripts/ci/check-docs.mjs` passes), and full CI validation (`scripts/ci/policy.mjs` classifies `scripts/support/*` and `tests/*` as `INFRASTRUCTURE`).
+4. **Adoption & Merge Gates (Issue `#205` Candidate Status):**
+   - Issue `#205` proposes minimal canonical synchronization of `#198` amendments in `AGENTS.md`, classification of this guide in `docs/SOURCE_OF_TRUTH.md`, and full Linux CI validation (`scripts/ci/policy.mjs` classifies `scripts/support/*` and `tests/*` as `INFRASTRUCTURE`).
+   - Actual adoption and activation take effect only after independent review, verified Linux CI evidence, separate explicit Owner acceptance, and merge to `main`.
 
 ## Exact Invocations
 
-Default mode (`--mode verify`) is **strictly read-only**: no `fetch`, `pull`, `checkout`, `reset`, `commit`, `push`, or PR/CI actions.
+Default mode (`--mode verify`) is **strictly read-only**: no `fetch`, `pull`, `checkout`, `reset`, `commit`, `push`, or PR/CI actions. Always pass `--redact-paths` before sharing `--json` output on public Issues; pass `--historical-base` when the task's authorized base is an intentional non-`main` pin.
 
 ### Windows (PowerShell)
 
@@ -39,6 +40,7 @@ node scripts/support/task-workspace-preflight.mjs `
   --total-executors 4 --codex-cloud 1 --ag-remote 1 --ag-local 2 --codex-local 0 `
   --same-task-active-writer false --isolated-resources true --disjoint-paths true `
   --peer-workspace "C:\work\EgyHealth360-G2-Q1" `
+  --redact-paths `
   --json
 ```
 
@@ -55,6 +57,7 @@ node scripts/support/task-workspace-preflight.mjs \
   --executor-type antigravity-remote \
   --total-executors 4 --codex-cloud 1 --ag-remote 1 --ag-local 2 --codex-local 0 \
   --same-task-active-writer false --isolated-resources true --disjoint-paths true \
+  --redact-paths \
   --json
 ```
 
@@ -93,4 +96,4 @@ These examples reflect point-in-time observations on `2026-11-27` to illustrate 
 5. **Run read-only freshness & origin check:** Verify clean workspace, trusted single `origin`, exact remote SHA/absent state, and ancestry (`node scripts/support/task-workspace-preflight.mjs ...`). Preserve any dirty/predecessor work untouched.
 6. **Record exclusive writer claim on GitHub Issue:** Post claim with verified base/head/tree and isolated workspace confirmation before editing any file.
 7. **Implement & screen checkpoints continuously:** Stage only allowlisted paths, screen diffs and newly reachable git objects for secrets/PII/PHI/unlicensed assets, push screened commits to the exact authorized task branch, verify remote SHA/tree readback, and post sanitized Issue receipts directly on GitHub.
-8. **Re-read remote & release cleanly at handoff:** Re-verify remote HEAD/tree/CI state and post final GitHub handoff + explicit writer release on the Issue. Future adoption/merge of this opt-in helper requires separate explicit Owner review and approval.
+8. **Re-read remote & release cleanly at handoff:** Re-verify remote HEAD/tree/CI state and post final GitHub handoff + explicit writer release on the Issue. Adoption and canonical activation require separate explicit Owner acceptance and merge to `main`.
