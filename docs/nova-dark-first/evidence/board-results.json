@@ -1,0 +1,62 @@
+{
+  "errors": [],
+  "viewport": 1440,
+  "width": 1440,
+  "height": 3818,
+  "images": [
+    {
+      "src": "assets/symbol-primary.svg",
+      "width": 145,
+      "height": 150,
+      "complete": true
+    },
+    {
+      "src": "evidence/light-ar-1440-full.png",
+      "width": 1440,
+      "height": 1334,
+      "complete": true
+    },
+    {
+      "src": "evidence/normal-ar-1440-full.png",
+      "width": 1440,
+      "height": 1260,
+      "complete": true
+    },
+    {
+      "src": "evidence/light-ar-390-full.png",
+      "width": 390,
+      "height": 1957,
+      "complete": true
+    },
+    {
+      "src": "evidence/normal-ar-390-full.png",
+      "width": 390,
+      "height": 1967,
+      "complete": true
+    },
+    {
+      "src": "evidence/light-en-390-full.png",
+      "width": 390,
+      "height": 2207,
+      "complete": true
+    },
+    {
+      "src": "evidence/normal-en-390-full.png",
+      "width": 390,
+      "height": 2218,
+      "complete": true
+    },
+    {
+      "src": "evidence/light-en-1440-full.png",
+      "width": 1440,
+      "height": 1316,
+      "complete": true
+    },
+    {
+      "src": "evidence/normal-en-1440-full.png",
+      "width": 1440,
+      "height": 1247,
+      "complete": true
+    }
+  ]
+}

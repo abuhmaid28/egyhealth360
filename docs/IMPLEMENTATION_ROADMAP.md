@@ -1,5 +1,9 @@
 # Current implementation roadmap
 
+## Current bounded Dark-first review gate
+
+The explicit current Product Owner authorization permits only the [Patient My Care Dark-first study](nova-dark-first/README.md): same selected identity, four bilingual desktop/mobile renders, actual comparison against preserved #98, independent gates and exact-head CI. [Assessment](nova-dark-first/ASSESSMENT.md) keeps Dark-first versus Light-first an owner decision. No automatic winner, production rollout or additional portal work. DP01/DP02 remain open; final Brand V2, Design System V2 and broader implementation require separate approvals. Earlier current-task statements below are historical within this newly bounded study; accepted clinical/content/security rules stay binding.
+
 CURRENT AUTHORITATIVE sequencing; execution still requires a separately scoped Product Owner authorization. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. [Charter](FOUNDATION_CHARTER.md) owns decision and milestone health gates. No dates or completion weights are inferred.
 
 ## Accepted complete

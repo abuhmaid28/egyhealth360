@@ -1,5 +1,7 @@
 # Source of truth and document index
 
+Current authorized Dark-first study: [nova-dark-first/README.md](nova-dark-first/README.md), [nova-dark-first/ASSESSMENT.md](nova-dark-first/ASSESSMENT.md), [nova-dark-first/VALIDATION.md](nova-dark-first/VALIDATION.md), [nova-dark-first/INDEPENDENT_REVIEW.md](nova-dark-first/INDEPENDENT_REVIEW.md). Classification: **PROPOSED / REVIEW EVIDENCE**, not final Brand/Design System contracts or owner visual selection. Explicit current conversation authorization controls. PR #98 remains the unchanged Light-first comparison at `732b377ca69ba964498c2153c97fbca664cc538e`; its source package is pinned remotely and not imported on main. Other accepted contracts and source pins are preserved.
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.

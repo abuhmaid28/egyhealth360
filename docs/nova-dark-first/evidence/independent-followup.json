@@ -1,0 +1,144 @@
+{
+  "boundary": [
+    {
+      "locale": "ar",
+      "selector": ".primary-nav [aria-current]",
+      "hover": true,
+      "bg": "rgb(27, 86, 100)",
+      "border": "rgb(133, 170, 179)",
+      "fg": "rgb(247, 249, 250)",
+      "ratio": 7.76,
+      "boundary": 3.28
+    },
+    {
+      "locale": "ar",
+      "selector": ".primary-nav button",
+      "hover": true,
+      "bg": "rgb(27, 86, 100)",
+      "border": "rgb(133, 170, 179)",
+      "fg": "rgb(215, 231, 234)",
+      "ratio": 6.44,
+      "boundary": 3.28
+    },
+    {
+      "locale": "ar",
+      "selector": ".source-action",
+      "hover": true,
+      "bg": "rgb(27, 86, 100)",
+      "border": "rgb(72, 213, 199)",
+      "fg": "rgb(139, 232, 221)",
+      "ratio": 5.73,
+      "boundary": 4.54
+    },
+    {
+      "locale": "ar",
+      "selector": ".primary-action",
+      "hover": true,
+      "bg": "rgb(139, 232, 221)",
+      "border": "rgb(139, 232, 221)",
+      "fg": "rgb(6, 46, 55)",
+      "ratio": 10.1,
+      "boundary": 1
+    },
+    {
+      "locale": "ar",
+      "focus": {
+        "outline": "rgb(243, 205, 130)",
+        "canvas": "rgb(7, 43, 54)",
+        "offset": "4px",
+        "ratio": 9.85
+      }
+    },
+    {
+      "locale": "en",
+      "selector": ".primary-nav [aria-current]",
+      "hover": true,
+      "bg": "rgb(27, 86, 100)",
+      "border": "rgb(133, 170, 179)",
+      "fg": "rgb(247, 249, 250)",
+      "ratio": 7.76,
+      "boundary": 3.28
+    },
+    {
+      "locale": "en",
+      "selector": ".primary-nav button",
+      "hover": true,
+      "bg": "rgb(27, 86, 100)",
+      "border": "rgb(133, 170, 179)",
+      "fg": "rgb(215, 231, 234)",
+      "ratio": 6.44,
+      "boundary": 3.28
+    },
+    {
+      "locale": "en",
+      "selector": ".source-action",
+      "hover": true,
+      "bg": "rgb(27, 86, 100)",
+      "border": "rgb(72, 213, 199)",
+      "fg": "rgb(139, 232, 221)",
+      "ratio": 5.73,
+      "boundary": 4.54
+    },
+    {
+      "locale": "en",
+      "selector": ".primary-action",
+      "hover": true,
+      "bg": "rgb(139, 232, 221)",
+      "border": "rgb(139, 232, 221)",
+      "fg": "rgb(6, 46, 55)",
+      "ratio": 10.1,
+      "boundary": 1
+    },
+    {
+      "locale": "en",
+      "focus": {
+        "outline": "rgb(243, 205, 130)",
+        "canvas": "rgb(7, 43, 54)",
+        "offset": "4px",
+        "ratio": 9.85
+      }
+    }
+  ],
+  "initial": [
+    {
+      "locale": "ar",
+      "js": false,
+      "shellVisible": false,
+      "fallback": true
+    },
+    {
+      "locale": "ar",
+      "js": "stalled",
+      "shell": {
+        "visible": "hidden",
+        "inert": true
+      }
+    },
+    {
+      "locale": "en",
+      "js": false,
+      "shellVisible": false,
+      "fallback": true
+    },
+    {
+      "locale": "en",
+      "js": "stalled",
+      "shell": {
+        "visible": "hidden",
+        "inert": true
+      }
+    }
+  ],
+  "reference": [
+    {
+      "locale": "ar",
+      "scroll": 320,
+      "height": 5067
+    },
+    {
+      "locale": "en",
+      "scroll": 320,
+      "height": 6314
+    }
+  ]
+}

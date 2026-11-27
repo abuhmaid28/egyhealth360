@@ -1,0 +1,1271 @@
+{
+  "browser": "154.0.8037.57",
+  "layouts": [
+    {
+      "locale": "ar",
+      "width": 320,
+      "scale": 1,
+      "viewport": 320,
+      "scroll": 320,
+      "fonts": "loaded",
+      "direction": "rtl",
+      "root": "16px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "w": 111.796875,
+          "h": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "w": 148.203125,
+          "h": 48
+        },
+        {
+          "text": "شوف تفاصيل الميعاد",
+          "w": 238,
+          "h": 58
+        },
+        {
+          "text": "دور على ميعاد",
+          "w": 238,
+          "h": 52
+        },
+        {
+          "text": "اقرا ملخص الزيارة",
+          "w": 238,
+          "h": 52
+        },
+        {
+          "text": "مواعيدكالجاية والسابقة",
+          "w": 280,
+          "h": 88
+        },
+        {
+          "text": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "w": 280,
+          "h": 88
+        },
+        {
+          "text": "السجل المتاحاللي متاح ليك هنا بس",
+          "w": 280,
+          "h": 88
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "ar",
+      "width": 320,
+      "scale": 2,
+      "viewport": 320,
+      "scroll": 320,
+      "fonts": "loaded",
+      "direction": "rtl",
+      "root": "32px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "w": 268,
+          "h": 75.5
+        },
+        {
+          "text": "دور على دكتور",
+          "w": 268,
+          "h": 75.5
+        },
+        {
+          "text": "شوف تفاصيل الميعاد",
+          "w": 238,
+          "h": 203.5625
+        },
+        {
+          "text": "دور على ميعاد",
+          "w": 238,
+          "h": 136.375
+        },
+        {
+          "text": "اقرا ملخص الزيارة",
+          "w": 238,
+          "h": 136.375
+        },
+        {
+          "text": "مواعيدكالجاية والسابقة",
+          "w": 280,
+          "h": 135.984375
+        },
+        {
+          "text": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "w": 280,
+          "h": 246.96875
+        },
+        {
+          "text": "السجل المتاحاللي متاح ليك هنا بس",
+          "w": 280,
+          "h": 187.78125
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "scale": 1,
+      "viewport": 390,
+      "scroll": 390,
+      "fonts": "loaded",
+      "direction": "rtl",
+      "root": "16px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "w": 146.796875,
+          "h": 48
+        },
+        {
+          "text": "دور على دكتور",
+          "w": 183.203125,
+          "h": 48
+        },
+        {
+          "text": "شوف تفاصيل الميعاد",
+          "w": 308,
+          "h": 58
+        },
+        {
+          "text": "دور على ميعاد",
+          "w": 308,
+          "h": 52
+        },
+        {
+          "text": "اقرا ملخص الزيارة",
+          "w": 308,
+          "h": 52
+        },
+        {
+          "text": "مواعيدكالجاية والسابقة",
+          "w": 350,
+          "h": 88
+        },
+        {
+          "text": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "w": 350,
+          "h": 88
+        },
+        {
+          "text": "السجل المتاحاللي متاح ليك هنا بس",
+          "w": 350,
+          "h": 88
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "scale": 2,
+      "viewport": 390,
+      "scroll": 390,
+      "fonts": "loaded",
+      "direction": "rtl",
+      "root": "32px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "w": 338,
+          "h": 75.5
+        },
+        {
+          "text": "دور على دكتور",
+          "w": 338,
+          "h": 75.5
+        },
+        {
+          "text": "شوف تفاصيل الميعاد",
+          "w": 308,
+          "h": 144.375
+        },
+        {
+          "text": "دور على ميعاد",
+          "w": 308,
+          "h": 77.1875
+        },
+        {
+          "text": "اقرا ملخص الزيارة",
+          "w": 308,
+          "h": 77.1875
+        },
+        {
+          "text": "مواعيدكالجاية والسابقة",
+          "w": 350,
+          "h": 135.984375
+        },
+        {
+          "text": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "w": 350,
+          "h": 135.984375
+        },
+        {
+          "text": "السجل المتاحاللي متاح ليك هنا بس",
+          "w": 350,
+          "h": 135.984375
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "ar",
+      "width": 768,
+      "scale": 1,
+      "viewport": 768,
+      "scroll": 768,
+      "fonts": "loaded",
+      "direction": "rtl",
+      "root": "16px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "w": 313.59375,
+          "h": 49.59375
+        },
+        {
+          "text": "دور على دكتور",
+          "w": 352.40625,
+          "h": 49.59375
+        },
+        {
+          "text": "شوف تفاصيل الميعاد",
+          "w": 622,
+          "h": 58
+        },
+        {
+          "text": "دور على ميعاد",
+          "w": 580,
+          "h": 52
+        },
+        {
+          "text": "اقرا ملخص الزيارة",
+          "w": 580,
+          "h": 52
+        },
+        {
+          "text": "مواعيدكالجاية والسابقة",
+          "w": 332,
+          "h": 96
+        },
+        {
+          "text": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "w": 332,
+          "h": 96
+        },
+        {
+          "text": "السجل المتاحاللي متاح ليك هنا بس",
+          "w": 332,
+          "h": 96
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "ar",
+      "width": 768,
+      "scale": 2,
+      "viewport": 768,
+      "scroll": 768,
+      "fonts": "loaded",
+      "direction": "rtl",
+      "root": "32px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "w": 294.1875,
+          "h": 79.1875
+        },
+        {
+          "text": "دور على دكتور",
+          "w": 371.8125,
+          "h": 79.1875
+        },
+        {
+          "text": "شوف تفاصيل الميعاد",
+          "w": 622,
+          "h": 85.1875
+        },
+        {
+          "text": "دور على ميعاد",
+          "w": 580,
+          "h": 77.1875
+        },
+        {
+          "text": "اقرا ملخص الزيارة",
+          "w": 580,
+          "h": 77.1875
+        },
+        {
+          "text": "مواعيدكالجاية والسابقة",
+          "w": 332,
+          "h": 128.59375
+        },
+        {
+          "text": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "w": 332,
+          "h": 128.59375
+        },
+        {
+          "text": "السجل المتاحاللي متاح ليك هنا بس",
+          "w": 332,
+          "h": 128.59375
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "scale": 1,
+      "viewport": 1440,
+      "scroll": 1440,
+      "fonts": "loaded",
+      "direction": "rtl",
+      "root": "16px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "w": 122.6875,
+          "h": 49.59375
+        },
+        {
+          "text": "دور على دكتور",
+          "w": 161.5,
+          "h": 49.59375
+        },
+        {
+          "text": "شوف تفاصيل الميعاد",
+          "w": 598.609375,
+          "h": 58
+        },
+        {
+          "text": "دور على ميعاد",
+          "w": 507.390625,
+          "h": 52
+        },
+        {
+          "text": "اقرا ملخص الزيارة",
+          "w": 507.390625,
+          "h": 52
+        },
+        {
+          "text": "مواعيدكالجاية والسابقة",
+          "w": 310,
+          "h": 96
+        },
+        {
+          "text": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "w": 310,
+          "h": 96
+        },
+        {
+          "text": "السجل المتاحاللي متاح ليك هنا بس",
+          "w": 310,
+          "h": 96
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "scale": 2,
+      "viewport": 1440,
+      "scroll": 1440,
+      "fonts": "loaded",
+      "direction": "rtl",
+      "root": "32px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "متابعتي",
+          "w": 168.375,
+          "h": 79.1875
+        },
+        {
+          "text": "دور على دكتور",
+          "w": 246,
+          "h": 79.1875
+        },
+        {
+          "text": "شوف تفاصيل الميعاد",
+          "w": 598.609375,
+          "h": 85.1875
+        },
+        {
+          "text": "دور على ميعاد",
+          "w": 507.390625,
+          "h": 77.1875
+        },
+        {
+          "text": "اقرا ملخص الزيارة",
+          "w": 507.390625,
+          "h": 77.1875
+        },
+        {
+          "text": "مواعيدكالجاية والسابقة",
+          "w": 310,
+          "h": 231.1875
+        },
+        {
+          "text": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "w": 310,
+          "h": 231.1875
+        },
+        {
+          "text": "السجل المتاحاللي متاح ليك هنا بس",
+          "w": 310,
+          "h": 231.1875
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "scale": 1,
+      "viewport": 320,
+      "scroll": 320,
+      "fonts": "loaded",
+      "direction": "ltr",
+      "root": "16px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "My care",
+          "w": 125.75,
+          "h": 48
+        },
+        {
+          "text": "Find care",
+          "w": 134.25,
+          "h": 48
+        },
+        {
+          "text": "View appointment details",
+          "w": 238,
+          "h": 80.375
+        },
+        {
+          "text": "Find an appointment",
+          "w": 238,
+          "h": 52
+        },
+        {
+          "text": "Read visit summary",
+          "w": 238,
+          "h": 52
+        },
+        {
+          "text": "AppointmentsUpcoming and past",
+          "w": 280,
+          "h": 88
+        },
+        {
+          "text": "Summaries and follow-upWhat your doctor shared",
+          "w": 280,
+          "h": 103.171875
+        },
+        {
+          "text": "Available historyOnly information available to you here",
+          "w": 280,
+          "h": 99.78125
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "scale": 2,
+      "viewport": 320,
+      "scroll": 320,
+      "fonts": "loaded",
+      "direction": "ltr",
+      "root": "32px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "My care",
+          "w": 268,
+          "h": 71
+        },
+        {
+          "text": "Find care",
+          "w": 268,
+          "h": 71
+        },
+        {
+          "text": "View appointment details",
+          "w": 238,
+          "h": 189.171875
+        },
+        {
+          "text": "Find an appointment",
+          "w": 238,
+          "h": 181.171875
+        },
+        {
+          "text": "Read visit summary",
+          "w": 238,
+          "h": 126.78125
+        },
+        {
+          "text": "AppointmentsUpcoming and past",
+          "w": 280,
+          "h": 228.96875
+        },
+        {
+          "text": "Summaries and follow-upWhat your doctor shared",
+          "w": 280,
+          "h": 283.359375
+        },
+        {
+          "text": "Available historyOnly information available to you here",
+          "w": 280,
+          "h": 324.15625
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "scale": 1,
+      "viewport": 390,
+      "scroll": 390,
+      "fonts": "loaded",
+      "direction": "ltr",
+      "root": "16px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "My care",
+          "w": 160.75,
+          "h": 48
+        },
+        {
+          "text": "Find care",
+          "w": 169.25,
+          "h": 48
+        },
+        {
+          "text": "View appointment details",
+          "w": 308,
+          "h": 58
+        },
+        {
+          "text": "Find an appointment",
+          "w": 308,
+          "h": 52
+        },
+        {
+          "text": "Read visit summary",
+          "w": 308,
+          "h": 52
+        },
+        {
+          "text": "AppointmentsUpcoming and past",
+          "w": 350,
+          "h": 88
+        },
+        {
+          "text": "Summaries and follow-upWhat your doctor shared",
+          "w": 350,
+          "h": 88
+        },
+        {
+          "text": "Available historyOnly information available to you here",
+          "w": 350,
+          "h": 88
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "scale": 2,
+      "viewport": 390,
+      "scroll": 390,
+      "fonts": "loaded",
+      "direction": "ltr",
+      "root": "32px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "My care",
+          "w": 338,
+          "h": 71
+        },
+        {
+          "text": "Find care",
+          "w": 338,
+          "h": 71
+        },
+        {
+          "text": "View appointment details",
+          "w": 308,
+          "h": 189.171875
+        },
+        {
+          "text": "Find an appointment",
+          "w": 308,
+          "h": 126.78125
+        },
+        {
+          "text": "Read visit summary",
+          "w": 308,
+          "h": 126.78125
+        },
+        {
+          "text": "AppointmentsUpcoming and past",
+          "w": 350,
+          "h": 174.578125
+        },
+        {
+          "text": "Summaries and follow-upWhat your doctor shared",
+          "w": 350,
+          "h": 228.96875
+        },
+        {
+          "text": "Available historyOnly information available to you here",
+          "w": 350,
+          "h": 276.5625
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "scale": 1,
+      "viewport": 768,
+      "scroll": 768,
+      "fonts": "loaded",
+      "direction": "ltr",
+      "root": "16px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "My care",
+          "w": 328.46875,
+          "h": 48
+        },
+        {
+          "text": "Find care",
+          "w": 337.53125,
+          "h": 48
+        },
+        {
+          "text": "View appointment details",
+          "w": 622,
+          "h": 58
+        },
+        {
+          "text": "Find an appointment",
+          "w": 580,
+          "h": 52
+        },
+        {
+          "text": "Read visit summary",
+          "w": 580,
+          "h": 52
+        },
+        {
+          "text": "AppointmentsUpcoming and past",
+          "w": 332,
+          "h": 96
+        },
+        {
+          "text": "Summaries and follow-upWhat your doctor shared",
+          "w": 332,
+          "h": 96
+        },
+        {
+          "text": "Available historyOnly information available to you here",
+          "w": 332,
+          "h": 96
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "en",
+      "width": 768,
+      "scale": 2,
+      "viewport": 768,
+      "scroll": 768,
+      "fonts": "loaded",
+      "direction": "ltr",
+      "root": "32px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "My care",
+          "w": 323.9375,
+          "h": 74.390625
+        },
+        {
+          "text": "Find care",
+          "w": 342.0625,
+          "h": 74.390625
+        },
+        {
+          "text": "View appointment details",
+          "w": 622,
+          "h": 80.390625
+        },
+        {
+          "text": "Find an appointment",
+          "w": 580,
+          "h": 72.390625
+        },
+        {
+          "text": "Read visit summary",
+          "w": 580,
+          "h": 72.390625
+        },
+        {
+          "text": "AppointmentsUpcoming and past",
+          "w": 332,
+          "h": 215.375
+        },
+        {
+          "text": "Summaries and follow-upWhat your doctor shared",
+          "w": 332,
+          "h": 215.375
+        },
+        {
+          "text": "Available historyOnly information available to you here",
+          "w": 332,
+          "h": 208.5625
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "scale": 1,
+      "viewport": 1440,
+      "scroll": 1440,
+      "fonts": "loaded",
+      "direction": "ltr",
+      "root": "16px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "My care",
+          "w": 139.46875,
+          "h": 48
+        },
+        {
+          "text": "Find care",
+          "w": 148.53125,
+          "h": 48
+        },
+        {
+          "text": "View appointment details",
+          "w": 598.609375,
+          "h": 58
+        },
+        {
+          "text": "Find an appointment",
+          "w": 507.390625,
+          "h": 52
+        },
+        {
+          "text": "Read visit summary",
+          "w": 507.390625,
+          "h": 52
+        },
+        {
+          "text": "AppointmentsUpcoming and past",
+          "w": 310,
+          "h": 96
+        },
+        {
+          "text": "Summaries and follow-upWhat your doctor shared",
+          "w": 310,
+          "h": 96
+        },
+        {
+          "text": "Available historyOnly information available to you here",
+          "w": 310,
+          "h": 96
+        }
+      ],
+      "clip": []
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "scale": 2,
+      "viewport": 1440,
+      "scroll": 1440,
+      "fonts": "loaded",
+      "direction": "ltr",
+      "root": "32px",
+      "overflow": [],
+      "targets": [
+        {
+          "text": "My care",
+          "w": 201.9375,
+          "h": 74.390625
+        },
+        {
+          "text": "Find care",
+          "w": 220.0625,
+          "h": 74.390625
+        },
+        {
+          "text": "View appointment details",
+          "w": 598.609375,
+          "h": 80.390625
+        },
+        {
+          "text": "Find an appointment",
+          "w": 507.390625,
+          "h": 72.390625
+        },
+        {
+          "text": "Read visit summary",
+          "w": 507.390625,
+          "h": 72.390625
+        },
+        {
+          "text": "AppointmentsUpcoming and past",
+          "w": 310,
+          "h": 258.5625
+        },
+        {
+          "text": "Summaries and follow-upWhat your doctor shared",
+          "w": 310,
+          "h": 258.5625
+        },
+        {
+          "text": "Available historyOnly information available to you here",
+          "w": 310,
+          "h": 258.5625
+        }
+      ],
+      "clip": []
+    }
+  ],
+  "states": [
+    {
+      "locale": "ar",
+      "state": "loading",
+      "appointment": "ميعادك الجاي\nمعاينة حالة\nبنحمّل مواعيدك\n\nلسه المواعيد ما اتحمّلتش. حالة الحجز هتظهر بعد ما التحميل يكتمل.",
+      "sourceCount": 2,
+      "shared": "اللي الدكتور شاركه معاك\nمتابعة مقترحة\nاتشاركت معاك\nالدكتور رشّح لك متابعة\n\nدي توصية من الدكتور، مش ميعاد محجوز.\n\nد. عمر علي\n5 نوفمبر 2026\n\nلسه مفيش ميعاد مربوط بالمتابعة دي هنا.\n\nدور على ميعاد\nملخص الزيارة\nمتاح ليك\nالدكتور شارك الملخص معاك\n\nتقدر تقرا الملخص اللي الدكتور شاركه معاك.\n\nد. عمر علي\n5 نوفمبر 2026\n\nاقرا ملخص الزيارة",
+      "busy": "true",
+      "alerts": 0,
+      "announcer": "بنحمّل مواعيدك",
+      "scroll": 390
+    },
+    {
+      "locale": "ar",
+      "state": "empty",
+      "appointment": "ميعادك الجاي\nمعاينة حالة\nمفيش ميعاد جاي ظاهر هنا\n\nمفيش مواعيد جاية في المعلومات المتاحة هنا. تقدر تدور على دكتور.\n\nدور على دكتور",
+      "sourceCount": 2,
+      "shared": "اللي الدكتور شاركه معاك\nمتابعة مقترحة\nاتشاركت معاك\nالدكتور رشّح لك متابعة\n\nدي توصية من الدكتور، مش ميعاد محجوز.\n\nد. عمر علي\n5 نوفمبر 2026\n\nلسه مفيش ميعاد مربوط بالمتابعة دي هنا.\n\nدور على ميعاد\nملخص الزيارة\nمتاح ليك\nالدكتور شارك الملخص معاك\n\nتقدر تقرا الملخص اللي الدكتور شاركه معاك.\n\nد. عمر علي\n5 نوفمبر 2026\n\nاقرا ملخص الزيارة",
+      "busy": "false",
+      "alerts": 0,
+      "announcer": "مفيش ميعاد جاي ظاهر هنا",
+      "scroll": 390
+    },
+    {
+      "locale": "ar",
+      "state": "error",
+      "appointment": "ميعادك الجاي\nمعاينة حالة\nمواعيدك ما اتحمّلتش\n\nمش قادرين نعرض حالة مواعيدك دلوقتي. دي مشكلة تحميل، مش معناها إن مفيش مواعيد.\n\nحمّل المواعيد تاني",
+      "sourceCount": 2,
+      "shared": "اللي الدكتور شاركه معاك\nمتابعة مقترحة\nاتشاركت معاك\nالدكتور رشّح لك متابعة\n\nدي توصية من الدكتور، مش ميعاد محجوز.\n\nد. عمر علي\n5 نوفمبر 2026\n\nلسه مفيش ميعاد مربوط بالمتابعة دي هنا.\n\nدور على ميعاد\nملخص الزيارة\nمتاح ليك\nالدكتور شارك الملخص معاك\n\nتقدر تقرا الملخص اللي الدكتور شاركه معاك.\n\nد. عمر علي\n5 نوفمبر 2026\n\nاقرا ملخص الزيارة",
+      "busy": "false",
+      "alerts": 1,
+      "announcer": "مواعيدك ما اتحمّلتش",
+      "scroll": 390
+    },
+    {
+      "locale": "ar",
+      "state": "no-sources",
+      "appointment": "ميعادك الجاي\nالحجز اتأكد\nد. عمر علي\n\nNile Care Clinic\n\nالخميس، 12 نوفمبر 2026\n\n2:30\nمساءً\nلحد 3:00 مساءً\n\n12\nنوفمبر\nشوف تفاصيل الميعاد",
+      "sourceCount": 0,
+      "shared": "اللي الدكتور شاركه معاك\nلسه مفيش ملخص أو متابعة متاحة ليك هنا\n\nهنا تقدر تشوف الملخصات والتعليمات اللي اتشاركت معاك بس.",
+      "busy": null,
+      "alerts": 0,
+      "announcer": "",
+      "scroll": 390
+    },
+    {
+      "locale": "ar",
+      "state": "unavailable",
+      "appointment": "ميعادك الجاي\nالحجز اتأكد\nد. عمر علي\n\nNile Care Clinic\n\nالخميس، 12 نوفمبر 2026\n\n2:30\nمساءً\nلحد 3:00 مساءً\n\n12\nنوفمبر\nشوف تفاصيل الميعاد",
+      "sourceCount": 0,
+      "shared": "المعلومات المتاحة\nالمحتوى مش متاح هنا\n\nالمحتوى مش متاح في العرض ده. تقدر ترجع للمعلومات المتاحة ليك.",
+      "busy": null,
+      "alerts": 0,
+      "announcer": "",
+      "scroll": 390
+    },
+    {
+      "locale": "en",
+      "state": "loading",
+      "appointment": "Your next appointment\nState preview\nLoading your appointments\n\nAppointments have not loaded yet. Booking status will appear after loading completes.",
+      "sourceCount": 2,
+      "shared": "What your doctor shared\nFollow-up recommendation\nShared with you\nYour doctor recommended follow-up\n\nThis is a recommendation, not a booked appointment.\n\nDr Omar Ali\n5 November 2026\n\nNo appointment is linked to this recommendation here.\n\nFind an appointment\nVisit summary\nAvailable to you\nYour doctor shared a visit summary\n\nRead the visit summary your doctor shared with you.\n\nDr Omar Ali\n5 November 2026\n\nRead visit summary",
+      "busy": "true",
+      "alerts": 0,
+      "announcer": "Loading your appointments",
+      "scroll": 390
+    },
+    {
+      "locale": "en",
+      "state": "empty",
+      "appointment": "Your next appointment\nState preview\nNo upcoming appointment in this view\n\nThere are no upcoming appointments in the information available here. You can find care.\n\nFind care",
+      "sourceCount": 2,
+      "shared": "What your doctor shared\nFollow-up recommendation\nShared with you\nYour doctor recommended follow-up\n\nThis is a recommendation, not a booked appointment.\n\nDr Omar Ali\n5 November 2026\n\nNo appointment is linked to this recommendation here.\n\nFind an appointment\nVisit summary\nAvailable to you\nYour doctor shared a visit summary\n\nRead the visit summary your doctor shared with you.\n\nDr Omar Ali\n5 November 2026\n\nRead visit summary",
+      "busy": "false",
+      "alerts": 0,
+      "announcer": "No upcoming appointment in this view",
+      "scroll": 390
+    },
+    {
+      "locale": "en",
+      "state": "error",
+      "appointment": "Your next appointment\nState preview\nYour appointments could not load\n\nWe cannot show your current appointment status. This is a loading failure, not an empty appointments list.\n\nReload appointments",
+      "sourceCount": 2,
+      "shared": "What your doctor shared\nFollow-up recommendation\nShared with you\nYour doctor recommended follow-up\n\nThis is a recommendation, not a booked appointment.\n\nDr Omar Ali\n5 November 2026\n\nNo appointment is linked to this recommendation here.\n\nFind an appointment\nVisit summary\nAvailable to you\nYour doctor shared a visit summary\n\nRead the visit summary your doctor shared with you.\n\nDr Omar Ali\n5 November 2026\n\nRead visit summary",
+      "busy": "false",
+      "alerts": 1,
+      "announcer": "Your appointments could not load",
+      "scroll": 390
+    },
+    {
+      "locale": "en",
+      "state": "no-sources",
+      "appointment": "Your next appointment\nAppointment confirmed\nDr Omar Ali\n\nNile Care Clinic\n\nThursday, 12 November 2026\n\n2:30\nPM\nto 3:00 PM\n\n12\nView appointment details",
+      "sourceCount": 0,
+      "shared": "What your doctor shared\nNo shared summary or follow-up is available here\n\nThis view shows only summaries and instructions shared with you.",
+      "busy": null,
+      "alerts": 0,
+      "announcer": "",
+      "scroll": 390
+    },
+    {
+      "locale": "en",
+      "state": "unavailable",
+      "appointment": "Your next appointment\nAppointment confirmed\nDr Omar Ali\n\nNile Care Clinic\n\nThursday, 12 November 2026\n\n2:30\nPM\nto 3:00 PM\n\n12\nView appointment details",
+      "sourceCount": 0,
+      "shared": "Available information\nThis content is unavailable here\n\nContent is unavailable in this view. You can return to information available to you.",
+      "busy": null,
+      "alerts": 0,
+      "announcer": "",
+      "scroll": 390
+    }
+  ],
+  "keyboard": [
+    {
+      "locale": "ar",
+      "index": 0,
+      "target": "find",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "ar",
+      "index": 1,
+      "target": "appointment",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "ar",
+      "index": 2,
+      "target": "followup",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "ar",
+      "index": 3,
+      "target": "summary",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "ar",
+      "index": 4,
+      "target": "appointments",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "ar",
+      "index": 5,
+      "target": "summaries",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "ar",
+      "index": 6,
+      "target": "history",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "en",
+      "index": 0,
+      "target": "find",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "en",
+      "index": 1,
+      "target": "appointment",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "en",
+      "index": 2,
+      "target": "followup",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "en",
+      "index": 3,
+      "target": "summary",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "en",
+      "index": 4,
+      "target": "appointments",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "en",
+      "index": 5,
+      "target": "summaries",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    },
+    {
+      "locale": "en",
+      "index": 6,
+      "target": "history",
+      "styles": {
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 205, 130)"
+      },
+      "dialogScroll": 0,
+      "focusReturn": true
+    }
+  ],
+  "motion": [
+    {
+      "locale": "ar",
+      "reducedMotion": "no-preference",
+      "scroll": "smooth",
+      "transition": "0.14s, 0.14s, 0.14s",
+      "skeleton": [
+        "none",
+        "none",
+        "none"
+      ]
+    },
+    {
+      "locale": "ar",
+      "reducedMotion": "reduce",
+      "scroll": "auto",
+      "transition": "0s",
+      "skeleton": [
+        "none",
+        "none",
+        "none"
+      ]
+    },
+    {
+      "locale": "en",
+      "reducedMotion": "no-preference",
+      "scroll": "smooth",
+      "transition": "0.14s, 0.14s, 0.14s",
+      "skeleton": [
+        "none",
+        "none",
+        "none"
+      ]
+    },
+    {
+      "locale": "en",
+      "reducedMotion": "reduce",
+      "scroll": "auto",
+      "transition": "0s",
+      "skeleton": [
+        "none",
+        "none",
+        "none"
+      ]
+    }
+  ],
+  "contrast": [],
+  "errors": [],
+  "colors": [
+    {
+      "selector": ".greeting",
+      "fg": "rgb(187, 211, 217)",
+      "bg": "rgb(7, 43, 54)",
+      "size": "16px",
+      "ratio": 9.54
+    },
+    {
+      "selector": ".intro",
+      "fg": "rgb(187, 211, 217)",
+      "bg": "rgb(7, 43, 54)",
+      "size": "16px",
+      "ratio": 9.54
+    },
+    {
+      "selector": ".status",
+      "fg": "rgb(181, 229, 197)",
+      "bg": "rgb(11, 61, 74)",
+      "size": "14px",
+      "ratio": 8.41
+    },
+    {
+      "selector": ".source-action",
+      "fg": "rgb(72, 213, 199)",
+      "bg": "rgb(11, 61, 74)",
+      "size": "16px",
+      "ratio": 6.52
+    },
+    {
+      "selector": ".primary-action",
+      "fg": "rgb(6, 46, 55)",
+      "bg": "rgb(72, 213, 199)",
+      "size": "16px",
+      "ratio": 7.99
+    },
+    {
+      "selector": ".source-state",
+      "fg": "rgb(187, 211, 217)",
+      "bg": "rgb(9, 50, 63)",
+      "size": "13px",
+      "ratio": 8.72
+    },
+    {
+      "selector": ".provenance",
+      "fg": "rgb(187, 211, 217)",
+      "bg": "rgb(9, 50, 63)",
+      "size": "14px",
+      "ratio": 8.72
+    },
+    {
+      "selector": ".unlinked",
+      "fg": "rgb(187, 211, 217)",
+      "bg": "rgb(9, 50, 63)",
+      "size": "14px",
+      "ratio": 8.72
+    },
+    {
+      "selector": ".retrieval-text small",
+      "fg": "rgb(187, 211, 217)",
+      "bg": "rgb(7, 43, 54)",
+      "size": "13px",
+      "ratio": 9.54
+    },
+    {
+      "selector": ".primary-nav [aria-current]",
+      "fg": "rgb(247, 249, 250)",
+      "bg": "rgb(23, 78, 92)",
+      "size": "16px",
+      "ratio": 8.72
+    }
+  ]
+}
