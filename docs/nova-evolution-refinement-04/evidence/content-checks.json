@@ -1,0 +1,56 @@
+{
+  "main": {
+    "text": "روح للمحتوى\nمعاينة تصميم · بيانات للتجربة\nEgyHealth 360\nمتابعتي\nدور على دكتور\nسلمى حسن\n\nأهلاً يا سلمى\n\nمتابعتي\n\nميعادك الجاي، واللي الدكتور شاركه معاك.\n\nميعادك الجاي\nالحجز اتأكد\nد. عمر علي\n\nNile Care Clinic\n\nالخميس، \n12\nنوفمبر\n 2026\n\n2:30\nمساءً\nلحد 3:00 مساءً\n\n12\nنوفمبر\nشوف تفاصيل الميعاد\n\nالحجز لوحده مش بيشارك معلوماتك الطبية.\n\nاللي الدكتور شاركه معاك\nمتابعة مقترحة\nاتشاركت معاك\nالدكتور رشّح لك متابعة\n\nدي توصية من الدكتور، مش ميعاد محجوز.\n\nد. عمر علي\n5 نوفمبر 2026\n\nلسه مفيش ميعاد مربوط بالمتابعة دي هنا.\n\nدور على ميعاد\nملخص الزيارة\nمتاح ليك\nالدكتور شارك الملخص معاك\n\nتقدر تقرا الملخص اللي الدكتور شاركه معاك.\n\nد. عمر علي\n5 نوفمبر 2026\n\nاقرا ملخص الزيارة\nارجع للي محتاجه\nوصول سريع\nمواعيدك\nالجاية والسابقة\nالملخصات والمتابعة\nاللي الدكتور شاركه معاك\nالسجل المتاح\nاللي متاح ليك هنا بس\nروشتاتك\nمش متاحة في المعاينة دي\nEgyHealth 360\nمعاينة بس · مفيش خدمات شغّالة",
+    "noTechnicalTime": true,
+    "noInitials": true,
+    "spriteComplete": true,
+    "iconCount": 20,
+    "iconStrokeWidths": [
+      "1.65px"
+    ],
+    "dateMonthSize": "19px",
+    "visiblePrivacy": "الحجز لوحده مش بيشارك معلوماتك الطبية.",
+    "disclosure": "معاينة تصميم · بيانات للتجربة",
+    "footer": "EgyHealth 360\nمعاينة بس · مفيش خدمات شغّالة",
+    "sourceOrder": [
+      "source followup",
+      "source summary"
+    ],
+    "controls": [
+      "find",
+      "appointment",
+      "followup",
+      "summary",
+      "appointments",
+      "summaries",
+      "history"
+    ]
+  },
+  "appointment": {
+    "times": [
+      {
+        "instant": "2026-11-12T14:30:00+02:00",
+        "label": "2:30"
+      },
+      {
+        "instant": "2026-11-12T15:00:00+02:00",
+        "label": "3:00"
+      }
+    ],
+    "zone": "Africa/Cairo",
+    "humanDisplay": "2:30\nمساءً\nلحد 3:00 مساءً",
+    "formatted": [
+      "2:30 pm",
+      "3:00 pm"
+    ],
+    "sameInstants": true,
+    "durationMinutes": 30
+  },
+  "privacy": {
+    "main": "الحجز لوحده مش بيشارك معلوماتك الطبية.",
+    "detail": "معاينة بس\nتفاصيل ميعادك\n\nد. عمر علي · Nile Care Clinic\n\nالخميس، 12 نوفمبر 2026\nمن 2:30 لحد 3:00 مساءً. الحجز اتأكد.\n\nالتوقيت المعروض هو توقيت العيادة في القاهرة.\n\nالحجز لوحده مش بيدي الدكتور صلاحية يشوف معلوماتك الطبية. طلب الرعاية الجديد محتاج موافقتك وقبول الدكتور.\n\nدي معاينة ببيانات للتجربة. مفيش حجز أو تغيير في بياناتك.\n\nارجع للمعاينة",
+    "detailPreservesBothApprovals": true
+  },
+  "method": "Actual rendered text, symbolic markers, local sprite references, exact offset-bearing datetime attributes and existing detail preview checked in Chromium. Editorial quality is independently reviewed, not inferred from token matching.",
+  "limits": "No native Egyptian participant, assistive, cross-browser or full-state validation."
+}

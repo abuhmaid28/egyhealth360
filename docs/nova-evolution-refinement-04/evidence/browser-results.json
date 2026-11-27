@@ -1,0 +1,784 @@
+{
+  "browser": "154.0.8037.57",
+  "source": "original isolated Arabic HTML/CSS/SVG",
+  "viewports": [
+    {
+      "candidate": "refined",
+      "width": 1440,
+      "textScale": 1,
+      "appointment": {
+        "top": 309.4375,
+        "height": 287.75,
+        "bottom": 597.1875
+      },
+      "action": {
+        "top": 506.625,
+        "bottom": 562.625
+      },
+      "source": {
+        "top": 718.078125
+      },
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "height": 1295,
+      "overflow": [],
+      "clipping": [],
+      "targets": [
+        {
+          "label": "متابعتي",
+          "width": 122.6875,
+          "height": 48
+        },
+        {
+          "label": "دور على دكتور",
+          "width": 161.5,
+          "height": 48
+        },
+        {
+          "label": "شوف تفاصيل الميعاد",
+          "width": 390,
+          "height": 56
+        },
+        {
+          "label": "دور على ميعاد",
+          "width": 220,
+          "height": 52
+        },
+        {
+          "label": "اقرا ملخص الزيارة",
+          "width": 220,
+          "height": 52
+        },
+        {
+          "label": "مواعيدكالجاية والسابقة",
+          "width": 310,
+          "height": 98
+        },
+        {
+          "label": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "width": 310,
+          "height": 98
+        },
+        {
+          "label": "السجل المتاحاللي متاح ليك هنا بس",
+          "width": 310,
+          "height": 98
+        }
+      ],
+      "rtl": true,
+      "lang": "ar",
+      "headings": 1,
+      "fonts": [
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Manrope",
+          "status": "loaded"
+        }
+      ],
+      "motion": "auto",
+      "timezone": "14 GMT+02:00"
+    },
+    {
+      "candidate": "refined",
+      "width": 390,
+      "textScale": 1,
+      "appointment": {
+        "top": 317.640625,
+        "height": 366.234375,
+        "bottom": 683.875
+      },
+      "action": {
+        "top": 608.875,
+        "bottom": 662.875
+      },
+      "source": {
+        "top": 796.46875
+      },
+      "documentWidth": 390,
+      "viewport": 390,
+      "height": 1907,
+      "overflow": [],
+      "clipping": [],
+      "targets": [
+        {
+          "label": "متابعتي",
+          "width": 165,
+          "height": 48
+        },
+        {
+          "label": "دور على دكتور",
+          "width": 165,
+          "height": 48
+        },
+        {
+          "label": "شوف تفاصيل الميعاد",
+          "width": 308,
+          "height": 54
+        },
+        {
+          "label": "دور على ميعاد",
+          "width": 312,
+          "height": 52
+        },
+        {
+          "label": "اقرا ملخص الزيارة",
+          "width": 312,
+          "height": 52
+        },
+        {
+          "label": "مواعيدكالجاية والسابقة",
+          "width": 350,
+          "height": 84
+        },
+        {
+          "label": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "width": 350,
+          "height": 84
+        },
+        {
+          "label": "السجل المتاحاللي متاح ليك هنا بس",
+          "width": 350,
+          "height": 84
+        }
+      ],
+      "rtl": true,
+      "lang": "ar",
+      "headings": 1,
+      "fonts": [
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Manrope",
+          "status": "loaded"
+        }
+      ],
+      "motion": "auto",
+      "timezone": "14 GMT+02:00"
+    },
+    {
+      "candidate": "refined",
+      "width": 320,
+      "textScale": 1,
+      "appointment": {
+        "top": 356.234375,
+        "height": 418.921875,
+        "bottom": 775.15625
+      },
+      "action": {
+        "top": 700.15625,
+        "bottom": 754.15625
+      },
+      "source": {
+        "top": 887.75
+      },
+      "documentWidth": 320,
+      "viewport": 320,
+      "height": 2078,
+      "overflow": [],
+      "clipping": [],
+      "targets": [
+        {
+          "label": "متابعتي",
+          "width": 134,
+          "height": 48
+        },
+        {
+          "label": "دور على دكتور",
+          "width": 134,
+          "height": 48
+        },
+        {
+          "label": "شوف تفاصيل الميعاد",
+          "width": 254,
+          "height": 54
+        },
+        {
+          "label": "دور على ميعاد",
+          "width": 250,
+          "height": 52
+        },
+        {
+          "label": "اقرا ملخص الزيارة",
+          "width": 250,
+          "height": 52
+        },
+        {
+          "label": "مواعيدكالجاية والسابقة",
+          "width": 288,
+          "height": 84
+        },
+        {
+          "label": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "width": 288,
+          "height": 84
+        },
+        {
+          "label": "السجل المتاحاللي متاح ليك هنا بس",
+          "width": 288,
+          "height": 84
+        }
+      ],
+      "rtl": true,
+      "lang": "ar",
+      "headings": 1,
+      "fonts": [
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Manrope",
+          "status": "loaded"
+        }
+      ],
+      "motion": "auto",
+      "timezone": "14 GMT+02:00"
+    },
+    {
+      "candidate": "refined",
+      "width": 390,
+      "textScale": 2,
+      "appointment": {
+        "top": 783.9375,
+        "height": 903.921875,
+        "bottom": 1687.859375
+      },
+      "action": {
+        "top": 1530.484375,
+        "bottom": 1666.859375
+      },
+      "source": {
+        "top": 1979.234375
+      },
+      "documentWidth": 390,
+      "viewport": 390,
+      "height": 4283,
+      "overflow": [],
+      "clipping": [],
+      "targets": [
+        {
+          "label": "متابعتي",
+          "width": 165,
+          "height": 131
+        },
+        {
+          "label": "دور على دكتور",
+          "width": 165,
+          "height": 131
+        },
+        {
+          "label": "شوف تفاصيل الميعاد",
+          "width": 308,
+          "height": 136.375
+        },
+        {
+          "label": "دور على ميعاد",
+          "width": 312,
+          "height": 77.1875
+        },
+        {
+          "label": "اقرا ملخص الزيارة",
+          "width": 312,
+          "height": 77.1875
+        },
+        {
+          "label": "مواعيدكالجاية والسابقة",
+          "width": 350,
+          "height": 136.28125
+        },
+        {
+          "label": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "width": 350,
+          "height": 136.28125
+        },
+        {
+          "label": "السجل المتاحاللي متاح ليك هنا بس",
+          "width": 350,
+          "height": 136.28125
+        }
+      ],
+      "rtl": true,
+      "lang": "ar",
+      "headings": 1,
+      "fonts": [
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Manrope",
+          "status": "loaded"
+        }
+      ],
+      "motion": "auto",
+      "timezone": "14 GMT+02:00"
+    },
+    {
+      "candidate": "refined",
+      "width": 320,
+      "textScale": 2,
+      "appointment": {
+        "top": 859.34375,
+        "height": 968.515625,
+        "bottom": 1827.859375
+      },
+      "action": {
+        "top": 1670.484375,
+        "bottom": 1806.859375
+      },
+      "source": {
+        "top": 2172.421875
+      },
+      "documentWidth": 320,
+      "viewport": 320,
+      "height": 4984,
+      "overflow": [],
+      "clipping": [],
+      "targets": [
+        {
+          "label": "متابعتي",
+          "width": 134,
+          "height": 186.5
+        },
+        {
+          "label": "دور على دكتور",
+          "width": 134,
+          "height": 186.5
+        },
+        {
+          "label": "شوف تفاصيل الميعاد",
+          "width": 254,
+          "height": 136.375
+        },
+        {
+          "label": "دور على ميعاد",
+          "width": 250,
+          "height": 77.1875
+        },
+        {
+          "label": "اقرا ملخص الزيارة",
+          "width": 250,
+          "height": 136.375
+        },
+        {
+          "label": "مواعيدكالجاية والسابقة",
+          "width": 288,
+          "height": 136.28125
+        },
+        {
+          "label": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "width": 288,
+          "height": 243.5625
+        },
+        {
+          "label": "السجل المتاحاللي متاح ليك هنا بس",
+          "width": 288,
+          "height": 184.375
+        }
+      ],
+      "rtl": true,
+      "lang": "ar",
+      "headings": 1,
+      "fonts": [
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Manrope",
+          "status": "loaded"
+        }
+      ],
+      "motion": "auto",
+      "timezone": "14 GMT+02:00"
+    },
+    {
+      "candidate": "refined",
+      "width": 1440,
+      "textScale": 2,
+      "appointment": {
+        "top": 439.875,
+        "height": 437.6875,
+        "bottom": 877.5625
+      },
+      "action": {
+        "top": 760.765625,
+        "bottom": 837.953125
+      },
+      "source": {
+        "top": 1061.34375
+      },
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "height": 2002,
+      "overflow": [],
+      "clipping": [],
+      "targets": [
+        {
+          "label": "متابعتي",
+          "width": 168.375,
+          "height": 77.1875
+        },
+        {
+          "label": "دور على دكتور",
+          "width": 246,
+          "height": 77.1875
+        },
+        {
+          "label": "شوف تفاصيل الميعاد",
+          "width": 390,
+          "height": 77.1875
+        },
+        {
+          "label": "دور على ميعاد",
+          "width": 257.765625,
+          "height": 77.1875
+        },
+        {
+          "label": "اقرا ملخص الزيارة",
+          "width": 303.171875,
+          "height": 77.1875
+        },
+        {
+          "label": "مواعيدكالجاية والسابقة",
+          "width": 310,
+          "height": 242.5625
+        },
+        {
+          "label": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "width": 310,
+          "height": 242.5625
+        },
+        {
+          "label": "السجل المتاحاللي متاح ليك هنا بس",
+          "width": 310,
+          "height": 242.5625
+        }
+      ],
+      "rtl": true,
+      "lang": "ar",
+      "headings": 1,
+      "fonts": [
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Plex",
+          "status": "loaded"
+        },
+        {
+          "family": "Manrope",
+          "status": "loaded"
+        }
+      ],
+      "motion": "auto",
+      "timezone": "14 GMT+02:00"
+    }
+  ],
+  "interactions": [
+    {
+      "candidate": "refined",
+      "skip": {
+        "class": "skip",
+        "outline": "solid",
+        "top": 16
+      },
+      "skipTarget": "main",
+      "actions": [
+        {
+          "label": "دور على دكتور",
+          "focus": {
+            "style": "solid",
+            "width": "3px"
+          },
+          "open": true,
+          "trapped": true,
+          "reverseTrapped": true,
+          "returned": true
+        },
+        {
+          "label": "شوف تفاصيل الميعاد",
+          "focus": {
+            "style": "solid",
+            "width": "3px"
+          },
+          "open": true,
+          "trapped": true,
+          "reverseTrapped": true,
+          "returned": true
+        },
+        {
+          "label": "دور على ميعاد",
+          "focus": {
+            "style": "solid",
+            "width": "3px"
+          },
+          "open": true,
+          "trapped": true,
+          "reverseTrapped": true,
+          "returned": true
+        },
+        {
+          "label": "اقرا ملخص الزيارة",
+          "focus": {
+            "style": "solid",
+            "width": "3px"
+          },
+          "open": true,
+          "trapped": true,
+          "reverseTrapped": true,
+          "returned": true
+        },
+        {
+          "label": "مواعيدكالجاية والسابقة",
+          "focus": {
+            "style": "solid",
+            "width": "3px"
+          },
+          "open": true,
+          "trapped": true,
+          "reverseTrapped": true,
+          "returned": true
+        },
+        {
+          "label": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "focus": {
+            "style": "solid",
+            "width": "3px"
+          },
+          "open": true,
+          "trapped": true,
+          "reverseTrapped": true,
+          "returned": true
+        },
+        {
+          "label": "السجل المتاحاللي متاح ليك هنا بس",
+          "focus": {
+            "style": "solid",
+            "width": "3px"
+          },
+          "open": true,
+          "trapped": true,
+          "reverseTrapped": true,
+          "returned": true
+        }
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/index.html",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/nova.css",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/specimen.js",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-regular.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/manrope.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-semibold.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/index.html",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/nova.css",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/specimen.js",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-regular.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/manrope.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-semibold.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/index.html",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/nova.css",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/specimen.js",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-regular.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/manrope.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-semibold.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/index.html",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/nova.css",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/specimen.js",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-regular.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/manrope.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-semibold.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/index.html",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/nova.css",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/specimen.js",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-regular.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/manrope.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-semibold.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/index.html",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/nova.css",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/specimen.js",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-regular.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/manrope.ttf",
+      "method": "GET"
+    },
+    {
+      "candidate": "refined",
+      "path": "/docs/nova-evolution-refinement-04/assets/plex-arabic-semibold.ttf",
+      "method": "GET"
+    }
+  ],
+  "errors": [],
+  "externalRequests": [],
+  "failedResponses": [],
+  "limitations": [
+    "Arabic only; English visual parity untested",
+    "Computed 200% text stress, not native browser zoom",
+    "Chromium emulation, not native device or screen-reader/WCAG conformance testing"
+  ]
+}
