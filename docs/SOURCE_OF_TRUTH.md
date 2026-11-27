@@ -42,6 +42,16 @@ All tracked documentation Markdown paths are classified below. Research files ar
 
 ## CURRENT AUTHORITATIVE
 
+### Frontend Architecture V2 proposal — current issue #116
+
+Documentation/read-only, no architecture selection or final DS approval. The later [owner decision](https://github.com/abuhmaid28/egyhealth360/pull/115#issuecomment-6785655141) accepts pinned audit #115 as INCOMPLETE / CONDITIONAL only; older task/status prose does not authorize implementation.
+
+| Document | Responsibility / limits |
+| --- | --- |
+| [frontend-architecture-v2/proposal/CURRENT_BOUNDARIES_AND_AB_OPTIONS.md](frontend-architecture-v2/proposal/CURRENT_BOUNDARIES_AND_AB_OPTIONS.md) | Fresh source/import/role/provider/style/dependency inventory and equal app-local/package proposals; neither selected. |
+| [frontend-architecture-v2/proposal/RISKS_F06_DEPENDENCIES_AND_ROLLBACK.md](frontend-architecture-v2/proposal/RISKS_F06_DEPENDENCIES_AND_ROLLBACK.md) | Preserved findings, local F06 impact/retest gates and proposed phased migration/rollback; no remediation. |
+| [frontend-architecture-v2/proposal/OWNER_DECISION_AND_VALIDATION.md](frontend-architecture-v2/proposal/OWNER_DECISION_AND_VALIDATION.md) | Independent criticism, preservation, exact-head CI receipt method and separate owner decisions/stop. |
+
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |
 | [STAGING_UI_POLISH.md](STAGING_UI_POLISH.md) | Current bounded fix inventory, deployed candidate attribution, validation, time-display review corrections, remaining issues and source alignment recommendation; original captures retain their point-in-time provenance. No release/merge approval or Final V2 design acceptance. |
