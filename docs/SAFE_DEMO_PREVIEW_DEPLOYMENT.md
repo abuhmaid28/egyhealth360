@@ -53,3 +53,14 @@ Reference template: [`apps/web/vercel.preview.json`](../apps/web/vercel.preview.
 
 - Inherited PR `#154` historical visual evidence (`docs/visual-evidence/135/**`, `78` PNGs) remains byte-identical internally, with `safeDemoPreviewOverlay` covering solely hardened [`application.tsx`](../apps/web/src/components/application.tsx) in [`ui-v2-combined-integration.test.mjs`](../tests/ui-v2-combined-integration.test.mjs) and [`ui-pharmacy-live.test.mjs`](../tests/ui-pharmacy-live.test.mjs).
 - Verified via [`ui-preview-safe-demo.test.mjs`](../tests/ui-preview-safe-demo.test.mjs), [`ui-safe-demo-preview-browser.mjs`](../scripts/support/ui-safe-demo-preview-browser.mjs), [`test-ui-deployment-browser.mjs`](../scripts/test-ui-deployment-browser.mjs), full `pnpm test`, and `pnpm test:ui:browser`.
+
+
+## G2-F1 Clean-Room Reconstruction & Preview Hardening Additions
+
+- **Retained `#158` Assets (Byte-Identical):** All 12 preview-attested visual assets (`/brand/dp02/{primary,compact}-{en,ar}-{light,dark}.svg` and `/visual-recovery/{care-encounter,mariam,omar,sara}.webp`) plus existing OFL font families (`Inter`, `Noto Sans Arabic`, `IBM Plex Sans Arabic`, `Manrope`) under `apps/web/public/fonts/`. Zero files placed in `apps/web/public/v2-foundation/`.
+- **Excluded Private Archive Assets:** Un-cleared `art/*.{webp,jpg}` and `illustrations/*.svg` / `icons.js` from private review storage remain excluded from public Git (`EXCLUDED_PUBLIC_AP05_PENDING`); replaced by clean-room inline TSX SVG primitives (`apps/web/src/components/v2/foundation/`).
+- **Additive Preview Hardening Controls (`EH_PREVIEW_DEMO_ONLY=1` / `VERCEL=1`):**
+  - Negative 404 route handler `apps/web/app/v2-foundation/[...slug]/route.ts` (`GET`/`HEAD` HTTP `404`) and catch-all exclusion (`first === "v2-foundation"` -> `notFound()`).
+  - Preview-only anti-frame HTTP headers in `apps/web/next.config.ts` (`X-Frame-Options: DENY`, `Content-Security-Policy: frame-ancestors 'none'`) alongside existing `X-Robots-Tag`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy`.
+  - Packaging exclusion file `apps/web/.vercelignore` blocking `.env*`, key/pem secrets, and local artifacts.
+  - Strict dual-mode isolation (`api.mode === "demo" && session.mode === "demo"`) across `V2EntryGateway`, `V2DemoShell`, and five-portal Demo V2 components.

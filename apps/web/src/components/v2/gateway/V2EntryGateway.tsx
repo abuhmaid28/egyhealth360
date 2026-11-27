@@ -141,13 +141,13 @@ export function V2EntryGateway({
           </div>
         </header>
 
-        <section className={styles.hero} aria-labelledby="gateway-hero-title">
+        <section className={styles.hero} aria-labelledby="entry-title">
           <div className={styles.heroCopy}>
             <p className={styles.kicker}>
               <FoundationIcon name="sparkles" size={16} />
               <span>{ar ? "عرض تجريبي ببيانات اصطناعية · غير مرتبط بمستشفى حي" : "Synthetic Browser Demo · Not Live Clinical Care"}</span>
             </p>
-            <h1 id="gateway-hero-title" className={styles.heroTitle}>
+            <h1 id="entry-title" className={styles.heroTitle}>
               {ar ? "كل رعايتك الصحية." : "All your connected care."}{" "}
               <em className={styles.heroTitleEm}>
                 {ar ? "بخطوة واضحة واحدة." : "Clearly in one place."}
@@ -162,6 +162,7 @@ export function V2EntryGateway({
               <button
                 type="button"
                 className={`demo-button ${styles.primaryCta}`}
+                aria-label={ar ? "استكشف تجربة المريض" : "Explore the patient demo"}
                 disabled={Boolean(busyRole || externalPending)}
                 onClick={() => void launch("PATIENT")}
                 data-gateway-primary-cta="PATIENT"
@@ -177,7 +178,15 @@ export function V2EntryGateway({
             </div>
           </div>
 
-          <div className={styles.heroVisualPane}>
+          <div
+            className={styles.heroVisualPane}
+            aria-hidden="true"
+            style={{
+              backgroundImage: `linear-gradient(180deg, rgba(14,11,26,0.22), rgba(14,11,26,0.65)), url("${careSceneSrc}")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
             <FoundationHeroVisual locale={locale} className={styles.heroSvg} />
             <div className={styles.previewFrame}>
               <img

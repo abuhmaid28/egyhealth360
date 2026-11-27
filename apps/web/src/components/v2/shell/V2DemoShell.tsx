@@ -121,7 +121,7 @@ export function V2DemoShell({
         {ar ? "تخطي إلى المحتوى الرئيسي" : "Skip to main content"}
       </a>
 
-      <header className={styles.header} data-v2-shell="true" data-frontend-v2>
+      <header className={styles.header} data-v2-shell="true" data-portal-shell={session.role} data-frontend-v2>
         <div className={styles.headerInner}>
           <div className={styles.topRow}>
             <div className={styles.brandGroup}>

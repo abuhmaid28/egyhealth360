@@ -90,9 +90,9 @@
   gap: 0.45rem;
 }
 
-.tools :global(button),
-.tools :global(summary),
-.tools :global(select) {
+.headerInner .tools :global(button),
+.headerInner .tools :global(summary),
+.headerInner .tools :global(select) {
   min-block-size: 44px;
   min-inline-size: 44px;
   border-radius: var(--eh-radius-sm);
@@ -106,7 +106,7 @@
   cursor: pointer;
 }
 
-.tools :global(button[aria-pressed="true"]) {
+.headerInner .tools :global(button[aria-pressed="true"]) {
   background: var(--eh-action-bg);
   border-color: var(--eh-action-bg);
   color: var(--eh-action-ink);
@@ -239,8 +239,14 @@
 }
 
 @media (max-width: 640px) {
+  .themeDetails {
+    position: static;
+  }
+
   .themePopover {
-    inset-inline-start: 0;
-    inset-inline-end: auto;
+    position: static;
+    margin-block-start: 0.45rem;
+    min-inline-size: 0;
+    inline-size: 100%;
   }
 }

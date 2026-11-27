@@ -25,14 +25,16 @@ export function FoundationBrandMark({
         : { width: 176, height: 40 };
 
   return (
-    <img
-      src={src}
-      alt="EgyHealth 360"
-      width={dims.width}
-      height={dims.height}
-      data-dp02-logo
-      className={className}
-    />
+    <span data-dp02-logo dir="ltr" className={className} style={{ display: "inline-flex", alignItems: "center" }}>
+      <picture style={{ display: "inline-flex", alignItems: "center" }}>
+        <img
+          src={src}
+          alt="EgyHealth 360"
+          width={dims.width}
+          height={dims.height}
+        />
+      </picture>
+    </span>
   );
 }
 

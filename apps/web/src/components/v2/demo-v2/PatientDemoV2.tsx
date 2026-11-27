@@ -101,11 +101,16 @@ export function PatientDemoV2({ path }: { path: string }) {
     [api],
   );
 
+  const doctorRouteId = path.startsWith("/patient/doctors/")
+    ? decodeURIComponent(path.slice("/patient/doctors/".length).split("/")[0] || "")
+    : "";
+
   useEffect(() => {
-    if (path === "/patient/discover" && providers.length > 0 && !selectedProviderId) {
-      void loadSlots(providers[0].id);
+    const targetId = doctorRouteId || (path === "/patient/discover" ? providers[0]?.id ?? "" : "");
+    if (targetId && selectedProviderId !== targetId && (doctorRouteId || !selectedProviderId)) {
+      void loadSlots(targetId);
     }
-  }, [path, providers, selectedProviderId, loadSlots]);
+  }, [path, doctorRouteId, providers, selectedProviderId, loadSlots]);
 
   const specialties = useMemo(() => {
     const map = new Map<string, string>();
@@ -231,15 +236,24 @@ export function PatientDemoV2({ path }: { path: string }) {
     );
   }
 
-  // Subroute: /patient/discover
-  if (path === "/patient/discover" || path.startsWith("/patient/discover/")) {
+  // Subroute: /patient/discover or /patient/doctors/:id
+  if (doctorRouteId || path === "/patient/discover" || path.startsWith("/patient/discover/")) {
+    const displayedProviders = doctorRouteId
+      ? providers.filter((p) => p.id === doctorRouteId)
+      : filteredProviders;
     return (
       <section className={styles.workspace} data-v2-portal="patient" aria-labelledby="patient-discover-title">
         <header className={styles.banner}>
           <div className={styles.bannerHead}>
             <FoundationPortalEmblem role="patient" className={styles.emblem} />
             <div className={styles.bannerTitles}>
-              <h1 id="patient-discover-title">{ar ? "اكتشاف الأطباء وحجز موعد" : "Discover doctors & book"}</h1>
+              <h1 id="patient-discover-title">
+                {doctorRouteId && selectedProvider
+                  ? selectedProvider.displayName
+                  : ar
+                    ? "اكتشاف الأطباء وحجز موعد"
+                    : "Discover doctors & book"}
+              </h1>
               <p>
                 {ar
                   ? "ابحث بالتخصص أو اسم العيادة واختر موعدًا بتوقيت ١٢ ساعة واضح."
@@ -248,6 +262,11 @@ export function PatientDemoV2({ path }: { path: string }) {
             </div>
           </div>
           <div className={styles.metaRow}>
+            {doctorRouteId ? (
+              <Link href="/patient/discover" className={styles.btnSecondary}>
+                {ar ? "كل الأطباء" : "All doctors"}
+              </Link>
+            ) : null}
             <span className={styles.pill}>{ar ? "توقيت المريض ١٢ ساعة" : "12h patient time"}</span>
             <span className={styles.pillAccent}>{ar ? "حجز تجريبي" : "Synthetic booking"}</span>
           </div>
@@ -273,38 +292,40 @@ export function PatientDemoV2({ path }: { path: string }) {
         ) : null}
 
         <section className={styles.card}>
-          <div className={styles.grid2}>
-            <div className={styles.field}>
-              <label htmlFor="discover-search">{ar ? "ابحث عن طبيب أو تخصص أو مدينة" : "Search clinician, specialty, or clinic"}</label>
-              <input
-                id="discover-search"
-                type="search"
-                className={styles.input}
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder={ar ? "مثال: قلب، القاهرة الجديدة..." : "e.g. Cardiology, Mariam, New Cairo..."}
-              />
-            </div>
+          {!doctorRouteId ? (
+            <div className={styles.grid2}>
+              <div className={styles.field}>
+                <label htmlFor="discover-search">{ar ? "ابحث عن طبيب أو تخصص أو مدينة" : "Search clinician, specialty, or clinic"}</label>
+                <input
+                  id="discover-search"
+                  type="search"
+                  className={styles.input}
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder={ar ? "مثال: قلب، القاهرة الجديدة..." : "e.g. Cardiology, Mariam, New Cairo..."}
+                />
+              </div>
 
-            <div className={styles.field}>
-              <span className={styles.subtle}>{ar ? "تصفية التخصص" : "Specialty filter"}</span>
-              <div className={styles.actionRow}>
-                {specialties.map((spec) => (
-                  <button
-                    key={spec.key}
-                    type="button"
-                    className={styles.btnSecondary}
-                    aria-pressed={specialtyFilter === spec.key}
-                    onClick={() => setSpecialtyFilter(spec.key)}
-                  >
-                    {spec.displayName}
-                  </button>
-                ))}
+              <div className={styles.field}>
+                <span className={styles.subtle}>{ar ? "تصفية التخصص" : "Specialty filter"}</span>
+                <div className={styles.actionRow}>
+                  {specialties.map((spec) => (
+                    <button
+                      key={spec.key}
+                      type="button"
+                      className={styles.btnSecondary}
+                      aria-pressed={specialtyFilter === spec.key}
+                      onClick={() => setSpecialtyFilter(spec.key)}
+                    >
+                      {spec.displayName}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
 
-          {filteredProviders.length === 0 ? (
+          {displayedProviders.length === 0 ? (
             <div className={styles.cardInset}>
               <p className={styles.muted}>{ar ? "لا يوجد أطباء مطابقون لبحثك." : "No matching clinicians found."}</p>
               <button
@@ -320,7 +341,7 @@ export function PatientDemoV2({ path }: { path: string }) {
             </div>
           ) : (
             <ul className={styles.listStack}>
-              {filteredProviders.map((provider) => {
+              {displayedProviders.map((provider) => {
                 const isSelected = selectedProvider?.id === provider.id;
                 const clinicSummary = provider.clinics.map((c) => `${c.displayName} (${c.city})`).join(" · ");
                 return (

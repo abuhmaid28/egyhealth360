@@ -44,8 +44,8 @@
   gap: 0.5rem;
 }
 
-.controls :global(button),
-.controls :global(summary) {
+.container .header .controls :global(button),
+.container .header .controls :global(summary) {
   min-block-size: 44px;
   min-inline-size: 44px;
   border-radius: var(--eh-radius-sm);
@@ -58,7 +58,7 @@
   cursor: pointer;
 }
 
-.controls :global(button[aria-pressed="true"]) {
+.container .header .controls :global(button[aria-pressed="true"]) {
   background: var(--eh-action-bg);
   border-color: var(--eh-action-bg);
   color: var(--eh-action-ink);
@@ -187,13 +187,17 @@
   display: grid;
   gap: 0.75rem;
   min-inline-size: 0;
+  padding: 0.85rem;
+  border-radius: var(--eh-radius-md);
+  border: 1px solid var(--eh-border-subtle);
+  overflow: hidden;
 }
 
 .heroSvg {
   inline-size: 100%;
   block-size: auto;
   display: block;
-  color: var(--eh-ink-primary);
+  color: #f5f2ff;
 }
 
 .previewFrame {
@@ -203,7 +207,7 @@
   align-items: center;
   padding: 0.65rem 0.8rem;
   border-radius: var(--eh-radius-md);
-  background: var(--eh-bg-inset);
+  background: var(--eh-bg-surface);
   border: 1px solid var(--eh-border-subtle);
 }
 
@@ -357,13 +361,19 @@
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .roleGrid {
     grid-template-columns: 1fr;
   }
 
+  .themeDetails {
+    position: static;
+  }
+
   .themePanel {
-    inset-inline-start: 0;
-    inset-inline-end: auto;
+    position: static;
+    margin-block-start: 0.45rem;
+    min-inline-size: 0;
+    inline-size: 100%;
   }
 }
