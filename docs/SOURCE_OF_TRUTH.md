@@ -1,8 +1,10 @@
 # Source of truth and document index
 
-Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
+Current bounded reference: [Design System V2 DS01–DS05 blueprint](design-system-v2/BLUEPRINT.md), with [decisions/evidence](design-system-v2/DECISION_AND_EVIDENCE_MATRIX.md) and [validation truth](design-system-v2/VALIDATION.md), under [Issue #102](https://github.com/abuhmaid28/egyhealth360/issues/102). This is a proposed documentation/planning package, not final DS approval or implementation. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. Brand acceptance follows [PR #101 owner decision 6761920764](https://github.com/abuhmaid28/egyhealth360/pull/101#issuecomment-6761920764) at pinned `687f94074c0ac4d45610546517ea6aa228d36183`, without copying that PR. AP03/AP05 remain distribution gates. Older pre-final polish and visual references below retain their scoped historical evidence; their earlier no-Brand-choice/current-task wording does not override this newer explicit decision.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
+
+Preserved pre-final evidence: [staging UI polish/source alignment](STAGING_UI_POLISH.md), [before/after viewer](staging-polish-evidence/review.html) and [R1 repair report](R1_UX_INTEGRATION_REPAIR.md). These point-in-time reports do not authorize a current release.
 
 ## Fast reading order
 
@@ -109,6 +111,14 @@ All tracked documentation Markdown paths are classified below. Research files ar
 | [UX_FOUNDATION.md](UX_FOUNDATION.md) | Product mental models, five behavioral profiles/JTBD, priorities, principles, safety constraints and anti-patterns; new UX choices remain proposals. |
 | [USER_JOURNEYS.md](USER_JOURNEYS.md) | Intent-based journeys, exact responsibility/information handoffs and current/future boundaries; not final IA or approved screens. |
 | [UX_DECISION_REGISTER.md](UX_DECISION_REGISTER.md) | Inherited approved foundations versus recommendations, owner decisions and explicit later-stage deferrals. |
+
+## PROPOSED / OWNER REVIEW — Design System V2 planning
+
+| Document | Responsibility / limits |
+| --- | --- |
+| [design-system-v2/BLUEPRINT.md](design-system-v2/BLUEPRINT.md) | DS01–DS05 complete documentation/planning blueprint, proposed tokens/responsive/component/pattern requirements, future validation and separate GO/NO-GO gates; not a final DS. |
+| [design-system-v2/DECISION_AND_EVIDENCE_MATRIX.md](design-system-v2/DECISION_AND_EVIDENCE_MATRIX.md) | Accepted versus proposed/unresolved authority, immutable Brand sources, time-content conflict and scoped owner decisions. |
+| [design-system-v2/VALIDATION.md](design-system-v2/VALIDATION.md) | Preservation/reference/review/CI method, actual-evidence handoff boundary and unexecuted V2 UI tests; final exact-head results live in the Draft PR. |
 
 ## ACCEPTED CONTRACT
 
