@@ -34,16 +34,20 @@ const darkTriggers = [
   ['cjp_admission_write_guard', 23, 'cjp_admission_guard'],
   ['cjp_binding_history_guard', 42, 'cjp_reject_history_change'],
   ['cjp_binding_write_guard', 23, 'cjp_binding_guard'],
+  ['cjp_booking_event_binding_guard', 5, 'cjp_booking_event_binding'],
   ['cjp_consent_anchor_guard', 5, 'cjp_consent_anchor'],
+  ['cjp_ended_event_commit_guard', 5, 'cjp_ended_event_commit'],
   ['cjp_event_history_guard', 58, 'cjp_reject_history_change'],
   ['cjp_event_insert_guard', 7, 'cjp_event_insert'],
+  ['cjp_journey_end_evidence_guard', 17, 'cjp_journey_end_evidence'],
   ['cjp_journey_history_guard', 42, 'cjp_reject_history_change'],
   ['cjp_journey_write_guard', 23, 'cjp_journey_guard'],
   ['cjp_pair_history_guard', 58, 'cjp_reject_history_change'],
 ].map(([tgname, tgtype, proname]) => ({tgname, tgtype, tgenabled: 'O', proname}));
 const darkFunctions = [
-  'cjp_admission_evidence', 'cjp_admission_guard', 'cjp_binding_guard', 'cjp_consent_anchor',
-  'cjp_event_insert', 'cjp_journey_guard', 'cjp_reject_history_change',
+  'cjp_admission_evidence', 'cjp_admission_guard', 'cjp_binding_guard', 'cjp_booking_event_binding',
+  'cjp_consent_anchor', 'cjp_ended_event_commit', 'cjp_event_insert', 'cjp_journey_end_evidence',
+  'cjp_journey_guard', 'cjp_reject_history_change',
 ];
 
 test('dark Care Journey objects preserve deferred scopes and grant no non-owner authority', () => withTransaction(async connection => {

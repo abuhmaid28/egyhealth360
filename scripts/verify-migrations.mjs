@@ -38,7 +38,7 @@ try {
   assert.equal(before[6].checksum, 'f59b690059bcb2cd99a9b67dc55c2f84758c495c90b218f52c1c75f54f770d1b');
   assert.equal(before[7].checksum, '49b5afca8d394e7f501a111409eb39dcba65166f8ef22f39a954028de8f9ea69');
   assert.ok(before.every(row => row.finished_at && row.rolled_back_at === null));
-  assert.equal(before.at(-1).checksum, 'ccbb29cbc564495d827cc3018e169d97e6cbe482511c92c31c64607db6c8536e');
+  assert.equal(before.at(-1).checksum, 'c260218681b369733383754ac6b10856a8eebd736974697f41236a95e88448c2');
   const darkTables = ['care_journey_pairs', 'care_journeys', 'care_journey_bookings',
     'care_journey_events', 'care_journey_clinic_admissions'];
   async function assertDark() {

@@ -225,6 +225,7 @@ CREATE TABLE public.care_journey_events (
     isfinite(recorded_at) AND policy_version <> ''
     AND (source = 'PARTICIPANT') = (actor_user_id IS NOT NULL)
     AND (actor_user_id IS NULL) = (actor_role IS NULL)
+    AND (actor_role IS NULL OR actor_role IN ('PATIENT', 'CLINICIAN', 'ADMIN'))
     AND (operation_key IS NULL) = (fingerprint IS NULL)
     AND (fingerprint IS NULL OR (source = 'PARTICIPANT' AND fingerprint ~ '^[0-9a-f]{64}$'))
     AND CASE
@@ -237,10 +238,25 @@ CREATE TABLE public.care_journey_events (
         AND admission_id IS NOT NULL AND scope_version <> '' AND purpose <> ''
         AND (kind NOT IN ('CONSENT_ACTIVATED', 'BOOKING_ATTACHED', 'ANCHOR_REPLACED', 'CARE_COMPLETED') OR booking_id IS NOT NULL)
       END
-    AND CASE WHEN kind = 'CONSENT_ACTIVATED' THEN
-      source = 'PARTICIPANT' AND actor_role = 'PATIENT' AND session_evidence_id IS NOT NULL
-      AND affirmative IS TRUE AND locale IN ('en','ar') AND notice_version <> '' AND notice_digest ~ '^[0-9a-f]{64}$'
-      ELSE session_evidence_id IS NULL AND affirmative IS NULL AND locale IS NULL AND notice_version IS NULL AND notice_digest IS NULL
+    AND CASE
+      WHEN kind = 'CONSENT_ACTIVATED' THEN
+        source = 'PARTICIPANT' AND actor_role = 'PATIENT' AND session_evidence_id IS NOT NULL
+        AND affirmative IS TRUE AND locale IN ('en','ar') AND notice_version <> '' AND notice_digest ~ '^[0-9a-f]{64}$'
+      WHEN kind = 'STANDING_OPT_IN' THEN
+        source = 'PARTICIPANT' AND actor_role = 'CLINICIAN'
+        AND session_evidence_id IS NULL AND affirmative IS NULL AND locale IS NULL AND notice_version IS NULL AND notice_digest IS NULL
+      WHEN kind = 'CARE_COMPLETED' THEN
+        source = 'PARTICIPANT' AND actor_role = 'CLINICIAN'
+        AND session_evidence_id IS NULL AND affirmative IS NULL AND locale IS NULL AND notice_version IS NULL AND notice_digest IS NULL
+      WHEN kind = 'CLINIC_VERIFIED' THEN
+        (source = 'SYSTEM' OR actor_role = 'ADMIN')
+        AND session_evidence_id IS NULL AND affirmative IS NULL AND locale IS NULL AND notice_version IS NULL AND notice_digest IS NULL
+      WHEN kind = 'PARTICIPATION_ENDED' THEN
+        (source = 'SYSTEM' OR actor_role IN ('CLINICIAN', 'ADMIN'))
+        AND session_evidence_id IS NULL AND affirmative IS NULL AND locale IS NULL AND notice_version IS NULL AND notice_digest IS NULL
+      ELSE
+        (source = 'SYSTEM' OR actor_role IN ('PATIENT', 'CLINICIAN'))
+        AND session_evidence_id IS NULL AND affirmative IS NULL AND locale IS NULL AND notice_version IS NULL AND notice_digest IS NULL
       END
     AND (kind = 'CLINIC_VERIFIED') = (credential_reference IS NOT NULL)
   ) IS TRUE)
@@ -291,6 +307,16 @@ BEGIN
   ) THEN
     RAISE EXCEPTION 'Invalid event attribution' USING ERRCODE = '23514';
   END IF;
+  IF NEW.actor_role = 'PATIENT' AND (NEW.patient_id IS NULL OR NOT EXISTS (
+    SELECT 1 FROM public.patient_profiles WHERE id = NEW.patient_id AND user_id = NEW.actor_user_id
+  )) THEN
+    RAISE EXCEPTION 'Invalid patient event attribution' USING ERRCODE = '23514';
+  END IF;
+  IF NEW.actor_role = 'CLINICIAN' AND NOT EXISTS (
+    SELECT 1 FROM public.clinician_profiles WHERE id = NEW.clinician_id AND user_id = NEW.actor_user_id
+  ) THEN
+    RAISE EXCEPTION 'Invalid clinician event attribution' USING ERRCODE = '23514';
+  END IF;
   IF NEW.kind = 'CONSENT_ACTIVATED' AND NOT EXISTS (
     SELECT 1
     FROM public.patient_profiles p
@@ -316,13 +342,39 @@ CREATE FUNCTION public.cjp_admission_guard() RETURNS trigger
 LANGUAGE plpgsql SECURITY INVOKER SET search_path = pg_catalog, public, pg_temp AS $$
 BEGIN
   IF TG_OP = 'INSERT' THEN
-    IF NEW.ended_at IS NOT NULL OR NOT EXISTS (
-      SELECT 1 FROM public.directory_affiliations a
-      JOIN public.clinician_directory p ON p.id = a.provider_id
-      WHERE a.id = NEW.affiliation_id AND a.provider_id = NEW.provider_id
-        AND a.membership_id = NEW.membership_id AND a.organization_id = NEW.organization_id
-        AND a.clinician_user_id = NEW.clinician_user_id AND p.clinician_id = NEW.clinician_id
-    ) THEN
+    IF NEW.ended_at IS NOT NULL THEN
+      RAISE EXCEPTION 'Invalid admission scope' USING ERRCODE = '23514';
+    END IF;
+    PERFORM 1 FROM public.users
+      WHERE id = NEW.clinician_user_id AND role = 'CLINICIAN' AND status = 'ACTIVE'
+      FOR SHARE;
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'Invalid admission scope' USING ERRCODE = '23514';
+    END IF;
+    PERFORM 1 FROM public.organizations
+      WHERE id = NEW.organization_id AND kind = 'CLINIC' AND status = 'ACTIVE'
+      FOR SHARE;
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'Invalid admission scope' USING ERRCODE = '23514';
+    END IF;
+    PERFORM 1 FROM public.organization_memberships
+      WHERE id = NEW.membership_id AND user_id = NEW.clinician_user_id AND organization_id = NEW.organization_id
+        AND user_role = 'CLINICIAN' AND organization_kind = 'CLINIC' AND status = 'ACTIVE' AND ended_at IS NULL
+      FOR SHARE;
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'Invalid admission scope' USING ERRCODE = '23514';
+    END IF;
+    PERFORM 1 FROM public.clinician_directory
+      WHERE id = NEW.provider_id AND clinician_id = NEW.clinician_id AND clinician_user_id = NEW.clinician_user_id
+      FOR SHARE;
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'Invalid admission scope' USING ERRCODE = '23514';
+    END IF;
+    PERFORM 1 FROM public.directory_affiliations
+      WHERE id = NEW.affiliation_id AND provider_id = NEW.provider_id AND membership_id = NEW.membership_id
+        AND organization_id = NEW.organization_id AND clinician_user_id = NEW.clinician_user_id AND withdrawn_at IS NULL
+      FOR SHARE;
+    IF NOT FOUND THEN
       RAISE EXCEPTION 'Invalid admission scope' USING ERRCODE = '23514';
     END IF;
   ELSE
@@ -353,7 +405,7 @@ BEGIN
   IF EXISTS (
     SELECT 1 FROM public.care_journey_clinic_admissions a
     LEFT JOIN public.care_journey_events e ON e.id = a.verification_event_id
-    WHERE a.id = NEW.id AND e.credential_reference IS DISTINCT FROM a.credential_reference
+    WHERE a.id = NEW.id AND (e.id IS NULL OR e.kind <> 'CLINIC_VERIFIED' OR e.credential_reference IS DISTINCT FROM a.credential_reference)
   ) THEN
     RAISE EXCEPTION 'Invalid verification evidence scope' USING ERRCODE = '23514';
   END IF;
@@ -363,17 +415,56 @@ $$;
 
 CREATE FUNCTION public.cjp_journey_guard() RETURNS trigger
 LANGUAGE plpgsql SECURITY INVOKER SET search_path = pg_catalog, public, pg_temp AS $$
+DECLARE
+  active_users integer;
 BEGIN
   IF TG_OP = 'INSERT' THEN
     IF NEW.ended_at IS NOT NULL OR NEW.first_care_completed_at IS NOT NULL THEN
       RAISE EXCEPTION 'Invalid initial Journey history' USING ERRCODE = '23514';
     END IF;
-    IF NOT EXISTS (
-      SELECT 1 FROM public.care_journey_clinic_admissions a
-      JOIN public.organizations o ON o.id = a.organization_id
-      WHERE a.id = NEW.admission_id AND a.verification_epoch = NEW.verification_epoch
-        AND a.participation_epoch = NEW.participation_epoch AND o.status_version = NEW.clinic_status_version
-    ) THEN
+    PERFORM 1 FROM public.users
+      WHERE id IN (NEW.patient_user_id, NEW.clinician_user_id)
+      ORDER BY id
+      FOR SHARE;
+    SELECT count(*) INTO active_users FROM public.users
+      WHERE (id = NEW.patient_user_id AND role = 'PATIENT' AND status = 'ACTIVE')
+         OR (id = NEW.clinician_user_id AND role = 'CLINICIAN' AND status = 'ACTIVE');
+    IF active_users <> 2 THEN
+      RAISE EXCEPTION 'Invalid Journey evidence snapshot' USING ERRCODE = '23514';
+    END IF;
+    PERFORM 1 FROM public.clinician_patient_assignments
+      WHERE id = NEW.assignment_id AND clinician_id = NEW.clinician_id AND patient_id = NEW.patient_id
+        AND status = 'ACTIVE' AND ended_at IS NULL
+      FOR SHARE;
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'Invalid Journey evidence snapshot' USING ERRCODE = '23514';
+    END IF;
+    PERFORM 1 FROM public.organizations
+      WHERE id = NEW.organization_id AND kind = 'CLINIC' AND status = 'ACTIVE'
+        AND status_version = NEW.clinic_status_version
+      FOR SHARE;
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'Invalid Journey evidence snapshot' USING ERRCODE = '23514';
+    END IF;
+    PERFORM 1 FROM public.organization_memberships
+      WHERE id = NEW.membership_id AND user_id = NEW.clinician_user_id AND organization_id = NEW.organization_id
+        AND user_role = 'CLINICIAN' AND organization_kind = 'CLINIC' AND status = 'ACTIVE' AND ended_at IS NULL
+      FOR SHARE;
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'Invalid Journey evidence snapshot' USING ERRCODE = '23514';
+    END IF;
+    PERFORM 1 FROM public.directory_affiliations
+      WHERE id = NEW.affiliation_id AND provider_id = NEW.provider_id AND membership_id = NEW.membership_id
+        AND organization_id = NEW.organization_id AND clinician_user_id = NEW.clinician_user_id AND withdrawn_at IS NULL
+      FOR SHARE;
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'Invalid Journey evidence snapshot' USING ERRCODE = '23514';
+    END IF;
+    PERFORM 1 FROM public.care_journey_clinic_admissions
+      WHERE id = NEW.admission_id AND ended_at IS NULL AND valid_until > NEW.started_at
+        AND verification_epoch = NEW.verification_epoch AND participation_epoch = NEW.participation_epoch
+      FOR SHARE;
+    IF NOT FOUND THEN
       RAISE EXCEPTION 'Invalid Journey evidence snapshot' USING ERRCODE = '23514';
     END IF;
   ELSIF OLD.ended_at IS NOT NULL OR
@@ -405,8 +496,78 @@ BEGIN
 END;
 $$;
 
+CREATE FUNCTION public.cjp_booking_event_binding() RETURNS trigger
+LANGUAGE plpgsql SECURITY INVOKER SET search_path = pg_catalog, public, pg_temp AS $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM public.care_journey_bookings b
+    JOIN public.care_journeys j ON j.id = b.journey_id
+    WHERE b.journey_id = NEW.journey_id
+      AND b.booking_id = NEW.booking_id
+      AND (NEW.kind <> 'CONSENT_ACTIVATED' OR (b.binding_kind = 'ANCHOR' AND b.replaced_binding_id IS NULL))
+      AND (NEW.kind <> 'BOOKING_ATTACHED' OR (b.binding_kind = 'VISIT' AND b.replaced_binding_id IS NULL))
+      AND (NEW.kind <> 'ANCHOR_REPLACED' OR (b.binding_kind = 'ANCHOR' AND b.replaced_binding_id IS NOT NULL))
+      AND (NEW.kind NOT IN ('BOOKING_ATTACHED', 'ANCHOR_REPLACED', 'CARE_COMPLETED') OR j.ended_at IS NULL)
+  ) THEN
+    RAISE EXCEPTION 'Invalid booking event binding' USING ERRCODE = '23514';
+  END IF;
+  RETURN NULL;
+END;
+$$;
+
+CREATE FUNCTION public.cjp_journey_end_evidence() RETURNS trigger
+LANGUAGE plpgsql SECURITY INVOKER SET search_path = pg_catalog, public, pg_temp AS $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM public.care_journey_events e
+    WHERE e.id = NEW.end_event_id
+      AND e.kind = 'ENDED'
+      AND e.journey_id = NEW.id
+      AND (
+        (NEW.end_reason = 'PATIENT_STOP' AND e.source = 'PARTICIPANT' AND e.actor_role = 'PATIENT' AND e.actor_user_id = NEW.patient_user_id)
+        OR (NEW.end_reason = 'CLINICIAN_END' AND e.source = 'PARTICIPANT' AND e.actor_role = 'CLINICIAN' AND e.actor_user_id = NEW.clinician_user_id)
+        OR (NEW.end_reason = 'EXPIRED' AND e.source = 'SYSTEM' AND NEW.effective_cutoff_at <= NEW.ended_at)
+        OR (NEW.end_reason IN ('SCOPE_LOST', 'ANCHOR_INVALIDATED') AND (
+          e.source = 'SYSTEM'
+          OR (e.source = 'PARTICIPANT' AND (
+            (e.actor_role = 'PATIENT' AND e.actor_user_id = NEW.patient_user_id)
+            OR (e.actor_role = 'CLINICIAN' AND e.actor_user_id = NEW.clinician_user_id)
+          ))
+        ))
+      )
+  ) THEN
+    RAISE EXCEPTION 'Invalid terminal Journey evidence' USING ERRCODE = '23514';
+  END IF;
+  RETURN NULL;
+END;
+$$;
+
+CREATE FUNCTION public.cjp_ended_event_commit() RETURNS trigger
+LANGUAGE plpgsql SECURITY INVOKER SET search_path = pg_catalog, public, pg_temp AS $$
+BEGIN
+  IF NEW.kind = 'ENDED' AND NOT EXISTS (
+    SELECT 1 FROM public.care_journeys j
+    WHERE j.id = NEW.journey_id AND j.ended_at IS NOT NULL AND j.end_event_id = NEW.id
+  ) THEN
+    RAISE EXCEPTION 'Ended event requires exact terminated Journey' USING ERRCODE = '23514';
+  END IF;
+  IF NEW.kind = 'PARTICIPATION_ENDED' AND NOT EXISTS (
+    SELECT 1 FROM public.care_journey_clinic_admissions a
+    WHERE a.id = NEW.admission_id AND a.ended_at IS NOT NULL AND a.end_event_id = NEW.id
+  ) THEN
+    RAISE EXCEPTION 'Participation ended event requires exact terminated admission' USING ERRCODE = '23514';
+  END IF;
+  RETURN NULL;
+END;
+$$;
+
 CREATE FUNCTION public.cjp_binding_guard() RETURNS trigger
 LANGUAGE plpgsql SECURITY INVOKER SET search_path = pg_catalog, public, pg_temp AS $$
+DECLARE
+  slot_end timestamptz(3);
+  j_row public.care_journeys%ROWTYPE;
 BEGIN
   IF TG_OP = 'UPDATE' THEN
     IF OLD.ended_at IS NOT NULL OR NEW.ended_at IS NULL OR
@@ -416,19 +577,33 @@ BEGIN
     END IF;
     RETURN NEW;
   END IF;
-  IF NEW.ended_at IS NOT NULL OR NOT EXISTS (
-    SELECT 1 FROM public.availability_slots s JOIN public.care_journeys j ON j.id = NEW.journey_id
-    WHERE s.id = NEW.slot_id AND s.clinician_id = NEW.clinician_id AND s.clinician_user_id = NEW.clinician_user_id
-      AND s.organization_id = NEW.organization_id AND s.provider_id = NEW.provider_id
-      AND s.membership_id = NEW.membership_id AND s.affiliation_id = NEW.affiliation_id
-      AND NEW.attached_at >= j.started_at
-      AND (NEW.binding_kind <> 'ANCHOR' OR s.end_at <= j.original_pre_care_ceiling_at)
-  ) OR (NEW.replaced_binding_id IS NOT NULL AND NOT EXISTS (
-    SELECT 1 FROM public.care_journey_bookings old_binding JOIN public.bookings b ON b.id = NEW.booking_id
-    WHERE old_binding.id = NEW.replaced_binding_id AND old_binding.journey_id = NEW.journey_id
-      AND old_binding.ended_at <= NEW.attached_at AND b.predecessor_id = old_binding.booking_id
-  )) THEN
+  IF NEW.ended_at IS NOT NULL THEN
     RAISE EXCEPTION 'Invalid booking binding' USING ERRCODE = '23514';
+  END IF;
+  SELECT end_at INTO slot_end FROM public.availability_slots
+    WHERE id = NEW.slot_id AND clinician_id = NEW.clinician_id AND clinician_user_id = NEW.clinician_user_id
+      AND organization_id = NEW.organization_id AND provider_id = NEW.provider_id
+      AND membership_id = NEW.membership_id AND affiliation_id = NEW.affiliation_id
+    FOR SHARE;
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'Invalid booking binding' USING ERRCODE = '23514';
+  END IF;
+  SELECT * INTO j_row FROM public.care_journeys WHERE id = NEW.journey_id FOR SHARE;
+  IF NOT FOUND OR j_row.ended_at IS NOT NULL
+    OR NEW.attached_at < j_row.started_at
+    OR NEW.attached_at >= j_row.hard_expires_at
+    OR (NEW.binding_kind = 'ANCHOR' AND slot_end > j_row.original_pre_care_ceiling_at)
+  THEN
+    RAISE EXCEPTION 'Invalid booking binding' USING ERRCODE = '23514';
+  END IF;
+  IF NEW.replaced_binding_id IS NOT NULL THEN
+    PERFORM 1 FROM public.care_journey_bookings old_binding JOIN public.bookings b ON b.id = NEW.booking_id
+      WHERE old_binding.id = NEW.replaced_binding_id AND old_binding.journey_id = NEW.journey_id
+        AND old_binding.ended_at <= NEW.attached_at AND b.predecessor_id = old_binding.booking_id
+      FOR SHARE OF old_binding;
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'Invalid booking binding' USING ERRCODE = '23514';
+    END IF;
   END IF;
   RETURN NEW;
 END;
@@ -439,6 +614,15 @@ CREATE CONSTRAINT TRIGGER cjp_admission_evidence_guard AFTER INSERT OR UPDATE ON
 CREATE CONSTRAINT TRIGGER cjp_consent_anchor_guard AFTER INSERT ON public.care_journey_events
   DEFERRABLE INITIALLY DEFERRED FOR EACH ROW WHEN (NEW.kind = 'CONSENT_ACTIVATED')
   EXECUTE FUNCTION public.cjp_consent_anchor();
+CREATE CONSTRAINT TRIGGER cjp_booking_event_binding_guard AFTER INSERT ON public.care_journey_events
+  DEFERRABLE INITIALLY DEFERRED FOR EACH ROW WHEN (NEW.booking_id IS NOT NULL)
+  EXECUTE FUNCTION public.cjp_booking_event_binding();
+CREATE CONSTRAINT TRIGGER cjp_ended_event_commit_guard AFTER INSERT ON public.care_journey_events
+  DEFERRABLE INITIALLY DEFERRED FOR EACH ROW WHEN (NEW.kind IN ('ENDED', 'PARTICIPATION_ENDED'))
+  EXECUTE FUNCTION public.cjp_ended_event_commit();
+CREATE CONSTRAINT TRIGGER cjp_journey_end_evidence_guard AFTER UPDATE ON public.care_journeys
+  DEFERRABLE INITIALLY DEFERRED FOR EACH ROW WHEN (NEW.ended_at IS NOT NULL)
+  EXECUTE FUNCTION public.cjp_journey_end_evidence();
 CREATE TRIGGER cjp_event_insert_guard BEFORE INSERT ON public.care_journey_events
   FOR EACH ROW EXECUTE FUNCTION public.cjp_event_insert();
 CREATE TRIGGER cjp_admission_write_guard BEFORE INSERT OR UPDATE ON public.care_journey_clinic_admissions
@@ -460,7 +644,8 @@ CREATE TRIGGER cjp_binding_history_guard BEFORE DELETE OR TRUNCATE ON public.car
 
 REVOKE ALL ON FUNCTION public.cjp_reject_history_change(), public.cjp_event_insert(),
   public.cjp_admission_guard(), public.cjp_admission_evidence(), public.cjp_journey_guard(),
-  public.cjp_consent_anchor(), public.cjp_binding_guard()
+  public.cjp_consent_anchor(), public.cjp_booking_event_binding(), public.cjp_journey_end_evidence(),
+  public.cjp_ended_event_commit(), public.cjp_binding_guard()
   FROM PUBLIC;
 
 COMMIT;
