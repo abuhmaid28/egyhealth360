@@ -1,4 +1,5 @@
 import { testR1Mode } from "./support/ui-r1-mode-browser.mjs";
+import { testInitialLocale } from "./support/ui-initial-locale-browser.mjs";
 import { testStagingTime } from "./support/ui-staging-time-browser.mjs";
 import {
   testPatientMyCare,
@@ -68,6 +69,7 @@ try {
       ? { executablePath: process.env.EH_UI_CHROMIUM }
       : {}),
   });
+  await testInitialLocale(browser, origin, shots);
   await testR1Mode(browser, origin);
   await testStagingTime(browser, origin, shots);
   const page = await browser.newPage({
