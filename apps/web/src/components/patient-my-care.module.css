@@ -1806,3 +1806,153 @@
     display: none;
   }
 }
+
+/* #118: only the existing next-appointment card; other V1 surfaces unchanged. */
+.root .appointment {
+  padding: 20px;
+  border: 1px solid var(--read-border);
+  border-block-start: 3px solid var(--read-action);
+  border-radius: 16px;
+  color: var(--read-ink);
+  background: var(--read-surface);
+}
+.root .appointment .appointmentTop {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-block-end: 16px;
+}
+.root .appointment .appointmentTop h2 {
+  color: var(--read-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+.root .appointment .status {
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  font-size: inherit;
+  line-height: inherit;
+}
+.root .appointment .status > span {
+  background: currentColor;
+}
+.root .appointment .appointmentDetails {
+  display: grid;
+  grid-template-columns: max(44px, 2.75em) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+.root .appointment .doctorAvatar {
+  inline-size: max(44px, 2.75em);
+  block-size: max(44px, 2.75em);
+  background: var(--read-raised);
+  color: var(--read-action);
+  font-size: 18px;
+}
+.root .appointment .doctorInfo h3 {
+  max-inline-size: none;
+  color: var(--read-ink);
+  font-size: 24px;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+.root .appointment .doctorInfo p {
+  color: var(--read-secondary);
+  font-size: 16px;
+  line-height: 1.5;
+}
+.root .appointment .doctorInfo small {
+  color: var(--read-secondary);
+}
+.root .appointment .appointmentWhen {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  margin-block-start: 0;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  color: var(--read-ink);
+  background: var(--read-raised);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.root .appointment .appointmentWhen p:first-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 20px;
+  font-weight: 600;
+}
+.root .appointment .eventZone {
+  color: var(--read-secondary);
+  font-size: 16px;
+}
+.root .appointment .appointmentBottom {
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-block-start: 16px;
+}
+.root .appointment .appointmentBottom p {
+  flex: 1 1 16em;
+  max-inline-size: none;
+  color: var(--read-secondary);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.root .appointment .whiteButton {
+  flex-shrink: 1;
+  min-block-size: 44px;
+  padding: 12px 16px;
+  border: 1px solid var(--read-action);
+  border-radius: 10px;
+  background: var(--read-action);
+  color: var(--read-on-action);
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: normal;
+}
+.root .appointment .whiteButton:hover {
+  background: var(--read-hover);
+  border-color: var(--read-hover);
+}
+.root .appointment .whiteButton:focus-visible {
+  outline: 3px solid var(--read-action);
+  outline-offset: 4px;
+}
+.root .appointment .loading > div {
+  background: var(--read-raised);
+}
+.root .appointment .appointmentState,
+.root .appointment .loading {
+  color: var(--read-ink);
+}
+.root .appointment .appointmentState .boundary {
+  color: var(--read-secondary);
+  font-size: 16px;
+}
+@media (max-width: 760px) {
+  .root .appointment {
+    padding: 16px;
+  }
+  .root .appointment .appointmentBottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .root .appointment .appointmentBottom p {
+    flex-basis: auto;
+  }
+}
+@media (forced-colors: active) {
+  .root .appointment,
+  .root .appointment .whiteButton {
+    border-color: CanvasText;
+  }
+  .root .appointment .whiteButton:focus-visible {
+    outline-color: Highlight;
+  }
+}

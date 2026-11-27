@@ -13,7 +13,6 @@ import { accountName, presentationName, directoryLabel, timeZoneLabel, repeatedT
 import {
   appointmentActivity,
   careDate,
-  careTime,
   nextCareAppointment,
   ownDemoAppointment,
   ownLiveAppointment,
@@ -29,6 +28,7 @@ import { useDirectoryNames } from "./live-booking";
 import { Icon, useResource, type IconName } from "./ui";
 import styles from "./patient-my-care.module.css";
 import { PortalShell } from "./portal-shell";
+import { ReadContextCard, ReadStatusLabel } from "./v2/read-context";
 
 type ScreenState = "ready" | "loading" | "empty" | "error" | "uncertain";
 const noSubscribe = () => () => {};
@@ -337,14 +337,18 @@ function AppointmentAnchor({
 }) {
   const offset = a ? repeatedTimeOffset(a.startAt, a.timeZone) : null;
   return (
-    <section
+    <ReadContextCard
       className={styles.appointment}
       aria-labelledby="care-next-title"
       data-appointment-anchor
     >
       <div className={styles.appointmentTop}>
         <h2 id="care-next-title">{c.nextAppointment}</h2>
-        {!loading && !error && a && <StateLabel state={a.state} c={c} />}
+        {!loading && !error && a && (
+          <ReadStatusLabel>
+            <StateLabel state={a.state} c={c} />
+          </ReadStatusLabel>
+        )}
       </div>
       {loading ? (
         <CareLoading c={c} />
@@ -376,21 +380,31 @@ function AppointmentAnchor({
             </span>
             <div className={styles.doctorInfo}>
               <h3>
-                {a.specialty ? directoryLabel(a.specialty, translate) : c.specialtyUnavailable}
-              </h3>
-              <p>
                 <bdi>
                   {a.doctor
                     ? presentationName(a.doctor, translate)
                     : c.doctorUnavailable}
                 </bdi>
+              </h3>
+              <p>
+                {a.specialty ? directoryLabel(a.specialty, translate) : c.specialtyUnavailable}
               </p>
               <small>{c.inPerson}</small>
             </div>
             <div className={styles.appointmentWhen}>
               <p>
                 <bdi>{careDate(a.startAt, a.timeZone, locale)}</bdi>{" "}
-                <bdi dir="ltr">{careTime(a.startAt, a.timeZone)}</bdi>
+                <bdi dir={locale === "ar" ? "rtl" : "ltr"}>
+                  {new Intl.DateTimeFormat(
+                    locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB",
+                    {
+                      hour: "numeric",
+                      minute: "2-digit",
+                      hourCycle: "h12",
+                      timeZone: a.timeZone,
+                    },
+                  ).format(new Date(a.startAt))}
+                </bdi>
               </p>
               <p className={styles.eventZone}>
                 <bdi>{timeZoneLabel(a.timeZone, translate)}</bdi>
@@ -427,7 +441,7 @@ function AppointmentAnchor({
           <p className={styles.boundary}>{c.bookingBoundary}</p>
         </div>
       )}
-    </section>
+    </ReadContextCard>
   );
 }
 function NextForYou({
