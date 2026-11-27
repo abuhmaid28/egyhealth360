@@ -1,0 +1,31 @@
+{
+  "method": "Independent persistent Chromium profile partition.default_zoom_level.x preference; actual host zoom, physical window640",
+  "native": [
+    {
+      "zoom": 1,
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "viewportScale": 1,
+      "cssZoom": "1",
+      "titleSize": "30px",
+      "scrollWidth": 640,
+      "cdpZoom": 1,
+      "bitmapWidth": 640,
+      "bitmapHeight": 3167
+    },
+    {
+      "zoom": 2,
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "viewportScale": 1,
+      "cssZoom": "1",
+      "titleSize": "30px",
+      "scrollWidth": 320,
+      "cdpZoom": 2,
+      "bitmapWidth": 640,
+      "bitmapHeight": 9185
+    }
+  ]
+}

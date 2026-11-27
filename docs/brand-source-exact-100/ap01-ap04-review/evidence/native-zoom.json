@@ -1,0 +1,4263 @@
+{
+  "method": "Chromium profile partition.default_zoom_level.x = log(zoom)/log(1.2); native host page zoom; no viewport emulation",
+  "evidence": "CSS viewport halves and devicePixelRatio doubles; CSS font size remains 30px; visualViewport.scale=1 and CSS zoom=1",
+  "cases": [
+    {
+      "name": "native100-plex-patient-ar-dark-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2902
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2902
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-patient-ar-light-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2902
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2902
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-patient-en-dark-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2765
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2765
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-patient-en-light-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2765
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2765
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-doctor-ar-dark-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3167
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3167
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-doctor-ar-light-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3167
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3167
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-doctor-en-dark-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2998
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2998
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-doctor-en-light-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2998
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2998
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-patient-ar-dark-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2902
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2902
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-patient-ar-light-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2902
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2902
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-patient-en-dark-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2743
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2743
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-patient-en-light-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2743
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2743
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-doctor-ar-dark-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3167
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3167
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-doctor-ar-light-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3167
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3167
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-doctor-en-dark-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2976
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2976
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-doctor-en-light-window640",
+      "zoom": 1,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 640,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2976
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2976
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native200-plex-patient-ar-dark-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 7346
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 3673
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 7346
+      },
+      "screenshot": "screenshots/native200-plex-patient-ar-dark-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-patient-ar-light-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 7346
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 3673
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 7346
+      },
+      "screenshot": "screenshots/native200-plex-patient-ar-light-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-patient-en-dark-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 7862
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 3931
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 7862
+      },
+      "screenshot": "screenshots/native200-plex-patient-en-dark-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-patient-en-light-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 7862
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 3931
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 7862
+      },
+      "screenshot": "screenshots/native200-plex-patient-en-light-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-doctor-ar-dark-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 8970
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 4485
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 8970
+      },
+      "screenshot": "screenshots/native200-plex-doctor-ar-dark-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-doctor-ar-light-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 8970
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 4485
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 8970
+      },
+      "screenshot": "screenshots/native200-plex-doctor-ar-light-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-doctor-en-dark-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 9111
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 4555
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 9111
+      },
+      "screenshot": "screenshots/native200-plex-doctor-en-dark-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-doctor-en-light-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 9111
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 4555
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 9111
+      },
+      "screenshot": "screenshots/native200-plex-doctor-en-light-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-patient-ar-dark-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 7565
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 3782
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 7565
+      },
+      "screenshot": "screenshots/native200-noto-patient-ar-dark-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-patient-ar-light-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 7565
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 3782
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 7565
+      },
+      "screenshot": "screenshots/native200-noto-patient-ar-light-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-patient-en-dark-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 7864
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 3932
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 7864
+      },
+      "screenshot": "screenshots/native200-noto-patient-en-dark-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-patient-en-light-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 7864
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 3932
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 7864
+      },
+      "screenshot": "screenshots/native200-noto-patient-en-light-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-doctor-ar-dark-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 9185
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 4592
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 9185
+      },
+      "screenshot": "screenshots/native200-noto-doctor-ar-dark-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-doctor-ar-light-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 9185
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 4592
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 9185
+      },
+      "screenshot": "screenshots/native200-noto-doctor-ar-light-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-doctor-en-dark-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 9113
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 4556
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 9113
+      },
+      "screenshot": "screenshots/native200-noto-doctor-en-dark-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-doctor-en-light-window640",
+      "zoom": 2,
+      "physicalWidth": 640,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 320,
+      "outerWidth": 640,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 320,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 9113
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 320,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 320,
+          "height": 4556
+        }
+      },
+      "bitmap": {
+        "width": 640,
+        "height": 9113
+      },
+      "screenshot": "screenshots/native200-noto-doctor-en-light-window640.png",
+      "pass": true
+    },
+    {
+      "name": "native100-plex-patient-ar-dark-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1833
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1833
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-patient-ar-light-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1833
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1833
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-patient-en-dark-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1746
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1746
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-patient-en-light-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1746
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1746
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-doctor-ar-dark-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 2080
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 2080
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-doctor-ar-light-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 2080
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 2080
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-doctor-en-dark-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1963
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1963
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-plex-doctor-en-light-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1963
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1963
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-patient-ar-dark-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1859
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1859
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-patient-ar-light-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1859
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1859
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-patient-en-dark-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1746
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1746
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-patient-en-light-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1746
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1746
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-doctor-ar-dark-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 2105
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 2105
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-doctor-ar-light-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 2105
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 2105
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-doctor-en-dark-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1963
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1963
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native100-noto-doctor-en-light-window1280",
+      "zoom": 1,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 1280,
+      "outerWidth": 1280,
+      "dpr": 1,
+      "visualScale": 1,
+      "documentWidth": 1280,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1963
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 1
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 1963
+        }
+      },
+      "bitmap": null,
+      "screenshot": null,
+      "pass": true
+    },
+    {
+      "name": "native200-plex-patient-ar-dark-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5797
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2898
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5797
+      },
+      "screenshot": "screenshots/native200-plex-patient-ar-dark-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-patient-ar-light-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5797
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2898
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5797
+      },
+      "screenshot": "screenshots/native200-plex-patient-ar-light-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-patient-en-dark-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5530
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2765
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5530
+      },
+      "screenshot": "screenshots/native200-plex-patient-en-dark-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-patient-en-light-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5530
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2765
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5530
+      },
+      "screenshot": "screenshots/native200-plex-patient-en-light-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-doctor-ar-dark-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 6316
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3158
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 6316
+      },
+      "screenshot": "screenshots/native200-plex-doctor-ar-dark-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-doctor-ar-light-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 6316
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3158
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 6316
+      },
+      "screenshot": "screenshots/native200-plex-doctor-ar-light-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-doctor-en-dark-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5996
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2998
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5996
+      },
+      "screenshot": "screenshots/native200-plex-doctor-en-dark-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-plex-doctor-en-light-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "plex",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5996
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2998
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5996
+      },
+      "screenshot": "screenshots/native200-plex-doctor-en-light-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-patient-ar-dark-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5805
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2902
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5805
+      },
+      "screenshot": "screenshots/native200-noto-patient-ar-dark-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-patient-ar-light-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5805
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2902
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5805
+      },
+      "screenshot": "screenshots/native200-noto-patient-ar-light-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-patient-en-dark-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5486
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2743
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5486
+      },
+      "screenshot": "screenshots/native200-noto-patient-en-dark-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-patient-en-light-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5486
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2743
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5486
+      },
+      "screenshot": "screenshots/native200-noto-patient-en-light-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-doctor-ar-dark-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 6322
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3161
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 6322
+      },
+      "screenshot": "screenshots/native200-noto-doctor-ar-dark-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-doctor-ar-light-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 6322
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 3161
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 6322
+      },
+      "screenshot": "screenshots/native200-noto-doctor-ar-light-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-doctor-en-dark-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5952
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2976
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5952
+      },
+      "screenshot": "screenshots/native200-noto-doctor-en-dark-window1280.png",
+      "pass": true
+    },
+    {
+      "name": "native200-noto-doctor-en-light-window1280",
+      "zoom": 2,
+      "physicalWidth": 1280,
+      "font": "noto",
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "innerWidth": 640,
+      "outerWidth": 1280,
+      "dpr": 2,
+      "visualScale": 1,
+      "documentWidth": 640,
+      "h1ComputedSize": "30px",
+      "cssZoom": "1",
+      "layout": {
+        "layoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873
+        },
+        "visualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 1280,
+          "clientHeight": 873,
+          "scale": 1,
+          "zoom": 2
+        },
+        "contentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 5952
+        },
+        "cssLayoutViewport": {
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436
+        },
+        "cssVisualViewport": {
+          "offsetX": 0,
+          "offsetY": 0,
+          "pageX": 0,
+          "pageY": 0,
+          "clientWidth": 640,
+          "clientHeight": 436.5,
+          "scale": 1,
+          "zoom": 2
+        },
+        "cssContentSize": {
+          "x": 0,
+          "y": 0,
+          "width": 640,
+          "height": 2976
+        }
+      },
+      "bitmap": {
+        "width": 1280,
+        "height": 5952
+      },
+      "screenshot": "screenshots/native200-noto-doctor-en-light-window1280.png",
+      "pass": true
+    }
+  ],
+  "limits": "Automated Linux Chromium profile zoom only; no physical keyboard/OS/device/installed-PWA evidence"
+}

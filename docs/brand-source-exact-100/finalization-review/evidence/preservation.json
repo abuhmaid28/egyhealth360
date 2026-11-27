@@ -1,0 +1,140 @@
+{
+  "method": "Batch git hash-object of every baseline tracked file versus immutable baseline ls-tree blob IDs; no filter override; source/glyph files unchanged",
+  "baseline": "cca4942a75672f2fae1a79f771cae8e7070d2e1b",
+  "baseMain": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "baselineTree": "e05071ed4dc6b952711917f2c353c36f10dac198",
+  "baselineFiles": 1921,
+  "identical": 1919,
+  "authorizedSummaryExceptions": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md"
+  ],
+  "protectedSVGs": [
+    {
+      "path": "docs/brand-source-exact-100/assets/bilingual-dark.svg",
+      "sha256": "0c9dbbab6c66b801fd54720a0eb99632cb10646197880541c72667343a603c63",
+      "blob": "60eb4dfb829e7e6457694a997e71263b215acd54"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/bilingual-light.svg",
+      "sha256": "acedb28f25ce3b1bae16bbe449ac2836261a3e785ca0b95497f3b662991d8f0f",
+      "blob": "1010b0f521fa6becd3345daa538cfe8988b6dc70"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/compact-ar-dark.svg",
+      "sha256": "bbed526c401f31fefdd1b98d8ab62c64663f2b03b1b8b0ef24a5f81498ea922d",
+      "blob": "c7efc03902edd9989aa1a5197bb818bba3a80acb"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/compact-ar-light.svg",
+      "sha256": "d83098460ac57d43801314dd5a8f96fa40b72268ae27893b302a0661e8ca89ff",
+      "blob": "06f934b606a2bd567ded9aa93951c1913e70c5b8"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/compact-en-dark.svg",
+      "sha256": "6ad7f9b61b1a43308e16e8d0a6a4bf80c389bac29d46d292eef938af8e2120c3",
+      "blob": "8bc86d976be762fdd94370ecc17c4e1b0583564f"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/compact-en-light.svg",
+      "sha256": "e49f02c9e4a7619ca8265d9d01e8e8a3b52176ec4654658b72e2cac6bf60b887",
+      "blob": "fef3558ca0480036f75fae100b75c19645f4f944"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-16.svg",
+      "sha256": "15c147afe9ac2d798fe32566728cdc4c4bbf4552ab32d77eb8be7dd40bfba03e",
+      "blob": "5625461114798cb907e795e8d12bd1774c6ea827"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-192.svg",
+      "sha256": "b7e02d3d890178926675e5e2e2c9aee4de633076d75e45894fa2498b4c5d0a0a",
+      "blob": "37b80f9ea2896800a1f493dd1adf09fafb8540b6"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-24.svg",
+      "sha256": "2540551a4214fb96cefbbf05442b3eb53adc5ff592833d77e1865cdeefd711c4",
+      "blob": "e57f9d533e3507581bc361e04f1001ea3184d496"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-32.svg",
+      "sha256": "610a7c913c918b73245a3d29a7d4b6a14e787444d72f862b025d7b002f61159b",
+      "blob": "6f1a2bacc0e3aa74ea9e273973972fafad3a0eb7"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-512.svg",
+      "sha256": "28fba5b16f7d5f73e99ebccd7cdfe05364284134ddd5665cfb20758f67481716",
+      "blob": "f4a459ab4d4f11a44f13a89d5cefe27674b19c23"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/icon-64.svg",
+      "sha256": "a90ab9d865da8546826b3a986e59d8b06b8ff1adec666f6ed106843632a16997",
+      "blob": "9365ac9c316720e1fb23623e3a470b5c75e5646c"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/maskable-512.svg",
+      "sha256": "e9af80f66e0b4c712b28dfbda527fa3572e51f193cbff669d53d8e309c0e6978",
+      "blob": "eb98b1617059219532add587e491932a76d746f0"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/primary-ar-dark.svg",
+      "sha256": "f96e38a2a6e1e7273edd57b8e98005f28b0894efa03ffba41ef2c0394a5196da",
+      "blob": "4581e121783a9fc8db772908271e5cafd926fd04"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/primary-ar-light.svg",
+      "sha256": "76d14637666b2d9aadbdc211223454c3f216bff38927c11577ed4d77abce4fa4",
+      "blob": "30e2f66388345f0863d29dd050429a6e826051a4"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/primary-bilingual-dark.svg",
+      "sha256": "8f6c88c7aff5e6646a62a3443e038b61bc1e21436fb4ac1947b4b552cfd3876e",
+      "blob": "f3235094b7b19dde80194d3fcaf622585d86c307"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/primary-bilingual-light.svg",
+      "sha256": "855407eb7604108c1556dd945928a5cbf23fc5b09b7f97ee162a157723b61a73",
+      "blob": "e11ee32c8cbbcee0cc1475fcf0688e4bda68ccf8"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/primary-en-dark.svg",
+      "sha256": "eaa33073140aff82d87d34e134157671f7f8d38ac625618a26b69978641bddd5",
+      "blob": "f209d89484e1c0656ee2e020170b36bf7b41cfe7"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/primary-en-light.svg",
+      "sha256": "f6935c1441d2e68092109425d31f707621f6ec33b405d6ceb00fc0876f53b54e",
+      "blob": "d07d0662f2bdd32f9ad68032726208b51fa00ab8"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/symbol-transparent.svg",
+      "sha256": "85fab1ed23199654946e0a84122c6302751becf9a6578c6ed8a7424dbf0c531e",
+      "blob": "21b45d9d788e118bd13f33ddb4043d709aadc4c3"
+    },
+    {
+      "path": "docs/brand-source-exact-100/source/lockup-dark.svg",
+      "sha256": "98818e104ae837379b13294760b76025a622d179499d3d586292859d520910ae",
+      "blob": "9f56f98e8df38bbf5bd529609bcd229568dac8cd"
+    },
+    {
+      "path": "docs/brand-source-exact-100/source/lockup-light.svg",
+      "sha256": "7e2c326dbc3215d961dfc2472e96589bb5581a50c3272f915607a221bbccef48",
+      "blob": "6d2ac50fa80dec65a2d93783cf3b3571567d6201"
+    },
+    {
+      "path": "docs/brand-source-exact-100/source/symbol-primary.svg",
+      "sha256": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b",
+      "blob": "1696e5fe6ebf617a6f15109fb02d08f01ce140a0"
+    }
+  ],
+  "approvedTypographyAndRoles": [
+    {
+      "path": "docs/brand-source-exact-100/ap01-ap04-review/evidence/font-provenance.json",
+      "sha256": "356ce48b617cb26003be13d17ceb052a9981239d8b63bdfb7a3caba662c8a64a"
+    },
+    {
+      "path": "docs/brand-source-exact-100/ap01-ap04-review/evidence/color-pairs.json",
+      "sha256": "0a47e72ab3b25da419353bc51d2582463f8a7f2c1818499eb2a79011581eaea8"
+    }
+  ],
+  "reusedPriorEvidence": "All pre-existing screenshots/JSON/PDF/fonts/assets included in whole-baseline identity proof; prior hash manifests are referenced, not rewritten."
+}

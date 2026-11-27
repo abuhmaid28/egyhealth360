@@ -1,0 +1,26 @@
+{
+  "id": "IR-01",
+  "severity": "P2 blocking evidence completeness",
+  "status": "RESOLVED after author correction and full independent160-case rerun",
+  "case": "plex-doctor-ar-dark-320-text200",
+  "before": {
+    "input#sample-reference.fontSize": "16px",
+    "td::before.fontSize": "14px",
+    "label.fontSize": "14px"
+  },
+  "afterInitialScaler": {
+    "input#sample-reference.fontSize": "16px",
+    "td::before.fontSize": "14px",
+    "label.fontSize": "28px"
+  },
+  "authorQAAtFindingSHA256": "9410c4848edcd2ee22f86bf52c38c93a3f79e834d9a8e2f6d01c92b31eb45b9c",
+  "authorToolAtFindingSHA256": "43f5ccb55edbab254200e2145c61d31dff5f8ba91b7347ea83817d2e7901ef9d",
+  "impact": "Initial computed200 screenshots omit input value and generated mobile table-label enlargement; distinct native zoom proof does not resolve this computed-text matrix requirement.",
+  "afterCorrection": {
+    "input#sample-reference.fontSize": "32px",
+    "td::before.fontSize": "28px",
+    "label.fontSize": "28px"
+  },
+  "verifiedBy": "independent-browser.json:160 cases;inputSizes and generatedSizes original/current metrics",
+  "finalAuthorQASHA256": "1c187a72664eaff0348a54acafc6927b7b7ff0973b6433703eda16438622af57"
+}

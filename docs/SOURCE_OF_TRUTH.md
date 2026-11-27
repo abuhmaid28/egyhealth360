@@ -1,5 +1,20 @@
 # Source of truth and document index
 
+Current consolidated review: [AP02/AP03/AP05 Brand Finalization Review](brand-source-exact-100/finalization-review/BRAND_FINALIZATION_REVIEW.md), with [independent evidence](brand-source-exact-100/finalization-review/evidence/independent-review.json). [Latest owner acceptance/authorization](https://github.com/abuhmaid28/egyhealth360/pull/101#issuecomment-6760649216) accepts AP01 Inter/Plex and AP04 Balanced Brand Color Reference at `cca4942a75672f2fae1a79f771cae8e7070d2e1b`. Prior pending type/color wording below and in protected exact-head evidence is historical; those artifacts are preserved. The new document is an evidence/decision review: AP02 pending owner choice; AP03 distribution and AP05 rights remain OPEN. No final Brand V2/Design System, merge, deployment or production authorization.
+
+Current AP01/AP04 evidence-only appendix: [review and owner choice](brand-source-exact-100/ap01-ap04-review/README.md), [independent second review](brand-source-exact-100/ap01-ap04-review/INDEPENDENT_REVIEW.md). [Authorization](https://github.com/abuhmaid28/egyhealth360/pull/101#issuecomment-6759512805). The prior package below is preserved point-in-time evidence at accepted DP01/DP02 head `81ea915d10c4ad83578465dcd8b2d26d69d1b6fe`; pending DP02 statements there are historical. Only the new appendix is the current AP01/AP04 comparison. No final font, palette or Design System approval.
+
+Current issue-scoped review reference: [source-exact Violet × Apricot candidate #100](brand-source-exact-100/README.md). This is a provisional review package under explicit [issue #100](https://github.com/abuhmaid28/egyhealth360/issues/100), not final Brand/Design System approval or runtime authorization. CURRENT_STATUS owns mutable state; earlier task wording below remains historical within this scope.
+
+| Issue #100 review document | Classification / responsibility |
+| --- | --- |
+| [brand-source-exact-100/README.md](brand-source-exact-100/README.md) | CURRENT SCOPED REVIEW: source-exact assets, provenance, allowed deltas, DP01 acceptance, tagline-free DP02 primary candidate/AP01–AP05 and owner gate; not final approved identity. |
+| [brand-source-exact-100/DECISIONS.md](brand-source-exact-100/DECISIONS.md) | CURRENT SCOPED DECISIONS: DP01 accepted, DP02 no-tagline content accepted, exact-new-head implementation/owner visual gate and AP01–AP05. |
+| [brand-source-exact-100/HISTORICAL_EVIDENCE.md](brand-source-exact-100/HISTORICAL_EVIDENCE.md) | HISTORICAL EVIDENCE CLASSIFICATION: prior tagline specimens, source and screenshots retained at stable paths; excluded from current primary inventory. |
+| [brand-source-exact-100/HISTORICAL_INDEPENDENT_REVIEW.md](brand-source-exact-100/HISTORICAL_INDEPENDENT_REVIEW.md) | HISTORICAL REVIEW: byte-preserved prior reviewer prose at pre-DP02 head; not current-candidate validation. |
+| [brand-source-exact-100/VALIDATION.md](brand-source-exact-100/VALIDATION.md) | POINT-IN-TIME EVIDENCE: actual source/path/Arabic/responsive/contrast/native-pixel checks and limitations; final remote head/CI in PR handoff. |
+| [brand-source-exact-100/INDEPENDENT_REVIEW.md](brand-source-exact-100/INDEPENDENT_REVIEW.md) | INDEPENDENT REVIEW EVIDENCE: separately executed screenshot/source/browser review and limits; no owner visual approval. |
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.

@@ -1,0 +1,307 @@
+{
+  "verdict": "PASS \u2014 bounded design/documentation review; no blocker found",
+  "review_date_utc": "2026-11-10T06:54:42.591999+00:00",
+  "authorization": "Live PR #101 owner comment 6760649216 independently read; AP01 Inter/Plex and AP04 Balanced accepted, AP02 decision pending, AP03/AP05 OPEN; no merge/deploy/production/Design System approval.",
+  "review_scope": "Independent source, actual artifact, Chromium rendering/native zoom, rights-boundary and preservation review. Author verify.mjs was read but not executed by this reviewer; its outputs were not overwritten. After author reran changed PDF packaging, reviewer independently unpacked gzip, confirmed one-page A4 structure, exact rendered pixels/text and date-normalized payload equality to retained original.",
+  "executed_tests": {
+    "source_and_preservation": {
+      "baseline": "cca4942a75672f2fae1a79f771cae8e7070d2e1b",
+      "prior_files": 1921,
+      "byte_identical": 1919,
+      "summary_exceptions": [
+        "docs/CURRENT_STATUS.md",
+        "docs/SOURCE_OF_TRUTH.md"
+      ],
+      "protected_svg_count": 23,
+      "path_gradient_ellipse_identity": true,
+      "board_sha256": "0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417",
+      "board_git_blob": "22a93818c30ec8feed68a5f3ad049c9856151bfe"
+    },
+    "browser": {
+      "browser": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+      "errors": [],
+      "boards": [
+        {
+          "theme": "dark",
+          "viewport": 1440,
+          "scroll": 1440,
+          "dpr": 1,
+          "loaded": true,
+          "sizes": [
+            {
+              "width": 16,
+              "height": 16,
+              "target": 16
+            },
+            {
+              "width": 24,
+              "height": 24,
+              "target": 24
+            },
+            {
+              "width": 32,
+              "height": 32,
+              "target": 32
+            },
+            {
+              "width": 64,
+              "height": 64,
+              "target": 64
+            },
+            {
+              "width": 192,
+              "height": 192,
+              "target": 192
+            },
+            {
+              "width": 512,
+              "height": 512,
+              "target": 512
+            }
+          ],
+          "sourceCrop": {
+            "left": "-145px",
+            "top": "-70px",
+            "width": 1536,
+            "height": 1024
+          }
+        },
+        {
+          "theme": "light",
+          "viewport": 1440,
+          "scroll": 1440,
+          "dpr": 1,
+          "loaded": true,
+          "sizes": [
+            {
+              "width": 16,
+              "height": 16,
+              "target": 16
+            },
+            {
+              "width": 24,
+              "height": 24,
+              "target": 24
+            },
+            {
+              "width": 32,
+              "height": 32,
+              "target": 32
+            },
+            {
+              "width": 64,
+              "height": 64,
+              "target": 64
+            },
+            {
+              "width": 192,
+              "height": 192,
+              "target": 192
+            },
+            {
+              "width": 512,
+              "height": 512,
+              "target": 512
+            }
+          ],
+          "sourceCrop": {
+            "left": "-145px",
+            "top": "-70px",
+            "width": 1536,
+            "height": 1024
+          }
+        }
+      ],
+      "zoom": [
+        {
+          "factor": 1,
+          "width": 1280,
+          "outer": 1280,
+          "dpr": 1,
+          "title": "30px",
+          "scroll": 1280,
+          "scale": 1,
+          "cdpZoom": 1
+        },
+        {
+          "factor": 2,
+          "width": 640,
+          "outer": 1280,
+          "dpr": 2,
+          "title": "30px",
+          "scroll": 640,
+          "scale": 1,
+          "cdpZoom": 2
+        }
+      ],
+      "availability": {
+        "firefox": {
+          "path": "/home/agent/.cache/ms-playwright/firefox-1555/firefox/firefox",
+          "exists": false
+        },
+        "webkit": {
+          "path": "/home/agent/.cache/ms-playwright/webkit-2370/pw_run.sh",
+          "exists": false
+        },
+        "edgePathExists": false
+      }
+    },
+    "independent_screenshot_pixel_comparison": {
+      "dark": {
+        "size": [
+          1240,
+          1623
+        ],
+        "pixel_identical": true,
+        "difference_bbox": null
+      },
+      "light": {
+        "size": [
+          1240,
+          1623
+        ],
+        "pixel_identical": true,
+        "difference_bbox": null
+      },
+      "native_strip_dimensions": [
+        1240,
+        657
+      ]
+    },
+    "pdf": {
+      "tools": [
+        "pdfinfo",
+        "pdffonts",
+        "pdftotext",
+        "pdftoppm"
+      ],
+      "pages": 1,
+      "page_size_points": [
+        594.96,
+        841.92
+      ],
+      "format": "A4",
+      "render_exit_code": 0,
+      "visually_reviewed_render": true,
+      "embedded_inter_fonts": true,
+      "physical_print": false,
+      "warning": "Syntax Warning: Bad bounding box in Type 3 glyph",
+      "warning_count": 5,
+      "packaging": {
+        "artifact": "chromium-print.pdf.gz",
+        "gzip_mtime": 0,
+        "payload_sha256": "7cb63c8a03ceb4e7eefeade936e6ad22ddc54ea94b50f61b08ec333f8abc7a50",
+        "payload_bytes": 120686,
+        "retained_original_sha256": "aa9a471198cd0fc6633aaf4c2e4d14708509cb1ae87260d133dcfd8d1a90f18f",
+        "rendered_pixels_identical_to_reviewed_original": true,
+        "extracted_text_identical_to_reviewed_original": true,
+        "byte_identical_after_pdf_date_metadata_normalization": true,
+        "reason": "New actual PDF export changes CreationDate/ModDate only; deterministic gzip preserves its native PDF payload and avoids Git text-whitespace misclassification."
+      }
+    },
+    "visual_inspection": [
+      "Actual approved 1536x1024 board and correct (145,70,310,320) master crop",
+      "All three delivered PNGs",
+      "Actual exported PDF rendered with Poppler: intact heading, disclaimers, bilingual dark/light lockups and three icon sizes"
+    ],
+    "provenance_and_rights": "Pinned #96 reconstruction README and #97 DEFERRED_POLISH fetched independently via GitHub; live #96/#97 comments returned empty. Their disclosed approximate gradients/fonts and unestablished underlying artwork rights agree with AP05. No creator grant, exclusivity, sublicensing or trademark clearance inferred.",
+    "document_scope": {
+      "local_markdown_links_checked": 22,
+      "unexpected_missing_links": [],
+      "single_review_word_count": 1977,
+      "representative_png_count": 3,
+      "pdf_count": 0,
+      "prior_typography_matrices": "Referenced and byte-preserved; not regenerated",
+      "manual_checks": "Concrete browser/zoom/theme, OS installation, favicon and print steps with expected captures; newly clarified DevTools theme command reviewed",
+      "gzip_pdf_count": 1
+    }
+  },
+  "findings": [
+    {
+      "severity": "nonblocking_export_limitation",
+      "detail": "Poppler renders the actual PDF successfully but emits five Type 3 glyph bounding-box warnings. Final main document explicitly discloses this; general PDF compatibility and physical printing remain unproven."
+    },
+    {
+      "severity": "aesthetic_owner_decision",
+      "detail": "Historical board has localized texture/gloss; original #96 vector and accepted recolor use smoother ramps. Fine rim/fold detail merges at 16\u201324px. This is disclosed visual approximation, not evidence of a new contour defect. AP02 remains owner-pending."
+    }
+  ],
+  "limitations": [
+    "Only Linux Chromium 154.0.8037.57 actually tested; no Chrome-branded/Edge/Firefox/Safari claim. Firefox/WebKit executable paths and Edge path absent; PATH finds only Chromium.",
+    "No physical Android/iOS, installed PWA/home-screen selection, OS text settings, assistive technology, physical printer, press/CMYK or universal small-size recognition test.",
+    "Rights review is bounded to cited material and does not establish legal clearance or absence of documents elsewhere.",
+    "This working-tree review does not replace final committed-head parity or actual required remote CI; those remain final handoff checks."
+  ],
+  "reviewed_inputs_sha256": [
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/BRAND_FINALIZATION_REVIEW.md",
+      "sha256": "18ce497a6f03df642f2f23219e6677f2133d26e42309354e7db0ff34a3ee87fd"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/comparison.html",
+      "sha256": "4be084a936d3815b15342f5fa7c0fd8d0c11c56855a2ae263807b02fc1e1a1f2"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/verify.mjs",
+      "sha256": "2ce2e53106d4c74639ed2f18dc4f7f861d7ccd21d35de161ad5af3f0f4e6ec1e"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/material-dark.png",
+      "sha256": "65ff39140501ec7bb55aea040b636be9195873c7df26a52134d6d245a823a251"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/material-light.png",
+      "sha256": "17756eb90746f741ff5a3bf0a302641da8106d8d75e414054b96f179d63e746a"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/native-sizes.png",
+      "sha256": "8d8efc122d981f22cc3d50692d76209d646dd3194f4e65f75431dc0f1c2d58ac"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/chromium-print.pdf.gz",
+      "sha256": "a84a002fcd32bd48ea9bc50f1cb787c1b4419c14d4f4a21d14700ee16989df5d"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/validation.json",
+      "sha256": "170aa8f021de3c9cff0825d4849069210208bbd13f03e898d1ce33c2178cac09"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/preservation.json",
+      "sha256": "d9e9f851918c3b17d1110326d55db4877ad7b625465aaa5abe27cb8d53111b75"
+    },
+    {
+      "path": "docs/CURRENT_STATUS.md",
+      "sha256": "7cfce98702a087b43563f062d27a3ce6e4f854d4f06042a973d14d31e2a9ad9f"
+    },
+    {
+      "path": "docs/SOURCE_OF_TRUTH.md",
+      "sha256": "ede5e06cb6f3783e24a71cf0bf0d189575b2921f9a0e732cfc81dbcb3e615717"
+    },
+    {
+      "path": "docs/brand-source-exact-100/source/symbol-primary.svg",
+      "sha256": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b"
+    },
+    {
+      "path": "docs/brand-source-exact-100/assets/symbol-transparent.svg",
+      "sha256": "85fab1ed23199654946e0a84122c6302751becf9a6578c6ed8a7424dbf0c531e"
+    },
+    {
+      "path": "docs/brand-source-exact-100/ap01-ap04-review/evidence/font-provenance.json",
+      "sha256": "356ce48b617cb26003be13d17ceb052a9981239d8b63bdfb7a3caba662c8a64a"
+    },
+    {
+      "path": "docs/brand-source-exact-100/ap01-ap04-review/evidence/color-pairs.json",
+      "sha256": "0a47e72ab3b25da419353bc51d2582463f8a7f2c1818499eb2a79011581eaea8"
+    },
+    {
+      "path": "docs/brand-source-exact-100/ap01-ap04-review/evidence/native-zoom.json",
+      "sha256": "e3d455a604a6aa75e792342febf44df174983e1cf007a1fa7326cde5956d90fe"
+    },
+    {
+      "path": "/tmp/eh101-approved-board.png",
+      "sha256": "0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417",
+      "git_blob": "22a93818c30ec8feed68a5f3ad049c9856151bfe",
+      "pinned_source_commit": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525"
+    }
+  ]
+}

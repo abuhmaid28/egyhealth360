@@ -1,0 +1,70 @@
+{
+  "selfExclusion": "this inventory only",
+  "files": [
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/BRAND_FINALIZATION_REVIEW.md",
+      "bytes": 16371,
+      "sha256": "18ce497a6f03df642f2f23219e6677f2133d26e42309354e7db0ff34a3ee87fd"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/comparison.html",
+      "bytes": 6877,
+      "sha256": "4be084a936d3815b15342f5fa7c0fd8d0c11c56855a2ae263807b02fc1e1a1f2"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/chromium-print.pdf.gz",
+      "bytes": 67566,
+      "sha256": "a84a002fcd32bd48ea9bc50f1cb787c1b4419c14d4f4a21d14700ee16989df5d"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/independent-review.json",
+      "bytes": 11405,
+      "sha256": "c10d3c21a62d0a3f91a9c851ec03b6e6c3d9f261cc585b70af989d65aa821711"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/material-dark.png",
+      "bytes": 383989,
+      "sha256": "65ff39140501ec7bb55aea040b636be9195873c7df26a52134d6d245a823a251"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/material-light.png",
+      "bytes": 378171,
+      "sha256": "17756eb90746f741ff5a3bf0a302641da8106d8d75e414054b96f179d63e746a"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/native-sizes.png",
+      "bytes": 94228,
+      "sha256": "8d8efc122d981f22cc3d50692d76209d646dd3194f4e65f75431dc0f1c2d58ac"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/preservation.json",
+      "bytes": 6259,
+      "sha256": "d9e9f851918c3b17d1110326d55db4877ad7b625465aaa5abe27cb8d53111b75"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/evidence/validation.json",
+      "bytes": 7742,
+      "sha256": "170aa8f021de3c9cff0825d4849069210208bbd13f03e898d1ce33c2178cac09"
+    },
+    {
+      "path": "docs/brand-source-exact-100/finalization-review/verify.mjs",
+      "bytes": 11224,
+      "sha256": "2ce2e53106d4c74639ed2f18dc4f7f861d7ccd21d35de161ad5af3f0f4e6ec1e"
+    }
+  ],
+  "changedPathsFromAcceptedHead": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md",
+    "docs/brand-source-exact-100/finalization-review/BRAND_FINALIZATION_REVIEW.md",
+    "docs/brand-source-exact-100/finalization-review/comparison.html",
+    "docs/brand-source-exact-100/finalization-review/evidence/chromium-print.pdf.gz",
+    "docs/brand-source-exact-100/finalization-review/evidence/independent-review.json",
+    "docs/brand-source-exact-100/finalization-review/evidence/inventory.json",
+    "docs/brand-source-exact-100/finalization-review/evidence/material-dark.png",
+    "docs/brand-source-exact-100/finalization-review/evidence/material-light.png",
+    "docs/brand-source-exact-100/finalization-review/evidence/native-sizes.png",
+    "docs/brand-source-exact-100/finalization-review/evidence/preservation.json",
+    "docs/brand-source-exact-100/finalization-review/evidence/validation.json",
+    "docs/brand-source-exact-100/finalization-review/verify.mjs"
+  ]
+}

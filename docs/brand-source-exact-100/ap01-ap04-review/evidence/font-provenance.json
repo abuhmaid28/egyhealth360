@@ -1,0 +1,144 @@
+{
+  "upstreamCommit": "5bb28733cec313b63fbd415b574b5ae35c8aa8b8",
+  "source": "https://github.com/google/fonts",
+  "auditTool": "fontTools 4.61.1 TTFont",
+  "files": [
+    {
+      "file": "fonts/plex-400.ttf",
+      "origin": "https://raw.githubusercontent.com/google/fonts/5bb28733cec313b63fbd415b574b5ae35c8aa8b8/ofl/ibmplexsansarabic/IBMPlexSansArabic-Regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9",
+      "bytes": 235924,
+      "names": {
+        "1": "IBM Plex Sans Arabic",
+        "2": "Regular",
+        "6": "IBMPlexSansArabic-Regular",
+        "16": null,
+        "17": null
+      },
+      "OS2WeightClass": 400,
+      "axes": [],
+      "usedWeights": [
+        400
+      ],
+      "version": "Version 1.101",
+      "license": "fonts/ibmplexsansarabic-OFL.txt",
+      "licenseURL": "http://scripts.sil.org/OFL"
+    },
+    {
+      "file": "fonts/plex-600.ttf",
+      "origin": "https://raw.githubusercontent.com/google/fonts/5bb28733cec313b63fbd415b574b5ae35c8aa8b8/ofl/ibmplexsansarabic/IBMPlexSansArabic-SemiBold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467",
+      "bytes": 244616,
+      "names": {
+        "1": "IBM Plex Sans Arabic SemiBold",
+        "2": "Regular",
+        "6": "IBMPlexSansArabic-SemiBold",
+        "16": "IBM Plex Sans Arabic",
+        "17": "SemiBold"
+      },
+      "OS2WeightClass": 600,
+      "axes": [],
+      "usedWeights": [
+        600
+      ],
+      "version": "Version 1.101",
+      "license": "fonts/ibmplexsansarabic-OFL.txt",
+      "licenseURL": "http://scripts.sil.org/OFL"
+    },
+    {
+      "file": "fonts/inter-variable.ttf",
+      "origin": "https://raw.githubusercontent.com/google/fonts/5bb28733cec313b63fbd415b574b5ae35c8aa8b8/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf",
+      "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+      "bytes": 876576,
+      "names": {
+        "1": "Inter",
+        "2": "Regular",
+        "6": "Inter-Regular",
+        "16": null,
+        "17": null
+      },
+      "OS2WeightClass": 400,
+      "axes": [
+        {
+          "tag": "opsz",
+          "min": 14.0,
+          "default": 14.0,
+          "max": 32.0
+        },
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        }
+      ],
+      "usedWeights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "version": "Version 4.001;git-66647c0bb",
+      "license": "fonts/inter-OFL.txt",
+      "licenseURL": "https://openfontlicense.org"
+    },
+    {
+      "file": "fonts/noto-variable.ttf",
+      "origin": "https://raw.githubusercontent.com/google/fonts/5bb28733cec313b63fbd415b574b5ae35c8aa8b8/ofl/notosansarabic/NotoSansArabic%5Bwdth%2Cwght%5D.ttf",
+      "sha256": "63111b5b2e074dd48cc67692e0a2726d86ee94c1c37fe8598257b7b4e87e869e",
+      "bytes": 844676,
+      "names": {
+        "1": "Noto Sans Arabic",
+        "2": "Regular",
+        "6": "NotoSansArabic-Regular",
+        "16": null,
+        "17": null
+      },
+      "OS2WeightClass": 400,
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        },
+        {
+          "tag": "wdth",
+          "min": 62.5,
+          "default": 100.0,
+          "max": 100.0
+        }
+      ],
+      "usedWeights": [
+        400,
+        600
+      ],
+      "version": "Version 2.012",
+      "license": "fonts/notosansarabic-OFL.txt",
+      "licenseURL": "https://scripts.sil.org/OFL"
+    }
+  ],
+  "licensePackaging": [
+    {
+      "readableNotice": "fonts/notosansarabic-OFL.txt",
+      "originalArchive": "fonts/notosansarabic-OFL.original.gz",
+      "upstreamPayloadSha256": "07fc70bfeb985cc1a87a8587d0a0c80bab11c86c9dc3fd95b6f0cb332f983e96",
+      "readableNoticeSha256": "df5143cdf3380169f2d03bf6d2cd243e85621fd097e608c3607cf7f9c9884ae6",
+      "normalization": "CRLF to LF and trailing spaces/tabs only; full notice text retained; exact upstream payload preserved in deterministic gzip"
+    },
+    {
+      "readableNotice": "fonts/inter-OFL.txt",
+      "originalArchive": "fonts/inter-OFL.original.gz",
+      "upstreamPayloadSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+      "readableNoticeSha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39",
+      "normalization": "CRLF to LF and trailing spaces/tabs only; full notice text retained; exact upstream payload preserved in deterministic gzip"
+    },
+    {
+      "readableNotice": "fonts/ibmplexsansarabic-OFL.txt",
+      "originalArchive": "fonts/ibmplexsansarabic-OFL.original.gz",
+      "upstreamPayloadSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "readableNoticeSha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f",
+      "normalization": "CRLF to LF and trailing spaces/tabs only; full notice text retained; exact upstream payload preserved in deterministic gzip"
+    }
+  ]
+}

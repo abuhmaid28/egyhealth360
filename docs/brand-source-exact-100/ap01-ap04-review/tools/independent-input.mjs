@@ -1,0 +1,30 @@
+/* global document, getComputedStyle */
+import assert from 'node:assert/strict';
+import { writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+const { chromium } = await import('/tmp/eh-review-tools/node_modules/playwright/index.mjs');
+const root = fileURLToPath(new URL('../', import.meta.url));
+const browser = await chromium.launch({ executablePath: '/usr/bin/chromium', args: ['--no-sandbox'] });
+const page = await browser.newPage({ viewport: { width: 320, height: 960 } });
+await page.goto('http://127.0.0.1:8100/docs/brand-source-exact-100/ap01-ap04-review/?font=plex&role=doctor&lang=ar&theme=dark');
+await page.evaluate(() => document.fonts.ready);
+await page.evaluate(() => {
+  const nodes = [...document.querySelectorAll('body *')].filter(e => e.checkVisibility() && e.getClientRects().length && !e.closest('#font-probes') && ([...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()) || e.matches('input,textarea,select') || ['::before', '::after'].some(p => !['none', 'normal', '""'].includes(getComputedStyle(e, p).content))));
+  const before = nodes.map(e => parseFloat(getComputedStyle(e).fontSize));
+  nodes.forEach((e, i) => { e.style.fontSize = `${before[i] * 2}px`; });
+});
+const field = page.locator('#sample-reference');
+const metrics = await field.evaluate(e => ({ size: getComputedStyle(e).fontSize, width: e.clientWidth, scrollWidth: e.scrollWidth, value: e.value }));
+await field.focus(); await page.keyboard.press('End');
+const end = await field.evaluate(e => ({ left: e.scrollLeft, start: e.selectionStart, end: e.selectionEnd }));
+await page.keyboard.press('Home');
+const home = await field.evaluate(e => ({ left: e.scrollLeft, start: e.selectionStart, end: e.selectionEnd }));
+await page.keyboard.press('Control+a');
+const selected = await field.evaluate(e => ({ value: e.value, start: e.selectionStart, end: e.selectionEnd }));
+assert.equal(metrics.size, '32px'); assert.equal(metrics.value, 'DEMO-360-01');
+assert.equal(end.end, 11); assert.ok(end.left > 0); assert.equal(home.start, 0); assert.equal(home.left, 0);
+assert.equal(selected.start, 0); assert.equal(selected.end, 11); assert.equal(selected.value, 'DEMO-360-01');
+const result = { case: 'plex-doctor-ar-dark-320-text200', metrics, end, home, selected, pass: true, limitation: 'At320/200 the single-line reference field internally scrolls. Home/End expose the whole retained value; Ctrl+A selects all11 characters. This remains a usability concern distinct from document overflow.' };
+await writeFile(`${root}evidence/independent-input.json`, JSON.stringify(result, null, 2) + '\n');
+console.log(JSON.stringify(result, null, 2));
+await browser.close();

@@ -1,0 +1,59 @@
+{
+  "issue": "https://github.com/abuhmaid28/egyhealth360/issues/100",
+  "authorization": "PR #101 owner authorization issuecomment-6757793824, 10 Nov 2026: bounded DP02 tagline-free primary refinement on existing branch.",
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "source_pr_96": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+  "foundation_pr_97": "e1abedc3d1c8811912f0fe6576e4b4f3459210ce",
+  "baseline_checked_utc": "2026-11-10",
+  "supersession_check": "Issue #100/comments, umbrella #72 comments, open review PRs/branches and fresh main checked; no later instruction found.",
+  "sources": {
+    "symbol-primary": {
+      "commit": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+      "path": "docs/brand-identity-reconstruction/assets/symbol-primary.svg",
+      "sha256": "ece9ce086fdb31ae834e9466dfa92b4cc919b2fb2e1e90042586482e6c727f6b"
+    },
+    "lockup-dark": {
+      "commit": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+      "path": "docs/brand-identity-reconstruction/assets/lockup-dark.svg",
+      "sha256": "98818e104ae837379b13294760b76025a622d179499d3d586292859d520910ae"
+    },
+    "lockup-light": {
+      "commit": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+      "path": "docs/brand-identity-reconstruction/assets/lockup-light.svg",
+      "sha256": "7e2c326dbc3215d961dfc2472e96589bb5581a50c3272f915607a221bbccef48"
+    },
+    "inter.woff2": {
+      "commit": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+      "path": "docs/brand-identity-reconstruction/assets/inter.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    "Inter-OFL.txt": {
+      "commit": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+      "path": "docs/brand-identity-reconstruction/assets/Inter-OFL.txt",
+      "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39"
+    },
+    "plex-arabic-regular.ttf": {
+      "commit": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+      "path": "docs/brand-identity-reconstruction/assets/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    "plex-arabic-OFL.txt": {
+      "commit": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+      "path": "docs/brand-identity-reconstruction/assets/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    }
+  },
+  "palette_status": "Provisional issue-local values; not global approved tokens or medical semantic statuses.",
+  "path_policy": "Raw UTF-8 d bytes, order, child transforms and ellipse geometry immutable. No shaping/tracing/fonts used for logo.",
+  "allowed_deltas": [
+    "stop-color only in existing gradients",
+    "rim fill colors",
+    "outline group fill colors",
+    "external wrapper transforms and spacing",
+    "SVG presentation root/title/viewBox/size/background",
+    "omission of whole tagline groups from all primary/default variants; whole non-applicable groups from locale/icon variants"
+  ],
+  "dp01": "Owner accepted at 864e84a8fe525b08dfd2449063832ef9af516b3d. Name/symbol/internal transforms preserved. Historical tagline +28/+34 wrappers retained only in archived specimens.",
+  "dp02": "Owner content decision accepted: no tagline. Primary asset implementation verification pending exact-new-head review; no new slogan. Old bilingual-* assets and pre-refinement evidence are archival only.",
+  "render_tool": "Free local Playwright 1.64.1 in /tmp/eh100-tools and existing /usr/bin/chromium; no repository dependency changes."
+}
