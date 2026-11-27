@@ -42,6 +42,12 @@ All tracked documentation Markdown paths are classified below. Research files ar
 
 ## CURRENT AUTHORITATIVE
 
+| F06 issue #120 review | Responsibility / limits |
+| --- | --- |
+| [f06-topology-review/ROOT_CAUSE_AND_EVIDENCE.md](f06-topology-review/ROOT_CAUSE_AND_EVIDENCE.md) | Source-grounded root cause, historical E13/generated-artifact provenance and CI gap; no new runtime execution. |
+| [f06-topology-review/OPTIONS_REGRESSION_AND_ROLLBACK.md](f06-topology-review/OPTIONS_REGRESSION_AND_ROLLBACK.md) | Unselected A/B topology options and future permission-scoped safety/rollback/CI plan; no implementation. |
+| [f06-topology-review/OWNER_DECISION_AND_INDEPENDENT_REVIEW.md](f06-topology-review/OWNER_DECISION_AND_INDEPENDENT_REVIEW.md) | P2 disposition, preserved gates, independent criticism, exact scope/CI receipt and owner stop. |
+
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |
 | [STAGING_UI_POLISH.md](STAGING_UI_POLISH.md) | Current bounded fix inventory, deployed candidate attribution, validation, time-display review corrections, remaining issues and source alignment recommendation; original captures retain their point-in-time provenance. No release/merge approval or Final V2 design acceptance. |
