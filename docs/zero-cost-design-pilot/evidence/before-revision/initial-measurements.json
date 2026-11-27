@@ -1,0 +1,956 @@
+{
+  "browser": "154.0.8037.57",
+  "summary": {
+    "measuredLayouts": 48,
+    "horizontalOverflows": [
+      "relay-clinician-en-320-text200"
+    ],
+    "clipped": [
+      {
+        "key": "interval-patient-en-1440",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-en-768",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-en-390",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-en-390-text200",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-en-320",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-en-320-text200",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-ar-1440",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-ar-768",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-ar-390",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-ar-390-text200",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-ar-320",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "interval-patient-ar-320-text200",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-en-1440",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-en-768",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-en-390",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-en-390-text200",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-en-320",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-en-320-text200",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 November 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-ar-1440",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-ar-768",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-ar-390",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-ar-390-text200",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-ar-320",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      },
+      {
+        "key": "relay-patient-ar-320-text200",
+        "clipped": [
+          {
+            "tag": "P",
+            "cls": "sr-only",
+            "text": "12 \u0646\u0648\u0641\u0645\u0628\u0631 2026"
+          }
+        ]
+      }
+    ],
+    "contrastFailures": [
+      {
+        "key": "interval-clinician-en-1440",
+        "text": "01",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-1440",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-1440",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-768",
+        "text": "01",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-768",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-768",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-390",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-390",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-390-text200",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-390-text200",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-320",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-320",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-320-text200",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-en-320-text200",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-1440",
+        "text": "01",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-1440",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-1440",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-768",
+        "text": "01",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-768",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-768",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-390",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-390",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-390-text200",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-390-text200",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-320",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-320",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-320-text200",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "interval-clinician-ar-320-text200",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          245,
+          248,
+          248
+        ],
+        "ratio": 3.62,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-1440",
+        "text": "01",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "ratio": 3.87,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-1440",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "ratio": 3.87,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-1440",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "ratio": 3.87,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-390",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-390",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-390-text200",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-390-text200",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-320",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-320",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-320-text200",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-en-320-text200",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-1440",
+        "text": "01",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "ratio": 3.87,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-1440",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "ratio": 3.87,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-1440",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          255,
+          255,
+          255
+        ],
+        "ratio": 3.87,
+        "size": "9.6px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-390",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-390",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-390-text200",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-390-text200",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-320",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-320",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "9.28px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-320-text200",
+        "text": "02",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      },
+      {
+        "key": "relay-clinician-ar-320-text200",
+        "text": "03",
+        "foreground": "rgb(110, 134, 136)",
+        "background": [
+          240,
+          243,
+          246
+        ],
+        "ratio": 3.47,
+        "size": "18.56px",
+        "weight": "500",
+        "disabled": false
+      }
+    ],
+    "externalRequestsBlocked": [],
+    "browserErrors": []
+  },
+  "note": "Initial rendering, before independent critique remediation. sr-only clipping observations are intentional assistive-text hiding, not visual defects. Not final candidate evidence."
+}

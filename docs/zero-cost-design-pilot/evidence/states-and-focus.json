@@ -1,0 +1,914 @@
+{
+  "inputHashes": {
+    "index.html": "6ae202bc0064e79e8d7a6fee936e35524cdff6c0749dbbffcea392a958c405dd",
+    "specimen.js": "202234e96c306dcf261537fb35d8cc56f51600d7db37de36651ac7e437ecec80",
+    "specimen.css": "9deb9e123f029d4cdc457e9c95ccb0886b9c647563684861f95363eee8eb9178"
+  },
+  "browser": "154.0.8037.57",
+  "scope": "Static representation only; no backend authorization/runtime fix claim",
+  "blockedExternalRequests": [],
+  "results": [
+    {
+      "direction": "interval",
+      "lang": "en",
+      "role": "patient",
+      "state": "read-error",
+      "key": "interval-patient-en-read-error-390",
+      "text": "Skip to content\nDesign specimen · synthetic data\nProposal 01 · INTERVAL\nEgyHealth\n360\nMy care\nFind care\nالعربية\nSH\n\nMY CARE\n\nHello, Salma.\n\nYour next visit. Your next step.\n\nAPPOINTMENTS · NOT LOADED\nYour appointments could not load.\n\nWe cannot show your current appointment status. This is a loading problem, not an empty appointments list.\n\nLoad appointments again\nNEXT STEP\nA follow-up to consider\n\nYour doctor recommended follow-up. This recommendation does not book an appointment.\n\nDr Omar Ali · 5 November 2026\n\nNo appointment is linked to this recommendation here.\n\nFind an appointment\nYour care, within reach\nYour appointments\nUpcoming and previous visits\nSummaries & follow-up\nWhat your doctor shared with you\nAvailable history\nYour permitted care sources\nYour prescriptions\nNot connected in this workspace\nUnavailable\nRecently shared with you\nAvailable history\n05\nNOV\nVISIT SUMMARY\nYour visit with Dr Omar Ali\n\nYour doctor shared this summary with you.\n\n5 November 2026 · Nile Care Clinic\n\nRead summary\nYour care permissions\nDesign specimen · synthetic data\nCompare design proposals",
+      "scrollWidth": 390,
+      "fixture": {
+        "patient": "Salma Hassan",
+        "doctor": "Dr Omar Ali",
+        "clinic": "Nile Care Clinic",
+        "date": "12 November 2026",
+        "past": "5 November 2026",
+        "time": "14:30–15:00",
+        "timezone": "Africa/Cairo · UTC+02:00",
+        "scenarioNow": "2026-11-12T09:00:00+02:00"
+      },
+      "mainControls": [
+        {
+          "text": "Load appointments again",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(112, 69, 46)",
+          "rect": {
+            "width": 304,
+            "height": 45
+          }
+        },
+        {
+          "text": "Find an appointment",
+          "fg": "rgb(0, 100, 90)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 304,
+            "height": 44
+          }
+        },
+        {
+          "text": "Your appointmentsUpcoming and previous visits",
+          "fg": "rgb(19, 46, 57)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 84.1875
+          }
+        },
+        {
+          "text": "Summaries & follow-upWhat your doctor shared with you",
+          "fg": "rgb(19, 46, 57)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 84.1875
+          }
+        },
+        {
+          "text": "Available historyYour permitted care sources",
+          "fg": "rgb(19, 46, 57)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 84.1875
+          }
+        },
+        {
+          "text": "Read summary",
+          "fg": "rgb(0, 100, 90)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 44
+          }
+        },
+        {
+          "text": "Your doctors",
+          "fg": "rgb(0, 100, 90)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 85.8125,
+            "height": 44
+          }
+        }
+      ]
+    },
+    {
+      "direction": "interval",
+      "lang": "en",
+      "role": "clinician",
+      "state": "access-redacted",
+      "key": "interval-clinician-en-access-redacted-390",
+      "text": "Skip to content\nDesign specimen · synthetic data\nProposal 01 · INTERVAL\nEgyHealth\n360\nSchedule\nPeople in your care\nالعربية\nOA\nCONSULTATION WORKSPACE\nThis item is unavailable.\n\nThis item is not available within your current permissions. Return to your workspace.\n\nReturn to schedule\nDesign specimen · synthetic data\nCompare design proposals",
+      "scrollWidth": 390,
+      "fixture": {
+        "state": "access-redacted",
+        "clinicalPayload": null
+      },
+      "mainControls": [
+        {
+          "text": "Return to schedule",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(0, 100, 90)",
+          "rect": {
+            "width": 306,
+            "height": 45
+          }
+        }
+      ],
+      "identitySuppressed": true
+    },
+    {
+      "direction": "interval",
+      "lang": "en",
+      "role": "clinician",
+      "state": "uncertain-write",
+      "key": "interval-clinician-en-uncertain-write-390",
+      "text": "Skip to content\nDesign specimen · synthetic data\nProposal 01 · INTERVAL\nEgyHealth\n360\nSchedule\nPeople in your care\nالعربية\nOA\nSH\nACTIVE CONSULTATION\nSalma Hassan\n\nDr Omar Ali · Nile Care Clinic\n\n12 November 2026\n14:30–15:00 · Cairo time\nUTC+02:00\nConsultation open\nScenario time 14:35\nPRIVATE NOTE · SIGNING STATUS UNKNOWN\nCheck the original action before continuing.\n\nWe cannot confirm whether the private-note signing completed. Review the current source status. Do not submit a new signing command.\n\nRecover the original request only when its exact retained context is available and current authority is rechecked. No automatic retry.\n\nReview current source status\nDesign specimen · synthetic data\nCompare design proposals",
+      "scrollWidth": 390,
+      "fixture": {
+        "patient": "Salma Hassan",
+        "doctor": "Dr Omar Ali",
+        "clinic": "Nile Care Clinic",
+        "date": "12 November 2026",
+        "past": "5 November 2026",
+        "time": "14:30–15:00",
+        "timezone": "Africa/Cairo · UTC+02:00",
+        "scenarioNow": "2026-11-12T14:35:00+02:00"
+      },
+      "mainControls": [
+        {
+          "text": "Review current source status",
+          "fg": "rgb(19, 46, 57)",
+          "bg": "rgb(255, 255, 255)",
+          "rect": {
+            "width": 301,
+            "height": 45
+          }
+        }
+      ]
+    },
+    {
+      "direction": "interval",
+      "lang": "ar",
+      "role": "patient",
+      "state": "read-error",
+      "key": "interval-patient-ar-read-error-390",
+      "text": "انتقل للمحتوى\nنموذج تصميم · بيانات تجريبية\nالاقتراح 01 · INTERVAL\nEgyHealth\n360\nمتابعتي\nدور على دكتور\nEnglish\nس ح\n\nمتابعتي\n\nأهلاً يا سلمى.\n\nميعادك الجاي والخطوة اللي بعده.\n\nالمواعيد · التحميل ماكملش\nحصلت مشكلة وإحنا بنحمّل مواعيدك.\n\nمش قادرين نعرض حالة مواعيدك الحالية. دي مشكلة تحميل، مش معناها إن مفيش مواعيد.\n\nحمّل المواعيد تاني\nالخطوة الجاية\nمتابعة الدكتور رشّحها ليك\n\nالدكتور رشّح لك متابعة. التوصية دي مش حجز ميعاد.\n\nد. عمر علي · 5 نوفمبر 2026\n\nلسه مفيش ميعاد مرتبط بالتوصية هنا.\n\nدور على ميعاد\nمتابعتك قريبة منك\nمواعيدك\nالمواعيد الجاية والزيارات السابقة\nالملخصات والمتابعة\nاللي الدكتور شاركه معاك\nالسجل المتاح\nالمعلومات المتاحة ليك\nروشتاتك\nمش متاحة في مساحة العمل دي دلوقتي\nمش متاحة\nالدكتور شارك معاك\nالسجل المتاح\n05\nنوفمبر\nملخص الزيارة\nزيارتك مع د. عمر علي\n\nالدكتور شارك الملخص معاك.\n\n5 نوفمبر 2026 · Nile Care Clinic\n\nاقرأ الملخص\nصلاحيات متابعة حالتك\nنموذج تصميم · بيانات تجريبية\nقارن اقتراحات التصميم",
+      "scrollWidth": 390,
+      "fixture": {
+        "patient": "سلمى حسن",
+        "doctor": "د. عمر علي",
+        "clinic": "Nile Care Clinic",
+        "date": "12 نوفمبر 2026",
+        "past": "5 نوفمبر 2026",
+        "time": "14:30–15:00",
+        "timezone": "Africa/Cairo · UTC+02:00",
+        "scenarioNow": "2026-11-12T09:00:00+02:00"
+      },
+      "mainControls": [
+        {
+          "text": "حمّل المواعيد تاني",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(112, 69, 46)",
+          "rect": {
+            "width": 304,
+            "height": 49.1875
+          }
+        },
+        {
+          "text": "دور على ميعاد",
+          "fg": "rgb(0, 100, 90)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 304,
+            "height": 47.1875
+          }
+        },
+        {
+          "text": "مواعيدكالمواعيد الجاية والزيارات السابقة",
+          "fg": "rgb(19, 46, 57)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 86.984375
+          }
+        },
+        {
+          "text": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "fg": "rgb(19, 46, 57)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 86.984375
+          }
+        },
+        {
+          "text": "السجل المتاحالمعلومات المتاحة ليك",
+          "fg": "rgb(19, 46, 57)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 86.984375
+          }
+        },
+        {
+          "text": "اقرأ الملخص",
+          "fg": "rgb(0, 100, 90)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 44
+          }
+        },
+        {
+          "text": "دكاترتي",
+          "fg": "rgb(0, 100, 90)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 44,
+            "height": 47.1875
+          }
+        }
+      ]
+    },
+    {
+      "direction": "interval",
+      "lang": "ar",
+      "role": "clinician",
+      "state": "access-redacted",
+      "key": "interval-clinician-ar-access-redacted-390",
+      "text": "انتقل للمحتوى\nنموذج تصميم · بيانات تجريبية\nالاقتراح 01 · INTERVAL\nEgyHealth\n360\nجدول المواعيد\nمرضاي\nEnglish\nع ع\nمساحة الاستشارة\nالعنصر ده مش متاح.\n\nالعنصر ده مش متاح ضمن صلاحياتك الحالية. ارجع لمساحة العمل.\n\nارجع لجدول المواعيد\nنموذج تصميم · بيانات تجريبية\nقارن اقتراحات التصميم",
+      "scrollWidth": 390,
+      "fixture": {
+        "state": "access-redacted",
+        "clinicalPayload": null
+      },
+      "mainControls": [
+        {
+          "text": "ارجع لجدول المواعيد",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(0, 100, 90)",
+          "rect": {
+            "width": 306,
+            "height": 49.1875
+          }
+        }
+      ],
+      "identitySuppressed": true
+    },
+    {
+      "direction": "interval",
+      "lang": "ar",
+      "role": "clinician",
+      "state": "uncertain-write",
+      "key": "interval-clinician-ar-uncertain-write-390",
+      "text": "انتقل للمحتوى\nنموذج تصميم · بيانات تجريبية\nالاقتراح 01 · INTERVAL\nEgyHealth\n360\nجدول المواعيد\nمرضاي\nEnglish\nع ع\nس ح\nالاستشارة الحالية\nسلمى حسن\n\nد. عمر علي · Nile Care Clinic\n\n12 نوفمبر 2026\n14:30–15:00 · بتوقيت القاهرة\nUTC+02:00\nالاستشارة مفتوحة\nتوقيت السيناريو 14:35\nالملاحظة الخاصة · حالة التوقيع مش مؤكدة\nراجع الإجراء الأصلي قبل ما تكمل.\n\nمش قادرين نأكد إذا كان توقيع الملاحظة الخاصة اكتمل ولا لأ. راجع الحالة الحالية للمصدر. ما تبعتش طلب توقيع جديد.\n\nاستعادة الطلب الأصلي تكون بس لو بياناته الأصلية محفوظة ومع مراجعة الصلاحية الحالية. مفيش إعادة تلقائية للإجراء.\n\nراجع حالة المصدر الحالية\nنموذج تصميم · بيانات تجريبية\nقارن اقتراحات التصميم",
+      "scrollWidth": 390,
+      "fixture": {
+        "patient": "سلمى حسن",
+        "doctor": "د. عمر علي",
+        "clinic": "Nile Care Clinic",
+        "date": "12 نوفمبر 2026",
+        "past": "5 نوفمبر 2026",
+        "time": "14:30–15:00",
+        "timezone": "Africa/Cairo · UTC+02:00",
+        "scenarioNow": "2026-11-12T14:35:00+02:00"
+      },
+      "mainControls": [
+        {
+          "text": "راجع حالة المصدر الحالية",
+          "fg": "rgb(19, 46, 57)",
+          "bg": "rgb(255, 255, 255)",
+          "rect": {
+            "width": 301,
+            "height": 49.1875
+          }
+        }
+      ]
+    },
+    {
+      "direction": "relay",
+      "lang": "en",
+      "role": "patient",
+      "state": "read-error",
+      "key": "relay-patient-en-read-error-390",
+      "text": "Skip to content\nDesign specimen · synthetic data\nProposal 02 · RELAY\nEgyHealth\n360\nMy care\nFind care\nالعربية\nSH\n\nMY CARE\n\nHello, Salma.\n\nYour next visit. Your next step.\n\nAppointments & shared sources\nAPPOINTMENTS · NOT LOADED\nYour appointments could not load.\n\nWe cannot show your current appointment status. This is a loading problem, not an empty appointments list.\n\nLoad appointments again\nNEXT STEP\nA follow-up to consider\n\nYour doctor recommended follow-up. This recommendation does not book an appointment.\n\nDr Omar Ali · 5 November 2026\n\nNo appointment is linked to this recommendation here.\n\nFind an appointment\nRecently shared with you\nAvailable history\n05\nNOV\nVISIT SUMMARY\nYour visit with Dr Omar Ali\n\nYour doctor shared this summary with you.\n\n5 November 2026 · Nile Care Clinic\n\nRead summary\nYour care, within reach\nYour appointments\nUpcoming and previous visits\nSummaries & follow-up\nWhat your doctor shared with you\nAvailable history\nYour permitted care sources\nYour prescriptions\nNot connected in this workspace\nUnavailable\nYour care permissions\nCLEAR SOURCES\n\nA visit summary and a follow-up recommendation are separate things your doctor shares.\n\nDesign specimen · synthetic data\nCompare design proposals",
+      "scrollWidth": 390,
+      "fixture": {
+        "patient": "Salma Hassan",
+        "doctor": "Dr Omar Ali",
+        "clinic": "Nile Care Clinic",
+        "date": "12 November 2026",
+        "past": "5 November 2026",
+        "time": "14:30–15:00",
+        "timezone": "Africa/Cairo · UTC+02:00",
+        "scenarioNow": "2026-11-12T09:00:00+02:00"
+      },
+      "mainControls": [
+        {
+          "text": "Load appointments again",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(112, 69, 46)",
+          "rect": {
+            "width": 251,
+            "height": 45
+          }
+        },
+        {
+          "text": "Find an appointment",
+          "fg": "rgb(35, 75, 194)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 297,
+            "height": 44
+          }
+        },
+        {
+          "text": "Read summary",
+          "fg": "rgb(35, 75, 194)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 297,
+            "height": 44
+          }
+        },
+        {
+          "text": "Your appointmentsUpcoming and previous visits",
+          "fg": "rgb(30, 48, 62)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 82.1875
+          }
+        },
+        {
+          "text": "Summaries & follow-upWhat your doctor shared with you",
+          "fg": "rgb(30, 48, 62)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 82.1875
+          }
+        },
+        {
+          "text": "Available historyYour permitted care sources",
+          "fg": "rgb(30, 48, 62)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 82.1875
+          }
+        },
+        {
+          "text": "Your doctors",
+          "fg": "rgb(35, 75, 194)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 85.8125,
+            "height": 44
+          }
+        }
+      ]
+    },
+    {
+      "direction": "relay",
+      "lang": "en",
+      "role": "clinician",
+      "state": "access-redacted",
+      "key": "relay-clinician-en-access-redacted-390",
+      "text": "Skip to content\nDesign specimen · synthetic data\nProposal 02 · RELAY\nEgyHealth\n360\nSchedule\nPeople in your care\nالعربية\nOA\nCONSULTATION WORKSPACE\nThis item is unavailable.\n\nThis item is not available within your current permissions. Return to your workspace.\n\nReturn to schedule\nDesign specimen · synthetic data\nCompare design proposals",
+      "scrollWidth": 390,
+      "fixture": {
+        "state": "access-redacted",
+        "clinicalPayload": null
+      },
+      "mainControls": [
+        {
+          "text": "Return to schedule",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(35, 75, 194)",
+          "rect": {
+            "width": 306,
+            "height": 45
+          }
+        }
+      ],
+      "identitySuppressed": true
+    },
+    {
+      "direction": "relay",
+      "lang": "en",
+      "role": "clinician",
+      "state": "uncertain-write",
+      "key": "relay-clinician-en-uncertain-write-390",
+      "text": "Skip to content\nDesign specimen · synthetic data\nProposal 02 · RELAY\nEgyHealth\n360\nSchedule\nPeople in your care\nالعربية\nOA\nSH\nACTIVE CONSULTATION\nSalma Hassan\n\nDr Omar Ali · Nile Care Clinic\n\n12 November 2026\n14:30–15:00 · Cairo time\nUTC+02:00\nConsultation open\nScenario time 14:35\nPRIVATE NOTE · SIGNING STATUS UNKNOWN\nCheck the original action before continuing.\n\nWe cannot confirm whether the private-note signing completed. Review the current source status. Do not submit a new signing command.\n\nRecover the original request only when its exact retained context is available and current authority is rechecked. No automatic retry.\n\nReview current source status\nDesign specimen · synthetic data\nCompare design proposals",
+      "scrollWidth": 390,
+      "fixture": {
+        "patient": "Salma Hassan",
+        "doctor": "Dr Omar Ali",
+        "clinic": "Nile Care Clinic",
+        "date": "12 November 2026",
+        "past": "5 November 2026",
+        "time": "14:30–15:00",
+        "timezone": "Africa/Cairo · UTC+02:00",
+        "scenarioNow": "2026-11-12T14:35:00+02:00"
+      },
+      "mainControls": [
+        {
+          "text": "Review current source status",
+          "fg": "rgb(30, 48, 62)",
+          "bg": "rgb(255, 255, 255)",
+          "rect": {
+            "width": 301,
+            "height": 45
+          }
+        }
+      ]
+    },
+    {
+      "direction": "relay",
+      "lang": "ar",
+      "role": "patient",
+      "state": "read-error",
+      "key": "relay-patient-ar-read-error-390",
+      "text": "انتقل للمحتوى\nنموذج تصميم · بيانات تجريبية\nالاقتراح 02 · RELAY\nEgyHealth\n360\nمتابعتي\nدور على دكتور\nEnglish\nس ح\n\nمتابعتي\n\nأهلاً يا سلمى.\n\nميعادك الجاي والخطوة اللي بعده.\n\nالمواعيد والمعلومات اللي اتشاركت\nالمواعيد · التحميل ماكملش\nحصلت مشكلة وإحنا بنحمّل مواعيدك.\n\nمش قادرين نعرض حالة مواعيدك الحالية. دي مشكلة تحميل، مش معناها إن مفيش مواعيد.\n\nحمّل المواعيد تاني\nالخطوة الجاية\nمتابعة الدكتور رشّحها ليك\n\nالدكتور رشّح لك متابعة. التوصية دي مش حجز ميعاد.\n\nد. عمر علي · 5 نوفمبر 2026\n\nلسه مفيش ميعاد مرتبط بالتوصية هنا.\n\nدور على ميعاد\nالدكتور شارك معاك\nالسجل المتاح\n05\nنوفمبر\nملخص الزيارة\nزيارتك مع د. عمر علي\n\nالدكتور شارك الملخص معاك.\n\n5 نوفمبر 2026 · Nile Care Clinic\n\nاقرأ الملخص\nمتابعتك قريبة منك\nمواعيدك\nالمواعيد الجاية والزيارات السابقة\nالملخصات والمتابعة\nاللي الدكتور شاركه معاك\nالسجل المتاح\nالمعلومات المتاحة ليك\nروشتاتك\nمش متاحة في مساحة العمل دي دلوقتي\nمش متاحة\nصلاحيات متابعة حالتك\nمصادر واضحة\n\nملخص الزيارة وتوصية المتابعة كل واحد فيهم مصدر مستقل الدكتور بيشاركه معاك.\n\nنموذج تصميم · بيانات تجريبية\nقارن اقتراحات التصميم",
+      "scrollWidth": 390,
+      "fixture": {
+        "patient": "سلمى حسن",
+        "doctor": "د. عمر علي",
+        "clinic": "Nile Care Clinic",
+        "date": "12 نوفمبر 2026",
+        "past": "5 نوفمبر 2026",
+        "time": "14:30–15:00",
+        "timezone": "Africa/Cairo · UTC+02:00",
+        "scenarioNow": "2026-11-12T09:00:00+02:00"
+      },
+      "mainControls": [
+        {
+          "text": "حمّل المواعيد تاني",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(112, 69, 46)",
+          "rect": {
+            "width": 251,
+            "height": 49.1875
+          }
+        },
+        {
+          "text": "دور على ميعاد",
+          "fg": "rgb(35, 75, 194)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 297,
+            "height": 47.1875
+          }
+        },
+        {
+          "text": "اقرأ الملخص",
+          "fg": "rgb(35, 75, 194)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 297,
+            "height": 44
+          }
+        },
+        {
+          "text": "مواعيدكالمواعيد الجاية والزيارات السابقة",
+          "fg": "rgb(30, 48, 62)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 84.984375
+          }
+        },
+        {
+          "text": "الملخصات والمتابعةاللي الدكتور شاركه معاك",
+          "fg": "rgb(30, 48, 62)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 84.984375
+          }
+        },
+        {
+          "text": "السجل المتاحالمعلومات المتاحة ليك",
+          "fg": "rgb(30, 48, 62)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 350,
+            "height": 84.984375
+          }
+        },
+        {
+          "text": "دكاترتي",
+          "fg": "rgb(35, 75, 194)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "rect": {
+            "width": 44,
+            "height": 47.1875
+          }
+        }
+      ]
+    },
+    {
+      "direction": "relay",
+      "lang": "ar",
+      "role": "clinician",
+      "state": "access-redacted",
+      "key": "relay-clinician-ar-access-redacted-390",
+      "text": "انتقل للمحتوى\nنموذج تصميم · بيانات تجريبية\nالاقتراح 02 · RELAY\nEgyHealth\n360\nجدول المواعيد\nمرضاي\nEnglish\nع ع\nمساحة الاستشارة\nالعنصر ده مش متاح.\n\nالعنصر ده مش متاح ضمن صلاحياتك الحالية. ارجع لمساحة العمل.\n\nارجع لجدول المواعيد\nنموذج تصميم · بيانات تجريبية\nقارن اقتراحات التصميم",
+      "scrollWidth": 390,
+      "fixture": {
+        "state": "access-redacted",
+        "clinicalPayload": null
+      },
+      "mainControls": [
+        {
+          "text": "ارجع لجدول المواعيد",
+          "fg": "rgb(255, 255, 255)",
+          "bg": "rgb(35, 75, 194)",
+          "rect": {
+            "width": 306,
+            "height": 49.1875
+          }
+        }
+      ],
+      "identitySuppressed": true
+    },
+    {
+      "direction": "relay",
+      "lang": "ar",
+      "role": "clinician",
+      "state": "uncertain-write",
+      "key": "relay-clinician-ar-uncertain-write-390",
+      "text": "انتقل للمحتوى\nنموذج تصميم · بيانات تجريبية\nالاقتراح 02 · RELAY\nEgyHealth\n360\nجدول المواعيد\nمرضاي\nEnglish\nع ع\nس ح\nالاستشارة الحالية\nسلمى حسن\n\nد. عمر علي · Nile Care Clinic\n\n12 نوفمبر 2026\n14:30–15:00 · بتوقيت القاهرة\nUTC+02:00\nالاستشارة مفتوحة\nتوقيت السيناريو 14:35\nالملاحظة الخاصة · حالة التوقيع مش مؤكدة\nراجع الإجراء الأصلي قبل ما تكمل.\n\nمش قادرين نأكد إذا كان توقيع الملاحظة الخاصة اكتمل ولا لأ. راجع الحالة الحالية للمصدر. ما تبعتش طلب توقيع جديد.\n\nاستعادة الطلب الأصلي تكون بس لو بياناته الأصلية محفوظة ومع مراجعة الصلاحية الحالية. مفيش إعادة تلقائية للإجراء.\n\nراجع حالة المصدر الحالية\nنموذج تصميم · بيانات تجريبية\nقارن اقتراحات التصميم",
+      "scrollWidth": 390,
+      "fixture": {
+        "patient": "سلمى حسن",
+        "doctor": "د. عمر علي",
+        "clinic": "Nile Care Clinic",
+        "date": "12 نوفمبر 2026",
+        "past": "5 نوفمبر 2026",
+        "time": "14:30–15:00",
+        "timezone": "Africa/Cairo · UTC+02:00",
+        "scenarioNow": "2026-11-12T14:35:00+02:00"
+      },
+      "mainControls": [
+        {
+          "text": "راجع حالة المصدر الحالية",
+          "fg": "rgb(30, 48, 62)",
+          "bg": "rgb(255, 255, 255)",
+          "rect": {
+            "width": 301,
+            "height": 49.1875
+          }
+        }
+      ]
+    }
+  ],
+  "focus": [
+    {
+      "direction": "interval",
+      "lang": "en",
+      "action": "summary",
+      "key": "interval-clinician-en-390-focus-summary",
+      "text": "Sign & share summary",
+      "outline": "rgb(18, 101, 207) solid 3px",
+      "top": 398.53125,
+      "bottom": 445.53125,
+      "viewport": 844,
+      "contexts": [
+        {
+          "text": "SHACTIVE CONSULTATIONSalma HassanDr Omar Ali · Nile Care Clinic12 November 202614:30–15:00 · Cairo timeUTC+02:00Consultation openScenario time 14:35",
+          "top": -1739,
+          "bottom": -1506.078125,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": -441.28125,
+          "bottom": -345.3125,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": 230.5625,
+          "bottom": 326.53125,
+          "visible": true
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": 1143.828125,
+          "bottom": 1218.203125,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": 1513.390625,
+          "bottom": 1587.765625,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "direction": "interval",
+      "lang": "en",
+      "action": "close",
+      "key": "interval-clinician-en-390-focus-close",
+      "text": "Review & close consultation",
+      "outline": "rgb(18, 101, 207) solid 3px",
+      "top": 632.765625,
+      "bottom": 677.765625,
+      "viewport": 844,
+      "contexts": [
+        {
+          "text": "SHACTIVE CONSULTATIONSalma HassanDr Omar Ali · Nile Care Clinic12 November 202614:30–15:00 · Cairo timeUTC+02:00Consultation openScenario time 14:35",
+          "top": -2710,
+          "bottom": -2477.078125,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": -1412.28125,
+          "bottom": -1316.3125,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": -740.4375,
+          "bottom": -644.46875,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": 172.828125,
+          "bottom": 247.203125,
+          "visible": true
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": 542.390625,
+          "bottom": 616.765625,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "direction": "interval",
+      "lang": "ar",
+      "action": "summary",
+      "key": "interval-clinician-ar-390-focus-summary",
+      "text": "وقّع وشارك الملخص",
+      "outline": "rgb(18, 101, 207) solid 3px",
+      "top": 396.84375,
+      "bottom": 448.03125,
+      "viewport": 844,
+      "contexts": [
+        {
+          "text": "س حالاستشارة الحاليةسلمى حسند. عمر علي · Nile Care Clinic12 نوفمبر 202614:30–15:00 · بتوقيت القاهرةUTC+02:00الاستشارة مفتوحةتوقيت السيناريو 14:35",
+          "top": -1715.8125,
+          "bottom": -1467.9375,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": -469.25,
+          "bottom": -373.28125,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": 224.6875,
+          "bottom": 320.65625,
+          "visible": true
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": 1110.6875,
+          "bottom": 1185.0625,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": 1497.375,
+          "bottom": 1571.75,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "direction": "interval",
+      "lang": "ar",
+      "action": "close",
+      "key": "interval-clinician-ar-390-focus-close",
+      "text": "راجع واقفل الاستشارة",
+      "outline": "rgb(18, 101, 207) solid 3px",
+      "top": 657.75,
+      "bottom": 706.9375,
+      "viewport": 844,
+      "contexts": [
+        {
+          "text": "س حالاستشارة الحاليةسلمى حسند. عمر علي · Nile Care Clinic12 نوفمبر 202614:30–15:00 · بتوقيت القاهرةUTC+02:00الاستشارة مفتوحةتوقيت السيناريو 14:35",
+          "top": -2645.8125,
+          "bottom": -2397.9375,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": -1399.25,
+          "bottom": -1303.28125,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": -705.3125,
+          "bottom": -609.34375,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": 180.6875,
+          "bottom": 255.0625,
+          "visible": true
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": 567.375,
+          "bottom": 641.75,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "direction": "relay",
+      "lang": "en",
+      "action": "summary",
+      "key": "relay-clinician-en-390-focus-summary",
+      "text": "Sign & share summary",
+      "outline": "rgb(18, 101, 207) solid 3px",
+      "top": 398.90625,
+      "bottom": 445.90625,
+      "viewport": 844,
+      "contexts": [
+        {
+          "text": "SHACTIVE CONSULTATIONSalma HassanDr Omar Ali · Nile Care Clinic12 November 202614:30–15:00 · Cairo timeUTC+02:00Consultation openScenario time 14:35",
+          "top": -1726,
+          "bottom": -1498.890625,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": -417.5,
+          "bottom": -321.53125,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": 230.9375,
+          "bottom": 326.90625,
+          "visible": true
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": 1236.78125,
+          "bottom": 1332.75,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": 1648.9375,
+          "bottom": 1723.3125,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "direction": "relay",
+      "lang": "en",
+      "action": "close",
+      "key": "relay-clinician-en-390-focus-close",
+      "text": "Review & close consultation",
+      "outline": "rgb(18, 101, 207) solid 3px",
+      "top": 632.3125,
+      "bottom": 677.3125,
+      "viewport": 844,
+      "contexts": [
+        {
+          "text": "SHACTIVE CONSULTATIONSalma HassanDr Omar Ali · Nile Care Clinic12 November 202614:30–15:00 · Cairo timeUTC+02:00Consultation openScenario time 14:35",
+          "top": -2833,
+          "bottom": -2605.890625,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": -1524.5,
+          "bottom": -1428.53125,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": -876.0625,
+          "bottom": -780.09375,
+          "visible": false
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": 129.78125,
+          "bottom": 225.75,
+          "visible": true
+        },
+        {
+          "text": "For Salma Hassan12 November 2026 · 14:30–15:00 · Cairo time (UTC+02:00)Consultation open",
+          "top": 541.9375,
+          "bottom": 616.3125,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "direction": "relay",
+      "lang": "ar",
+      "action": "summary",
+      "key": "relay-clinician-ar-390-focus-summary",
+      "text": "وقّع وشارك الملخص",
+      "outline": "rgb(18, 101, 207) solid 3px",
+      "top": 396.828125,
+      "bottom": 448.015625,
+      "viewport": 844,
+      "contexts": [
+        {
+          "text": "س حالاستشارة الحاليةسلمى حسند. عمر علي · Nile Care Clinic12 نوفمبر 202614:30–15:00 · بتوقيت القاهرةUTC+02:00الاستشارة مفتوحةتوقيت السيناريو 14:35",
+          "top": -1701,
+          "bottom": -1460.484375,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": -445.53125,
+          "bottom": -349.5625,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": 224.671875,
+          "bottom": 320.640625,
+          "visible": true
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": 1171.265625,
+          "bottom": 1267.234375,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": 1600.546875,
+          "bottom": 1674.921875,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "direction": "relay",
+      "lang": "ar",
+      "action": "close",
+      "key": "relay-clinician-ar-390-focus-close",
+      "text": "راجع واقفل الاستشارة",
+      "outline": "rgb(18, 101, 207) solid 3px",
+      "top": 657.921875,
+      "bottom": 707.109375,
+      "viewport": 844,
+      "contexts": [
+        {
+          "text": "س حالاستشارة الحاليةسلمى حسند. عمر علي · Nile Care Clinic12 نوفمبر 202614:30–15:00 · بتوقيت القاهرةUTC+02:00الاستشارة مفتوحةتوقيت السيناريو 14:35",
+          "top": -2734,
+          "bottom": -2493.484375,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": -1478.53125,
+          "bottom": -1382.5625,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": -808.328125,
+          "bottom": -712.359375,
+          "visible": false
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": 138.265625,
+          "bottom": 234.234375,
+          "visible": true
+        },
+        {
+          "text": "لـ سلمى حسن12 نوفمبر 2026 · 14:30–15:00 · بتوقيت القاهرة (UTC+02:00)الاستشارة مفتوحة",
+          "top": 567.546875,
+          "bottom": 641.921875,
+          "visible": true
+        }
+      ]
+    }
+  ]
+}

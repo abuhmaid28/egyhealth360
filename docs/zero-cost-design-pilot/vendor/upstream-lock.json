@@ -1,0 +1,109 @@
+{
+  "repository": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+  "commit": "b7d5353e0130feb8c5574ef1251f8a1db1873ccb",
+  "audit_date": "2026-11-07",
+  "mode": "EXPLICIT_AUDITED_PLAYBOOK_ONLY",
+  "upstream_executed": false,
+  "native_activation_verified": false,
+  "inspected_files": [
+    {
+      "path": "LICENSE",
+      "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014"
+    },
+    {
+      "path": "README.md",
+      "sha256": "86c60796b67ca7a6b6c5df1b2cf60876de0dc718804c6a58d134a7be5d81980b"
+    },
+    {
+      "path": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "sha256": "9aa50bd44076db28624ea976056d915905ab9357748f90263a004fa0ef087147"
+    },
+    {
+      "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "sha256": "ff81ec613f70ba9fc3fcce52dbe4ae35d44b2079dbe6dc066d2d6e38c28facd5"
+    },
+    {
+      "path": "cli/package.json",
+      "sha256": "437708e28cb24f148eeacc16a8af4b33e6b7ee9879b099ccb3f059b81ad962dc"
+    },
+    {
+      "path": "cli/src/utils/github.ts",
+      "sha256": "78ed9417edf0c912b60e421cc0bfc776df917d3d97c8eeabbac085ecfa87dc41"
+    },
+    {
+      "path": "cli/src/utils/extract.ts",
+      "sha256": "b4f8fc7a166dabdb4c9563e350c56ac8dffd60b00b083733b9265c5867affa67"
+    },
+    {
+      "path": "cli/src/commands/update.ts",
+      "sha256": "711f798a0d3dd1132957c67d577b887ac8d2e403e333161fb804869293d9bb18"
+    },
+    {
+      "path": "cli/src/commands/init.ts",
+      "sha256": "774e91be2618c8e321b6c1e40a69b1877c12084cd853ce7222bf61765b71acd3"
+    },
+    {
+      "path": "cli/src/utils/template.ts",
+      "sha256": "adbd5e50f745fd1a8c1fc63b7c06b05c2a32578ee9d54380d29a833f32ef5cff"
+    },
+    {
+      "path": "cli/scripts/sync-assets.mjs",
+      "sha256": "d4143ad8a52dc97d879af8c6980dd33527d2f73ca69c90c0b90f35301db816b0"
+    },
+    {
+      "path": "src/ui-ux-pro-max/scripts/core.py",
+      "sha256": "caf92bdcf2579c9a7d6af4f53c54ee9d3c8f05472cfab77aaec38bef120ec63e"
+    },
+    {
+      "path": "src/ui-ux-pro-max/scripts/design_system.py",
+      "sha256": "e7d1c94c4b2eada17c5551157668362659ccf9626d34dbd58e68142410f90103"
+    },
+    {
+      "path": "src/ui-ux-pro-max/scripts/reasoning_contract.py",
+      "sha256": "b8bac1af82aa280d3e06f00aabaeac4337e632996b07fed874e2b6ee6e9c5913"
+    },
+    {
+      "path": "src/ui-ux-pro-max/scripts/search.py",
+      "sha256": "9fd5acc991142fd43c3afe7be0f6720911b668f3988b34e74b5cbc41d58e7947"
+    },
+    {
+      "path": "src/ui-ux-pro-max/scripts/validate_data.py",
+      "sha256": "a599aa256049cf30954d1f164721b99e453eb7e4cb8241bcab2d5573e6cf58b8"
+    }
+  ],
+  "retained": {
+    "vendor/LICENSE": "LICENSE",
+    "vendor/basic-ux-excerpts.json": {
+      "source": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+      "row_numbers": [
+        9,
+        22,
+        23,
+        28,
+        36,
+        39,
+        40,
+        41,
+        43,
+        45,
+        54,
+        66,
+        76,
+        77,
+        78,
+        100,
+        101,
+        102,
+        109,
+        110,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117
+      ],
+      "transformation": "CSV rows to JSON; field text unchanged"
+    }
+  }
+}

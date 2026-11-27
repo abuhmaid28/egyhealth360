@@ -1,6 +1,8 @@
 # Source of truth and document index
 
-Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
+Current bounded reference: [zero-additional-cost design-only pilot](zero-cost-design-pilot/README.md), under the Product Owner’s 7 November 2026 brief. Native Skill activation remains unverified; implementation is not authorized. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable state.
+
+Preserved prior staging reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
 
@@ -41,6 +43,17 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| Bounded zero-additional-cost design pilot | Responsibility / limits |
+| --- | --- |
+| [zero-cost-design-pilot/README.md](zero-cost-design-pilot/README.md) | Owner visual artifact entry; isolated unapproved comparison, no production implementation or final system decision. |
+| [zero-cost-design-pilot/BASELINE.md](zero-cost-design-pilot/BASELINE.md) | Verified GitHub/accepted-contract baseline and separate design/reviewer/dormant implementation barriers. |
+| [zero-cost-design-pilot/AUDIT.md](zero-cost-design-pilot/AUDIT.md) | Pinned MIT Basic static-subset audit, honest explicit activation mode, cost model and full-package limits. |
+| [zero-cost-design-pilot/PLAYBOOK.md](zero-cost-design-pilot/PLAYBOOK.md) | Explicitly loaded adapted checklist only; no host-native activation or S1 completion. |
+| [zero-cost-design-pilot/DESIGN_SPEC.md](zero-cost-design-pilot/DESIGN_SPEC.md) | Two unapproved visual hypotheses, equal synthetic data, responsive/bilingual composition and future handoff barriers. |
+| [zero-cost-design-pilot/INDEPENDENT_REVIEW.md](zero-cost-design-pilot/INDEPENDENT_REVIEW.md) | Independent actual-screenshot critique, material findings/revision verification and bounded verdict; no owner selection. |
+| [zero-cost-design-pilot/VALIDATION.md](zero-cost-design-pilot/VALIDATION.md) | Actual browser/preservation/reference checks, evidence limits and exact-head remote CI handoff. |
+| `zero-cost-design-pilot/specimen/`, `index.html`, `evidence/`, `tools/`, `vendor/` | Synthetic standalone HTML/CSS/JS; browser PNG/PDF/JSON evidence; local tooling; attributed MIT excerpts/license and immutable upstream pin. No product imports or native Skill manifests. |
 
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |
