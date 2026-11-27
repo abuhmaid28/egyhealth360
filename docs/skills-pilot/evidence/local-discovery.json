@@ -1,0 +1,64 @@
+{
+  "kind": "ACTUAL_LOCAL_CODEX_CATALOG_NOT_HOSTED_INVOCATION",
+  "observed_at": "2026-11-07T12:45:36.772615+00:00",
+  "checkout_head_at_probe": "d569ef9d0d0434a6c0398db11a7e74bac74bbc23",
+  "initialize_request": {
+    "id": 1,
+    "method": "initialize",
+    "params": {
+      "clientInfo": {
+        "name": "eh360_s1_discovery_probe",
+        "version": "1"
+      },
+      "capabilities": {
+        "experimentalApi": true
+      }
+    }
+  },
+  "user_agent": "eh360_s1_discovery_probe/0.159.2 (Debian 13.0.0; x86_64) dumb (eh360_s1_discovery_probe; 1)",
+  "request": {
+    "id": 2,
+    "method": "skills/list",
+    "params": {
+      "cwds": [
+        "/workspace/egyhealth360"
+      ],
+      "forceReload": true
+    }
+  },
+  "response_id": 2,
+  "pilot_skills": [
+    {
+      "name": "eh360-ux-review",
+      "description": "Review EgyHealth 360 workflow usability, screen tasks, or role journeys against accepted UX, IA, content, and clinical/privacy boundaries. Use for evidence-based UX findings, not visual proposal generation, pixel/layout QA, general code review, or implementation.",
+      "path": "/workspace/egyhealth360/.agents/skills/eh360-ux-review/SKILL.md",
+      "scope": "repo",
+      "enabled": true,
+      "pluginId": null
+    },
+    {
+      "name": "eh360-visual-exploration",
+      "description": "Develop differentiated, comparable EgyHealth 360 visual design alternatives for an explicitly authorized exploration brief. Use for candidate composition and design rationale, not UX audits, rendered visual QA, production frontend implementation, or final brand selection.",
+      "path": "/workspace/egyhealth360/.agents/skills/eh360-visual-exploration/SKILL.md",
+      "scope": "repo",
+      "enabled": true,
+      "pluginId": null
+    },
+    {
+      "name": "eh360-visual-qa",
+      "description": "Evaluate a bounded EgyHealth 360 UI candidate using rendered screenshots and measurable responsive, RTL/LTR, typography, state, focus, and accessibility evidence against accepted specifications. Use for visual QA, not workflow UX audits, new design alternatives, code fixes, or final design approval.",
+      "path": "/workspace/egyhealth360/.agents/skills/eh360-visual-qa/SKILL.md",
+      "scope": "repo",
+      "enabled": true,
+      "pluginId": null
+    }
+  ],
+  "repository_errors": [],
+  "skill_sha256": {
+    "eh360-ux-review": "08f1b0aa78074bfd48a851f8e5c169db3ea689750cee806bb6d3ca895c9bf327",
+    "eh360-visual-exploration": "63cc0b2c92a94b8bb7ad7a6ebd616113113a4d4319db571de5b3a6387294a6df",
+    "eh360-visual-qa": "d204ed472c7467bbfb73f8b220b9008569a5d233a56699ef2e794e55d47d1160"
+  },
+  "redaction": "Response filtered to three pilot skills and repository errors; unrelated catalog/config/stderr omitted",
+  "limits": "Local automatic catalog scan only; no model invocation, reference loading, hosted discovery or efficacy proof"
+}

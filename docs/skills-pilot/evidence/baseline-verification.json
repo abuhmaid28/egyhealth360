@@ -1,0 +1,42 @@
+{
+  "verified_at": "2026-11-07",
+  "main": {
+    "branch": "main",
+    "sha": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3"
+  },
+  "proposal_pr_86": {
+    "number": 86,
+    "state": "open",
+    "merged": false,
+    "head": "7bd1d03195185b19b6ed869fb2e5ced51b4cb9b3",
+    "branch": "design/72-human-precision-review",
+    "auto_merge": null,
+    "url": "https://github.com/abuhmaid28/egyhealth360/pull/86"
+  },
+  "remote_branch_count": 65,
+  "open_prs": [
+    81,
+    82,
+    83,
+    86
+  ],
+  "skills_issue_search": [],
+  "workspace_r0_search": "No R0 package or pre-existing Skills found before authoring",
+  "baseline_ci": {
+    "run_id": 42165554605,
+    "sha": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+    "conclusion": "success",
+    "url": "https://github.com/abuhmaid28/egyhealth360/actions/runs/42165554605"
+  },
+  "sources": [
+    "git ls-remote origin refs/heads/main",
+    "GitHub connector: branches?per_page=100",
+    "GitHub connector: search issues for skills and open PRs",
+    "GitHub connector: pulls/86; branches/main; actions/runs?branch=main&per_page=1"
+  ],
+  "limits": [
+    "This is baseline verification, not pilot-head CI",
+    "Current live branch-protection read rejected 403",
+    "User-submitted S1 prompt is authorization; no new owner comment fabricated"
+  ]
+}

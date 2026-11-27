@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-07",
+  "os": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "cwd": "/workspace/egyhealth360",
+  "codex_cli": "0.159.2",
+  "node": "v24.19.0",
+  "pnpm": "11.25.0",
+  "python": "3.12.14",
+  "network_policy": "unrestricted/enforced; observed current via cloud_environment.environment_status",
+  "managed_environment": "ccarenv_b64_Y2NhcmVudl9mYTAyOTQ3MzZiNjg4MTkxYjE3M2I3MzI4ZTUyNTYxOA",
+  "secrets_status": "No secret bindings reported by environment status; no values collected",
+  "model": "Not instantiated by evaluation probes; no model/effort equivalence established",
+  "fresh_hosted_session": "unavailable: 401 authentication failure",
+  "codex_skills_docs": {
+    "url": "https://developers.openai.com/codex/skills",
+    "retrieved": "2026-11-07",
+    "html_sha256": "9520a3523867ca8d29b37b74946fc5cff98da86ab0078519696a01d92667bae5"
+  },
+  "local_catalog": "Codex 0.159.2 fresh app-server skills/list: three enabled repo Skills; no model turn"
+}
