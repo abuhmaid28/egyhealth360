@@ -1,0 +1,42 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "sourceHead": "cb3fd9112f15e17b3d500d7a9dd085dd6e412525",
+  "sourceBoardSHA256Verified": "0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417",
+  "byteIdenticalSourceCopies": 22,
+  "parsedRasterFreeSVGs": 13,
+  "baselineTrackedFiles": 1423,
+  "byteIdenticalBaselineFiles": 1420,
+  "onlyChangedBaselineFiles": [
+    "docs/CURRENT_STATUS.md",
+    "docs/IMPLEMENTATION_ROADMAP.md",
+    "docs/SOURCE_OF_TRUTH.md"
+  ],
+  "pngDimensions": {
+    "app-icon-512.png": [
+      512,
+      512
+    ],
+    "favicon-16.png": [
+      16,
+      16
+    ],
+    "owner-desktop.png": [
+      1440,
+      1815
+    ],
+    "favicon-32.png": [
+      32,
+      32
+    ],
+    "owner-mobile.png": [
+      390,
+      2276
+    ],
+    "favicon-24.png": [
+      24,
+      24
+    ]
+  },
+  "browserCasesPassed": 16,
+  "result": "PASS"
+}

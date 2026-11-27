@@ -1,0 +1,143 @@
+{
+  "method": "WCAG sRGB solid opaque color relative luminance; not component or gradient audit",
+  "colors": [
+    {
+      "name": "nile-night",
+      "hex": "#0B3D4A",
+      "rgb": [
+        11,
+        61,
+        74
+      ],
+      "provenance": "board label"
+    },
+    {
+      "name": "turquoise",
+      "hex": "#0FB5A8",
+      "rgb": [
+        15,
+        181,
+        168
+      ],
+      "provenance": "board label"
+    },
+    {
+      "name": "gold",
+      "hex": "#E3B45C",
+      "rgb": [
+        227,
+        180,
+        92
+      ],
+      "provenance": "board label"
+    },
+    {
+      "name": "light",
+      "hex": "#F7F9FA",
+      "rgb": [
+        247,
+        249,
+        250
+      ],
+      "provenance": "board label"
+    },
+    {
+      "name": "white",
+      "hex": "#FFFFFF",
+      "rgb": [
+        255,
+        255,
+        255
+      ],
+      "provenance": "proposed neutral role"
+    },
+    {
+      "name": "muted",
+      "hex": "#45616A",
+      "rgb": [
+        69,
+        97,
+        106
+      ],
+      "provenance": "proposed neutral role"
+    },
+    {
+      "name": "border",
+      "hex": "#D6E3E7",
+      "rgb": [
+        214,
+        227,
+        231
+      ],
+      "provenance": "proposed neutral role"
+    },
+    {
+      "name": "soft",
+      "hex": "#EDF4F5",
+      "rgb": [
+        237,
+        244,
+        245
+      ],
+      "provenance": "proposed neutral role"
+    }
+  ],
+  "contrast": [
+    {
+      "foreground": "white",
+      "background": "nile-night",
+      "ratio": 11.79371550024434,
+      "normalText4_5": true,
+      "largeText3": true
+    },
+    {
+      "foreground": "nile-night",
+      "background": "light",
+      "ratio": 11.167822790261612,
+      "normalText4_5": true,
+      "largeText3": true
+    },
+    {
+      "foreground": "turquoise",
+      "background": "white",
+      "ratio": 2.562446933308663,
+      "normalText4_5": false,
+      "largeText3": false
+    },
+    {
+      "foreground": "gold",
+      "background": "white",
+      "ratio": 1.9179442593375595,
+      "normalText4_5": false,
+      "largeText3": false
+    },
+    {
+      "foreground": "nile-night",
+      "background": "turquoise",
+      "ratio": 4.60252087445813,
+      "normalText4_5": true,
+      "largeText3": true
+    },
+    {
+      "foreground": "nile-night",
+      "background": "gold",
+      "ratio": 6.149144034205553,
+      "normalText4_5": true,
+      "largeText3": true
+    },
+    {
+      "foreground": "muted",
+      "background": "light",
+      "ratio": 6.270978450963209,
+      "normalText4_5": true,
+      "largeText3": true
+    },
+    {
+      "foreground": "border",
+      "background": "white",
+      "ratio": 1.3124371123359873,
+      "normalText4_5": false,
+      "largeText3": false
+    }
+  ]
+}
