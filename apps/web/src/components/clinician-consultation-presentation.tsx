@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState, useLayoutEffect, type ReactNode } from "react";
 import { useLocale } from "../lib/i18n/context";
 import { clinicianConsultationCopy } from "../lib/clinician-consultation-copy";
 import { presentationName, timeZoneLabel, repeatedTimeOffset } from "../lib/presentation";
@@ -243,4 +243,21 @@ export function ClinicalTimestamp({
       <bdi dir="ltr">{careTime(value, zone)}</bdi>
     </bdi>
   );
+}
+
+// Package A presentation disclosure; source projection and editor remain mounted.
+export function ClinicianSourceContext({ children }: { children: ReactNode }) {
+  const { locale } = useLocale();
+  const ref = useRef<HTMLDetailsElement>(null);
+  useLayoutEffect(() => {
+    const media = window.matchMedia("(min-width: 1100px)");
+    const update = () => { if (ref.current) ref.current.open = media.matches; };
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  return <details className="v2-source-context" ref={ref} open>
+    <summary><Icon name="record" size={20} /><span>{clinicianConsultationCopy[locale].sources}</span><Icon name="chevron" size={18} /></summary>
+    {children}
+  </details>;
 }

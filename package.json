@@ -20,7 +20,7 @@
     "m2:verify": "node --env-file-if-exists=.env scripts/verify-care-action-runtime.mjs",
     "clinical:bootstrap": "node --env-file-if-exists=.env scripts/bootstrap-clinical-catalog.mjs",
     "test:ui": "node --test tests/ui-demo.test.mjs",
-    "test:ui:browser": "node scripts/test-ui-browser.mjs",
+    "test:ui:browser": "bash -c 'set -euo pipefail; d=$(mktemp -d \"${TMPDIR:-/tmp}/eh-ui-browser.XXXXXX\"); cleanup() { rm -rf -- \"$d\"; }; trap cleanup EXIT; rc=0; bash scripts/test-ui-visual-recovery.sh HEAD \"$d\" || rc=$?; for f in install.log build.log browser.log; do if [ -s \"$d/$f\" ] && { [ \"$rc\" -ne 0 ] || [ \"$f\" = browser.log ]; }; then echo \"=== $f ===\"; cat \"$d/$f\"; fi; done; exit \"$rc\"'",
     "test:ui:real": "node scripts/test-ui-availability-real.mjs"
   },
   "devDependencies": {

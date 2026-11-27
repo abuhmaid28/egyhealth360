@@ -14,3 +14,6 @@ overrides:
 
   # Nest 11.2.7 pins multer 2.4.0; same-major security fix for GHSA-q7qp-rjg7-q26m.
   '@nestjs/platform-express@11.2.7>multer': 2.5.0
+
+  # @prisma/config 7.10.0 pins effect 3.20.0; same-major fix for GHSA-7589-6fvf-x4pw.
+  '@prisma/config@7.10.0>effect': 3.22.1

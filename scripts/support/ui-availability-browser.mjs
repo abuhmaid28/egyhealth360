@@ -273,7 +273,7 @@ export async function testLiveAvailability(browser, origin, shots) {
   await page
     .getByRole("heading", { name: "Booking details", exact: true })
     .waitFor();
-  assert.equal(await page.getByLabel("Demo workspace").count(), 0);
+  assert.equal(await page.locator("[data-workspace-switch]").count(), 0);
   assert.equal(
     await page
       .getByRole("link", { name: "Open consultation workspace" })

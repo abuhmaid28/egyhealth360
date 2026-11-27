@@ -25,7 +25,17 @@ test('I3S2 strict raw duplicate/nested JSON and bounded purpose pagination',()=>
 test('I3S2 exact additive API/model inventory and all twenty-one historical migration bytes remain pinned',async()=>{
  const {readFile,readdir}=await import('node:fs/promises'),{createHash}=await import('node:crypto'),{beforeI3Slice2}=await import('./support/openapi-baseline.mjs');
  const raw=await readFile('docs/openapi.json','utf8'),old=beforeI3Slice2(raw),api=JSON.parse(raw),prior=JSON.parse(old);assert.equal(createHash('sha256').update(old).digest('hex'),'f8b9cc152df87f118d671222b6270b62ff2955f5cd7a13e47837b8a7223d2362');
- const paths=Object.keys(api.paths).filter(p=>!Object.hasOwn(prior.paths,p));assert.equal(paths.length,10);assert.ok(paths.every(p=>p.includes('/pharmacy-routes')||p.includes('/pharmacies/')||p.endsWith('/pharmacy-destinations')));assert.deepEqual(api.components.schemas.PrescriptionItem.properties.fulfillmentState.enum,['NOT_DISPENSED','FULLY_DISPENSED']);for(const p of paths)if(api.paths[p].head)assert.ok(Object.values(api.paths[p].head.responses).every(r=>r.content===undefined));
+ const paths=Object.keys(api.paths).filter(p=>!Object.hasOwn(prior.paths,p));assert.equal(paths.length,11);assert.ok(paths.every(p=>p.includes('/pharmacy-routes')||p.includes('/pharmacies/')||p.endsWith('/pharmacy-destinations')));assert.deepEqual(api.components.schemas.PrescriptionItem.properties.fulfillmentState.enum,['NOT_DISPENSED','FULLY_DISPENSED']);for(const p of paths)if(api.paths[p].head)assert.ok(Object.values(api.paths[p].head.responses).every(r=>r.content===undefined));
  const checksums=JSON.parse(await readFile('tests/fixtures/v3-i3-slice2-migration-checksums.json','utf8'));assert.equal(Object.keys(checksums).length,21);for(const[name,digest]of Object.entries(checksums))assert.equal(createHash('sha256').update(await readFile('packages/db/prisma/migrations/'+name+'/migration.sql')).digest('hex'),digest);
  const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();assert.equal(names.length,22);assert.equal(names.at(-1),'20261101170000_v3_i3_pharmacy_fulfillment');const schema=await readFile('packages/db/prisma/schema.prisma','utf8');assert.equal([...schema.matchAll(/^model /gm)].length,63);assert.doesNotMatch(schema,/model (LabOrder|LabResult|DispensePartial|Refill|ClosureAssessment)\b/);
+});
+
+test('S1 exact context OpenAPI is session protected, GET/HEAD only, own operational context without artifact authority',async()=>{
+ const {readFile}=await import('node:fs/promises'),api=JSON.parse(await readFile('docs/openapi.json','utf8')),path=api.paths['/api/v1/pharmacies/context'];
+ assert.deepEqual(Object.keys(path).sort(),['get','head']);
+ for(const method of ['get','head']){assert.deepEqual(path[method].security,[{sessionCookie:[]}]);assert.deepEqual(path[method].parameters.map(p=>p.name),['page','pageSize']);assert.ok(path[method].responses['401']);assert.ok(path[method].responses['404']);assert.ok(path[method].responses['503']);}
+ const schema=path.get.responses['200'].content['application/json'].schema;assert.equal(schema.additionalProperties,false);assert.deepEqual(schema.required,['data','meta']);
+ assert.deepEqual(api.components.schemas.PharmacyDestination.required,['id','name']);
+ assert.equal(api.components.schemas.PharmacyRoute.properties.items.type,'array');assert.equal(api.components.schemas.PharmacyRoute.properties.items.minItems,0);
+ assert.ok(Object.values(path.head.responses).every(r=>r.content===undefined));
 });

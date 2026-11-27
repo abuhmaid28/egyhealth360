@@ -1,0 +1,25 @@
+{
+  "results": [
+    "Login EN Light 1440 + Escape theme menu",
+    "Login AR Dark 390 + RTL letterSpacing 0",
+    "Patient MyCare EN Light 1440 & AR Dark 390",
+    "Patient Discover mobile subtitle preserved + EN/AR captures",
+    "Patient DoctorProfile Before vs After EN Dark 1440 + back-link >=44px",
+    "Patient Appointments Before vs After (success-banner Dark fix + 320px reflow)",
+    "Patient Laboratory Dark .result-text contrast + tabs >=44px",
+    "Doctor Schedule + Availability + Appointment captures",
+    "Doctor Demo Consultation Workspace Before vs After + localized Sex not recorded",
+    "Pharmacy Before vs After EN Light 1440 & AR Dark 390",
+    "Admin People + Directory Before vs After",
+    "FUTURE Laboratory Before vs After EN Light 1440 & AR Dark 390 + interactive stage",
+    "320px 200%-text forced-colors reflow patient-appt",
+    "320px 200%-text forced-colors reflow doctor-consult",
+    "320px 200%-text forced-colors reflow pharmacy",
+    "320px 200%-text forced-colors reflow admin",
+    "320px 200%-text forced-colors reflow lab",
+    "Live boundary preserves honest unavailable UI across Pharmacy/Admin/Lab/Patient"
+  ],
+  "failures": [],
+  "unexpected": [],
+  "pageErrors": []
+}

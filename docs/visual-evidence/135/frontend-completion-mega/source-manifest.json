@@ -1,0 +1,96 @@
+{
+  "base": "15ce0b379ee7f8430ae63cf1f159a6d480189b50",
+  "baseTree": "5bd412d06e1f9b29de79471894e61337c7c03ea3",
+  "head": "2e030545b83e90f98d609f9479a5542a9ff27dbc",
+  "headTree": "98e06c83bde212de652950c13c0b9f735bd8a0c3",
+  "webTree": "a9fd6e16eaacd4c2974048f949da9a268fe92742",
+  "paths": [
+    {
+      "path": "apps/web/src/components/application.tsx",
+      "mode": "100644",
+      "blob": "5327813efdddf753b522bb36a36b3e73ebea8931",
+      "sha256": "b6bdf78094de960c70e7fffdbeb89d3af382ebea989c25f4081f3e85b2e9dcf6"
+    },
+    {
+      "path": "apps/web/src/components/doctor.tsx",
+      "mode": "100644",
+      "blob": "cab39a6f3b87d4863789ad139d2e39449de7a08d",
+      "sha256": "39b0d16df728d51a5509a67c028fb05111311450ac629e10db6c57f00ac7b274"
+    },
+    {
+      "path": "apps/web/src/components/patient.tsx",
+      "mode": "100644",
+      "blob": "831f3c0e094ac66e24421588bf020f9fe30cf8d6",
+      "sha256": "f4ff36eacccb610022ca526671e815101c2bb51ea1aa532ca06995a62062eb21"
+    },
+    {
+      "path": "apps/web/src/components/portal-shell.module.css",
+      "mode": "100644",
+      "blob": "f26638a5df004d42bb4e059082abacf90de38c2d",
+      "sha256": "18303cfa657f84c2b778351231d4324cc2fe745cb44bf0639cb5cd976432b626"
+    },
+    {
+      "path": "apps/web/src/components/v2/doctor-schedule-signature.module.css",
+      "mode": "100644",
+      "blob": "0cb2f3fbadba13a70c5f4775f2f395835f67f77a",
+      "sha256": "3ea7d865ee7a99a756e1d5ec3fec89370d1009cc8c6197b11085a29af47ad0f3"
+    },
+    {
+      "path": "apps/web/src/components/v2/frontend-completion-doctor.module.css",
+      "mode": "100644",
+      "blob": "4c05f1a72a9fcdae9e95dfef88c151482e6816bd",
+      "sha256": "ec522332f0c307856f0529f652979e55a6bce1dbd55cc3cfea8084aa4ff548c7"
+    },
+    {
+      "path": "apps/web/src/components/v2/frontend-completion-patient.module.css",
+      "mode": "100644",
+      "blob": "4c3996186376602b9308869876a8ef6c8e2ac5fa",
+      "sha256": "78af6aeb521fb8c9d2957ef277921fa63512943ffb8f14fc276b1aa5cc0d4673"
+    },
+    {
+      "path": "apps/web/src/components/v2/patient-discovery-signature.module.css",
+      "mode": "100644",
+      "blob": "4c181c92e3cb9a43126fc459761881c4b829e383",
+      "sha256": "c3abdb692c2d74b406338dd108f2efbda3f6c6a060076d18eb300af9a984b1b0"
+    },
+    {
+      "path": "apps/web/src/components/v2/patient-doctor-layout.module.css",
+      "mode": "100644",
+      "blob": "5ddf7e59542ae8fae2b41b3de434433a0f7bb322",
+      "sha256": "7e53c7cdbb03c980a9141fdb513ca9769819813c9f45e4db6a31cab3e3e651bc"
+    },
+    {
+      "path": "apps/web/src/components/v2/staff-workspaces.module.css",
+      "mode": "100644",
+      "blob": "92f6d24eee3ef355ac8d1fcc94f619c8cd145c7e",
+      "sha256": "fc8b5c410552a77d9658f69c7088fc86f4ad2dcdb5804eb12f937a21e8e6cc3d"
+    },
+    {
+      "path": "apps/web/src/components/v2/visual-recovery.module.css",
+      "mode": "100644",
+      "blob": "d534e480b501c16a7c008fd62f824d7e35560d99",
+      "sha256": "c614028229a6bb0b1892735d3b2955779fbec2a734c07901aff20ca7cbd00bf9"
+    },
+    {
+      "path": "scripts/support/ui-frontend-completion-browser.mjs",
+      "mode": "100644",
+      "blob": "4e2334c167a61228943278a5eee0278393bb19ba",
+      "sha256": "d803b470011ee433373bd50915ee41c702a734bdf176d4c9e7e774e49a1e07e3"
+    },
+    {
+      "path": "tests/ui-frontend-completion.test.mjs",
+      "mode": "100644",
+      "blob": "454699493ea4e20d46ef08117f1405e4b176dc77",
+      "sha256": "dedf56e4dcb669022da19feb0314cca88f7085b01aa4045eb097a97585434a5f"
+    },
+    {
+      "path": "tests/ui-v2-combined-integration.test.mjs",
+      "mode": "100644",
+      "blob": "4818cd0face758d8d6e291cd52bedbcc4b0851b1",
+      "sha256": "3ddcd18d7bcaff5308cd965ae04cabb84e2bdd54a9fe92f037dda4dfb84354da"
+    }
+  ],
+  "diffSha256": "0e42a62fe3b500aea51c199ee5ce353fae0b43d766c50c1585f2de979992f434",
+  "protectedEvidenceUnchanged": true,
+  "liveAndBackendUnchanged": true
+}

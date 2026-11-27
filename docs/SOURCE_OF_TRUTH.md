@@ -1,6 +1,12 @@
+Current combined local candidate: [Frontend V2 Combined Integration receipt](frontend-v2-slices/FRONTEND_V2_COMBINED_INTEGRATION.md), under [Owner GO](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900321063) and [14/44 scope amendment](https://github.com/abuhmaid28/egyhealth360/issues/135#issuecomment-6900745939). Local validation/reviews PASS;publication blocked by deployment-trigger visibility.58-path ceiling;no combined remoteCI,merge,deployment,Live or release acceptance.
+
 # Source of truth and document index
 
-Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
+Current Package A reference: [Patient/Doctor V2 receipt](frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md), under [Issue #136](https://github.com/abuhmaid28/egyhealth360/issues/136). This is a bounded stacked Draft candidate, not merged/deployed or final Design System approval.
+
+Preserved integration reference: [Issue #133 unified receipt](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md#unified-integration--issue-133). [CURRENT_STATUS](CURRENT_STATUS.md) owns integrated delivery; source-candidate reports retain their historical provenance and limits.
+
+Preserved staging reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.
 
@@ -41,6 +47,16 @@ Within current documents, explicitly labeled historical sections retain that cla
 All tracked documentation Markdown paths are classified below. Research files are under `docs/research/`; there is no top-level `research/` directory at the audited baseline.
 
 ## CURRENT AUTHORITATIVE
+
+| Package A candidate | Responsibility / limits |
+| --- | --- |
+| [frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md](frontend-v2-slices/FRONTEND_V2_PACKAGE_A.md) | Exact source/scope, current Patient/Doctor visual integration, T1, real-browser evidence, independent agent reviews, validation, handoff and rollback; no release or Package B authorization. |
+
+| Integrated candidate and preserved source receipts | Responsibility / limits |
+| --- | --- |
+| [frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md](frontend-v2-slices/PATIENT_MY_CARE_INTEGRATION.md) | Issue #133 current unified provenance, 28-path inventory, four collisions, actual combined tests/E1 health-only evidence and limits, independent reviews, exact-head CI/rollback receipt and open gates; below it, preserved Issue #127 source-specific history. |
+| [frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md](frontend-v2-slices/F03_CRITICAL_ARABIC_COPY.md) | Preserved #130 booking-create-only critical-copy/outcome contract plus current #133 integration evidence; no global F03 or release acceptance. |
+| [frontend-v2-slices/F04_INITIAL_LOCALE.md](frontend-v2-slices/F04_INITIAL_LOCALE.md) | Preserved #132 neutral startup/no-JS contract plus current #133 joint tests; no personalized Arabic SSR, cookies or release acceptance. |
 
 | Current staging polish reference | Responsibility / limits |
 | --- | --- |
@@ -232,3 +248,8 @@ The table below classifies **HISTORICAL EVIDENCE — REJECTED VISUAL CANDIDATES*
 Do not mass-delete/move historical files. Existing issue/PR/screenshot paths remain stable. Prefer explicit index/header classifications and precise current reference repairs; any future archive move needs a link-preserving plan. Old mutable status paragraphs inside classified accepted/historical documents are not current instructions.
 
 Each milestone delivery updates CURRENT_STATUS and affected current references, preserves contract/history evidence and verifies mutual consistency before handoff. Add new important documents to this index. At every major milestone health review recheck architecture, roadmap, debt, Product/UX/Design, security/data, CI/runtime and deployment truth. Final UX/content/brand/Design System/prototype approval is separate from technical CI. [Charter](FOUNDATION_CHARTER.md).
+
+- [B4 Pharmacy READ integration experiment](frontend-v2-slices/PHARMACY_LIVE_READ_INTEGRATION.md): disposable exact-A2 integration only; not canonical authorization or hosted readiness.
+- [Doctor Schedule S0 visual evidence](visual-evidence/135/doctor-schedule-a109ba6/README.md), [S0 UX review](visual-evidence/135/doctor-schedule-a109ba6/ux-independent-review.md), [S0 security review](visual-evidence/135/doctor-schedule-a109ba6/security-independent-review.md): immutable Issue `#135` S0 visual evidence baseline (`a109ba67` / `e07e0ae7`).
+- [Doctor Operations S1 visual evidence](visual-evidence/135/doctor-operations-sprint1/README.md), [S1 independent review](visual-evidence/135/doctor-operations-sprint1/independent-review.md): immutable Issue `#135` S1 visual evidence baseline (`15ce0b37`).
+- [Frontend V2 MEGA five-portal visual gallery](visual-evidence/135/frontend-completion-mega/README.md), [MEGA independent review](visual-evidence/135/frontend-completion-mega/independent-review.md): immutable Issue `#135` five-portal acceptance & QA evidence (`2e030545` / `78bb7ebd`); pending Product Owner final visual review.

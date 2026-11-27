@@ -2,14 +2,18 @@
 import { presentationName, directoryLabel, timeZoneLabel } from "../lib/presentation";
 import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import type {
   Availability,
+  Clinic,
+  OwnAvailability,
   Page,
   Provider,
   PublishSlot,
 } from "../lib/api/contracts";
 import { useApp } from "./context";
+import ops from "./v2/doctor-operations-signature.module.css";
 import {
   Badge,
   Card,
@@ -225,7 +229,7 @@ export function PublicAvailability({
 export function DoctorAvailability() {
   const { t, locale } = useLocale();
 
-  const { api, preview, refresh, changed, notify } = useApp();
+  const { api, preview, refresh, changed, notify, session } = useApp();
   const [page, setPage] = useState(1);
   const slots = useResource(
     () => api.ownAvailability(page),
@@ -240,39 +244,296 @@ export function DoctorAvailability() {
   const [withdrawing, setWithdrawing] = useState("");
   const pending = useRef<PublishSlot | undefined>(undefined);
   const withdrawalKeys = useRef(new Map<string, string>());
-  return (
-    <>
-      <Heading
-        eyebrow={t("Make room for care")}
-        title={t("Availability")}
+  const isExpressiveDemo =
+    api.mode === "demo" &&
+    session.mode === "demo" &&
+    session.role === "CLINICIAN";
+  const formatTile = (
+    iso: string,
+    timeZone: string,
+    options: Intl.DateTimeFormatOptions,
+  ) =>
+    new Intl.DateTimeFormat(locale === "ar" ? "ar-EG-u-nu-latn" : "en-GB", {
+      ...options,
+      timeZone,
+    }).format(new Date(iso));
+
+  const withdrawSlot = async (s: OwnAvailability) => {
+    setWithdrawing(s.id);
+    setError("");
+    const identity = `${s.id}:${s.version}`;
+    let key = withdrawalKeys.current.get(identity);
+    if (!key) {
+      key = crypto.randomUUID();
+      withdrawalKeys.current.set(identity, key);
+    }
+    try {
+      await api.withdrawSlot({
+        slotId: s.id,
+        expectedVersion: s.version,
+        operationKey: key,
+      });
+      changed();
+      notify("Availability withdrawn.");
+    } catch (e) {
+      setError(safeErrorMessage(e));
+    } finally {
+      setWithdrawing("");
+    }
+  };
+
+  const publishForm = (options: Clinic[]) =>
+    options.length ? (
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setBusy(true);
+          setError("");
+          const values = {
+            clinicId,
+            startAt: start.trim(),
+            endAt: end.trim(),
+          };
+          const prior = pending.current;
+          if (
+            !prior ||
+            prior.clinicId !== values.clinicId ||
+            prior.startAt !== values.startAt ||
+            prior.endAt !== values.endAt
+          )
+            pending.current = {
+              ...values,
+              operationKey: crypto.randomUUID(),
+            };
+          try {
+            await api.publishSlot(pending.current!);
+            pending.current = undefined;
+            changed();
+            notify("Availability published.");
+          } catch (e) {
+            setError(safeErrorMessage(e));
+          } finally {
+            setBusy(false);
+          }
+        }}
+      >
+        <Field
+          label={t("Publication clinic")}
+          hint={t("Choose a clinic where you can publish appointments.")}
+        >
+          <select
+            required
+            value={clinicId}
+            onChange={(e) => setClinicId(e.target.value)}
+          >
+            <option value="">{t("Choose a published clinic")}</option>
+            {options.map((c) => (
+              <option key={c.id} value={c.id}>
+                {presentationName(c.displayName, t)} {t("·")}
+                {directoryLabel(c.city, t)}
+              </option>
+            ))}
+          </select>
+        </Field>
+        <Field
+          label={t("Starts at")}
+          hint={t("Use the format shown, including the clinic’s time difference.")}
+        >
+          <input
+            type="text"
+            required
+            value={start}
+            onChange={(e) => setStart(e.target.value)}
+            dir="ltr"
+            placeholder={t("2026-11-02T09:00:00+02:00")}
+            autoComplete="off"
+          />
+        </Field>
+        <Field label={t("Ends at")}>
+          <input
+            type="text"
+            required
+            value={end}
+            onChange={(e) => setEnd(e.target.value)}
+            dir="ltr"
+            placeholder={t("2026-11-02T09:30:00+02:00")}
+            autoComplete="off"
+          />
+        </Field>
+        <button
+          className="button primary full"
+          disabled={busy || !!withdrawing}
+        >
+          {busy ? t("Publishing…") : t("Publish interval")}
+          <Icon name="plus" size={17} />
+        </button>
+      </form>
+    ) : (
+      <Empty
+        title={t("No published clinics")}
         description={t(
-          "Publish finite intervals and review your own publication history.",
+          "Publication requires an eligible clinic and current membership.",
         )}
       />
-      <div className="two-column availability-columns">
-        <Card>
-          <CardTitle title={t("Your published availability history")} />
+    );
+
+  if (!isExpressiveDemo) {
+    return (
+      <>
+        <Heading
+          eyebrow={t("Make room for care")}
+          title={t("Availability")}
+          description={t(
+            "Publish finite intervals and review your own publication history.",
+          )}
+        />
+        <div className="two-column availability-columns">
+          <Card>
+            <CardTitle title={t("Your published availability history")} />
+            <Resource resource={slots} preview={preview}>
+              {(result) => (
+                <>
+                  {result.data.length ? (
+                    <div className="own-slot-list">
+                      {result.data.map((s) => (
+                        <article className="own-slot" key={s.id}>
+                          <div>
+                            <strong>{date(s.startAt, s.timeZone, locale)}</strong>
+                            <p>
+                              <bdi dir="ltr">
+                                {time(s.startAt, s.timeZone, locale)}
+                                {t("–")}
+                                {time(s.endAt, s.timeZone, locale)}
+                              </bdi>{" "}
+                              {t("·")}
+                              {timeZoneLabel(s.timeZone, t)}
+                            </p>
+                            <small className="muted">
+                              {presentationName(
+                                clinics.data?.find((c) => c.id === s.clinicId)
+                                  ?.displayName ?? t("Clinic unavailable"),
+                                t,
+                              )}
+                            </small>
+                          </div>
+                          <div className="own-slot-actions">
+                            <Badge
+                              tone={s.state === "WITHDRAWN" ? "soft" : "green"}
+                            >
+                              {s.state === "PUBLISHED"
+                                ? t("Published")
+                                : t("Withdrawn")}
+                            </Badge>
+                            {s.state === "PUBLISHED" && (
+                              <button
+                                className="button secondary"
+                                disabled={!!withdrawing || busy}
+                                onClick={() => withdrawSlot(s)}
+                              >
+                                {withdrawing === s.id
+                                  ? t("Withdrawing…")
+                                  : t("Withdraw interval")}
+                              </button>
+                            )}
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  ) : (
+                    <Empty
+                      title={t("No published intervals")}
+                      description={t(
+                        "Publish a finite interval to make time available. Withdrawn intervals remain in your own history.",
+                      )}
+                    />
+                  )}
+                  <Pagination meta={result.meta} change={setPage} />
+                </>
+              )}
+            </Resource>
+          </Card>
+          <Card>
+            <CardTitle title={t("Publish a finite interval")} />
+            <Resource resource={clinics} preview={preview}>
+              {publishForm}
+            </Resource>
+            <p className="small muted">
+              {t(
+                "Appointments follow the clinic’s scheduling rules. Publish each interval separately.",
+              )}
+            </p>
+            {api.mode === "demo" && (
+              <p className="small muted">
+                {t("Demo appointments are shown in Cairo time.")}
+              </p>
+            )}
+          </Card>
+        </div>
+        {error && (
+          <div className="form-error" role="alert">
+            {t(error)}
+            <button
+              className="text-link"
+              onClick={() => {
+                slots.retry();
+                clinics.retry();
+              }}
+            >
+              {t("Refresh availability")}
+            </button>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  return (
+    <div className={ops.root} data-expressive-doctor-availability>
+      <header className={ops.heading}>
+        <div className={ops.headingBody}>
+          <p className={ops.eyebrow}>{t("Make room for care")}</p>
+          <h1>{t("Availability")}</h1>
+          <p className={ops.lead}>
+            {t(
+              "Publish finite intervals and review your own publication history.",
+            )}
+          </p>
+        </div>
+        <Link className={ops.navLink} href="/doctor/schedule">
+          {t("← Back to schedule")}
+        </Link>
+      </header>
+      <div className={ops.layout}>
+        <section
+          className={ops.panel}
+          aria-labelledby="doctor-availability-history"
+        >
+          <div className={ops.panelHead}>
+            <h2 id="doctor-availability-history">
+              {t("Your published availability history")}
+            </h2>
+          </div>
           <Resource resource={slots} preview={preview}>
             {(result) => (
               <>
                 {result.data.length ? (
-                  <div className="own-slot-list">
+                  <ul className={ops.slotList}>
                     {result.data.map((s) => (
-                      <article className="own-slot" key={s.id}>
-                        <div>
-                          <strong>{date(s.startAt, s.timeZone, locale)}</strong>
-                          <p>
-                            <bdi dir="ltr">{time(s.startAt, s.timeZone, locale)}
-                            {t("–")}
-                            {time(s.endAt, s.timeZone, locale)}</bdi> {t("·")}
-                            {timeZoneLabel(s.timeZone, t)}
-                          </p>
-                          <small className="muted">
-                            {presentationName(clinics.data?.find((c) => c.id === s.clinicId)
-                              ?.displayName ?? t("Clinic unavailable"), t)}
-                          </small>
-                        </div>
-                        <div className="own-slot-actions">
+                      <li className={ops.slotRow} key={s.id}>
+                        <time className={ops.tile} dateTime={s.startAt}>
+                          <strong>
+                            {formatTile(s.startAt, s.timeZone, {
+                              day: "numeric",
+                            })}
+                          </strong>
+                          <span>
+                            {formatTile(s.startAt, s.timeZone, {
+                              month: "short",
+                              year: "numeric",
+                            })}
+                          </span>
+                        </time>
+                        <div className={ops.slotMeta}>
                           <Badge
                             tone={s.state === "WITHDRAWN" ? "soft" : "green"}
                           >
@@ -280,33 +541,36 @@ export function DoctorAvailability() {
                               ? t("Published")
                               : t("Withdrawn")}
                           </Badge>
+                          <p className={ops.slotTime}>
+                            <bdi>{date(s.startAt, s.timeZone, locale)}</bdi>{" "}
+                            {t("·")}{" "}
+                            <bdi dir="ltr">
+                              {time(s.startAt, s.timeZone, locale)}
+                              {t("–")}
+                              {time(s.endAt, s.timeZone, locale)}
+                            </bdi>
+                          </p>
+                          <p className={ops.slotClinic}>
+                            <Icon name="pin" size={16} />
+                            <span>
+                              <bdi>
+                                {presentationName(
+                                  clinics.data?.find((c) => c.id === s.clinicId)
+                                    ?.displayName ?? t("Clinic unavailable"),
+                                  t,
+                                )}
+                              </bdi>{" "}
+                              {t("·")}{" "}
+                              <bdi>{timeZoneLabel(s.timeZone, t)}</bdi>
+                            </span>
+                          </p>
+                        </div>
+                        <div className={ops.slotActions}>
                           {s.state === "PUBLISHED" && (
                             <button
                               className="button secondary"
                               disabled={!!withdrawing || busy}
-                              onClick={async () => {
-                                setWithdrawing(s.id);
-                                setError("");
-                                const identity = `${s.id}:${s.version}`;
-                                let key = withdrawalKeys.current.get(identity);
-                                if (!key) {
-                                  key = crypto.randomUUID();
-                                  withdrawalKeys.current.set(identity, key);
-                                }
-                                try {
-                                  await api.withdrawSlot({
-                                    slotId: s.id,
-                                    expectedVersion: s.version,
-                                    operationKey: key,
-                                  });
-                                  changed();
-                                  notify("Availability withdrawn.");
-                                } catch (e) {
-                                  setError(safeErrorMessage(e));
-                                } finally {
-                                  setWithdrawing("");
-                                }
-                              }}
+                              onClick={() => withdrawSlot(s)}
                             >
                               {withdrawing === s.id
                                 ? t("Withdrawing…")
@@ -314,9 +578,9 @@ export function DoctorAvailability() {
                             </button>
                           )}
                         </div>
-                      </article>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 ) : (
                   <Empty
                     title={t("No published intervals")}
@@ -329,126 +593,41 @@ export function DoctorAvailability() {
               </>
             )}
           </Resource>
-        </Card>
-        <Card>
-          <CardTitle title={t("Publish a finite interval")} />
-          <Resource resource={clinics} preview={preview}>
-            {(options) =>
-              options.length ? (
-                <form
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    setBusy(true);
-                    setError("");
-                    const values = {
-                      clinicId,
-                      startAt: start.trim(),
-                      endAt: end.trim(),
-                    };
-                    const prior = pending.current;
-                    if (
-                      !prior ||
-                      prior.clinicId !== values.clinicId ||
-                      prior.startAt !== values.startAt ||
-                      prior.endAt !== values.endAt
-                    )
-                      pending.current = {
-                        ...values,
-                        operationKey: crypto.randomUUID(),
-                      };
-                    try {
-                      await api.publishSlot(pending.current!);
-                      pending.current = undefined;
-                      changed();
-                      notify("Availability published.");
-                    } catch (e) {
-                      setError(safeErrorMessage(e));
-                    } finally {
-                      setBusy(false);
-                    }
-                  }}
-                >
-                  <Field
-                    label={t("Publication clinic")}
-                    hint={t(
-                      "Choose a clinic where you can publish appointments.",
-                    )}
-                  >
-                    <select
-                      required
-                      value={clinicId}
-                      onChange={(e) => setClinicId(e.target.value)}
-                    >
-                      <option value="">{t("Choose a published clinic")}</option>
-                      {options.map((c) => (
-                        <option key={c.id} value={c.id}>
-                          {presentationName(c.displayName, t)} {t("·")}
-                          {directoryLabel(c.city, t)}
-                        </option>
-                      ))}
-                    </select>
-                  </Field>
-                  <Field
-                    label={t("Starts at")}
-                    hint={t(
-                      "Use the format shown, including the clinic’s time difference.",
-                    )}
-                  >
-                    <input
-                      type="text"
-                      required
-                      value={start}
-                      onChange={(e) => setStart(e.target.value)}
-                      dir="ltr"
-                      placeholder={t("2026-11-02T09:00:00+02:00")}
-                      autoComplete="off"
-                    />
-                  </Field>
-                  <Field label={t("Ends at")}>
-                    <input
-                      type="text"
-                      required
-                      value={end}
-                      onChange={(e) => setEnd(e.target.value)}
-                      dir="ltr"
-                      placeholder={t("2026-11-02T09:30:00+02:00")}
-                      autoComplete="off"
-                    />
-                  </Field>
-                  <button
-                    className="button primary full"
-                    disabled={busy || !!withdrawing}
-                  >
-                    {busy ? t("Publishing…") : t("Publish interval")}
-                    <Icon name="plus" size={17} />
-                  </button>
-                </form>
-              ) : (
-                <Empty
-                  title={t("No published clinics")}
-                  description={t(
-                    "Publication requires an eligible clinic and current membership.",
-                  )}
-                />
-              )
-            }
-          </Resource>
-          <p className="small muted">
-            {t(
-              "Appointments follow the clinic’s scheduling rules. Publish each interval separately.",
-            )}
-          </p>
-          {api.mode === "demo" && (
-            <p className="small muted">
+        </section>
+        <section
+          className={`${ops.panel} ${ops.publishPanel}`}
+          aria-labelledby="doctor-availability-publish"
+        >
+          <div className={ops.publishHead}>
+            <span className={ops.publishTag}>{t("Make room for care")}</span>
+            <h2 id="doctor-availability-publish">
+              {t("Publish a finite interval")}
+            </h2>
+            <p>
               {t(
-                "Demo appointments are shown in Cairo time.",
+                "Choose a clinic where you can publish appointments.",
               )}
             </p>
-          )}
-        </Card>
+          </div>
+          <div className={ops.publishBody}>
+            <Resource resource={clinics} preview={preview}>
+              {publishForm}
+            </Resource>
+            <div className={ops.publishNotes}>
+              <p className="small muted">
+                {t(
+                  "Appointments follow the clinic’s scheduling rules. Publish each interval separately.",
+                )}
+              </p>
+              <p className="small muted">
+                {t("Demo appointments are shown in Cairo time.")}
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
       {error && (
-        <div className="form-error" role="alert">
+        <div className={`form-error ${ops.errorBanner}`} role="alert">
           {t(error)}
           <button
             className="text-link"
@@ -461,6 +640,6 @@ export function DoctorAvailability() {
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }

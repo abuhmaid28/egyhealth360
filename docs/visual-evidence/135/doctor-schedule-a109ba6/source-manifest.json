@@ -1,0 +1,48 @@
+{
+  "base": "7b5973b85a458d6603ca944b401f6444985244ed",
+  "baseTree": "2dcfa1024d2e2a3e0e5004a162d830440fa91d6c",
+  "head": "a109ba67bcf4c8466421f92f4a8d67b8ca1a6b89",
+  "headTree": "5765ba6c2cf9e33126a115678892ee9e012fa379",
+  "directParent": "384996ae16f47f1d2b7f9fa47c75e81dcbff48d5",
+  "webTree": "4e0393da4993f1bd8eae854c0d6b9e00255a096d",
+  "paths": [
+    {
+      "path": "apps/web/src/components/doctor.tsx",
+      "mode": "100644",
+      "blob": "81f41977b1abbdba50fe3156046fc12a00e5a82c",
+      "sha256": "8d6c055b637f1a21a9abd6b96ce52f8441add4183445d36b312f6292a784db7d"
+    },
+    {
+      "path": "apps/web/src/components/v2/doctor-schedule-signature.module.css",
+      "mode": "100644",
+      "blob": "e09b401081d3b938f3b762ab563021992d82e6b1",
+      "sha256": "289a43f5fe0dd30b1af382737af7861b98d65d2158e66c78c558390d08135731"
+    },
+    {
+      "path": "scripts/support/ui-expressive-doctor-schedule-browser.mjs",
+      "mode": "100644",
+      "blob": "4420a38d4bdc9f0d47d0082c9be44e96c14c766d",
+      "sha256": "b15530ba6919f9b905d951ed959a11ecb03a1b162d4500f2f63da637b95a11c2"
+    },
+    {
+      "path": "scripts/support/ui-polish-browser.mjs",
+      "mode": "100644",
+      "blob": "5a7f56e0b7a45ce98792d1aeb5708ebadee5040a",
+      "sha256": "55e965617751fe9480e71cd80bffaa4c98db00019bc6816b8d0c49aaf397bae6"
+    },
+    {
+      "path": "tests/ui-pharmacy-live.test.mjs",
+      "mode": "100644",
+      "blob": "241963cf0e2019f51ed302e4d4cc236eac1a0f9d",
+      "sha256": "8b1b1fcedae39aa6bca3103ed76ee4b57a9ae8c1a060d34c5e2f73e6a77e71fd"
+    },
+    {
+      "path": "tests/ui-v2-combined-integration.test.mjs",
+      "mode": "100644",
+      "blob": "1b4758e17b46818f3f39e3133acde0fdb6ea83d8",
+      "sha256": "16a91d85f12207c32fca19efacc21887e0d8a94480f07b2ddfabd2a6d6416536"
+    }
+  ],
+  "originalBrowserEntrypointUnchanged": true,
+  "candidateClean": true
+}

@@ -16,11 +16,11 @@ export function pharmacyRequestBoundary(auth:AuthRuntime){return(q:Request,s:Ser
   if(Buffer.byteLength(raw)>2048||q.rawHeaders.reduce((n,v)=>n+Buffer.byteLength(v),0)>8192)throw invalid();
   const author=/^\/api\/v1\/consultations\/([^/]+)\/prescriptions\/([^/]+)\/pharmacy-routes(?:\/([^/]+)\/(withdrawals|reroutes))?$/.exec(path);
   const staff=/^\/api\/v1\/pharmacies\/([^/]+)\/routes(?:\/([^/]+)(?:\/(accept)|\/items\/([^/]+)\/dispenses|\/dispenses\/([^/]+)\/(corrections|reversals))?)?$/.exec(path);
-  const destinations=path==='/api/v1/pharmacy-destinations';
-  if(path!==normalized||path.includes('%')||!author&&!staff&&!destinations)throw missing();
-  for(const id of author?[author[1],author[2],author[3]]:destinations?[]:[staff![1],staff![2],staff![4],staff![5]])if(id!==undefined)try{availabilityId(id);}catch{throw missing();}
+  const destinations=path==='/api/v1/pharmacy-destinations',context=path==='/api/v1/pharmacies/context';
+  if(path!==normalized||path.includes('%')||!author&&!staff&&!destinations&&!context)throw missing();
+  for(const id of author?[author[1],author[2],author[3]]:destinations||context?[]:[staff![1],staff![2],staff![4],staff![5]])if(id!==undefined)try{availabilityId(id);}catch{throw missing();}
   const mutation=!!author||!!staff?.[3]||!!staff?.[4]||!!staff?.[5],methods=mutation?['POST']:['GET','HEAD'];if(!methods.includes(q.method??'')){s.setHeader('Allow',methods.join(', '));throw authError(405,'METHOD_NOT_ALLOWED','Method not allowed.');}
-  if(!mutation){if(q.headers['transfer-encoding']!==undefined||Number(q.headers['content-length']??0)>0)throw invalid();const query=pharmacyQuery(raw);if(destinations&&Object.hasOwn(query,'purpose'))throw invalid();return next();}
+  if(!mutation){if(q.headers['transfer-encoding']!==undefined||Number(q.headers['content-length']??0)>0)throw invalid();const query=pharmacyQuery(raw);if((destinations||context)&&Object.hasOwn(query,'purpose'))throw invalid();return next();}
   if(raw.includes('?'))throw invalid();verifyOrigin(q,auth.config);requireJson(q);
   const count=(name:string)=>q.rawHeaders.filter((v,i)=>i%2===0&&v.toLowerCase()===name).length;if(count('idempotency-key'))throw invalid();if(count('content-encoding')>1||q.headers['content-encoding']!==undefined&&q.headers['content-encoding']!=='identity')throw authError(415,'REQUEST_CONTENT_TYPE_INVALID','Unsupported content type.');
   command=author?(author[4]==='withdrawals'?'WITHDRAW':author[4]==='reroutes'?'REROUTE':'ROUTE'):staff![3]?'ACCEPT':staff![4]?'DISPENSE':staff![6]==='corrections'?'CORRECT':'REVERSE';
@@ -32,6 +32,8 @@ export function pharmacyController(auth:AuthRuntime,store:PharmacyPersistence){
  async function invoke(q:Request,s:ServerResponse,op:()=>Promise<unknown>){try{const {status=200,...body}=await op() as {status?:number};send(q,s,status,body);}catch(e){if(e instanceof PharmacyError&&e.code==='PHARMACY_UNAUTHENTICATED')s.setHeader('Set-Cookie',sessionCookie(auth.config,null));throw failure(e);}}
  @Controller()
  class PharmacyController{
+  @Get('pharmacies/context') @UseGuards(session)
+  context(@Req()q:Request,@Res()s:ServerResponse){return invoke(q,s,()=>store.context(q.principal!,pharmacyQuery(q.url!)));}
   @Get('pharmacy-destinations') @UseGuards(session)
   destinations(@Req()q:Request,@Res()s:ServerResponse){return invoke(q,s,()=>store.destinations(q.principal!,pharmacyQuery(q.url!)));}
   @Post('consultations/:consultationId/prescriptions/:prescriptionId/pharmacy-routes') @UseGuards(session,csrf)

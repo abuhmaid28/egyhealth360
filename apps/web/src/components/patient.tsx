@@ -8,7 +8,7 @@ import { safeErrorMessage } from "../lib/api/errors";
 import { useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type {
   Appointment,
   Availability,
@@ -16,10 +16,16 @@ import type {
   Provider,
 } from "../lib/api/contracts";
 import { useApp } from "./context";
+import { ProviderPortrait } from "./v2/demo-portrait";
+import recovery from "./v2/visual-recovery.module.css";
+import expressive from "./v2/patient-discovery-signature.module.css";
+import completion from "./v2/frontend-completion-patient.module.css";
+import { CareSignal, SignatureIcon } from "./v2/signature-icon";
 import {
   LiveBookingList,
   LiveBookingDetail,
   LiveCreateReview,
+  BookingTime,
 } from "./live-booking";
 import { DemoContinuation, PatientJourney, LiveSummaryEntry } from "./journey";
 import { PublicAvailability } from "./availability";
@@ -42,12 +48,17 @@ import {
 export function PatientScreen({ path }: { path: string }) {
   const { t, locale } = useLocale();
 
-  const { api } = useApp();
+  const { api, session } = useApp();
+  if (path === "/patient/discover" && api.mode === "demo" && session.mode === "demo") {
+    return <ExpressiveDiscovery />;
+  }
+
+  let body: React.ReactNode;
   if (
     api.mode === "live" &&
     ["/patient/medications", "/patient/laboratory"].includes(path)
   )
-    return (
+    body = (
       <>
         <Heading
           title={t(path.endsWith("medications") ? "Medications" : "Laboratory")}
@@ -76,39 +87,38 @@ export function PatientScreen({ path }: { path: string }) {
         </Card>
       </>
     );
-
-  if (
+  else if (
     api.mode === "live" &&
     (path === "/patient/appointments" ||
       path.startsWith("/patient/appointments/"))
   )
-    return path.split("/")[3] ? (
+    body = path.split("/")[3] ? (
       <LiveBookingDetail id={path.split("/")[3]} />
     ) : (
       <LiveBookingList />
     );
-  if (api.mode === "live" && path === "/patient/summaries")
-    return (
+  else if (api.mode === "live" && path === "/patient/summaries")
+    body = (
       <ReleasedSummariesScreen
         service={api.documentation ?? createUnavailableDocumentation()}
       />
     );
-  if (api.mode === "live" && path === "/patient/follow-up")
-    return <PatientFollowUps />;
-  if (path === "/patient" && api.mode === "live") return <LivePatientHome />;
-  if (path === "/patient") return <Dashboard />;
-  if (path === "/patient/discover") return <Discovery />;
-  if (path.startsWith("/patient/doctors/"))
-    return <DoctorProfile id={path.split("/")[3]} />;
-  if (path.startsWith("/patient/clinics/"))
-    return <ClinicScreen id={path.split("/")[3]} />;
-  if (
+  else if (api.mode === "live" && path === "/patient/follow-up")
+    body = <PatientFollowUps />;
+  else if (path === "/patient" && api.mode === "live") body = <LivePatientHome />;
+  else if (path === "/patient") body = <Dashboard />;
+  else if (path === "/patient/discover") body = <Discovery />;
+  else if (path.startsWith("/patient/doctors/"))
+    body = <DoctorProfile id={path.split("/")[3]} />;
+  else if (path.startsWith("/patient/clinics/"))
+    body = <ClinicScreen id={path.split("/")[3]} />;
+  else if (
     path === "/patient/appointments" ||
     path.startsWith("/patient/appointments/")
   )
-    return <Appointments id={path.split("/")[3]} />;
-  if (path === "/patient/settings") return <Settings />;
-  if (
+    body = <Appointments id={path.split("/")[3]} />;
+  else if (path === "/patient/settings") body = <Settings />;
+  else if (
     [
       "/patient/record",
       "/patient/history",
@@ -117,13 +127,20 @@ export function PatientScreen({ path }: { path: string }) {
       "/patient/follow-up",
     ].includes(path)
   )
-    return <RecordScreen section={path.split("/")[2]} />;
+    body = <RecordScreen section={path.split("/")[2]} />;
+  else
+    body = (
+      <Empty
+        title={t("Page not found")}
+        href="/patient"
+        action={t("Back to overview")}
+      />
+    );
+
   return (
-    <Empty
-      title={t("Page not found")}
-      href="/patient"
-      action={t("Back to overview")}
-    />
+    <div className={completion.surface} data-frontend-completion-patient>
+      {body}
+    </div>
   );
 }
 function Dashboard() {
@@ -242,7 +259,7 @@ function Dashboard() {
                 }
                 note={
                   record.measurements[0]
-                    ? `mmHg · ${date(record.measurements[0].measuredAt, undefined, locale)}`
+                    ? `${t("mmHg")} · ${date(record.measurements[0].measuredAt, undefined, locale)}`
                     : "No measurements recorded"
                 }
               />
@@ -451,9 +468,9 @@ export function ProviderCard({ provider }: { provider: Provider }) {
   const { t } = useLocale();
 
   return (
-    <Card className="provider-card">
+    <Card className={`provider-card ${recovery.providerCard}`}>
       <div className="provider-top">
-        <Avatar name={presentationName(provider.displayName, t)} large />
+        <ProviderPortrait providerId={provider.id} name={presentationName(provider.displayName, t)} />
         <Badge tone="soft">
           <bdi>{directoryLabel(provider.specialty.displayName, t)}</bdi>
         </Badge>
@@ -483,10 +500,173 @@ export function ProviderCard({ provider }: { provider: Provider }) {
     </Card>
   );
 }
+const discoveryDoctorNames: Readonly<Record<string, string>> = {
+  "mariam-hassan": "د. مريم حسن",
+  "omar-khaled": "د. عمر خالد",
+  "sara-adel": "د. سارة عادل",
+};
+const discoveryClinicNames: Readonly<Record<string, string>> = {
+  "cairo-clinic": "عيادة نايل كير",
+  "new-cairo": "مركز إيست سايد الطبي",
+};
+const normalizeDiscoveryQuery = (value: string) => value
+  .normalize("NFC").replace(/[\u064B-\u065F\u0670\u0640]/g, "")
+  .replace(/[أإآ]/g, "ا").trim().toLowerCase();
+
+type DiscoveryOption = { value: string; label: string };
+
+function DiscoverySelect({
+  id, label, value, options, onChange, icon,
+}: {
+  id: string; label: string; value: string; options: DiscoveryOption[];
+  onChange: (value: string) => void; icon: "filter" | "pin";
+}) {
+  return (
+    <div className={expressive.field}>
+      <label htmlFor={id} className={expressive.label}>{label}</label>
+      <span className={expressive.well}><SignatureIcon name={icon} /></span>
+      <div className={expressive.selectFrame}>
+        <select id={id} value={value} onChange={(event) => onChange(event.target.value)}>
+          {options.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+        </select>
+        <span aria-hidden="true" className={expressive.selectValue} data-discovery-select-value>
+          <bdi>{options.find((option) => option.value === value)?.label}</bdi>
+        </span>
+        <span className={expressive.chevron}><SignatureIcon name="chevron" /></span>
+      </div>
+    </div>
+  );
+}
+
+function ExpressiveDiscovery() {
+  const { t, locale } = useLocale();
+  const { api, preview } = useApp();
+  const ar = locale === "ar";
+  const copy = (en: string, arabic: string) => ar ? arabic : en;
+  const [query, setQuery] = useState("");
+  const [specialty, setSpecialty] = useState("");
+  const [clinic, setClinic] = useState("");
+  const data = useResource(
+    () => Promise.all([api.providers(), api.specialties(), api.clinics()]),
+    [api],
+  );
+  const doctorName = (provider: Provider) =>
+    (ar ? discoveryDoctorNames[provider.id] : undefined) ?? presentationName(provider.displayName, t);
+  const clinicName = (id: string, name: string) =>
+    (ar ? discoveryClinicNames[id] : undefined) ?? presentationName(name, t);
+  const ready = preview === "ready" && !data.pending && !data.error ? data.data : undefined;
+  const needle = normalizeDiscoveryQuery(query);
+  const filtered = ready?.[0].filter((provider) =>
+    (!needle || [provider.displayName, doctorName(provider)].some((name) => normalizeDiscoveryQuery(name).includes(needle))) &&
+    (!specialty || provider.specialty.key === specialty) &&
+    (!clinic || provider.clinics.some((item) => item.id === clinic)),
+  ) ?? [];
+  const clear = () => {
+    setQuery("");
+    setSpecialty("");
+    setClinic("");
+    document.getElementById("expressive-doctor-search")?.focus();
+  };
+  return (
+    <div className={expressive.root} data-expressive-discovery>
+      <div className={expressive.hero}>
+        <div className={expressive.headline}>
+          <div>
+            <h1>{copy("Find a doctor", "دور على دكتور")}</h1>
+            <p>{copy("Choose a specialty or clinic and see the available profiles.", "اختار التخصص أو العيادة وشوف صفحات الدكاترة.")}</p>
+          </div>
+          <div className={expressive.art}><CareSignal /></div>
+        </div>
+        <Resource resource={data} preview={preview}>
+          {([, specialties, clinics]) => (
+            <div className={expressive.fields} aria-label={copy("Find a doctor filters", "فلاتر البحث عن دكتور")} role="group">
+              <div className={expressive.field}>
+                <label className={expressive.label} htmlFor="expressive-doctor-search">{t("Search doctors")}</label>
+                <span className={`${expressive.well} ${expressive.searchWell}`}><SignatureIcon name="find" /></span>
+                <input id="expressive-doctor-search" value={query} onChange={(event) => setQuery(event.target.value)}
+                  placeholder={t("Search by doctor’s name")} />
+              </div>
+              <DiscoverySelect
+                id="expressive-specialty" label={t("Specialty")} value={specialty} onChange={setSpecialty} icon="filter"
+                options={[{ value: "", label: t("All specialties") }, ...specialties.map((s) => ({
+                  value: s.key, label: directoryLabel(s.displayName, t),
+                }))]}
+              />
+              <DiscoverySelect
+                id="expressive-clinic" label={t("Clinic")} value={clinic} onChange={setClinic} icon="pin"
+                options={[{ value: "", label: t("All clinics") }, ...clinics.map((c) => ({
+                  value: c.id, label: clinicName(c.id, c.displayName),
+                }))]}
+              />
+            </div>
+          )}
+        </Resource>
+      </div>
+      {ready && (
+          <section aria-labelledby="expressive-results">
+            <div className={expressive.results}>
+              <h2 id="expressive-results">{copy("Doctors", "الدكاترة")}</h2>
+              <span role="status">{t("Doctors in this view: {count}", { count: String(filtered.length) })}</span>
+              {(query || specialty || clinic) && (
+                <button className={expressive.clear} onClick={clear}>{t("Clear search & filters")}</button>
+              )}
+            </div>
+            {filtered.length ? (
+              <div className={`provider-grid ${expressive.cards}`}>
+                {filtered.map((provider) => {
+                  const name = doctorName(provider);
+                  const headingId = `expressive-doctor-${provider.id}`;
+                  const place = provider.clinics.find((item) => item.id === clinic) ?? provider.clinics[0];
+                  return (
+                    <article className={`provider-card ${expressive.card}`} key={provider.id} aria-labelledby={headingId}>
+                      <ProviderPortrait providerId={provider.id} name={name} discovery />
+                      <div className={expressive.identity}>
+                        <p className={expressive.specialty}><bdi>{directoryLabel(provider.specialty.displayName, t)}</bdi></p>
+                        <h3 id={headingId}><bdi>{name}</bdi></h3>
+                        {place && (
+                          <p className={expressive.place}>
+                            <SignatureIcon name="pin" />
+                            <span><bdi>{clinicName(place.id, place.displayName)}</bdi>{" · "}<bdi>{directoryLabel(place.city, t)}</bdi></span>
+                          </p>
+                        )}
+                        <Link className={expressive.action} href={`/patient/doctors/${provider.id}`} aria-describedby={headingId}>
+                          {t("View profile & availability")}<SignatureIcon name="arrow" directional />
+                        </Link>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className={`search-empty ${expressive.empty}`}>
+                <Empty title={t("No doctors match your search")} description={t("Try a different name, specialty, or clinic.")} />
+                <button className={expressive.clear} onClick={clear}>{t("Clear search & filters")}</button>
+              </div>
+            )}
+            <div className={`filter-chips ${expressive.chips}`} role="group" aria-label={t("Specialty")}>
+              <button aria-pressed={!specialty} onClick={() => setSpecialty("")}>{t("All specialties")}</button>
+              {ready[1].map((item) => (
+                <button key={item.key} aria-pressed={specialty === item.key} onClick={() => setSpecialty(item.key)}>
+                  {directoryLabel(item.displayName, t)}
+                </button>
+              ))}
+            </div>
+          </section>
+      )}
+      <details className={expressive.disclosure}>
+        <summary><SignatureIcon name="info" />{copy("About these example profiles", "عن صفحات الدكاترة في العرض")}</summary>
+        <p>{copy("The names and portraits here illustrate fictional profiles. This is a demonstration.", "الأسماء والصور هنا لصفحات توضيحية لأشخاص غير حقيقيين. النسخة دي للعرض.")}</p>
+      </details>
+      <p className={expressive.boundary}>{t("Directory profiles help you discover care. A profile or booking does not grant access to your medical record.")}</p>
+    </div>
+  );
+}
+
 function Discovery() {
   const { t } = useLocale();
 
   const { api, preview } = useApp();
+  const searchRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [specialty, setSpecialty] = useState("");
   const [clinic, setClinic] = useState("");
@@ -496,13 +676,14 @@ function Discovery() {
   );
   return (
     <>
-      <Heading
-        eyebrow={t("Find your care partner")}
-        title={t("The right doctor. A better next step.")}
-        description={t(
-          "Explore specialties, get to know your doctor, and plan your visit.",
-        )}
-      />
+      <div className={recovery.discoveryHeading}>
+        <Heading
+          eyebrow={t("Find your care partner")}
+          title={t("The right doctor. A better next step.")}
+          description={t("Explore specialties, get to know your doctor, and plan your visit.")}
+        />
+        <span className={recovery.heroGlyph} aria-hidden="true"><Icon name="search" size={54} /></span>
+      </div>
       <Resource resource={data} preview={preview}>
         {([providers, specialties, clinics]) => {
           const filtered = providers.filter(
@@ -521,6 +702,7 @@ function Discovery() {
                 <div className="search-input">
                   <Icon name="search" />
                   <input
+                    ref={searchRef}
                     aria-label={t("Search doctors")}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
@@ -559,6 +741,7 @@ function Discovery() {
                     setQuery("");
                     setSpecialty("");
                     setClinic("");
+                    searchRef.current?.focus();
                   }}
                 >
                   {t("Clear search & filters")}
@@ -587,10 +770,7 @@ function Discovery() {
                 <p className="muted">
                   {t("Doctors in this view: {count}", { count: String(filtered.length) })}
                 </p>
-                <span className="muted small">
-                  {t("Curated public profiles")}
-                </span>
-              </div>
+                </div>
               {filtered.length ? (
                 <div className="provider-grid">
                   {filtered.map((p) => (
@@ -651,8 +831,8 @@ function DoctorProfile({ id }: { id: string }) {
       <Resource resource={data} preview={preview}>
         {(p) => (
           <>
-            <Card className="doctor-profile">
-              <Avatar name={presentationName(p.displayName, t)} large />
+            <Card className={`doctor-profile ${recovery.providerProfile}`}>
+              <ProviderPortrait providerId={p.id} name={presentationName(p.displayName, t)} />
               <div>
                 <Badge tone="soft">
                   <bdi>{directoryLabel(p.specialty.displayName, t)}</bdi>
@@ -667,16 +847,18 @@ function DoctorProfile({ id }: { id: string }) {
                   {presentationName(p.clinics[0]?.displayName ?? "", t)}
                 </div>
               </div>
-              <div className="profile-seal">
-                <Icon name="heart" size={32} />
-                <span>
-                  {t("A more connected")}
-                  <br />
-                  {t("care experience")}
-                </span>
-              </div>
             </Card>
-            <div className="two-column">
+            <div className={`two-column ${recovery.bookingColumns}`}>
+              <PublicAvailability
+                provider={p}
+                reason={reason}
+                setReason={setReason}
+                onReview={(selection) => {
+                  setSlot(selection);
+                  setError("");
+                  setConfirm(true);
+                }}
+              />
               <div className="stack">
                 <Card>
                   <CardTitle title={t("About this doctor")} />
@@ -737,16 +919,6 @@ function DoctorProfile({ id }: { id: string }) {
                   </ul>
                 </Card>
               </div>
-              <PublicAvailability
-                provider={p}
-                reason={reason}
-                setReason={setReason}
-                onReview={(selection) => {
-                  setSlot(selection);
-                  setError("");
-                  setConfirm(true);
-                }}
-              />
             </div>
             {confirm && slot && api.mode === "live" ? (
               <LiveCreateReview
@@ -872,10 +1044,15 @@ function BookingDialog({
           <small className="muted">{timeZoneLabel(slot.timeZone, t)}</small>
         </Detail>
         <Detail icon="pin" title={t("Clinic")}>
-          {provider.clinics.find((c) => c.id === slot.clinicId)?.displayName}
+          <bdi>
+            {presentationName(
+              provider.clinics.find((c) => c.id === slot.clinicId)?.displayName ?? "",
+              t,
+            )}
+          </bdi>
         </Detail>
         <Detail icon="record" title={t("Reason for visit")}>
-          <bdi>{reason}</bdi>
+          <bdi dir="auto">{reason}</bdi>
         </Detail>
       </div>
       {error && (
@@ -928,7 +1105,7 @@ function ClinicScreen({ id }: { id: string }) {
               />
               <Card className="map-art large-map">
                 <Icon name="pin" size={40} />
-                <strong>{presentationName(c.displayName, t)}</strong>
+                <strong><bdi>{presentationName(c.displayName, t)}</bdi></strong>
                 <span>{t("Address overview · illustrative map")}</span>
               </Card>
               <div className="section-heading">
@@ -977,24 +1154,35 @@ export function AppointmentRow({
       </div>
       <div className="appointment-main">
         <Badge tone={a.status === "Completed" ? "soft" : "green"}>
-          {a.status}
+          {t(a.status)}
         </Badge>
-        <h3>{doctor ? a.patientName : a.provider.displayName}</h3>
+        <h3>
+          <bdi>
+            {doctor
+              ? a.patientName
+              : presentationName(a.provider.displayName, t)}
+          </bdi>
+        </h3>
         <p>
-          {directoryLabel(a.provider.specialty.displayName, t)} {t("·")}{" "}
-          {time(a.slot.startAt, a.slot.timeZone, locale)}
-          {t("–")}
-          {time(a.slot.endAt, a.slot.timeZone, locale)}
+          <bdi>{directoryLabel(a.provider.specialty.displayName, t)}</bdi> {t("·")}{" "}
+          <bdi dir="ltr">
+            {time(a.slot.startAt, a.slot.timeZone, locale)}
+            {t("–")}
+            {time(a.slot.endAt, a.slot.timeZone, locale)}
+          </bdi>
         </p>
         <small className="appointment-zone">
           <bdi>{timeZoneLabel(a.slot.timeZone, t)}</bdi>
         </small>
         <small>
           <Icon name="pin" size={13} />
-          {
-            a.provider.clinics.find((c) => c.id === a.slot.clinicId)
-              ?.displayName
-          }
+          <bdi>
+            {presentationName(
+              a.provider.clinics.find((c) => c.id === a.slot.clinicId)
+                ?.displayName ?? "",
+              t,
+            )}
+          </bdi>
         </small>
       </div>
       <Link
@@ -1057,7 +1245,7 @@ function Appointments({ id }: { id?: string }) {
                           )}
                     </p>
                   </div>
-                  <Badge>{a.status}</Badge>
+                  <Badge>{t(a.status)}</Badge>
                 </div>
                 {a.availabilitySource === "live" && (
                   <div className="boundary-notice">
@@ -1075,11 +1263,11 @@ function Appointments({ id }: { id?: string }) {
                   <Card>
                     <CardTitle title={t("Appointment details")} />
                     <div className="inline">
-                      <Avatar name={a.provider.displayName} large />
+                      <Avatar name={presentationName(a.provider.displayName, t)} large />
                       <div>
-                        <h2>{a.provider.displayName}</h2>
+                        <h2><bdi>{presentationName(a.provider.displayName, t)}</bdi></h2>
                         <p className="muted">
-                          {directoryLabel(a.provider.specialty.displayName, t)}
+                          <bdi>{directoryLabel(a.provider.specialty.displayName, t)}</bdi>
                         </p>
                       </div>
                     </div>
@@ -1088,20 +1276,20 @@ function Appointments({ id }: { id?: string }) {
                         {date(a.slot.startAt, a.slot.timeZone, locale)}
                       </Detail>
                       <Detail icon="clock" title={t("Time")}>
-                        {time(a.slot.startAt, a.slot.timeZone, locale)}
-                        {t("–")}
-                        {time(a.slot.endAt, a.slot.timeZone, locale)} {t("·")}{" "}
-                        {timeZoneLabel(a.slot.timeZone, t)}
+                        <BookingTime booking={a.slot} patientDetail />
                       </Detail>
                       <Detail icon="pin" title={t("Location")}>
-                        {
-                          a.provider.clinics.find(
-                            (c) => c.id === a.slot.clinicId,
-                          )?.displayName
-                        }
+                        <bdi>
+                          {presentationName(
+                            a.provider.clinics.find(
+                              (c) => c.id === a.slot.clinicId,
+                            )?.displayName ?? "",
+                            t,
+                          )}
+                        </bdi>
                       </Detail>
                       <Detail icon="record" title={t("Reason for visit")}>
-                        {a.reason}
+                        <bdi dir="auto">{a.reason}</bdi>
                       </Detail>
                     </div>
                   </Card>

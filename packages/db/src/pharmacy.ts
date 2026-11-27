@@ -52,7 +52,7 @@ export function createPharmacyModule(pool:pg.Pool,source:SourceAccess){
   SELECT (SELECT count(*)::int FROM visible) total,coalesce((SELECT jsonb_agg(jsonb_build_object('id',r.id,'prescriptionId',r.root_id,'pharmacyId',r.pharmacy_id,'pharmacyName',r.pharmacy_name,'version',r.version,'state',r.state,'recordedState',r.retained_state,'purpose',CASE WHEN $5='history' THEN 'CORRECTION_HISTORY' ELSE 'FULFILLMENT' END,'createdAt',r.created_at,'patientDisplayName',CASE WHEN $5='history' THEN NULL ELSE r.patient_name END,
    'validFrom',(SELECT valid_from FROM public.prescription_versions WHERE root_id=r.root_id ORDER BY version DESC LIMIT 1),'validUntil',(SELECT valid_until FROM public.prescription_versions WHERE root_id=r.root_id ORDER BY version DESC LIMIT 1),
    'transitions',(SELECT jsonb_agg(jsonb_build_object('state',state,'recordedAt',recorded_at,'reason',reason) ORDER BY version) FROM public.pharmacy_route_versions WHERE route_id=r.id),
-   'items',(SELECT jsonb_agg(jsonb_build_object('id',i.id,'medicationId',i.medication_id,'medicationDisplay',i.medication_display,'quantity',trim(trailing '.' FROM trim(trailing '0' FROM i.quantity::text)),'unit',i.unit,'instructions',CASE WHEN $5='history' THEN NULL ELSE i.instructions END)||(CASE WHEN $4::boolean THEN public.i3_pharmacy_item_projection(i.id,$9,$10)-'routingHistory'-'routingHistoryMeta' ELSE public.i3_pharmacy_item_projection(i.id,$9,$10) END) ORDER BY i.id) FROM public.pharmacy_route_items ri JOIN public.prescription_items i ON i.id=ri.item_id WHERE ri.route_id=r.id AND (NOT $4::boolean OR $5<>'history' OR EXISTS(SELECT 1 FROM public.pharmacy_dispenses d WHERE d.item_id=i.id)))
+   'items',(SELECT coalesce(jsonb_agg(jsonb_build_object('id',i.id,'medicationId',i.medication_id,'medicationDisplay',i.medication_display,'quantity',trim(trailing '.' FROM trim(trailing '0' FROM i.quantity::text)),'unit',i.unit,'instructions',CASE WHEN $5='history' THEN NULL ELSE i.instructions END)||(CASE WHEN $4::boolean THEN public.i3_pharmacy_item_projection(i.id,$9,$10)-'routingHistory'-'routingHistoryMeta' ELSE public.i3_pharmacy_item_projection(i.id,$9,$10) END) ORDER BY i.id),'[]'::jsonb) FROM public.pharmacy_route_items ri JOIN public.prescription_items i ON i.id=ri.item_id WHERE ri.route_id=r.id AND (NOT $4::boolean OR $5<>'history' OR EXISTS(SELECT 1 FROM public.pharmacy_dispenses d WHERE d.item_id=i.id)))
   ) ORDER BY r.created_at DESC,r.id) FROM selected r),'[]'::jsonb) data`,[org,root,id,staff,page.purpose,id?1:page.pageSize,id?0:(page.page-1)*page.pageSize,receipt,id?page.page:1,id?page.pageSize:1])).rows[0];
   if(id){if(!result.data.length)deny();return{data:result.data[0]};}return{data:result.data,meta:{...page,total:result.total}};
  }
@@ -121,6 +121,32 @@ export function createPharmacyModule(pool:pg.Pool,source:SourceAccess){
   },async tx=>{for(const target of hints){if(await privacy(tx,target.root_id))deny();if(!['CORRECT','REVERSE'].includes(command)&&!await eligible(tx,target.root_id,command==='DISPENSE'))deny();}});
  }
  return{
+  /** Own operational context only; each artifact read still performs staffRun authorization. */
+  async context(principal:AuthPrincipal,page:unknown={}){
+   // Purpose belongs to artifact reads, never to discovery.
+   if(!page||typeof page!=='object'||Reflect.ownKeys(page).some(k=>k!=='page'&&k!=='pageSize'))fail('PHARMACY_INVALID');
+   const p=pharmacyPage(page),a=actor(principal);let tx:pg.PoolClient|undefined,discard=false;
+   const connectionError=()=>{discard=true;};
+   try{
+    tx=await pool.connect();tx.on('error',connectionError);await tx.query('BEGIN');
+    await tx.query("SET LOCAL transaction_timeout='30s'");await tx.query("SET LOCAL lock_timeout='5s'");await tx.query("SET LOCAL statement_timeout='10s'");
+    // Same user/session ordering as staffRun and real membership/revocation writers.
+    await tx.query('SELECT id FROM public.users WHERE id=$1 FOR NO KEY UPDATE',[a.userId]);
+    await tx.query('SELECT id FROM public.sessions WHERE id=$1 FOR UPDATE',[a.sessionId]);
+    await source.current(tx,a);if(a.role!=='PHARMACY_STAFF')deny();
+    // The actor user lock also serializes membership grants/ends. Only own candidates are inspected.
+    const candidates=(await tx.query<{id:string;organization_id:string}>("SELECT id,organization_id FROM public.organization_memberships WHERE user_id=$1 AND user_role='PHARMACY_STAFF' AND organization_kind='PHARMACY' AND status='ACTIVE' AND ended_at IS NULL ORDER BY organization_id,id",[a.userId])).rows;
+    await orgLocks(tx,candidates.map(m=>m.organization_id));
+    for(const m of candidates)await tx.query('SELECT id FROM public.organization_memberships WHERE id=$1 AND user_id=$2 FOR SHARE',[m.id,a.userId]);
+    await source.current(tx,a);
+    const result=(await tx.query(`WITH pharmacy_context AS MATERIALIZED (
+     SELECT DISTINCT o.id,o.name FROM public.organization_memberships m JOIN public.organizations o ON o.id=m.organization_id
+     WHERE m.user_id=$1 AND m.id=ANY($2::uuid[]) AND m.user_role='PHARMACY_STAFF' AND m.organization_kind='PHARMACY' AND m.status='ACTIVE' AND m.ended_at IS NULL AND o.kind='PHARMACY' AND o.status='ACTIVE'
+    ) SELECT coalesce((SELECT jsonb_agg(jsonb_build_object('id',id,'name',name) ORDER BY id) FROM (SELECT * FROM pharmacy_context ORDER BY id LIMIT $3 OFFSET $4) selected),'[]'::jsonb) data,(SELECT count(*)::int FROM pharmacy_context) total`,[a.userId,candidates.map(m=>m.id),p.pageSize,(p.page-1)*p.pageSize])).rows[0];
+    await source.current(tx,a);await tx.query('COMMIT');
+    return{data:result.data,meta:{page:p.page,pageSize:p.pageSize,total:result.total}};
+   }catch(e){if(!(e instanceof PharmacyError)&&!(e instanceof PrescriptionError))discard=true;if(tx)await tx.query('ROLLBACK').catch(()=>{discard=true;});return translate(e);}finally{tx?.release(discard);tx?.removeListener('error',connectionError);}
+  },
   async destinations(principal:AuthPrincipal,page:unknown={}){
    const a=actor(principal),p=pharmacyPage(page);try{return await source.run(a,null,[],false,async tx=>{if(a.role!=='CLINICIAN'||p.purpose!=='fulfillment')deny();const result=(await tx.query("WITH visible AS MATERIALIZED(SELECT id,name FROM public.organizations WHERE kind='PHARMACY' AND status='ACTIVE') SELECT (SELECT count(*)::int FROM visible) total,coalesce((SELECT jsonb_agg(jsonb_build_object('id',id,'name',name) ORDER BY id) FROM (SELECT * FROM visible ORDER BY id LIMIT $1 OFFSET $2) p),'[]'::jsonb) data",[p.pageSize,(p.page-1)*p.pageSize])).rows[0];return{data:result.data,meta:{page:p.page,pageSize:p.pageSize,total:result.total}};},true);}catch(e){return translate(e);}
   },
