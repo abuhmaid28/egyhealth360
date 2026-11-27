@@ -1,0 +1,680 @@
+{
+  "browser": "154.0.8037.57",
+  "layouts": [
+    {
+      "l": "ar",
+      "width": 320,
+      "scale": 1,
+      "scroll": 320,
+      "fonts": [
+        "Inter",
+        "Plex",
+        "Plex"
+      ],
+      "targetMinimum": 48,
+      "h1": 1,
+      "dir": "rtl",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "ar",
+      "width": 320,
+      "scale": 2,
+      "scroll": 320,
+      "fonts": [
+        "Inter",
+        "Plex",
+        "Plex"
+      ],
+      "targetMinimum": 75.5,
+      "h1": 1,
+      "dir": "rtl",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "ar",
+      "width": 390,
+      "scale": 1,
+      "scroll": 390,
+      "fonts": [
+        "Inter",
+        "Plex",
+        "Plex"
+      ],
+      "targetMinimum": 48,
+      "h1": 1,
+      "dir": "rtl",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "ar",
+      "width": 390,
+      "scale": 2,
+      "scroll": 390,
+      "fonts": [
+        "Inter",
+        "Plex",
+        "Plex"
+      ],
+      "targetMinimum": 75.5,
+      "h1": 1,
+      "dir": "rtl",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "ar",
+      "width": 768,
+      "scale": 1,
+      "scroll": 768,
+      "fonts": [
+        "Inter",
+        "Plex",
+        "Plex"
+      ],
+      "targetMinimum": 49.59375,
+      "h1": 1,
+      "dir": "rtl",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "ar",
+      "width": 768,
+      "scale": 2,
+      "scroll": 768,
+      "fonts": [
+        "Inter",
+        "Plex",
+        "Plex"
+      ],
+      "targetMinimum": 77.1875,
+      "h1": 1,
+      "dir": "rtl",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "ar",
+      "width": 1440,
+      "scale": 1,
+      "scroll": 1440,
+      "fonts": [
+        "Inter",
+        "Plex",
+        "Plex"
+      ],
+      "targetMinimum": 49.59375,
+      "h1": 1,
+      "dir": "rtl",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "ar",
+      "width": 1440,
+      "scale": 2,
+      "scroll": 1440,
+      "fonts": [
+        "Inter",
+        "Plex",
+        "Plex"
+      ],
+      "targetMinimum": 77.1875,
+      "h1": 1,
+      "dir": "rtl",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "en",
+      "width": 320,
+      "scale": 1,
+      "scroll": 320,
+      "fonts": [
+        "Inter"
+      ],
+      "targetMinimum": 48,
+      "h1": 1,
+      "dir": "ltr",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "en",
+      "width": 320,
+      "scale": 2,
+      "scroll": 320,
+      "fonts": [
+        "Inter"
+      ],
+      "targetMinimum": 71,
+      "h1": 1,
+      "dir": "ltr",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "en",
+      "width": 390,
+      "scale": 1,
+      "scroll": 390,
+      "fonts": [
+        "Inter"
+      ],
+      "targetMinimum": 48,
+      "h1": 1,
+      "dir": "ltr",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "en",
+      "width": 390,
+      "scale": 2,
+      "scroll": 390,
+      "fonts": [
+        "Inter"
+      ],
+      "targetMinimum": 71,
+      "h1": 1,
+      "dir": "ltr",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "en",
+      "width": 768,
+      "scale": 1,
+      "scroll": 768,
+      "fonts": [
+        "Inter"
+      ],
+      "targetMinimum": 48,
+      "h1": 1,
+      "dir": "ltr",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "en",
+      "width": 768,
+      "scale": 2,
+      "scroll": 768,
+      "fonts": [
+        "Inter"
+      ],
+      "targetMinimum": 72.390625,
+      "h1": 1,
+      "dir": "ltr",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "en",
+      "width": 1440,
+      "scale": 1,
+      "scroll": 1440,
+      "fonts": [
+        "Inter"
+      ],
+      "targetMinimum": 48,
+      "h1": 1,
+      "dir": "ltr",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    },
+    {
+      "l": "en",
+      "width": 1440,
+      "scale": 2,
+      "scroll": 1440,
+      "fonts": [
+        "Inter"
+      ],
+      "targetMinimum": 74.390625,
+      "h1": 1,
+      "dir": "ltr",
+      "overflow": [],
+      "time": [
+        "2026-11-12T14:30:00+02:00",
+        "2026-11-12T15:00:00+02:00"
+      ],
+      "motion": "auto"
+    }
+  ],
+  "states": [
+    {
+      "l": "ar",
+      "state": "loading",
+      "appointment": "ميعادك الجاي\nمعاينة حالة\nبنحمّل مواعيدك\n\nلسه المواعيد ما اتحمّلتش. حالة الحجز هتظهر بعد ما التحميل يكتمل.",
+      "shared": "اللي الدكتور شاركه معاك\nمتابعة مقترحة\nاتشاركت معاك\nالدكتور رشّح لك متابعة\n\nدي توصية من الدكتور، مش ميعاد محجوز.\n\nد. عمر علي\n5 نوفمبر 2026\n\nلسه مفيش ميعاد مربوط بالمتابعة دي هنا.\n\nدور على ميعاد\nملخص الزيارة\nمتاح ليك\nالدكتور شارك الملخص معاك\n\nتقدر تقرا الملخص اللي الدكتور شاركه معاك.\n\nد. عمر علي\n5 نوفمبر 2026\n\nاقرا ملخص الزيارة",
+      "busy": "true",
+      "status": "بنحمّل مواعيدك",
+      "articles": 2
+    },
+    {
+      "l": "ar",
+      "state": "empty",
+      "appointment": "ميعادك الجاي\nمعاينة حالة\nمفيش ميعاد جاي ظاهر هنا\n\nمفيش مواعيد جاية في المعلومات المتاحة هنا. تقدر تدور على دكتور.\n\nدور على دكتور",
+      "shared": "اللي الدكتور شاركه معاك\nمتابعة مقترحة\nاتشاركت معاك\nالدكتور رشّح لك متابعة\n\nدي توصية من الدكتور، مش ميعاد محجوز.\n\nد. عمر علي\n5 نوفمبر 2026\n\nلسه مفيش ميعاد مربوط بالمتابعة دي هنا.\n\nدور على ميعاد\nملخص الزيارة\nمتاح ليك\nالدكتور شارك الملخص معاك\n\nتقدر تقرا الملخص اللي الدكتور شاركه معاك.\n\nد. عمر علي\n5 نوفمبر 2026\n\nاقرا ملخص الزيارة",
+      "busy": "false",
+      "status": "مفيش ميعاد جاي ظاهر هنا",
+      "articles": 2
+    },
+    {
+      "l": "ar",
+      "state": "error",
+      "appointment": "ميعادك الجاي\nمعاينة حالة\nمواعيدك ما اتحمّلتش\n\nمش قادرين نعرض حالة مواعيدك دلوقتي. دي مشكلة تحميل، مش معناها إن مفيش مواعيد.\n\nحمّل المواعيد تاني",
+      "shared": "اللي الدكتور شاركه معاك\nمتابعة مقترحة\nاتشاركت معاك\nالدكتور رشّح لك متابعة\n\nدي توصية من الدكتور، مش ميعاد محجوز.\n\nد. عمر علي\n5 نوفمبر 2026\n\nلسه مفيش ميعاد مربوط بالمتابعة دي هنا.\n\nدور على ميعاد\nملخص الزيارة\nمتاح ليك\nالدكتور شارك الملخص معاك\n\nتقدر تقرا الملخص اللي الدكتور شاركه معاك.\n\nد. عمر علي\n5 نوفمبر 2026\n\nاقرا ملخص الزيارة",
+      "busy": "false",
+      "status": "مواعيدك ما اتحمّلتش",
+      "alert": "مش قادرين نعرض حالة مواعيدك دلوقتي. دي مشكلة تحميل، مش معناها إن مفيش مواعيد.",
+      "articles": 2
+    },
+    {
+      "l": "ar",
+      "state": "no-sources",
+      "appointment": "ميعادك الجاي\nالحجز اتأكد\nد. عمر علي\n\nNile Care Clinic\n\nالخميس، 12 نوفمبر 2026\n\n2:30\nمساءً\nلحد 3:00 مساءً\n\n12\nنوفمبر\nشوف تفاصيل الميعاد",
+      "shared": "اللي الدكتور شاركه معاك\nلسه مفيش ملخص أو متابعة متاحة ليك هنا\n\nهنا تقدر تشوف الملخصات والتعليمات اللي اتشاركت معاك بس.",
+      "busy": null,
+      "status": "",
+      "articles": 0
+    },
+    {
+      "l": "ar",
+      "state": "unavailable",
+      "appointment": "ميعادك الجاي\nالحجز اتأكد\nد. عمر علي\n\nNile Care Clinic\n\nالخميس، 12 نوفمبر 2026\n\n2:30\nمساءً\nلحد 3:00 مساءً\n\n12\nنوفمبر\nشوف تفاصيل الميعاد",
+      "shared": "المعلومات المتاحة\nالمحتوى مش متاح هنا\n\nالمحتوى مش متاح في العرض ده. تقدر ترجع للمعلومات المتاحة ليك.",
+      "busy": null,
+      "status": "",
+      "articles": 0
+    },
+    {
+      "l": "en",
+      "state": "loading",
+      "appointment": "Your next appointment\nState preview\nLoading your appointments\n\nAppointments have not loaded yet. Booking status will appear after loading completes.",
+      "shared": "What your doctor shared\nFollow-up recommendation\nShared with you\nYour doctor recommended follow-up\n\nThis is a recommendation, not a booked appointment.\n\nDr Omar Ali\n5 November 2026\n\nNo appointment is linked to this recommendation here.\n\nFind an appointment\nVisit summary\nAvailable to you\nYour doctor shared a visit summary\n\nRead the visit summary your doctor shared with you.\n\nDr Omar Ali\n5 November 2026\n\nRead visit summary",
+      "busy": "true",
+      "status": "Loading your appointments",
+      "articles": 2
+    },
+    {
+      "l": "en",
+      "state": "empty",
+      "appointment": "Your next appointment\nState preview\nNo upcoming appointment in this view\n\nThere are no upcoming appointments in the information available here. You can find care.\n\nFind care",
+      "shared": "What your doctor shared\nFollow-up recommendation\nShared with you\nYour doctor recommended follow-up\n\nThis is a recommendation, not a booked appointment.\n\nDr Omar Ali\n5 November 2026\n\nNo appointment is linked to this recommendation here.\n\nFind an appointment\nVisit summary\nAvailable to you\nYour doctor shared a visit summary\n\nRead the visit summary your doctor shared with you.\n\nDr Omar Ali\n5 November 2026\n\nRead visit summary",
+      "busy": "false",
+      "status": "No upcoming appointment in this view",
+      "articles": 2
+    },
+    {
+      "l": "en",
+      "state": "error",
+      "appointment": "Your next appointment\nState preview\nYour appointments could not load\n\nWe cannot show your current appointment status. This is a loading failure, not an empty appointments list.\n\nReload appointments",
+      "shared": "What your doctor shared\nFollow-up recommendation\nShared with you\nYour doctor recommended follow-up\n\nThis is a recommendation, not a booked appointment.\n\nDr Omar Ali\n5 November 2026\n\nNo appointment is linked to this recommendation here.\n\nFind an appointment\nVisit summary\nAvailable to you\nYour doctor shared a visit summary\n\nRead the visit summary your doctor shared with you.\n\nDr Omar Ali\n5 November 2026\n\nRead visit summary",
+      "busy": "false",
+      "status": "Your appointments could not load",
+      "alert": "We cannot show your current appointment status. This is a loading failure, not an empty appointments list.",
+      "articles": 2
+    },
+    {
+      "l": "en",
+      "state": "no-sources",
+      "appointment": "Your next appointment\nAppointment confirmed\nDr Omar Ali\n\nNile Care Clinic\n\nThursday, 12 November 2026\n\n2:30\nPM\nto 3:00 PM\n\n12\nView appointment details",
+      "shared": "What your doctor shared\nNo shared summary or follow-up is available here\n\nThis view shows only summaries and instructions shared with you.",
+      "busy": null,
+      "status": "",
+      "articles": 0
+    },
+    {
+      "l": "en",
+      "state": "unavailable",
+      "appointment": "Your next appointment\nAppointment confirmed\nDr Omar Ali\n\nNile Care Clinic\n\nThursday, 12 November 2026\n\n2:30\nPM\nto 3:00 PM\n\n12\nView appointment details",
+      "shared": "Available information\nThis content is unavailable here\n\nContent is unavailable in this view. You can return to information available to you.",
+      "busy": null,
+      "status": "",
+      "articles": 0
+    }
+  ],
+  "keyboard": [
+    {
+      "l": "ar",
+      "skip": {
+        "cls": "skip",
+        "outline": "solid",
+        "top": 16
+      },
+      "main": "main",
+      "actions": [
+        {
+          "action": "find",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "دور على دكتور",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "appointment",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "تفاصيل ميعادك",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "followup",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "الدكتور رشّح لك متابعة",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "summary",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "ملخص الزيارة",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "appointments",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "مواعيدك",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "summaries",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "الملخصات والمتابعة",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "history",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "السجل المتاح",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        }
+      ]
+    },
+    {
+      "l": "en",
+      "skip": {
+        "cls": "skip",
+        "outline": "solid",
+        "top": 16
+      },
+      "main": "main",
+      "actions": [
+        {
+          "action": "find",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "Find care",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "appointment",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "Appointment details",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "followup",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "Follow-up recommendation",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "summary",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "Visit summary",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "appointments",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "Appointments",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "summaries",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "Summaries and follow-up",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        },
+        {
+          "action": "history",
+          "focus": {
+            "outline": "solid",
+            "width": "3px"
+          },
+          "opened": {
+            "open": true,
+            "title": "Available history",
+            "active": "preview-title",
+            "scroll": 0,
+            "sw": 286,
+            "cw": 286
+          },
+          "tab": "dialog-close",
+          "shiftTab": "dialog-close",
+          "returned": true
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

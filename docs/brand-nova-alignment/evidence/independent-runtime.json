@@ -1,0 +1,174 @@
+{
+  "motion": [
+    {
+      "l": "ar",
+      "motion": "reduce",
+      "scroll": "auto",
+      "button": "0s",
+      "skeleton": [
+        "none",
+        "none",
+        "none"
+      ]
+    },
+    {
+      "l": "ar",
+      "motion": "no-preference",
+      "scroll": "smooth",
+      "button": "0.14s, 0.14s, 0.14s",
+      "skeleton": [
+        "none",
+        "none",
+        "none"
+      ]
+    },
+    {
+      "l": "en",
+      "motion": "reduce",
+      "scroll": "auto",
+      "button": "0s",
+      "skeleton": [
+        "none",
+        "none",
+        "none"
+      ]
+    },
+    {
+      "l": "en",
+      "motion": "no-preference",
+      "scroll": "smooth",
+      "button": "0.14s, 0.14s, 0.14s",
+      "skeleton": [
+        "none",
+        "none",
+        "none"
+      ]
+    }
+  ],
+  "guards": [
+    {
+      "l": "ar",
+      "noJS": true,
+      "shellVisible": false
+    },
+    {
+      "l": "en",
+      "noJS": true,
+      "shellVisible": false
+    }
+  ],
+  "contrast": [
+    {
+      "name": "main text",
+      "fg": "0B3D4A",
+      "bg": "F7F9FA",
+      "ratio": 11.167822790261612,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "muted",
+      "fg": "45616A",
+      "bg": "F7F9FA",
+      "ratio": 6.270978450963209,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark text",
+      "fg": "F7F9FA",
+      "bg": "092D38",
+      "ratio": 13.770431232821377,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "dark muted",
+      "fg": "BDD4DA",
+      "bg": "092D38",
+      "ratio": 9.413328199982592,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "primary",
+      "fg": "062E37",
+      "bg": "48D5C7",
+      "ratio": 7.991936378055899,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "secondary",
+      "fg": "06645F",
+      "bg": "FFFFFF",
+      "ratio": 7.009680740236943,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "success",
+      "fg": "B5E5C5",
+      "bg": "092D38",
+      "ratio": 10.372538774770657,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "focus-light",
+      "fg": "006F70",
+      "bg": "FFFFFF",
+      "ratio": 5.9867501192758095,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "focus-dark",
+      "fg": "F3CD82",
+      "bg": "092D38",
+      "ratio": 9.601863623549841,
+      "min": 3,
+      "pass": true
+    },
+    {
+      "name": "success-light",
+      "fg": "226344",
+      "bg": "E4F2E9",
+      "ratio": 6.190362441322124,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "warning",
+      "fg": "805000",
+      "bg": "FFF1D9",
+      "ratio": 6.144928781320321,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "error",
+      "fg": "A42D3D",
+      "bg": "FDECEF",
+      "ratio": 6.097198713121684,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "info",
+      "fg": "245D85",
+      "bg": "E8F2FA",
+      "ratio": 6.213385096772505,
+      "min": 4.5,
+      "pass": true
+    },
+    {
+      "name": "restricted",
+      "fg": "4D5966",
+      "bg": "EDF0F3",
+      "ratio": 6.25233101215139,
+      "min": 4.5,
+      "pass": true
+    }
+  ]
+}

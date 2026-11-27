@@ -1,0 +1,11 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "baselineFiles": 1423,
+  "byteIdentical": 1420,
+  "exceptions": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md",
+    "docs/IMPLEMENTATION_ROADMAP.md"
+  ],
+  "scope": "All other baseline files byte-identical, including production/backend/API/schema/migrations/clinical/privacy contracts/CI/dependencies/historical evidence. Pinned remote sources separately rechecked in final PR handoff."
+}

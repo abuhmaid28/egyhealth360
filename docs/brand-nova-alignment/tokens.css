@@ -1,0 +1,15 @@
+/* Proposed shared roles. Logo gradients live only in the unchanged SVG. */
+:root {
+ --brand-nile:#0B3D4A; --brand-turquoise:#0FB5A8; --brand-gold:#E3B45C; --brand-light:#F7F9FA;
+ --canvas:var(--brand-light); --surface:#FFFFFF; --surface-soft:#EDF4F5; --surface-selected:#DDF2EF;
+ --surface-dark:#092D38; --surface-elevated:#124653; --surface-hover:#1B5360;
+ --ink:var(--brand-nile); --muted:#45616A; --on-dark:#F7F9FA; --muted-dark:#BDD4DA;
+ --border:#D6E3E7; --control-border:#5D7B83; --border-dark:#64858D;
+ --action:#087F79; --action-hover:#06645F; --action-on-dark:#48D5C7; --action-ink:#062E37;
+ --focus:#006F70; --focus-dark:#F3CD82;
+ --success:#226344; --success-bg:#E4F2E9; --success-on-dark:#B5E5C5;
+ --warning:#805000; --warning-bg:#FFF1D9; --error:#A42D3D; --error-bg:#FDECEF;
+ --info:#245D85; --info-bg:#E8F2FA; --restricted:#4D5966; --restricted-bg:#EDF0F3;
+ --r-control:14px; --r-panel:28px; --space-unit:4px;
+ --depth:0 14px 35px -26px #092D384D;
+}
