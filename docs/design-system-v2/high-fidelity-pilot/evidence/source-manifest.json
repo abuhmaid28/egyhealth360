@@ -1,0 +1,57 @@
+[
+  {
+    "file": "screen.html",
+    "sha256": "8eceb9a4c9c1604956b8c732388309b296893299238a76fe163928e0eebe745c",
+    "bytes": 336
+  },
+  {
+    "file": "screen.css",
+    "sha256": "b852dc1ff17f864e889c6392b1134c4929e18abb91e0bff168c575906afc465c",
+    "bytes": 17649
+  },
+  {
+    "file": "screen.js",
+    "sha256": "a69b72cf0e264e3655d289f9dfac5388d7f8366886801f335a6d8cd93dc48a27",
+    "bytes": 19645
+  },
+  {
+    "file": "icon-paths.js",
+    "sha256": "3c73d5349b1da3551cb5d10ea7381053779bc3bf5d6efac1544ceaf58bd1ce3e",
+    "bytes": 3044
+  },
+  {
+    "file": "gallery.html",
+    "sha256": "c5fe425c932a0ff59b4852d2681c576a8f1911998bf0866fa073460173a3080c",
+    "bytes": 3459
+  },
+  {
+    "file": "gallery.css",
+    "sha256": "6eeaa4517da35d3d9420be8f74f29afcba90e7d91e9e3750f60532082e38f6bf",
+    "bytes": 2068
+  },
+  {
+    "file": "gallery.js",
+    "sha256": "e24bc3145fb7fcf154f6ebee5734eb4a25d9a52ec4f669ecf30ab5726afec2a3",
+    "bytes": 831
+  },
+  {
+    "file": "reference-manifest.json",
+    "sha256": "7fc34d1f05b99c369837381640a5fbcac91a0ec195d78b3790e5855265f71668",
+    "bytes": 2969
+  },
+  {
+    "file": "verify.mjs",
+    "sha256": "845d06fbccac296a539ef92f975a0dbda5fc1191da9bb61008140bc931d5aa31",
+    "bytes": 11666
+  },
+  {
+    "file": "supplemental.mjs",
+    "sha256": "d6f3aa29402d5181a1d269dfc949f1e5253101f03fe2f65aefeb2d5379f7bbf3",
+    "bytes": 5168
+  },
+  {
+    "file": "prepare-reference.py",
+    "sha256": "1d745bc9c1c9d1ac5cff8632a14c46a42f3fabe0c6bdc334e4e9ca8c702f1923",
+    "bytes": 934
+  }
+]

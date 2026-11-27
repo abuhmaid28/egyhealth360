@@ -1,0 +1,203 @@
+{
+  "baseline": "7181bde73ececcf2ba68882d6ecd2c10ab756385",
+  "browser": "154.0.8037.57",
+  "viewport": {
+    "width": 390,
+    "height": 1200
+  },
+  "cases": [
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "light",
+      "before": {
+        "height": 1974,
+        "appointmentActionY": 747.96875,
+        "findCareLinks": 2,
+        "historyLinks": 2
+      },
+      "after": {
+        "height": 1296,
+        "appointmentActionY": 616.875,
+        "findCareLinks": 1,
+        "historyLinks": 1
+      },
+      "heightReductionPercent": 34.3
+    },
+    {
+      "role": "patient",
+      "lang": "ar",
+      "theme": "dark",
+      "before": {
+        "height": 1974,
+        "appointmentActionY": 747.96875,
+        "findCareLinks": 2,
+        "historyLinks": 2
+      },
+      "after": {
+        "height": 1296,
+        "appointmentActionY": 616.875,
+        "findCareLinks": 1,
+        "historyLinks": 1
+      },
+      "heightReductionPercent": 34.3
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "light",
+      "before": {
+        "height": 2081,
+        "appointmentActionY": 825.140625,
+        "findCareLinks": 2,
+        "historyLinks": 2
+      },
+      "after": {
+        "height": 1338,
+        "appointmentActionY": 638.0625,
+        "findCareLinks": 1,
+        "historyLinks": 1
+      },
+      "heightReductionPercent": 35.7
+    },
+    {
+      "role": "patient",
+      "lang": "en",
+      "theme": "dark",
+      "before": {
+        "height": 2081,
+        "appointmentActionY": 825.140625,
+        "findCareLinks": 2,
+        "historyLinks": 2
+      },
+      "after": {
+        "height": 1338,
+        "appointmentActionY": 638.0625,
+        "findCareLinks": 1,
+        "historyLinks": 1
+      },
+      "heightReductionPercent": 35.7
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "light",
+      "before": {
+        "height": 3088,
+        "findCareLinks": 0,
+        "historyLinks": 0,
+        "editorY": 702.375,
+        "contextScrollDistance": 1888,
+        "contextFocused": "context",
+        "contextSourceY": 2378.109375,
+        "followUpScrollY": 1904,
+        "followUpFocus": ""
+      },
+      "after": {
+        "height": 1964,
+        "findCareLinks": 0,
+        "historyLinks": 0,
+        "editorY": 739.96875,
+        "contextScrollDistance": 0,
+        "contextFocused": "context-opener",
+        "contextSourceY": 723.96875,
+        "nearEditorIdentity": "نور أحمد عبد الله\n\n12 نوفمبر 2026 • 15:00–15:30\n\nAfrica/Cairo (UTC+02:00)\n\nصلاحية الرعاية الحالية سارية؛ مستقلة عن الحجز.",
+        "followUpScrollY": 0,
+        "followUpFocus": "follow-up",
+        "browserBackForward": "PASS"
+      },
+      "heightReductionPercent": 36.4
+    },
+    {
+      "role": "doctor",
+      "lang": "ar",
+      "theme": "dark",
+      "before": {
+        "height": 3088,
+        "findCareLinks": 0,
+        "historyLinks": 0,
+        "editorY": 702.375,
+        "contextScrollDistance": 1888,
+        "contextFocused": "context",
+        "contextSourceY": 2378.109375,
+        "followUpScrollY": 1904,
+        "followUpFocus": ""
+      },
+      "after": {
+        "height": 1964,
+        "findCareLinks": 0,
+        "historyLinks": 0,
+        "editorY": 739.96875,
+        "contextScrollDistance": 0,
+        "contextFocused": "context-opener",
+        "contextSourceY": 723.96875,
+        "nearEditorIdentity": "نور أحمد عبد الله\n\n12 نوفمبر 2026 • 15:00–15:30\n\nAfrica/Cairo (UTC+02:00)\n\nصلاحية الرعاية الحالية سارية؛ مستقلة عن الحجز.",
+        "followUpScrollY": 0,
+        "followUpFocus": "follow-up",
+        "browserBackForward": "PASS"
+      },
+      "heightReductionPercent": 36.4
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "light",
+      "before": {
+        "height": 3230,
+        "findCareLinks": 0,
+        "historyLinks": 0,
+        "editorY": 775.9375,
+        "contextScrollDistance": 2030,
+        "contextFocused": "context",
+        "contextSourceY": 2554.40625,
+        "followUpScrollY": 2045,
+        "followUpFocus": ""
+      },
+      "after": {
+        "height": 2077,
+        "findCareLinks": 0,
+        "historyLinks": 0,
+        "editorY": 817.53125,
+        "contextScrollDistance": 0,
+        "contextFocused": "context-opener",
+        "contextSourceY": 801.53125,
+        "nearEditorIdentity": "Nour Ahmed Abdallah\n\n12 November 2026 • 15:00–15:30\n\nAfrica/Cairo (UTC+02:00)\n\nCurrent care access active; separate from booking.",
+        "followUpScrollY": 15,
+        "followUpFocus": "follow-up",
+        "browserBackForward": "PASS"
+      },
+      "heightReductionPercent": 35.7
+    },
+    {
+      "role": "doctor",
+      "lang": "en",
+      "theme": "dark",
+      "before": {
+        "height": 3230,
+        "findCareLinks": 0,
+        "historyLinks": 0,
+        "editorY": 775.9375,
+        "contextScrollDistance": 2030,
+        "contextFocused": "context",
+        "contextSourceY": 2554.40625,
+        "followUpScrollY": 2045,
+        "followUpFocus": ""
+      },
+      "after": {
+        "height": 2077,
+        "findCareLinks": 0,
+        "historyLinks": 0,
+        "editorY": 817.53125,
+        "contextScrollDistance": 0,
+        "contextFocused": "context-opener",
+        "contextSourceY": 801.53125,
+        "nearEditorIdentity": "Nour Ahmed Abdallah\n\n12 November 2026 • 15:00–15:30\n\nAfrica/Cairo (UTC+02:00)\n\nCurrent care access active; separate from booking.",
+        "followUpScrollY": 15,
+        "followUpFocus": "follow-up",
+        "browserBackForward": "PASS"
+      },
+      "heightReductionPercent": 35.7
+    }
+  ],
+  "limit": "A matched390px browser observation of static synthetic previews. Length and scroll distances support visual critique; they do not establish real-device usability or clinical task safety."
+}
