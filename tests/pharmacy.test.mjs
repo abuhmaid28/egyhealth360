@@ -22,12 +22,108 @@ test('I3S2 strict raw duplicate/nested JSON and bounded purpose pagination',()=>
  assert.deepEqual(pharmacyPage({purpose:'history',pageSize:1}),{page:1,pageSize:1,purpose:'history'});for(const v of [{purpose:'forensic'},{patientId:randomUUID()},{pageSize:101},Object.create({page:1})])invalid(()=>pharmacyPage(v));
  const a=base();Object.defineProperty(a,'itemIds',{get(){throw Error('do not execute');},enumerable:true});invalid(()=>pharmacyInput('ROUTE',a));
 });
-test('I3S2 exact additive API/model inventory and all twenty-one historical migration bytes remain pinned',async()=>{
+const historicalMigrations = [
+ '20261012200810_eh005_identity_core_foundation',
+ '20261013014000_eh006_auth_sessions',
+ '20261013235221_eh009_clinical_definition_foundation',
+ '20261016000000_eh010_care_plan_lifecycle',
+ '20261017000000_eh011_bp_provenance',
+ '20261018000000_eh012_followup_encounters',
+ '20261019000000_eh013_record_coverage_windows',
+ '20261020000000_eh015_observed_clinical_applicability',
+ '20261021000000_bp_correction_invalidation',
+ '20261022000000_eh014_initial_care_action',
+ '20261023000000_v3_i1_staff_roles',
+ '20261023000100_v3_i1_organizations',
+ '20261024000000_v3_i1_directory',
+ '20261025190000_v3_i1_relationships',
+ '20261027210000_v3_i2_availability',
+ '20261028090000_v3_i2_bookings',
+ '20261029090000_v3_i2_consultation_opening',
+ '20261030090000_v3_i2_consultation_documentation',
+ '20261030120000_v3_i2_follow_up_intent',
+ '20261031140000_v3_i2_consultation_close',
+ '20261101150000_v3_i3_prescription_source',
+ '20261101170000_v3_i3_pharmacy_fulfillment',
+];
+const historicalModels = [
+ 'AssignmentEndProvenance',
+ 'AuditLog',
+ 'AvailabilityOperation',
+ 'AvailabilitySlot',
+ 'BloodPressureMeasurement',
+ 'Booking',
+ 'BookingAttendance',
+ 'BookingEvent',
+ 'BookingOperation',
+ 'BpAmendmentOperation',
+ 'BpExclusion',
+ 'BpPrivacyTarget',
+ 'CareAction',
+ 'CareActionApplicabilityInput',
+ 'CareActionDecision',
+ 'CarePlan',
+ 'CarePlanTemplate',
+ 'CareRuleDefinition',
+ 'ClinicDirectory',
+ 'ClinicSchedulingSettings',
+ 'ClinicalEncounter',
+ 'ClinicianDirectory',
+ 'ClinicianPatientAssignment',
+ 'ClinicianProfile',
+ 'Consultation',
+ 'ConsultationDocument',
+ 'ConsultationDocumentOperation',
+ 'ConsultationDocumentVersion',
+ 'ConsultationPrivacyRestriction',
+ 'DirectoryAffiliation',
+ 'EncounterBloodPressureAssociation',
+ 'FollowUpAppointment',
+ 'FollowUpIntent',
+ 'FollowUpIntentBookingLink',
+ 'FollowUpIntentOperation',
+ 'FollowUpIntentPrivacyRestriction',
+ 'FollowUpIntentVersion',
+ 'GuidelineSource',
+ 'Medication',
+ 'MedicationOperation',
+ 'MedicationVersion',
+ 'ObservedClinicalApplicabilityRetraction',
+ 'ObservedClinicalApplicabilitySnapshot',
+ 'Organization',
+ 'OrganizationMembership',
+ 'PatientProfile',
+ 'PharmacyDispense',
+ 'PharmacyDispenseCorrection',
+ 'PharmacyOperation',
+ 'PharmacyRoute',
+ 'PharmacyRouteItem',
+ 'PharmacyRouteVersion',
+ 'Prescription',
+ 'PrescriptionItem',
+ 'PrescriptionOperation',
+ 'PrescriptionPrivacyRestriction',
+ 'PrescriptionVersion',
+ 'PrescriptionVersionItem',
+ 'RecordCoverageWindow',
+ 'RelationshipRequest',
+ 'Session',
+ 'Specialty',
+ 'User',
+];
+
+test('I3S2 exact additive API and historical schema inventory remain pinned',async()=>{
  const {readFile,readdir}=await import('node:fs/promises'),{createHash}=await import('node:crypto'),{beforeI3Slice2}=await import('./support/openapi-baseline.mjs');
  const raw=await readFile('docs/openapi.json','utf8'),old=beforeI3Slice2(raw),api=JSON.parse(raw),prior=JSON.parse(old);assert.equal(createHash('sha256').update(old).digest('hex'),'f8b9cc152df87f118d671222b6270b62ff2955f5cd7a13e47837b8a7223d2362');
  const paths=Object.keys(api.paths).filter(p=>!Object.hasOwn(prior.paths,p));assert.equal(paths.length,11);assert.ok(paths.every(p=>p.includes('/pharmacy-routes')||p.includes('/pharmacies/')||p.endsWith('/pharmacy-destinations')));assert.deepEqual(api.components.schemas.PrescriptionItem.properties.fulfillmentState.enum,['NOT_DISPENSED','FULLY_DISPENSED']);for(const p of paths)if(api.paths[p].head)assert.ok(Object.values(api.paths[p].head.responses).every(r=>r.content===undefined));
  const checksums=JSON.parse(await readFile('tests/fixtures/v3-i3-slice2-migration-checksums.json','utf8'));assert.equal(Object.keys(checksums).length,21);for(const[name,digest]of Object.entries(checksums))assert.equal(createHash('sha256').update(await readFile('packages/db/prisma/migrations/'+name+'/migration.sql')).digest('hex'),digest);
- const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();assert.equal(names.length,22);assert.equal(names.at(-1),'20261101170000_v3_i3_pharmacy_fulfillment');const schema=await readFile('packages/db/prisma/schema.prisma','utf8');assert.equal([...schema.matchAll(/^model /gm)].length,63);assert.doesNotMatch(schema,/model (LabOrder|LabResult|DispensePartial|Refill|ClosureAssessment)\b/);
+ const pharmacyMigration = await readFile('packages/db/prisma/migrations/20261101170000_v3_i3_pharmacy_fulfillment/migration.sql');
+ assert.equal(createHash('sha256').update(pharmacyMigration).digest('hex'), 'd1482ce8ac43bb9eb6d86397ce22ca2f015c874d04eeb96eacd9aa5a731eca37');
+ const names = (await readdir('packages/db/prisma/migrations')).filter(name => name !== 'migration_lock.toml').sort();
+ assert.deepEqual(names, historicalMigrations);
+ const schema = await readFile('packages/db/prisma/schema.prisma', 'utf8');
+ assert.deepEqual([...schema.matchAll(/^model (\w+)/gm)].map(([,name]) => name).sort(), historicalModels);
+ assert.doesNotMatch(schema, /model (LabOrder|LabResult|DispensePartial|Refill|ClosureAssessment)\b/);
 });
 
 test('S1 exact context OpenAPI is session protected, GET/HEAD only, own operational context without artifact authority',async()=>{
