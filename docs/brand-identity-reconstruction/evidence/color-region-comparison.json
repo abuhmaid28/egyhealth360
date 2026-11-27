@@ -1,0 +1,17 @@
+{
+  "method": "Native310x320 aligned primary crop. Threshold color-region agreement only, NOT a full silhouette, perceptual fidelity, beauty or acceptance score. Gold:R>130,G>90,B<.8R;cyan:G>100,G-R>45;rim:RGB>200. Background/deep fold excluded;alpha>127. Antialiasing, smoothing and color decisions affect classification.",
+  "regions": {
+    "gold": {
+      "threshold_mask_IoU": 0.9617,
+      "intersection_RGB_MAE": 13.57
+    },
+    "cyan": {
+      "threshold_mask_IoU": 0.9308,
+      "intersection_RGB_MAE": 5.26
+    },
+    "rim": {
+      "threshold_mask_IoU": 0.6687,
+      "intersection_RGB_MAE": 6.03
+    }
+  }
+}

@@ -1,0 +1,650 @@
+{
+  "browser": "154.0.8037.57",
+  "cases": [
+    {
+      "name": "index",
+      "width": 1220,
+      "scale": 1,
+      "documentWidth": 1220,
+      "ratios": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "Actual512px app PNG",
+          "width": 158.328125,
+          "height": 44
+        },
+        {
+          "name": "Source / reconstruction fidelity board",
+          "width": 259.6875,
+          "height": 44
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "index",
+      "width": 1220,
+      "scale": 2,
+      "documentWidth": 1220,
+      "ratios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "Actual512px app PNG",
+          "width": 316.640625,
+          "height": 70.390625
+        },
+        {
+          "name": "Source / reconstruction fidelity board",
+          "width": 519.375,
+          "height": 70.390625
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "index",
+      "width": 768,
+      "scale": 1,
+      "documentWidth": 768,
+      "ratios": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "Actual512px app PNG",
+          "width": 158.328125,
+          "height": 44
+        },
+        {
+          "name": "Source / reconstruction fidelity board",
+          "width": 259.6875,
+          "height": 44
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "index",
+      "width": 768,
+      "scale": 2,
+      "documentWidth": 768,
+      "ratios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "Actual512px app PNG",
+          "width": 316.640625,
+          "height": 70.390625
+        },
+        {
+          "name": "Source / reconstruction fidelity board",
+          "width": 519.375,
+          "height": 70.390625
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "index",
+      "width": 390,
+      "scale": 1,
+      "documentWidth": 390,
+      "ratios": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "Actual512px app PNG",
+          "width": 158.328125,
+          "height": 44
+        },
+        {
+          "name": "Source / reconstruction fidelity board",
+          "width": 259.6875,
+          "height": 44
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1,
+      "focus": [
+        {
+          "name": "Actual512px app PNG",
+          "style": "solid",
+          "width": "3px"
+        },
+        {
+          "name": "Source / reconstruction fidelity board",
+          "style": "solid",
+          "width": "3px"
+        }
+      ]
+    },
+    {
+      "name": "index",
+      "width": 390,
+      "scale": 2,
+      "documentWidth": 390,
+      "ratios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "Actual512px app PNG",
+          "width": 316.640625,
+          "height": 70.390625
+        },
+        {
+          "name": "Source / reconstruction fidelity board",
+          "width": 350,
+          "height": 124.78125
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "index",
+      "width": 320,
+      "scale": 1,
+      "documentWidth": 320,
+      "ratios": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "Actual512px app PNG",
+          "width": 158.328125,
+          "height": 44
+        },
+        {
+          "name": "Source / reconstruction fidelity board",
+          "width": 259.6875,
+          "height": 44
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "index",
+      "width": 320,
+      "scale": 2,
+      "documentWidth": 320,
+      "ratios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "Actual512px app PNG",
+          "width": 280,
+          "height": 124.78125
+        },
+        {
+          "name": "Source / reconstruction fidelity board",
+          "width": 280,
+          "height": 179.171875
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "fidelity",
+      "width": 1220,
+      "scale": 1,
+      "documentWidth": 1220,
+      "ratios": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "All variants, native sizes and applications",
+          "width": 290.828125,
+          "height": 44
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "fidelity",
+      "width": 1220,
+      "scale": 2,
+      "documentWidth": 1220,
+      "ratios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "All variants, native sizes and applications",
+          "width": 581.640625,
+          "height": 70.390625
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "fidelity",
+      "width": 768,
+      "scale": 1,
+      "documentWidth": 768,
+      "ratios": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "All variants, native sizes and applications",
+          "width": 290.828125,
+          "height": 44
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "fidelity",
+      "width": 768,
+      "scale": 2,
+      "documentWidth": 768,
+      "ratios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "All variants, native sizes and applications",
+          "width": 581.640625,
+          "height": 70.390625
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "fidelity",
+      "width": 390,
+      "scale": 1,
+      "documentWidth": 390,
+      "ratios": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "All variants, native sizes and applications",
+          "width": 290.828125,
+          "height": 44
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1,
+      "focus": [
+        {
+          "name": "All variants, native sizes and applications",
+          "style": "solid",
+          "width": "3px"
+        }
+      ]
+    },
+    {
+      "name": "fidelity",
+      "width": 390,
+      "scale": 2,
+      "documentWidth": 390,
+      "ratios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "All variants, native sizes and applications",
+          "width": 350,
+          "height": 124.78125
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "fidelity",
+      "width": 320,
+      "scale": 1,
+      "documentWidth": 320,
+      "ratios": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "All variants, native sizes and applications",
+          "width": 280,
+          "height": 70.375
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    },
+    {
+      "name": "fidelity",
+      "width": 320,
+      "scale": 2,
+      "documentWidth": 320,
+      "ratios": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "overflow": [],
+      "brokenImages": [],
+      "targets": [
+        {
+          "name": "All variants, native sizes and applications",
+          "width": 280,
+          "height": 179.171875
+        }
+      ],
+      "mainCount": 1,
+      "h1Count": 1
+    }
+  ],
+  "vectors": [
+    "app-icon-512.svg",
+    "favicon-16.svg",
+    "favicon-24.svg",
+    "favicon-32.svg",
+    "icon-dark.svg",
+    "icon-light.svg",
+    "icon-mono.svg",
+    "lockup-dark.svg",
+    "lockup-light.svg",
+    "lockup-mono.svg",
+    "nova-header-ar.svg",
+    "nova-header-en.svg",
+    "symbol-primary.svg"
+  ],
+  "dimensions": [
+    {
+      "name": "app-icon-512",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "favicon-32",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "name": "favicon-24",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "name": "favicon-16",
+      "width": 16,
+      "height": 16
+    }
+  ],
+  "errors": [],
+  "external": [],
+  "failed": [],
+  "failures": [],
+  "method": "16 actual responsive proof-page cases with measured100%/200% direct text. Native PNG headers checked for512/32/24/16 dimensions. SVGs are self-contained path/gradient graphics. Automated checks are not visual fidelity or screen-reader certification."
+}

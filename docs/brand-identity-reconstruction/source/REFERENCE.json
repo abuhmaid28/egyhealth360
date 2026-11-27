@@ -1,0 +1,21 @@
+{
+  "authority": "Current Product Owner supplied ZIP; sole visual reference. Earlier logos/crops excluded.",
+  "archive": "EgyHealth360_Approved_Brand_Board_Source.zip",
+  "originalEntry": "EgyHealth_360_Logo_Implementation_Package.png",
+  "preservedAs": "approved-board.png",
+  "sha256": "0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417",
+  "dimensions": [
+    1536,
+    1024
+  ],
+  "mode": "RGBA",
+  "primaryHeroSourceBox": [
+    145,
+    70,
+    310,
+    320
+  ],
+  "currentAuthorization": "Design-only exact reconstruction with editable symbol, full bilingual lockups, dark/light/mono, standalone icons, app512,fav32/24/16,NOVA AR/EN,fidelity comparison and independent QA. No redesign, production, merge, deployment, Brand/System freeze.",
+  "implementation": "Manual measured primary curves and source-guided gold/rim contours; editable gradients; font approximations disclosed. No raster in deliverable SVGs.",
+  "nativeSkillActivationClaimed": false
+}

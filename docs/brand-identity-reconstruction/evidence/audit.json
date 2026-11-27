@@ -1,0 +1,57 @@
+{
+  "result": "PASS",
+  "sourceHash": "0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417",
+  "pages": 16,
+  "selfContainedSVGs": 13,
+  "nativePNGs": [
+    {
+      "name": "app-icon-512",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "name": "favicon-32",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "name": "favicon-24",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "name": "favicon-16",
+      "width": 16,
+      "height": 16
+    }
+  ],
+  "exactApprovedStrings": true,
+  "fonts": [
+    {
+      "file": "inter.woff2",
+      "original": "apps/web/public/fonts/inter-latin-variable.woff2",
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "file": "Inter-OFL.txt",
+      "original": "apps/web/public/fonts/Inter-OFL.txt",
+      "sha256": "5dd548d31a85f756e01d63e00d7faf1e324103ed3e9102fcbbabf2cc2db6dd39"
+    },
+    {
+      "file": "plex-arabic-regular.ttf",
+      "original": "apps/web/public/fonts/my-care/plex-arabic-regular.ttf",
+      "sha256": "6f611412270a132bbac838da9259d4c68569b4175f3b3b8fa3fa36a30b56dab9"
+    },
+    {
+      "file": "plex-arabic-semibold.ttf",
+      "original": "apps/web/public/fonts/my-care/plex-arabic-semibold.ttf",
+      "sha256": "597bd5502e5997be4414e4c9c88834b30ff3784250c84f20bce2b20e53ebd467"
+    },
+    {
+      "file": "plex-arabic-OFL.txt",
+      "original": "apps/web/public/fonts/my-care/plex-arabic-OFL.txt",
+      "sha256": "d741e57d5f865e294df801f96b7b5161a88b211df65887e4358d271c9fc5fb4f"
+    }
+  ],
+  "scope": "Graphics and source fidelity evidence only; no overall fidelity score, pixel-perfect claim or WCAG certification."
+}

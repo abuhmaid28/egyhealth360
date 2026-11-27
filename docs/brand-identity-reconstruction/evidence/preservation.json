@@ -1,0 +1,13 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "baselineFiles": 1423,
+  "byteIdenticalFiles": 1420,
+  "exceptions": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md",
+    "docs/IMPLEMENTATION_ROADMAP.md"
+  ],
+  "sourceHash": "0b99fbfb55ba1fcb1276b344fde138b0c48316937bcbad8ea950847bba9ee417",
+  "historicalCandidates": "Unchanged; not visual references for this reconstruction",
+  "noProductionChanges": true
+}
