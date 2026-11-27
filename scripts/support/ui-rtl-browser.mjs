@@ -1,7 +1,7 @@
 import {
   myCareCopy,
-  openDemoUtility,
-  toggleDemoControls,
+  switchDemoWorkspace,
+  setDemoScenario,
 } from "./ui-my-care-browser.mjs";
 import assert from "node:assert/strict";
 import { mkdir } from "node:fs/promises";
@@ -48,9 +48,8 @@ export async function testArabic(browser, origin, shots) {
     .getByRole("heading", { name: `${myCareCopy.ar.greeting} Ahmed` })
     .waitFor();
   await snap("21-ar-patient-dashboard");
-  await toggleDemoControls(page, "أدوات العرض التجريبي");
   for (const state of ["loading", "empty", "error", "ready"]) {
-    await page.getByLabel("حالة الشاشة").selectOption(state);
+    await setDemoScenario(page, state);
     if (state === "loading")
       await page
         .getByRole("status", { name: myCareCopy.ar.loading, exact: true })
@@ -67,7 +66,6 @@ export async function testArabic(browser, origin, shots) {
         .first()
         .waitFor();
   }
-  await toggleDemoControls(page, "أدوات العرض التجريبي");
   const demoBefore = await page.evaluate(() =>
     globalThis.localStorage.getItem("eh360-ui-demo-v1"),
   );
@@ -100,8 +98,7 @@ export async function testArabic(browser, origin, shots) {
     .click();
   await page.getByRole("button", { name: "تأكيد الحجز", exact: true }).click();
   await page.getByText("تم تأكيد تفاصيل زيارتك", { exact: true }).waitFor();
-  await openDemoUtility(page);
-  await page.getByLabel("مساحة العرض التجريبي").selectOption("CLINICIAN");
+  await switchDemoWorkspace(page, "CLINICIAN");
   await page.waitForURL("**/doctor");
   await page.getByRole("link", { name: "فتح الموعد" }).waitFor();
   await snap("25-ar-doctor-dashboard");
@@ -135,8 +132,7 @@ export async function testArabic(browser, origin, shots) {
   await page
     .getByText("تمت مشاركة الملخص مع المريض الافتراضي", { exact: true })
     .waitFor();
-  await openDemoUtility(page);
-  await page.getByLabel("مساحة العرض التجريبي").selectOption("PATIENT");
+  await switchDemoWorkspace(page, "PATIENT");
   await page.waitForURL("**/patient");
   await page.goto(origin + "/patient/history");
   await page.getByText(complaint, { exact: true }).waitFor();
@@ -144,8 +140,7 @@ export async function testArabic(browser, origin, shots) {
     !(await page.locator("#main").innerText()).includes("PRIVATE-RTL-NOTE"),
   );
   for (const role of ["PHARMACY_STAFF", "LAB_STAFF", "ADMIN"]) {
-    await openDemoUtility(page);
-    await page.getByLabel("مساحة العرض التجريبي").selectOption(role);
+    await switchDemoWorkspace(page, role);
     await page.waitForURL(`**/${{ PHARMACY_STAFF: "pharmacy", LAB_STAFF: "laboratory", ADMIN: "admin" }[role]}`);
     await page.locator("#main h1").waitFor();
     await page.locator("#main .loading").first().waitFor({ state: "hidden" });
@@ -166,8 +161,7 @@ export async function testArabic(browser, origin, shots) {
     }
     assert.equal(await page.locator("html").getAttribute("dir"), "rtl");
   }
-  await openDemoUtility(page);
-  await page.getByLabel("مساحة العرض التجريبي").selectOption("PATIENT");
+  await switchDemoWorkspace(page, "PATIENT");
   await page.waitForURL("**/patient");
   for (const width of [1440, 834, 390]) {
     await page.setViewportSize({ width, height: 1000 });

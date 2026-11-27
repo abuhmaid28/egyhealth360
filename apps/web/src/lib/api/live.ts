@@ -1,3 +1,4 @@
+import { PharmacyEngine } from "./pharmacy-live";
 import { createConsultationCloseApi, CloseUiError } from "./consultation-close";
 import { createLiveFollowUpApi, followUpHttpError } from "./follow-up-intents";
 import {
@@ -21,12 +22,16 @@ import type {
   Specialty,
   Clinic,
 } from "./contracts";
-type Auth = { user: { email: string; role: Role }; csrfToken: string };
+type Auth = { user: { id: string; email: string; role: Role }; csrfToken: string };
 /** Same-origin Next rewrite; HttpOnly backend cookie stays browser-managed. Never persist credentials. */
 export function createLiveAdapter(): HealthcareAdapter {
   let csrf = "";
   let sessionIdentity = "";
-  const request = async <T>(path: string, init?: RequestInit): Promise<T> => {
+  let authGeneration = 0;
+  let authInvalidation = 0;
+  let pharmacyIdentity = "";
+  const send = async (path: string, init?: RequestInit): Promise<Response> => {
+    const dispatchedGeneration = authGeneration;
     const response = await fetch(`/api/v1${path}`, {
       ...init,
       credentials: "same-origin",
@@ -36,7 +41,10 @@ export function createLiveAdapter(): HealthcareAdapter {
         ...init?.headers,
       },
     });
-    if (response.status === 401) {
+    if (response.status === 401 && dispatchedGeneration === authGeneration) {
+      authInvalidation++;
+      pharmacy.invalidate();
+      pharmacyIdentity = "";
       csrf = "";
       sessionIdentity = "";
       liveBookings.clearCommands();
@@ -45,6 +53,17 @@ export function createLiveAdapter(): HealthcareAdapter {
       documentation.clear?.("expired");
       followUpIntents.clear("expired");
     }
+    return response;
+  };
+  const pharmacy = new PharmacyEngine((path, init) => send(path.slice("/api/v1".length), init));
+  const request = async <T>(path: string, init?: RequestInit, recovered = false): Promise<T> => {
+    const dispatchedGeneration = authGeneration;
+    const dispatchedInvalidation = authInvalidation;
+    const dispatchedIdentity = sessionIdentity;
+    const dispatchedActor = pharmacyIdentity;
+    const dispatchedCsrf = csrf;
+    const response = await send(path, init);
+    if (dispatchedGeneration !== authGeneration) throw new UiError("The service could not complete this request. Please try again.");
     if (
       !response.ok &&
       (path.endsWith("/close") ||
@@ -88,10 +107,37 @@ export function createLiveAdapter(): HealthcareAdapter {
             ? "This resource is unavailable for your current access."
             : "The service could not complete this request. Please try again.",
       );
-    return response.status === 204
-      ? (undefined as T)
-      : (response.json() as Promise<T>);
+    if (dispatchedInvalidation !== authInvalidation) {
+      void response.body?.cancel().catch(() => {});
+      return recoverBooking<T>(path, init, recovered, dispatchedGeneration, dispatchedIdentity, dispatchedActor, dispatchedCsrf);
+    }
+    const body = response.status === 204 ? undefined : await response.json();
+    if (dispatchedGeneration !== authGeneration) throw new UiError("The service could not complete this request. Please try again.");
+    if (dispatchedInvalidation !== authInvalidation) return recoverBooking<T>(path, init, recovered, dispatchedGeneration, dispatchedIdentity, dispatchedActor, dispatchedCsrf);
+    return body as T;
   };
+  /** Discard a fenced body. Only a newly authorized Patient logistics GET can replace it.
+   * No command replay, session creation, credential restoration or clinical reactivation. */
+  async function recoverBooking<T>(path: string, init: RequestInit | undefined, recovered: boolean, generation: number, identity: string, actor: string, token: string): Promise<T> {
+    const deny = (): never => { throw new UiError("The service could not complete this request. Please try again."); };
+    if (recovered || generation !== authGeneration || !token || !actor || !identity.startsWith('["PATIENT",') ||
+      (init?.method !== undefined && init.method !== "GET") || init?.body !== undefined || init?.signal?.aborted ||
+      !/^\/me\/bookings(?:\/[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})?(?:\?[^#]*)?$/.test(path)) return deny();
+    const invalidation = authInvalidation;
+    const confirmation = await send("/auth/me");
+    if (!confirmation.ok || generation !== authGeneration || invalidation !== authInvalidation) return deny();
+    const observed: unknown = await confirmation.json();
+    if (generation !== authGeneration || invalidation !== authInvalidation || init?.signal?.aborted) return deny();
+    const auth = (observed as { data?: Partial<Auth> } | null)?.data;
+    const user = auth?.user;
+    if (!user || user.role !== "PATIENT" || typeof user.id !== "string" ||
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(user.id) ||
+      typeof user.email !== "string" || !user.email || auth?.csrfToken !== token ||
+      JSON.stringify([user.role, user.email]) !== identity || JSON.stringify([user.id, user.role]) !== actor) return deny();
+    // This GET must independently pass backend authorization and the ordinary response fences.
+    // Do not restore csrf/sessionIdentity or invoke session(): expired commands stay cleared.
+    return request<T>(path, init, true);
+  }
   const session = (a: Auth): Session => {
     const identity = JSON.stringify([a.user.role, a.user.email]);
     if (sessionIdentity && sessionIdentity !== identity) {
@@ -103,6 +149,12 @@ export function createLiveAdapter(): HealthcareAdapter {
     }
     documentation.activate();
     sessionIdentity = identity;
+    const pharmacyKey = JSON.stringify([a.user.id, a.user.role]);
+    if (pharmacyIdentity !== pharmacyKey || csrf !== a.csrfToken || pharmacy.snapshot().status === "signed-out") {
+      authGeneration++;
+      pharmacy.establishSession({ userId: a.user.id, role: a.user.role });
+      pharmacyIdentity = pharmacyKey;
+    }
     csrf = a.csrfToken;
     return { role: a.user.role, name: a.user.email, mode: "live" };
   };
@@ -118,6 +170,7 @@ export function createLiveAdapter(): HealthcareAdapter {
   const followUpIntents = createLiveFollowUpApi(request, () => csrf);
   return {
     mode: "live",
+    pharmacyRead: pharmacy,
     followUpIntents,
     documentation,
     liveDocumentation: documentation,
@@ -125,9 +178,13 @@ export function createLiveAdapter(): HealthcareAdapter {
     consultationClose,
     liveBookings,
     async session() {
+      const observedGeneration = authGeneration;
       try {
         return session((await request<{ data: Auth }>("/auth/me")).data);
       } catch {
+        if (observedGeneration !== authGeneration) return null;
+        pharmacy.invalidate();
+        pharmacyIdentity = "";
         csrf = "";
         sessionIdentity = "";
         liveBookings.clearCommands();
@@ -139,6 +196,9 @@ export function createLiveAdapter(): HealthcareAdapter {
       }
     },
     async login(email, password) {
+      authGeneration++;
+      pharmacyIdentity = "";
+      pharmacy.invalidate();
       return session(
         (
           await request<{ data: Auth }>("/auth/login", {
@@ -150,6 +210,9 @@ export function createLiveAdapter(): HealthcareAdapter {
       );
     },
     async logout() {
+      authGeneration++;
+      pharmacyIdentity = "";
+      pharmacy.invalidate();
       documentation.clear?.();
       followUpIntents.clear();
       await request("/auth/logout", {

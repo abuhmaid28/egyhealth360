@@ -1,4 +1,4 @@
-import { myCareCopy, openDemoUtility } from "./ui-my-care-browser.mjs";
+import { myCareCopy, switchDemoWorkspace } from "./ui-my-care-browser.mjs";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
@@ -134,11 +134,21 @@ export async function testLiveJourney(browser, origin, shots) {
           globalThis.document.fonts.check(
             locale === "ar"
               ? '16px "EH My Care Arabic"'
-              : '16px "EH My Care Manrope"',
+              : '16px Inter',
           ),
         locale,
       ),
     );
+    // Package A uses approved Inter/Plex. Check the actual rendered heading,
+    // not only whether a declared legacy font happened to be downloaded.
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("DOM.enable");
+    await cdp.send("CSS.enable");
+    const { root } = await cdp.send("DOM.getDocument");
+    const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: root.nodeId, selector: "#main h1" });
+    const rendered = await cdp.send("CSS.getPlatformFontsForNode", { nodeId });
+    assert.ok(rendered.fonts.some(font => font.glyphCount > 0 && font.familyName.includes(locale === "ar" ? "Plex" : "Inter")), JSON.stringify(rendered.fonts));
+    await cdp.detach();
     for (const control of await page.locator(".language-switch button").all()) {
       const rect = await control.boundingBox();
       assert.ok(rect && rect.width >= 44 && rect.height >= 44);
@@ -175,12 +185,10 @@ export async function testLiveJourney(browser, origin, shots) {
     .click();
   await page.waitForURL("**/patient");
   await page.locator("[data-my-care]").waitFor();
-  await openDemoUtility(page);
-  await page.getByLabel("Demo workspace").selectOption("CLINICIAN");
+  await switchDemoWorkspace(page, "CLINICIAN");
   await page.waitForURL("**/doctor");
   await page.locator("[data-my-care]").waitFor({ state: "detached" });
-  await openDemoUtility(page);
-  await page.getByLabel("Demo workspace").selectOption("PATIENT");
+  await switchDemoWorkspace(page, "PATIENT");
   await page.waitForURL("**/patient");
   await page.getByText("Welcome back, Ahmed", { exact: true }).waitFor();
   await page.close();

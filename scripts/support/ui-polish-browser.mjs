@@ -57,7 +57,7 @@ export async function testPolish(browser, origin, shots) {
     await page.locator('[data-my-care] a[href="/patient/appointments"]').last().click();
     await page.waitForURL("**/patient/appointments");
     assert.equal(await page.locator(".sidebar").count(), 0);
-    const account = page.locator("header details");
+    const account = page.locator("header details:has(> summary[aria-label])");
     await account.locator("summary").click();
     assert.equal(await account.evaluate(el => el.open), true);
     await page.keyboard.press("Escape");
@@ -166,7 +166,7 @@ export async function testPolish(browser, origin, shots) {
     await ready();
     await responsive("doctor schedule");
     console.log(`Phase 3 ${locale}: consultation review and handoffs`);
-    await link("Open patient").click();
+    await link("View appointment").click();
     await link("Open consultation workspace").click();
     await ready();
     const complaint = "شكوى بشرية محفوظة without translation $&";

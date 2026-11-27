@@ -1,0 +1,48 @@
+{
+  "base": "e07e0ae74b1fa6f709448a0305121e6f7663c2c9",
+  "baseTree": "adbb786a252da2ec20cedf4a43c5cec9a67ff88b",
+  "head": "f6326b9a04830ca1dbf1099750ed4340810d49b0",
+  "headTree": "344ef5711dfff7a10da21d5d8df693d5cdcf67cb",
+  "webTree": "38a31c7c3cb2321cdeb687bfa426c5efe8cc80e2",
+  "paths": [
+    {
+      "path": "apps/web/src/components/availability.tsx",
+      "mode": "100644",
+      "blob": "74a5397b63e5cdc212aaf831bcac023a669ca4c6",
+      "sha256": "dac1506a53aea75a1fd5d8f176dd312d7a20a97791628f8bad2ae78d09af64c5"
+    },
+    {
+      "path": "apps/web/src/components/doctor.tsx",
+      "mode": "100644",
+      "blob": "9f2f0ead8dc2c1a35234dcd80ceb3f50c36b6096",
+      "sha256": "252cd7387559f98a17826d096ffc092dc702ea84cf73310357c75a6a280522aa"
+    },
+    {
+      "path": "apps/web/src/components/v2/doctor-operations-signature.module.css",
+      "mode": "100644",
+      "blob": "83d81ade13a27872d340308f7f0dcf11ed6d5fd6",
+      "sha256": "8736d0bccebe8cca8feda0060cebce8907820549b10b130bb07a10bef3bd65b3"
+    },
+    {
+      "path": "scripts/support/ui-doctor-operations-browser.mjs",
+      "mode": "100644",
+      "blob": "b7d4c8827ce8eb3593c2b3e1d1e59cd2c9670b3c",
+      "sha256": "ec70424606d2bcd4950ec58e364473c8ab336d1d0eb4cad25b7ae3f5cf7b47dd"
+    },
+    {
+      "path": "tests/ui-doctor-operations.test.mjs",
+      "mode": "100644",
+      "blob": "966e74d4fe8dfcea6525413c084fa76863e4f92a",
+      "sha256": "66d35417ab3c0a4c9fb0de5207b59eaa849ee4f17f46e107816471a5401a9610"
+    },
+    {
+      "path": "tests/ui-v2-combined-integration.test.mjs",
+      "mode": "100644",
+      "blob": "88784626b9a5a1a79c51dc37a0db56039a8c55e6",
+      "sha256": "b99d9695e4977ef79eea14d92e6a7d1d4101384cd7b66163e63dc792898d4628"
+    }
+  ],
+  "sixFileDiffSha256": "00051a413a526713b372357d3f6d9f1d9149ffc086fe185c93680de7dd657adb",
+  "protectedScheduleEvidenceUnchanged": true,
+  "candidateClean": true
+}
