@@ -52,8 +52,9 @@ export function LaboratoryDemoV2() {
           <button
             type="button"
             role="tab"
+            id="lab-tab-orders"
+            aria-controls="lab-concept-panel"
             aria-selected={activeTab === "orders"}
-            aria-pressed={activeTab === "orders"}
             className={styles.btnSecondary}
             onClick={() => setActiveTab("orders")}
           >
@@ -62,8 +63,9 @@ export function LaboratoryDemoV2() {
           <button
             type="button"
             role="tab"
+            id="lab-tab-specimens"
+            aria-controls="lab-concept-panel"
             aria-selected={activeTab === "specimens"}
-            aria-pressed={activeTab === "specimens"}
             className={styles.btnSecondary}
             onClick={() => setActiveTab("specimens")}
           >
@@ -72,8 +74,9 @@ export function LaboratoryDemoV2() {
           <button
             type="button"
             role="tab"
+            id="lab-tab-reports"
+            aria-controls="lab-concept-panel"
             aria-selected={activeTab === "reports"}
-            aria-pressed={activeTab === "reports"}
             className={styles.btnSecondary}
             onClick={() => setActiveTab("reports")}
           >
@@ -81,7 +84,12 @@ export function LaboratoryDemoV2() {
           </button>
         </div>
 
-        <div className={styles.cardInset} role="tabpanel">
+        <div
+          id="lab-concept-panel"
+          className={styles.cardInset}
+          role="tabpanel"
+          aria-labelledby={`lab-tab-${activeTab}`}
+        >
           {activeTab === "orders" ? (
             <>
               <h3>{ar ? "تحويل طلبات التحاليل المحدودة" : "Order Routing Preview (Inactive)"}</h3>

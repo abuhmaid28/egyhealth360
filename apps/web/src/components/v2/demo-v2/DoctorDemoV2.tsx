@@ -53,18 +53,22 @@ export function DoctorDemoV2({ path }: { path: string }) {
       setAppointments(nextAppointments);
       setSlots(slotPage.data);
       setClinics(nextClinics);
-      if (nextClinics.length > 0 && !nextClinics.some((c) => c.id === slotClinicId)) {
-        setSlotClinicId(nextClinics[0].id);
+      if (nextClinics.length > 0) {
+        setSlotClinicId((prev) =>
+          nextClinics.some((c) => c.id === prev) ? prev : nextClinics[0].id,
+        );
       }
-      if (nextAppointments.length > 0 && !selectedId) {
-        setSelectedId(nextAppointments[0].id);
+      if (nextAppointments.length > 0) {
+        setSelectedId((prev) =>
+          nextAppointments.some((a) => a.id === prev) ? prev : nextAppointments[0].id,
+        );
       }
     } catch (err) {
       setError(safeErrorMessage(err));
     } finally {
       setLoading(false);
     }
-  }, [api, selectedId, slotClinicId]);
+  }, [api]);
 
   useEffect(() => {
     void load();
@@ -110,7 +114,23 @@ export function DoctorDemoV2({ path }: { path: string }) {
     setSlotBusy(true);
     setSlotError("");
     try {
-      const startIso = `${slotDate}T${slotTime}:00+02:00`;
+      // Determine actual Africa/Cairo UTC offset (+02:00 or DST +03:00) on the chosen date.
+      const probeUtc = Date.parse(`${slotDate}T${slotTime}:00Z`);
+      let offset = "+02:00";
+      if (!Number.isNaN(probeUtc)) {
+        const tzPart = new Intl.DateTimeFormat("en-US", {
+          timeZone: "Africa/Cairo",
+          timeZoneName: "shortOffset",
+        })
+          .formatToParts(new Date(probeUtc))
+          .find((part) => part.type === "timeZoneName")?.value;
+        const m = /GMT([+-]\d{1,2})(?::(\d{2}))?/.exec(tzPart ?? "");
+        if (m) {
+          const hrs = `${m[1][0]}${m[1].slice(1).padStart(2, "0")}`;
+          offset = `${hrs}:${m[2] ?? "00"}`;
+        }
+      }
+      const startIso = `${slotDate}T${slotTime}:00${offset}`;
       const startMs = Date.parse(startIso);
       const endIso = Number.isNaN(startMs)
         ? startIso
@@ -220,10 +240,10 @@ export function DoctorDemoV2({ path }: { path: string }) {
             <FoundationPortalEmblem role="doctor" className={styles.emblem} />
             <div className={styles.bannerTitles}>
               <h1 id="doc-avail-title">{ar ? "إدارة المواعيد المتاحة" : "Manage Availability"}</h1>
-              <p>{ar ? "نشر أو سحب الفترات الزمنية بتوقيت ٢٤ ساعة." : "Publish open slots and withdraw unbooked windows in 24-hour time."}</p>
+              <p>{ar ? "نشر أو سحب الفترات الزمنية بتوقيت 24 ساعة." : "Publish open slots and withdraw unbooked windows in 24-hour time."}</p>
             </div>
           </div>
-          <span className={styles.pill}>{ar ? "توقيت ٢٤ ساعة" : "24h clinician time"}</span>
+          <span className={styles.pill}>{ar ? "توقيت 24 ساعة" : "24h clinician time"}</span>
         </header>
 
         <div className={styles.grid2}>
@@ -241,7 +261,7 @@ export function DoctorDemoV2({ path }: { path: string }) {
                 />
               </div>
               <div className={styles.field}>
-                <label htmlFor="slot-time">{ar ? "الوقت (٢٤ ساعة)" : "Time (24h HH:mm)"}</label>
+                <label htmlFor="slot-time">{ar ? "الوقت (24 ساعة)" : "Time (24h HH:mm)"}</label>
                 <input
                   id="slot-time"
                   type="time"
@@ -451,7 +471,7 @@ export function DoctorDemoV2({ path }: { path: string }) {
             <h1 id="doc-sched-title">{ar ? "جدول الطبيب اليومي" : "Doctor Schedule"}</h1>
             <p>
               {ar
-                ? "متابعة الزيارات المحجوزة والمواعيد المفتوحة بتوقيت ٢٤ ساعة."
+                ? "متابعة الزيارات المحجوزة والمواعيد المفتوحة بتوقيت 24 ساعة."
                 : "Review booked consultations and open availability slots in 24-hour time."}
             </p>
           </div>

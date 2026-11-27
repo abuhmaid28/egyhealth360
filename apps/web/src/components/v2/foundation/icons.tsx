@@ -233,6 +233,7 @@ export function FoundationIcon({
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
+      data-mirror-rtl={name === "arrow" ? "true" : undefined}
       aria-hidden={label ? undefined : true}
       role={label ? "img" : undefined}
       aria-label={label}

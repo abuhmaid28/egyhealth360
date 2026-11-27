@@ -202,7 +202,8 @@
   color: var(--eh-ink-primary);
 }
 
-.btnSecondary[aria-pressed="true"] {
+.btnSecondary[aria-pressed="true"],
+.btnSecondary[aria-selected="true"] {
   background: var(--eh-action-bg);
   border-color: var(--eh-action-bg);
   color: var(--eh-action-ink);
@@ -210,7 +211,7 @@
 
 .btnGhost {
   background: transparent;
-  border: 1px solid var(--eh-border-subtle);
+  border: 1px solid var(--eh-border-strong);
   color: var(--eh-ink-primary);
 }
 

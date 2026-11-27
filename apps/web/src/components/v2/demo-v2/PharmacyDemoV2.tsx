@@ -115,7 +115,7 @@ export function PharmacyDemoV2() {
         </div>
         <div className={styles.metaRow}>
           <span className={styles.pill}>{c("Routed scope only", "نطاق صرف محدود")}</span>
-          <span className={styles.pillAccent}>{c("24h operational time", "توقيت ٢٤ ساعة")}</span>
+          <span className={styles.pillAccent}>{c("24h operational time", "توقيت 24 ساعة")}</span>
         </div>
       </header>
 

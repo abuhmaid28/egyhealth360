@@ -179,37 +179,58 @@ async function runSuite(kind) {
     const pageErrors = [];
     const apiRequests = [];
 
-    const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const context = await browser.newContext({
+      viewport: { width: 1440, height: 900 },
+      colorScheme: "dark",
+    });
     const page = await context.newPage();
     page.on("pageerror", (e) => pageErrors.push(e.message));
     page.on("request", (req) => {
       if (req.url().includes("/api/v1/")) apiRequests.push(req.url());
     });
 
-    // Tampered live mode check under preview build
-    await page.addInitScript(() => {
-      globalThis.localStorage.setItem("eh360-ui-mode", "live");
+    // Tampered live mode check under preview build; normal demo session under normal build
+    await page.addInitScript((previewFlag) => {
+      globalThis.localStorage.setItem("eh360-ui-mode", previewFlag ? "live" : "demo");
       globalThis.localStorage.setItem("eh360-locale", "en");
-    });
+    }, isPreview);
 
     const t0 = Date.now();
     await page.goto(origin, { waitUntil: "networkidle" });
     summary.performanceMs.gatewayLoad = Date.now() - t0;
 
-    // Preview build must fail closed (0 textboxes, exact .entry-mode-note)
-    assert.equal(await page.getByRole("textbox").count(), 0, "No live login textboxes allowed when preview/unconfigured");
-    await page.locator(".entry-mode-note").waitFor();
+    if (isPreview) {
+      // Preview build must fail closed (0 textboxes, exact .entry-mode-note, V2EntryGateway)
+      assert.equal(await page.getByRole("textbox").count(), 0, "No live login textboxes allowed in preview");
+      await page.locator(".entry-mode-note").waitFor();
+      await page.locator('[data-v2-gateway="true"]').waitFor();
+    } else {
+      // Normal non-preview build preserves Live email/password login alongside demo workspaces
+      assert.equal(await page.getByRole("textbox").count(), 2, "Normal build must preserve Live login inputs");
+    }
 
-    // Verify DP02 mark loaded and no broken images
+    // Verify visible DP02 mark and assets load cleanly after hydration
+    await page.waitForFunction(() => {
+      const visibleImgs = Array.from(globalThis.document.querySelectorAll("img")).filter((img) => {
+        const r = img.getBoundingClientRect();
+        return r.width > 0 && r.height > 0;
+      });
+      return visibleImgs.length > 0 && visibleImgs.every((img) => img.complete && img.naturalWidth > 0);
+    });
     const imgCheck = await page.evaluate(() =>
-      Array.from(globalThis.document.querySelectorAll("img")).map((img) => ({
-        src: img.getAttribute("src"),
-        complete: img.complete,
-        naturalWidth: img.naturalWidth,
-      })),
+      Array.from(globalThis.document.querySelectorAll("img"))
+        .filter((img) => {
+          const r = img.getBoundingClientRect();
+          return r.width > 0 && r.height > 0;
+        })
+        .map((img) => ({
+          src: img.getAttribute("src"),
+          complete: img.complete,
+          naturalWidth: img.naturalWidth,
+        })),
     );
     for (const img of imgCheck) {
-      assert.ok(img.complete && img.naturalWidth > 0, `Broken image on Gateway: ${JSON.stringify(img)}`);
+      assert.ok(img.complete && img.naturalWidth > 0, `Broken visible image on entry page: ${JSON.stringify(img)}`);
     }
 
     // Verify Negative Mutation Canary for contrast scanner
@@ -226,70 +247,78 @@ async function runSuite(kind) {
     assert.ok(canaryResult && canaryResult.ratio < 2.0, "Negative contrast canary MUST be caught by scanner");
     summary.canary = canaryResult;
 
-    // Check Dark EN, Light EN, Dark AR on Gateway + viewports 1440 / 768 / 390 / 320 + 200% zoom
-    const checkContrast = async (label) => {
+    const checkContrast = async (label, expectedTheme = "dark") => {
+      const actualTheme = await page.locator("[data-foundation-theme]").getAttribute("data-foundation-theme");
+      assert.equal(actualTheme, expectedTheme, `Expected theme ${expectedTheme} at ${label}, got ${actualTheme}`);
       const res = await page.evaluate(CONTRAST_EVALUATOR);
       assert.equal(res.failures.length, 0, `Contrast failures at ${label}: ${JSON.stringify(res.failures)}`);
-      summary.contrast.push({ label, ...res });
+      summary.contrast.push({ label, theme: actualTheme, ...res });
     };
 
-    await checkContrast("gateway-en-dark");
-
-    // Toggle Light mode
-    await page.locator('[data-v2-gateway] summary').click();
-    await page.getByRole("button", { name: /^light$/i }).click();
-    await page.waitForTimeout(100);
-    assert.equal(await page.locator("[data-foundation-theme]").getAttribute("data-foundation-theme"), "light");
-    await checkContrast("gateway-en-light");
-
-    // Toggle back to Dark mode
-    await page.getByRole("button", { name: /^dark$/i }).click();
-    await page.waitForTimeout(100);
-    assert.equal(await page.locator("[data-foundation-theme]").getAttribute("data-foundation-theme"), "dark");
-
-    // Responsive + 200% zoom checks on Gateway
-    for (const vp of [
-      { name: "desktop-1440", width: 1440, height: 900 },
-      { name: "tablet-768", width: 768, height: 1024 },
-      { name: "mobile-390", width: 390, height: 844 },
-      { name: "mobile-320", width: 320, height: 568 },
-    ]) {
-      await page.setViewportSize({ width: vp.width, height: vp.height });
-      await page.waitForTimeout(80);
-      const overflow = await page.evaluate(() => ({
+    const checkViewports = async (prefix) => {
+      for (const vp of [
+        { name: `${prefix}-desktop-1440`, width: 1440, height: 900 },
+        { name: `${prefix}-tablet-768`, width: 768, height: 1024 },
+        { name: `${prefix}-mobile-390`, width: 390, height: 844 },
+        { name: `${prefix}-mobile-320`, width: 320, height: 568 },
+      ]) {
+        await page.setViewportSize({ width: vp.width, height: vp.height });
+        await page.waitForTimeout(80);
+        const overflow = await page.evaluate(() => ({
+          scrollWidth: globalThis.document.documentElement.scrollWidth,
+          clientWidth: globalThis.document.documentElement.clientWidth,
+        }));
+        assert.ok(
+          overflow.scrollWidth <= overflow.clientWidth + 1,
+          `Horizontal overflow at ${vp.name}: ${JSON.stringify(overflow)}`,
+        );
+        summary.viewports.push({ label: vp.name, ...overflow });
+      }
+      await page.setViewportSize({ width: 720, height: 450 });
+      const zoomOverflow = await page.evaluate(() => ({
         scrollWidth: globalThis.document.documentElement.scrollWidth,
         clientWidth: globalThis.document.documentElement.clientWidth,
       }));
-      assert.ok(
-        overflow.scrollWidth <= overflow.clientWidth + 1,
-        `Horizontal overflow at ${vp.name}: ${JSON.stringify(overflow)}`,
-      );
-      summary.viewports.push({ label: vp.name, ...overflow });
+      assert.ok(zoomOverflow.scrollWidth <= zoomOverflow.clientWidth + 1, `Overflow at ${prefix}-zoom-200-equiv-720: ${JSON.stringify(zoomOverflow)}`);
+      summary.viewports.push({ label: `${prefix}-zoom-200-equiv-720`, ...zoomOverflow });
+      await page.setViewportSize({ width: 1440, height: 900 });
+    };
+
+    if (isPreview) {
+      await checkContrast("gateway-en-dark", "dark");
+
+      // Toggle Light mode on V2EntryGateway
+      await page.locator("[data-v2-gateway] summary").click();
+      await page.locator(".v2-theme-switch select").selectOption("light");
+      await page.waitForTimeout(100);
+      await checkContrast("gateway-en-light", "light");
+
+      // Toggle back to Dark mode
+      await page.locator(".v2-theme-switch select").selectOption("dark");
+      await page.waitForTimeout(100);
+
+      await checkViewports("gateway");
+
+      // Switch to Arabic RTL on Gateway & verify direction + dark contrast
+      await page.getByRole("button", { name: /العربية/ }).click();
+      await page.waitForTimeout(100);
+      assert.equal(await page.locator("[data-foundation-surface='gateway']").getAttribute("dir"), "rtl");
+      await checkContrast("gateway-ar-dark", "dark");
+      await page.getByRole("button", { name: /English/ }).click();
+      await page.waitForTimeout(100);
     }
-    // 200% zoom check at 1440 (720px logical width or zoom 2)
-    await page.setViewportSize({ width: 720, height: 450 });
-    const zoomOverflow = await page.evaluate(() => ({
-      scrollWidth: globalThis.document.documentElement.scrollWidth,
-      clientWidth: globalThis.document.documentElement.clientWidth,
-    }));
-    assert.ok(zoomOverflow.scrollWidth <= zoomOverflow.clientWidth + 1, `Overflow at 200% zoom equivalent: ${JSON.stringify(zoomOverflow)}`);
-    summary.viewports.push({ label: "zoom-200-equiv-720", ...zoomOverflow });
-    await page.setViewportSize({ width: 1440, height: 900 });
 
-    // Switch to Arabic RTL on Gateway & verify direction + dark contrast
-    await page.getByRole("button", { name: /العربية/ }).click();
-    await page.waitForTimeout(100);
-    assert.equal(await page.locator("[data-foundation-surface='gateway']").getAttribute("dir"), "rtl");
-    await checkContrast("gateway-ar-dark");
-    await page.getByRole("button", { name: /English/ }).click();
-    await page.waitForTimeout(100);
-
-    // 1. Enter Patient portal via primary CTA & verify P1/P2 fixes
+    // 1. Enter Patient portal via primary CTA / demo button
     const tPortal = Date.now();
-    await page.locator('[data-gateway-primary-cta="PATIENT"]').click();
+    if (isPreview) {
+      await page.locator('[data-gateway-primary-cta="PATIENT"]').click();
+    } else {
+      await page.locator("#demo-workspaces .demo-button").click();
+    }
     await page.locator('[data-v2-portal="patient"]').waitFor();
     summary.performanceMs.enterPatient = Date.now() - tPortal;
-    await checkContrast("patient-home-dark");
+    await checkContrast("patient-home-dark", "dark");
+    await checkViewports("patient");
 
     // Verify neutral BP text without "optimal" / "safe"
     const homeText = await page.locator('[data-v2-portal="patient"]').innerText();
@@ -309,19 +338,19 @@ async function runSuite(kind) {
     summary.flows.patientBooking = "PASS";
 
     // Appointments persistence after reload
-    await page.getByRole("link", { name: /Appointments/i }).click();
+    await page.getByRole("link", { name: "Appointments", exact: true }).click();
     await page.locator('[data-appointment-item]').first().waitFor();
     await page.reload({ waitUntil: "networkidle" });
     await page.locator('[data-appointment-item]').first().waitFor();
     summary.flows.patientReloadPersistence = "PASS";
 
     // P2 profile display name sync fix verification
-    await page.getByRole("link", { name: /Settings/i }).click();
+    await page.getByRole("link", { name: "Settings", exact: true }).click();
     await page.locator("#profile-name").fill("Layla Hassan");
     await page.locator('[data-save-profile="true"]').click();
     await page.waitForTimeout(150);
     assert.ok((await page.locator('[data-shell-account-name]').innerText()).includes("Layla Hassan"));
-    await page.getByRole("link", { name: /My care/i }).click();
+    await page.getByRole("link", { name: "My care", exact: true }).click();
     assert.ok((await page.locator('[data-patient-greeting]').innerText()).includes("Layla Hassan"));
     summary.flows.patientProfileLiveSyncP2 = "PASS";
 
@@ -334,10 +363,10 @@ async function runSuite(kind) {
     await page.locator("[data-workspace-switch]").selectOption("CLINICIAN");
     await page.locator('[data-v2-portal="doctor"]').waitFor();
     await checkContrast("doctor-schedule-dark");
-    await page.getByRole("link", { name: /Availability/i }).click();
+    await page.getByRole("link", { name: "Availability", exact: true }).click();
     await page.locator('[data-publish-slot-btn="true"]').click();
     await page.waitForTimeout(150);
-    await page.getByRole("link", { name: /Consultation/i }).click();
+    await page.getByRole("link", { name: "Consultation", exact: true }).click();
     await page.locator("#consult-summary").fill("Follow-up note verified");
     await page.locator("#consult-med").fill("Cetirizine 10mg");
     await page.locator('[data-release-submit="true"]').click();
@@ -373,14 +402,19 @@ async function runSuite(kind) {
     await checkContrast("admin-dark");
 
     await page.locator('[data-v2-shell] summary').click();
-    await page.getByRole("button", { name: /^light$/i }).click();
+    await page.locator(".v2-theme-switch select").selectOption("light");
     await page.waitForTimeout(100);
-    await checkContrast("admin-light");
+    assert.equal(await page.locator("[data-foundation-theme]").getAttribute("data-foundation-theme"), "light");
+    await checkContrast("admin-light", "light");
     summary.flows.adminDirectoryAndLightTheme = "PASS";
 
-    // Sign out returns to Gateway
+    // Sign out returns to Gateway / entry workspaces
     await page.locator('[data-shell-signout]').click();
-    await page.locator('[data-v2-gateway="true"]').waitFor();
+    if (isPreview) {
+      await page.locator('[data-v2-gateway="true"]').waitFor();
+    } else {
+      await page.locator("#demo-workspaces").waitFor();
+    }
     summary.flows.signOut = "PASS";
 
     assert.equal(pageErrors.length, 0, `Uncaught page errors: ${pageErrors.join("; ")}`);

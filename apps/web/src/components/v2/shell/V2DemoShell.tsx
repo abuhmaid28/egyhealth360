@@ -84,10 +84,13 @@ export function V2DemoShell({
   const ar = locale === "ar";
   const [liveAccountName, setLiveAccountName] = useState<string>(session.name);
 
+  useEffect(() => {
+    setLiveAccountName(session.name);
+  }, [session.name, session.role]);
+
   // Sync latest patient display name whenever refresh ticks (fixes P2 stale profile name defect).
   useEffect(() => {
     let active = true;
-    setLiveAccountName(session.name);
     if (api.mode === "demo" && session.mode === "demo" && session.role === "PATIENT") {
       api
         .profile()
@@ -101,7 +104,7 @@ export function V2DemoShell({
     return () => {
       active = false;
     };
-  }, [api, session.mode, session.name, session.role, refresh]);
+  }, [api, session.mode, session.role, refresh]);
 
   const navItems = ROLE_NAV[session.role] ?? [];
   const surface =

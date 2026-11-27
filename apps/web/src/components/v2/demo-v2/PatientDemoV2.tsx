@@ -256,7 +256,7 @@ export function PatientDemoV2({ path }: { path: string }) {
               </h1>
               <p>
                 {ar
-                  ? "ابحث بالتخصص أو اسم العيادة واختر موعدًا بتوقيت ١٢ ساعة واضح."
+                  ? "ابحث بالتخصص أو اسم العيادة واختر موعدًا بتوقيت 12 ساعة واضح."
                   : "Filter clinicians by specialty or clinic and choose an open slot in clear 12-hour time."}
               </p>
             </div>
@@ -267,7 +267,7 @@ export function PatientDemoV2({ path }: { path: string }) {
                 {ar ? "كل الأطباء" : "All doctors"}
               </Link>
             ) : null}
-            <span className={styles.pill}>{ar ? "توقيت المريض ١٢ ساعة" : "12h patient time"}</span>
+            <span className={styles.pill}>{ar ? "توقيت المريض 12 ساعة" : "12h patient time"}</span>
             <span className={styles.pillAccent}>{ar ? "حجز تجريبي" : "Synthetic booking"}</span>
           </div>
         </header>
@@ -522,7 +522,7 @@ export function PatientDemoV2({ path }: { path: string }) {
             <FoundationPortalEmblem role="patient" className={styles.emblem} />
             <div className={styles.bannerTitles}>
               <h1 id="appointments-v2-title">{ar ? "مواعيدي" : "My appointments"}</h1>
-              <p>{ar ? "كل المواعيد المحجوزة بتوقيت ١٢ ساعة." : "Booked synthetic visits in clear 12-hour patient time."}</p>
+              <p>{ar ? "كل المواعيد المحجوزة بتوقيت 12 ساعة." : "Booked synthetic visits in clear 12-hour patient time."}</p>
             </div>
           </div>
           <Link href="/patient/discover" className={styles.btnPrimary}>
@@ -629,7 +629,10 @@ export function PatientDemoV2({ path }: { path: string }) {
                 return (
                   <li key={entry.appointmentId} className={styles.cardInset} data-record-entry={entry.appointmentId}>
                     <div className={styles.cardTitleRow}>
-                      <h3>{appt?.provider.displayName ?? entry.appointmentId}</h3>
+                      <h3>
+                        {appt?.provider.displayName ??
+                          (ar ? "ملخص زيارة سابقة معتمد" : "Released previous consultation")}
+                      </h3>
                       <span className={styles.pill}>
                         {appt ? formatFullDate(appt.slot.startAt, locale) : ar ? "معتمد" : "Released"}
                       </span>
@@ -849,7 +852,10 @@ export function PatientDemoV2({ path }: { path: string }) {
           )}
           {latestNote ? (
             <div className={styles.cardInset}>
-              <h3>{latestAppt?.provider.displayName ?? latestNote.appointmentId}</h3>
+              <h3>
+                {latestAppt?.provider.displayName ??
+                  (ar ? "ملخص زيارة سابقة معتمد" : "Released previous consultation")}
+              </h3>
               <p className={styles.muted}>{latestNote.notes || latestNote.diagnosis}</p>
             </div>
           ) : null}

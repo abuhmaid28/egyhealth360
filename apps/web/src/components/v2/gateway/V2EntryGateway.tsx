@@ -40,7 +40,7 @@ const SECONDARY_ROLES: readonly RoleTile[] = [
     enCta: "Open Doctor",
     arCta: "دخول الطبيب",
     enBadge: "24h schedule",
-    arBadge: "جدول ٢٤ ساعة",
+    arBadge: "جدول 24 ساعة",
   },
   {
     role: "PHARMACY_STAFF",
@@ -145,7 +145,7 @@ export function V2EntryGateway({
           <div className={styles.heroCopy}>
             <p className={styles.kicker}>
               <FoundationIcon name="sparkles" size={16} />
-              <span>{ar ? "عرض تجريبي ببيانات اصطناعية · غير مرتبط بمستشفى حي" : "Synthetic Browser Demo · Not Live Clinical Care"}</span>
+              <span>{ar ? "عرض تجريبي ببيانات اصطناعية" : "Synthetic Browser Demo · Not Live Clinical Care"}</span>
             </p>
             <h1 id="entry-title" className={styles.heroTitle}>
               {ar ? "كل رعايتك الصحية." : "All your connected care."}{" "}
@@ -173,21 +173,9 @@ export function V2EntryGateway({
               </button>
               <a className={styles.secondaryLink} href="#demo-workspaces">
                 <FoundationIcon name="list" size={18} />
-                <span>{ar ? "كل البوابات (٥ أدوار)" : "All 5 role workspaces"}</span>
+                <span>{ar ? "كل البوابات (5 أدوار)" : "All 5 role workspaces"}</span>
               </a>
             </div>
-          </div>
-
-          <div
-            className={styles.heroVisualPane}
-            aria-hidden="true"
-            style={{
-              backgroundImage: `linear-gradient(180deg, rgba(14,11,26,0.22), rgba(14,11,26,0.65)), url("${careSceneSrc}")`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <FoundationHeroVisual locale={locale} className={styles.heroSvg} />
             <div className={styles.previewFrame}>
               <img
                 src={careSceneSrc}
@@ -205,6 +193,18 @@ export function V2EntryGateway({
                 </span>
               </div>
             </div>
+          </div>
+
+          <div
+            className={styles.heroVisualPane}
+            aria-hidden="true"
+            style={{
+              backgroundImage: `linear-gradient(180deg, rgba(14,11,26,0.22), rgba(14,11,26,0.65)), url("${careSceneSrc}")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <FoundationHeroVisual locale={locale} className={styles.heroSvg} />
           </div>
         </section>
 
