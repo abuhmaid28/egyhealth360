@@ -1,5 +1,13 @@
 # Source of truth and document index
 
+Current bounded reference: [NOVA three-logo exploration](nova-logo-exploration/README.md), under the [explicit owner authorization](nova-logo-exploration/evidence/owner-authorization.txt). Pinned94 Patient validation is accepted only as sufficient to explore; no logo/Brand/System/final Patient acceptance. [CURRENT_STATUS](CURRENT_STATUS.md) and [current six-step sequence](IMPLEMENTATION_ROADMAP.md#current-patient-to-brand-sequence) supersede older active-task wording below.
+
+| New scoped reference | Classification |
+| --- | --- |
+| [nova-logo-exploration/README.md](nova-logo-exploration/README.md) | CURRENT scoped owner selection package; all three unselected proposals, rights and risks |
+| [nova-logo-exploration/VALIDATION.md](nova-logo-exploration/VALIDATION.md) | HISTORICAL EVIDENCE at candidate: actual tests, recovery and exact limitations; final CI in Draft PR |
+| [nova-logo-exploration/INDEPENDENT_REVIEW.md](nova-logo-exploration/INDEPENDENT_REVIEW.md) | HISTORICAL EVIDENCE: separate reviewer critiques, closed findings and remaining reservations; not owner approval |
+
 Current bounded reference: [pre-final staging UI polish and repository alignment](STAGING_UI_POLISH.md), under the Product Owner's 5 November 2026 brief in the current chat. [CURRENT_STATUS](CURRENT_STATUS.md) owns mutable delivery state. The [before/after viewer](staging-polish-evidence/review.html) is point-in-time visual evidence. The [R1 repair report](R1_UX_INTEGRATION_REPAIR.md) remains historical evidence for the deployed parent candidate; it is not today's release authorization.
 
 CURRENT AUTHORITATIVE classification index. **CURRENT_STATUS is the single mutable current-state summary**; current explicit GitHub owner authorization sets executable scope. This index classifies rather than repeats that state.

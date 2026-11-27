@@ -1,0 +1,66 @@
+{
+  "mode": "EXPLICIT_AUDITED_PLAYBOOK_LOADING",
+  "native_activation_proven": false,
+  "S1_complete": false,
+  "resources": [
+    {
+      "pin": "9e5fca14c7f931a49e94dd88915f8c9fa24a45da",
+      "path": "docs/patient-finalist-validation/NOVA_BRAND_LOGO_NEXT_GATE.md",
+      "sha256": "a5794a5c56181fdc2e9f9ed4888c8996a19e51a096b0a40cc9c71084beed29f2"
+    },
+    {
+      "pin": "9e5fca14c7f931a49e94dd88915f8c9fa24a45da",
+      "path": "docs/patient-finalist-validation/ar.html",
+      "sha256": "5865389d8775e2a03d9c1b4dc3092f69a88986b4e291bb893b5f42faadf2a1b6"
+    },
+    {
+      "pin": "9e5fca14c7f931a49e94dd88915f8c9fa24a45da",
+      "path": "docs/patient-finalist-validation/en.html",
+      "sha256": "d892f8910e02fe85b2f8e437c6171fb06293a430d1eb7ea4055fbe0a2d9a7410"
+    },
+    {
+      "pin": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/PLAYBOOK.md",
+      "sha256": "c6e33163ee61345ad528533f71c42c31dd2c21d7214cd5bf784654b1ff87cb52"
+    },
+    {
+      "pin": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/AUDIT.md",
+      "sha256": "b57049cf1681662084e6a85639e3e200348b2f0dcce6ced8552a2ecf370266da"
+    },
+    {
+      "pin": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/LICENSE",
+      "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014"
+    },
+    {
+      "pin": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/upstream-lock.json",
+      "sha256": "a2d399a0f43b6bb6f90cf9908435f2f4c7be1c3b6b67c829299bf35c749f69df"
+    },
+    {
+      "pin": "0886788bd6b395bb7cace8653ffe280da68af4b8",
+      "path": "docs/zero-cost-design-pilot/vendor/basic-ux-excerpts.json",
+      "sha256": "f54216357069593405470e09cffe4d34169c83c92f2d0e067ca34e5ef4a871c5"
+    },
+    {
+      "pin": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": ".agents/skills/eh360-visual-exploration/SKILL.md",
+      "sha256": "63cc0b2c92a94b8bb7ad7a6ebd616113113a4d4319db571de5b3a6387294a6df"
+    },
+    {
+      "pin": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": ".agents/skills/eh360-visual-qa/SKILL.md",
+      "sha256": "d204ed472c7467bbfb73f8b220b9008569a5d233a56699ef2e794e55d47d1160"
+    },
+    {
+      "pin": "b3eb9543a58d571968a16168d3492bf817792cb4",
+      "path": "docs/skills-pilot/REFERENCE_MAP.md",
+      "sha256": "504d8827e3d0e1081f9714f00bd165b068ba50d65eb52a457acbe9038381fd6e"
+    }
+  ],
+  "symbol_geometry": "Original paths authored in tools/generate.py; no historical/stock vector imported. Category similarity remains unresolved.",
+  "wordmark": "Outlined existing Manrope700 via installed FontTools; retained OFL.",
+  "header_css": "Pinned94 CSS relocated; only font URLs rebased in nova-base.css. Other context additions isolated.",
+  "owner_authorization_sha256": "e23a2e2ae74d9a4d12eb7365ef42f10c0d9ddc86540b173e89b83f3727c273bd"
+}

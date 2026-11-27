@@ -1,0 +1,13 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "pinnedPatient": "9e5fca14c7f931a49e94dd88915f8c9fa24a45da",
+  "checkpoint": "ca0ff90ed834d328e68ec0ed0bcfba0ac317bfd8",
+  "baselineFiles": 1423,
+  "byteIdenticalFiles": 1420,
+  "exceptions": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md",
+    "docs/IMPLEMENTATION_ROADMAP.md"
+  ],
+  "scope": "All other pre-existing files, including production/auth/clinical/contracts/schema/migrations/CI/dependencies/historical candidates, byte-identical."
+}
