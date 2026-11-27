@@ -1,0 +1,12 @@
+{
+  "base": "5355ae5b12bb86ed2c05f70fcadd77eadcd7bde3",
+  "priorTrackedPaths": 1423,
+  "retained": 1423,
+  "byteIdentical": 1421,
+  "summaryExceptions": [
+    "docs/CURRENT_STATUS.md",
+    "docs/SOURCE_OF_TRUTH.md"
+  ],
+  "runtimeSchemaMigrationsOpenApiDependenciesWorkflowsProtectedAssets": "byte-identical; no prior path removed",
+  "permittedNewRoot": "docs/design-system-v2/spec-pilot"
+}
