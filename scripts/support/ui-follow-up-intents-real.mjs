@@ -94,8 +94,10 @@ export async function testRealFollowUps(
     });
     observer.assertPhasePrivacy("login_landing", {
       minSucceeded: 1,
+      expectedKind: "list",
       expectedDataLength: 0,
       expectedMetaTotal: 0,
+      expectedEmptyLinks: true,
       forbiddenMarkers: [instruction, draftId, row.id],
     });
 
@@ -107,12 +109,15 @@ export async function testRealFollowUps(
     await observer.waitForPhaseSettled("initial_draft_hidden", {
       minSucceeded: 1,
       timeoutMs: 10000,
+      expectedKind: "list",
     });
     assert.ok(!(await patient.locator("body").innerText()).includes(instruction));
     observer.assertPhasePrivacy("initial_draft_hidden", {
       minSucceeded: 1,
+      expectedKind: "list",
       expectedDataLength: 0,
       expectedMetaTotal: 0,
+      expectedEmptyLinks: true,
       forbiddenMarkers: [instruction, draftId, row.id],
     });
 
@@ -177,8 +182,10 @@ export async function testRealFollowUps(
     });
     observer.assertPhasePrivacy("released", {
       minSucceeded: 1,
+      expectedKind: "list",
       expectedDataLength: 1,
       expectedMetaTotal: 1,
+      expectedEmptyLinks: true,
       requiredText: [instruction],
       forbiddenMarkers: [draftId],
     });
@@ -210,6 +217,7 @@ export async function testRealFollowUps(
     });
     observer.assertPhasePrivacy("linked", {
       minSucceeded: 1,
+      expectedKind: "list",
       expectedDataLength: 1,
       expectedMetaTotal: 1,
       requiredText: [instruction, booking.id, "BOOKED"],
@@ -247,6 +255,7 @@ export async function testRealFollowUps(
     });
     observer.assertPhasePrivacy("booking_cancelled", {
       minSucceeded: 1,
+      expectedKind: "list",
       expectedDataLength: 1,
       expectedMetaTotal: 1,
       requiredText: [instruction, booking.id, "CANCELLED"],
@@ -303,6 +312,7 @@ export async function testRealFollowUps(
     });
     observer.assertPhasePrivacy("corrected", {
       minSucceeded: 1,
+      expectedKind: "list",
       expectedDataLength: 1,
       expectedMetaTotal: 1,
       requiredText: [instruction + " Corrected wording."],
@@ -345,8 +355,15 @@ export async function testRealFollowUps(
       }
       await p.getByRole("button", { name: "English", exact: true }).click();
     }
-    await observer.settle({ timeoutMs: 5000 });
-    observer.assertEvidenceComplete({ phase: "locale_responsive", minSucceeded: 0 });
+    await observer.settle({ phase: "locale_responsive", timeoutMs: 5000 });
+    observer.assertPhasePrivacy("locale_responsive", {
+      minSucceeded: 0,
+      expectedKind: "list",
+      expectedDataLength: 1,
+      expectedMetaTotal: 1,
+      requiredText: [instruction + " Corrected wording."],
+      forbiddenMarkers: [draftId],
+    });
     await page.setViewportSize({ width: 1440, height: 1000 });
 
     // A real privacy restriction removes the complete root, all links and counts.
@@ -370,6 +387,7 @@ export async function testRealFollowUps(
     await observer.waitForPhaseSettled("privacy_restricted", {
       minSucceeded: 1,
       timeoutMs: 10000,
+      expectedKind: "list",
     });
     const restrictedMarkers = [
       row.id,
@@ -380,6 +398,7 @@ export async function testRealFollowUps(
     ];
     observer.assertPhasePrivacy("privacy_restricted", {
       minSucceeded: 1,
+      expectedKind: "list",
       expectedDataLength: 0,
       expectedMetaTotal: 0,
       expectedEmptyLinks: true,
@@ -393,18 +412,6 @@ export async function testRealFollowUps(
       })
       .waitFor();
     assert.equal(await button("Correct released follow-up").count(), 0);
-
-    // Final drain and cross-phase privacy re-check before tearing down browser context.
-    await observer.settle({ timeoutMs: 5000 });
-    observer.assertEvidenceComplete({ minSucceeded: 7 });
-    observer.assertGlobalPrivacy({ forbiddenMarkers: [draftId] });
-    observer.assertPhasePrivacy("privacy_restricted", {
-      minSucceeded: 1,
-      expectedDataLength: 0,
-      expectedMetaTotal: 0,
-      expectedEmptyLinks: true,
-      forbiddenMarkers: restrictedMarkers,
-    });
 
     for (const p of [page, patient]) {
       const storage = await p.evaluate(() =>
@@ -420,12 +427,20 @@ export async function testRealFollowUps(
     assert.deepEqual(await legacy(), before, "no EH-012 or CareAction writes");
     assert.deepEqual(errors, []);
 
-    const summary = observer.getSummary();
+    // Final bounded drain, full retained-phase re-verification, and immediate observation closure
+    // before printing PASS so no post-drain async gap can mask late responses.
+    const summary = await observer.closeAndVerifyFinalEvidence({
+      timeoutMs: 5000,
+      minSucceeded: 7,
+      globalForbiddenMarkers: [draftId],
+      requireNoVersionMetadata: true,
+      requireAllObservedPhasesCovered: true,
+    });
     console.log(
-      `PASS real Slice6 UI (observer observed=${summary.observedCount} succeededGet=${summary.succeededGetCount} scanned=${summary.scannedCount} bodyErrors=${summary.bodyErrorCount} httpErrors=${summary.httpErrorCount} redirects=${summary.redirectCount} aborts=${summary.abortedCount}): draft hidden from patient; explicit release; lost committed response/exact retry once; desired zone window; current linked booking/cancellation; reasoned released correction and preserved predecessor; EN/AR/RTL desktop/tablet/mobile; whole-root privacy suppression; no browser clinical storage; no EH-012/CareAction bridge.`,
+      `PASS real Slice6 UI (observer observed=${summary.observedCount} succeededGet=${summary.succeededGetCount} scanned=${summary.scannedCount} bodyErrors=${summary.bodyErrorCount} httpErrors=${summary.httpErrorCount} redirects=${summary.redirectCount} aborts=${summary.abortedCount} faults=${summary.globalObserverFaultCount}): draft hidden from patient; explicit release; lost committed response/exact retry once; desired zone window; current linked booking/cancellation; reasoned released correction and preserved predecessor; EN/AR/RTL desktop/tablet/mobile; whole-root privacy suppression; no browser clinical storage; no EH-012/CareAction bridge.`,
     );
   } finally {
-    observer.dispose();
+    await observer.dispose();
     page.off("request", collect);
     await context.close();
   }
