@@ -271,9 +271,13 @@ async function runSuite(kind) {
       // F-01/F-02 negative: Live mode with ?v2=1 and tampered eh360-v2-demo must NEVER render DemoV2Router
       const liveCtx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
       const livePage = await liveCtx.newPage();
+      let liveAuthenticated = false;
       await livePage.route("**/api/v1/**", async (route) => {
         const url = route.request().url();
-        if (url.endsWith("/auth/login") || url.endsWith("/auth/me")) {
+        if (url.endsWith("/auth/login")) {
+          liveAuthenticated = true;
+        }
+        if (liveAuthenticated && (url.endsWith("/auth/login") || url.endsWith("/auth/me"))) {
           return route.fulfill({
             json: {
               data: {
@@ -284,7 +288,7 @@ async function runSuite(kind) {
             },
           });
         }
-        return route.fulfill({ status: 404, json: { error: { message: "Unavailable" } } });
+        return route.fulfill({ status: 401, json: { error: { message: "Unauthenticated" } } });
       });
       await livePage.addInitScript(() => {
         globalThis.sessionStorage.setItem("eh360-v2-demo", "1");
@@ -303,7 +307,7 @@ async function runSuite(kind) {
 
     // 2. F-09 Gateway failed-image probe across Dark, Light, and System (preview build)
     if (isPreview) {
-      for (const scheme of ["dark", "light"]) {
+      for (const scheme of ["dark", "light", "no-preference"]) {
         const failImgCtx = await browser.newContext({
           viewport: { width: 1440, height: 900 },
           colorScheme: scheme,
@@ -317,8 +321,7 @@ async function runSuite(kind) {
           await failImgPage.waitForTimeout(80);
         }
         const paneBg = await failImgPage
-          .locator('[data-v2-gateway] [aria-hidden="true"]')
-          .first()
+          .locator('[data-v2-gateway] [aria-labelledby="entry-title"] > div[aria-hidden="true"]')
           .evaluate((el) => globalThis.getComputedStyle(el).backgroundColor);
         assert.equal(paneBg, "rgb(20, 15, 38)", `Hero visual pane dark fallback must hold in ${scheme}: ${paneBg}`);
         await failImgCtx.close();
@@ -505,14 +508,15 @@ async function runSuite(kind) {
 
     // Appointments persistence after reload
     await page.getByRole("link", { name: "Appointments", exact: true }).click();
-    await assertHeadingHierarchy(page, "patient-appointments");
     await page.locator('[data-appointment-item]').first().waitFor();
+    await assertHeadingHierarchy(page, "patient-appointments");
     await page.reload({ waitUntil: "networkidle" });
     await page.locator('[data-appointment-item]').first().waitFor();
     summary.flows.patientReloadPersistence = "PASS";
 
     // F-06 + F-09: Save profile ("Layla Hassan") triggers toast -> switching locale clears stale toast
     await page.getByRole("link", { name: "Settings", exact: true }).click();
+    await page.locator("#profile-name").waitFor();
     await assertHeadingHierarchy(page, "patient-settings");
     await page.locator("#profile-name").fill("Layla Hassan");
     await page.locator('[data-save-profile="true"]').click();
@@ -550,6 +554,7 @@ async function runSuite(kind) {
     // Switch to Doctor portal -> verify snapshot labels, 24h time, unknown/foreign consultation not-found, F-03 release & private sentinel
     await page.locator("[data-workspace-switch]").selectOption("CLINICIAN");
     await page.locator('[data-v2-portal="doctor"]').waitFor();
+    await page.locator('[data-doctor-appointment="demo-appointment-1"]').waitFor();
     await assertHeadingHierarchy(page, "doctor-schedule");
     await checkContrast("doctor-schedule-dark");
     const appt1Text = await page.locator('[data-doctor-appointment="demo-appointment-1"]').innerText();
@@ -567,6 +572,7 @@ async function runSuite(kind) {
 
     // Availability publish + AR status check
     await page.getByRole("link", { name: "Availability", exact: true }).click();
+    await page.locator("#slot-date").waitFor();
     await assertHeadingHierarchy(page, "doctor-availability");
     await page.locator('[data-publish-slot-btn="true"]').click();
     await page.waitForTimeout(150);
@@ -579,6 +585,7 @@ async function runSuite(kind) {
 
     // F-03: Open exact /doctor/consultation/demo-appointment-1, author public assessment + followUp + prescription + private sentinel, release
     await page.goto(`${origin}/doctor/consultation/demo-appointment-1`, { waitUntil: "networkidle" });
+    await page.locator("#consult-assessment").waitFor();
     await assertHeadingHierarchy(page, "doctor-consultation");
     await page.locator("#consult-assessment").fill("Public clinical assessment G2-F3");
     await page.locator("#consult-followup").fill("Public follow-up guidance G2-F3");
@@ -594,6 +601,7 @@ async function runSuite(kind) {
     // F-03: Switch back to Patient -> Home & Record show public assessment/guidance & NEVER private sentinel
     await page.locator("[data-workspace-switch]").selectOption("PATIENT");
     await page.locator('[data-v2-portal="patient"]').waitFor();
+    await page.locator('[data-patient-home-released]').waitFor();
     const patientHomeAfter = await page.locator('[data-v2-portal="patient"]').innerText();
     assert.ok(patientHomeAfter.includes("Public clinical assessment G2-F3"));
     assert.ok(patientHomeAfter.includes("Public follow-up guidance G2-F3"));
@@ -601,8 +609,10 @@ async function runSuite(kind) {
     assert.ok(!patientHomeAfter.includes("Private synthetic note"));
 
     await page.getByRole("link", { name: "Record", exact: true }).click();
+    await page.locator("#record-v2-title").waitFor();
     await assertHeadingHierarchy(page, "patient-record");
     await page.reload({ waitUntil: "networkidle" });
+    await page.locator("#record-v2-title").waitFor();
     const recordAfterReload = await page.locator('[data-v2-portal="patient"]').innerText();
     assert.ok(recordAfterReload.includes("Public clinical assessment G2-F3"));
     assert.ok(recordAfterReload.includes("Public follow-up guidance G2-F3"));
@@ -614,6 +624,7 @@ async function runSuite(kind) {
     // Switch to Pharmacy portal -> transition Received -> Preparing -> Dispensed + verify zero private notes
     await page.locator("[data-workspace-switch]").selectOption("PHARMACY_STAFF");
     await page.locator('[data-v2-portal="pharmacy"]').waitFor();
+    await page.locator("#pharmacy-v2-title").waitFor();
     await assertHeadingHierarchy(page, "pharmacy");
     await checkContrast("pharmacy-dark");
     const pharmText = await page.locator('[data-v2-portal="pharmacy"]').innerText();
@@ -633,6 +644,7 @@ async function runSuite(kind) {
     // F-08: Switch to Laboratory -> verify FUTURE / NOT LIVE + accessible ARIA tablist keyboard nav in EN LTR & AR RTL
     await page.locator("[data-workspace-switch]").selectOption("LAB_STAFF");
     await page.locator('[data-v2-portal="laboratory"]').waitFor();
+    await page.locator('[data-lab-future-badge="true"]').waitFor();
     await assertHeadingHierarchy(page, "laboratory");
     await page.locator('[data-lab-future-badge="true"]').waitFor();
     await checkContrast("laboratory-dark");
@@ -670,6 +682,7 @@ async function runSuite(kind) {
     // Switch to Admin -> verify operational directory & Light theme parity contrast
     await page.locator("[data-workspace-switch]").selectOption("ADMIN");
     await page.locator('[data-v2-portal="admin"]').waitFor();
+    await page.locator("#admin-user-search").waitFor();
     await assertHeadingHierarchy(page, "admin");
     await page.locator("#admin-user-search").fill("Mariam");
     await checkContrast("admin-dark");
