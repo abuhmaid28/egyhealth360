@@ -1,4 +1,5 @@
 import { r1EvidencePath } from "./ui-r1-evidence.mjs";
+import { createFollowUpResponseObserver } from "./ui-follow-up-response-observer.mjs";
 /** Actual browser → Next → merged Nest Slice 6 → disposable PostgreSQL.
  * Synthetic data only. Follow-up HTTP routes are never mocked. */
 import assert from "node:assert/strict";
@@ -23,8 +24,7 @@ export async function testRealFollowUps(
   });
   const button = (name, scope = section) =>
     scope.getByRole("button", { name, exact: true });
-  const posts = [],
-    releasedBodies = [];
+  const posts = [];
   const collect = (r) => {
     if (r.method() === "POST" && new URL(r.url()).pathname.startsWith(base))
       posts.push({
@@ -81,234 +81,367 @@ export async function testRealFollowUps(
   const patient = await context.newPage();
   const errors = [];
   patient.on("pageerror", (e) => errors.push(e.message));
-  patient.on("response", async (r) => {
-    if (new URL(r.url()).pathname.includes("/me/follow-up-intents") && r.ok())
-      releasedBodies.push(await r.text());
-  });
-  await login(patient, "patient");
-  await patient.goto(origin + "/patient/follow-up");
-  await patient
-    .getByText("No released follow-up instructions", { exact: true })
-    .waitFor();
-  assert.ok(!(await patient.locator("body").innerText()).includes(instruction));
-  assert.ok(!releasedBodies.join("").includes(draftId));
-  await button("Review follow-up release").click();
-  const dialog = page.getByRole("dialog");
-  assert.equal(
-    await button("Sign and release follow-up", dialog).isDisabled(),
-    true,
-  );
-  await page.keyboard.press("Escape");
-  await dialog.waitFor({ state: "hidden" });
-  assert.equal(
-    await button("Review follow-up release").evaluate(
-      (el) => el === globalThis.document.activeElement,
-    ),
-    true,
-  );
-  await button("Review follow-up release").click();
-  await dialog
-    .getByRole("checkbox", {
-      name: "I reviewed this instruction for the correct patient",
-      exact: true,
-    })
-    .check();
-  await mkdir("docs/ui-screenshots/follow-up", { recursive: true });
-  await page.screenshot({
-    path: r1EvidencePath("docs/ui-screenshots/follow-up/live-en-release-desktop.png"),
-  });
-  const dropped = fault.followUpsDropped;
-  fault.dropFollowUpSuffix = "/follow-up-intents/" + row.id + "/sign-release";
-  await button("Sign and release follow-up", dialog).click();
-  await dialog.getByRole("alert").waitFor();
-  assert.equal(fault.followUpsDropped, dropped + 1);
-  assert.equal(
-    (await versionRows()).length,
-    2,
-    "release committed once despite lost response",
-  );
-  assert.equal(
-    posts.filter((x) => x.path.endsWith("/sign-release")).length,
-    1,
-    "no automatic retry",
-  );
-  await button("Sign and release follow-up", dialog).click();
-  await dialog.waitFor({ state: "hidden" });
-  const releases = posts.filter((x) => x.path.endsWith("/sign-release"));
-  assert.equal(releases.length, 2);
-  assert.equal(releases[0].body, releases[1].body);
-  assert.equal((await versionRows()).length, 2);
-  await patient
-    .getByRole("button", {
-      name: "Refresh follow-up instructions",
-      exact: true,
-    })
-    .click();
-  await patient.getByText(instruction, { exact: true }).waitFor();
-  assert.ok(!releasedBodies.join("").includes(draftId));
-  assert.ok(!releasedBodies.join("").includes('"version":'));
-  assert.equal(await patient.getByRole("textbox").count(), 0);
-  // Existing real booking links are displayed, including their current state.
-  // Link editing is intentionally outside this bounded UI; fixture setup uses the merged service.
-  const booking = await f.create(await f.publish(600));
-  await f.intents.execute("LINK", f.actors.clinician, {
-    consultationId,
-    intentId: row.id,
-    bookingId: booking.id,
-    expectedLinkVersion: 0,
-    operationKey: randomUUID(),
-  });
-  await patient
-    .getByRole("button", {
-      name: "Refresh follow-up instructions",
-      exact: true,
-    })
-    .click();
-  await patient
-    .getByRole("link", { name: "View linked booking", exact: true })
-    .waitFor();
-  assert.ok(
-    (
-      await patient
-        .getByRole("link", { name: "View linked booking", exact: true })
-        .getAttribute("href")
-    ).endsWith(booking.id),
-  );
-  await f.bookings.cancel(f.actors.patient, {
-    bookingId: booking.id,
-    expectedVersion: booking.version,
-    operationKey: randomUUID(),
-  });
-  await patient
-    .getByRole("button", {
-      name: "Refresh follow-up instructions",
-      exact: true,
-    })
-    .click();
-  await patient
-    .getByText(
-      "The linked booking is no longer booked. This follow-up instruction remains separate.",
-      { exact: true },
-    )
-    .waitFor();
-  await button("Correct released follow-up").click();
-  await dialog
-    .getByLabel("Clinician instruction", { exact: true })
-    .fill(instruction + " Corrected wording.");
-  // Returned UTC window is converted back to zone-compatible offsets for the backend.
-  assert.equal(
-    await dialog
-      .getByLabel("Desired window starts at", { exact: true })
-      .inputValue(),
-    "2026-11-15T09:00:00.000+02:00",
-  );
-  await dialog
-    .getByLabel("Reason for follow-up correction", { exact: true })
-    .fill("Clarified the agreed wording");
-  await button("Review follow-up correction", dialog).click();
-  assert.equal(
-    await button("Sign and release correction", dialog).isDisabled(),
-    true,
-  );
-  await dialog
-    .getByRole("checkbox", {
-      name: "I reviewed this instruction for the correct patient",
-      exact: true,
-    })
-    .check();
-  await button("Sign and release correction", dialog).click();
-  await dialog.waitFor({ state: "hidden" });
-  assert.equal((await versionRows()).length, 3);
-  assert.equal(
-    (await versionRows())[2].predecessor_id,
-    (await versionRows())[1].id,
-  );
-  await patient
-    .getByRole("button", {
-      name: "Refresh follow-up instructions",
-      exact: true,
-    })
-    .click();
-  await patient
-    .getByText(instruction + " Corrected wording.", { exact: true })
-    .waitFor();
-  for (const p of [page, patient]) {
-    for (const locale of ["en", "ar"]) {
-      await p
-        .getByRole("button", {
-          name: locale === "en" ? "English" : "العربية",
-          exact: true,
-        })
-        .click();
-      assert.equal(
-        await p.locator("html").getAttribute("dir"),
-        locale === "ar" ? "rtl" : "ltr",
-      );
-      for (const width of [1440, 834, 390]) {
-        await p.setViewportSize({ width, height: 1000 });
-        assert.ok(
-          await p.evaluate(
-            () =>
-              globalThis.document.documentElement.scrollWidth <=
-              globalThis.innerWidth + 1,
-          ),
-          `follow-up overflow ${locale} ${width}`,
-        );
-      }
-      if (p === patient)
-        await p.screenshot({
-          path: r1EvidencePath(`docs/ui-screenshots/follow-up/live-${locale}-patient-mobile.png`),
-          fullPage: true,
-        });
-      else if (locale === "ar")
-        await p.locator(".follow-up-intent").screenshot({
-          path: r1EvidencePath("docs/ui-screenshots/follow-up/live-ar-clinician-mobile.png"),
-        });
-    }
-    await p.getByRole("button", { name: "English", exact: true }).click();
-  }
-  await page.setViewportSize({ width: 1440, height: 1000 });
-  // A real privacy restriction removes the complete root, all links and counts.
-  await f.intents.execute("PRIVACY", f.actors.clinician, {
-    consultationId,
-    intentId: row.id,
-    versionIds: [(await versionRows())[2].id],
-    reason: "Synthetic wrong-patient suppression proof",
-    operationKey: randomUUID(),
-  });
-  await patient
-    .getByRole("button", {
-      name: "Refresh follow-up instructions",
-      exact: true,
-    })
-    .click();
-  await patient
-    .getByText("No released follow-up instructions", { exact: true })
-    .waitFor();
-  assert.ok(!(await patient.locator("body").innerText()).includes(instruction));
-  await button("Refresh follow-up instructions").click();
-  await section
-    .getByText("No visible follow-up drafts or released instructions", {
-      exact: true,
-    })
-    .waitFor();
-  assert.equal(await button("Correct released follow-up").count(), 0);
-  for (const p of [page, patient]) {
-    const storage = await p.evaluate(() =>
-      JSON.stringify({
-        ...globalThis.localStorage,
-        ...globalThis.sessionStorage,
-      }),
+  const observer = createFollowUpResponseObserver(patient, { origin });
+  observer.attach();
+  try {
+    // Wait for /patient landing page's own /me/follow-up-intents read to complete before navigating
+    // away to /patient/follow-up so CDP Network.getResponseBody is never raced against navigation.
+    observer.beginPhase("login_landing");
+    await login(patient, "patient");
+    await observer.waitForPhaseSettled("login_landing", {
+      minSucceeded: 1,
+      timeoutMs: 10000,
+    });
+    observer.assertPhasePrivacy("login_landing", {
+      minSucceeded: 1,
+      expectedKind: "list",
+      expectedDataLength: 0,
+      expectedMetaTotal: 0,
+      expectedEmptyLinks: true,
+      forbiddenMarkers: [instruction, draftId, row.id],
+    });
+
+    observer.beginPhase("initial_draft_hidden");
+    await patient.goto(origin + "/patient/follow-up");
+    await patient
+      .getByText("No released follow-up instructions", { exact: true })
+      .waitFor();
+    await observer.waitForPhaseSettled("initial_draft_hidden", {
+      minSucceeded: 1,
+      timeoutMs: 10000,
+      expectedKind: "list",
+    });
+    assert.ok(!(await patient.locator("body").innerText()).includes(instruction));
+    observer.assertPhasePrivacy("initial_draft_hidden", {
+      minSucceeded: 1,
+      expectedKind: "list",
+      expectedDataLength: 0,
+      expectedMetaTotal: 0,
+      expectedEmptyLinks: true,
+      forbiddenMarkers: [instruction, draftId, row.id],
+    });
+
+    await button("Review follow-up release").click();
+    const dialog = page.getByRole("dialog");
+    assert.equal(
+      await button("Sign and release follow-up", dialog).isDisabled(),
+      true,
     );
-    assert.ok(!storage.includes(instruction));
-    assert.ok(!storage.includes(consultationId));
+    await page.keyboard.press("Escape");
+    await dialog.waitFor({ state: "hidden" });
+    assert.equal(
+      await button("Review follow-up release").evaluate(
+        (el) => el === globalThis.document.activeElement,
+      ),
+      true,
+    );
+    await button("Review follow-up release").click();
+    await dialog
+      .getByRole("checkbox", {
+        name: "I reviewed this instruction for the correct patient",
+        exact: true,
+      })
+      .check();
+    await mkdir("docs/ui-screenshots/follow-up", { recursive: true });
+    await page.screenshot({
+      path: r1EvidencePath("docs/ui-screenshots/follow-up/live-en-release-desktop.png"),
+    });
+    const dropped = fault.followUpsDropped;
+    fault.dropFollowUpSuffix = "/follow-up-intents/" + row.id + "/sign-release";
+    await button("Sign and release follow-up", dialog).click();
+    await dialog.getByRole("alert").waitFor();
+    assert.equal(fault.followUpsDropped, dropped + 1);
+    assert.equal(
+      (await versionRows()).length,
+      2,
+      "release committed once despite lost response",
+    );
+    assert.equal(
+      posts.filter((x) => x.path.endsWith("/sign-release")).length,
+      1,
+      "no automatic retry",
+    );
+    await button("Sign and release follow-up", dialog).click();
+    await dialog.waitFor({ state: "hidden" });
+    const releases = posts.filter((x) => x.path.endsWith("/sign-release"));
+    assert.equal(releases.length, 2);
+    assert.equal(releases[0].body, releases[1].body);
+    assert.equal((await versionRows()).length, 2);
+
+    observer.beginPhase("released");
+    await patient
+      .getByRole("button", {
+        name: "Refresh follow-up instructions",
+        exact: true,
+      })
+      .click();
+    await patient.getByText(instruction, { exact: true }).waitFor();
+    await observer.waitForPhaseSettled("released", {
+      minSucceeded: 1,
+      timeoutMs: 10000,
+    });
+    observer.assertPhasePrivacy("released", {
+      minSucceeded: 1,
+      expectedKind: "list",
+      expectedDataLength: 1,
+      expectedMetaTotal: 1,
+      expectedEmptyLinks: true,
+      requiredText: [instruction],
+      forbiddenMarkers: [draftId],
+    });
+    assert.equal(await patient.getByRole("textbox").count(), 0);
+
+    // Existing real booking links are displayed, including their current state.
+    // Link editing is intentionally outside this bounded UI; fixture setup uses the merged service.
+    const booking = await f.create(await f.publish(600));
+    await f.intents.execute("LINK", f.actors.clinician, {
+      consultationId,
+      intentId: row.id,
+      bookingId: booking.id,
+      expectedLinkVersion: 0,
+      operationKey: randomUUID(),
+    });
+    observer.beginPhase("linked");
+    await patient
+      .getByRole("button", {
+        name: "Refresh follow-up instructions",
+        exact: true,
+      })
+      .click();
+    await patient
+      .getByRole("link", { name: "View linked booking", exact: true })
+      .waitFor();
+    await observer.waitForPhaseSettled("linked", {
+      minSucceeded: 1,
+      timeoutMs: 10000,
+    });
+    observer.assertPhasePrivacy("linked", {
+      minSucceeded: 1,
+      expectedKind: "list",
+      expectedDataLength: 1,
+      expectedMetaTotal: 1,
+      requiredText: [instruction, booking.id, "BOOKED"],
+      forbiddenMarkers: [draftId],
+    });
+    assert.ok(
+      (
+        await patient
+          .getByRole("link", { name: "View linked booking", exact: true })
+          .getAttribute("href")
+      ).endsWith(booking.id),
+    );
+
+    await f.bookings.cancel(f.actors.patient, {
+      bookingId: booking.id,
+      expectedVersion: booking.version,
+      operationKey: randomUUID(),
+    });
+    observer.beginPhase("booking_cancelled");
+    await patient
+      .getByRole("button", {
+        name: "Refresh follow-up instructions",
+        exact: true,
+      })
+      .click();
+    await patient
+      .getByText(
+        "The linked booking is no longer booked. This follow-up instruction remains separate.",
+        { exact: true },
+      )
+      .waitFor();
+    await observer.waitForPhaseSettled("booking_cancelled", {
+      minSucceeded: 1,
+      timeoutMs: 10000,
+    });
+    observer.assertPhasePrivacy("booking_cancelled", {
+      minSucceeded: 1,
+      expectedKind: "list",
+      expectedDataLength: 1,
+      expectedMetaTotal: 1,
+      requiredText: [instruction, booking.id, "CANCELLED"],
+      forbiddenMarkers: [draftId],
+    });
+
+    await button("Correct released follow-up").click();
+    await dialog
+      .getByLabel("Clinician instruction", { exact: true })
+      .fill(instruction + " Corrected wording.");
+    // Returned UTC window is converted back to zone-compatible offsets for the backend.
+    assert.equal(
+      await dialog
+        .getByLabel("Desired window starts at", { exact: true })
+        .inputValue(),
+      "2026-11-15T09:00:00.000+02:00",
+    );
+    await dialog
+      .getByLabel("Reason for follow-up correction", { exact: true })
+      .fill("Clarified the agreed wording");
+    await button("Review follow-up correction", dialog).click();
+    assert.equal(
+      await button("Sign and release correction", dialog).isDisabled(),
+      true,
+    );
+    await dialog
+      .getByRole("checkbox", {
+        name: "I reviewed this instruction for the correct patient",
+        exact: true,
+      })
+      .check();
+    await button("Sign and release correction", dialog).click();
+    await dialog.waitFor({ state: "hidden" });
+    const versionsAfterCorrection = await versionRows();
+    assert.equal(versionsAfterCorrection.length, 3);
+    assert.equal(
+      versionsAfterCorrection[2].predecessor_id,
+      versionsAfterCorrection[1].id,
+    );
+
+    observer.beginPhase("corrected");
+    await patient
+      .getByRole("button", {
+        name: "Refresh follow-up instructions",
+        exact: true,
+      })
+      .click();
+    await patient
+      .getByText(instruction + " Corrected wording.", { exact: true })
+      .waitFor();
+    await observer.waitForPhaseSettled("corrected", {
+      minSucceeded: 1,
+      timeoutMs: 10000,
+    });
+    observer.assertPhasePrivacy("corrected", {
+      minSucceeded: 1,
+      expectedKind: "list",
+      expectedDataLength: 1,
+      expectedMetaTotal: 1,
+      requiredText: [instruction + " Corrected wording."],
+      forbiddenMarkers: [draftId],
+    });
+
+    observer.beginPhase("locale_responsive");
+    for (const p of [page, patient]) {
+      for (const locale of ["en", "ar"]) {
+        await p
+          .getByRole("button", {
+            name: locale === "en" ? "English" : "العربية",
+            exact: true,
+          })
+          .click();
+        assert.equal(
+          await p.locator("html").getAttribute("dir"),
+          locale === "ar" ? "rtl" : "ltr",
+        );
+        for (const width of [1440, 834, 390]) {
+          await p.setViewportSize({ width, height: 1000 });
+          assert.ok(
+            await p.evaluate(
+              () =>
+                globalThis.document.documentElement.scrollWidth <=
+                globalThis.innerWidth + 1,
+            ),
+            `follow-up overflow ${locale} ${width}`,
+          );
+        }
+        if (p === patient)
+          await p.screenshot({
+            path: r1EvidencePath(`docs/ui-screenshots/follow-up/live-${locale}-patient-mobile.png`),
+            fullPage: true,
+          });
+        else if (locale === "ar")
+          await p.locator(".follow-up-intent").screenshot({
+            path: r1EvidencePath("docs/ui-screenshots/follow-up/live-ar-clinician-mobile.png"),
+          });
+      }
+      await p.getByRole("button", { name: "English", exact: true }).click();
+    }
+    await observer.settle({ phase: "locale_responsive", timeoutMs: 5000 });
+    observer.assertPhasePrivacy("locale_responsive", {
+      minSucceeded: 0,
+      expectedKind: "list",
+      expectedDataLength: 1,
+      expectedMetaTotal: 1,
+      requiredText: [instruction + " Corrected wording."],
+      forbiddenMarkers: [draftId],
+    });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+
+    // A real privacy restriction removes the complete root, all links and counts.
+    await f.intents.execute("PRIVACY", f.actors.clinician, {
+      consultationId,
+      intentId: row.id,
+      versionIds: [versionsAfterCorrection[2].id],
+      reason: "Synthetic wrong-patient suppression proof",
+      operationKey: randomUUID(),
+    });
+    observer.beginPhase("privacy_restricted");
+    await patient
+      .getByRole("button", {
+        name: "Refresh follow-up instructions",
+        exact: true,
+      })
+      .click();
+    await patient
+      .getByText("No released follow-up instructions", { exact: true })
+      .waitFor();
+    await observer.waitForPhaseSettled("privacy_restricted", {
+      minSucceeded: 1,
+      timeoutMs: 10000,
+      expectedKind: "list",
+    });
+    const restrictedMarkers = [
+      row.id,
+      ...versionsAfterCorrection.map((v) => v.id),
+      instruction,
+      "Corrected wording.",
+      booking.id,
+    ];
+    observer.assertPhasePrivacy("privacy_restricted", {
+      minSucceeded: 1,
+      expectedKind: "list",
+      expectedDataLength: 0,
+      expectedMetaTotal: 0,
+      expectedEmptyLinks: true,
+      forbiddenMarkers: restrictedMarkers,
+    });
+    assert.ok(!(await patient.locator("body").innerText()).includes(instruction));
+    await button("Refresh follow-up instructions").click();
+    await section
+      .getByText("No visible follow-up drafts or released instructions", {
+        exact: true,
+      })
+      .waitFor();
+    assert.equal(await button("Correct released follow-up").count(), 0);
+
+    for (const p of [page, patient]) {
+      const storage = await p.evaluate(() =>
+        JSON.stringify({
+          ...globalThis.localStorage,
+          ...globalThis.sessionStorage,
+        }),
+      );
+      assert.ok(!storage.includes(instruction));
+      assert.ok(!storage.includes(consultationId));
+    }
+    assert.ok(posts.every((x) => !x.headers["idempotency-key"]));
+    assert.deepEqual(await legacy(), before, "no EH-012 or CareAction writes");
+    assert.deepEqual(errors, []);
+
+    // Final bounded drain, full retained-phase re-verification, and immediate observation closure
+    // before printing PASS so no post-drain async gap can mask late responses.
+    const summary = await observer.closeAndVerifyFinalEvidence({
+      timeoutMs: 5000,
+      minSucceeded: 7,
+      globalForbiddenMarkers: [draftId],
+      requireNoVersionMetadata: true,
+      requireAllObservedPhasesCovered: true,
+    });
+    console.log(
+      `PASS real Slice6 UI (observer observed=${summary.observedCount} succeededGet=${summary.succeededGetCount} scanned=${summary.scannedCount} bodyErrors=${summary.bodyErrorCount} httpErrors=${summary.httpErrorCount} redirects=${summary.redirectCount} aborts=${summary.abortedCount} faults=${summary.globalObserverFaultCount}): draft hidden from patient; explicit release; lost committed response/exact retry once; desired zone window; current linked booking/cancellation; reasoned released correction and preserved predecessor; EN/AR/RTL desktop/tablet/mobile; whole-root privacy suppression; no browser clinical storage; no EH-012/CareAction bridge.`,
+    );
+  } finally {
+    await observer.dispose();
+    page.off("request", collect);
+    await context.close();
   }
-  assert.ok(posts.every((x) => !x.headers["idempotency-key"]));
-  assert.deepEqual(await legacy(), before, "no EH-012 or CareAction writes");
-  assert.deepEqual(errors, []);
-  await context.close();
-  page.off("request", collect);
-  console.log(
-    "PASS real Slice6 UI: draft hidden from patient; explicit release; lost committed response/exact retry once; desired zone window; current linked booking/cancellation; reasoned released correction and preserved predecessor; EN/AR/RTL desktop/tablet/mobile; whole-root privacy suppression; no browser clinical storage; no EH-012/CareAction bridge.",
-  );
 }
