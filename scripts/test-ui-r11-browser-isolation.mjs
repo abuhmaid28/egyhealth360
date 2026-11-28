@@ -1,40 +1,30 @@
-/** Opt-in synthetic browser isolation and R11 recovery diagnostic. */
+/** Opt-in anonymous initial sign-in page observation in disposable resources. */
 import { spawnSync } from 'node:child_process';
 import { createHash, randomBytes } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
-import { createServer } from 'node:net';
-import { dirname, isAbsolute, join, resolve } from 'node:path';
+import { createConnection, createServer } from 'node:net';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as wait } from 'node:timers/promises';
 import { chromium } from 'playwright';
 import {
   APP, APP_FILES, APP_TREE, BASE, BASE_TREE, BRANCH, DOCKER_HOST_ARG, DOCKER_ID, NODE_IMAGE, PATHS, PG_IMAGE,
-  DiagnosticFailure, checkCleanup, checkCompose, checkSourceHashes, checkWriteLedger, commandOutput,
-  copyCommand, createLedger, createObservation, assertOwnedProject, gitIn, manifestInput, noContentLogout, projectedResponse,
-  requestTarget, requireCheck, scanOwnedLogs, scanText, sha, verifyWorkspace,
+  DiagnosticFailure, checkCleanup, checkCompose, checkSourceHashes, checkZeroAuthLedger, commandOutput,
+  classifyInitialRequest, copyCommand, createInitialLedger, createObservation, assertOwnedProject, gitIn, initialArguments,
+  initialRequestTarget, manifestInput, projectedResponse, requireCheck, scanOwnedLogs, scanText, sha, verifyWorkspace,
 } from './support/r11-browser-isolation.mjs';
 
 const PG_DIGEST = 'sha256:f1ea2a1a4fb7b68d4836be1fdcb8a6466a89b072158bf9d97663600538c294c5';
 const DB = 'eh216_q2';
 const ME = '/api/v1/auth/me';
 const LOGIN = '/api/v1/auth/login';
-const LOGOUT = '/api/v1/auth/logout';
 const HEALTH = '/api/v1/health';
-const SUMMARY_API = '/api/v1/me/summaries';
-const SUMMARY = '/patient/summaries';
 const SIGN_IN = 'Sign in with live account';
-const LIVE = '[data-session-mode="live"]';
-const UI = Object.freeze({
-  english: ['English', 'ltr', 1440, 'Refresh visible documentation', 'No visible released summaries'],
-  arabic: ['العربية', 'rtl', 390, 'تحديث التوثيق المتاح للعرض', 'لا توجد ملخصات منشورة متاحة للعرض'],
-});
 
 async function fixtureWorker(name) {
   let pool;
-  let persistence;
   let output;
   try {
-    const { Buffer } = await import('node:buffer');
     const { createRequire } = await import('node:module');
     const { createHash } = await import('node:crypto');
     const { Pool } = createRequire('/app/packages/db/package.json')('pg');
@@ -50,23 +40,7 @@ async function fixtureWorker(name) {
     }
     const data = JSON.parse(body);
     pool = new Pool({ connectionString: url.href, max: 2, connectionTimeoutMillis: 3000, statement_timeout: 15000 });
-    if (data.action === 'init') {
-      if (!/^[a-f0-9]{12}$/.test(data.nonce) || !Array.isArray(data.passwords) || data.passwords.length !== 2
-        || !data.passwords.every(value => /^[A-Za-z0-9_-]{43}$/.test(value))
-        || (await pool.query('SELECT count(*)::int AS n FROM users')).rows[0].n !== 0) throw new Error();
-      const { createPersistence } = await import('/app/packages/db/dist/index.js');
-      const { hashPassword } = await import('/app/apps/api/dist/password.js');
-      persistence = createPersistence(url.href);
-      const actors = [];
-      for (const [index, alias] of ['A', 'B'].entries()) {
-        const displayName = 'Qtwo' + alias + data.nonce;
-        const email = 'patient' + alias.toLowerCase() + '-' + data.nonce + '@q2.example.invalid';
-        const hash = await hashPassword(Buffer.from(data.passwords[index]));
-        const created = await persistence.createUser({ role: 'PATIENT', email, passwordHash: hash, profile: { displayName } });
-        actors.push({ id: created.id, profileId: created.profileId, email, displayName, hash });
-      }
-      output = actors;
-    } else if (data.action === 'snapshot') {
+    if (data.action === 'snapshot') {
       const tables = (await pool.query("SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename")).rows;
       const domains = {};
       for (const { tablename } of tables) {
@@ -82,14 +56,14 @@ async function fixtureWorker(name) {
       const audits = Object.fromEntries((await pool.query('SELECT action_type, count(*)::int AS n FROM audit_logs GROUP BY action_type'))
         .rows.map(row => [row.action_type, row.n]));
       const unsafelyAudited = (await pool.query("SELECT count(*)::int AS n FROM audit_logs WHERE safe_metadata <> '{}'::jsonb")).rows[0].n;
-      output = { domains, ...sessions, audits, unsafelyAudited };
+      const accounts = (await pool.query('SELECT count(*)::int AS n FROM public.users')).rows[0].n;
+      output = { domains, accounts, ...sessions, audits, unsafelyAudited };
     } else if (data.action === 'migrations') {
       output = (await pool.query('SELECT migration_name,checksum FROM _prisma_migrations ORDER BY migration_name')).rows;
     } else throw new Error();
   } catch {
     process.exitCode = 1;
   } finally {
-    try { await persistence?.close(); } catch { process.exitCode = 1; }
     try { await pool?.end(); } catch { process.exitCode = 1; }
   }
   if (!process.exitCode) process.stdout.write(JSON.stringify(output));
@@ -117,8 +91,8 @@ export function composeOverride(project, ports) {
   ];
   return [
     'services:', '  api:', '    image: ' + project + ':local', '    build:', '      secrets: [proxy_ca]',
-    '    environment:', '      EH216_PROJECT: ' + project, ...bind('api', 3001), '  web:',
-    '    image: ' + project + ':local', ...bind('web', 3000), '  worker:', '    image: ' + project + ':local',
+    '    environment:', '      EH216_PROJECT: ' + project, '    healthcheck: {disable: true}', ...bind('api', 3001), '  web:',
+    '    image: ' + project + ':local', '    healthcheck: {disable: true}', ...bind('web', 3000), '  worker:', '    image: ' + project + ':local',
     '  postgres:', '    volumes: !override', '      - type: tmpfs', '        target: /var/lib/postgresql',
     '        tmpfs:', '          size: 1073741824', 'volumes: !reset {}',
     'secrets:', '  proxy_ca:', '    file: $' + '{EH216_CA}', '',
@@ -159,240 +133,183 @@ export async function signOutControl(page) {
   return menu.getByRole('button', { name: 'Sign out', exact: true });
 }
 
-async function observedBody(response, path) {
-  if (noContentLogout(path, response.request().method(), response.status(), response.headers())) {
-    return { text: '', bodyless: true };
+async function boundedAsync(operation, milliseconds, predicate) {
+  const controller = new globalThis.AbortController();
+  try {
+    return await Promise.race([operation(), wait(milliseconds, undefined, { signal: controller.signal })
+      .then(() => { throw new DiagnosticFailure(predicate); })]);
+  } finally {
+    controller.abort();
   }
-  let bytes;
-  try { bytes = await response.body(); } catch { throw new DiagnosticFailure('OBSERVER_BODY_UNAVAILABLE'); }
-  requireCheck(bytes.length <= 1_000_000, 'OBSERVER_RESPONSE_SIZE');
-  return { text: bytes.toString('utf8'), bodyless: false };
 }
 
-async function exercise({ context, origin, actors, passwords, secrets, ledger, observation, receipt, step, outage, ready }) {
+async function waitForTcp(port) {
+  const end = globalThis.performance.now() + 10000;
+  while (globalThis.performance.now() < end) {
+    const listening = await new Promise(resolve => {
+      const socket = createConnection({ host: '127.0.0.1', port });
+      const finish = ready => { socket.destroy(); resolve(ready); };
+      socket.once('connect', () => finish(true));
+      socket.once('error', () => finish(false));
+      socket.setTimeout(150, () => finish(false));
+    });
+    if (listening) return;
+    await wait(100);
+  }
+  throw new DiagnosticFailure('TOPOLOGY_TCP_TIMEOUT');
+}
+
+function ownedChromeProcesses() {
+  const chrome = new Map();
+  function collect(pid) {
+    let children;
+    try { children = readFileSync('/proc/' + pid + '/task/' + pid + '/children', 'utf8').trim(); }
+    catch { return; }
+    for (const child of children.split(/\s+/).filter(Boolean).map(Number)) {
+      const info = processIdentity(child);
+      if (info && /chrome|chromium/i.test(info.name)) chrome.set(child, info.birth);
+      collect(child);
+    }
+  }
+  collect(process.pid);
+  return chrome;
+}
+
+function processIdentity(pid) {
+  try {
+    const stat = readFileSync('/proc/' + pid + '/stat', 'utf8');
+    const end = stat.lastIndexOf(')');
+    const [state, ...fields] = stat.slice(end + 2).trim().split(/\s+/);
+    return { name: stat.slice(stat.indexOf('(') + 1, end), state, birth: fields[18] };
+  } catch (error) {
+    if (error?.code === 'ENOENT' || error?.code === 'ESRCH') return null;
+    throw error;
+  }
+}
+
+function liveOwnedChrome(owned) {
+  return [...owned].filter(([pid, birth]) => {
+    const info = processIdentity(pid);
+    return info?.birth === birth && !['Z', 'X'].includes(info.state);
+  }).length;
+}
+
+export async function finishInitialEvidence({ close, snapshot, before, ledger }) {
+  let closed = false;
+  try { await close(); closed = true; } catch { /* cleanup result remains independent */ }
+  if (!before) return { closed, writes: { result: 'NOT VERIFIED', attempted: false } };
+  let after;
+  try { after = await snapshot(); }
+  catch { return { closed, writes: { result: 'NOT VERIFIED', attempted: true } }; }
+  try {
+    checkZeroAuthLedger(before, after, ledger());
+  } catch (error) {
+    return { closed, writes: { result: 'FAIL', attempted: true,
+      predicate: error instanceof DiagnosticFailure ? error.predicate : 'WRITE_LEDGER_UNAVAILABLE' } };
+  }
+  if (!closed) return { closed, writes: { result: 'NOT VERIFIED', attempted: true } };
+  return { closed, writes: { result: 'PASS', attempted: true, accounts: 0, sessions: 0, audits: 0, domainSnapshotUnchanged: true } };
+}
+
+async function observeInitialPage({ context, origin, secrets, ledger, observation, receipt }) {
   const page = await context.newPage();
   page.setDefaultTimeout(12000);
-  let phase = 'accountA';
-  let actor = null;
-  let authWindow = null;
-  const profiles = actors.map(item => item.profileId);
-  const markers = item => [item.id, item.profileId, item.email, item.displayName];
-  const restricted = active => [...secrets, ...actors.filter(item => item !== active).flatMap(markers)];
-  const requestActor = new Map();
-  context.on('request', request => {
+  const active = new Map();
+  let navigations = 0;
+
+  const fail = error => observation.fault(error instanceof DiagnosticFailure ? error.predicate : 'OBSERVER_UNEXPECTED');
+  const observe = callback => (...args) => {
+    try { callback(...args); } catch (error) { fail(error); }
+  };
+
+  context.on('page', observe(() => { requireCheck(context.pages().length === 1, 'INITIAL_PAGE_COUNT'); }));
+  context.on('request', observe(request => {
+    const method = request.method();
+    const resource = request.resourceType();
+    const requestClass = classifyInitialRequest(request.url(), resource);
     try {
-      const method = request.method();
-      if (method === 'GET') ledger.get(phase);
-      const type = requestTarget(request.url(), origin, method, profiles);
-      if (type === 'login' || type === 'logout') {
-        requireCheck(authWindow === type, 'AUTH_WINDOW');
-        ledger.auth(phase, type);
-      }
-      observation.start(request, type !== 'asset');
-      requestActor.set(request, actor);
+      ledger.dispatch('INITIAL_PAGE', method);
     } catch (error) {
-      observation.fault(error.predicate ?? 'OBSERVER_REQUEST');
+      observation.start(request, { requestClass, method });
+      fail(error);
+      void context.close().catch(() => {});
+      return;
+    }
+    observation.start(request, { requestClass, method });
+    try {
+      active.set(request, initialRequestTarget(request.url(), origin, method, resource));
+      if (request.isNavigationRequest()) {
+        receipt.navigations = ++navigations;
+        requireCheck(navigations === 1 && requestClass === 'DOCUMENT', 'INITIAL_NAVIGATION_LIMIT');
+      }
+    } catch (error) {
+      fail(error);
       void context.close().catch(() => {});
     }
-  });
-  const terminal = (request, value) => {
-    requestActor.delete(request);
-    try { observation.terminal(request, value); } catch { observation.fault('OBSERVER_TERMINAL'); }
-  };
-  context.on('requestfailed', request => terminal(request, {
-    failed: true, cancelled: request.failure()?.errorText === 'net::ERR_ABORTED',
   }));
-  context.on('requestfinished', request => {
-    const path = new URL(request.url()).pathname;
-    if (!path.startsWith('/api/v1/')) return terminal(request, {});
-    const atDispatch = requestActor.get(request);
+  context.on('response', observe(response => observation.event(response.request(), 'BROWSER_RESPONSE')));
+  context.on('requestfailed', observe(request => {
+    observation.event(request, 'BROWSER_FAILED');
+    observation.terminal(request, { cancelled: request.failure()?.errorText === 'net::ERR_ABORTED' });
+    active.delete(request);
+  }));
+  context.on('requestfinished', observe(request => {
+    observation.event(request, 'BROWSER_FINISHED');
+    observation.event(request, 'RESPONSE_ACQUIRING');
     void (async () => {
-      let scanned = false;
-      let bodyless = false;
       try {
         const response = await request.response();
         requireCheck(response, 'OBSERVER_RESPONSE_MISSING');
-        const body = await observedBody(response, path);
-        const projection = projectAuthText(body.text, path, response.status(), atDispatch, secrets);
-        requireCheck(scanText(projection.text, restricted(atDispatch)), 'RESPONSE_PRIVACY');
-        requireCheck(projection.valid, 'AUTH_PROJECTION_UNSAFE');
-        bodyless = body.bodyless;
-        scanned = !bodyless;
-      } catch (error) { observation.fault(error.predicate ?? 'OBSERVER_BODY_UNAVAILABLE'); }
-      finally { terminal(request, { scanned, bodyless }); }
+        observation.event(request, 'RESPONSE_ACQUIRED');
+        const headers = response.headers();
+        requireCheck(await response.headerValue('set-cookie') === null, 'ANONYMOUS_COOKIE_WRITE');
+        const type = active.get(request);
+        requireCheck(type, 'OBSERVER_CLASSIFICATION');
+        if (type !== 'DOCUMENT' && type !== 'ALLOWED_API') return observation.terminal(request);
+        if (request.method() === 'HEAD' && type === 'DOCUMENT') {
+          return observation.terminal(request, { bodyless: true });
+        }
+        observation.event(request, 'BODY_ACQUIRING');
+        let bytes;
+        try { bytes = await response.body(); }
+        catch { throw new DiagnosticFailure('OBSERVER_BODY_UNAVAILABLE'); }
+        requireCheck(bytes && bytes.length > 0, 'OBSERVER_BODY_UNAVAILABLE');
+        requireCheck(bytes.length <= 1_000_000, 'OBSERVER_RESPONSE_SIZE');
+        observation.event(request, 'BODY_ACQUIRED');
+        observation.event(request, 'SCAN_STARTED');
+        const body = bytes.toString('utf8');
+        const clean = scanText(body, [...secrets]);
+        observation.event(request, 'SCAN_COMPLETED');
+        requireCheck(clean, 'RESPONSE_PRIVACY');
+        if (type === 'ALLOWED_API') {
+          const projection = projectedResponse({ text: body, status: response.status(), cache: headers['cache-control'] },
+            { expected: 401, type: 'error' });
+          requireCheck(projection.pass, 'ANONYMOUS_API_CONTRACT');
+        } else requireCheck(response.status() === 200, 'INITIAL_DOCUMENT_STATUS');
+        observation.terminal(request);
+      } catch (error) {
+        try { observation.terminal(request, { cause: error instanceof DiagnosticFailure ? error.predicate : 'OBSERVER_UNEXPECTED' }); }
+        catch (terminalError) { fail(terminalError); }
+      } finally {
+        active.delete(request);
+      }
     })();
-  });
-  page.on('pageerror', () => { receipt.browserErrors++; });
-  const match = (path, method = 'GET') => page.waitForResponse(response => {
-    const url = new URL(response.url());
-    return url.origin === origin && url.pathname === path && response.request().method() === method;
-  });
-  const check = async (response, label, expected, type, active, noStore = true) => {
-    const path = new URL(response.url()).pathname;
-    const { text: raw, bodyless } = await observedBody(response, path);
-    const auth = projectAuthText(raw, path, response.status(), active, secrets);
-    const projection = projectedResponse({ text: auth.text, cache: response.headers()['cache-control'], status: response.status() },
-      { expected, type, noStore, markers: restricted(active) });
-    receipt.statuses.push({ label, ...projection, bodyless });
-    requireCheck(auth.valid, 'AUTH_PROJECTION_UNSAFE');
-    requireCheck(projection.pass, 'CASE_HTTP_CONTRACT');
-    return type === 'data' || type === 'error' ? parse(raw) : null;
-  };
-  const request = async (path, label, expected, type, active) => {
-    const [response] = await Promise.all([match(path), page.evaluate(async route => {
-      const value = await fetch(route, { credentials: 'same-origin', cache: 'no-store' });
-      await value.arrayBuffer();
-    }, path)]);
-    return check(response, label, expected, type, active);
-  };
-  const surface = async active => {
-    await observation.settle();
-    const { html, storage, navigation } = await page.evaluate(() => ({
-      html: globalThis.document.documentElement.outerHTML,
-      storage: JSON.stringify([Object.entries(globalThis.localStorage), Object.entries(globalThis.sessionStorage), globalThis.document.cookie]),
-      navigation: JSON.stringify([globalThis.location.href, globalThis.history.state]),
-    }));
-    requireCheck(scanText(html, restricted(active)), 'DOM_PRIVACY');
-    requireCheck(scanText(storage, restricted(null)) && scanText(navigation, restricted(null)), 'STORAGE_HISTORY_PRIVACY');
-    receipt.domScans++;
-    receipt.storageScans++;
-    requireCheck(receipt.browserErrors === 0, 'BROWSER_PAGE_ERROR');
-  };
-  const live = async () => {
-    await page.locator(LIVE).waitFor();
-    requireCheck(await page.locator('[data-session-mode="demo"],.demo-role-links,.demo-button').count() === 0, 'DEMO_FALLBACK');
-  };
-  const checkActor = async (active, label) => {
-    const me = await request(ME, label + '_ME', 200, 'data', active);
-    requireCheck(me.data?.user?.id === active.id && me.data.user.email === active.email && me.data.user.role === 'PATIENT', 'CURRENT_ACTOR');
-    const cookies = (await context.cookies()).filter(cookie => cookie.name === 'eh_session');
-    requireCheck(cookies.length === 1 && cookies[0].httpOnly && !cookies[0].secure
-      && cookies[0].sameSite === 'Lax' && cookies[0].path === '/', 'LOCAL_COOKIE_ATTRIBUTES');
-    secrets.add(cookies[0].value);
-    receipt.cookieChecks.push({ label, currentActor: true, present: true, httpOnly: true, local: true });
-    await live();
-  };
-  const visible = async active => {
-    await page.getByRole('heading').filter({ hasText: active.displayName }).first().waitFor();
-    await surface(active);
-    receipt.ownVisible++;
-  };
-  const readProfile = (active, label) => request('/api/v1/patients/' + active.profileId + '/profile', label, 200, 'data', active);
-  const checkProfile = (own, active) => requireCheck(Object.keys(own.data ?? {}).sort().join(',') === 'displayName,id'
-    && own.data.id === active.profileId && own.data.displayName === active.displayName, 'OWN_PROFILE');
-  const profilesFor = async (active, foreign, label) => {
-    checkProfile(await readProfile(active, label + '_OWN'), active);
-    const denied = await request('/api/v1/patients/' + foreign.profileId + '/profile', label + '_FOREIGN', 404, 'error', active);
-    requireCheck(denied.error.code === 'PATIENT_NOT_FOUND', 'FOREIGN_PROFILE_PROJECTION');
-    await surface(active);
-  };
-  const signIn = async (active, index, label) => {
-    actor = active;
-    await page.getByLabel('Email address', { exact: true }).fill(active.email);
-    await page.getByLabel('Password', { exact: true }).fill(passwords[index]);
-    authWindow = 'login';
-    try {
-      const [response] = await Promise.all([match(LOGIN, 'POST'),
-        page.getByRole('button', { name: SIGN_IN, exact: true }).click()]);
-      const value = await check(response, label + '_LOGIN', 200, 'data', active);
-      requireCheck(value.data?.user?.id === active.id, 'LOGIN_ACTOR');
-    } finally { authWindow = null; }
-    await live();
-    await observation.settle();
-    await page.goto(origin + '/patient');
-    await checkActor(active, label);
-    await visible(active);
-  };
-  const signOut = async (active, label) => {
-    const control = await signOutControl(page);
-    authWindow = 'logout';
-    try {
-      const [response] = await Promise.all([match(LOGOUT, 'POST'),
-        control.click()]);
-      await check(response, label + '_LOGOUT', 204, 'empty', active);
-    } finally { authWindow = null; }
-    await page.getByRole('button', { name: SIGN_IN, exact: true }).waitFor();
-    await observation.settle();
-    actor = null;
-    await request(ME, label + '_SIGNED_OUT_ME', 401, 'error', null);
-    requireCheck(!(await context.cookies()).some(cookie => cookie.name === 'eh_session'), 'SIGNED_OUT_COOKIE_PRESENT');
-    receipt.cookieChecks.push({ label, present: false, signedOut: true });
-    await surface(null);
-  };
-
-  const [a, b] = actors;
-  await step('ACCOUNT_A', async () => {
-    await page.goto(origin + '/patient');
-    await page.getByRole('button', { name: SIGN_IN, exact: true }).waitFor();
-    await observation.settle();
-    await signIn(a, 0, 'A');
-    await profilesFor(a, b, 'A');
-    await signOut(a, 'A');
-  });
-  phase = 'accountB';
-  await step('ACCOUNT_B_HISTORY', async () => {
-    await signIn(b, 1, 'B');
-    await profilesFor(b, a, 'B');
-    await page.goto(origin + SUMMARY);
-    await live();
-    await surface(b);
-    await page.reload();
-    await checkActor(b, 'RELOAD');
-    await surface(b);
-    await page.goBack();
-    await checkActor(b, 'BACK');
-    await visible(b);
-    await page.goForward();
-    await checkActor(b, 'FORWARD');
-    await surface(b);
-  });
-
-  for (const [locale, [language, direction, width, refreshText, emptyText]] of Object.entries(UI)) {
-    phase = locale;
-    await step(locale === 'english' ? 'RECOVERY_EN' : 'RECOVERY_AR', async () => {
-      await page.getByRole('button', { name: language, exact: true }).click();
-      await page.setViewportSize({ width, height: 900 });
-      const refresh = () => page.getByRole('button', { name: refreshText, exact: true });
-      const empty = () => page.getByText(emptyText, { exact: true });
-      await empty().waitFor();
-      await surface(b);
-      for (const [kind, status] of [['database', 503], ['api', 500]]) {
-        const label = locale.toUpperCase() + '_' + kind.toUpperCase();
-        await outage(kind, async () => {
-          await ready(origin, status, phase, label);
-          const [response] = await Promise.all([match(SUMMARY_API), refresh().click()]);
-          await check(response, label + '_SUMMARIES', status, kind === 'api' ? 'upstream' : 'error', b, kind !== 'api');
-          const error = page.getByRole('alert').first();
-          await error.waitFor();
-          requireCheck((await error.innerText()).trim() && !await empty().isVisible(), 'OUTAGE_FALSE_EMPTY_OR_ERROR');
-          await live();
-          await surface(b);
-        });
-        await ready(origin, 200, phase, label + '_RESTORED');
-        const [response] = await Promise.all([match(SUMMARY_API), refresh().click()]);
-        await check(response, label + '_RECOVERED', 200, 'data', b);
-        await empty().waitFor();
-        await checkActor(b, label + '_RESTORE');
-        checkProfile(await readProfile(b, label + '_OWN_RESTORED'), b);
-        requireCheck(await page.locator('html').getAttribute('dir') === direction, 'RECOVERED_DIRECTION');
-        await surface(b);
-        receipt.recovery.push({ label, visibleError: true, falseEmpty: false, live: true, direction, ownProfile: true });
-      }
-      if (locale === 'arabic') {
-        await page.getByRole('button', { name: 'English', exact: true }).click();
-        await signOut(b, 'B');
-      }
-    });
-  }
+  }));
+  page.on('pageerror', () => { receipt.browserErrors++; observation.fault('BROWSER_PAGE_ERROR'); });
+  receipt.navigationAttempts = 1;
+  await page.goto(origin + '/patient', { waitUntil: 'domcontentloaded', timeout: 12000 });
+  await page.getByRole('button', { name: SIGN_IN, exact: true }).waitFor({ timeout: 12000 });
   await observation.settle();
+  requireCheck(navigations === 1 && context.pages().length === 1, 'INITIAL_NAVIGATION_LIMIT');
+  receipt.signInControl = true;
 }
 
 export async function run(argv) {
-  requireCheck(argv.length === 2 && argv[0] === '--evidence-dir' && isAbsolute(argv[1]), 'EXPLICIT_EVIDENCE_DIRECTORY');
+  const evidencePath = initialArguments(argv);
   const harness = process.cwd();
   const root = dirname(harness);
   const application = join(root, 'application');
-  const evidence = resolve(argv[1]);
+  const evidence = resolve(evidencePath);
   requireCheck(dirname(evidence) === root && !existsSync(evidence) && realpathSync(root) === root, 'EVIDENCE_CONTAINMENT');
   verifyWorkspace(harness, {});
   verifyWorkspace(application, { expected: APP, tree: APP_TREE });
@@ -414,21 +331,27 @@ export async function run(argv) {
     POSTGRES_USER: DB, POSTGRES_DB: DB, POSTGRES_PASSWORD: randomBytes(24).toString('hex'),
     AUTH_BROWSER_ORIGIN: origin, EH216_CA: process.env.CODEX_PROXY_CERT ?? '/etc/ssl/certs/ca-certificates.crt' };
   const secrets = new Set([env.POSTGRES_PASSWORD]);
-  let actorMarkers = [];
-  const ledger = createLedger();
+  const ledger = createInitialLedger();
   const observation = createObservation();
   const receipt = { issue: 216, result: 'FAIL', app: APP, appTree: APP_TREE, harness: gitIn(harness, ['rev-parse', 'HEAD']),
-    cases: [], statuses: [], cookieChecks: [], domScans: 0, storageScans: 0, ownVisible: 0, browserErrors: 0, recovery: [],
-    staleResponses: 'NOT PROVEN', delayedCookies: 'NOT PROVEN', wrongExistingBooking: 'NOT PROVEN',
-    clinicalFixtures: 0, clinicalWrites: null, fixtureCount: null, logScans: 0 };
+    cases: [], statuses: [], browserErrors: 0, navigations: 0, navigationAttempts: 0,
+    clinicalFixtures: 0, clinicalWrites: null, logScans: 0 };
   let stage = 'TOPOLOGY';
   let browser;
+  let before;
+  const chrome = new Map();
   let image;
   let compose;
   let services;
   let network;
   let commandFailure;
   let ownershipEstablished = false;
+  const recordFailure = (failureStage, predicate, command) => {
+    receipt.result = 'FAIL';
+    if (receipt.failure) return;
+    receipt.failure = { stage: failureStage, predicate, ...(command ? { command } : {}) };
+    receipt.failureObservation = observation.firstFailure() ?? observation.report();
+  };
   const bounded = (binary, operation, args, { input, timeout = 60000, extraEnv = env } = {}) => commandOutput(
     spawnSync(binary, args, { cwd: harness, input, env: extraEnv, timeout, maxBuffer: 32_000_000, encoding: 'utf8' }),
     binary, operation, failure => { commandFailure = failure; });
@@ -455,26 +378,16 @@ export async function run(argv) {
       'FIXTURE_CONTAINER_OWNERSHIP');
     return parse(docker('FIXTURE', ['exec', '-i', api.Id, 'node', '-e', fixtureProgram()], { input: JSON.stringify(data) }));
   };
-  const ready = async (target, expected, phase, label) => {
+  const ready = async (target, label) => {
     requireCheck(target === origin || target === direct, 'HEALTH_TARGET');
-    let raw;
-    for (let i = 0; i < 6; i++) {
-      ledger.get(phase);
-      let response;
-      try { response = await fetch(target + HEALTH, { redirect: 'error', signal: globalThis.AbortSignal.timeout(3500) }); }
-      catch { await wait(300); continue; }
-      const text = await response.text();
-      requireCheck(text.length < 16000 && scanText(text, [...secrets, ...actorMarkers]), 'HEALTH_PRIVACY');
-      raw = { status: response.status, text, cache: response.headers.get('cache-control') };
-      if (raw.status === expected) break;
-      await wait(300);
-    }
-    const type = expected === 200 ? 'data' : expected === 503 ? 'error' : 'upstream';
-    const item = projectedResponse(raw ?? { status: 0, text: '' }, { expected, type, noStore: false });
+    ledger.dispatch('TOPOLOGY', 'GET');
+    const response = await fetch(target + HEALTH, { redirect: 'error', signal: globalThis.AbortSignal.timeout(3500) });
+    const body = await response.text();
+    requireCheck(body.length < 16000 && scanText(body, [...secrets]), 'HEALTH_PRIVACY');
+    const item = projectedResponse({ status: response.status, text: body, cache: response.headers.get('cache-control') },
+      { expected: 200, type: 'data', noStore: false });
     receipt.statuses.push({ label, ...item });
-    requireCheck(item.pass, 'HEALTH_STATUS_SHAPE');
-    if (expected === 200) requireCheck(parse(raw.text)?.data?.status === 'ok', 'HEALTH_OK_CONTRACT');
-    if (expected === 503) requireCheck(parse(raw.text)?.error?.code === 'DATABASE_UNAVAILABLE', 'HEALTH_DATABASE_CONTRACT');
+    requireCheck(item.pass && parse(body)?.data?.status === 'ok', 'HEALTH_OK_CONTRACT');
   };
   const proveLive = () => {
     const running = Object.fromEntries(owned('container').map(id => {
@@ -494,6 +407,7 @@ export async function run(argv) {
       } else {
         const bindings = item.NetworkSettings.Ports[(name === 'api' ? '3001' : '3000') + '/tcp'];
         requireCheck(item.Image === image && item.Config.User === 'node' && item.Config.WorkingDir === '/app'
+          && item.Config.Healthcheck?.Test?.[0] === 'NONE'
           && item.Mounts.length === 0 && bindings?.length === 1 && bindings[0].HostIp === '127.0.0.1'
           && Number(bindings[0].HostPort) === ports[name], 'RUNNING_APP_SCOPE');
       }
@@ -506,32 +420,6 @@ export async function run(argv) {
   };
   const sameResources = candidate => candidate.net.Id === network.Id
     && Object.keys(services).every(name => candidate.running[name].Id === services[name].Id);
-  const outage = async (kind, action) => {
-    requireCheck(kind === 'database' || kind === 'api', 'OUTAGE_KIND');
-    const before = proveLive();
-    requireCheck(sameResources(before), 'OUTAGE_RESOURCE_DRIFT');
-    ledger.outage();
-    const pg = services.postgres.Id;
-    const api = services.api.Id;
-    const aliases = before.running.postgres.NetworkSettings.Networks[network.Name].Aliases;
-    requireCheck(aliases.includes('postgres') && aliases.every(alias => alias === 'postgres' || alias === project + '-postgres-1'),
-      'POSTGRES_ALIASES');
-    try {
-      if (kind === 'database') {
-        docker('DATABASE_DISCONNECT', ['network', 'disconnect', network.Id, pg]);
-        docker('API_STOP', ['stop', '--time', '10', api]);
-        docker('API_START', ['start', api]);
-      } else docker('API_STOP', ['stop', '--time', '10', api]);
-      await action();
-    } finally {
-      if (kind === 'database' && !inspect('container', pg).NetworkSettings.Networks[network.Name]) {
-        docker('DATABASE_RECONNECT', ['network', 'connect', ...aliases.flatMap(alias => ['--alias', alias]), network.Id, pg]);
-      }
-      if (!inspect('container', api).State.Running) docker('API_START', ['start', api]);
-      requireCheck(sameResources(proveLive()), 'OUTAGE_RESTORE_IDENTITY');
-    }
-  };
-
   try {
     await step('TOPOLOGY', async () => {
       const entries = sourceEntries(application);
@@ -553,7 +441,9 @@ export async function run(argv) {
       const override = join(evidence, 'override.yaml');
       writeFileSync(override, composeOverride(project, ports), { mode: 0o600 });
       compose = ['compose', '--project-name', project, '--env-file', '/dev/null', '-f', join(archive, 'compose.yaml'), '-f', override];
-      checkCompose(parse(docker('COMPOSE_CONFIG', [...compose, 'config', '--format', 'json'])), project, ports);
+      const config = parse(docker('COMPOSE_CONFIG', [...compose, 'config', '--format', 'json']));
+      checkCompose(config, project, ports);
+      requireCheck(['api', 'web'].every(name => config.services[name].healthcheck.disable === true), 'NO_UNCOUNTED_HTTP_HEALTH');
       stage = 'BUILD';
       const extraEnv = { ...env };
       for (const key of ['HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy', 'NO_PROXY', 'no_proxy', 'SSL_CERT_FILE', 'SSL_CERT_DIR']) {
@@ -587,8 +477,9 @@ export async function run(argv) {
         && rules[0].destination === 'http://api:3001/api/v1/:path*', 'EXACT_REWRITE');
       Object.assign(receipt, { copied: APP_FILES, sourceSha: sha(JSON.stringify(hashes)), rewriteSha: sha(routes),
         applicationNode: '24.22.3' });
-      await ready(direct, 200, 'topology', 'DIRECT_HEALTH');
-      await ready(origin, 200, 'topology', 'PROXIED_HEALTH');
+      await Promise.all([waitForTcp(ports.api), waitForTcp(ports.web)]);
+      await ready(direct, 'DIRECT_HEALTH');
+      await ready(origin, 'PROXIED_HEALTH');
       stage = 'MIGRATIONS';
       requireCheck(docker('PG_EMPTY', ['exec', services.postgres.Id, 'psql', '-U', DB, '-d', DB, '-Atc',
         "SELECT count(*) FROM information_schema.tables WHERE table_schema='public'"]) === '0', 'PG_EMPTY_SCHEMA');
@@ -601,50 +492,59 @@ export async function run(argv) {
       receipt.migrations = 22;
     });
 
-    stage = 'FIXTURES';
-    const passwords = Array.from({ length: 2 }, () => randomBytes(32).toString('base64url'));
-    for (const password of passwords) secrets.add(password);
-    const actors = fixture({ action: 'init', passwords, nonce: project.slice(-12) });
-    requireCheck(actors.length === 2 && actors.every(actor => ['id', 'profileId'].every(key =>
-      /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(actor[key])))
-      && actors[0].id !== actors[1].id && actors[0].profileId !== actors[1].profileId, 'EXACT_SYNTHETIC_ACTORS');
-    actorMarkers = actors.flatMap(({ id, profileId, email, displayName }) => [id, profileId, email, displayName]);
-    for (const actor of actors) secrets.add(actor.hash);
-    receipt.fixtureCount = 2;
-    const before = fixture({ action: 'snapshot' });
+    stage = 'BASELINE_LEDGER';
+    before = fixture({ action: 'snapshot' });
+    checkZeroAuthLedger(before, before, ledger.report());
     stage = 'BROWSER_LAUNCH';
-    browser = await chromium.launch({ headless: true, args: ['--no-proxy-server', '--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1'],
+    browser = await chromium.launch({ headless: true,
+      args: ['--no-proxy-server', '--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1'],
       env: { PATH: env.PATH, HOME: env.HOME, LANG: 'C.UTF-8', TZ: 'UTC' } });
-    const context = await browser.newContext({ serviceWorkers: 'block', viewport: { width: 1440, height: 900 } });
-    await exercise({ context, origin, actors, passwords, secrets, ledger, observation, receipt, step, outage, ready });
-    stage = 'WRITE_LEDGER';
-    const after = fixture({ action: 'snapshot' });
-    checkWriteLedger(before, after);
-    receipt.writes = { clinical: 0, domainSnapshotUnchanged: true, sessions: after.sessions, revoked: after.revoked, audits: after.audits };
-    receipt.clinicalWrites = 0;
+    for (const [pid, birth] of ownedChromeProcesses()) chrome.set(pid, birth);
+    requireCheck(chrome.size > 0, 'BROWSER_PROCESS_OWNERSHIP');
+    writeFileSync(scopeFile, JSON.stringify({ project, ports, image, chromium: [...chrome] }), { mode: 0o600 });
+    const context = await browser.newContext({ serviceWorkers: 'block', locale: 'en-US', viewport: { width: 1440, height: 900 } });
+    await step('INITIAL_PAGE', () => observeInitialPage({ context, origin, secrets, ledger, observation, receipt }));
     receipt.result = 'PASS';
   } catch (error) {
-    const predicate = error instanceof DiagnosticFailure ? error.predicate
-      : observation.report().fault ?? (error?.name === 'TimeoutError' ? 'BROWSER_WAIT_TIMEOUT' : 'UNEXPECTED_FAILURE');
-    receipt.failure = { stage, predicate, ...(commandFailure ? { command: commandFailure } : {}) };
+    const predicate = observation.firstFailure()?.fault ?? (error instanceof DiagnosticFailure ? error.predicate
+      : error?.name === 'TimeoutError' ? 'BROWSER_WAIT_TIMEOUT' : 'UNEXPECTED_FAILURE');
+    recordFailure(stage, predicate, commandFailure);
   } finally {
+    const final = await finishInitialEvidence({
+      close: async () => {
+        if (!browser) return;
+        for (const [pid, birth] of ownedChromeProcesses()) chrome.set(pid, birth);
+        writeFileSync(scopeFile, JSON.stringify({ project, ports, image, chromium: [...chrome] }), { mode: 0o600 });
+        await boundedAsync(() => browser.close(), 10000, 'BROWSER_CLOSE_TIMEOUT');
+        requireCheck(liveOwnedChrome(chrome) === 0, 'CHROMIUM_STILL_RUNNING');
+      },
+      snapshot: () => {
+        requireCheck(sameResources(proveLive()), 'FINAL_RESOURCE_DRIFT');
+        return fixture({ action: 'snapshot' });
+      },
+      before, ledger: ledger.report,
+    });
+    receipt.writes = final.writes;
+    if (observation.firstFailure()) recordFailure('INITIAL_PAGE', observation.firstFailure().fault);
+    if (final.writes.result !== 'PASS') recordFailure('WRITE_LEDGER', final.writes.predicate ?? 'WRITE_LEDGER_UNAVAILABLE');
+    else receipt.clinicalWrites = 0;
     if (services) {
       for (const name of ['api', 'web']) {
         try {
           const logs = spawnSync('docker', [DOCKER_HOST_ARG, 'logs', services[name].Id], {
             cwd: harness, env, encoding: 'utf8', timeout: 15000, maxBuffer: 8_000_000,
           });
-          requireCheck(scanOwnedLogs(logs, [...secrets, ...actorMarkers], failure => { commandFailure = failure; }),
+          requireCheck(scanOwnedLogs(logs, [...secrets], failure => { commandFailure = failure; }),
             'SERVICE_LOG_PRIVACY');
           receipt.logScans++;
         } catch (error) {
-          receipt.result = 'FAIL';
           receipt.logFailure = error instanceof DiagnosticFailure ? error.predicate : 'SERVICE_LOG_UNAVAILABLE';
+          recordFailure('LOG_SCAN', receipt.logFailure, commandFailure);
         }
       }
     }
-    const cleanup = { closed: !browser, containers: null, networks: null, volumes: null, image: null, imageId: null, portsReleased: false };
-    try { await browser?.close(); cleanup.closed = true; } catch { /* recorded */ }
+    const cleanup = { closed: final.closed && !browser?.isConnected(), containers: null, networks: null, volumes: null,
+      image: null, imageId: null, portsReleased: false, liveChromium: null };
     if (ownershipEstablished) {
       try { if (compose) docker('COMPOSE_DOWN', [...compose, 'down', '--volumes', '--remove-orphans', '--timeout', '10']); }
       catch { receipt.cleanupDownFailure = true; }
@@ -660,18 +560,20 @@ export async function run(argv) {
         await freePort(ports.api);
         await freePort(ports.web);
         cleanup.portsReleased = true;
+        cleanup.liveChromium = liveOwnedChrome(chrome);
+        requireCheck(cleanup.liveChromium === 0, 'CHROMIUM_STILL_RUNNING');
         checkCleanup(cleanup);
         requireCheck(!receipt.cleanupDownFailure && !receipt.cleanupImageFailure, 'R13_CLEANUP_COMMAND');
         cleanup.result = 'PASS';
       } catch { /* recorded */ }
     }
     cleanup.result ??= 'FAIL';
-    if (cleanup.result !== 'PASS') receipt.result = 'FAIL';
+    if (cleanup.result !== 'PASS') recordFailure('R13', 'R13_CLEANUP');
     receipt.R13 = cleanup;
     receipt.observer = observation.report();
     receipt.ledger = ledger.report();
     const serialized = JSON.stringify(receipt, null, 2) + '\n';
-    requireCheck(scanText(serialized, [...secrets, ...actorMarkers]), 'RECEIPT_PRIVACY');
+    requireCheck(scanText(serialized, [...secrets]), 'RECEIPT_PRIVACY');
     writeFileSync(join(evidence, 'receipt.json'), serialized, { mode: 0o600, flag: 'wx' });
     console.log(JSON.stringify({ result: receipt.result, failure: receipt.failure ?? null, R13: cleanup.result, digest: sha(serialized) }));
   }

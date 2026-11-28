@@ -226,48 +226,210 @@ export function projectedResponse(raw, { expected, type, noStore = true, markers
     pass: raw.status === expected && (!noStore || cache) && Boolean(shape) };
 }
 
-export function createObservation() {
-  const pending = new Map();
-  const counts = { started: 0, finished: 0, failed: 0, scans: 0, bodyless: 0, cancelled: 0, scanFailures: 0 };
-  let fault = null;
-  const markFault = cause => { fault ??= cause; };
+export const INITIAL_MODE = '--initial-page-only';
+export const INITIAL_REQUEST_LIMIT = 60;
+const requestClasses = ['DOCUMENT', 'SCRIPT', 'STYLESHEET', 'FONT', 'IMAGE', 'OTHER_ASSET', 'ALLOWED_API', 'UNKNOWN'];
+const requestMethods = ['GET', 'HEAD', 'OTHER'];
+const requestPhases = ['TOPOLOGY', 'INITIAL_PAGE'];
+const ageBuckets = ['UNDER_300_MS', 'UNDER_3_S', 'UNDER_12_S', 'AT_LEAST_12_S'];
+const requestStages = {
+  REQUEST_DISPATCHED: ['BROWSER_RESPONSE', 'BROWSER_FINISHED', 'BROWSER_FAILED'],
+  BROWSER_RESPONSE: ['BROWSER_FINISHED', 'BROWSER_FAILED'],
+  BROWSER_FINISHED: ['RESPONSE_ACQUIRING'],
+  BROWSER_FAILED: ['TERMINAL'],
+  RESPONSE_ACQUIRING: ['RESPONSE_ACQUIRED'],
+  RESPONSE_ACQUIRED: ['BODY_ACQUIRING', 'TERMINAL'],
+  BODY_ACQUIRING: ['BODY_ACQUIRED'],
+  BODY_ACQUIRED: ['SCAN_STARTED'],
+  SCAN_STARTED: ['SCAN_COMPLETED'],
+  SCAN_COMPLETED: ['TERMINAL'],
+  TERMINAL: [],
+};
+const stageCounters = {
+  BROWSER_RESPONSE: 'browserResponses', BROWSER_FINISHED: 'browserFinished', BROWSER_FAILED: 'browserFailed',
+  RESPONSE_ACQUIRED: 'responsesAcquired', BODY_ACQUIRED: 'bodiesAcquired',
+  SCAN_STARTED: 'scansStarted', SCAN_COMPLETED: 'scans',
+};
+const countsFor = keys => Object.fromEntries(keys.map(key => [key, 0]));
+const methodGroup = method => requestMethods.includes(method) ? method : 'OTHER';
+
+export function initialArguments(argv) {
+  requireCheck(argv.length === 3 && argv[0] === INITIAL_MODE && argv[1] === '--evidence-dir'
+    && isAbsolute(argv[2]), 'INITIAL_PAGE_MODE_REQUIRED');
+  return argv[2];
+}
+
+export function createInitialLedger() {
+  const phases = countsFor(requestPhases);
+  const methods = countsFor(requestMethods);
+  let total = 0;
   return {
-    start(key, api) {
-      requireCheck(!pending.has(key), 'OBSERVER_DUPLICATE');
-      pending.set(key, api);
-      counts.started++;
+    dispatch(phase, method) {
+      requireCheck(Object.hasOwn(phases, phase), 'GET_PHASE');
+      phases[phase]++;
+      methods[methodGroup(method)]++;
+      requireCheck(++total <= INITIAL_REQUEST_LIMIT, 'GET_BUDGET');
+      requireCheck(method === 'GET' || method === 'HEAD', 'UNAUTHORIZED_BROWSER_METHOD');
     },
-    terminal(key, { failed = false, scanned = false, bodyless = false, cancelled = false } = {}) {
-      requireCheck(pending.has(key), 'OBSERVER_UNKNOWN_TERMINAL');
-      const api = pending.get(key);
-      pending.delete(key);
-      if (failed) {
+    report: () => ({ total, byPhase: { ...phases }, byMethod: { ...methods }, login: 0, logout: 0, outages: 0 }),
+  };
+}
+
+export function classifyInitialRequest(value, resource) {
+  let path;
+  try { path = new URL(value).pathname; } catch { return 'UNKNOWN'; }
+  if (path === '/api/v1/auth/me') return 'ALLOWED_API';
+  if (path.startsWith('/api/')) return 'UNKNOWN';
+  if (path === '/patient' && resource === 'document') return 'DOCUMENT';
+  if (path.startsWith('/_next/static/') || /^\/(?:favicon\.ico|icon[^/]*\.png)$/.test(path)) {
+    return { script: 'SCRIPT', stylesheet: 'STYLESHEET', font: 'FONT', image: 'IMAGE', other: 'OTHER_ASSET' }[resource] ?? 'UNKNOWN';
+  }
+  if (/^\/fonts\/(?:inter-latin-variable\.woff2|noto-sans-arabic-variable\.woff2|my-care\/(?:manrope|plex-arabic-(?:regular|semibold))\.ttf)$/.test(path)) {
+    return resource === 'font' ? 'FONT' : 'UNKNOWN';
+  }
+  if (/^\/brand\/dp02\/(?:primary|compact)-(?:en|ar)-(?:light|dark)\.svg$/.test(path)
+    || path === '/visual-recovery/care-encounter.webp') return resource === 'image' ? 'IMAGE' : 'UNKNOWN';
+  return 'UNKNOWN';
+}
+
+export function initialRequestTarget(value, origin, method, resource) {
+  let url;
+  try { url = new URL(value); } catch { throw new DiagnosticFailure('FOREIGN_BROWSER_TARGET'); }
+  requireCheck(url.origin === origin && url.protocol === 'http:' && !url.username && !url.password, 'FOREIGN_BROWSER_TARGET');
+  requireCheck(method === 'GET' || method === 'HEAD', 'UNAUTHORIZED_BROWSER_METHOD');
+  requireCheck(!url.search && !url.hash, 'UNAUTHORIZED_INITIAL_QUERY');
+  const requestClass = classifyInitialRequest(value, resource);
+  requireCheck(requestClass !== 'UNKNOWN', 'UNAUTHORIZED_INITIAL_TARGET');
+  if (requestClass === 'ALLOWED_API') requireCheck(method === 'GET', 'UNAUTHORIZED_API_METHOD');
+  return requestClass;
+}
+
+export function createObservation({ now = () => globalThis.performance.now() } = {}) {
+  const entries = new Map();
+  const counts = { started: 0, browserResponses: 0, browserFinished: 0, browserFailed: 0,
+    responsesAcquired: 0, bodiesAcquired: 0, scansStarted: 0, scans: 0,
+    finished: 0, failed: 0, bodyless: 0, assetsWithoutBodies: 0, cancelled: 0, scanFailures: 0 };
+  let firstFailure;
+  let fault = null;
+  let revision = 0;
+
+  function snapshot() {
+    const byClass = countsFor(requestClasses);
+    const byStage = countsFor(Object.keys(requestStages).filter(stage => stage !== 'TERMINAL'));
+    const byAge = countsFor(ageBuckets);
+    const byMethod = countsFor(requestMethods);
+    const byPhase = countsFor(requestPhases);
+    const time = now();
+    let pending = 0;
+    for (const entry of entries.values()) {
+      if (entry.stage === 'TERMINAL') continue;
+      pending++;
+      byClass[entry.requestClass]++;
+      byStage[entry.stage]++;
+      byMethod[entry.method]++;
+      byPhase[entry.phase]++;
+      const age = time - entry.started;
+      byAge[age < 300 ? ageBuckets[0] : age < 3000 ? ageBuckets[1] : age < 12000 ? ageBuckets[2] : ageBuckets[3]]++;
+    }
+    return Object.freeze({ ...counts, pending, fault, pendingByClass: Object.freeze(byClass),
+      pendingByStage: Object.freeze(byStage), pendingByAge: Object.freeze(byAge),
+      pendingByMethod: Object.freeze(byMethod), pendingByPhase: Object.freeze(byPhase) });
+  }
+
+  function markFault(cause) {
+    if (fault !== null) return;
+    fault = typeof cause === 'string' && /^[A-Z][A-Z0-9_]{0,63}$/.test(cause) ? cause : 'OBSERVER_UNEXPECTED';
+    firstFailure = snapshot();
+  }
+
+  function requireTransition(condition, cause) {
+    if (condition) return;
+    markFault(cause);
+    throw new DiagnosticFailure(cause);
+  }
+
+  function entryFor(key) {
+    const entry = entries.get(key);
+    requireTransition(entry, 'OBSERVER_UNKNOWN_TERMINAL');
+    return entry;
+  }
+
+  function advance(entry, stage) {
+    requireTransition(requestStages[entry.stage].includes(stage), 'OBSERVER_INVALID_TRANSITION');
+    entry.stage = stage;
+    revision++;
+    if (stageCounters[stage]) counts[stageCounters[stage]]++;
+  }
+
+  const requiresScan = entry => ['ALLOWED_API', 'DOCUMENT', 'UNKNOWN'].includes(entry.requestClass);
+  return {
+    start(key, { requestClass = 'UNKNOWN', method = 'OTHER', phase = 'INITIAL_PAGE' } = {}) {
+      requireTransition(!entries.has(key), 'OBSERVER_DUPLICATE');
+      requireTransition(requestClasses.includes(requestClass) && requestPhases.includes(phase), 'OBSERVER_CLASSIFICATION');
+      entries.set(key, { stage: 'REQUEST_DISPATCHED', started: now(), requestClass, method: methodGroup(method), phase });
+      counts.started++;
+      revision++;
+    },
+    event(key, stage) {
+      requireTransition(stage !== 'TERMINAL' && Object.hasOwn(requestStages, stage), 'OBSERVER_INVALID_TRANSITION');
+      advance(entryFor(key), stage);
+    },
+    terminal(key, { bodyless = false, cancelled = false, cause = null } = {}) {
+      const entry = entryFor(key);
+      const browserFailure = entry.stage === 'BROWSER_FAILED';
+      const unfinished = !browserFailure && entry.stage !== 'SCAN_COMPLETED'
+        && !(entry.stage === 'RESPONSE_ACQUIRED' && (bodyless || !requiresScan(entry)));
+      const invalidOutcome = (bodyless && (browserFailure || entry.stage !== 'RESPONSE_ACQUIRED'))
+        || (cancelled && !browserFailure);
+      requireTransition(entry.stage !== 'TERMINAL' && !invalidOutcome, 'OBSERVER_INVALID_TRANSITION');
+      if (cause || unfinished || browserFailure) {
+        if (requiresScan(entry)) counts.scanFailures++;
+        if (cause || requiresScan(entry) || !cancelled) {
+          markFault(cause ?? (requiresScan(entry) ? 'OBSERVER_API_UNSCANNED' : 'OBSERVER_ASSET_FAILURE'));
+        }
         counts.failed++;
         if (cancelled) counts.cancelled++;
-        else if (!api) markFault('OBSERVER_ASSET_FAILURE');
-      } else counts.finished++;
-      if (scanned) counts.scans++;
-      if (bodyless && !failed) counts.bodyless++;
-      if (api && (failed || (!scanned && !bodyless))) { counts.scanFailures++; markFault('OBSERVER_API_UNSCANNED'); }
+        entry.stage = 'TERMINAL';
+        revision++;
+        return;
+      }
+      advance(entry, 'TERMINAL');
+      counts.finished++;
+      if (bodyless) counts.bodyless++;
+      else if (!requiresScan(entry)) counts.assetsWithoutBodies++;
     },
     fault: markFault,
-    report: () => ({ ...counts, pending: pending.size, fault }),
+    firstFailure: () => firstFailure,
+    report: snapshot,
     async settle(timeout = 12000, quiet = 300) {
-      const end = Date.now() + timeout;
-      let since = Date.now();
-      let seen = counts.started;
-      while (Date.now() < end) {
+      const end = now() + timeout;
+      let since = now();
+      let seen = revision;
+      while (now() < end) {
         requireCheck(!fault, fault);
-        if (seen !== counts.started || pending.size) { seen = counts.started; since = Date.now(); }
-        if (!pending.size && Date.now() - since >= quiet) {
-          requireCheck(counts.started === counts.finished + counts.failed, 'OBSERVER_TOTALS');
+        const pending = counts.started - counts.finished - counts.failed;
+        if (seen !== revision || pending) { seen = revision; since = now(); }
+        if (!pending && now() - since >= quiet) {
+          requireTransition(counts.started === counts.finished + counts.failed
+            && counts.started === counts.browserFinished + counts.browserFailed, 'OBSERVER_TOTALS');
           return;
         }
         await sleep(20);
       }
-      throw new DiagnosticFailure('OBSERVER_PENDING');
+      markFault('OBSERVER_PENDING');
+      throw new DiagnosticFailure(fault);
     },
   };
+}
+
+export function checkZeroAuthLedger(before, after, ledger) {
+  requireCheck(before && after && ledger, 'WRITE_LEDGER_UNAVAILABLE');
+  requireCheck(JSON.stringify(before.domains) === JSON.stringify(after.domains), 'UNAUTHORIZED_DOMAIN_WRITE');
+  for (const state of [before, after]) {
+    requireCheck(state.accounts === 0 && state.sessions === 0 && state.active === 0 && state.revoked === 0
+      && state.audits && Object.keys(state.audits).length === 0 && state.unsafelyAudited === 0, 'ZERO_AUTH_WRITE_LEDGER');
+  }
+  requireCheck(ledger.login === 0 && ledger.logout === 0 && ledger.outages === 0 && ledger.byMethod?.OTHER === 0, 'ZERO_AUTH_REQUEST_LEDGER');
 }
 
 export function checkCleanup(proof) {

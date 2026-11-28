@@ -6,12 +6,13 @@ import { dirname, join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { runInNewContext } from 'node:vm';
 import ts from 'typescript';
-import { composeOverride, projectAuthText, signOutControl } from '../scripts/test-ui-r11-browser-isolation.mjs';
+import { composeOverride, finishInitialEvidence, projectAuthText, signOutControl } from '../scripts/test-ui-r11-browser-isolation.mjs';
 import {
   APP, APP_FILES, APP_TREE, DOCKER_HOST_ARG, GET_BUDGET, PG_IMAGE,
   checkCleanup, checkCompose, checkSourceHashes, checkWriteLedger, commandOutput, copyCommand, createLedger,
   createObservation, assertOwnedProject, gitEnvironment, gitIn, manifestInput, noContentLogout, projectedResponse, requestTarget,
   scanOwnedLogs, scanText, sha, sourceProgram, verifyWorkspace,
+  checkZeroAuthLedger, classifyInitialRequest, createInitialLedger, initialArguments, initialRequestTarget,
 } from '../scripts/support/r11-browser-isolation.mjs';
 
 const project = 'eh216-q2-0123456789ab';
@@ -130,29 +131,38 @@ test('network and per-case request budgets reject foreign targets and writes', (
   assert.throws(() => ledger.outage(), /OUTAGE_BUDGET/);
 });
 
+const scanStages = [
+  'BROWSER_RESPONSE', 'BROWSER_FINISHED', 'RESPONSE_ACQUIRING', 'RESPONSE_ACQUIRED',
+  'BODY_ACQUIRING', 'BODY_ACQUIRED', 'SCAN_STARTED', 'SCAN_COMPLETED',
+];
+
 test('terminal ledger fails on API cancellation, unavailable body and pending observation', async () => {
   const ok = createObservation();
-  ok.start('first', true);
-  ok.terminal('first', { scanned: true });
-  ok.start('second', false);
-  ok.terminal('second', { failed: true, cancelled: true });
+  ok.start('first', { requestClass: 'ALLOWED_API', method: 'GET' });
+  for (const stage of scanStages) ok.event('first', stage);
+  ok.terminal('first');
+  ok.start('second', { requestClass: 'IMAGE' });
+  ok.event('second', 'BROWSER_FAILED');
+  ok.terminal('second', { cancelled: true });
   await ok.settle(100, 0);
   assert.equal(ok.report().started, 2);
   assert.equal(ok.report().scans, 1);
   assert.equal(ok.report().cancelled, 1);
   const asset = createObservation();
-  asset.start('asset', false);
-  asset.terminal('asset', { failed: true });
+  asset.start('asset', { requestClass: 'IMAGE' });
+  asset.event('asset', 'BROWSER_FAILED');
+  asset.terminal('asset');
   await assert.rejects(asset.settle(100, 0), /OBSERVER_ASSET_FAILURE/);
-  for (const terminal of [{}, { failed: true }]) {
+  for (const browserStage of ['BROWSER_FINISHED', 'BROWSER_FAILED']) {
     const failed = createObservation();
-    failed.start('api', true);
-    failed.terminal('api', terminal);
+    failed.start('api', { requestClass: 'ALLOWED_API' });
+    failed.event('api', browserStage);
+    failed.terminal('api');
     await assert.rejects(failed.settle(100, 0), /OBSERVER_API_UNSCANNED/);
     assert.equal(failed.report().scanFailures, 1);
   }
   const pending = createObservation();
-  pending.start('api', true);
+  pending.start('api', { requestClass: 'ALLOWED_API' });
   await assert.rejects(pending.settle(20, 0), /OBSERVER_PENDING/);
   assert.throws(() => pending.terminal('not-started'), /OBSERVER_UNKNOWN_TERMINAL/);
 });
@@ -164,8 +174,9 @@ test('only contractually bodyless logout can complete without a retrieved API bo
     ['POST', 204, { 'transfer-encoding': 'chunked' }]]) assert.equal(noContentLogout(logout, ...sample), false);
   assert.equal(noContentLogout('/api/v1/auth/me', 'POST', 204, {}), false);
   const observation = createObservation();
-  observation.start('empty-response', true);
-  observation.terminal('empty-response', { bodyless: true });
+  observation.start('empty-response', { requestClass: 'ALLOWED_API', method: 'POST' });
+  for (const stage of scanStages.slice(0, 4)) observation.event('empty-response', stage);
+  observation.terminal('empty-response', { bodyless: noContentLogout(logout, 'POST', 204, {}) });
   await observation.settle(100, 0);
   assert.equal(observation.report().bodyless, 1);
   assert.equal(observation.report().scans, 0);
@@ -295,3 +306,130 @@ for (const status of [200, 401]) {
     assert.equal(calls, 3);
   });
 }
+
+test('initial ledger counts rejected dispatches, enforces sixty, and refuses the earlier runtime entrypoint', () => {
+  assert.throws(() => initialArguments(['--evidence-dir', '/owned']), /INITIAL_PAGE_MODE_REQUIRED/);
+  assert.throws(() => initialArguments(['--initial-page-only', '--evidence-dir', 'relative']), /INITIAL_PAGE_MODE_REQUIRED/);
+  assert.equal(initialArguments(['--initial-page-only', '--evidence-dir', '/owned']), '/owned');
+  const ledger = createInitialLedger();
+  ledger.dispatch('TOPOLOGY', 'GET');
+  for (let i = 0; i < 59; i++) ledger.dispatch('INITIAL_PAGE', 'HEAD');
+  assert.throws(() => ledger.dispatch('INITIAL_PAGE', 'GET'), /GET_BUDGET/);
+  assert.equal(ledger.report().total, 61);
+  const unauthorized = createInitialLedger();
+  assert.throws(() => unauthorized.dispatch('INITIAL_PAGE', 'POST'), /UNAUTHORIZED_BROWSER_METHOD/);
+  assert.deepEqual(unauthorized.report().byMethod, { GET: 0, HEAD: 0, OTHER: 1 });
+  for (const [path, type, expected] of [['/patient', 'document', 'DOCUMENT'],
+    ['/_next/static/chunks/app.js', 'script', 'SCRIPT'], ['/_next/static/app.css', 'stylesheet', 'STYLESHEET'],
+    ['/fonts/inter-latin-variable.woff2', 'font', 'FONT'], ['/brand/dp02/primary-en-dark.svg', 'image', 'IMAGE'],
+    ['/_next/static/asset', 'other', 'OTHER_ASSET'], ['/api/v1/auth/me', 'fetch', 'ALLOWED_API']]) {
+    assert.equal(initialRequestTarget(origin + path, origin, 'GET', type), expected);
+  }
+  assert.equal(classifyInitialRequest(origin + '/unknown?private=marker', 'fetch'), 'UNKNOWN');
+  assert.throws(() => initialRequestTarget('http://127.0.0.1:9/patient', origin, 'GET', 'document'), /FOREIGN_BROWSER_TARGET/);
+  assert.throws(() => initialRequestTarget(origin + '/api/v1/auth/login', origin, 'POST', 'fetch'), /UNAUTHORIZED_BROWSER_METHOD/);
+  assert.throws(() => initialRequestTarget(origin + '/api/v1/me/profile', origin, 'GET', 'fetch'), /UNAUTHORIZED_INITIAL_TARGET/);
+  assert.throws(() => initialRequestTarget(origin + '/api/v1/auth/me?private=marker', origin, 'GET', 'fetch'), /UNAUTHORIZED_INITIAL_QUERY/);
+});
+
+test('same pending count distinguishes browser finish, response wait, body wait and incomplete scan', async () => {
+  for (const [stopAfter, expectedStage] of [[0, 'REQUEST_DISPATCHED'], [2, 'BROWSER_FINISHED'],
+    [3, 'RESPONSE_ACQUIRING'], [5, 'BODY_ACQUIRING'], [7, 'SCAN_STARTED']]) {
+    const observer = createObservation();
+    observer.start(Symbol('private-marker'), { requestClass: 'ALLOWED_API', method: 'GET' });
+    const key = {};
+    observer.start(key, { requestClass: 'DOCUMENT', method: 'GET' });
+    for (const stage of scanStages.slice(0, stopAfter)) observer.event(key, stage);
+    await assert.rejects(observer.settle(20, 0), /OBSERVER_PENDING/);
+    const evidence = observer.firstFailure();
+    assert.equal(evidence.pending, 2);
+    assert.equal(evidence.browserFinished, stopAfter >= 2 ? 1 : 0);
+    assert.equal(evidence.responsesAcquired, stopAfter >= 4 ? 1 : 0);
+    assert.equal(evidence.bodiesAcquired, stopAfter >= 6 ? 1 : 0);
+    assert.equal(evidence.scansStarted, stopAfter >= 7 ? 1 : 0);
+    assert.equal(evidence.scans, 0);
+    assert.equal(evidence.finished, 0);
+    assert.equal(evidence.pendingByClass.DOCUMENT, 1);
+    assert.equal(evidence.pendingByStage[expectedStage], stopAfter ? 1 : 2);
+    assert.doesNotMatch(JSON.stringify(evidence), /private-marker/);
+    for (const stage of scanStages.slice(stopAfter)) observer.event(key, stage);
+    observer.terminal(key);
+    observer.fault('LATER_CLEANUP_ERROR');
+    assert.equal(observer.report().finished, 1);
+    assert.equal(observer.firstFailure(), evidence);
+    assert.equal(evidence.finished, 0);
+    assert.equal(evidence.fault, 'OBSERVER_PENDING');
+    assert.ok(Object.isFrozen(evidence.pendingByStage));
+  }
+});
+
+test('unknown, duplicate, late and invalid events fail closed and scans are distinct from browser events', () => {
+  const unknown = createObservation();
+  assert.throws(() => unknown.event({}, 'BROWSER_RESPONSE'), /OBSERVER_UNKNOWN_TERMINAL/);
+  const invalid = createObservation();
+  invalid.start('opaque');
+  assert.equal(invalid.report().pendingByClass.UNKNOWN, 1);
+  assert.throws(() => invalid.event('opaque', 'BODY_ACQUIRED'), /OBSERVER_INVALID_TRANSITION/);
+  assert.throws(() => invalid.start('opaque'), /OBSERVER_DUPLICATE/);
+  assert.equal(invalid.firstFailure().fault, 'OBSERVER_INVALID_TRANSITION');
+  for (const [cause, stopAfter] of [['OBSERVER_RESPONSE_MISSING', 3], ['OBSERVER_BODY_UNAVAILABLE', 5], ['RESPONSE_PRIVACY', 7]]) {
+    const failed = createObservation();
+    failed.start('private-marker', { requestClass: 'ALLOWED_API' });
+    for (const stage of scanStages.slice(0, stopAfter)) failed.event('private-marker', stage);
+    failed.terminal('private-marker', { cause });
+    assert.equal(failed.firstFailure().fault, cause);
+    assert.equal(failed.report().scans, 0);
+    assert.equal(failed.report().failed, 1);
+    assert.throws(() => failed.terminal('private-marker'), /OBSERVER_INVALID_TRANSITION/);
+    assert.throws(() => failed.event('private-marker', 'BROWSER_RESPONSE'), /OBSERVER_INVALID_TRANSITION/);
+  }
+  const complete = createObservation();
+  complete.start('page', { requestClass: 'DOCUMENT' });
+  for (const stage of scanStages) complete.event('page', stage);
+  complete.terminal('page');
+  const evidence = complete.report();
+  assert.equal(evidence.started, 1);
+  assert.equal(evidence.browserResponses, 1);
+  assert.equal(evidence.browserFinished, 1);
+  assert.equal(evidence.responsesAcquired, 1);
+  assert.equal(evidence.bodiesAcquired, 1);
+  assert.equal(evidence.scansStarted, 1);
+  assert.equal(evidence.scans, 1);
+  assert.equal(evidence.finished, 1);
+  assert.equal(evidence.pending, 0);
+});
+
+test('zero-auth write comparison runs after close, fails closed and never substitutes for the observation fault', async () => {
+  const before = { domains: { users: 'inert' }, accounts: 0, sessions: 0, revoked: 0, active: 0, audits: {}, unsafelyAudited: 0 };
+  const ledger = createInitialLedger();
+  checkZeroAuthLedger(before, globalThis.structuredClone(before), ledger.report());
+  for (const field of ['accounts', 'sessions', 'revoked', 'active', 'unsafelyAudited']) {
+    assert.throws(() => checkZeroAuthLedger(before, { ...before, [field]: 1 }, ledger.report()), /ZERO_AUTH_WRITE_LEDGER/);
+  }
+  assert.throws(() => checkZeroAuthLedger(before, { ...before, audits: { AUTH_LOGIN: 1 } }, ledger.report()), /ZERO_AUTH_WRITE_LEDGER/);
+  const operations = [];
+  const observer = createObservation();
+  observer.start('pending', { requestClass: 'STYLESHEET' });
+  observer.fault('OBSERVER_PENDING');
+  const evidence = observer.firstFailure();
+  const finish = snapshot => finishInitialEvidence({ before, ledger: ledger.report,
+    close: async () => { operations.push('close'); observer.event('pending', 'BROWSER_FAILED');
+      observer.terminal('pending', { cancelled: true }); },
+    snapshot: async () => { operations.push('snapshot'); return snapshot(); },
+  });
+  assert.deepEqual(await finish(() => { throw Error('private-marker'); }),
+    { closed: true, writes: { result: 'NOT VERIFIED', attempted: true } });
+  assert.deepEqual(operations, ['close', 'snapshot']);
+  assert.equal(observer.firstFailure(), evidence);
+  assert.equal(evidence.pending, 1);
+  assert.equal(observer.report().pending, 0);
+  const finishWithoutClose = await finishInitialEvidence({ before, ledger: ledger.report,
+    close: async () => { throw Error('private-marker'); }, snapshot: async () => before });
+  assert.deepEqual(finishWithoutClose, { closed: false, writes: { result: 'NOT VERIFIED', attempted: true } });
+  for (const [state, result] of [[before, 'PASS'], [{ ...before, domains: { users: 'changed' } }, 'FAIL']]) {
+    const completed = await finishInitialEvidence({ before, ledger: ledger.report,
+      close: async () => {}, snapshot: async () => state });
+    assert.equal(completed.writes.result, result);
+    assert.doesNotMatch(JSON.stringify(completed), /inert|changed|private-marker/);
+  }
+});
