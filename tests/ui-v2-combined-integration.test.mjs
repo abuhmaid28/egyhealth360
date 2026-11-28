@@ -261,7 +261,7 @@ const qaRecoveryOverlay = {
   "scripts/support/ui-v2-patient-doctor-browser.mjs": "56ef00878d1d0da45a6ae0cea42c761810b19a10"
 };
 const safeDemoPreviewOverlay = {
-  "apps/web/src/components/application.tsx": "d07e7feb971b8967f87af75d2ed7d57c66c9079f"
+  "apps/web/src/components/application.tsx": "7443088fcb433a1765cbaab6f4735188fd8b61c1"
 };
 test("Combined pins and historical P2 overlays are retained, with explicit Visual Recovery overrides", () => {
   assert.equal(pinned.length,44);assert.equal(Object.keys(overlays).length,7);
@@ -355,7 +355,7 @@ const frozenB4 = {
 // Original12-owner manifest retained. This remediation explicitly owns shared live.ts; runtime/script/historical receipt entries remain byte-pinned.
 const sessionFenceRepairSHA256 = "357e5bc20ccba7662dec6a78893af72b801bb863ede64a289e6ce1a5dbbde786";
 // The original browser entrypoint still owns all B4 cases and invokes the original pharmacy runner.
-const visualBrowserRunnerSHA256 = "5ed4e4bd19a44f8c30410507622243d68856cd0419b7dfe9e21dd5ac6d064757";
+const visualBrowserRunnerSHA256 = "edb6d5696937e19c1eec1effa979d2e7f2208d5d3187f4c4f5bf2945507aa566";
 // Historical immutable C3c snapshot identity (reconciled dd08b738 bridge at commit 8adbe131).
 const historicalBridgeCommitC3c = "8adbe1314b190f52b8725d86f62e9db4eb075212";
 const currentStatusBridgeSHA256 = "a4d5844482f2181e9fc1393d972756b95bd6316d50a10353b6deec9ada780767";

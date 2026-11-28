@@ -4,7 +4,7 @@ import { safeErrorMessage } from "../lib/api/errors";
 import { LanguageSwitch, useLocale } from "../lib/i18n/context";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type {
   HealthcareAdapter,
   Mode,
@@ -22,6 +22,11 @@ import recovery from "./v2/visual-recovery.module.css";
 import { useDemoTestScenario } from "./v2/demo-test-scenario";
 import { FrontendV2ThemeSwitch, useFrontendV2Theme } from "./v2/frontend-v2-theme";
 import { V2EntryGateway } from "./v2/gateway/V2EntryGateway";
+import {
+  activateDemoV2PresentationOptIn,
+  captureDemoV2QueryIntent,
+  clearDemoV2PresentationOptIn,
+} from "./v2/demo-v2/presentation-opt-in";
 import { PatientScreen } from "./patient";
 import { PatientMyCare } from "./patient-my-care";
 import {
@@ -98,6 +103,14 @@ export function Application({
       active = false;
     };
   }, [liveSession, liveConfigured, resetTheme]);
+  const prevLocaleRef = useRef(locale);
+  useEffect(() => {
+    if (prevLocaleRef.current === locale) return;
+    prevLocaleRef.current = locale;
+    if (api?.mode === "demo" && session?.mode === "demo") {
+      setToast("");
+    }
+  }, [locale, api?.mode, session?.mode]);
   useEffect(() => {
     if (!toast) return;
     const timer = setTimeout(() => setToast(""), 4500);
@@ -115,6 +128,9 @@ export function Application({
     resetTheme();
     liveSession.clear();
     const effective: Mode = mode === "live" && !liveConfigured ? "demo" : mode;
+    if (effective === "live") {
+      clearDemoV2PresentationOptIn();
+    }
     liveSession.selectMode(effective);
     const adapter =
       effective === "live" ? liveSession.adapter() : liveSession.demo();
@@ -123,6 +139,11 @@ export function Application({
   };
   const enter = async (role: Role, path?: string) => {
     if (session?.mode === "live") return;
+    if (!liveConfigured) {
+      activateDemoV2PresentationOptIn();
+    } else {
+      captureDemoV2QueryIntent();
+    }
     const demo = chooseMode("demo") as ReturnType<typeof createDemoAdapter>;
     const s = await demo.enter(role);
     setSession(s);
@@ -136,6 +157,7 @@ export function Application({
       await api?.logout();
       demoFocusDestination = null;
       resetTheme();
+      clearDemoV2PresentationOptIn();
       setSession(null);
       router.push("/login");
     } catch (e) {

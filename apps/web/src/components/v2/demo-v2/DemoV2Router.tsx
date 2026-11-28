@@ -43,7 +43,24 @@ export function DemoV2Router({
   }
 
   const home = ROLE_HOME[session.role];
-  const allowed = path === home || path.startsWith(`${home}/`);
+  const cleanPath = path.length > 1 && path.endsWith("/") ? path.slice(0, -1) : path;
+  const allowed = cleanPath === home || cleanPath.startsWith(`${home}/`);
+
+  const renderNotFound = () => (
+    <section className={styles.card} data-v2-not-found="true">
+      <h1>{ar ? "الصفحة غير موجودة" : "Page not found"}</h1>
+      <p className={styles.muted}>
+        {ar
+          ? "المسار المطلوب غير متاح داخل مساحة العمل الحالية."
+          : "The requested route is not available in this demo workspace."}
+      </p>
+      <div className={styles.actionRow}>
+        <Link href={home} className={styles.btnPrimary}>
+          {ar ? "العودة إلى البوابة" : "Return to workspace"}
+        </Link>
+      </div>
+    </section>
+  );
 
   return (
     <V2DemoShell
@@ -67,15 +84,17 @@ export function DemoV2Router({
           </div>
         </section>
       ) : session.role === "PATIENT" ? (
-        <PatientDemoV2 path={path} />
+        <PatientDemoV2 path={cleanPath} />
       ) : session.role === "CLINICIAN" ? (
-        <DoctorDemoV2 path={path} />
+        <DoctorDemoV2 path={cleanPath} />
       ) : session.role === "PHARMACY_STAFF" ? (
-        <PharmacyDemoV2 />
+        cleanPath === "/pharmacy" ? <PharmacyDemoV2 /> : renderNotFound()
       ) : session.role === "LAB_STAFF" ? (
-        <LaboratoryDemoV2 />
-      ) : (
+        cleanPath === "/laboratory" ? <LaboratoryDemoV2 /> : renderNotFound()
+      ) : cleanPath === "/admin" ? (
         <AdminDemoV2 />
+      ) : (
+        renderNotFound()
       )}
     </V2DemoShell>
   );

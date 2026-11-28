@@ -225,14 +225,21 @@ export function V2DemoShell({
       </header>
 
       <main id="main" tabIndex={-1} className={styles.main}>
-        {toast ? (
-          <div className={styles.toast} role="status" aria-live="polite">
-            <span>{toast}</span>
-            <button type="button" className={styles.toastDismiss} onClick={onDismiss}>
-              {ar ? "إغلاق" : "Dismiss"}
-            </button>
-          </div>
-        ) : null}
+        <div
+          className={toast ? styles.toast : "sr-only"}
+          role="status"
+          aria-live="polite"
+          data-v2-toast-region="true"
+        >
+          {toast ? (
+            <>
+              <span>{toast}</span>
+              <button type="button" className={styles.toastDismiss} onClick={onDismiss}>
+                {ar ? "إغلاق" : "Dismiss"}
+              </button>
+            </>
+          ) : null}
+        </div>
         {children}
       </main>
 

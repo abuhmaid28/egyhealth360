@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type {
   Appointment,
@@ -17,14 +17,48 @@ import {
   FoundationPortalEmblem,
   FoundationPortrait,
 } from "../foundation/index";
-import { formatDayMonthTile, formatFullDate, formatTimeDisplay, toLatinDigits } from "./format";
+import {
+  formatAppointmentStatus,
+  formatBookedVisitsCount,
+  formatDayMonthTile,
+  formatFullDate,
+  formatReleasedSummariesCount,
+  formatTimeDisplay,
+  toLatinDigits,
+} from "./format";
 import styles from "./demo-v2.module.css";
+
+function normalizePatientPath(path: string): string {
+  if (path.length > 1 && path.endsWith("/")) return path.slice(0, -1);
+  return path;
+}
 
 export function PatientDemoV2({ path }: { path: string }) {
   const { api, booking, session, refresh, notify, changed } = useApp();
   const { locale } = useLocale();
   const ar = locale === "ar";
+  const localeRef = useRef(locale);
+  localeRef.current = locale;
   const isDemoSurface = api.mode === "demo" && session.mode === "demo";
+
+  const cleanPath = normalizePatientPath(path);
+  const isHomeRoute = cleanPath === "/patient";
+  const isDiscoverRoute = cleanPath === "/patient/discover";
+  const doctorMatch = /^\/patient\/doctors\/([^/]+)$/.exec(cleanPath);
+  const doctorRouteId = doctorMatch ? decodeURIComponent(doctorMatch[1]) : "";
+  const isAppointmentsIndex = cleanPath === "/patient/appointments";
+  const appointmentMatch = /^\/patient\/appointments\/([^/]+)$/.exec(cleanPath);
+  const appointmentRouteId = appointmentMatch ? decodeURIComponent(appointmentMatch[1]) : "";
+  const isRecordRoute = cleanPath === "/patient/record";
+  const isSettingsRoute = cleanPath === "/patient/settings";
+  const isKnownRoute =
+    isHomeRoute ||
+    isDiscoverRoute ||
+    Boolean(doctorRouteId) ||
+    isAppointmentsIndex ||
+    Boolean(appointmentRouteId) ||
+    isRecordRoute ||
+    isSettingsRoute;
 
   const [providers, setProviders] = useState<Provider[]>([]);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -53,6 +87,8 @@ export function PatientDemoV2({ path }: { path: string }) {
   const [editSex, setEditSex] = useState("");
   const [profileBusy, setProfileBusy] = useState(false);
   const [profileError, setProfileError] = useState("");
+
+  const slotsRequestSeqRef = useRef(0);
 
   const loadCore = useCallback(async () => {
     setLoading(true);
@@ -84,33 +120,65 @@ export function PatientDemoV2({ path }: { path: string }) {
 
   const loadSlots = useCallback(
     async (providerId: string) => {
+      const requestSeq = ++slotsRequestSeqRef.current;
       setSelectedProviderId(providerId);
       setSelectedSlot(null);
+      setSlots([]);
       setBookingError("");
       setSlotsLoading(true);
       try {
         const page = await api.availabilityPage(providerId, { page: 1, pageSize: 16 });
-        setSlots(page.data.filter((slot) => slot.bookable));
+        if (slotsRequestSeqRef.current !== requestSeq) return;
+        setSlots(page.data.filter((slot) => slot.bookable && slot.providerId === providerId));
       } catch (err) {
+        if (slotsRequestSeqRef.current !== requestSeq) return;
         setBookingError(safeErrorMessage(err));
         setSlots([]);
       } finally {
-        setSlotsLoading(false);
+        if (slotsRequestSeqRef.current === requestSeq) {
+          setSlotsLoading(false);
+        }
       }
     },
     [api],
   );
 
-  const doctorRouteId = path.startsWith("/patient/doctors/")
-    ? decodeURIComponent(path.slice("/patient/doctors/".length).split("/")[0] || "")
-    : "";
+  // Reset transient slot/selection whenever navigating between subroutes or doctor IDs
+  useEffect(() => {
+    slotsRequestSeqRef.current += 1;
+    setSelectedSlot(null);
+    setBookingError("");
+    setSlots([]);
+    if (!doctorRouteId && !isDiscoverRoute) {
+      setSelectedProviderId("");
+    }
+  }, [cleanPath, doctorRouteId, isDiscoverRoute]);
+
+  const routeDoctor = useMemo(
+    () => (doctorRouteId ? providers.find((p) => p.id === doctorRouteId) ?? null : null),
+    [providers, doctorRouteId],
+  );
 
   useEffect(() => {
-    const targetId = doctorRouteId || (path === "/patient/discover" ? providers[0]?.id ?? "" : "");
-    if (targetId && selectedProviderId !== targetId && (doctorRouteId || !selectedProviderId)) {
-      void loadSlots(targetId);
+    if (loading) return;
+    if (doctorRouteId) {
+      if (!routeDoctor) {
+        slotsRequestSeqRef.current += 1;
+        setSelectedProviderId("");
+        setSelectedSlot(null);
+        setSlots([]);
+        setSlotsLoading(false);
+        return;
+      }
+      if (selectedProviderId !== routeDoctor.id) {
+        void loadSlots(routeDoctor.id);
+      }
+      return;
     }
-  }, [path, doctorRouteId, providers, selectedProviderId, loadSlots]);
+    if (isDiscoverRoute && providers.length > 0 && !selectedProviderId) {
+      void loadSlots(providers[0].id);
+    }
+  }, [loading, isDiscoverRoute, doctorRouteId, routeDoctor, providers, selectedProviderId, loadSlots]);
 
   const specialties = useMemo(() => {
     const map = new Map<string, string>();
@@ -135,10 +203,15 @@ export function PatientDemoV2({ path }: { path: string }) {
     });
   }, [providers, searchQuery, specialtyFilter]);
 
-  const selectedProvider = useMemo(
-    () => providers.find((p) => p.id === selectedProviderId) ?? filteredProviders[0] ?? null,
-    [providers, selectedProviderId, filteredProviders],
-  );
+  const selectedProvider = useMemo(() => {
+    if (doctorRouteId) {
+      return routeDoctor;
+    }
+    if (selectedProviderId) {
+      return providers.find((p) => p.id === selectedProviderId) ?? null;
+    }
+    return filteredProviders[0] ?? null;
+  }, [doctorRouteId, routeDoctor, providers, selectedProviderId, filteredProviders]);
 
   const clinicNameFor = useCallback(
     (provider: Provider | null, clinicId: string): string => {
@@ -150,7 +223,12 @@ export function PatientDemoV2({ path }: { path: string }) {
 
   async function submitBooking(event: React.FormEvent) {
     event.preventDefault();
-    if (!selectedSlot || bookingBusy) return;
+    if (!selectedSlot || !selectedProvider || bookingBusy) return;
+    if (doctorRouteId && selectedProvider.id !== doctorRouteId) return;
+    if (selectedSlot.providerId !== selectedProvider.id) {
+      setBookingError(ar ? "يرجى اختيار موعد تابع للطبيب المحدد." : "Choose an available slot belonging to the selected clinician.");
+      return;
+    }
     const trimmed = visitReason.trim();
     if (!trimmed) {
       setBookingError(ar ? "يرجى كتابة سبب مختصر للزيارة." : "Please enter a brief visit reason.");
@@ -158,17 +236,17 @@ export function PatientDemoV2({ path }: { path: string }) {
     }
     setBookingBusy(true);
     setBookingError("");
+    const bookedProviderId = selectedProvider.id;
     try {
       const created = await booking.create(selectedSlot.id, trimmed);
       setReceipt(created);
       setSelectedSlot(null);
       setVisitReason("");
       setConsentPrototypeChecked(false);
-      notify(ar ? "تم تأكيد الحجز التجريبي بنجاح." : "Synthetic appointment booked.");
+      const currentAr = localeRef.current === "ar";
+      notify(currentAr ? "تم تأكيد الحجز التجريبي بنجاح." : "Synthetic appointment booked.");
       changed();
-      if (selectedProviderId) {
-        void loadSlots(selectedProviderId);
-      }
+      void loadSlots(bookedProviderId);
     } catch (err) {
       setBookingError(safeErrorMessage(err));
     } finally {
@@ -194,7 +272,8 @@ export function PatientDemoV2({ path }: { path: string }) {
       });
       const latest = await api.profile();
       setProfile(latest);
-      notify(ar ? "تم تحديث ملف المريض التجريبي." : "Patient profile updated.");
+      const currentAr = localeRef.current === "ar";
+      notify(currentAr ? "تم تحديث ملف المريض التجريبي." : "Patient profile updated.");
       changed();
     } catch (err) {
       setProfileError(safeErrorMessage(err));
@@ -236,11 +315,56 @@ export function PatientDemoV2({ path }: { path: string }) {
     );
   }
 
-  // Subroute: /patient/discover or /patient/doctors/:id
-  if (doctorRouteId || path === "/patient/discover" || path.startsWith("/patient/discover/")) {
-    const displayedProviders = doctorRouteId
-      ? providers.filter((p) => p.id === doctorRouteId)
-      : filteredProviders;
+  if (!isKnownRoute) {
+    return (
+      <section className={styles.workspace} data-v2-portal="patient" aria-labelledby="patient-not-found-title">
+        <section className={styles.card} data-v2-not-found="true">
+          <h1 id="patient-not-found-title">{ar ? "الصفحة غير موجودة" : "Patient page not found"}</h1>
+          <p className={styles.muted}>
+            {ar
+              ? "المسار المطلوب غير متاح داخل بوابة المريض."
+              : "The requested route is not available in the patient workspace."}
+          </p>
+          <div className={styles.actionRow}>
+            <Link href="/patient" className={styles.btnPrimary}>
+              {ar ? "العودة إلى رعايتي" : "Return to My care"}
+            </Link>
+            <Link href="/patient/discover" className={styles.btnSecondary}>
+              {ar ? "استكشاف الأطباء" : "Discover doctors"}
+            </Link>
+          </div>
+        </section>
+      </section>
+    );
+  }
+
+  // Subroute: /patient/doctors/:id when ID does not exist -> explicit Not Found (zero fallback to providers[0])
+  if (doctorRouteId && !routeDoctor) {
+    return (
+      <section className={styles.workspace} data-v2-portal="patient" aria-labelledby="doctor-not-found-title">
+        <section className={styles.card} data-v2-not-found="true">
+          <h1 id="doctor-not-found-title">{ar ? "الطبيب غير موجود" : "Doctor not found"}</h1>
+          <p className={styles.muted}>
+            {ar
+              ? "لا يوجد طبيب مطابق لهذا المعرّف في الدليل التجريبي."
+              : "No clinician matches this identifier in the synthetic directory."}
+          </p>
+          <div className={styles.actionRow}>
+            <Link href="/patient/discover" className={styles.btnPrimary}>
+              {ar ? "عرض كل الأطباء" : "Browse all doctors"}
+            </Link>
+            <Link href="/patient" className={styles.btnSecondary}>
+              {ar ? "العودة إلى رعايتي" : "Return to My care"}
+            </Link>
+          </div>
+        </section>
+      </section>
+    );
+  }
+
+  // Subroute: /patient/discover or valid /patient/doctors/:id
+  if (isDiscoverRoute || doctorRouteId) {
+    const displayedProviders = doctorRouteId ? (routeDoctor ? [routeDoctor] : []) : filteredProviders;
     return (
       <section className={styles.workspace} data-v2-portal="patient" aria-labelledby="patient-discover-title">
         <header className={styles.banner}>
@@ -248,8 +372,8 @@ export function PatientDemoV2({ path }: { path: string }) {
             <FoundationPortalEmblem role="patient" className={styles.emblem} />
             <div className={styles.bannerTitles}>
               <h1 id="patient-discover-title">
-                {doctorRouteId && selectedProvider
-                  ? selectedProvider.displayName
+                {doctorRouteId && routeDoctor
+                  ? routeDoctor.displayName
                   : ar
                     ? "اكتشاف الأطباء وحجز موعد"
                     : "Discover doctors & book"}
@@ -292,6 +416,7 @@ export function PatientDemoV2({ path }: { path: string }) {
         ) : null}
 
         <section className={styles.card}>
+          <h2 className="sr-only">{ar ? "الأطباء المتاحون" : "Available clinicians"}</h2>
           {!doctorRouteId ? (
             <div className={styles.grid2}>
               <div className={styles.field}>
@@ -355,7 +480,11 @@ export function PatientDemoV2({ path }: { path: string }) {
                       />
                       <div className={styles.workspace}>
                         <div className={styles.cardTitleRow}>
-                          <h3>{provider.displayName}</h3>
+                          <h3>
+                            <Link href={`/patient/doctors/${encodeURIComponent(provider.id)}`} className={styles.inlineLink}>
+                              {provider.displayName}
+                            </Link>
+                          </h3>
                           <span className={styles.pill}>{provider.specialty.displayName}</span>
                         </div>
                         <p className={styles.muted}>
@@ -513,8 +642,74 @@ export function PatientDemoV2({ path }: { path: string }) {
     );
   }
 
+  // Subroute: /patient/appointments/:id
+  if (appointmentRouteId) {
+    const exactAppt = appointments.find((item) => item.id === appointmentRouteId) ?? null;
+    if (!exactAppt) {
+      return (
+        <section className={styles.workspace} data-v2-portal="patient" aria-labelledby="patient-appt-missing-title">
+          <section className={styles.card} data-v2-not-found="true">
+            <h1 id="patient-appt-missing-title">{ar ? "الموعد غير موجود" : "Appointment not found"}</h1>
+            <p className={styles.muted}>
+              {ar
+                ? "لا يوجد موعد مطابق لهذا المعرّف في مواعيدك الحالية."
+                : "No appointment matches this identifier in your booked visits."}
+            </p>
+            <div className={styles.actionRow}>
+              <Link href="/patient/appointments" className={styles.btnPrimary}>
+                {ar ? "عرض كل المواعيد" : "View all appointments"}
+              </Link>
+              <Link href="/patient" className={styles.btnSecondary}>
+                {ar ? "العودة إلى رعايتي" : "Return to My care"}
+              </Link>
+            </div>
+          </section>
+        </section>
+      );
+    }
+
+    return (
+      <section className={styles.workspace} data-v2-portal="patient" aria-labelledby="patient-appt-detail-title">
+        <header className={styles.banner}>
+          <div className={styles.bannerHead}>
+            <FoundationPortalEmblem role="patient" className={styles.emblem} />
+            <div className={styles.bannerTitles}>
+              <h1 id="patient-appt-detail-title">{exactAppt.provider.displayName}</h1>
+              <p>{ar ? "تفاصيل الموعد المحجوز بتوقيت 12 ساعة." : "Booked appointment details in 12-hour patient time."}</p>
+            </div>
+          </div>
+          <span className={styles.pillSuccess}>{formatAppointmentStatus(exactAppt.status, locale)}</span>
+        </header>
+
+        <section className={styles.card}>
+          <h2>{ar ? "بيانات الزيارة" : "Visit details"}</h2>
+          <div className={styles.cardInset} data-appointment-item={exactAppt.id}>
+            <p className={styles.muted}>
+              {clinicNameFor(exactAppt.provider, exactAppt.slot.clinicId)} ·{" "}
+              <span className={styles.tabular}>
+                {formatFullDate(exactAppt.slot.startAt, locale)} ·{" "}
+                {formatTimeDisplay(exactAppt.slot.startAt, locale, "patient")}
+              </span>
+            </p>
+            <p className={styles.subtle}>
+              {ar ? "السبب:" : "Reason:"} {exactAppt.reason}
+            </p>
+          </div>
+          <div className={styles.actionRow}>
+            <Link href="/patient/appointments" className={styles.btnSecondary}>
+              {ar ? "كل المواعيد" : "All appointments"}
+            </Link>
+            <Link href="/patient" className={styles.btnPrimary}>
+              {ar ? "العودة إلى رعايتي" : "Return to My care"}
+            </Link>
+          </div>
+        </section>
+      </section>
+    );
+  }
+
   // Subroute: /patient/appointments
-  if (path === "/patient/appointments" || path.startsWith("/patient/appointments/")) {
+  if (isAppointmentsIndex) {
     return (
       <section className={styles.workspace} data-v2-portal="patient" aria-labelledby="appointments-v2-title">
         <header className={styles.banner}>
@@ -537,6 +732,7 @@ export function PatientDemoV2({ path }: { path: string }) {
         </div>
 
         <section className={styles.card}>
+          <h2 className="sr-only">{ar ? "قائمة المواعيد المحجوزة" : "Booked visits list"}</h2>
           {appointments.length === 0 ? (
             <p className={styles.muted}>
               {ar ? "لا توجد مواعيد محجوزة بعد." : "No booked visits yet. Open Discover to book an available slot."}
@@ -564,7 +760,7 @@ export function PatientDemoV2({ path }: { path: string }) {
                         {ar ? "السبب:" : "Reason:"} {item.reason}
                       </p>
                     </div>
-                    <span className={styles.pillSuccess}>{item.status}</span>
+                    <span className={styles.pillSuccess}>{formatAppointmentStatus(item.status, locale)}</span>
                   </li>
                 );
               })}
@@ -576,7 +772,8 @@ export function PatientDemoV2({ path }: { path: string }) {
   }
 
   // Subroute: /patient/record
-  if (path === "/patient/record" || path.startsWith("/patient/record/")) {
+  if (isRecordRoute) {
+    const consultations = record ? [...record.consultations].reverse() : [];
     return (
       <section className={styles.workspace} data-v2-portal="patient" aria-labelledby="record-v2-title">
         <header className={styles.banner}>
@@ -586,8 +783,8 @@ export function PatientDemoV2({ path }: { path: string }) {
               <h1 id="record-v2-title">{ar ? "الملف الصحي والملخصات" : "Shared Care Record"}</h1>
               <p>
                 {ar
-                  ? "ملخصات الزيارات والوصفات المعتمدة من الأطباء كما صدرت."
-                  : "Released consultation notes and prescriptions exactly as shared by clinicians."}
+                  ? "التقييمات وتوصيات المتابعة والوصفات المعتمدة من الأطباء كما صدرت. تبقى الملاحظات الخاصة للطبيب سرية."
+                  : "Released patient-facing assessments, follow-up guidance, and prescriptions exactly as shared by clinicians. Private clinician notes remain excluded."}
               </p>
             </div>
           </div>
@@ -618,13 +815,13 @@ export function PatientDemoV2({ path }: { path: string }) {
 
         <section className={styles.card}>
           <h2>{ar ? "الزيارات والوصفات المعتمدة" : "Released consultations & prescriptions"}</h2>
-          {!record || record.consultations.length === 0 ? (
+          {consultations.length === 0 ? (
             <p className={styles.muted}>
               {ar ? "لا توجد ملخصات منشورة بعد." : "No released consultation summaries recorded yet."}
             </p>
           ) : (
             <ul className={styles.listStack}>
-              {record.consultations.map((entry) => {
+              {consultations.map((entry) => {
                 const appt = providerNameMap.get(entry.appointmentId);
                 return (
                   <li key={entry.appointmentId} className={styles.cardInset} data-record-entry={entry.appointmentId}>
@@ -638,18 +835,26 @@ export function PatientDemoV2({ path }: { path: string }) {
                       </span>
                     </div>
                     {entry.diagnosis ? (
-                      <p className={styles.muted}>
-                        <strong>{ar ? "التشخيص الموثق:" : "Assessment:"}</strong> {entry.diagnosis}
+                      <p className={styles.muted} data-record-assessment={entry.appointmentId}>
+                        <strong>{ar ? "التقييم الموثق للمريض:" : "Patient-facing assessment:"}</strong> {entry.diagnosis}
                       </p>
                     ) : null}
-                    <p className={styles.muted}>{entry.notes || entry.followUp || entry.complaint}</p>
+                    {entry.followUp ? (
+                      <p className={styles.muted} data-record-followup={entry.appointmentId}>
+                        <strong>{ar ? "توصيات المتابعة والرعاية:" : "Follow-up & care guidance:"}</strong> {entry.followUp}
+                      </p>
+                    ) : null}
                     {entry.medication ? (
-                      <div className={styles.noticeInfo}>
+                      <div className={styles.noticeInfo} data-record-prescription={entry.appointmentId}>
                         <strong>{ar ? "الوصفة:" : "Prescription:"}</strong>{" "}
                         <span>{entry.medication}</span>
                         {entry.dosage ? ` · ${entry.dosage}` : ""}
                         {entry.instructions ? ` — ${entry.instructions}` : ""}
                       </div>
+                    ) : entry.instructions ? (
+                      <p className={styles.muted} data-record-instructions={entry.appointmentId}>
+                        <strong>{ar ? "تعليمات الزيارة:" : "Visit instructions:"}</strong> {entry.instructions}
+                      </p>
                     ) : null}
                   </li>
                 );
@@ -662,7 +867,7 @@ export function PatientDemoV2({ path }: { path: string }) {
   }
 
   // Subroute: /patient/settings
-  if (path === "/patient/settings" || path.startsWith("/patient/settings/")) {
+  if (isSettingsRoute) {
     return (
       <section className={styles.workspace} data-v2-portal="patient" aria-labelledby="settings-v2-title">
         <header className={styles.banner}>
@@ -680,6 +885,7 @@ export function PatientDemoV2({ path }: { path: string }) {
         </header>
 
         <section className={styles.card}>
+          <h2 className="sr-only">{ar ? "تفاصيل الملف الشخصي" : "Profile details"}</h2>
           <form className={styles.workspace} onSubmit={(e) => void submitProfile(e)} data-profile-form="true">
             <div className={styles.grid3}>
               <div className={styles.field}>
@@ -738,8 +944,11 @@ export function PatientDemoV2({ path }: { path: string }) {
   }
 
   // Default: /patient (My care home)
-  const latestNote = record?.consultations[0] ?? null;
-  const latestAppt = latestNote ? providerNameMap.get(latestNote.appointmentId) : null;
+  const latestReleased =
+    record?.consultations && record.consultations.length > 0
+      ? record.consultations[record.consultations.length - 1]
+      : null;
+  const latestAppt = latestReleased ? providerNameMap.get(latestReleased.appointmentId) : null;
 
   return (
     <section className={styles.workspace} data-v2-portal="patient" aria-labelledby="patient-home-title">
@@ -752,8 +961,8 @@ export function PatientDemoV2({ path }: { path: string }) {
             </h1>
             <p>
               {ar
-                ? "لوحة رعايتي المتصلة: المواعيد القادمة، البحث عن الأطباء، والملخصات المنشورة."
-                : "Your connected My care overview: upcoming appointments, clinician discovery, and shared notes."}
+                ? "لوحة رعايتي المتصلة: المواعيد القادمة، البحث عن الأطباء، والتقييمات المعتمدة."
+                : "Your connected My care overview: upcoming appointments, clinician discovery, and released assessments."}
             </p>
           </div>
         </div>
@@ -765,34 +974,37 @@ export function PatientDemoV2({ path }: { path: string }) {
         </div>
       </header>
 
-      <div className={styles.grid4}>
-        <Link href="/patient/discover" className={styles.card}>
-          <FoundationIcon name="search" size={24} />
-          <h3>{ar ? "اكتشاف الأطباء" : "Find a doctor"}</h3>
-          <p className={styles.muted}>{ar ? "تصفح الأطباء والمواعيد المتاحة" : "Browse clinicians & open slots"}</p>
-        </Link>
-        <Link href="/patient/appointments" className={styles.card}>
-          <FoundationIcon name="calendar" size={24} />
-          <h3>{ar ? "المواعيد" : "Appointments"}</h3>
-          <p className={styles.muted}>
-            <span className={styles.tabular}>{appointments.length}</span>{" "}
-            {ar ? "مواعيد مسجلة" : "booked visits"}
-          </p>
-        </Link>
-        <Link href="/patient/record" className={styles.card}>
-          <FoundationIcon name="doc" size={24} />
-          <h3>{ar ? "الملف الصحي" : "Care record"}</h3>
-          <p className={styles.muted}>
-            <span className={styles.tabular}>{record?.consultations.length ?? 0}</span>{" "}
-            {ar ? "ملخصات معتمدة" : "released notes"}
-          </p>
-        </Link>
-        <Link href="/patient/settings" className={styles.card}>
-          <FoundationIcon name="user" size={24} />
-          <h3>{ar ? "الإعدادات" : "Profile & preferences"}</h3>
-          <p className={styles.muted}>{displayName}</p>
-        </Link>
-      </div>
+      <section aria-labelledby="patient-shortcuts-heading">
+        <h2 id="patient-shortcuts-heading" className="sr-only">
+          {ar ? "اختصارات بوابة المريض" : "Patient workspace shortcuts"}
+        </h2>
+        <div className={styles.grid4}>
+          <Link href="/patient/discover" className={styles.card}>
+            <FoundationIcon name="search" size={24} />
+            <h3>{ar ? "اكتشاف الأطباء" : "Find a doctor"}</h3>
+            <p className={styles.muted}>{ar ? "تصفح الأطباء والمواعيد المتاحة" : "Browse clinicians & open slots"}</p>
+          </Link>
+          <Link href="/patient/appointments" className={styles.card}>
+            <FoundationIcon name="calendar" size={24} />
+            <h3>{ar ? "المواعيد" : "Appointments"}</h3>
+            <p className={styles.muted} data-patient-booked-count="true">
+              <span className={styles.tabular}>{formatBookedVisitsCount(appointments.length, locale)}</span>
+            </p>
+          </Link>
+          <Link href="/patient/record" className={styles.card}>
+            <FoundationIcon name="doc" size={24} />
+            <h3>{ar ? "الملف الصحي" : "Care record"}</h3>
+            <p className={styles.muted} data-patient-released-count="true">
+              <span className={styles.tabular}>{formatReleasedSummariesCount(record?.consultations.length ?? 0, locale)}</span>
+            </p>
+          </Link>
+          <Link href="/patient/settings" className={styles.card}>
+            <FoundationIcon name="user" size={24} />
+            <h3>{ar ? "الإعدادات" : "Profile & preferences"}</h3>
+            <p className={styles.muted}>{displayName}</p>
+          </Link>
+        </div>
+      </section>
 
       <div className={styles.grid2}>
         <section className={styles.card}>
@@ -806,7 +1018,7 @@ export function PatientDemoV2({ path }: { path: string }) {
             <div className={styles.cardInset}>
               <div className={styles.cardTitleRow}>
                 <h3>{upcoming.provider.displayName}</h3>
-                <span className={styles.pillSuccess}>{upcoming.status}</span>
+                <span className={styles.pillSuccess}>{formatAppointmentStatus(upcoming.status, locale)}</span>
               </div>
               <p className={styles.muted}>
                 {clinicNameFor(upcoming.provider, upcoming.slot.clinicId)} ·{" "}
@@ -831,7 +1043,7 @@ export function PatientDemoV2({ path }: { path: string }) {
 
         <section className={styles.card}>
           <div className={styles.cardTitleRow}>
-            <h2>{ar ? "آخر قراءة وملخص" : "Latest reading & shared note"}</h2>
+            <h2>{ar ? "آخر قراءة وتقييم معتمد" : "Latest reading & released guidance"}</h2>
             <Link href="/patient/record" className={styles.btnGhost}>
               {ar ? "فتح الملف" : "Open record"}
             </Link>
@@ -850,13 +1062,27 @@ export function PatientDemoV2({ path }: { path: string }) {
           ) : (
             <p className={styles.muted}>{ar ? "لا توجد قراءات حيوية مسجلة." : "No sample readings recorded."}</p>
           )}
-          {latestNote ? (
-            <div className={styles.cardInset}>
+          {latestReleased ? (
+            <div className={styles.cardInset} data-patient-home-released={latestReleased.appointmentId}>
               <h3>
                 {latestAppt?.provider.displayName ??
                   (ar ? "ملخص زيارة سابقة معتمد" : "Released previous consultation")}
               </h3>
-              <p className={styles.muted}>{latestNote.notes || latestNote.diagnosis}</p>
+              {latestReleased.diagnosis ? (
+                <p className={styles.muted}>
+                  <strong>{ar ? "التقييم الموثق للمريض:" : "Patient-facing assessment:"}</strong> {latestReleased.diagnosis}
+                </p>
+              ) : null}
+              {latestReleased.followUp ? (
+                <p className={styles.muted}>
+                  <strong>{ar ? "توصيات المتابعة والرعاية:" : "Follow-up & care guidance:"}</strong> {latestReleased.followUp}
+                </p>
+              ) : null}
+              {!latestReleased.diagnosis && !latestReleased.followUp && latestReleased.instructions ? (
+                <p className={styles.muted}>
+                  <strong>{ar ? "تعليمات الزيارة:" : "Visit instructions:"}</strong> {latestReleased.instructions}
+                </p>
+              ) : null}
             </div>
           ) : null}
         </section>

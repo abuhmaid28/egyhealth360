@@ -171,3 +171,64 @@ export function formatTimeDisplay(
   const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
   return `${String(hour12).padStart(2, "0")}:${mm} ${period}`;
 }
+
+function normalizeCount(count: number): number {
+  if (!Number.isFinite(count)) return 0;
+  return Math.max(0, Math.trunc(count));
+}
+
+export function formatBookedVisitsCount(count: number, locale: Locale): string {
+  const n = normalizeCount(count);
+  const nStr = toLatinDigits(n);
+  if (locale === "ar") {
+    if (n === 0) return "لا توجد مواعيد مسجلة";
+    if (n === 1) return "موعد واحد مسجل";
+    if (n === 2) return "موعدان مسجلان";
+    const mod100 = n % 100;
+    if (mod100 >= 3 && mod100 <= 10) return `${nStr} مواعيد مسجلة`;
+    return `${nStr} موعد مسجل`;
+  }
+  if (n === 1) return "1 booked visit";
+  return `${nStr} booked visits`;
+}
+
+export function formatReleasedSummariesCount(count: number, locale: Locale): string {
+  const n = normalizeCount(count);
+  const nStr = toLatinDigits(n);
+  if (locale === "ar") {
+    if (n === 0) return "لا توجد ملخصات معتمدة";
+    if (n === 1) return "ملخص واحد معتمد";
+    if (n === 2) return "ملخصان معتمدان";
+    const mod100 = n % 100;
+    if (mod100 >= 3 && mod100 <= 10) return `${nStr} ملخصات معتمدة`;
+    return `${nStr} ملخص معتمد`;
+  }
+  if (n === 1) return "1 released summary";
+  return `${nStr} released summaries`;
+}
+
+const APPOINTMENT_STATUS_LABELS: Record<string, { en: string; ar: string }> = {
+  Upcoming: { en: "Upcoming", ar: "قادم" },
+  Completed: { en: "Completed", ar: "مكتمل" },
+};
+
+const AVAILABILITY_STATE_LABELS: Record<string, { en: string; ar: string }> = {
+  PUBLISHED: { en: "Published", ar: "منشور" },
+  WITHDRAWN: { en: "Withdrawn", ar: "مسحوب" },
+};
+
+export function formatAppointmentStatus(status: string, locale: Locale): string {
+  const entry = Object.prototype.hasOwnProperty.call(APPOINTMENT_STATUS_LABELS, status)
+    ? APPOINTMENT_STATUS_LABELS[status]
+    : undefined;
+  if (!entry) return locale === "ar" ? "غير معروف" : "Unknown";
+  return locale === "ar" ? entry.ar : entry.en;
+}
+
+export function formatAvailabilityState(state: string, locale: Locale): string {
+  const entry = Object.prototype.hasOwnProperty.call(AVAILABILITY_STATE_LABELS, state)
+    ? AVAILABILITY_STATE_LABELS[state]
+    : undefined;
+  if (!entry) return locale === "ar" ? "غير معروف" : "Unknown";
+  return locale === "ar" ? entry.ar : entry.en;
+}

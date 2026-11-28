@@ -11,10 +11,13 @@ test("V2DemoShell gates on dual Demo api/session, syncs live profile name, and p
   assert.ok(shellSource.includes('variant="compact"'));
   assert.ok(shellSource.includes("data-workspace-switch"));
   assert.ok(shellSource.includes('aria-disabled="true"'));
+  assert.ok(shellSource.includes('data-v2-toast-region="true"'));
   assert.ok(!shellSource.includes("/api/v1/"));
   assert.ok(!shellSource.includes("localStorage"));
 
   const portalShellSource = readFileSync("apps/web/src/components/portal-shell.tsx", "utf8");
   assert.ok(portalShellSource.includes('api.mode === "demo" && session.mode === "demo"'));
   assert.ok(portalShellSource.includes("DemoV2Router"));
+  assert.ok(portalShellSource.includes("resolveDemoV2PresentationOptIn"));
+  assert.ok(!portalShellSource.includes(".sessionStorage"));
 });

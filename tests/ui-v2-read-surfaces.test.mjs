@@ -222,20 +222,27 @@ test("Care index separates retrieval from released-source claims and preserves e
   }
 });
 
-let path = "/patient", role = "PATIENT", mode = "demo";
+let path = "/patient", role = "PATIENT", mode = "demo", sessionMode = "demo";
 const shellSource = read(root + "components/portal-shell.tsx");
 const shellAST = ts.createSourceFile("shell.tsx", shellSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+const optInExports = evaluate(read(root + "components/v2/demo-v2/presentation-opt-in.ts"));
+const DemoV2Router = ({ path: routePath }) => React.createElement("div", { "data-demo-v2-router": routePath }, "Demo V2 Router");
 const shell = evaluate(shellAST.statements.filter(n => !ts.isImportDeclaration(n)).map(n => n.getText()).join("\n"), {
-  Link, Icon, BrandLogo, care: styles, styles, v2: styles, recovery: styles, FrontendV2ThemeSwitch: () => null, myCareCopy: copy, accountName: presentation.accountName,
+  Link, Icon, BrandLogo, DemoV2Router,
+  isDemoV2QueryActive: optInExports.isDemoV2QueryActive,
+  resolveDemoV2PresentationOptIn: optInExports.resolveDemoV2PresentationOptIn,
+  care: styles, styles, v2: styles, recovery: styles, FrontendV2ThemeSwitch: () => null, myCareCopy: copy, accountName: presentation.accountName,
   LanguageSwitch: () => React.createElement("span", null, "Language control"),
   usePathname: () => path, useLocale, useState: React.useState, useEffect: React.useEffect,
-  useApp: () => ({ api: { mode }, session: { role, name: "Permitted account", mode } }),
+  useApp: () => ({ api: { mode }, session: { role, name: "Permitted account", mode: sessionMode } }),
 });
 const renderShell = patientMyCareV2 => renderToStaticMarkup(React.createElement(shell.PortalShell, {
   patientMyCareV2, onRoleChange: async () => { throw Error("render must never switch workspaces"); }, onLogout: () => { throw Error("render must never log out"); }, toast: "", onDismiss: () => {},
 }, React.createElement("article", null, "Permitted content")));
 test("Presentation requires explicit opt-in, exact PATIENT role and exact route; every other default is identical", () => {
+  sessionMode = mode;
   for (locale of ["en", "ar"]) for (mode of ["demo", "live"]) for (role of ["PATIENT", "CLINICIAN", "PHARMACY_STAFF", "LAB_STAFF", "ADMIN"]) for (path of ["/patient", "/patient/appointments", "/patient/", "/doctor/schedule"]) {
+    sessionMode = mode;
     const plain = renderShell(false), opted = renderShell(true);
     assert.ok(plain.includes("data-dp02-logo") && opted.includes("data-dp02-logo"));
     assert.ok(plain.includes(`/brand/dp02/primary-${locale}-light.svg`));
@@ -256,7 +263,37 @@ test("Presentation requires explicit opt-in, exact PATIENT role and exact route;
   }
 });
 
+test("PortalShell AST binds DemoV2Router positively only for dual Demo and fails closed for Live or mixed modes", () => {
+  assert.equal(typeof DemoV2Router, "function", "DemoV2Router must be bound in AST evaluation");
+  const prevPreview = process.env.EH_UI_PREVIEW_DEMO_ONLY;
+  const prevLive = process.env.EH_UI_LIVE_CONFIGURED;
+  try {
+    process.env.EH_UI_PREVIEW_DEMO_ONLY = "1";
+    process.env.EH_UI_LIVE_CONFIGURED = "0";
+    for (role of ["PATIENT", "CLINICIAN", "PHARMACY_STAFF", "LAB_STAFF", "ADMIN"]) {
+      path = role === "CLINICIAN" ? "/doctor" : role === "PHARMACY_STAFF" ? "/pharmacy" : role === "LAB_STAFF" ? "/laboratory" : role === "ADMIN" ? "/admin" : "/patient";
+      mode = "demo";
+      sessionMode = "demo";
+      const positive = renderShell(true);
+      assert.ok(positive.includes(`data-demo-v2-router="${path}"`), `Expected DemoV2Router handoff for ${role}`);
+      for (const [apiM, sessM] of [["live", "live"], ["live", "demo"], ["demo", "live"]]) {
+        mode = apiM;
+        sessionMode = sessM;
+        const negative = renderShell(true);
+        assert.ok(!negative.includes("data-demo-v2-router"), `Mixed/Live (${apiM}/${sessM}) must never mount DemoV2Router`);
+      }
+    }
+  } finally {
+    if (prevPreview === undefined) delete process.env.EH_UI_PREVIEW_DEMO_ONLY;
+    else process.env.EH_UI_PREVIEW_DEMO_ONLY = prevPreview;
+    if (prevLive === undefined) delete process.env.EH_UI_LIVE_CONFIGURED;
+    else process.env.EH_UI_LIVE_CONFIGURED = prevLive;
+    mode = "demo";
+    sessionMode = "demo";
+  }
+});
+
 test("Visual Recovery pins the reviewed shell and leaves the inherited shared CSS prefix byte-exact", () => {
-  assert.equal(sha256(shellSource), "5159119f69a1070a72ee72bd33190726d9ec185d52e28384ae5c75b2e38a927d");
+  assert.equal(sha256(shellSource), "a59ed289373b1623e5add573898a48036984cacedf02d1a4d4cc9f0e5c69bb56");
   assert.equal(sha256(read(root + "components/portal-shell.module.css").slice(0,4671)), "a17947877e71c51799d6d28f9faf1784ca7fe968430f876a0c39d24cff3775da");
 });

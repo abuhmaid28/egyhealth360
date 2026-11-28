@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Fulfillment } from "../../../lib/api/contracts";
 import { safeErrorMessage } from "../../../lib/api/errors";
 import { useLocale } from "../../../lib/i18n/context";
@@ -23,7 +23,8 @@ export function PharmacyDemoV2() {
   const { api, refresh, notify, changed } = useApp();
   const { locale } = useLocale();
   const { c, status, copy } = useStaffCopy();
-  const ar = locale === "ar";
+  const localeRef = useRef(locale);
+  localeRef.current = locale;
 
   const [items, setItems] = useState<RoutedArtifactItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -85,10 +86,19 @@ export function PharmacyDemoV2() {
         },
         item.id,
       );
+      const currentAr = localeRef.current === "ar";
+      const statusLabel =
+        nextStatus === "Preparing"
+          ? currentAr
+            ? "جاري التجهيز · تجريبي"
+            : "Preparing"
+          : currentAr
+            ? "اتسجل صرف البند بالكامل · تجريبي"
+            : "Dispensed";
       notify(
-        ar
-          ? `تم تحديث حالة الصرف إلى ${status(nextStatus)}.`
-          : `Fulfillment status updated to ${nextStatus}.`,
+        currentAr
+          ? `تم تحديث حالة الصرف إلى ${statusLabel}.`
+          : `Fulfillment status updated to ${statusLabel}.`,
       );
       changed();
     } catch (err) {
@@ -127,6 +137,7 @@ export function PharmacyDemoV2() {
       </div>
 
       <section className={styles.card}>
+        <h2 className="sr-only">{c("Routed prescription items", "قائمة الوصفات المحوّلة")}</h2>
         <div className={styles.field}>
           <label htmlFor="pharmacy-search">{c("Filter assigned prescriptions", "تصفية الوصفات المسندة")}</label>
           <input

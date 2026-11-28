@@ -1,14 +1,23 @@
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { mkdir, writeFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { dirname, join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { chromium } from "playwright";
 
-const args = new Set(process.argv.slice(2));
-const mode = args.has("--mode=preview") ? "preview" : args.has("--mode=normal") ? "normal" : "both";
-const reportPath =
-  process.argv.find((a) => a.startsWith("--report="))?.split("=")[1] ??
-  "tmp/v2-browser-qa-report.json";
+export function resolveReportPath(
+  argv = process.argv.slice(2),
+  tempDir = tmpdir(),
+  joinPath = join,
+) {
+  const flag = argv.find((a) => a.startsWith("--report="));
+  if (flag) {
+    const value = flag.slice("--report=".length).trim();
+    if (value) return value;
+  }
+  return joinPath(tempDir, "eh-v2-browser-qa-report.json");
+}
 
 const CONTRAST_EVALUATOR = `(() => {
   function parseColor(str) {
@@ -113,6 +122,24 @@ async function waitForServer(origin) {
   return false;
 }
 
+async function assertHeadingHierarchy(page, label) {
+  const levels = await page.evaluate(() =>
+    Array.from(globalThis.document.querySelectorAll("h1, h2, h3, h4, h5, h6")).map((h) => ({
+      level: Number(h.tagName.slice(1)),
+      text: (h.textContent || "").trim().slice(0, 48),
+    })),
+  );
+  assert.ok(levels.some((h) => h.level === 1), `Missing h1 at ${label}: ${JSON.stringify(levels)}`);
+  let prev = 1;
+  for (const h of levels) {
+    assert.ok(
+      h.level <= prev + 1,
+      `Heading level jump at ${label} (${prev} -> ${h.level} "${h.text}"): ${JSON.stringify(levels)}`,
+    );
+    prev = h.level;
+  }
+}
+
 async function runSuite(kind) {
   const isPreview = kind === "preview";
   const port = isPreview ? "3122" : "3121";
@@ -141,6 +168,7 @@ async function runSuite(kind) {
     canary: null,
     viewports: [],
     flows: {},
+    remediation: {},
     performanceMs: {},
   };
 
@@ -179,6 +207,125 @@ async function runSuite(kind) {
     const pageErrors = [];
     const apiRequests = [];
 
+    // 1. F-01 + F-02 dedicated probes in normal configured mode
+    if (!isPreview) {
+      // F-01: Denied sessionStorage getter probe -> normal Demo must render without ErrorPage or uncaught exception
+      const deniedCtx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+      const deniedErrors = [];
+      const deniedPage = await deniedCtx.newPage();
+      deniedPage.on("pageerror", (e) => deniedErrors.push(e.message));
+      await deniedPage.addInitScript(() => {
+        Object.defineProperty(globalThis.window, "sessionStorage", {
+          configurable: true,
+          get() {
+            throw new globalThis.DOMException("Storage denied by test", "SecurityError");
+          },
+        });
+      });
+      await deniedPage.goto(origin, { waitUntil: "networkidle" });
+      await deniedPage.locator("#demo-workspaces .demo-button").click();
+      await deniedPage.locator("[data-portal-shell='PATIENT']").waitFor();
+      assert.equal(deniedErrors.length, 0, `F-01 denied storage errors: ${deniedErrors.join("; ")}`);
+      assert.equal(await deniedPage.locator("[data-v2-portal]").count(), 0, "F-01 denied storage without ?v2=1 keeps normal Demo");
+      await deniedCtx.close();
+
+      // F-02: Denied sessionStorage WITH /?v2=1 -> bounded in-memory SPA V2 works, role switches, reload without ?v2=1 returns normal Demo cleanly
+      const deniedOptCtx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+      const deniedOptErrors = [];
+      const deniedOptPage = await deniedOptCtx.newPage();
+      deniedOptPage.on("pageerror", (e) => deniedOptErrors.push(e.message));
+      await deniedOptPage.addInitScript(() => {
+        Object.defineProperty(globalThis.window, "sessionStorage", {
+          configurable: true,
+          get() {
+            throw new globalThis.DOMException("Storage denied by test", "SecurityError");
+          },
+        });
+      });
+      await deniedOptPage.goto(`${origin}/?v2=1`, { waitUntil: "networkidle" });
+      await deniedOptPage.locator("#demo-workspaces .demo-button").click();
+      await deniedOptPage.locator('[data-v2-portal="patient"]').waitFor();
+      await deniedOptPage.locator("[data-workspace-switch]").selectOption("CLINICIAN");
+      await deniedOptPage.locator('[data-v2-portal="doctor"]').waitFor();
+      assert.equal(deniedOptErrors.length, 0);
+      await deniedOptCtx.close();
+
+      // F-02: /?v2=1 entry -> Patient V2 -> Link nav -> reload persistence -> sign out clears V2 opt-in -> normal Demo entry
+      const optCtx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+      const optPage = await optCtx.newPage();
+      optPage.on("pageerror", (e) => pageErrors.push(e.message));
+      await optPage.goto(`${origin}/?v2=1`, { waitUntil: "networkidle" });
+      await optPage.locator("#demo-workspaces .demo-button").click();
+      await optPage.locator('[data-v2-portal="patient"]').waitFor();
+      await optPage.getByRole("link", { name: /Discover/i }).click();
+      await optPage.locator("#discover-search").waitFor();
+      await optPage.reload({ waitUntil: "networkidle" });
+      await optPage.locator('[data-v2-portal="patient"]').waitFor();
+      await optPage.locator("[data-shell-signout]").click();
+      await optPage.locator("#demo-workspaces .demo-button").waitFor();
+      await optPage.locator("#demo-workspaces .demo-button").click();
+      await optPage.locator("[data-portal-shell='PATIENT']").waitFor();
+      assert.equal(await optPage.locator('[data-v2-portal="patient"]').count(), 0, "Sign out must clear ?v2=1 opt-in");
+      await optCtx.close();
+
+      // F-01/F-02 negative: Live mode with ?v2=1 and tampered eh360-v2-demo must NEVER render DemoV2Router
+      const liveCtx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+      const livePage = await liveCtx.newPage();
+      await livePage.route("**/api/v1/**", async (route) => {
+        const url = route.request().url();
+        if (url.endsWith("/auth/login") || url.endsWith("/auth/me")) {
+          return route.fulfill({
+            json: {
+              data: {
+                user: { email: "patient@example.invalid", role: "PATIENT" },
+                session: { expiresAt: "2026-10-29T00:00:00Z" },
+                csrfToken: "csrf-live-negative",
+              },
+            },
+          });
+        }
+        return route.fulfill({ status: 404, json: { error: { message: "Unavailable" } } });
+      });
+      await livePage.addInitScript(() => {
+        globalThis.sessionStorage.setItem("eh360-v2-demo", "1");
+      });
+      await livePage.goto(`${origin}/?v2=1`, { waitUntil: "networkidle" });
+      await livePage.getByLabel("Email address").fill("patient@example.invalid");
+      await livePage.getByLabel("Password", { exact: true }).fill("synthetic-only");
+      await livePage.getByRole("button", { name: "Sign in with live account" }).click();
+      await livePage.getByText("Live care", { exact: true }).waitFor();
+      assert.equal(await livePage.locator("[data-v2-portal]").count(), 0, "Live mode must never mount DemoV2Router");
+      await liveCtx.close();
+
+      summary.remediation.f01StorageDenialAndLiveNegative = "PASS";
+      summary.remediation.f02QueryOptInLifecycle = "PASS";
+    }
+
+    // 2. F-09 Gateway failed-image probe across Dark, Light, and System (preview build)
+    if (isPreview) {
+      for (const scheme of ["dark", "light"]) {
+        const failImgCtx = await browser.newContext({
+          viewport: { width: 1440, height: 900 },
+          colorScheme: scheme,
+        });
+        const failImgPage = await failImgCtx.newPage();
+        await failImgPage.route("**/care-encounter.webp", (route) => route.abort());
+        await failImgPage.goto(origin, { waitUntil: "networkidle" });
+        if (scheme === "light") {
+          await failImgPage.locator("[data-v2-gateway] summary").click();
+          await failImgPage.locator(".v2-theme-switch select").selectOption("light");
+          await failImgPage.waitForTimeout(80);
+        }
+        const paneBg = await failImgPage
+          .locator('[data-v2-gateway] [aria-hidden="true"]')
+          .first()
+          .evaluate((el) => globalThis.getComputedStyle(el).backgroundColor);
+        assert.equal(paneBg, "rgb(20, 15, 38)", `Hero visual pane dark fallback must hold in ${scheme}: ${paneBg}`);
+        await failImgCtx.close();
+      }
+      summary.remediation.f09HeroDarkFallback = "PASS";
+    }
+
     const context = await browser.newContext({
       viewport: { width: 1440, height: 900 },
       colorScheme: "dark",
@@ -203,12 +350,11 @@ async function runSuite(kind) {
     summary.performanceMs.gatewayLoad = Date.now() - t0;
 
     if (isPreview) {
-      // Preview build must fail closed (0 textboxes, exact .entry-mode-note, V2EntryGateway)
       assert.equal(await page.getByRole("textbox").count(), 0, "No live login textboxes allowed in preview");
       await page.locator(".entry-mode-note").waitFor();
       await page.locator('[data-v2-gateway="true"]').waitFor();
+      await assertHeadingHierarchy(page, "gateway");
     } else {
-      // Normal non-preview build preserves Live email/password login alongside demo workspaces
       assert.equal(await page.getByRole("textbox").count(), 2, "Normal build must preserve Live login inputs");
     }
 
@@ -220,21 +366,6 @@ async function runSuite(kind) {
       });
       return visibleImgs.length > 0 && visibleImgs.every((img) => img.complete && img.naturalWidth > 0);
     });
-    const imgCheck = await page.evaluate(() =>
-      Array.from(globalThis.document.querySelectorAll("img"))
-        .filter((img) => {
-          const r = img.getBoundingClientRect();
-          return r.width > 0 && r.height > 0;
-        })
-        .map((img) => ({
-          src: img.getAttribute("src"),
-          complete: img.complete,
-          naturalWidth: img.naturalWidth,
-        })),
-    );
-    for (const img of imgCheck) {
-      assert.ok(img.complete && img.naturalWidth > 0, `Broken visible image on entry page: ${JSON.stringify(img)}`);
-    }
 
     // Verify Negative Mutation Canary for contrast scanner
     const canaryResult = await page.evaluate((script) => {
@@ -289,29 +420,31 @@ async function runSuite(kind) {
 
     if (isPreview) {
       await checkContrast("gateway-en-dark", "dark");
-
-      // Toggle Light mode on V2EntryGateway
       await page.locator("[data-v2-gateway] summary").click();
       await page.locator(".v2-theme-switch select").selectOption("light");
       await page.waitForTimeout(100);
       await checkContrast("gateway-en-light", "light");
-
-      // Toggle back to Dark mode
       await page.locator(".v2-theme-switch select").selectOption("dark");
       await page.waitForTimeout(100);
-
       await checkViewports("gateway");
-
-      // Switch to Arabic RTL on Gateway & verify direction + dark contrast
       await page.getByRole("button", { name: /العربية/ }).click();
       await page.waitForTimeout(100);
       assert.equal(await page.locator("[data-foundation-surface='gateway']").getAttribute("dir"), "rtl");
       await checkContrast("gateway-ar-dark", "dark");
       await page.getByRole("button", { name: /English/ }).click();
       await page.waitForTimeout(100);
+
+      // F-09: Fresh Gateway -> Doctor empty consultation state check before Patient bookings
+      await page.locator('[data-gateway-role-btn="CLINICIAN"]').click();
+      await page.locator('[data-v2-portal="doctor"]').waitFor();
+      await page.getByRole("link", { name: "Consultation", exact: true }).click();
+      await page.locator('[data-doctor-empty-consultations="true"]').waitFor();
+      await page.locator('[data-shell-signout]').click();
+      await page.locator('[data-v2-gateway="true"]').waitFor();
+      summary.remediation.f09FreshDoctorEmpty = "PASS";
     }
 
-    // 1. Enter Patient portal via primary CTA / demo button
+    // 3. Enter Patient portal via primary CTA / demo button
     const tPortal = Date.now();
     if (isPreview) {
       await page.locator('[data-gateway-primary-cta="PATIENT"]').click();
@@ -320,66 +453,172 @@ async function runSuite(kind) {
     }
     await page.locator('[data-v2-portal="patient"]').waitFor();
     summary.performanceMs.enterPatient = Date.now() - tPortal;
+    await assertHeadingHierarchy(page, "patient-home");
     await checkContrast("patient-home-dark", "dark");
     await checkViewports("patient");
+
+    // F-05: 0 booked visits + 1 released summary on fresh Patient home
+    assert.ok((await page.locator('[data-patient-booked-count]').innerText()).includes("0 booked visits"));
+    assert.ok((await page.locator('[data-patient-released-count]').innerText()).includes("1 released summary"));
 
     // Verify neutral BP text without "optimal" / "safe"
     const homeText = await page.locator('[data-v2-portal="patient"]').innerText();
     assert.ok(!/optimal|safe range/i.test(homeText), "Telemetry must remain strictly neutral");
 
-    // Patient discover -> select slot -> verify unchecked Option 1A+2A -> confirm booking
-    await page.getByRole("link", { name: /Discover/i }).click();
+    // F-07: Unknown doctor ID + unmatched subroute must show Not Found (never fallback to providers[0])
+    await page.goto(`${origin}/patient/doctors/unknown-doctor-213`, { waitUntil: "networkidle" });
+    await page.locator('[data-v2-not-found="true"]').waitFor();
+    assert.equal(await page.locator('[data-slot-chip]').count(), 0);
+    await page.goto(`${origin}/patient/unknown-subroute`, { waitUntil: "networkidle" });
+    await page.locator('[data-v2-not-found="true"]').waitFor();
+
+    // F-07: Selecting slot on omar-khaled then navigating to mariam-hassan clears stale slot
+    await page.goto(`${origin}/patient/doctors/omar-khaled`, { waitUntil: "networkidle" });
+    await page.locator('[data-slot-chip]').first().click();
+    await page.locator('[data-booking-form="true"]').waitFor();
+    await page.goto(`${origin}/patient/doctors/mariam-hassan`, { waitUntil: "networkidle" });
+    assert.equal(await page.locator('[data-booking-form="true"]').count(), 0, "Stale slot must clear on doctor route change");
+
+    // Patient discover -> book 1st appointment with Dr. Mariam Hassan (patientName = "Ahmed Mostafa")
+    await page.getByRole("link", { name: "All doctors" }).click();
     await page.locator("#discover-search").waitFor();
+    await assertHeadingHierarchy(page, "patient-discover");
     await page.locator('[data-slot-chip]').first().click();
     const consentBox = page.locator('[data-consent-checkbox="true"]');
     await consentBox.waitFor();
     assert.equal(await consentBox.isChecked(), false, "Option 1A+2A consent prototype MUST be unchecked by default");
-    await page.locator("#booking-reason").fill("G2-F1 verification consultation");
+    await page.locator("#booking-reason").fill("G2-F3 verification consultation");
     await page.locator('[data-confirm-booking="true"]').click();
     await page.locator('[data-booking-receipt]').waitFor();
     await checkContrast("patient-discover-receipt");
     summary.flows.patientBooking = "PASS";
 
+    // F-05: 1 booked visit singular check on Patient home (EN + AR)
+    await page.getByRole("link", { name: "My care", exact: true }).click();
+    assert.ok((await page.locator('[data-patient-booked-count]').innerText()).includes("1 booked visit"));
+    await page.getByRole("button", { name: /العربية/ }).click();
+    await page.waitForTimeout(80);
+    assert.ok((await page.locator('[data-patient-booked-count]').innerText()).includes("موعد واحد مسجل"));
+    assert.ok((await page.locator('[data-patient-released-count]').innerText()).includes("ملخص واحد معتمد"));
+    await page.getByRole("button", { name: /English/ }).click();
+    await page.waitForTimeout(80);
+
     // Appointments persistence after reload
     await page.getByRole("link", { name: "Appointments", exact: true }).click();
+    await assertHeadingHierarchy(page, "patient-appointments");
     await page.locator('[data-appointment-item]').first().waitFor();
     await page.reload({ waitUntil: "networkidle" });
     await page.locator('[data-appointment-item]').first().waitFor();
     summary.flows.patientReloadPersistence = "PASS";
 
-    // P2 profile display name sync fix verification
+    // F-06 + F-09: Save profile ("Layla Hassan") triggers toast -> switching locale clears stale toast
     await page.getByRole("link", { name: "Settings", exact: true }).click();
+    await assertHeadingHierarchy(page, "patient-settings");
     await page.locator("#profile-name").fill("Layla Hassan");
     await page.locator('[data-save-profile="true"]').click();
-    await page.waitForTimeout(150);
+    await page.locator('[data-v2-toast-region="true"]').getByText(/Patient profile updated/i).waitFor();
+    await page.getByRole("button", { name: /العربية/ }).click();
+    await page.waitForTimeout(80);
+    assert.equal(
+      (await page.locator('[data-v2-toast-region="true"]').innerText()).trim(),
+      "",
+      "F-06: Stale EN toast must be cleared on AR switch",
+    );
+    await page.locator('[data-save-profile="true"]').click();
+    await page.locator('[data-v2-toast-region="true"]').getByText(/تم تحديث ملف المريض التجريبي/).waitFor();
+    await page.getByRole("button", { name: /English/ }).click();
+    await page.waitForTimeout(80);
+    summary.remediation.f06StaleToastCleared = "PASS";
+
     assert.ok((await page.locator('[data-shell-account-name]').innerText()).includes("Layla Hassan"));
     await page.getByRole("link", { name: "My care", exact: true }).click();
     assert.ok((await page.locator('[data-patient-greeting]').innerText()).includes("Layla Hassan"));
     summary.flows.patientProfileLiveSyncP2 = "PASS";
+
+    // F-09: Book 2nd appointment after profile rename (retains snapshot "Ahmed Mostafa" on 1st, "Layla Hassan" on 2nd)
+    await page.getByRole("link", { name: "Discover", exact: true }).click();
+    await page.locator('[data-slot-chip]').first().click();
+    await page.locator("#booking-reason").fill("Post-rename booking check");
+    await page.locator('[data-confirm-booking="true"]').click();
+    await page.locator('[data-booking-receipt]').waitFor();
 
     // Wrong-role direct navigation boundary (/admin while PATIENT)
     await page.goto(`${origin}/admin`, { waitUntil: "networkidle" });
     await page.getByRole("heading", { name: /Open your active workspace/i }).waitFor();
     summary.flows.wrongRoleGuard = "PASS";
 
-    // Switch to Doctor portal -> verify 24h time, availability publish/withdraw, consultation release
+    // Switch to Doctor portal -> verify snapshot labels, 24h time, unknown/foreign consultation not-found, F-03 release & private sentinel
     await page.locator("[data-workspace-switch]").selectOption("CLINICIAN");
     await page.locator('[data-v2-portal="doctor"]').waitFor();
+    await assertHeadingHierarchy(page, "doctor-schedule");
     await checkContrast("doctor-schedule-dark");
+    const appt1Text = await page.locator('[data-doctor-appointment="demo-appointment-1"]').innerText();
+    const appt2Text = await page.locator('[data-doctor-appointment="demo-appointment-2"]').innerText();
+    assert.ok(appt1Text.includes("Ahmed Mostafa"), "Existing booking must retain booking-time snapshot Ahmed Mostafa");
+    assert.ok(appt2Text.includes("Layla Hassan"), "New booking must reflect updated profile Layla Hassan");
+    assert.ok((await page.locator('[data-booking-patient-snapshot="true"]').count()) >= 2);
+    summary.remediation.f09SnapshotVsProfile = "PASS";
+
+    // F-07: Foreign/unknown consultation ID must show Not Found
+    await page.goto(`${origin}/doctor/consultation/unknown-visit-213`, { waitUntil: "networkidle" });
+    await page.locator('[data-v2-not-found="true"]').waitFor();
+    assert.equal(await page.locator('[data-release-form="true"]').count(), 0);
+    await page.goto(`${origin}/doctor/schedule`, { waitUntil: "networkidle" });
+
+    // Availability publish + AR status check
     await page.getByRole("link", { name: "Availability", exact: true }).click();
+    await assertHeadingHierarchy(page, "doctor-availability");
     await page.locator('[data-publish-slot-btn="true"]').click();
     await page.waitForTimeout(150);
-    await page.getByRole("link", { name: "Consultation", exact: true }).click();
-    await page.locator("#consult-summary").fill("Follow-up note verified");
+    await page.getByRole("button", { name: /العربية/ }).click();
+    await page.waitForTimeout(80);
+    await page.getByText("منشور", { exact: true }).first().waitFor();
+    await page.getByRole("button", { name: /English/ }).click();
+    await page.waitForTimeout(80);
+    summary.remediation.f05ArabicCountsAndStatus = "PASS";
+
+    // F-03: Open exact /doctor/consultation/demo-appointment-1, author public assessment + followUp + prescription + private sentinel, release
+    await page.goto(`${origin}/doctor/consultation/demo-appointment-1`, { waitUntil: "networkidle" });
+    await assertHeadingHierarchy(page, "doctor-consultation");
+    await page.locator("#consult-assessment").fill("Public clinical assessment G2-F3");
+    await page.locator("#consult-followup").fill("Public follow-up guidance G2-F3");
+    await page.locator("#consult-private-notes").fill("PRIVATE_NOTE_SENTINEL_213");
     await page.locator("#consult-med").fill("Cetirizine 10mg");
+    await page.locator("#consult-dosage").fill("10 mg once daily");
+    await page.locator("#consult-inst").fill("Take after evening meal");
     await page.locator('[data-release-submit="true"]').click();
-    await page.waitForTimeout(150);
+    await page.locator('[data-consultation-released="true"]').waitFor();
+    assert.equal(await page.locator('[data-release-submit="true"]').count(), 0, "Released visit becomes read-only");
     summary.flows.doctorFlow = "PASS";
 
-    // Switch to Pharmacy portal -> transition Received -> Preparing -> Dispensed + terminal lock
+    // F-03: Switch back to Patient -> Home & Record show public assessment/guidance & NEVER private sentinel
+    await page.locator("[data-workspace-switch]").selectOption("PATIENT");
+    await page.locator('[data-v2-portal="patient"]').waitFor();
+    const patientHomeAfter = await page.locator('[data-v2-portal="patient"]').innerText();
+    assert.ok(patientHomeAfter.includes("Public clinical assessment G2-F3"));
+    assert.ok(patientHomeAfter.includes("Public follow-up guidance G2-F3"));
+    assert.ok(!patientHomeAfter.includes("PRIVATE_NOTE_SENTINEL_213"));
+    assert.ok(!patientHomeAfter.includes("Private synthetic note"));
+
+    await page.getByRole("link", { name: "Record", exact: true }).click();
+    await assertHeadingHierarchy(page, "patient-record");
+    await page.reload({ waitUntil: "networkidle" });
+    const recordAfterReload = await page.locator('[data-v2-portal="patient"]').innerText();
+    assert.ok(recordAfterReload.includes("Public clinical assessment G2-F3"));
+    assert.ok(recordAfterReload.includes("Public follow-up guidance G2-F3"));
+    assert.ok(recordAfterReload.includes("Cetirizine 10mg"));
+    assert.ok(!recordAfterReload.includes("PRIVATE_NOTE_SENTINEL_213"));
+    assert.ok(!recordAfterReload.includes("Private synthetic note"));
+    summary.remediation.f03PrivacyAndShareableSummary = "PASS";
+
+    // Switch to Pharmacy portal -> transition Received -> Preparing -> Dispensed + verify zero private notes
     await page.locator("[data-workspace-switch]").selectOption("PHARMACY_STAFF");
     await page.locator('[data-v2-portal="pharmacy"]').waitFor();
+    await assertHeadingHierarchy(page, "pharmacy");
     await checkContrast("pharmacy-dark");
+    const pharmText = await page.locator('[data-v2-portal="pharmacy"]').innerText();
+    assert.ok(!pharmText.includes("PRIVATE_NOTE_SENTINEL_213"));
+    assert.ok(!pharmText.includes("Public clinical assessment G2-F3"));
     if ((await page.locator('[data-pharmacy-action="Preparing"]').count()) > 0) {
       await page.locator('[data-pharmacy-action="Preparing"]').first().click();
       await page.waitForTimeout(120);
@@ -391,16 +630,47 @@ async function runSuite(kind) {
     await page.locator('[data-pharmacy-terminal="true"]').first().waitFor();
     summary.flows.pharmacyTerminalLock = "PASS";
 
-    // Switch to Laboratory -> verify FUTURE / NOT LIVE + tabs + 0 mutations
+    // F-08: Switch to Laboratory -> verify FUTURE / NOT LIVE + accessible ARIA tablist keyboard nav in EN LTR & AR RTL
     await page.locator("[data-workspace-switch]").selectOption("LAB_STAFF");
     await page.locator('[data-v2-portal="laboratory"]').waitFor();
+    await assertHeadingHierarchy(page, "laboratory");
     await page.locator('[data-lab-future-badge="true"]').waitFor();
     await checkContrast("laboratory-dark");
+
+    const tab1 = page.locator("#lab-tab-orders");
+    const tab2 = page.locator("#lab-tab-specimens");
+    const tab3 = page.locator("#lab-tab-reports");
+    assert.equal(await tab1.getAttribute("aria-selected"), "true");
+    assert.equal(await tab1.getAttribute("tabindex"), "0");
+    assert.equal(await tab2.getAttribute("tabindex"), "-1");
+    await tab1.focus();
+    await page.keyboard.press("ArrowRight");
+    assert.equal(await tab2.getAttribute("aria-selected"), "true");
+    assert.equal(await tab2.getAttribute("tabindex"), "0");
+    await page.keyboard.press("End");
+    assert.equal(await tab3.getAttribute("aria-selected"), "true");
+    await page.keyboard.press("Home");
+    assert.equal(await tab1.getAttribute("aria-selected"), "true");
+
+    // RTL Arabic keyboard test: ArrowLeft moves visually forward (orders -> specimens)
+    await page.getByRole("button", { name: /العربية/ }).click();
+    await page.waitForTimeout(80);
+    await tab1.focus();
+    await page.keyboard.press("ArrowLeft");
+    assert.equal(await tab2.getAttribute("aria-selected"), "true");
+    await page.keyboard.press("ArrowRight");
+    assert.equal(await tab1.getAttribute("aria-selected"), "true");
+    await page.getByRole("button", { name: /English/ }).click();
+    await page.waitForTimeout(80);
+
     summary.flows.laboratoryFutureHonesty = "PASS";
+    summary.remediation.f07RouteAndSelectionGuards = "PASS";
+    summary.remediation.f08HeadingsAndLabTablist = "PASS";
 
     // Switch to Admin -> verify operational directory & Light theme parity contrast
     await page.locator("[data-workspace-switch]").selectOption("ADMIN");
     await page.locator('[data-v2-portal="admin"]').waitFor();
+    await assertHeadingHierarchy(page, "admin");
     await page.locator("#admin-user-search").fill("Mariam");
     await checkContrast("admin-dark");
 
@@ -429,10 +699,37 @@ async function runSuite(kind) {
   return summary;
 }
 
-const results = {};
-if (mode === "normal" || mode === "both") results.normal = await runSuite("normal");
-if (mode === "preview" || mode === "both") results.preview = await runSuite("preview");
+async function main() {
+  const args = process.argv.slice(2);
+  const argSet = new Set(args);
+  const mode = argSet.has("--mode=preview") ? "preview" : argSet.has("--mode=normal") ? "normal" : "both";
+  const hasExplicitReport = args.some((a) => a.startsWith("--report="));
+  let ownedTempDir = null;
+  let reportPath;
+  if (hasExplicitReport) {
+    reportPath = resolveReportPath(args);
+  } else {
+    ownedTempDir = await mkdtemp(join(tmpdir(), "eh-v2-qa-"));
+    reportPath = resolveReportPath(args, ownedTempDir, join);
+  }
 
-await mkdir(dirname(resolve(reportPath)), { recursive: true });
-await writeFile(resolve(reportPath), `${JSON.stringify(results, null, 2)}\n`, "utf8");
-console.log(JSON.stringify(results, null, 2));
+  try {
+    const results = {};
+    if (mode === "normal" || mode === "both") results.normal = await runSuite("normal");
+    if (mode === "preview" || mode === "both") results.preview = await runSuite("preview");
+
+    await mkdir(dirname(resolve(reportPath)), { recursive: true });
+    await writeFile(resolve(reportPath), `${JSON.stringify(results, null, 2)}\n`, "utf8");
+    console.log(JSON.stringify(results, null, 2));
+  } finally {
+    if (ownedTempDir) {
+      await rm(ownedTempDir, { recursive: true, force: true });
+    }
+  }
+}
+
+const isEntrypoint =
+  process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href;
+if (isEntrypoint) {
+  await main();
+}

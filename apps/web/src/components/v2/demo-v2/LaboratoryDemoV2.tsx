@@ -1,16 +1,58 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useLocale } from "../../../lib/i18n/context";
 import { FoundationIcon, FoundationPortalEmblem } from "../foundation/index";
 import styles from "./demo-v2.module.css";
 
 type ConceptTab = "orders" | "specimens" | "reports";
 
+const TAB_ORDER: readonly ConceptTab[] = ["orders", "specimens", "reports"];
+
 export function LaboratoryDemoV2() {
   const { locale } = useLocale();
   const ar = locale === "ar";
   const [activeTab, setActiveTab] = useState<ConceptTab>("orders");
+  const tabRefs = useRef<Partial<Record<ConceptTab, HTMLButtonElement | null>>>({});
+
+  function selectAndFocusTab(tab: ConceptTab) {
+    setActiveTab(tab);
+    tabRefs.current[tab]?.focus();
+  }
+
+  function handleTabKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, current: ConceptTab) {
+    const idx = TAB_ORDER.indexOf(current);
+    if (idx === -1) return;
+
+    if (event.key === "Home") {
+      event.preventDefault();
+      selectAndFocusTab(TAB_ORDER[0]);
+      return;
+    }
+    if (event.key === "End") {
+      event.preventDefault();
+      selectAndFocusTab(TAB_ORDER[TAB_ORDER.length - 1]);
+      return;
+    }
+
+    const forwardKey = ar ? "ArrowLeft" : "ArrowRight";
+    const backwardKey = ar ? "ArrowRight" : "ArrowLeft";
+    if (event.key === forwardKey) {
+      event.preventDefault();
+      selectAndFocusTab(TAB_ORDER[(idx + 1) % TAB_ORDER.length]);
+      return;
+    }
+    if (event.key === backwardKey) {
+      event.preventDefault();
+      selectAndFocusTab(TAB_ORDER[(idx - 1 + TAB_ORDER.length) % TAB_ORDER.length]);
+    }
+  }
+
+  const tabs: { id: ConceptTab; labelEn: string; labelAr: string }[] = [
+    { id: "orders", labelEn: "Order Routing (Future)", labelAr: "طلبات التحاليل (مستقبلي)" },
+    { id: "specimens", labelEn: "Specimen Status (Future)", labelAr: "تتبع العينات (مستقبلي)" },
+    { id: "reports", labelEn: "Result Release (Future)", labelAr: "مراجعة النتائج (مستقبلي)" },
+  ];
 
   return (
     <section className={styles.workspace} data-v2-portal="laboratory" aria-labelledby="lab-v2-title">
@@ -49,46 +91,36 @@ export function LaboratoryDemoV2() {
         </div>
 
         <div className={styles.actionRow} role="tablist" aria-label={ar ? "أقسام تصور المعمل" : "Laboratory concept tabs"}>
-          <button
-            type="button"
-            role="tab"
-            id="lab-tab-orders"
-            aria-controls="lab-concept-panel"
-            aria-selected={activeTab === "orders"}
-            className={styles.btnSecondary}
-            onClick={() => setActiveTab("orders")}
-          >
-            {ar ? "طلبات التحاليل (مستقبلي)" : "Order Routing (Future)"}
-          </button>
-          <button
-            type="button"
-            role="tab"
-            id="lab-tab-specimens"
-            aria-controls="lab-concept-panel"
-            aria-selected={activeTab === "specimens"}
-            className={styles.btnSecondary}
-            onClick={() => setActiveTab("specimens")}
-          >
-            {ar ? "تتبع العينات (مستقبلي)" : "Specimen Status (Future)"}
-          </button>
-          <button
-            type="button"
-            role="tab"
-            id="lab-tab-reports"
-            aria-controls="lab-concept-panel"
-            aria-selected={activeTab === "reports"}
-            className={styles.btnSecondary}
-            onClick={() => setActiveTab("reports")}
-          >
-            {ar ? "مراجعة النتائج (مستقبلي)" : "Result Release (Future)"}
-          </button>
+          {tabs.map((tab) => {
+            const selected = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                ref={(el) => {
+                  tabRefs.current[tab.id] = el;
+                }}
+                type="button"
+                role="tab"
+                id={`lab-tab-${tab.id}`}
+                aria-controls={`lab-panel-${tab.id}`}
+                aria-selected={selected}
+                tabIndex={selected ? 0 : -1}
+                className={styles.btnSecondary}
+                onClick={() => setActiveTab(tab.id)}
+                onKeyDown={(event) => handleTabKeyDown(event, tab.id)}
+              >
+                {ar ? tab.labelAr : tab.labelEn}
+              </button>
+            );
+          })}
         </div>
 
         <div
-          id="lab-concept-panel"
+          id={`lab-panel-${activeTab}`}
           className={styles.cardInset}
           role="tabpanel"
           aria-labelledby={`lab-tab-${activeTab}`}
+          tabIndex={0}
         >
           {activeTab === "orders" ? (
             <>

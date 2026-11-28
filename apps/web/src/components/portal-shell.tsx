@@ -15,6 +15,10 @@ import styles from "./portal-shell.module.css";
 
 import { FrontendV2ThemeSwitch } from "./v2/frontend-v2-theme";
 import { DemoV2Router } from "./v2/demo-v2/DemoV2Router";
+import {
+  isDemoV2QueryActive,
+  resolveDemoV2PresentationOptIn,
+} from "./v2/demo-v2/presentation-opt-in";
 import v2 from "./v2/patient-doctor-layout.module.css";
 import recovery from "./v2/visual-recovery.module.css";
 
@@ -57,26 +61,37 @@ export function PortalShell({
   const { api, session } = useApp();
   const { locale, t } = useLocale();
   const path = usePathname();
-  const [v2OptIn, setV2OptIn] = useState(
+  const isDemoPair = api.mode === "demo" && session.mode === "demo";
+  const previewDefault =
     process.env.EH_UI_PREVIEW_DEMO_ONLY === "1" ||
-      process.env.EH_UI_LIVE_CONFIGURED !== "1",
+    process.env.EH_UI_LIVE_CONFIGURED === "0";
+  const [v2OptIn, setV2OptIn] = useState(() =>
+    isDemoPair
+      ? resolveDemoV2PresentationOptIn({
+          previewDemoOnly: process.env.EH_UI_PREVIEW_DEMO_ONLY === "1",
+          liveConfigured: process.env.EH_UI_LIVE_CONFIGURED !== "0",
+        })
+      : false,
   );
   useEffect(() => {
-    if (typeof globalThis.window === "undefined") return;
-    const search = new URLSearchParams(globalThis.window.location.search);
+    if (!isDemoPair) {
+      setV2OptIn(false);
+      return;
+    }
     if (
-      search.get("v2") === "1" ||
-      globalThis.window.sessionStorage?.getItem("eh360-v2-demo") === "1"
+      resolveDemoV2PresentationOptIn({
+        previewDemoOnly: process.env.EH_UI_PREVIEW_DEMO_ONLY === "1",
+        liveConfigured: process.env.EH_UI_LIVE_CONFIGURED !== "0",
+      })
     ) {
       setV2OptIn(true);
     }
-  }, []);
-  if (
-    v2OptIn &&
-    api.mode === "demo" &&
-    session.mode === "demo" &&
-    typeof DemoV2Router === "function"
-  ) {
+  }, [isDemoPair, path]);
+  const demoV2Active =
+    isDemoPair &&
+    (previewDefault || v2OptIn || isDemoV2QueryActive()) &&
+    typeof DemoV2Router === "function";
+  if (demoV2Active) {
     return (
       <DemoV2Router
         path={path}
