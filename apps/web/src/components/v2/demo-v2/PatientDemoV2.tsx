@@ -104,6 +104,8 @@ export function PatientDemoV2({ path }: { path: string }) {
   cleanPathRef.current = cleanPath;
   const doctorRouteIdRef = useRef(doctorRouteId);
   doctorRouteIdRef.current = doctorRouteId;
+  const selectedProviderIdRef = useRef(selectedProviderId);
+  selectedProviderIdRef.current = selectedProviderId;
 
   const loadCore = useCallback(async () => {
     const seq = ++coreRequestSeqRef.current;
@@ -169,10 +171,8 @@ export function PatientDemoV2({ path }: { path: string }) {
     setSelectedSlot(null);
     setBookingError("");
     setSlots([]);
-    if (!doctorRouteId && !isDiscoverRoute) {
-      setSelectedProviderId("");
-    }
-  }, [cleanPath, doctorRouteId, isDiscoverRoute]);
+    setSelectedProviderId("");
+  }, [cleanPath]);
 
   const routeDoctor = useMemo(
     () => (doctorRouteId ? providers.find((p) => p.id === doctorRouteId) ?? null : null),
@@ -236,7 +236,7 @@ export function PatientDemoV2({ path }: { path: string }) {
   const clinicNameFor = useCallback(
     (provider: Provider | null, clinicId: string): string => {
       if (!provider) return clinicId;
-      return provider.clinics.find((c) => c.id === clinicId)?.displayName ?? provider.clinics[0]?.displayName ?? clinicId;
+      return provider.clinics?.find((c) => c.id === clinicId)?.displayName ?? provider.clinics?.[0]?.displayName ?? clinicId;
     },
     [],
   );
@@ -265,7 +265,8 @@ export function PatientDemoV2({ path }: { path: string }) {
       if (!isMountedRef.current) return;
       const stillSameBookingContext =
         cleanPathRef.current === targetPath &&
-        (!doctorRouteIdRef.current || doctorRouteIdRef.current === bookedProviderId);
+        (!doctorRouteIdRef.current || doctorRouteIdRef.current === bookedProviderId) &&
+        selectedProviderIdRef.current === bookedProviderId;
       if (stillSameBookingContext) {
         setReceipt(created);
         setSelectedSlot(null);
@@ -539,6 +540,7 @@ export function PatientDemoV2({ path }: { path: string }) {
                           <button
                             type="button"
                             className={isSelected ? styles.btnPrimary : styles.btnSecondary}
+                            disabled={bookingBusy}
                             onClick={() => void loadSlots(provider.id)}
                             data-provider-slots-btn={provider.id}
                           >

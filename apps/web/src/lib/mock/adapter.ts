@@ -127,6 +127,7 @@ function isValidState(value: unknown): value is State {
         isPlainRecord(a.provider) &&
         typeof a.provider.id === "string" &&
         typeof a.provider.displayName === "string" &&
+        Array.isArray(a.provider.clinics) &&
         isPlainRecord(a.slot) &&
         typeof a.slot.id === "string" &&
         typeof a.slot.startAt === "string" &&

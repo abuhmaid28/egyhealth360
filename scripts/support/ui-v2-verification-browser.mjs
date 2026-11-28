@@ -757,6 +757,26 @@ async function runSuite(kind) {
       await page.waitForTimeout(100);
     }
     await checkContrast("doctor-light", "light");
+    await page.locator("[data-workspace-switch]").selectOption("PHARMACY_STAFF");
+    await page.locator('[data-v2-portal="pharmacy"]').waitFor();
+    if ((await page.locator("[data-foundation-theme]").getAttribute("data-foundation-theme")) !== "light") {
+      if ((await page.locator('[data-v2-shell] details[open]').count()) === 0) {
+        await page.locator('[data-v2-shell] summary').click();
+      }
+      await page.locator(".v2-theme-switch select").selectOption("light");
+      await page.waitForTimeout(100);
+    }
+    await checkContrast("pharmacy-light", "light");
+    await page.locator("[data-workspace-switch]").selectOption("LAB_STAFF");
+    await page.locator('[data-v2-portal="laboratory"]').waitFor();
+    if ((await page.locator("[data-foundation-theme]").getAttribute("data-foundation-theme")) !== "light") {
+      if ((await page.locator('[data-v2-shell] details[open]').count()) === 0) {
+        await page.locator('[data-v2-shell] summary').click();
+      }
+      await page.locator(".v2-theme-switch select").selectOption("light");
+      await page.waitForTimeout(100);
+    }
+    await checkContrast("laboratory-light", "light");
     await page.locator("[data-workspace-switch]").selectOption("PATIENT");
     await page.locator('[data-v2-portal="patient"]').waitFor();
     if ((await page.locator("[data-foundation-theme]").getAttribute("data-foundation-theme")) !== "light") {

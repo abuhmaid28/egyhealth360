@@ -181,6 +181,7 @@ export function DoctorDemoV2({ path }: { path: string }) {
         // Shareable patient-facing fields ONLY; private c.notes stays strictly in privateNotes.
         // Only populate form inputs on appointment switch or when authoritative released state is returned.
         if (needsLoadingState || c.released) {
+          setReleaseError("");
           setPatientAssessment(c.diagnosis || "");
           setFollowUpGuidance(c.followUp || "");
           setPrivateNotes(c.notes || "");

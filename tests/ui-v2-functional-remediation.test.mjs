@@ -790,6 +790,14 @@ test("F4-1 DoctorDemoV2: delayed consultation A after switch to B, mid-flight re
   await h.settle(3);
   assert.equal(h.findOne((n) => n.props?.id === "consult-assessment").props.value, "Diagnosis B");
 
+  // Unreleased clinician draft edits survive a refresh reload intact without resetting form inputs
+  h.findOne((n) => n.props?.id === "consult-assessment").props.onChange({ target: { value: "Edited Unreleased Draft" } });
+  h.render();
+  h.update({ app: { refresh: 1 } });
+  h.render();
+  await h.settle(4);
+  assert.equal(h.findOne((n) => n.props?.id === "consult-assessment").props.value, "Edited Unreleased Draft");
+
   // Trigger release on B? Test mid-flight release failure isolation: navigate back to A with resolved draft, trigger release, switch to B before failure
   const defA2 = deferred();
   const baseApi = {
@@ -968,6 +976,17 @@ test("F4-1 PatientDemoV2: delayed availability race, away-nav submitBooking safe
     h.findOne((n) => n.props?.["data-appointment-detail-link"] === "demo-appointment-1")?.props.href,
     "/patient/appointments/demo-appointment-1",
   );
+  // Continuous-mount route transition: /patient/discover -> /patient/doctors/mariam-hassan -> /patient/discover reloads slots
+  h.update({ props: { path: "/patient/discover" } });
+  h.render();
+  await h.settle(3);
+  h.update({ props: { path: "/patient/doctors/mariam-hassan" } });
+  h.render();
+  await h.settle(3);
+  h.update({ props: { path: "/patient/discover" } });
+  h.render();
+  await h.settle(3);
+  assert.ok(h.findAll((n) => typeof n.props?.["data-slot-chip"] === "string").length > 0);
   h.unmount();
 });
 
@@ -989,8 +1008,30 @@ test("F4-1 adapter storage hardening: malformed JSON, invalid state shape, remov
   assert.equal((await reloadedValid.profile()).displayName, "Preserved User");
   assert.equal((await reloadedValid.session()).role, "PATIENT");
 
-  // 2. Malformed JSON & wrong state shape fall back safely without throwing
-  for (const badRaw of ["{not-json", "[]", JSON.stringify({ session: null, profile: { id: 123 } }), JSON.stringify({ session: { role: "SUPERADMIN", name: "x", mode: "demo" } })]) {
+  // 2. Malformed JSON & wrong state shape (including missing provider.clinics) fall back safely without throwing
+  for (const badRaw of [
+    "{not-json",
+    "[]",
+    JSON.stringify({ session: null, profile: { id: 123 } }),
+    JSON.stringify({ session: { role: "SUPERADMIN", name: "x", mode: "demo" } }),
+    JSON.stringify({
+      session: { role: "PATIENT", name: "x", mode: "demo" },
+      profile: { id: "p1", displayName: "x", dateOfBirth: "1990-01-01", sex: "FEMALE" },
+      slots: [],
+      appointments: [
+        {
+          id: "a1",
+          patientName: "x",
+          status: "Upcoming",
+          reason: "r",
+          provider: { id: "mariam-hassan", displayName: "Dr" },
+          slot: { id: "s1", startAt: "2026-10-28T09:00:00Z", clinicId: "c1" },
+        },
+      ],
+      consultations: [],
+      fulfillment: {},
+    }),
+  ]) {
     const badStorage = {
       getItem: () => badRaw,
       setItem: () => {},
