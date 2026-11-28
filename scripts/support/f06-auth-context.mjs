@@ -9,6 +9,9 @@ import { isAbsolute, resolve } from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
 
 export const APPLICATION = '94f3b75476a43ac0118665aecf75a2ce471190b0';
+export const APPLICATION_FILE_COUNT = 1424;
+// SHA-256 of JSON.stringify() on the ordered paths from git ls-tree -r APPLICATION.
+const SOURCE_COPY_MANIFEST_SHA256 = '41fa84fec6e6422e88e7f50fc5207572be79832937b17317bddd94e8b55f6418';
 export const HARNESS_BASE = '781e92bffea26f79c5a89abab79158072383feda';
 export const ALLOWLIST = Object.freeze([
   'scripts/support/f06-auth-context.mjs',
@@ -153,6 +156,61 @@ export class DiagnosticAssertionError extends Error {
 
 export function sha256Hex(value) {
   return createHash('sha256').update(value).digest('hex');
+}
+
+export function sourceCopyInput(paths) {
+  assert.ok(Array.isArray(paths) && paths.length === APPLICATION_FILE_COUNT
+    && paths.every(path => typeof path === 'string'), 'SOURCE_COPY_MANIFEST_REJECTED');
+  const input = JSON.stringify(paths);
+  assert.ok(sha256Hex(input) === SOURCE_COPY_MANIFEST_SHA256, 'SOURCE_COPY_MANIFEST_REJECTED');
+  return input;
+}
+
+async function sourceCopyWorker(manifestSha256) {
+  try {
+    if (process.argv.length !== 1) throw new Error();
+    const { createHash } = await import('node:crypto');
+    const { readFileSync } = await import('node:fs');
+    let input = '';
+    for await (const chunk of process.stdin) {
+      input += chunk;
+      if (input.length > 128 * 1024) throw new Error();
+    }
+    if (createHash('sha256').update(input).digest('hex') !== manifestSha256) throw new Error();
+    const files = Object.fromEntries(JSON.parse(input).map(path => [
+      path, createHash('sha256').update(readFileSync(path)).digest('hex'),
+    ]));
+    process.stdout.write(JSON.stringify(files));
+  } catch {
+    process.exitCode = 1;
+  }
+}
+
+export function sourceCopyProgram() {
+  return `(${sourceCopyWorker.toString()})(${JSON.stringify(SOURCE_COPY_MANIFEST_SHA256)})`;
+}
+
+export function assertSourceCopyHashes(output, expected) {
+  let actual;
+  try {
+    actual = JSON.parse(output);
+  } catch {
+    throw new Error('SOURCE_COPY_OUTPUT_REJECTED');
+  }
+  assert.ok(isDeepStrictEqual(actual, expected), 'SOURCE_COPY_HASH_MISMATCH');
+}
+
+export function boundedCommandOutput(result, binary, argv, recordFailure) {
+  if (result.error || result.status !== 0) {
+    recordFailure({
+      tool: binary,
+      operation: argv.filter(v => ['config', 'compose', 'up', 'down', 'rm', 'exec', 'inspect', 'image', 'ps', 'network', 'volume'].includes(v)).join(' '),
+      exit: result.status,
+      reason: result.error?.code === 'ETIMEDOUT' ? 'timeout' : result.error ? 'spawn' : 'exit',
+    });
+    throw new Error('BOUNDED_COMMAND_FAILED');
+  }
+  return result.stdout.trim();
 }
 
 export function parseOptions(args) {

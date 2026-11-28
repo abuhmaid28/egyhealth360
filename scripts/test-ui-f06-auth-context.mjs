@@ -20,6 +20,7 @@ import { verifyRewrite } from './verify-web-api-topology.mjs';
 import {
   ALLOWLIST,
   APPLICATION,
+  APPLICATION_FILE_COUNT,
   AUTH_LEDGER,
   HARNESS_BASE,
   OMITTED_HISTORICAL_VARIABLES,
@@ -28,6 +29,8 @@ import {
   assertLoopbackHttpUrl,
   assertObserverQuiescent,
   assertOwnedProject,
+  assertSourceCopyHashes,
+  boundedCommandOutput,
   buildDomScanPolicy,
   cookieAttributes,
   createBudgetTracker,
@@ -38,6 +41,8 @@ import {
   scanAuthorizedResponse,
   scanSensitiveText,
   sha256Hex,
+  sourceCopyInput,
+  sourceCopyProgram,
   summarizeBrowserCookieState,
 } from './support/f06-auth-context.mjs';
 
@@ -281,6 +286,15 @@ export async function cleanupOwnedResources({ browser, compose, docker, listReso
   };
 }
 
+export function verifyCopiedApplication(runCommand, containerId, paths, expectedFiles) {
+  assert.ok(typeof containerId === 'string' && /^[a-f0-9]{64}$/.test(containerId), 'SOURCE_COPY_CONTAINER_REJECTED');
+  const input = sourceCopyInput(paths);
+  const output = runCommand('docker', [
+    '--host=unix:///var/run/docker.sock', 'exec', '-i', containerId, 'node', '-e', sourceCopyProgram(),
+  ], input);
+  assertSourceCopyHashes(output, expectedFiles);
+}
+
 export async function runAuthContextDiagnostic(args) {
   const opts = parseOptions(args);
   const repo = realpathSync(process.cwd());
@@ -313,15 +327,7 @@ export async function runAuthContextDiagnostic(args) {
   let commandFailure;
   const runCommand = (binary, argv, input, timeout = 60000) => {
     const r = spawnSync(binary, argv, { cwd: repo, env, input, encoding: 'utf8', timeout, maxBuffer: 32000000 });
-    if (r.error || r.status !== 0) {
-      commandFailure = {
-        tool: binary,
-        operation: argv.filter(v => ['config', 'compose', 'up', 'down', 'rm', 'exec', 'inspect', 'image', 'ps', 'network', 'volume'].includes(v)).join(' '),
-        exit: r.status,
-      };
-    }
-    assert.ok(!r.error && r.status === 0, 'BOUNDED_COMMAND_FAILED');
-    return r.stdout.trim();
+    return boundedCommandOutput(r, binary, argv, failure => { commandFailure = failure; });
   };
   const docker = (...argv) => runCommand('docker', ['--host=unix:///var/run/docker.sock', ...argv]);
   const inspect = (kind, id) => JSON.parse(docker(kind, 'inspect', id))[0];
@@ -389,7 +395,7 @@ export async function runAuthContextDiagnostic(args) {
       .sort((a, b) => a[1].localeCompare(b[1]));
     assert.deepEqual(changedFromHarnessBase, ALLOWLIST.map(p => ['A', p]), 'HARNESS_SCOPE_ALLOWLIST_MISMATCH');
     const entries = runCommand('git', ['ls-tree', '-r', APPLICATION]).split('\n');
-    assert.equal(entries.length, 1424, 'APPLICATION_TREE_COUNT_MISMATCH');
+    assert.equal(entries.length, APPLICATION_FILE_COUNT, 'APPLICATION_TREE_COUNT_MISMATCH');
     for (const entry of entries) {
       const [meta, path] = entry.split('\t');
       const bytes = readFileSync(path);
@@ -460,10 +466,7 @@ export async function runAuthContextDiagnostic(args) {
 
     const paths = entries.map(e => e.split('\t')[1]);
     const expectedFiles = Object.fromEntries(paths.map(p => [p, sha256Hex(readFileSync(resolve(contextDir, p)))]));
-    const actualFiles = JSON.parse(docker('exec', '-i', containers.web.Id, 'node', '-e',
-      "let s='';process.stdin.on('data',p=>s+=p);process.stdin.on('end',()=>{const fs=require('node:fs'),c=require('node:crypto');console.log(JSON.stringify(Object.fromEntries(JSON.parse(s).map(p=>[p,c.createHash('sha256').update(fs.readFileSync(p)).digest('hex')]))))});",
-      JSON.stringify(paths)));
-    assert.deepEqual(actualFiles, expectedFiles);
+    verifyCopiedApplication(runCommand, containers.web.Id, paths, expectedFiles);
     receipt.copiedFiles = paths.length;
     receipt.copiedSha256 = sha256Hex(JSON.stringify(expectedFiles));
 

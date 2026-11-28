@@ -1,9 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { tmpdir } from 'node:os';
+import { dirname, resolve } from 'node:path';
 import {
   ALLOWLIST,
   APPLICATION,
@@ -13,6 +16,7 @@ import {
   buildComposeOverrideYaml,
   cleanupOwnedResources,
   rawHttpRequest,
+  verifyCopiedApplication,
 } from '../scripts/test-ui-f06-auth-context.mjs';
 import {
   DIAGNOSTIC_CASES,
@@ -24,6 +28,7 @@ import {
   assertLoopbackHttpUrl,
   assertObserverQuiescent,
   assertOwnedProject,
+  boundedCommandOutput,
   buildDomScanPolicy,
   cookieAttributes,
   createBudgetTracker,
@@ -34,6 +39,7 @@ import {
   scanAuthorizedResponse,
   scanSensitiveText,
   sha256Hex,
+  sourceCopyProgram,
   summarizeBrowserCookieState,
 } from '../scripts/support/f06-auth-context.mjs';
 
@@ -78,6 +84,93 @@ test('pins exact historical application/harness and rejects unsafe CLI options o
     'http://localhost:80/privileged-port',
   ]) {
     assert.throws(() => assertLoopbackHttpUrl(badTarget));
+  }
+});
+
+function pinnedApplicationPaths() {
+  return execFileSync('git', ['ls-tree', '-rz', '--name-only', APPLICATION], { encoding: 'utf8' })
+    .split('\0').slice(0, -1);
+}
+
+test('source-copy verification uses fixed Docker argv and exclusive stdin with all pinned hashes', t => {
+  const cwd = mkdtempSync(resolve(tmpdir(), 'f06-source-copy-'));
+  t.after(() => rmSync(cwd, { recursive: true, force: true }));
+  const paths = pinnedApplicationPaths();
+  const expected = Object.fromEntries(paths.map((path, index) => {
+    const file = resolve(cwd, path);
+    const contents = `synthetic fixture ${index}\n`;
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, contents);
+    return [path, createHash('sha256').update(contents).digest('hex')];
+  }));
+  const containerId = 'a'.repeat(64);
+  let invocations = 0;
+  const run = (binary, argv, input, timeout) => {
+    invocations++;
+    assert.equal(binary, 'docker');
+    assert.deepEqual(argv, [
+      '--host=unix:///var/run/docker.sock', 'exec', '-i', containerId, 'node', '-e', sourceCopyProgram(),
+    ]);
+    assert.notEqual(argv.at(-1), input);
+    assert.equal(input, JSON.stringify(paths));
+    assert.equal(timeout, undefined);
+    const result = spawnSync(process.execPath, argv.slice(5), { cwd, input, encoding: 'utf8', timeout: 5000 });
+    return boundedCommandOutput(result, binary, argv, () => assert.fail('source-copy worker failed'));
+  };
+
+  verifyCopiedApplication(run, containerId, paths, expected);
+  writeFileSync(resolve(cwd, paths[0]), 'altered fixture');
+  assert.throws(() => verifyCopiedApplication(run, containerId, paths, expected), {
+    message: 'SOURCE_COPY_HASH_MISMATCH',
+  });
+
+  assert.throws(() => verifyCopiedApplication(run, '--privileged', paths, expected), /SOURCE_COPY_CONTAINER_REJECTED/);
+  assert.throws(() => verifyCopiedApplication(run, containerId, paths.slice(1), expected), /SOURCE_COPY_MANIFEST_REJECTED/);
+  assert.throws(() => verifyCopiedApplication(run, containerId, ['../outside', ...paths.slice(1)], expected), /SOURCE_COPY_MANIFEST_REJECTED/);
+  assert.equal(invocations, 2);
+});
+
+test('source-copy worker rejects absent, malformed, incomplete and argv input without diagnostics', () => {
+  const program = sourceCopyProgram();
+  const paths = pinnedApplicationPaths();
+  const payload = JSON.stringify(paths);
+  for (const [extraArgs, input] of [
+    [[], undefined],
+    [[], '{"synthetic_private_marker":'],
+    [[], JSON.stringify(paths.slice(1))],
+    [[], 'x'.repeat(128 * 1024 + 1)],
+    [[payload], undefined],
+    [[payload], payload],
+  ]) {
+    const result = spawnSync(process.execPath, ['-e', program, ...extraArgs], {
+      input, encoding: 'utf8', timeout: 5000,
+    });
+    assert.equal(result.status, 1);
+    assert.equal(result.stdout, '');
+    assert.equal(result.stderr, '');
+  }
+  assert.throws(() => verifyCopiedApplication(() => 'malformed output', 'a'.repeat(64), paths, {}), {
+    message: 'SOURCE_COPY_OUTPUT_REJECTED',
+  });
+});
+
+test('bounded command failure and timeout receipts exclude command arguments and private subprocess output', () => {
+  const marker = 'synthetic_private_marker';
+  const argv = ['exec', '-i', marker];
+  const timeout = spawnSync(process.execPath, ['-e', 'setInterval(() => {}, 1000)'], {
+    encoding: 'utf8', timeout: 100,
+  });
+  assert.equal(timeout.error?.code, 'ETIMEDOUT');
+  for (const [result, exit, reason] of [
+    [{ status: 1 }, 1, 'exit'],
+    [timeout, null, 'timeout'],
+    [{ status: null, error: new Error(marker) }, null, 'spawn'],
+  ]) {
+    let failure;
+    assert.throws(() => boundedCommandOutput({ ...result, stdout: marker, stderr: marker }, 'docker', argv,
+      info => { failure = info; }), { message: 'BOUNDED_COMMAND_FAILED' });
+    assert.deepEqual(failure, { tool: 'docker', operation: 'exec', exit, reason });
+    assert.equal(finalizeSafeReceipt({ failure }, [marker]).scan.clean, true);
   }
 });
 
