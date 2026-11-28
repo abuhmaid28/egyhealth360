@@ -255,7 +255,7 @@ async function exercise({ context, origin, actors, passwords, secrets, ledger, o
     await live();
   };
   const visible = async active => {
-    await page.locator('h1').filter({ hasText: active.displayName }).waitFor();
+    await page.getByRole('heading').filter({ hasText: active.displayName }).first().waitFor();
     await surface(active);
     receipt.ownVisible++;
   };

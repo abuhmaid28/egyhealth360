@@ -113,6 +113,8 @@ test('rejects unowned projects, extra ports, volumes, privileges and networks', 
 test('network and per-case request budgets reject foreign targets and writes', () => {
   assert.equal(requestTarget(origin + '/api/v1/auth/login', origin, 'POST', []), 'login');
   assert.equal(requestTarget(origin + '/api/v1/me/profile', origin, 'GET', []), 'api');
+  assert.equal(requestTarget(origin + '/api/v1/directory/providers?page=1&pageSize=100', origin, 'GET', []), 'api');
+  assert.throws(() => requestTarget(origin + '/api/v1/directory/providers', origin, 'GET', []), /UNAUTHORIZED_API_READ/);
   for (const [url, method] of [[origin + '/api/v1/me/profile', 'PUT'],
     [origin + '/api/v1/unknown', 'GET'], ['http://127.0.0.1:32002/', 'GET'],
     [origin + '/api/v1/auth/logout?extra=1', 'POST']]) {

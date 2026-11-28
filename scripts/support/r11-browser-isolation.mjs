@@ -184,7 +184,9 @@ export function requestTarget(value, origin, method, profiles) {
   if (url.pathname.startsWith('/api/')) {
     requireCheck(method === 'GET', 'UNAUTHORIZED_API_METHOD');
     requireCheck(/^\/api\/v1\/(?:auth\/me|me\/(?:profile|bookings|summaries|follow-up-intents|care-plan|care-plans|blood-pressure-measurements|record|prescriptions)|health)$/.test(url.pathname)
-      || profiles.some(id => url.pathname === '/api/v1/patients/' + id + '/profile'), 'UNAUTHORIZED_API_READ');
+      || (['/api/v1/directory/providers', '/api/v1/directory/clinics'].includes(url.pathname)
+        && url.search === '?page=1&pageSize=100')
+      || profiles.some(id => url.pathname === '/api/v1/patients/' + id + '/profile' && !url.search), 'UNAUTHORIZED_API_READ');
     return 'api';
   }
   return 'asset';
