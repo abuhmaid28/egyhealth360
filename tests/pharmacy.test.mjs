@@ -22,10 +22,92 @@ test('I3S2 strict raw duplicate/nested JSON and bounded purpose pagination',()=>
  assert.deepEqual(pharmacyPage({purpose:'history',pageSize:1}),{page:1,pageSize:1,purpose:'history'});for(const v of [{purpose:'forensic'},{patientId:randomUUID()},{pageSize:101},Object.create({page:1})])invalid(()=>pharmacyPage(v));
  const a=base();Object.defineProperty(a,'itemIds',{get(){throw Error('do not execute');},enumerable:true});invalid(()=>pharmacyInput('ROUTE',a));
 });
-test('I3S2 exact additive API/model inventory and all twenty-one historical migration bytes remain pinned',async()=>{
+const historicalModels = [
+ 'AssignmentEndProvenance',
+ 'AuditLog',
+ 'AvailabilityOperation',
+ 'AvailabilitySlot',
+ 'BloodPressureMeasurement',
+ 'Booking',
+ 'BookingAttendance',
+ 'BookingEvent',
+ 'BookingOperation',
+ 'BpAmendmentOperation',
+ 'BpExclusion',
+ 'BpPrivacyTarget',
+ 'CareAction',
+ 'CareActionApplicabilityInput',
+ 'CareActionDecision',
+ 'CarePlan',
+ 'CarePlanTemplate',
+ 'CareRuleDefinition',
+ 'ClinicDirectory',
+ 'ClinicSchedulingSettings',
+ 'ClinicalEncounter',
+ 'ClinicianDirectory',
+ 'ClinicianPatientAssignment',
+ 'ClinicianProfile',
+ 'Consultation',
+ 'ConsultationDocument',
+ 'ConsultationDocumentOperation',
+ 'ConsultationDocumentVersion',
+ 'ConsultationPrivacyRestriction',
+ 'DirectoryAffiliation',
+ 'EncounterBloodPressureAssociation',
+ 'FollowUpAppointment',
+ 'FollowUpIntent',
+ 'FollowUpIntentBookingLink',
+ 'FollowUpIntentOperation',
+ 'FollowUpIntentPrivacyRestriction',
+ 'FollowUpIntentVersion',
+ 'GuidelineSource',
+ 'Medication',
+ 'MedicationOperation',
+ 'MedicationVersion',
+ 'ObservedClinicalApplicabilityRetraction',
+ 'ObservedClinicalApplicabilitySnapshot',
+ 'Organization',
+ 'OrganizationMembership',
+ 'PatientProfile',
+ 'PharmacyDispense',
+ 'PharmacyDispenseCorrection',
+ 'PharmacyOperation',
+ 'PharmacyRoute',
+ 'PharmacyRouteItem',
+ 'PharmacyRouteVersion',
+ 'Prescription',
+ 'PrescriptionItem',
+ 'PrescriptionOperation',
+ 'PrescriptionPrivacyRestriction',
+ 'PrescriptionVersion',
+ 'PrescriptionVersionItem',
+ 'RecordCoverageWindow',
+ 'RelationshipRequest',
+ 'Session',
+ 'Specialty',
+ 'User',
+];
+
+test('I3S2 exact API, historical and dark model inventories and migration bytes remain pinned',async()=>{
  const {readFile,readdir}=await import('node:fs/promises'),{createHash}=await import('node:crypto'),{beforeI3Slice2}=await import('./support/openapi-baseline.mjs');
  const raw=await readFile('docs/openapi.json','utf8'),old=beforeI3Slice2(raw),api=JSON.parse(raw),prior=JSON.parse(old);assert.equal(createHash('sha256').update(old).digest('hex'),'f8b9cc152df87f118d671222b6270b62ff2955f5cd7a13e47837b8a7223d2362');
+ assert.equal(Object.keys(api.paths).length, 82);
  const paths=Object.keys(api.paths).filter(p=>!Object.hasOwn(prior.paths,p));assert.equal(paths.length,10);assert.ok(paths.every(p=>p.includes('/pharmacy-routes')||p.includes('/pharmacies/')||p.endsWith('/pharmacy-destinations')));assert.deepEqual(api.components.schemas.PrescriptionItem.properties.fulfillmentState.enum,['NOT_DISPENSED','FULLY_DISPENSED']);for(const p of paths)if(api.paths[p].head)assert.ok(Object.values(api.paths[p].head.responses).every(r=>r.content===undefined));
  const checksums=JSON.parse(await readFile('tests/fixtures/v3-i3-slice2-migration-checksums.json','utf8'));assert.equal(Object.keys(checksums).length,21);for(const[name,digest]of Object.entries(checksums))assert.equal(createHash('sha256').update(await readFile('packages/db/prisma/migrations/'+name+'/migration.sql')).digest('hex'),digest);
- const names=(await readdir('packages/db/prisma/migrations')).filter(n=>n!=='migration_lock.toml').sort();assert.equal(names.length,22);assert.equal(names.at(-1),'20261101170000_v3_i3_pharmacy_fulfillment');const schema=await readFile('packages/db/prisma/schema.prisma','utf8');assert.equal([...schema.matchAll(/^model /gm)].length,63);assert.doesNotMatch(schema,/model (LabOrder|LabResult|DispensePartial|Refill|ClosureAssessment)\b/);
+ const additionalMigrations = {
+  '20261101170000_v3_i3_pharmacy_fulfillment': 'd1482ce8ac43bb9eb6d86397ce22ca2f015c874d04eeb96eacd9aa5a731eca37',
+  '20261123000000_cjp_expand_dark': 'c260218681b369733383754ac6b10856a8eebd736974697f41236a95e88448c2',
+  '20261125000000_cjp_account_epoch_dark': '972cd87e2fb604a9058c0ec3487506944965f6b821e5b3d5c393171c75db0da8',
+ };
+ for (const [name, digest] of Object.entries(additionalMigrations)) {
+  const bytes = await readFile('packages/db/prisma/migrations/' + name + '/migration.sql');
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), digest, name);
+ }
+ const names = (await readdir('packages/db/prisma/migrations')).filter(name => name !== 'migration_lock.toml').sort();
+ assert.deepEqual(names, [...Object.keys(checksums), ...Object.keys(additionalMigrations)].sort());
+ const schema = await readFile('packages/db/prisma/schema.prisma', 'utf8');
+ const models = [...schema.matchAll(/^model (\w+)/gm)].map(([, name]) => name).sort();
+ const darkModels = ['CareJourney', 'CareJourneyBooking', 'CareJourneyClinicAdmission', 'CareJourneyEvent', 'CareJourneyPair'];
+ assert.deepEqual(models, [...historicalModels, ...darkModels].sort());
+ assert.doesNotMatch(schema, /model (LabOrder|LabResult|DispensePartial|Refill|ClosureAssessment)\b/);
 });

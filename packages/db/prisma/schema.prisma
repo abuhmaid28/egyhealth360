@@ -40,6 +40,8 @@ enum RelationshipRequestStatus {
 }
 
 model User {
+  accountEpoch Int @default(1) @map("account_epoch") @ignore
+  careJourneyEvents CareJourneyEvent[]
   schedulingChanges ClinicSchedulingSettings[] @relation("SchedulingActor")
   availabilityPublications AvailabilitySlot[] @relation("AvailabilityPublisher")
   availabilityWithdrawals AvailabilitySlot[] @relation("AvailabilityWithdrawer")
@@ -100,6 +102,8 @@ model Session {
 }
 
 model PatientProfile {
+  careJourneyPairs CareJourneyPair[]
+  careJourneys CareJourney[]
   relationshipRequests RelationshipRequest[]
   @@unique([id,userId],map:"patient_profiles_id_user_key")
   bpAmendments BpAmendmentOperation[]
@@ -131,6 +135,9 @@ model PatientProfile {
 }
 
 model ClinicianProfile {
+  careJourneyPairs CareJourneyPair[]
+  careJourneyAdmissions CareJourneyClinicAdmission[]
+  careJourneyEvents CareJourneyEvent[]
   availabilitySlots AvailabilitySlot[]
   relationshipRequests RelationshipRequest[]
   directory ClinicianDirectory?
@@ -151,6 +158,7 @@ model ClinicianProfile {
 }
 
 model ClinicianPatientAssignment {
+  careJourneys CareJourney[]
   relationshipRequests RelationshipRequest[] @relation("AcceptedAssignment")
   authorizationContexts RelationshipRequest[] @relation("AuthorizationAssignment")
   endProvenance AssignmentEndProvenance[]
@@ -666,6 +674,7 @@ model Organization {
 }
 
 model OrganizationMembership {
+  careJourneyAdmissions CareJourneyClinicAdmission[]
   availabilitySlots AvailabilitySlot[]
   directoryAffiliations DirectoryAffiliation[]
   @@unique([id,userId,organizationId,userRole,organizationKind],map:"memberships_directory_scope_key")
@@ -742,6 +751,7 @@ model ClinicDirectory {
 }
 
 model ClinicianDirectory {
+  careJourneyAdmissions CareJourneyClinicAdmission[]
   availabilitySlots AvailabilitySlot[]
   relationshipRequests RelationshipRequest[]
   @@unique([publicId,clinicianId,clinicianUserId],map:"directory_relationship_locator_key")
@@ -774,6 +784,7 @@ model ClinicianDirectory {
 }
 
 model DirectoryAffiliation {
+  careJourneyAdmissions CareJourneyClinicAdmission[]
   availabilitySlots AvailabilitySlot[]
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   providerId String @map("provider_id") @db.Uuid
@@ -918,6 +929,9 @@ model AvailabilityOperation {
 
 // Slice 3 logistics. SQL owns composite RESTRICT FKs, partial/exclusion constraints and history guards.
 model Booking {
+  careJourneyBindings CareJourneyBooking[]
+  careJourneyEvents CareJourneyEvent[]
+  @@unique([id, patientId, patientUserId, clinicianId, clinicianUserId, organizationId, slotId], map: "booking_consultation_scope")
  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
  patientId String @map("patient_id") @db.Uuid
  patientUserId String @map("patient_user_id") @db.Uuid
@@ -1353,4 +1367,200 @@ model PharmacyOperation {
  auditId String @map("audit_id") @db.Uuid
  recordedAt DateTime @map("recorded_at") @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
  @@map("pharmacy_operations")
+}
+
+// Dark Care Journey sidecars. SQL owns CHECKs, partial uniqueness and deferred history checks.
+model CareJourneyBooking {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  journeyId String @db.Uuid @map("journey_id")
+  bookingId String @db.Uuid @map("booking_id")
+  slotId String @db.Uuid @map("slot_id")
+  patientId String @db.Uuid @map("patient_id")
+  patientUserId String @db.Uuid @map("patient_user_id")
+  clinicianId String @db.Uuid @map("clinician_id")
+  clinicianUserId String @db.Uuid @map("clinician_user_id")
+  organizationId String @db.Uuid @map("organization_id")
+  providerId String @db.Uuid @map("provider_id")
+  membershipId String @db.Uuid @map("membership_id")
+  affiliationId String @db.Uuid @map("affiliation_id")
+  bindingKind CareJourneyBindingKind @map("binding_kind")
+  attachedAt DateTime @db.Timestamptz(3) @map("attached_at")
+  endedAt DateTime? @db.Timestamptz(3) @map("ended_at")
+  replacedBindingId String? @unique(map: "cjp_binding_replacement_key") @db.Uuid @map("replaced_binding_id")
+  booking Booking @relation(fields: [bookingId, patientId, patientUserId, clinicianId, clinicianUserId, organizationId, slotId], references: [id, patientId, patientUserId, clinicianId, clinicianUserId, organizationId, slotId], onDelete: Restrict, onUpdate: Restrict, map: "cjp_binding_booking_fk")
+  journey CareJourney @relation(fields: [journeyId, patientId, patientUserId, clinicianId, clinicianUserId, organizationId, providerId, membershipId, affiliationId], references: [id, patientId, patientUserId, clinicianId, clinicianUserId, organizationId, providerId, membershipId, affiliationId], onDelete: Restrict, onUpdate: Restrict, map: "cjp_binding_journey_fk")
+  replaces CareJourneyBooking? @relation("CareJourneyBindingReplacement", fields: [replacedBindingId, journeyId, bindingKind], references: [id, journeyId, bindingKind], onDelete: Restrict, onUpdate: Restrict, map: "cjp_binding_replaced_fk")
+  replacedBy CareJourneyBooking[] @relation("CareJourneyBindingReplacement")
+  @@unique([id, journeyId, bindingKind], map: "cjp_binding_scope")
+  @@map("care_journey_bookings")
+}
+
+model CareJourneyClinicAdmission {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clinicianId String @db.Uuid @map("clinician_id")
+  clinicianUserId String @db.Uuid @map("clinician_user_id")
+  organizationId String @db.Uuid @map("organization_id")
+  providerId String @db.Uuid @map("provider_id")
+  membershipId String @db.Uuid @map("membership_id")
+  affiliationId String @db.Uuid @map("affiliation_id")
+  clinicianRole UserRole @default(CLINICIAN) @map("clinician_role")
+  organizationKind OrganizationKind @default(CLINIC) @map("organization_kind")
+  policyVersion String @db.VarChar(64) @map("policy_version")
+  purpose String @db.VarChar(64)
+  credentialSource String @db.VarChar(64) @map("credential_source")
+  credentialIssuer String @db.VarChar(128) @map("credential_issuer")
+  credentialReference String @db.Uuid @map("credential_reference")
+  verifiedAt DateTime @db.Timestamptz(3) @map("verified_at")
+  validUntil DateTime @db.Timestamptz(3) @map("valid_until")
+  participatedAt DateTime @db.Timestamptz(3) @map("participated_at")
+  endedAt DateTime? @db.Timestamptz(3) @map("ended_at")
+  verificationEpoch Int @map("verification_epoch")
+  participationEpoch Int @map("participation_epoch")
+  verificationEventId String @db.Uuid @map("verification_event_id")
+  participationEventId String @db.Uuid @map("participation_event_id")
+  endEventId String? @db.Uuid @map("end_event_id")
+  verificationKind CareJourneyEventKind @default(CLINIC_VERIFIED) @map("verification_kind")
+  participationKind CareJourneyEventKind @default(STANDING_OPT_IN) @map("participation_kind")
+  endKind CareJourneyEventKind @default(PARTICIPATION_ENDED) @map("end_kind")
+  affiliation DirectoryAffiliation @relation(fields: [affiliationId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  clinician ClinicianProfile @relation(fields: [clinicianId, clinicianUserId], references: [id, userId], onDelete: Restrict, onUpdate: Restrict, map: "cjp_admission_clinician_fk")
+  endEvent CareJourneyEvent? @relation("CareJourneyAdmissionEnd", fields: [endEventId, endKind, id, clinicianId, organizationId, policyVersion, purpose, endedAt], references: [id, kind, admissionId, clinicianId, organizationId, policyVersion, purpose, recordedAt], onDelete: NoAction, onUpdate: Restrict, map: "cjp_admission_end_fk")
+  membership OrganizationMembership @relation(fields: [membershipId, clinicianUserId, organizationId, clinicianRole, organizationKind], references: [id, userId, organizationId, userRole, organizationKind], onDelete: Restrict, onUpdate: Restrict, map: "cjp_admission_membership_fk")
+  participationEvent CareJourneyEvent @relation("CareJourneyAdmissionParticipation", fields: [participationEventId, participationKind, id, clinicianId, organizationId, policyVersion, purpose, participatedAt], references: [id, kind, admissionId, clinicianId, organizationId, policyVersion, purpose, recordedAt], onDelete: NoAction, onUpdate: Restrict, map: "cjp_admission_participation_fk")
+  provider ClinicianDirectory @relation(fields: [providerId, clinicianUserId], references: [id, clinicianUserId], onDelete: Restrict, onUpdate: Restrict, map: "cjp_admission_provider_fk")
+  verificationEvent CareJourneyEvent @relation("CareJourneyAdmissionVerification", fields: [verificationEventId, verificationKind, id, clinicianId, organizationId, policyVersion, purpose, verifiedAt], references: [id, kind, admissionId, clinicianId, organizationId, policyVersion, purpose, recordedAt], onDelete: NoAction, onUpdate: Restrict, map: "cjp_admission_verification_fk")
+  events CareJourneyEvent[] @relation("CareJourneyAdmissionEvents")
+  journeys CareJourney[]
+  @@unique([id, clinicianId, clinicianUserId, organizationId, providerId, membershipId, affiliationId, policyVersion, purpose], map: "cjp_admission_scope")
+  @@unique([id, clinicianId, organizationId, policyVersion, purpose], map: "cjp_admission_event_scope")
+  @@map("care_journey_clinic_admissions")
+}
+
+model CareJourneyEvent {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  kind CareJourneyEventKind
+  source CareJourneyEventSource
+  patientId String? @db.Uuid @map("patient_id")
+  clinicianId String @db.Uuid @map("clinician_id")
+  journeyId String? @db.Uuid @map("journey_id")
+  admissionId String? @db.Uuid @map("admission_id")
+  organizationId String? @db.Uuid @map("organization_id")
+  bookingId String? @db.Uuid @map("booking_id")
+  actorUserId String? @db.Uuid @map("actor_user_id")
+  actorRole UserRole? @map("actor_role")
+  sessionEvidenceId String? @db.Uuid @map("session_evidence_id")
+  policyVersion String @db.VarChar(64) @map("policy_version")
+  scopeVersion String? @db.VarChar(64) @map("scope_version")
+  purpose String? @db.VarChar(64)
+  noticeVersion String? @db.VarChar(64) @map("notice_version")
+  noticeDigest String? @db.VarChar(64) @map("notice_digest")
+  locale String? @db.VarChar(2)
+  affirmative Boolean?
+  credentialReference String? @db.Uuid @map("credential_reference")
+  operationKey String? @db.Uuid @map("operation_key")
+  fingerprint String? @db.VarChar(64)
+  recordedAt DateTime @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3) @map("recorded_at")
+  endedAdmissions CareJourneyClinicAdmission[] @relation("CareJourneyAdmissionEnd")
+  participatingAdmissions CareJourneyClinicAdmission[] @relation("CareJourneyAdmissionParticipation")
+  verifiedAdmissions CareJourneyClinicAdmission[] @relation("CareJourneyAdmissionVerification")
+  actor User? @relation(fields: [actorUserId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  booking Booking? @relation(fields: [bookingId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  clinician ClinicianProfile @relation(fields: [clinicianId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  admission CareJourneyClinicAdmission? @relation("CareJourneyAdmissionEvents", fields: [admissionId, clinicianId, organizationId, policyVersion, purpose], references: [id, clinicianId, organizationId, policyVersion, purpose], onDelete: NoAction, onUpdate: Restrict, map: "cjp_event_admission_fk")
+  journey CareJourney? @relation("CareJourneyEvents", fields: [journeyId, patientId, clinicianId, organizationId, admissionId, policyVersion, scopeVersion, purpose], references: [id, patientId, clinicianId, organizationId, admissionId, policyVersion, scopeVersion, purpose], onDelete: NoAction, onUpdate: Restrict, map: "cjp_event_journey_fk")
+  pair CareJourneyPair? @relation("CareJourneyPairEvents", fields: [patientId, clinicianId], references: [patientId, clinicianId], onDelete: NoAction, onUpdate: Restrict, map: "cjp_event_pair_fk")
+  enrolledPairs CareJourneyPair[] @relation("CareJourneyPairEnrollment")
+  consentedJourneys CareJourney[] @relation("CareJourneyConsent")
+  endedJourneys CareJourney[] @relation("CareJourneyEnd")
+  @@unique([id, kind, admissionId, clinicianId, organizationId, policyVersion, purpose, recordedAt], map: "cjp_event_admission_scope")
+  @@unique([id, kind, journeyId, patientId, clinicianId, organizationId, admissionId, policyVersion, scopeVersion, purpose, recordedAt], map: "cjp_event_journey_scope")
+  @@unique([actorUserId, kind, operationKey], map: "cjp_event_operation")
+  @@unique([id, kind, patientId, clinicianId, policyVersion, recordedAt], map: "cjp_event_pair_scope")
+  @@index([journeyId, recordedAt, id], map: "cjp_events_journey_history")
+  @@map("care_journey_events")
+}
+
+model CareJourneyPair {
+  patientId String @db.Uuid @map("patient_id")
+  clinicianId String @db.Uuid @map("clinician_id")
+  enrolledAt DateTime @db.Timestamptz(3) @map("enrolled_at")
+  policyVersion String @db.VarChar(64) @map("policy_version")
+  enrollmentEventId String @db.Uuid @map("enrollment_event_id")
+  enrollmentKind CareJourneyEventKind @default(ENROLLED) @map("enrollment_kind")
+  events CareJourneyEvent[] @relation("CareJourneyPairEvents")
+  clinician ClinicianProfile @relation(fields: [clinicianId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  enrollmentEvent CareJourneyEvent @relation("CareJourneyPairEnrollment", fields: [enrollmentEventId, enrollmentKind, patientId, clinicianId, policyVersion, enrolledAt], references: [id, kind, patientId, clinicianId, policyVersion, recordedAt], onDelete: NoAction, onUpdate: Restrict, map: "cjp_pair_enrollment_fk")
+  journeys CareJourney[]
+  @@id([patientId, clinicianId], map: "cjp_pair_pk")
+  @@map("care_journey_pairs")
+}
+
+model CareJourney {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  patientId String @db.Uuid @map("patient_id")
+  patientUserId String @db.Uuid @map("patient_user_id")
+  clinicianId String @db.Uuid @map("clinician_id")
+  clinicianUserId String @db.Uuid @map("clinician_user_id")
+  organizationId String @db.Uuid @map("organization_id")
+  providerId String @db.Uuid @map("provider_id")
+  membershipId String @db.Uuid @map("membership_id")
+  affiliationId String @db.Uuid @map("affiliation_id")
+  admissionId String @db.Uuid @map("admission_id")
+  assignmentId String @unique(map: "cjp_journey_assignment_key") @db.Uuid @map("assignment_id")
+  scopeVersion String @db.VarChar(64) @map("scope_version")
+  policyVersion String @db.VarChar(64) @map("policy_version")
+  purpose String @db.VarChar(64)
+  consentEventId String @db.Uuid @map("consent_event_id")
+  consentKind CareJourneyEventKind @default(CONSENT_ACTIVATED) @map("consent_kind")
+  clinicStatusVersion Int @map("clinic_status_version")
+  verificationEpoch Int @map("verification_epoch")
+  participationEpoch Int @map("participation_epoch")
+  startedAt DateTime @db.Timestamptz(3) @map("started_at")
+  originalPreCareCeilingAt DateTime @db.Timestamptz(3) @map("original_pre_care_ceiling_at")
+  hardExpiresAt DateTime @db.Timestamptz(3) @map("hard_expires_at")
+  firstCareCompletedAt DateTime? @db.Timestamptz(3) @map("first_care_completed_at")
+  latestQualifiedCloseAt DateTime? @db.Timestamptz(3) @map("latest_qualified_close_at")
+  effectiveCutoffAt DateTime? @db.Timestamptz(3) @map("effective_cutoff_at")
+  endedAt DateTime? @db.Timestamptz(3) @map("ended_at")
+  endEventId String? @db.Uuid @map("end_event_id")
+  endKind CareJourneyEventKind @default(ENDED) @map("end_kind")
+  endReason String? @db.VarChar(32) @map("end_reason")
+  bindings CareJourneyBooking[]
+  events CareJourneyEvent[] @relation("CareJourneyEvents")
+  admission CareJourneyClinicAdmission @relation(fields: [admissionId, clinicianId, clinicianUserId, organizationId, providerId, membershipId, affiliationId, policyVersion, purpose], references: [id, clinicianId, clinicianUserId, organizationId, providerId, membershipId, affiliationId, policyVersion, purpose], onDelete: Restrict, onUpdate: Restrict, map: "cjp_journey_admission_fk")
+  assignment ClinicianPatientAssignment @relation(fields: [assignmentId, clinicianId, patientId], references: [id, clinicianId, patientId], onDelete: Restrict, onUpdate: Restrict, map: "cjp_journey_assignment_fk")
+  consentEvent CareJourneyEvent @relation("CareJourneyConsent", fields: [consentEventId, consentKind, id, patientId, clinicianId, organizationId, admissionId, policyVersion, scopeVersion, purpose, startedAt], references: [id, kind, journeyId, patientId, clinicianId, organizationId, admissionId, policyVersion, scopeVersion, purpose, recordedAt], onDelete: NoAction, onUpdate: Restrict, map: "cjp_journey_consent_fk")
+  endEvent CareJourneyEvent? @relation("CareJourneyEnd", fields: [endEventId, endKind, id, patientId, clinicianId, organizationId, admissionId, policyVersion, scopeVersion, purpose, endedAt], references: [id, kind, journeyId, patientId, clinicianId, organizationId, admissionId, policyVersion, scopeVersion, purpose, recordedAt], onDelete: NoAction, onUpdate: Restrict, map: "cjp_journey_end_fk")
+  pair CareJourneyPair @relation(fields: [patientId, clinicianId], references: [patientId, clinicianId], onDelete: Restrict, onUpdate: Restrict, map: "cjp_journey_pair_fk")
+  patient PatientProfile @relation(fields: [patientId, patientUserId], references: [id, userId], onDelete: Restrict, onUpdate: Restrict, map: "cjp_journey_patient_fk")
+  @@unique([id, patientId, clinicianId, organizationId, admissionId, policyVersion, scopeVersion, purpose], map: "cjp_journey_event_scope")
+  @@unique([id, patientId, patientUserId, clinicianId, clinicianUserId, organizationId, providerId, membershipId, affiliationId], map: "cjp_journey_scope")
+  @@map("care_journeys")
+}
+
+enum CareJourneyBindingKind {
+  ANCHOR
+  VISIT
+  @@map("care_journey_binding_kind")
+}
+
+enum CareJourneyEventKind {
+  ENROLLED
+  CLINIC_VERIFIED
+  STANDING_OPT_IN
+  PARTICIPATION_ENDED
+  CONSENT_ACTIVATED
+  BOOKING_ATTACHED
+  ANCHOR_REPLACED
+  CARE_COMPLETED
+  ENDED
+  INTERRUPTED
+  @@map("care_journey_event_kind")
+}
+
+enum CareJourneyEventSource {
+  PARTICIPANT
+  SYSTEM
+  @@map("care_journey_event_source")
 }
