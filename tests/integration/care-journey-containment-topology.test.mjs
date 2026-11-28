@@ -70,13 +70,34 @@ async function restrictedBoundary(client, role, otherRoles) {
 }
 
 async function assertRestrictedLocks(client, userId) {
+  async function rejectsPermissionDenied(sql, values = [], expectedMessage = undefined) {
+    await client.query('SAVEPOINT restricted_probe');
+    try {
+      await assert.rejects(
+        client.query(sql, values),
+        expectedMessage ? { code: '42501', message: expectedMessage } : { code: '42501' },
+      );
+    } finally {
+      await client.query('ROLLBACK TO SAVEPOINT restricted_probe');
+    }
+  }
   await client.query('BEGIN');
   try {
     const locked = await client.query('SELECT id FROM public.users WHERE id = $1 FOR NO KEY UPDATE', [userId]);
     assert.deepEqual(locked.rows, [{ id: userId }]);
-    await assert.rejects(client.query(
+    const epochColPriv = (await client.query(`
+      SELECT has_column_privilege(current_user, 'public.users', 'account_epoch', 'SELECT') AS sel,
+        has_column_privilege(current_user, 'public.users', 'account_epoch', 'UPDATE') AS upd`)).rows[0];
+    assert.deepEqual(epochColPriv, { sel: false, upd: false });
+    await client.query("UPDATE public.users SET status = 'DISABLED' WHERE id = $1", [userId]);
+    await rejectsPermissionDenied("UPDATE public.users SET status = 'ACTIVE' WHERE id = $1 RETURNING account_epoch", [userId]);
+    await rejectsPermissionDenied('UPDATE public.users SET account_epoch = 2 WHERE id = $1', [userId]);
+    await rejectsPermissionDenied('ALTER TABLE public.users DISABLE TRIGGER cjp_users_account_epoch_write_guard');
+    await rejectsPermissionDenied(
       'LOCK TABLE public.users,public.patient_profiles,public.clinician_profiles,public.clinician_patient_assignments IN ROW EXCLUSIVE MODE',
-    ), { code: '42501', message: 'permission denied for table users' });
+      [],
+      'permission denied for table users',
+    );
   } finally {
     await client.query('ROLLBACK');
   }
@@ -720,17 +741,18 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
       console.log('CJP_A0_WAIT_PAIR_5_LEGACY_LOCK', JSON.stringify({ legacyLockPid, successorWaiterPid: foundWaiter }));
     }
 
-    // Revoke membership and privileges on legacyRole before terminating backends.
-    await adminPool.query(`REVOKE ${groupRole} FROM ${legacyRole}`);
+    // Revoke object privileges first while schema USAGE via groupRole remains: warmed read fails with 42501 on obsoleteReaderPid.
     await ownerPool.query(`REVOKE ALL ON ALL TABLES IN SCHEMA public FROM ${legacyRole}`);
     await ownerPool.query(`REVOKE ALL ON ALL SEQUENCES IN SCHEMA public FROM ${legacyRole}`);
     await ownerPool.query(`REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM ${legacyRole}`);
-    await ownerPool.query(`REVOKE ALL ON SCHEMA public FROM ${legacyRole}`);
 
-    // The real warmed authorization connection now returns no result under the retired grants.
     legacyReadPid = undefined;
     await assert.rejects(legacyProfileRead(), error => prismaSqlState(error, '42501'));
     assert.equal(legacyReadPid, obsoleteReaderPid);
+
+    // Revoke group membership and schema USAGE as well before verifying pooledCheckClient and drain readiness.
+    await adminPool.query(`REVOKE ${groupRole} FROM ${legacyRole}`);
+    await ownerPool.query(`REVOKE ALL ON SCHEMA public FROM ${legacyRole}`);
 
     // Verify SET ROLE and direct table query fail with 42501 on pooledEstablished BEFORE pg_terminate_backend!
     const pooledCheckClient = await legacyPool.connect();

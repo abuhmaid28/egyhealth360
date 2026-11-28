@@ -45,7 +45,7 @@ test('account epoch initializes at one and increments once per actual status or 
     }
     const profile = await pair(c);
     await rejectsConstraint(c, "UPDATE public.users SET role = 'ADMIN' WHERE id = $1",
-      [profile.patientUser.id], '23503', 'patient_profiles_user_role_fkey');
+      [profile.patientUser.id], '23001', 'patient_profiles_user_role_fkey');
     assert.deepEqual(await epoch(c, profile.patientUser.id), { role: 'PATIENT', status: 'ACTIVE', account_epoch: 1 });
   }));
 
@@ -61,7 +61,8 @@ test('initialization, direct tampering and conflict updates fail closed without 
     await c.query("UPDATE public.users SET status = 'DISABLED' WHERE id = $1", [admin.id]);
     for (const update of [
       'account_epoch = NULL', 'account_epoch = 1', 'account_epoch = account_epoch - 1',
-      'account_epoch = account_epoch + 1', "status = 'ACTIVE', account_epoch = account_epoch + 2",
+      'account_epoch = account_epoch + 1', "status = 'ACTIVE', account_epoch = account_epoch + 1",
+      "status = 'ACTIVE', account_epoch = account_epoch + 2",
     ]) {
       await rejectsConstraint(c, `UPDATE public.users SET ${update} WHERE id = $1`, [admin.id], '23514', guardConstraint);
     }
