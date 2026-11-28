@@ -224,11 +224,15 @@ export function createObservation() {
       pending.set(key, api);
       counts.started++;
     },
-    terminal(key, { failed = false, scanned = false } = {}) {
+    terminal(key, { failed = false, scanned = false, cancelled = false } = {}) {
       requireCheck(pending.has(key), 'OBSERVER_UNKNOWN_TERMINAL');
       const api = pending.get(key);
       pending.delete(key);
-      if (failed) { counts.failed++; counts.cancelled++; } else counts.finished++;
+      if (failed) {
+        counts.failed++;
+        if (cancelled) counts.cancelled++;
+        else if (!api) markFault('OBSERVER_ASSET_FAILURE');
+      } else counts.finished++;
       if (scanned) counts.scans++;
       if (api && (failed || !scanned)) { counts.scanFailures++; markFault('OBSERVER_API_UNSCANNED'); }
     },

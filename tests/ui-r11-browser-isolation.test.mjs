@@ -133,10 +133,15 @@ test('terminal ledger fails on API cancellation, unavailable body and pending ob
   ok.start('first', true);
   ok.terminal('first', { scanned: true });
   ok.start('second', false);
-  ok.terminal('second', { failed: true });
+  ok.terminal('second', { failed: true, cancelled: true });
   await ok.settle(100, 0);
   assert.equal(ok.report().started, 2);
   assert.equal(ok.report().scans, 1);
+  assert.equal(ok.report().cancelled, 1);
+  const asset = createObservation();
+  asset.start('asset', false);
+  asset.terminal('asset', { failed: true });
+  await assert.rejects(asset.settle(100, 0), /OBSERVER_ASSET_FAILURE/);
   for (const terminal of [{}, { failed: true }]) {
     const failed = createObservation();
     failed.start('api', true);

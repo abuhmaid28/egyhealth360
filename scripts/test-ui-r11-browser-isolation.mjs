@@ -182,7 +182,9 @@ async function exercise({ context, origin, actors, passwords, secrets, ledger, o
     requestActor.delete(request);
     try { observation.terminal(request, value); } catch { observation.fault('OBSERVER_TERMINAL'); }
   };
-  context.on('requestfailed', request => terminal(request, { failed: true }));
+  context.on('requestfailed', request => terminal(request, {
+    failed: true, cancelled: request.failure()?.errorText === 'net::ERR_ABORTED',
+  }));
   context.on('requestfinished', request => {
     const path = new URL(request.url()).pathname;
     if (!path.startsWith('/api/v1/')) return terminal(request, {});
@@ -329,8 +331,8 @@ async function exercise({ context, origin, actors, passwords, secrets, ledger, o
   for (const [locale, [language, direction, width, refreshText, emptyText]] of Object.entries(UI)) {
     phase = locale;
     await step(locale === 'english' ? 'RECOVERY_EN' : 'RECOVERY_AR', async () => {
-      await page.setViewportSize({ width, height: 900 });
       await page.getByRole('button', { name: language, exact: true }).click();
+      await page.setViewportSize({ width, height: 900 });
       const refresh = () => page.getByRole('button', { name: refreshText, exact: true });
       const empty = () => page.getByText(emptyText, { exact: true });
       await empty().waitFor();
@@ -407,7 +409,7 @@ export async function run(argv) {
   let services;
   let network;
   let commandFailure;
-  let preexisting = false;
+  let ownershipEstablished = false;
   const bounded = (binary, operation, args, { input, timeout = 60000, extraEnv = env } = {}) => commandOutput(
     spawnSync(binary, args, { cwd: harness, input, env: extraEnv, timeout, maxBuffer: 32_000_000, encoding: 'utf8' }),
     binary, operation, failure => { commandFailure = failure; });
@@ -420,10 +422,13 @@ export async function run(argv) {
   const tagged = () => docker('TAG_LIST', ['image', 'ls', '-q', '--filter', 'reference=' + tag]) !== '';
   const step = async (id, action) => {
     stage = id;
+    const started = Date.now();
     const item = { id, result: 'FAIL' };
     receipt.cases.push(item);
-    await action();
-    item.result = 'PASS';
+    try {
+      await action();
+      item.result = 'PASS';
+    } finally { item.elapsedMs = Date.now() - started; }
   };
   const fixture = data => {
     const api = inspect('container', services.api.Id);
@@ -513,8 +518,8 @@ export async function run(argv) {
       const entries = sourceEntries(application);
       const paths = entries.map(([path]) => path);
       manifestInput(paths);
-      preexisting = ['container', 'network', 'volume'].some(kind => owned(kind).length > 0) || tagged();
-      requireCheck(!preexisting, 'PREEXISTING_OWNED_LABEL');
+      requireCheck(!['container', 'network', 'volume'].some(kind => owned(kind).length > 0) && !tagged(), 'PREEXISTING_OWNED_LABEL');
+      ownershipEstablished = true;
       requireCheck(inspect('image', NODE_IMAGE).RepoDigests.some(value => value.endsWith(NODE_IMAGE.split('@')[1]))
         && inspect('image', PG_IMAGE).RepoDigests.some(value => value.endsWith(PG_DIGEST)), 'BASE_IMAGE_PINS');
       const bundle = join(evidence, 'candidate.tar');
@@ -600,8 +605,9 @@ export async function run(argv) {
     receipt.clinicalWrites = 0;
     receipt.result = 'PASS';
   } catch (error) {
-    receipt.failure = { stage, predicate: error instanceof DiagnosticFailure ? error.predicate : 'UNEXPECTED_FAILURE',
-      ...(commandFailure ? { command: commandFailure } : {}) };
+    const predicate = error instanceof DiagnosticFailure ? error.predicate
+      : observation.report().fault ?? (error?.name === 'TimeoutError' ? 'BROWSER_WAIT_TIMEOUT' : 'UNEXPECTED_FAILURE');
+    receipt.failure = { stage, predicate, ...(commandFailure ? { command: commandFailure } : {}) };
   } finally {
     if (services) {
       for (const name of ['api', 'web']) {
@@ -617,7 +623,7 @@ export async function run(argv) {
     }
     const cleanup = { closed: !browser, containers: null, networks: null, volumes: null, image: null, imageId: null, portsReleased: false };
     try { await browser?.close(); cleanup.closed = true; } catch { /* recorded */ }
-    if (!preexisting) {
+    if (ownershipEstablished) {
       try { if (compose) docker('COMPOSE_DOWN', [...compose, 'down', '--volumes', '--remove-orphans', '--timeout', '10']); }
       catch { receipt.cleanupDownFailure = true; }
       try { if (tagged()) docker('OWNED_IMAGE_REMOVE', ['image', 'rm', tag]); }
@@ -627,8 +633,8 @@ export async function run(argv) {
         cleanup.networks = owned('network').length;
         cleanup.volumes = owned('volume').length;
         cleanup.image = tagged();
-        cleanup.imageId = Boolean(image && spawnSync('docker', [DOCKER_HOST_ARG, 'image', 'inspect', image],
-          { cwd: harness, env, stdio: 'ignore', timeout: 15000 }).status === 0);
+        cleanup.imageId = Boolean(image && docker('IMAGE_ID_LIST', ['image', 'ls', '-aq', '--no-trunc'])
+          .split('\n').includes(image));
         await freePort(ports.api);
         await freePort(ports.web);
         cleanup.portsReleased = true;
