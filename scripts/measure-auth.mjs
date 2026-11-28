@@ -9,7 +9,7 @@ import { authConfiguration } from '../packages/config/dist/index.js';
 import { createApp } from '../apps/api/dist/app.js';
 
 // Explicit validation workflow, synthetic fixture only; never outputs credentials.
-assert.equal(process.version, 'v24.21.0');
+assert.equal(process.version, 'v24.22.3');
 const sampleCount = 20;
 const password = Buffer.from(randomBytes(32).toString('base64url'), 'utf8');
 const startup = performance.now();

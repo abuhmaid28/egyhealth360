@@ -18,11 +18,11 @@ The web/API now implement the accepted slices above. Only closure-engine, FHIR a
 
 ### Pinned toolchain
 
-Node **24.21.0**, pnpm **10.34.6**, TypeScript **5.9.3**, Next.js **16.4.1**, React **19.3.0**, NestJS **11.2.7**, Prisma **7.10.0**, PostgreSQL **18.6**. Root `packageManager`, `.nvmrc`, CI, and Docker fix the runtime/toolchain versions. Direct dependencies are exact and transitive resolutions are in `pnpm-lock.yaml`.
+Node **24.22.3**, pnpm **10.34.6**, TypeScript **5.9.3**, Next.js **16.4.1**, React **19.3.0**, NestJS **11.2.7**, Prisma **7.10.0**, PostgreSQL **18.6**. Root `packageManager`, `.nvmrc`, CI, and Docker fix the runtime/toolchain versions. Direct dependencies are exact and transitive resolutions are in `pnpm-lock.yaml`.
 
 ### Local startup
 
-Use Node 24.21.0 (`nvm install && nvm use` if using nvm), then:
+Use Node 24.22.3 (`nvm install && nvm use` if using nvm), then:
 
 ```sh
 npm install --global pnpm@10.34.6

@@ -8,7 +8,7 @@ import { authConfiguration } from '../packages/config/dist/index.js';
 import { sessionCookie, sessionCredential, sessionHash, csrfToken } from '../apps/api/dist/auth.js';
 
 test('pinned runtime Argon2id matches independent RFC 9106 known-answer vector', async () => {
-  assert.equal(process.version, 'v24.21.0');
+  assert.equal(process.version, 'v24.22.3');
   const key = await promisify(argon2)('argon2id', {
     message: Buffer.alloc(32, 1), nonce: Buffer.alloc(16, 2), secret: Buffer.alloc(8, 3),
     associatedData: Buffer.alloc(12, 4), parallelism: 4, tagLength: 32, memory: 32, passes: 3,
