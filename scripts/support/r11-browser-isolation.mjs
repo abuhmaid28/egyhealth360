@@ -192,7 +192,7 @@ export function requestTarget(value, origin, method, profiles) {
 
 export function scanText(text, protectedValues) {
   return !protectedValues.some(marker => marker && text.includes(marker))
-    && !/(?:postgresql:\/\/|eh_session=|eh-pw-v1\$|password_hash|\bSELECT \w+.+ FROM |\bINSERT INTO )/i.test(text);
+    && !/(?:postgresql:\/\/|eh_session=|eh-pw-v1\$|password_hash|"csrfToken"\s*:|\bSELECT \w+.+ FROM |\bINSERT INTO )/i.test(text);
 }
 
 export function projectedResponse(raw, { expected, type, noStore = true, markers = [] }) {

@@ -6,7 +6,7 @@ import { dirname, join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { runInNewContext } from 'node:vm';
 import ts from 'typescript';
-import { composeOverride } from '../scripts/test-ui-r11-browser-isolation.mjs';
+import { composeOverride, projectAuthText } from '../scripts/test-ui-r11-browser-isolation.mjs';
 import {
   APP, APP_FILES, APP_TREE, DOCKER_HOST_ARG, GET_BUDGET, PG_IMAGE,
   checkCleanup, checkCompose, checkSourceHashes, checkWriteLedger, commandOutput, copyCommand, createLedger,
@@ -160,6 +160,23 @@ test('response privacy runs before status, cache and shape checks', () => {
   assert.throws(() => projectedResponse({ status: 500, text: 'private-canary bad-json' }, expected), /RESPONSE_PRIVACY/);
   assert.equal(scanText('arbitrary prior-profile-canary', ['prior-profile-canary']), false);
   assert.equal(scanText('postgresql://local', []), false);
+});
+
+test('only the exact own authentication success field is projected before scanning', () => {
+  const actor = { id: 'fixture-a', email: 'fixture-address' };
+  const inert = 'x'.repeat(43);
+  const raw = JSON.stringify({ data: { user: { ...actor, role: 'PATIENT' },
+    session: { expiresAt: 'fixture' }, csrfToken: inert } });
+  const secrets = new Set();
+  const expected = projectAuthText(raw, '/api/v1/auth/me', 200, actor, secrets);
+  assert.equal(expected.valid, true);
+  assert.equal(scanText(expected.text, [...secrets]), true);
+  for (const [body, status, current] of [[raw, 401, actor], [raw, 200, { id: 'fixture-other' }],
+    [raw.replace('"session"', '"csrfToken":"' + inert + '","session"'), 200, actor]]) {
+    const result = projectAuthText(body, '/api/v1/auth/me', status, current, secrets);
+    assert.equal(result.valid, false);
+    assert.equal(scanText(result.text, [...secrets]), false);
+  }
 });
 
 test('domain writes and cleanup fail closed on a single drifted field', () => {

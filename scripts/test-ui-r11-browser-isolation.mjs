@@ -134,18 +134,22 @@ function sourceEntries(application) {
   });
 }
 
-function projectAuthText(text, path, actor, secrets) {
-  if (path !== ME && path !== LOGIN) return text;
+export function projectAuthText(text, path, status, actor, secrets) {
+  if (path !== ME && path !== LOGIN) return { text, valid: true };
   let json;
-  try { json = parse(text); } catch { return text; }
+  try { json = parse(text); } catch { return { text, valid: true }; }
   const auth = json?.data;
-  if (!auth || !Object.hasOwn(auth, 'csrfToken')) return text;
-  requireCheck(actor && auth.user?.id === actor.id && auth.user.email === actor.email && auth.user.role === 'PATIENT'
-    && Object.keys(json).join(',') === 'data' && Object.keys(auth).sort().join(',') === 'csrfToken,session,user'
-    && Object.keys(auth.user).sort().join(',') === 'email,id,role' && Object.keys(auth.session ?? {}).join(',') === 'expiresAt'
-    && /^[A-Za-z0-9_-]{43}$/.test(auth.csrfToken ?? ''), 'AUTH_PROJECTION_UNSAFE');
+  if (!auth || !Object.hasOwn(auth, 'csrfToken')) return { text, valid: status !== 200 };
+  const occurrences = [...text.matchAll(/"csrfToken"\s*:\s*"([A-Za-z0-9_-]{43})"/g)];
+  const valid = status === 200 && actor && auth.user?.id === actor.id && auth.user.email === actor.email
+    && auth.user.role === 'PATIENT' && Object.keys(json).join(',') === 'data'
+    && Object.keys(auth).sort().join(',') === 'csrfToken,session,user'
+    && Object.keys(auth.user).sort().join(',') === 'email,id,role'
+    && Object.keys(auth.session ?? {}).join(',') === 'expiresAt'
+    && occurrences.length === 1 && occurrences[0][1] === auth.csrfToken;
+  if (!valid) return { text, valid: false };
   secrets.add(auth.csrfToken);
-  return JSON.stringify({ data: { ...auth, csrfToken: '[projected]' } });
+  return { text: text.replace(occurrences[0][0], '"projectedField":null'), valid: true };
 }
 
 async function exercise({ context, origin, actors, passwords, secrets, ledger, observation, receipt, step, outage, ready }) {
@@ -190,8 +194,9 @@ async function exercise({ context, origin, actors, passwords, secrets, ledger, o
         requireCheck(response, 'OBSERVER_RESPONSE_MISSING');
         const bytes = await response.body();
         requireCheck(bytes.length <= 1_000_000, 'OBSERVER_RESPONSE_SIZE');
-        const text = projectAuthText(bytes.toString('utf8'), path, atDispatch, secrets);
-        requireCheck(scanText(text, restricted(atDispatch)), 'RESPONSE_PRIVACY');
+        const projection = projectAuthText(bytes.toString('utf8'), path, response.status(), atDispatch, secrets);
+        requireCheck(scanText(projection.text, restricted(atDispatch)), 'RESPONSE_PRIVACY');
+        requireCheck(projection.valid, 'AUTH_PROJECTION_UNSAFE');
         scanned = true;
       } catch (error) { observation.fault(error.predicate ?? 'OBSERVER_BODY_UNAVAILABLE'); }
       finally { terminal(request, { scanned }); }
@@ -206,10 +211,11 @@ async function exercise({ context, origin, actors, passwords, secrets, ledger, o
     let raw;
     try { raw = (await response.body()).toString('utf8'); } catch { throw new DiagnosticFailure('CASE_BODY_UNAVAILABLE'); }
     const path = new URL(response.url()).pathname;
-    const text = projectAuthText(raw, path, active, secrets);
-    const projection = projectedResponse({ text, cache: response.headers()['cache-control'], status: response.status() },
+    const auth = projectAuthText(raw, path, response.status(), active, secrets);
+    const projection = projectedResponse({ text: auth.text, cache: response.headers()['cache-control'], status: response.status() },
       { expected, type, noStore, markers: restricted(active) });
     receipt.statuses.push({ label, ...projection });
+    requireCheck(auth.valid, 'AUTH_PROJECTION_UNSAFE');
     requireCheck(projection.pass, 'CASE_HTTP_CONTRACT');
     return type === 'data' || type === 'error' ? parse(raw) : null;
   };
@@ -583,7 +589,7 @@ export async function run(argv) {
     receipt.fixtureCount = 2;
     const before = fixture({ action: 'snapshot' });
     stage = 'BROWSER_LAUNCH';
-    browser = await chromium.launch({ headless: true, args: ['--host-resolver-rules=MAP * ~NOTFOUND'],
+    browser = await chromium.launch({ headless: true, args: ['--no-proxy-server', '--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1'],
       env: { PATH: env.PATH, HOME: env.HOME, LANG: 'C.UTF-8', TZ: 'UTC' } });
     const context = await browser.newContext({ serviceWorkers: 'block', viewport: { width: 1440, height: 900 } });
     await exercise({ context, origin, actors, passwords, secrets, ledger, observation, receipt, step, outage, ready });
