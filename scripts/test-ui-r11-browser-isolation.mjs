@@ -214,21 +214,27 @@ export async function closeInitialBrowser({ attempted, browser, inventory, close
 }
 
 export async function finishInitialEvidence({ close, snapshot, before, ledger }) {
-  let closed = false;
-  try { await close(); closed = true; } catch { /* cleanup result remains independent */ }
-  if (!before) return { closed, writes: { result: 'NOT VERIFIED', attempted: false } };
+  const cleanup = { closed: false };
+  try {
+    await close();
+    cleanup.closed = true;
+  } catch (error) {
+    cleanup.closeFailure = error instanceof DiagnosticFailure ? error.predicate : 'BROWSER_CLEANUP_UNAVAILABLE';
+  }
+  const result = writes => ({ ...cleanup, writes });
+  if (!before) return result({ result: 'NOT VERIFIED', attempted: false });
   let after;
   try { after = await snapshot(); }
-  catch { return { closed, writes: { result: 'NOT VERIFIED', attempted: true } }; }
+  catch { return result({ result: 'NOT VERIFIED', attempted: true }); }
   try {
     checkZeroAuthLedger(before, after, ledger());
   } catch (error) {
     const predicate = error instanceof DiagnosticFailure ? error.predicate : 'WRITE_LEDGER_UNAVAILABLE';
-    return { closed, writes: { result: predicate === 'WRITE_LEDGER_UNAVAILABLE' ? 'NOT VERIFIED' : 'FAIL',
-      attempted: true, predicate } };
+    return result({ result: predicate === 'WRITE_LEDGER_UNAVAILABLE' ? 'NOT VERIFIED' : 'FAIL',
+      attempted: true, predicate });
   }
-  if (!closed) return { closed, writes: { result: 'NOT VERIFIED', attempted: true } };
-  return { closed, writes: { result: 'PASS', attempted: true, accounts: 0, sessions: 0, audits: 0, domainSnapshotUnchanged: true } };
+  if (!cleanup.closed) return result({ result: 'NOT VERIFIED', attempted: true });
+  return result({ result: 'PASS', attempted: true, accounts: 0, sessions: 0, audits: 0, domainSnapshotUnchanged: true });
 }
 
 async function observeInitialPage({ context, origin, secrets, ledger, observation, receipt, tasks }) {
@@ -548,6 +554,11 @@ export async function run(argv) {
       before, ledger: ledger.report,
     });
     receipt.writes = final.writes;
+    if (observation.firstFailure()) recordFailure('INITIAL_PAGE', observation.firstFailure().fault);
+    if (final.closeFailure) {
+      receipt.closeFailure = final.closeFailure;
+      recordFailure('BROWSER_CLOSE', final.closeFailure);
+    }
     try { observation.verifyComplete(ledger.report().byPhase.INITIAL_PAGE); }
     catch (error) { recordFailure('INITIAL_PAGE', error.predicate); }
     if (final.writes.result !== 'PASS') recordFailure('WRITE_LEDGER', final.writes.predicate ?? 'WRITE_LEDGER_UNAVAILABLE');

@@ -8,7 +8,7 @@ import { runInNewContext } from 'node:vm';
 import ts from 'typescript';
 import { closeInitialBrowser, composeOverride, finishInitialEvidence, projectAuthText, signOutControl } from '../scripts/test-ui-r11-browser-isolation.mjs';
 import {
-  APP, APP_FILES, APP_TREE, DOCKER_HOST_ARG, GET_BUDGET, PG_IMAGE,
+  DiagnosticFailure, APP, APP_FILES, APP_TREE, DOCKER_HOST_ARG, GET_BUDGET, PG_IMAGE,
   checkCleanup, checkCompose, checkSourceHashes, checkWriteLedger, commandOutput, copyCommand, createLedger,
   createObservation, assertOwnedProject, gitEnvironment, gitIn, manifestInput, noContentLogout, projectedResponse, requestTarget,
   scanOwnedLogs, scanText, sha, sourceProgram, verifyWorkspace,
@@ -456,7 +456,13 @@ test('zero-auth write comparison runs after close, fails closed and never substi
   assert.equal(observer.report().pending, 0);
   const finishWithoutClose = await finishInitialEvidence({ before, ledger: ledger.report,
     close: async () => { throw Error('private-marker'); }, snapshot: async () => before });
-  assert.deepEqual(finishWithoutClose, { closed: false, writes: { result: 'NOT VERIFIED', attempted: true } });
+  assert.deepEqual(finishWithoutClose, { closed: false, closeFailure: 'BROWSER_CLEANUP_UNAVAILABLE',
+    writes: { result: 'NOT VERIFIED', attempted: true } });
+  const timedOut = await finishInitialEvidence({ before, ledger: ledger.report,
+    close: async () => { throw new DiagnosticFailure('BROWSER_CLOSE_TIMEOUT'); }, snapshot: async () => before });
+  assert.equal(timedOut.closeFailure, 'BROWSER_CLOSE_TIMEOUT');
+  assert.equal(timedOut.writes.result, 'NOT VERIFIED');
+  assert.equal(observer.firstFailure(), evidence);
   for (const [state, result] of [[before, 'PASS'], [{ ...before, domains: { users: 'changed' } }, 'FAIL']]) {
     const completed = await finishInitialEvidence({ before, ledger: ledger.report,
       close: async () => {}, snapshot: async () => state });
