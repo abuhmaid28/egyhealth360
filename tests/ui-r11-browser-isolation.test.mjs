@@ -6,7 +6,7 @@ import { dirname, join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { runInNewContext } from 'node:vm';
 import ts from 'typescript';
-import { composeOverride, finishInitialEvidence, projectAuthText, signOutControl } from '../scripts/test-ui-r11-browser-isolation.mjs';
+import { closeInitialBrowser, composeOverride, finishInitialEvidence, projectAuthText, signOutControl } from '../scripts/test-ui-r11-browser-isolation.mjs';
 import {
   APP, APP_FILES, APP_TREE, DOCKER_HOST_ARG, GET_BUDGET, PG_IMAGE,
   checkCleanup, checkCompose, checkSourceHashes, checkWriteLedger, commandOutput, copyCommand, createLedger,
@@ -398,6 +398,34 @@ test('unknown, duplicate, late and invalid events fail closed and scans are dist
   assert.equal(evidence.scans, 1);
   assert.equal(evidence.finished, 1);
   assert.equal(evidence.pending, 0);
+});
+
+test('final accounting rejects requests observed after settle and mismatched dispatch totals', async () => {
+  const observer = createObservation();
+  await observer.settle(100, 0);
+  observer.start('late', { requestClass: 'SCRIPT', method: 'GET' });
+  assert.throws(() => observer.verifyComplete(1), /OBSERVER_PENDING/);
+  assert.equal(observer.firstFailure().pendingByClass.SCRIPT, 1);
+  observer.event('late', 'BROWSER_FAILED');
+  observer.terminal('late', { cancelled: true });
+  assert.throws(() => observer.verifyComplete(1), /OBSERVER_PENDING/);
+  assert.equal(observer.report().pending, 0);
+  assert.throws(() => createObservation().verifyComplete(1), /OBSERVER_TOTALS/);
+});
+
+test('browser cleanup is attempted despite an inventory fault and fails closed without a launch handle', async () => {
+  const operations = [];
+  const drain = async () => { operations.push('drain'); };
+  const inventory = () => { operations.push('inventory'); };
+  const closed = () => true;
+  await closeInitialBrowser({ attempted: false, inventory, closed, drain });
+  assert.deepEqual(operations, []);
+  await assert.rejects(closeInitialBrowser({ attempted: true, inventory, closed, drain }), /BROWSER_CLEANUP_UNVERIFIED/);
+  assert.deepEqual(operations.splice(0), ['inventory', 'drain']);
+  const browser = { close: async () => { operations.push('close'); } };
+  const unavailable = () => { inventory(); throw Error('inert-failure'); };
+  await assert.rejects(closeInitialBrowser({ attempted: true, browser, inventory: unavailable, closed, drain }), /inert-failure/);
+  assert.deepEqual(operations, ['inventory', 'close', 'drain']);
 });
 
 test('zero-auth write comparison runs after close, fails closed and never substitutes for the observation fault', async () => {

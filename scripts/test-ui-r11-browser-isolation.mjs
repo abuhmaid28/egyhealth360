@@ -199,6 +199,20 @@ function liveOwnedChrome(owned) {
   }).length;
 }
 
+export async function closeInitialBrowser({ attempted, browser, inventory, closed, drain }) {
+  if (!attempted) return;
+  try {
+    inventory();
+  } finally {
+    try {
+      if (browser) await browser.close();
+    } finally {
+      await drain();
+    }
+  }
+  requireCheck(browser && closed(), 'BROWSER_CLEANUP_UNVERIFIED');
+}
+
 export async function finishInitialEvidence({ close, snapshot, before, ledger }) {
   let closed = false;
   try { await close(); closed = true; } catch { /* cleanup result remains independent */ }
@@ -209,14 +223,15 @@ export async function finishInitialEvidence({ close, snapshot, before, ledger })
   try {
     checkZeroAuthLedger(before, after, ledger());
   } catch (error) {
-    return { closed, writes: { result: 'FAIL', attempted: true,
-      predicate: error instanceof DiagnosticFailure ? error.predicate : 'WRITE_LEDGER_UNAVAILABLE' } };
+    const predicate = error instanceof DiagnosticFailure ? error.predicate : 'WRITE_LEDGER_UNAVAILABLE';
+    return { closed, writes: { result: predicate === 'WRITE_LEDGER_UNAVAILABLE' ? 'NOT VERIFIED' : 'FAIL',
+      attempted: true, predicate } };
   }
   if (!closed) return { closed, writes: { result: 'NOT VERIFIED', attempted: true } };
   return { closed, writes: { result: 'PASS', attempted: true, accounts: 0, sessions: 0, audits: 0, domainSnapshotUnchanged: true } };
 }
 
-async function observeInitialPage({ context, origin, secrets, ledger, observation, receipt }) {
+async function observeInitialPage({ context, origin, secrets, ledger, observation, receipt, tasks }) {
   const page = await context.newPage();
   page.setDefaultTimeout(12000);
   const active = new Map();
@@ -236,13 +251,17 @@ async function observeInitialPage({ context, origin, secrets, ledger, observatio
     const method = request.method();
     const resource = request.resourceType();
     const requestClass = classifyInitialRequest(request.url(), resource);
-    observation.start(request, { requestClass, method });
-    requireCheck(ledger.dispatch('INITIAL_PAGE', method), 'GET_BUDGET_REACHED');
-    active.set(request, initialRequestTarget(request.url(), origin, method, resource));
-    if (request.isNavigationRequest()) {
-      receipt.navigations = ++navigations;
-      requireCheck(navigations === 1 && requestClass === 'DOCUMENT', 'INITIAL_NAVIGATION_LIMIT');
+    const navigation = request.isNavigationRequest();
+    if (navigation) receipt.navigations = ++navigations;
+    let budget;
+    try {
+      budget = ledger.dispatch('INITIAL_PAGE', method);
+    } finally {
+      observation.start(request, { requestClass, method });
     }
+    requireCheck(budget, 'GET_BUDGET_REACHED');
+    active.set(request, initialRequestTarget(request.url(), origin, method, resource));
+    if (navigation) requireCheck(navigations === 1 && requestClass === 'DOCUMENT', 'INITIAL_NAVIGATION_LIMIT');
   }));
   context.on('response', observe(response => observation.event(response.request(), 'BROWSER_RESPONSE')));
   context.on('requestfailed', observe(request => {
@@ -253,7 +272,7 @@ async function observeInitialPage({ context, origin, secrets, ledger, observatio
   context.on('requestfinished', observe(request => {
     observation.event(request, 'BROWSER_FINISHED');
     observation.event(request, 'RESPONSE_ACQUIRING');
-    void (async () => {
+    const task = (async () => {
       try {
         const response = await request.response();
         requireCheck(response, 'OBSERVER_RESPONSE_MISSING');
@@ -271,9 +290,10 @@ async function observeInitialPage({ context, origin, secrets, ledger, observatio
         let bytes;
         try { bytes = await response.body(); }
         catch { throw new DiagnosticFailure('OBSERVER_BODY_UNAVAILABLE'); }
-        requireCheck(bytes && bytes.length > 0, 'OBSERVER_BODY_UNAVAILABLE');
-        requireCheck(bytes.length <= 1_000_000, 'OBSERVER_RESPONSE_SIZE');
+        requireCheck(bytes, 'OBSERVER_BODY_UNAVAILABLE');
         observation.event(request, 'BODY_ACQUIRED');
+        requireCheck(bytes.length > 0, 'OBSERVER_BODY_UNAVAILABLE');
+        requireCheck(bytes.length <= 1_000_000, 'OBSERVER_RESPONSE_SIZE');
         observation.event(request, 'SCAN_STARTED');
         const body = bytes.toString('utf8');
         const clean = scanText(body, [...secrets]);
@@ -290,14 +310,16 @@ async function observeInitialPage({ context, origin, secrets, ledger, observatio
         active.delete(request);
       }
     })();
+    tasks.add(task);
+    void task.then(() => tasks.delete(task), error => { tasks.delete(task); halt(error); });
   }));
   page.on('pageerror', () => { receipt.browserErrors++; observation.fault('BROWSER_PAGE_ERROR'); });
   receipt.navigationAttempts = 1;
   await page.goto(origin + '/patient', { waitUntil: 'domcontentloaded', timeout: 12000 });
   await page.getByRole('button', { name: SIGN_IN, exact: true }).waitFor({ timeout: 12000 });
+  receipt.signInControl = true;
   await observation.settle();
   requireCheck(navigations === 1 && context.pages().length === 1, 'INITIAL_NAVIGATION_LIMIT');
-  receipt.signInControl = true;
 }
 
 export async function run(argv) {
@@ -334,6 +356,8 @@ export async function run(argv) {
     clinicalFixtures: 0, clinicalWrites: null, logScans: 0 };
   let stage = 'TOPOLOGY';
   let browser;
+  let launchAttempted = false;
+  const tasks = new Set();
   let before;
   const chrome = new Map();
   let image;
@@ -492,6 +516,7 @@ export async function run(argv) {
     before = fixture({ action: 'snapshot' });
     checkZeroAuthLedger(before, before, ledger.report());
     stage = 'BROWSER_LAUNCH';
+    launchAttempted = true;
     browser = await chromium.launch({ headless: true,
       args: ['--no-proxy-server', '--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1'],
       env: { PATH: env.PATH, HOME: env.HOME, LANG: 'C.UTF-8', TZ: 'UTC' } });
@@ -499,7 +524,7 @@ export async function run(argv) {
     requireCheck(chrome.size > 0, 'BROWSER_PROCESS_OWNERSHIP');
     writeFileSync(scopeFile, JSON.stringify({ project, ports, image, chromium: [...chrome] }), { mode: 0o600 });
     const context = await browser.newContext({ serviceWorkers: 'block', locale: 'en-US', viewport: { width: 1440, height: 900 } });
-    await step('INITIAL_PAGE', () => observeInitialPage({ context, origin, secrets, ledger, observation, receipt }));
+    await step('INITIAL_PAGE', () => observeInitialPage({ context, origin, secrets, ledger, observation, receipt, tasks }));
     receipt.result = 'PASS';
   } catch (error) {
     const predicate = observation.firstFailure()?.fault ?? (error instanceof DiagnosticFailure ? error.predicate
@@ -507,13 +532,15 @@ export async function run(argv) {
     recordFailure(stage, predicate, commandFailure);
   } finally {
     const final = await finishInitialEvidence({
-      close: async () => {
-        if (!browser) return;
-        for (const [pid, birth] of ownedChromeProcesses()) chrome.set(pid, birth);
-        writeFileSync(scopeFile, JSON.stringify({ project, ports, image, chromium: [...chrome] }), { mode: 0o600 });
-        await boundedAsync(() => browser.close(), 10000, 'BROWSER_CLOSE_TIMEOUT');
-        requireCheck(liveOwnedChrome(chrome) === 0, 'CHROMIUM_STILL_RUNNING');
-      },
+      close: () => boundedAsync(() => closeInitialBrowser({
+        attempted: launchAttempted, browser,
+        inventory: () => {
+          for (const [pid, birth] of ownedChromeProcesses()) chrome.set(pid, birth);
+          writeFileSync(scopeFile, JSON.stringify({ project, ports, image, chromium: [...chrome] }), { mode: 0o600 });
+        },
+        closed: () => chrome.size > 0 && liveOwnedChrome(chrome) === 0,
+        drain: async () => { while (tasks.size) await Promise.allSettled(tasks); },
+      }), 10000, 'BROWSER_CLOSE_TIMEOUT'),
       snapshot: () => {
         requireCheck(sameResources(proveLive()), 'FINAL_RESOURCE_DRIFT');
         return fixture({ action: 'snapshot' });
@@ -521,7 +548,8 @@ export async function run(argv) {
       before, ledger: ledger.report,
     });
     receipt.writes = final.writes;
-    if (observation.firstFailure()) recordFailure('INITIAL_PAGE', observation.firstFailure().fault);
+    try { observation.verifyComplete(ledger.report().byPhase.INITIAL_PAGE); }
+    catch (error) { recordFailure('INITIAL_PAGE', error.predicate); }
     if (final.writes.result !== 'PASS') recordFailure('WRITE_LEDGER', final.writes.predicate ?? 'WRITE_LEDGER_UNAVAILABLE');
     else receipt.clinicalWrites = 0;
     if (services) {
@@ -566,8 +594,10 @@ export async function run(argv) {
     cleanup.result ??= 'FAIL';
     if (cleanup.result !== 'PASS') recordFailure('R13', 'R13_CLEANUP');
     receipt.R13 = cleanup;
-    receipt.observer = observation.report();
     receipt.ledger = ledger.report();
+    try { observation.verifyComplete(receipt.ledger.byPhase.INITIAL_PAGE); }
+    catch (error) { recordFailure('INITIAL_PAGE', error.predicate); }
+    receipt.observer = observation.report();
     const serialized = JSON.stringify(receipt, null, 2) + '\n';
     requireCheck(scanText(serialized, [...secrets]), 'RECEIPT_PRIVACY');
     writeFileSync(join(evidence, 'receipt.json'), serialized, { mode: 0o600, flag: 'wx' });

@@ -383,6 +383,12 @@ export function createObservation({ now = () => globalThis.performance.now() } =
   }
 
   const requiresScan = entry => ['ALLOWED_API', 'DOCUMENT', 'UNKNOWN'].includes(entry.requestClass);
+  function verifyComplete(browserDispatches = counts.started) {
+    requireCheck(!fault, fault);
+    requireTransition(counts.started === counts.finished + counts.failed, 'OBSERVER_PENDING');
+    requireTransition(counts.started === counts.browserFinished + counts.browserFailed
+      && counts.started === browserDispatches, 'OBSERVER_TOTALS');
+  }
   return {
     start(key, { requestClass = 'UNKNOWN', method = 'OTHER', phase = 'INITIAL_PAGE' } = {}) {
       requireTransition(!entries.has(key), 'OBSERVER_DUPLICATE');
@@ -398,6 +404,7 @@ export function createObservation({ now = () => globalThis.performance.now() } =
     terminal(key, { bodyless = false, cancelled = false, cause = null } = {}) {
       const entry = entryFor(key);
       const browserFailure = entry.stage === 'BROWSER_FAILED';
+      if (entry.requestClass === 'UNKNOWN') cause ??= 'OBSERVER_CLASSIFICATION';
       const unfinished = !browserFailure && entry.stage !== 'SCAN_COMPLETED'
         && !(entry.stage === 'RESPONSE_ACQUIRED' && (bodyless || !requiresScan(entry)));
       const invalidOutcome = (bodyless && (browserFailure || entry.stage !== 'RESPONSE_ACQUIRED'))
@@ -422,6 +429,7 @@ export function createObservation({ now = () => globalThis.performance.now() } =
     fault: markFault,
     firstFailure: () => firstFailure,
     report: snapshot,
+    verifyComplete,
     async settle(timeout = 12000, quiet = 300) {
       const end = now() + timeout;
       let since = now();
@@ -431,13 +439,11 @@ export function createObservation({ now = () => globalThis.performance.now() } =
         const pending = counts.started - counts.finished - counts.failed;
         if (seen !== revision || pending) { seen = revision; since = now(); }
         if (!pending && now() - since >= quiet) {
-          requireTransition(counts.started === counts.finished + counts.failed
-            && counts.started === counts.browserFinished + counts.browserFailed, 'OBSERVER_TOTALS');
-          return;
+          return verifyComplete();
         }
         await sleep(20);
       }
-      markFault('OBSERVER_PENDING');
+      markFault(counts.started === counts.finished + counts.failed ? 'OBSERVER_QUIET_TIMEOUT' : 'OBSERVER_PENDING');
       throw new DiagnosticFailure(fault);
     },
   };
@@ -445,12 +451,15 @@ export function createObservation({ now = () => globalThis.performance.now() } =
 
 export function checkZeroAuthLedger(before, after, ledger) {
   requireCheck(before && after && ledger, 'WRITE_LEDGER_UNAVAILABLE');
-  requireCheck(JSON.stringify(before.domains) === JSON.stringify(after.domains), 'UNAUTHORIZED_DOMAIN_WRITE');
   for (const state of [before, after]) {
-    requireCheck(state.domains && Object.hasOwn(state.domains, 'users'), 'WRITE_LEDGER_UNAVAILABLE');
+    requireCheck(state.domains && Object.hasOwn(state.domains, 'users')
+      && state.audits && typeof state.audits === 'object' && !Array.isArray(state.audits)
+      && [state.accounts, state.sessions, state.active, state.revoked, state.unsafelyAudited].every(Number.isInteger),
+    'WRITE_LEDGER_UNAVAILABLE');
     requireCheck(state.accounts === 0 && state.sessions === 0 && state.active === 0 && state.revoked === 0
-      && state.audits && Object.keys(state.audits).length === 0 && state.unsafelyAudited === 0, 'ZERO_AUTH_WRITE_LEDGER');
+      && Object.keys(state.audits).length === 0 && state.unsafelyAudited === 0, 'ZERO_AUTH_WRITE_LEDGER');
   }
+  requireCheck(JSON.stringify(before.domains) === JSON.stringify(after.domains), 'UNAUTHORIZED_DOMAIN_WRITE');
   requireCheck(ledger.login === 0 && ledger.logout === 0 && ledger.outages === 0 && ledger.byMethod?.OTHER === 0, 'ZERO_AUTH_REQUEST_LEDGER');
 }
 
