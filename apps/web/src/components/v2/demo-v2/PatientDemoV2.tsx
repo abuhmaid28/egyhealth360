@@ -88,9 +88,25 @@ export function PatientDemoV2({ path }: { path: string }) {
   const [profileBusy, setProfileBusy] = useState(false);
   const [profileError, setProfileError] = useState("");
 
+  const isMountedRef = useRef(true);
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  const coreRequestSeqRef = useRef(0);
   const slotsRequestSeqRef = useRef(0);
+  const bookingBusyRef = useRef(false);
+  const profileBusyRef = useRef(false);
+  const cleanPathRef = useRef(cleanPath);
+  cleanPathRef.current = cleanPath;
+  const doctorRouteIdRef = useRef(doctorRouteId);
+  doctorRouteIdRef.current = doctorRouteId;
 
   const loadCore = useCallback(async () => {
+    const seq = ++coreRequestSeqRef.current;
     setLoading(true);
     setError("");
     try {
@@ -100,6 +116,7 @@ export function PatientDemoV2({ path }: { path: string }) {
         api.record(),
         api.profile(),
       ]);
+      if (!isMountedRef.current || coreRequestSeqRef.current !== seq) return;
       setProviders(nextProviders);
       setAppointments(nextAppointments);
       setRecord(nextRecord);
@@ -108,9 +125,12 @@ export function PatientDemoV2({ path }: { path: string }) {
       setEditDob(nextProfile.dateOfBirth ?? "");
       setEditSex(nextProfile.sex ?? "");
     } catch (err) {
+      if (!isMountedRef.current || coreRequestSeqRef.current !== seq) return;
       setError(safeErrorMessage(err));
     } finally {
-      setLoading(false);
+      if (isMountedRef.current && coreRequestSeqRef.current === seq) {
+        setLoading(false);
+      }
     }
   }, [api]);
 
@@ -128,14 +148,14 @@ export function PatientDemoV2({ path }: { path: string }) {
       setSlotsLoading(true);
       try {
         const page = await api.availabilityPage(providerId, { page: 1, pageSize: 16 });
-        if (slotsRequestSeqRef.current !== requestSeq) return;
+        if (!isMountedRef.current || slotsRequestSeqRef.current !== requestSeq) return;
         setSlots(page.data.filter((slot) => slot.bookable && slot.providerId === providerId));
       } catch (err) {
-        if (slotsRequestSeqRef.current !== requestSeq) return;
+        if (!isMountedRef.current || slotsRequestSeqRef.current !== requestSeq) return;
         setBookingError(safeErrorMessage(err));
         setSlots([]);
       } finally {
-        if (slotsRequestSeqRef.current === requestSeq) {
+        if (isMountedRef.current && slotsRequestSeqRef.current === requestSeq) {
           setSlotsLoading(false);
         }
       }
@@ -223,7 +243,7 @@ export function PatientDemoV2({ path }: { path: string }) {
 
   async function submitBooking(event: React.FormEvent) {
     event.preventDefault();
-    if (!selectedSlot || !selectedProvider || bookingBusy) return;
+    if (!selectedSlot || !selectedProvider || bookingBusyRef.current) return;
     if (doctorRouteId && selectedProvider.id !== doctorRouteId) return;
     if (selectedSlot.providerId !== selectedProvider.id) {
       setBookingError(ar ? "يرجى اختيار موعد تابع للطبيب المحدد." : "Choose an available slot belonging to the selected clinician.");
@@ -234,34 +254,49 @@ export function PatientDemoV2({ path }: { path: string }) {
       setBookingError(ar ? "يرجى كتابة سبب مختصر للزيارة." : "Please enter a brief visit reason.");
       return;
     }
+    bookingBusyRef.current = true;
     setBookingBusy(true);
     setBookingError("");
+    const targetPath = cleanPath;
     const bookedProviderId = selectedProvider.id;
+    const targetSlotId = selectedSlot.id;
     try {
-      const created = await booking.create(selectedSlot.id, trimmed);
-      setReceipt(created);
-      setSelectedSlot(null);
-      setVisitReason("");
-      setConsentPrototypeChecked(false);
+      const created = await booking.create(targetSlotId, trimmed);
+      if (!isMountedRef.current) return;
+      const stillSameBookingContext =
+        cleanPathRef.current === targetPath &&
+        (!doctorRouteIdRef.current || doctorRouteIdRef.current === bookedProviderId);
+      if (stillSameBookingContext) {
+        setReceipt(created);
+        setSelectedSlot(null);
+        setVisitReason("");
+        setConsentPrototypeChecked(false);
+        void loadSlots(bookedProviderId);
+      }
       const currentAr = localeRef.current === "ar";
       notify(currentAr ? "تم تأكيد الحجز التجريبي بنجاح." : "Synthetic appointment booked.");
       changed();
-      void loadSlots(bookedProviderId);
     } catch (err) {
-      setBookingError(safeErrorMessage(err));
+      if (isMountedRef.current && cleanPathRef.current === targetPath) {
+        setBookingError(safeErrorMessage(err));
+      }
     } finally {
-      setBookingBusy(false);
+      bookingBusyRef.current = false;
+      if (isMountedRef.current) {
+        setBookingBusy(false);
+      }
     }
   }
 
   async function submitProfile(event: React.FormEvent) {
     event.preventDefault();
-    if (profileBusy) return;
+    if (profileBusyRef.current) return;
     const nameTrimmed = editName.trim();
     if (!nameTrimmed) {
       setProfileError(ar ? "الاسم الكامل مطلوب." : "Display name is required.");
       return;
     }
+    profileBusyRef.current = true;
     setProfileBusy(true);
     setProfileError("");
     try {
@@ -270,15 +305,22 @@ export function PatientDemoV2({ path }: { path: string }) {
         dateOfBirth: editDob.trim() ? toLatinDigits(editDob.trim()) : null,
         sex: editSex.trim() ? editSex.trim() : null,
       });
+      if (!isMountedRef.current) return;
       const latest = await api.profile();
+      if (!isMountedRef.current) return;
       setProfile(latest);
       const currentAr = localeRef.current === "ar";
       notify(currentAr ? "تم تحديث ملف المريض التجريبي." : "Patient profile updated.");
       changed();
     } catch (err) {
-      setProfileError(safeErrorMessage(err));
+      if (isMountedRef.current) {
+        setProfileError(safeErrorMessage(err));
+      }
     } finally {
-      setProfileBusy(false);
+      profileBusyRef.current = false;
+      if (isMountedRef.current) {
+        setProfileBusy(false);
+      }
     }
   }
 
@@ -305,12 +347,15 @@ export function PatientDemoV2({ path }: { path: string }) {
   if (error) {
     return (
       <section className={styles.workspace} data-v2-portal="patient">
-        <div className={styles.noticeDanger} role="alert">
-          <p>{error}</p>
-          <button type="button" className={styles.btnSecondary} onClick={() => void loadCore()}>
-            {ar ? "إعادة المحاولة" : "Retry"}
-          </button>
-        </div>
+        <section className={styles.card}>
+          <h1>{ar ? "بوابة المريض" : "Patient Workspace"}</h1>
+          <div className={styles.noticeDanger} role="alert">
+            <p>{error}</p>
+            <button type="button" className={styles.btnSecondary} onClick={() => void loadCore()}>
+              {ar ? "إعادة المحاولة" : "Retry"}
+            </button>
+          </div>
+        </section>
       </section>
     );
   }
@@ -748,7 +793,15 @@ export function PatientDemoV2({ path }: { path: string }) {
                       <span>{tile.month}</span>
                     </div>
                     <div className={styles.workspace}>
-                      <h3>{item.provider.displayName}</h3>
+                      <h3>
+                        <Link
+                          href={`/patient/appointments/${encodeURIComponent(item.id)}`}
+                          className={styles.inlineLink}
+                          data-appointment-detail-link={item.id}
+                        >
+                          {item.provider.displayName}
+                        </Link>
+                      </h3>
                       <p className={styles.muted}>
                         {clinicNameFor(item.provider, item.slot.clinicId)} ·{" "}
                         <span className={styles.tabular}>
@@ -1028,6 +1081,15 @@ export function PatientDemoV2({ path }: { path: string }) {
                 </span>
               </p>
               <p className={styles.subtle}>{upcoming.reason}</p>
+              <div className={styles.actionRow}>
+                <Link
+                  href={`/patient/appointments/${encodeURIComponent(upcoming.id)}`}
+                  className={styles.btnGhost}
+                  data-next-appointment-link="true"
+                >
+                  {ar ? "تفاصيل الموعد" : "Visit details"}
+                </Link>
+              </div>
             </div>
           ) : (
             <div className={styles.cardInset}>

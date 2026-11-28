@@ -185,6 +185,7 @@ async function runSuite(kind) {
       referrerPolicy: rootRes.headers.get("referrer-policy"),
       xRobotsTag: rootRes.headers.get("x-robots-tag"),
       xFrameOptions: rootRes.headers.get("x-frame-options"),
+      contentSecurityPolicy: rootRes.headers.get("content-security-policy"),
       permissionsPolicy: rootRes.headers.get("permissions-policy"),
     };
     const badFoundationGet = await fetch(`${origin}/v2-foundation/unapproved.webp`);
@@ -496,23 +497,31 @@ async function runSuite(kind) {
     await checkContrast("patient-discover-receipt");
     summary.flows.patientBooking = "PASS";
 
-    // F-05: 1 booked visit singular check on Patient home (EN + AR)
+    // F-05: 1 booked visit singular check on Patient home + Next-appointment detail link (EN + AR)
     await page.getByRole("link", { name: "My care", exact: true }).click();
     assert.ok((await page.locator('[data-patient-booked-count]').innerText()).includes("1 booked visit"));
+    await page.locator('[data-next-appointment-link="true"]').click();
+    await page.locator("#patient-appt-detail-title").waitFor();
+    await page.getByRole("link", { name: "My care", exact: true }).click();
     await page.getByRole("button", { name: /العربية/ }).click();
     await page.waitForTimeout(80);
     assert.ok((await page.locator('[data-patient-booked-count]').innerText()).includes("موعد واحد مسجل"));
     assert.ok((await page.locator('[data-patient-released-count]').innerText()).includes("ملخص واحد معتمد"));
+    await checkContrast("patient-home-ar-dark", "dark");
     await page.getByRole("button", { name: /English/ }).click();
     await page.waitForTimeout(80);
 
-    // Appointments persistence after reload
+    // Appointments persistence & detail route after reload
     await page.getByRole("link", { name: "Appointments", exact: true }).click();
     await page.locator('[data-appointment-item]').first().waitFor();
     await assertHeadingHierarchy(page, "patient-appointments");
     await page.reload({ waitUntil: "networkidle" });
     await page.locator('[data-appointment-item]').first().waitFor();
+    await page.locator('[data-appointment-detail-link="demo-appointment-1"]').click();
+    await page.locator("#patient-appt-detail-title").waitFor();
+    await assertHeadingHierarchy(page, "patient-appointment-detail");
     summary.flows.patientReloadPersistence = "PASS";
+    summary.remediation.f41PatientAppointmentDetailLinks = "PASS";
 
     // F-06 + F-09: Save profile ("Layla Hassan") triggers toast -> switching locale clears stale toast
     await page.getByRole("link", { name: "Settings", exact: true }).click();
@@ -546,17 +555,26 @@ async function runSuite(kind) {
     await page.locator('[data-confirm-booking="true"]').click();
     await page.locator('[data-booking-receipt]').waitFor();
 
+    // F4-1: Book 3rd appointment with a DIFFERENT provider (omar-khaled) to test real existing foreign-appointment UI guard in Doctor portal
+    await page.goto(`${origin}/patient/doctors/omar-khaled`, { waitUntil: "networkidle" });
+    await page.locator('[data-slot-chip]').first().click();
+    await page.locator("#booking-reason").fill("Foreign provider booking check");
+    await page.locator('[data-confirm-booking="true"]').click();
+    await page.locator('[data-booking-receipt]').waitFor();
+
     // Wrong-role direct navigation boundary (/admin while PATIENT)
     await page.goto(`${origin}/admin`, { waitUntil: "networkidle" });
     await page.getByRole("heading", { name: /Open your active workspace/i }).waitFor();
     summary.flows.wrongRoleGuard = "PASS";
 
-    // Switch to Doctor portal -> verify snapshot labels, 24h time, unknown/foreign consultation not-found, F-03 release & private sentinel
+    // Switch to Doctor portal -> verify snapshot labels, 24h time, unknown & foreign consultation not-found, F-03 release & private sentinel
     await page.locator("[data-workspace-switch]").selectOption("CLINICIAN");
     await page.locator('[data-v2-portal="doctor"]').waitFor();
     await page.locator('[data-doctor-appointment="demo-appointment-1"]').waitFor();
+    assert.equal(await page.locator('[data-doctor-appointment="demo-appointment-3"]').count(), 0, "Foreign provider appointment must not appear in Doctor schedule");
     await assertHeadingHierarchy(page, "doctor-schedule");
     await checkContrast("doctor-schedule-dark");
+    await checkViewports("doctor");
     const appt1Text = await page.locator('[data-doctor-appointment="demo-appointment-1"]').innerText();
     const appt2Text = await page.locator('[data-doctor-appointment="demo-appointment-2"]').innerText();
     assert.ok(appt1Text.includes("Ahmed Mostafa"), "Existing booking must retain booking-time snapshot Ahmed Mostafa");
@@ -564,29 +582,45 @@ async function runSuite(kind) {
     assert.ok((await page.locator('[data-booking-patient-snapshot="true"]').count()) >= 2);
     summary.remediation.f09SnapshotVsProfile = "PASS";
 
-    // F-07: Foreign/unknown consultation ID must show Not Found
+    // F-07 + F4-1: Unknown AND real existing foreign consultation/appointment IDs must show Not Found
     await page.goto(`${origin}/doctor/consultation/unknown-visit-213`, { waitUntil: "networkidle" });
     await page.locator('[data-v2-not-found="true"]').waitFor();
     assert.equal(await page.locator('[data-release-form="true"]').count(), 0);
+    await page.goto(`${origin}/doctor/consultation/demo-appointment-3`, { waitUntil: "networkidle" });
+    await page.locator('[data-v2-not-found="true"]').waitFor();
+    assert.equal(await page.locator('[data-release-form="true"]').count(), 0);
+    await page.goto(`${origin}/doctor/appointments/demo-appointment-3`, { waitUntil: "networkidle" });
+    await page.locator('[data-v2-not-found="true"]').waitFor();
+    summary.remediation.f41RealForeignAppointmentRejected = "PASS";
     await page.goto(`${origin}/doctor/schedule`, { waitUntil: "networkidle" });
 
-    // Availability publish + AR status check
+    // Availability publish + withdraw + AR status check
     await page.getByRole("link", { name: "Availability", exact: true }).click();
     await page.locator("#slot-date").waitFor();
     await assertHeadingHierarchy(page, "doctor-availability");
     await page.locator('[data-publish-slot-btn="true"]').click();
     await page.waitForTimeout(150);
+    await page.locator('[data-withdraw-slot]').last().click();
+    await page.waitForTimeout(150);
     await page.getByRole("button", { name: /العربية/ }).click();
     await page.waitForTimeout(80);
     await page.getByText("منشور", { exact: true }).first().waitFor();
+    await page.getByText("مسحوب", { exact: true }).first().waitFor();
+    await checkContrast("doctor-availability-ar-dark", "dark");
     await page.getByRole("button", { name: /English/ }).click();
     await page.waitForTimeout(80);
     summary.remediation.f05ArabicCountsAndStatus = "PASS";
+    summary.remediation.f41SlotWithdrawAndAr = "PASS";
 
-    // F-03: Open exact /doctor/consultation/demo-appointment-1, author public assessment + followUp + prescription + private sentinel, release
+    // F-03 + F4-1: Open exact /doctor/consultation/demo-appointment-1 -> test empty release block, then full release & reload read-only lock
     await page.goto(`${origin}/doctor/consultation/demo-appointment-1`, { waitUntil: "networkidle" });
     await page.locator("#consult-assessment").waitFor();
     await assertHeadingHierarchy(page, "doctor-consultation");
+    await page.locator('[data-release-submit="true"]').click();
+    await page.locator('[data-v2-portal="doctor"] [role="alert"]').waitFor();
+    assert.equal(await page.locator('[data-consultation-released="true"]').count(), 0, "Empty release must be blocked in UI");
+    summary.remediation.f41EmptyReleaseBlocked = "PASS";
+
     await page.locator("#consult-assessment").fill("Public clinical assessment G2-F3");
     await page.locator("#consult-followup").fill("Public follow-up guidance G2-F3");
     await page.locator("#consult-private-notes").fill("PRIVATE_NOTE_SENTINEL_213");
@@ -596,6 +630,10 @@ async function runSuite(kind) {
     await page.locator('[data-release-submit="true"]').click();
     await page.locator('[data-consultation-released="true"]').waitFor();
     assert.equal(await page.locator('[data-release-submit="true"]').count(), 0, "Released visit becomes read-only");
+    await page.reload({ waitUntil: "networkidle" });
+    await page.locator('[data-consultation-released="true"]').waitFor();
+    assert.equal(await page.locator('[data-release-submit="true"]').count(), 0, "Duplicate release remains blocked after reload");
+    summary.remediation.f41PostReloadReadOnlyLock = "PASS";
     summary.flows.doctorFlow = "PASS";
 
     // F-03: Switch back to Patient -> Home & Record show public assessment/guidance & NEVER private sentinel
@@ -621,12 +659,13 @@ async function runSuite(kind) {
     assert.ok(!recordAfterReload.includes("Private synthetic note"));
     summary.remediation.f03PrivacyAndShareableSummary = "PASS";
 
-    // Switch to Pharmacy portal -> transition Received -> Preparing -> Dispensed + verify zero private notes
+    // Switch to Pharmacy portal -> transition Received -> Preparing -> Dispensed + verify zero private notes + viewport + AR/light parity
     await page.locator("[data-workspace-switch]").selectOption("PHARMACY_STAFF");
     await page.locator('[data-v2-portal="pharmacy"]').waitFor();
     await page.locator("#pharmacy-v2-title").waitFor();
     await assertHeadingHierarchy(page, "pharmacy");
     await checkContrast("pharmacy-dark");
+    await checkViewports("pharmacy");
     const pharmText = await page.locator('[data-v2-portal="pharmacy"]').innerText();
     assert.ok(!pharmText.includes("PRIVATE_NOTE_SENTINEL_213"));
     assert.ok(!pharmText.includes("Public clinical assessment G2-F3"));
@@ -639,6 +678,11 @@ async function runSuite(kind) {
       await page.waitForTimeout(120);
     }
     await page.locator('[data-pharmacy-terminal="true"]').first().waitFor();
+    await page.getByRole("button", { name: /العربية/ }).click();
+    await page.waitForTimeout(80);
+    await checkContrast("pharmacy-ar-dark", "dark");
+    await page.getByRole("button", { name: /English/ }).click();
+    await page.waitForTimeout(80);
     summary.flows.pharmacyTerminalLock = "PASS";
 
     // F-08: Switch to Laboratory -> verify FUTURE / NOT LIVE + accessible ARIA tablist keyboard nav in EN LTR & AR RTL
@@ -648,6 +692,7 @@ async function runSuite(kind) {
     await assertHeadingHierarchy(page, "laboratory");
     await page.locator('[data-lab-future-badge="true"]').waitFor();
     await checkContrast("laboratory-dark");
+    await checkViewports("laboratory");
 
     const tab1 = page.locator("#lab-tab-orders");
     const tab2 = page.locator("#lab-tab-specimens");
@@ -667,6 +712,7 @@ async function runSuite(kind) {
     // RTL Arabic keyboard test: ArrowLeft moves visually forward (orders -> specimens)
     await page.getByRole("button", { name: /العربية/ }).click();
     await page.waitForTimeout(80);
+    await checkContrast("laboratory-ar-dark", "dark");
     await tab1.focus();
     await page.keyboard.press("ArrowLeft");
     assert.equal(await tab2.getAttribute("aria-selected"), "true");
@@ -679,22 +725,55 @@ async function runSuite(kind) {
     summary.remediation.f07RouteAndSelectionGuards = "PASS";
     summary.remediation.f08HeadingsAndLabTablist = "PASS";
 
-    // Switch to Admin -> verify operational directory & Light theme parity contrast
+    // Switch to Admin -> verify operational directory, viewports & Light theme parity contrast across Admin + Doctor + Patient
     await page.locator("[data-workspace-switch]").selectOption("ADMIN");
     await page.locator('[data-v2-portal="admin"]').waitFor();
     await page.locator("#admin-user-search").waitFor();
     await assertHeadingHierarchy(page, "admin");
     await page.locator("#admin-user-search").fill("Mariam");
     await checkContrast("admin-dark");
+    await checkViewports("admin");
 
     await page.locator('[data-v2-shell] summary').click();
     await page.locator(".v2-theme-switch select").selectOption("light");
     await page.waitForTimeout(100);
     assert.equal(await page.locator("[data-foundation-theme]").getAttribute("data-foundation-theme"), "light");
     await checkContrast("admin-light", "light");
+    await page.getByRole("button", { name: /العربية/ }).click();
+    await page.waitForTimeout(80);
+    await checkContrast("admin-ar-light", "light");
+    await page.getByRole("button", { name: /English/ }).click();
+    await page.waitForTimeout(80);
     summary.flows.adminDirectoryAndLightTheme = "PASS";
 
-    // Sign out returns to Gateway / entry workspaces
+    // Check Light theme contrast on Doctor & Patient too, then reset theme to dark
+    await page.locator("[data-workspace-switch]").selectOption("CLINICIAN");
+    await page.locator('[data-v2-portal="doctor"]').waitFor();
+    if ((await page.locator("[data-foundation-theme]").getAttribute("data-foundation-theme")) !== "light") {
+      if ((await page.locator('[data-v2-shell] details[open]').count()) === 0) {
+        await page.locator('[data-v2-shell] summary').click();
+      }
+      await page.locator(".v2-theme-switch select").selectOption("light");
+      await page.waitForTimeout(100);
+    }
+    await checkContrast("doctor-light", "light");
+    await page.locator("[data-workspace-switch]").selectOption("PATIENT");
+    await page.locator('[data-v2-portal="patient"]').waitFor();
+    if ((await page.locator("[data-foundation-theme]").getAttribute("data-foundation-theme")) !== "light") {
+      if ((await page.locator('[data-v2-shell] details[open]').count()) === 0) {
+        await page.locator('[data-v2-shell] summary').click();
+      }
+      await page.locator(".v2-theme-switch select").selectOption("light");
+      await page.waitForTimeout(100);
+    }
+    await checkContrast("patient-home-light", "light");
+    if ((await page.locator('[data-v2-shell] details[open]').count()) === 0) {
+      await page.locator('[data-v2-shell] summary').click();
+    }
+    await page.locator(".v2-theme-switch select").selectOption("dark");
+    await page.waitForTimeout(100);
+
+    // Sign out preserves demo journey in storage until explicit reset
     await page.locator('[data-shell-signout]').click();
     if (isPreview) {
       await page.locator('[data-v2-gateway="true"]').waitFor();
@@ -702,6 +781,30 @@ async function runSuite(kind) {
       await page.locator("#demo-workspaces").waitFor();
     }
     summary.flows.signOut = "PASS";
+
+    // F4-1: Sign out preserves persisted Demo state; Explicit Demo Reset clears back to Ahmed Mostafa / 0 booked visits
+    if (isPreview) {
+      await page.locator('[data-gateway-primary-cta="PATIENT"]').click();
+    } else {
+      await page.goto(`${origin}/?v2=1`, { waitUntil: "networkidle" });
+      await page.locator("#demo-workspaces .demo-button").click();
+    }
+    await page.locator('[data-v2-portal="patient"]').waitFor();
+    assert.ok((await page.locator('[data-patient-greeting]').innerText()).includes("Layla Hassan"));
+    await page.locator('[data-shell-reset]').click();
+    if (isPreview) {
+      await page.locator('[data-v2-gateway="true"]').waitFor();
+      await page.locator('[data-gateway-primary-cta="PATIENT"]').click();
+    } else {
+      await page.locator("#demo-workspaces").waitFor();
+      await page.goto(`${origin}/?v2=1`, { waitUntil: "networkidle" });
+      await page.locator("#demo-workspaces .demo-button").click();
+    }
+    await page.locator('[data-v2-portal="patient"]').waitFor();
+    assert.ok((await page.locator('[data-patient-greeting]').innerText()).includes("Ahmed Mostafa"));
+    assert.ok((await page.locator('[data-patient-booked-count]').innerText()).includes("0 booked visits"));
+    assert.ok((await page.locator('[data-patient-released-count]').innerText()).includes("1 released summary"));
+    summary.remediation.f41DemoResetClean = "PASS";
 
     assert.equal(pageErrors.length, 0, `Uncaught page errors: ${pageErrors.join("; ")}`);
     assert.equal(apiRequests.length, 0, `Unexpected /api/v1/ requests in Demo mode: ${apiRequests.join(", ")}`);

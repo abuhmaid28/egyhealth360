@@ -70,12 +70,28 @@ export function DoctorDemoV2({ path }: { path: string }) {
   const [medName, setMedName] = useState("");
   const [medDosage, setMedDosage] = useState("");
   const [medInstructions, setMedInstructions] = useState("");
-  const [releaseBusy, setReleaseBusy] = useState(false);
+  const [releasingIds, setReleasingIds] = useState<ReadonlySet<string>>(() => new Set());
   const [releaseError, setReleaseError] = useState("");
 
+  const isMountedRef = useRef(true);
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  const loadSeqRef = useRef(0);
+  const consultationSeqRef = useRef(0);
+  const prevAppointmentIdRef = useRef("");
+  const draftAppointmentIdRef = useRef("");
+  draftAppointmentIdRef.current = draftAppointmentId;
   const activeAppointmentIdRef = useRef("");
+  const releasingIdsRef = useRef<Set<string>>(new Set());
+  const slotBusyRef = useRef(false);
 
   const load = useCallback(async () => {
+    const seq = ++loadSeqRef.current;
     setLoading(true);
     setError("");
     try {
@@ -84,6 +100,7 @@ export function DoctorDemoV2({ path }: { path: string }) {
         api.ownAvailability(1),
         api.clinics(),
       ]);
+      if (!isMountedRef.current || loadSeqRef.current !== seq) return;
       setAppointments(nextAppointments);
       setSlots(slotPage.data);
       setClinics(nextClinics);
@@ -97,9 +114,12 @@ export function DoctorDemoV2({ path }: { path: string }) {
         return nextAppointments[0]?.id ?? "";
       });
     } catch (err) {
+      if (!isMountedRef.current || loadSeqRef.current !== seq) return;
       setError(safeErrorMessage(err));
     } finally {
-      setLoading(false);
+      if (isMountedRef.current && loadSeqRef.current === seq) {
+        setLoading(false);
+      }
     }
   }, [api]);
 
@@ -120,44 +140,77 @@ export function DoctorDemoV2({ path }: { path: string }) {
 
   useEffect(() => {
     let active = true;
-    setConsultationDraft(null);
-    setDraftAppointmentId("");
-    setPatientAssessment("");
-    setFollowUpGuidance("");
-    setPrivateNotes("");
-    setMedName("");
-    setMedDosage("");
-    setMedInstructions("");
-    setReleaseError("");
+    const appointmentChanged = prevAppointmentIdRef.current !== activeAppointmentId;
+    prevAppointmentIdRef.current = activeAppointmentId;
+    const reqSeq = ++consultationSeqRef.current;
+
+    if (!activeAppointmentId || appointmentChanged) {
+      setConsultationDraft(null);
+      setDraftAppointmentId("");
+      setPatientAssessment("");
+      setFollowUpGuidance("");
+      setPrivateNotes("");
+      setMedName("");
+      setMedDosage("");
+      setMedInstructions("");
+      setReleaseError("");
+    }
 
     if (!activeAppointmentId) {
       setDraftLoading(false);
       return;
     }
 
-    setDraftLoading(true);
+    const needsLoadingState = appointmentChanged || draftAppointmentIdRef.current !== activeAppointmentId;
+    if (needsLoadingState) {
+      setDraftLoading(true);
+    }
     api
       .consultation(activeAppointmentId)
       .then((c) => {
-        if (!active || activeAppointmentIdRef.current !== activeAppointmentId) return;
+        if (
+          !active ||
+          !isMountedRef.current ||
+          consultationSeqRef.current !== reqSeq ||
+          activeAppointmentIdRef.current !== activeAppointmentId
+        ) {
+          return;
+        }
         setConsultationDraft(c);
         setDraftAppointmentId(c.appointmentId);
         // Shareable patient-facing fields ONLY; private c.notes stays strictly in privateNotes.
-        setPatientAssessment(c.diagnosis || "");
-        setFollowUpGuidance(c.followUp || "");
-        setPrivateNotes(c.notes || "");
-        setMedName(c.medication || "");
-        setMedDosage(c.dosage || "");
-        setMedInstructions(c.instructions || "");
+        // Only populate form inputs on appointment switch or when authoritative released state is returned.
+        if (needsLoadingState || c.released) {
+          setPatientAssessment(c.diagnosis || "");
+          setFollowUpGuidance(c.followUp || "");
+          setPrivateNotes(c.notes || "");
+          setMedName(c.medication || "");
+          setMedDosage(c.dosage || "");
+          setMedInstructions(c.instructions || "");
+        }
       })
       .catch((err) => {
-        if (!active || activeAppointmentIdRef.current !== activeAppointmentId) return;
-        setConsultationDraft(null);
-        setDraftAppointmentId("");
+        if (
+          !active ||
+          !isMountedRef.current ||
+          consultationSeqRef.current !== reqSeq ||
+          activeAppointmentIdRef.current !== activeAppointmentId
+        ) {
+          return;
+        }
+        if (needsLoadingState) {
+          setConsultationDraft(null);
+          setDraftAppointmentId("");
+        }
         setReleaseError(safeErrorMessage(err));
       })
       .finally(() => {
-        if (active && activeAppointmentIdRef.current === activeAppointmentId) {
+        if (
+          active &&
+          isMountedRef.current &&
+          consultationSeqRef.current === reqSeq &&
+          activeAppointmentIdRef.current === activeAppointmentId
+        ) {
           setDraftLoading(false);
         }
       });
@@ -173,7 +226,8 @@ export function DoctorDemoV2({ path }: { path: string }) {
 
   async function publishSlot(event: React.FormEvent) {
     event.preventDefault();
-    if (slotBusy) return;
+    if (slotBusyRef.current) return;
+    slotBusyRef.current = true;
     setSlotBusy(true);
     setSlotError("");
     try {
@@ -204,17 +258,25 @@ export function DoctorDemoV2({ path }: { path: string }) {
         endAt: endIso,
         operationKey: `publish-${slotDate}-${slotTime}-${Date.now()}`,
       });
+      if (!isMountedRef.current) return;
       const currentAr = localeRef.current === "ar";
       notify(currentAr ? "تم نشر الموعد المتاح بنجاح." : "Open slot published.");
       changed();
     } catch (err) {
-      setSlotError(safeErrorMessage(err));
+      if (isMountedRef.current) {
+        setSlotError(safeErrorMessage(err));
+      }
     } finally {
-      setSlotBusy(false);
+      slotBusyRef.current = false;
+      if (isMountedRef.current) {
+        setSlotBusy(false);
+      }
     }
   }
 
   async function withdrawSlot(slot: OwnAvailability) {
+    if (slotBusyRef.current) return;
+    slotBusyRef.current = true;
     setSlotBusy(true);
     setSlotError("");
     try {
@@ -223,21 +285,28 @@ export function DoctorDemoV2({ path }: { path: string }) {
         expectedVersion: slot.version,
         operationKey: `withdraw-${slot.id}-${slot.version}`,
       });
+      if (!isMountedRef.current) return;
       const currentAr = localeRef.current === "ar";
       notify(currentAr ? "تم سحب الموعد المفتوح." : "Open slot withdrawn.");
       changed();
     } catch (err) {
-      setSlotError(safeErrorMessage(err));
+      if (isMountedRef.current) {
+        setSlotError(safeErrorMessage(err));
+      }
     } finally {
-      setSlotBusy(false);
+      slotBusyRef.current = false;
+      if (isMountedRef.current) {
+        setSlotBusy(false);
+      }
     }
   }
 
   async function releaseConsultation(event: React.FormEvent) {
     event.preventDefault();
-    if (!activeAppointment || releaseBusy || draftLoading) return;
+    if (!activeAppointment || draftLoading) return;
     const targetId = activeAppointment.id;
     if (consultationRouteId && targetId !== consultationRouteId) return;
+    if (releasingIdsRef.current.has(targetId)) return;
     if (draftAppointmentId !== targetId || consultationDraft?.appointmentId !== targetId) {
       setReleaseError(
         ar
@@ -263,48 +332,55 @@ export function DoctorDemoV2({ path }: { path: string }) {
       return;
     }
 
-    setReleaseBusy(true);
+    const payload: Consultation = {
+      ...consultationDraft,
+      appointmentId: targetId,
+      diagnosis: patientAssessment.trim(),
+      followUp: followUpGuidance.trim(),
+      // Private clinician notes stay strictly clinician-only; adapter.record() strips notes on Patient reads.
+      notes: privateNotes.trim(),
+      medication: medName.trim(),
+      dosage: medDosage.trim(),
+      instructions: medInstructions.trim(),
+      released: true,
+    };
+
+    releasingIdsRef.current.add(targetId);
+    setReleasingIds((prev) => {
+      const next = new Set(prev);
+      next.add(targetId);
+      return next;
+    });
     setReleaseError("");
     try {
-      await api.release({
-        ...consultationDraft,
-        appointmentId: targetId,
-        diagnosis: patientAssessment.trim(),
-        followUp: followUpGuidance.trim(),
-        // Private clinician notes stay strictly clinician-only; adapter.record() strips notes on Patient reads.
-        notes: privateNotes.trim(),
-        medication: medName.trim(),
-        dosage: medDosage.trim(),
-        instructions: medInstructions.trim(),
-        released: true,
-      });
+      await api.release(payload);
+      if (!isMountedRef.current) return;
       if (activeAppointmentIdRef.current === targetId) {
         setConsultationDraft((prev) =>
-          prev && prev.appointmentId === targetId
-            ? {
-                ...prev,
-                diagnosis: patientAssessment.trim(),
-                followUp: followUpGuidance.trim(),
-                notes: privateNotes.trim(),
-                medication: medName.trim(),
-                dosage: medDosage.trim(),
-                instructions: medInstructions.trim(),
-                released: true,
-              }
-            : prev,
+          prev && prev.appointmentId === targetId ? payload : prev,
+        );
+        const currentAr = localeRef.current === "ar";
+        notify(
+          currentAr
+            ? "تم اعتماد ونشر التقييم الموجه للمريض وتعليمات الوصفة."
+            : "Patient-facing assessment and prescription instructions released.",
         );
       }
-      const currentAr = localeRef.current === "ar";
-      notify(
-        currentAr
-          ? "تم اعتماد ونشر التقييم الموجه للمريض وتعليمات الوصفة."
-          : "Patient-facing assessment and prescription instructions released.",
-      );
       changed();
     } catch (err) {
-      setReleaseError(safeErrorMessage(err));
+      if (isMountedRef.current && activeAppointmentIdRef.current === targetId) {
+        setReleaseError(safeErrorMessage(err));
+      }
     } finally {
-      setReleaseBusy(false);
+      releasingIdsRef.current.delete(targetId);
+      if (isMountedRef.current) {
+        setReleasingIds((prev) => {
+          if (!prev.has(targetId)) return prev;
+          const next = new Set(prev);
+          next.delete(targetId);
+          return next;
+        });
+      }
     }
   }
 
@@ -321,12 +397,15 @@ export function DoctorDemoV2({ path }: { path: string }) {
   if (error) {
     return (
       <section className={styles.workspace} data-v2-portal="doctor">
-        <div className={styles.noticeDanger} role="alert">
-          <p>{error}</p>
-          <button type="button" className={styles.btnSecondary} onClick={() => void load()}>
-            {ar ? "إعادة المحاولة" : "Retry"}
-          </button>
-        </div>
+        <section className={styles.card}>
+          <h1>{ar ? "بوابة الطبيب" : "Doctor Workspace"}</h1>
+          <div className={styles.noticeDanger} role="alert">
+            <p>{error}</p>
+            <button type="button" className={styles.btnSecondary} onClick={() => void load()}>
+              {ar ? "إعادة المحاولة" : "Retry"}
+            </button>
+          </div>
+        </section>
       </section>
     );
   }
@@ -550,6 +629,7 @@ export function DoctorDemoV2({ path }: { path: string }) {
     }
 
     const isReleased = Boolean(consultationDraft?.released);
+    const isReleaseBusy = Boolean(activeAppointment && releasingIds.has(activeAppointment.id));
 
     return (
       <section className={styles.workspace} data-v2-portal="doctor" aria-labelledby="doc-consult-title">
@@ -638,7 +718,7 @@ export function DoctorDemoV2({ path }: { path: string }) {
                 </div>
               ) : null}
 
-              <fieldset disabled={isReleased || releaseBusy} className={styles.fieldset}>
+              <fieldset disabled={isReleased || isReleaseBusy} className={styles.fieldset}>
                 <div className={styles.field}>
                   <label htmlFor="consult-assessment">
                     {ar ? "التقييم الموثق للمريض (يُشارك عند النشر)" : "Patient-facing assessment (shared on release)"}
@@ -739,8 +819,8 @@ export function DoctorDemoV2({ path }: { path: string }) {
 
               {!isReleased ? (
                 <div className={styles.actionRow}>
-                  <button type="submit" className={styles.btnPrimary} disabled={releaseBusy} data-release-submit="true">
-                    {releaseBusy
+                  <button type="submit" className={styles.btnPrimary} disabled={isReleaseBusy} data-release-submit="true">
+                    {isReleaseBusy
                       ? ar
                         ? "جاري النشر..."
                         : "Releasing..."

@@ -45,7 +45,15 @@ test("next.config.ts, vercel.preview.json, and untrusted asset 404 route handler
   const vercelPreview = JSON.parse(readFileSync("apps/web/vercel.preview.json", "utf8"));
   assert.match(vercelPreview.buildCommand, /EH_PREVIEW_DEMO_ONLY=1/);
   assert.equal(vercelPreview.framework, "nextjs");
-  assert.ok(JSON.stringify(vercelPreview.headers).includes("noindex, nofollow, noarchive"));
+  const headerList = vercelPreview.headers?.[0]?.headers ?? [];
+  const headerMap = Object.fromEntries(headerList.map((entry) => [entry.key, entry.value]));
+  assert.equal(headerMap["X-Robots-Tag"], "noindex, nofollow, noarchive");
+  assert.equal(headerMap["X-Content-Type-Options"], "nosniff");
+  assert.equal(headerMap["Referrer-Policy"], "no-referrer");
+  assert.equal(headerMap["Permissions-Policy"], "camera=(), microphone=(), geolocation=()");
+  assert.equal(headerMap["X-Frame-Options"], "DENY");
+  assert.equal(headerMap["Content-Security-Policy"], "frame-ancestors 'none'");
+  assert.equal(headerList.length, 6);
   assert.doesNotMatch(JSON.stringify(vercelPreview), /egyhealth360\.vercel\.app/);
 
   for (const routeFile of [

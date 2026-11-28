@@ -77,7 +77,7 @@ export function V2DemoShell({
   toast: string;
   onDismiss: () => void;
 }) {
-  const { api, session, refresh } = useApp();
+  const { api, session, refresh, notify } = useApp();
   const pathname = usePathname() || "";
   const { locale } = useLocale();
   const { resolved } = useFoundationTheme();
@@ -178,6 +178,28 @@ export function V2DemoShell({
                     </option>
                   ))}
                 </select>
+              ) : null}
+
+              {api.mode === "demo" && session.mode === "demo" ? (
+                <button
+                  type="button"
+                  data-shell-reset
+                  onClick={() => {
+                    const result = (
+                      api as { reset?: () => { persisted?: boolean } | void }
+                    ).reset?.();
+                    if (result && result.persisted === false) {
+                      notify(
+                        ar
+                          ? "تمت إعادة ضبط الجلسة الحالية فقط؛ تعذر مسح تخزين المتصفح عبر إعادة التحميل."
+                          : "Demo reset in this session only; browser storage blocked clearing across reload.",
+                      );
+                    }
+                    onLogout();
+                  }}
+                >
+                  <span>{ar ? "إعادة ضبط التجربة" : "Reset demo journey"}</span>
+                </button>
               ) : null}
 
               <button type="button" onClick={onLogout} data-shell-signout>

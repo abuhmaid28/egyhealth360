@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Operations } from "../../../lib/api/contracts";
 import { safeErrorMessage } from "../../../lib/api/errors";
 import { useApp } from "../../context";
@@ -16,17 +16,31 @@ export function AdminDemoV2() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
+  const loadSeqRef = useRef(0);
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   const load = useCallback(async () => {
+    const seq = ++loadSeqRef.current;
     setLoading(true);
     setError("");
     try {
       const next = await api.operations();
+      if (!isMountedRef.current || loadSeqRef.current !== seq) return;
       setData(next);
     } catch (err) {
+      if (!isMountedRef.current || loadSeqRef.current !== seq) return;
       setError(safeErrorMessage(err));
     } finally {
-      setLoading(false);
+      if (isMountedRef.current && loadSeqRef.current === seq) {
+        setLoading(false);
+      }
     }
   }, [api]);
 
@@ -75,19 +89,17 @@ export function AdminDemoV2() {
         )}
       </div>
 
-      {error ? (
+      {loading ? (
+        <section className={styles.card}>
+          <p className={styles.muted}>{c("Loading operational directory...", "جاري تحميل الدليل التشغيلي...")}</p>
+        </section>
+      ) : error ? (
         <div className={styles.noticeDanger} role="alert">
           <p>{error}</p>
           <button type="button" className={styles.btnSecondary} onClick={() => void load()}>
             {c("Retry", "إعادة المحاولة")}
           </button>
         </div>
-      ) : null}
-
-      {loading ? (
-        <section className={styles.card}>
-          <p className={styles.muted}>{c("Loading operational directory...", "جاري تحميل الدليل التشغيلي...")}</p>
-        </section>
       ) : (
         <div className={styles.grid2}>
           <section className={styles.card}>

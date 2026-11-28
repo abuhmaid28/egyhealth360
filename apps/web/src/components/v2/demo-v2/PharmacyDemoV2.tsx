@@ -30,24 +30,41 @@ export function PharmacyDemoV2() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
-  const [busyId, setBusyId] = useState("");
+  const [busyIds, setBusyIds] = useState<ReadonlySet<string>>(() => new Set());
+  const busyIdsRef = useRef<Set<string>>(new Set());
+  const loadSeqRef = useRef(0);
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   const load = useCallback(async () => {
+    const seq = ++loadSeqRef.current;
     setLoading(true);
     setError("");
     try {
-      const routed = await api.artifacts();
+      // Filter empty/whitespace medications at UI layer only, preserving adapter artifacts() contract for LAB_STAFF.
+      const routed = (await api.artifacts()).filter((entry) => Boolean(entry.medication?.trim()));
+      if (!isMountedRef.current || loadSeqRef.current !== seq) return;
       const settled = await Promise.all(
         routed.map(async (entry) => ({
           ...entry,
           fulfillment: await api.fulfillment(entry.id),
         })),
       );
+      if (!isMountedRef.current || loadSeqRef.current !== seq) return;
       setItems(settled);
     } catch (err) {
+      if (!isMountedRef.current || loadSeqRef.current !== seq) return;
       setError(safeErrorMessage(err));
     } finally {
-      setLoading(false);
+      if (isMountedRef.current && loadSeqRef.current === seq) {
+        setLoading(false);
+      }
     }
   }, [api]);
 
@@ -76,7 +93,13 @@ export function PharmacyDemoV2() {
     item: RoutedArtifactItem,
     nextStatus: "Preparing" | "Dispensed",
   ) {
-    setBusyId(item.id);
+    if (busyIdsRef.current.has(item.id)) return;
+    busyIdsRef.current.add(item.id);
+    setBusyIds((prev) => {
+      const next = new Set(prev);
+      next.add(item.id);
+      return next;
+    });
     setError("");
     try {
       await api.updateFulfillment(
@@ -86,6 +109,7 @@ export function PharmacyDemoV2() {
         },
         item.id,
       );
+      if (!isMountedRef.current) return;
       const currentAr = localeRef.current === "ar";
       const statusLabel =
         nextStatus === "Preparing"
@@ -102,9 +126,19 @@ export function PharmacyDemoV2() {
       );
       changed();
     } catch (err) {
-      setError(safeErrorMessage(err));
+      if (isMountedRef.current) {
+        setError(safeErrorMessage(err));
+      }
     } finally {
-      setBusyId("");
+      busyIdsRef.current.delete(item.id);
+      if (isMountedRef.current) {
+        setBusyIds((prev) => {
+          if (!prev.has(item.id)) return prev;
+          const next = new Set(prev);
+          next.delete(item.id);
+          return next;
+        });
+      }
     }
   }
 
@@ -136,105 +170,106 @@ export function PharmacyDemoV2() {
         )}
       </div>
 
-      <section className={styles.card}>
-        <h2 className="sr-only">{c("Routed prescription items", "قائمة الوصفات المحوّلة")}</h2>
-        <div className={styles.field}>
-          <label htmlFor="pharmacy-search">{c("Filter assigned prescriptions", "تصفية الوصفات المسندة")}</label>
-          <input
-            id="pharmacy-search"
-            type="search"
-            className={styles.input}
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={copy.searchPlaceholderRx}
-          />
+      {!loading && error ? (
+        <div className={styles.noticeDanger} role="alert">
+          <p>{error}</p>
+          <button type="button" className={styles.btnSecondary} onClick={() => void load()}>
+            {c("Retry", "إعادة المحاولة")}
+          </button>
         </div>
-
-        {error ? (
-          <div className={styles.noticeDanger} role="alert">
-            <p>{error}</p>
-            <button type="button" className={styles.btnSecondary} onClick={() => void load()}>
-              {c("Retry", "إعادة المحاولة")}
-            </button>
+      ) : (
+        <section className={styles.card}>
+          <h2 className="sr-only">{c("Routed prescription items", "قائمة الوصفات المحوّلة")}</h2>
+          <div className={styles.field}>
+            <label htmlFor="pharmacy-search">{c("Filter assigned prescriptions", "تصفية الوصفات المسندة")}</label>
+            <input
+              id="pharmacy-search"
+              type="search"
+              className={styles.input}
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={copy.searchPlaceholderRx}
+            />
           </div>
-        ) : null}
 
-        {loading ? (
-          <p className={styles.muted}>{c("Loading routed prescriptions...", "جاري تحميل الوصفات المحوّلة...")}</p>
-        ) : filtered.length === 0 ? (
-          <p className={styles.muted}>
-            {query.trim()
-              ? copy.noMatchingRoutes
-              : c("No routed prescriptions available.", "لا توجد وصفات محوّلة حاليًا.")}
-          </p>
-        ) : (
-          <ul className={styles.listStack}>
-            {filtered.map((item) => {
-              const rxState = item.fulfillment.prescription;
-              const terminal = rxState === "Dispensed";
-              return (
-                <li key={item.id} className={styles.cardInset} data-pharmacy-item={item.id}>
-                  <div className={styles.cardTitleRow}>
-                    <h3>
-                      <FoundationIcon name="pharmacy-rx" size={18} />{" "}
-                      <span>{item.medication || c("Pending medication artifact", "وصفة قيد التحويل")}</span>
-                    </h3>
-                    <span
-                      className={
-                        terminal
-                          ? styles.pillSuccess
-                          : rxState === "Preparing"
-                            ? styles.pillWarning
-                            : styles.pill
-                      }
-                    >
-                      {status(rxState)}
-                    </span>
-                  </div>
-                  <p className={styles.muted}>
-                    {c("Route ref", "مرجع المسار")}: <strong className={styles.tabular}>{item.id}</strong> ·{" "}
-                    {c("Patient", "المريض")}: <strong>{item.patient}</strong> ·{" "}
-                    {c("Clinician", "الطبيب")}: <strong>{item.provider}</strong>
-                  </p>
-                  <p className={styles.muted}>
-                    {c("Source dosage", "الجرعة الأصلية")}: <span>{item.dosage || "—"}</span>
-                  </p>
-                  <div className={styles.actionRow}>
-                    {rxState === "Received" ? (
-                      <button
-                        type="button"
-                        className={styles.btnPrimary}
-                        disabled={busyId === item.id}
-                        onClick={() => void transition(item, "Preparing")}
-                        data-pharmacy-action="Preparing"
+          {loading ? (
+            <p className={styles.muted}>{c("Loading routed prescriptions...", "جاري تحميل الوصفات المحوّلة...")}</p>
+          ) : filtered.length === 0 ? (
+            <p className={styles.muted}>
+              {query.trim()
+                ? copy.noMatchingRoutes
+                : c("No routed prescriptions available.", "لا توجد وصفات محوّلة حاليًا.")}
+            </p>
+          ) : (
+            <ul className={styles.listStack}>
+              {filtered.map((item) => {
+                const rxState = item.fulfillment.prescription;
+                const terminal = rxState === "Dispensed";
+                const itemBusy = busyIds.has(item.id);
+                return (
+                  <li key={item.id} className={styles.cardInset} data-pharmacy-item={item.id}>
+                    <div className={styles.cardTitleRow}>
+                      <h3>
+                        <FoundationIcon name="pharmacy-rx" size={18} />{" "}
+                        <span>{item.medication}</span>
+                      </h3>
+                      <span
+                        className={
+                          terminal
+                            ? styles.pillSuccess
+                            : rxState === "Preparing"
+                              ? styles.pillWarning
+                              : styles.pill
+                        }
                       >
-                        {c("Mark Preparing", "بدء التجهيز")}
-                      </button>
-                    ) : null}
-                    {rxState === "Preparing" ? (
-                      <button
-                        type="button"
-                        className={styles.btnPrimary}
-                        disabled={busyId === item.id}
-                        onClick={() => void transition(item, "Dispensed")}
-                        data-pharmacy-action="Dispensed"
-                      >
-                        {c("Mark Dispensed", "تأكيد التسليم بالكامل")}
-                      </button>
-                    ) : null}
-                    {terminal ? (
-                      <span className={styles.pillSuccess} data-pharmacy-terminal="true">
-                        <FoundationIcon name="lock" size={15} />{" "}
-                        {c("Terminal status — Dispensed locked", "حالة نهائية — تم القفل بعد التسليم")}
+                        {status(rxState)}
                       </span>
-                    ) : null}
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </section>
+                    </div>
+                    <p className={styles.muted}>
+                      {c("Route ref", "مرجع المسار")}: <strong className={styles.tabular}>{item.id}</strong> ·{" "}
+                      {c("Patient", "المريض")}: <strong>{item.patient}</strong> ·{" "}
+                      {c("Clinician", "الطبيب")}: <strong>{item.provider}</strong>
+                    </p>
+                    <p className={styles.muted}>
+                      {c("Source dosage", "الجرعة الأصلية")}: <span>{item.dosage || "—"}</span>
+                    </p>
+                    <div className={styles.actionRow}>
+                      {rxState === "Received" ? (
+                        <button
+                          type="button"
+                          className={styles.btnPrimary}
+                          disabled={itemBusy}
+                          onClick={() => void transition(item, "Preparing")}
+                          data-pharmacy-action="Preparing"
+                        >
+                          {c("Mark Preparing", "بدء التجهيز")}
+                        </button>
+                      ) : null}
+                      {rxState === "Preparing" ? (
+                        <button
+                          type="button"
+                          className={styles.btnPrimary}
+                          disabled={itemBusy}
+                          onClick={() => void transition(item, "Dispensed")}
+                          data-pharmacy-action="Dispensed"
+                        >
+                          {c("Mark Dispensed", "تأكيد التسليم بالكامل")}
+                        </button>
+                      ) : null}
+                      {terminal ? (
+                        <span className={styles.pillSuccess} data-pharmacy-terminal="true">
+                          <FoundationIcon name="lock" size={15} />{" "}
+                          {c("Terminal status — Dispensed locked", "حالة نهائية — تم القفل بعد التسليم")}
+                        </span>
+                      ) : null}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </section>
+      )}
     </section>
   );
 }

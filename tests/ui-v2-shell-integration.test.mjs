@@ -12,8 +12,17 @@ test("V2DemoShell gates on dual Demo api/session, syncs live profile name, and p
   assert.ok(shellSource.includes("data-workspace-switch"));
   assert.ok(shellSource.includes('aria-disabled="true"'));
   assert.ok(shellSource.includes('data-v2-toast-region="true"'));
+  assert.ok(shellSource.includes("data-shell-reset"));
+  assert.ok(shellSource.includes(".reset?.()"));
+  assert.ok(shellSource.includes("persisted === false"));
   assert.ok(!shellSource.includes("/api/v1/"));
   assert.ok(!shellSource.includes("localStorage"));
+
+  // Confirm reset button appears only inside dual Demo gate, immediately alongside Demo controls
+  const resetGateIdx = shellSource.indexOf("data-shell-reset");
+  assert.ok(resetGateIdx > 0);
+  const preResetWindow = shellSource.slice(Math.max(0, resetGateIdx - 180), resetGateIdx);
+  assert.ok(preResetWindow.includes('api.mode === "demo" && session.mode === "demo"'));
 
   const portalShellSource = readFileSync("apps/web/src/components/portal-shell.tsx", "utf8");
   assert.ok(portalShellSource.includes('api.mode === "demo" && session.mode === "demo"'));

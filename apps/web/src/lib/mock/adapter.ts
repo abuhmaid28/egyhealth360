@@ -32,6 +32,145 @@ interface State {
   fulfillment: Record<string, Fulfillment>;
 }
 const key = "eh360-ui-demo-v1";
+const VALID_ROLES: ReadonlySet<string> = new Set([
+  "PATIENT",
+  "CLINICIAN",
+  "PHARMACY_STAFF",
+  "LAB_STAFF",
+  "ADMIN",
+]);
+const VALID_RX_STATES: ReadonlySet<string> = new Set([
+  "Received",
+  "Preparing",
+  "Dispensed",
+]);
+const VALID_LAB_STATES: ReadonlySet<string> = new Set([
+  "Requested",
+  "In progress",
+  "Result ready",
+]);
+
+function isPlainRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isValidState(value: unknown): value is State {
+  if (!isPlainRecord(value)) return false;
+
+  if (value.session !== null) {
+    if (
+      !isPlainRecord(value.session) ||
+      typeof value.session.role !== "string" ||
+      !VALID_ROLES.has(value.session.role) ||
+      typeof value.session.name !== "string" ||
+      value.session.mode !== "demo"
+    ) {
+      return false;
+    }
+  }
+
+  if (
+    !isPlainRecord(value.profile) ||
+    typeof value.profile.id !== "string" ||
+    typeof value.profile.displayName !== "string" ||
+    (value.profile.dateOfBirth !== null && typeof value.profile.dateOfBirth !== "string") ||
+    (value.profile.sex !== null && typeof value.profile.sex !== "string")
+  ) {
+    return false;
+  }
+
+  if (
+    !Array.isArray(value.slots) ||
+    !value.slots.every(
+      (s) =>
+        isPlainRecord(s) &&
+        typeof s.id === "string" &&
+        typeof s.providerId === "string" &&
+        typeof s.clinicId === "string" &&
+        typeof s.startAt === "string" &&
+        typeof s.endAt === "string" &&
+        typeof s.timeZone === "string" &&
+        typeof s.bookable === "boolean",
+    )
+  ) {
+    return false;
+  }
+
+  if (value.ownSlots !== undefined) {
+    if (
+      !Array.isArray(value.ownSlots) ||
+      !value.ownSlots.every(
+        (s) =>
+          isPlainRecord(s) &&
+          typeof s.id === "string" &&
+          typeof s.providerId === "string" &&
+          typeof s.clinicId === "string" &&
+          typeof s.startAt === "string" &&
+          typeof s.endAt === "string" &&
+          (s.state === "PUBLISHED" || s.state === "WITHDRAWN") &&
+          typeof s.version === "number",
+      )
+    ) {
+      return false;
+    }
+  }
+
+  if (
+    !Array.isArray(value.appointments) ||
+    !value.appointments.every(
+      (a) =>
+        isPlainRecord(a) &&
+        typeof a.id === "string" &&
+        typeof a.patientName === "string" &&
+        (a.status === "Upcoming" || a.status === "Completed") &&
+        typeof a.reason === "string" &&
+        isPlainRecord(a.provider) &&
+        typeof a.provider.id === "string" &&
+        typeof a.provider.displayName === "string" &&
+        isPlainRecord(a.slot) &&
+        typeof a.slot.id === "string" &&
+        typeof a.slot.startAt === "string" &&
+        typeof a.slot.clinicId === "string",
+    )
+  ) {
+    return false;
+  }
+
+  if (
+    !Array.isArray(value.consultations) ||
+    !value.consultations.every(
+      (c) =>
+        isPlainRecord(c) &&
+        typeof c.appointmentId === "string" &&
+        typeof c.diagnosis === "string" &&
+        typeof c.notes === "string" &&
+        typeof c.followUp === "string" &&
+        typeof c.medication === "string" &&
+        typeof c.dosage === "string" &&
+        typeof c.instructions === "string" &&
+        typeof c.released === "boolean",
+    )
+  ) {
+    return false;
+  }
+
+  if (!isPlainRecord(value.fulfillment)) return false;
+  for (const entry of Object.values(value.fulfillment)) {
+    if (
+      !isPlainRecord(entry) ||
+      typeof entry.prescription !== "string" ||
+      !VALID_RX_STATES.has(entry.prescription) ||
+      typeof entry.lab !== "string" ||
+      !VALID_LAB_STATES.has(entry.lab) ||
+      typeof entry.result !== "string"
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 const fresh = (): State => ({
   session: null,
   profile: { ...profile },
@@ -45,7 +184,7 @@ export function createDemoAdapter(
   storage?: Pick<Storage, "getItem" | "setItem" | "removeItem">,
 ): HealthcareAdapter & {
   enter(role: Role): Promise<Session>;
-  reset(): void;
+  reset(): { persisted: boolean };
   bookPreview(
     provider: Provider,
     slot: Availability,
@@ -53,16 +192,21 @@ export function createDemoAdapter(
   ): Promise<Appointment>;
 } {
   let memory = fresh();
+  let storageDetached = false;
   const read = (): State => {
+    if (storageDetached || !storage) return memory;
     try {
-      const raw = storage?.getItem(key);
-      return raw ? (JSON.parse(raw) as State) : memory;
+      const raw = storage.getItem(key);
+      if (!raw) return memory;
+      const parsed: unknown = JSON.parse(raw);
+      return isValidState(parsed) ? parsed : memory;
     } catch {
       return memory;
     }
   };
   const write = (state: State) => {
     memory = state;
+    if (storageDetached) return;
     try {
       storage?.setItem(key, JSON.stringify(state));
     } catch {
@@ -155,7 +299,19 @@ export function createDemoAdapter(
     enter,
     reset() {
       memory = fresh();
-      storage?.removeItem(key);
+      if (!storage) {
+        return { persisted: true };
+      }
+      try {
+        storage.removeItem(key);
+        storageDetached = false;
+        return { persisted: true };
+      } catch {
+        // Storage removal failed: detach storage in this instance so stale persisted values
+        // cannot override fresh memory state; cross-reload persistence remains limited.
+        storageDetached = true;
+        return { persisted: false };
+      }
     },
     async session() {
       return read().session;
