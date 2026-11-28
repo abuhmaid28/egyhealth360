@@ -6,12 +6,12 @@ import { dirname, join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { runInNewContext } from 'node:vm';
 import ts from 'typescript';
-import { composeOverride, projectAuthText } from '../scripts/test-ui-r11-browser-isolation.mjs';
+import { composeOverride, projectAuthText, signOutControl } from '../scripts/test-ui-r11-browser-isolation.mjs';
 import {
   APP, APP_FILES, APP_TREE, DOCKER_HOST_ARG, GET_BUDGET, PG_IMAGE,
   checkCleanup, checkCompose, checkSourceHashes, checkWriteLedger, commandOutput, copyCommand, createLedger,
-  createObservation, assertOwnedProject, gitEnvironment, gitIn, manifestInput, projectedResponse, requestTarget,
-  scanText, sha, sourceProgram, verifyWorkspace,
+  createObservation, assertOwnedProject, gitEnvironment, gitIn, manifestInput, noContentLogout, projectedResponse, requestTarget,
+  scanOwnedLogs, scanText, sha, sourceProgram, verifyWorkspace,
 } from '../scripts/support/r11-browser-isolation.mjs';
 
 const project = 'eh216-q2-0123456789ab';
@@ -155,6 +155,50 @@ test('terminal ledger fails on API cancellation, unavailable body and pending ob
   pending.start('api', true);
   await assert.rejects(pending.settle(20, 0), /OBSERVER_PENDING/);
   assert.throws(() => pending.terminal('not-started'), /OBSERVER_UNKNOWN_TERMINAL/);
+});
+
+test('only contractually bodyless logout can complete without a retrieved API body', async () => {
+  const logout = '/api/v1/auth/logout';
+  assert.equal(noContentLogout(logout, 'POST', 204, {}), true);
+  for (const sample of [['GET', 204, {}], ['POST', 200, {}], ['POST', 204, { 'content-length': '1' }],
+    ['POST', 204, { 'transfer-encoding': 'chunked' }]]) assert.equal(noContentLogout(logout, ...sample), false);
+  assert.equal(noContentLogout('/api/v1/auth/me', 'POST', 204, {}), false);
+  const observation = createObservation();
+  observation.start('empty-response', true);
+  observation.terminal('empty-response', { bodyless: true });
+  await observation.settle(100, 0);
+  assert.equal(observation.report().bodyless, 1);
+  assert.equal(observation.report().scans, 0);
+});
+
+test('ordinary sign-out opens the scoped account control first', async () => {
+  const events = [];
+  const control = {};
+  const summary = { click: async () => { events.push('open'); } };
+  const menu = {
+    getAttribute: async name => { assert.equal(name, 'open'); return null; },
+    getByRole: (role, options) => {
+      assert.equal(role, 'button');
+      assert.deepEqual(options, { name: 'Sign out', exact: true });
+      events.push('scoped');
+      return control;
+    },
+  };
+  const page = { locator: selector => {
+    if (selector === 'summary[aria-label="Account"]') return summary;
+    assert.equal(selector, 'details');
+    return { filter: ({ has }) => { assert.equal(has, summary); return menu; } };
+  } };
+  assert.equal(await signOutControl(page), control);
+  assert.deepEqual(events, ['open', 'scoped']);
+});
+
+test('owned service-log scan checks stdout and stderr independently', () => {
+  const clean = { status: 0, stdout: 'ordinary', stderr: 'ordinary' };
+  assert.equal(scanOwnedLogs(clean, ['private-canary']), true);
+  for (const stream of ['stdout', 'stderr']) {
+    assert.equal(scanOwnedLogs({ ...clean, [stream]: 'private-canary' }, ['private-canary']), false);
+  }
 });
 
 test('response privacy runs before status, cache and shape checks', () => {

@@ -197,6 +197,17 @@ export function scanText(text, protectedValues) {
     && !/(?:postgresql:\/\/|eh_session=|eh-pw-v1\$|password_hash|"csrfToken"\s*:|\bSELECT \w+.+ FROM |\bINSERT INTO )/i.test(text);
 }
 
+export function scanOwnedLogs(result, markers, report) {
+  commandOutput(result, 'docker', 'OWNED_LOG_SCAN', report);
+  return scanText(result.stdout, markers) && scanText(result.stderr, markers);
+}
+
+export function noContentLogout(path, method, status, headers) {
+  return path === '/api/v1/auth/logout' && method === 'POST' && status === 204
+    && headers['transfer-encoding'] === undefined
+    && (headers['content-length'] === undefined || headers['content-length'] === '0');
+}
+
 export function projectedResponse(raw, { expected, type, noStore = true, markers = [] }) {
   requireCheck(scanText(raw.text, markers), 'RESPONSE_PRIVACY');
   let result;
@@ -217,7 +228,7 @@ export function projectedResponse(raw, { expected, type, noStore = true, markers
 
 export function createObservation() {
   const pending = new Map();
-  const counts = { started: 0, finished: 0, failed: 0, scans: 0, cancelled: 0, scanFailures: 0 };
+  const counts = { started: 0, finished: 0, failed: 0, scans: 0, bodyless: 0, cancelled: 0, scanFailures: 0 };
   let fault = null;
   const markFault = cause => { fault ??= cause; };
   return {
@@ -226,7 +237,7 @@ export function createObservation() {
       pending.set(key, api);
       counts.started++;
     },
-    terminal(key, { failed = false, scanned = false, cancelled = false } = {}) {
+    terminal(key, { failed = false, scanned = false, bodyless = false, cancelled = false } = {}) {
       requireCheck(pending.has(key), 'OBSERVER_UNKNOWN_TERMINAL');
       const api = pending.get(key);
       pending.delete(key);
@@ -236,7 +247,8 @@ export function createObservation() {
         else if (!api) markFault('OBSERVER_ASSET_FAILURE');
       } else counts.finished++;
       if (scanned) counts.scans++;
-      if (api && (failed || !scanned)) { counts.scanFailures++; markFault('OBSERVER_API_UNSCANNED'); }
+      if (bodyless && !failed) counts.bodyless++;
+      if (api && (failed || (!scanned && !bodyless))) { counts.scanFailures++; markFault('OBSERVER_API_UNSCANNED'); }
     },
     fault: markFault,
     report: () => ({ ...counts, pending: pending.size, fault }),

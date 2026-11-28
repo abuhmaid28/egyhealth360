@@ -10,8 +10,8 @@ import { chromium } from 'playwright';
 import {
   APP, APP_FILES, APP_TREE, BASE, BASE_TREE, BRANCH, DOCKER_HOST_ARG, DOCKER_ID, NODE_IMAGE, PATHS, PG_IMAGE,
   DiagnosticFailure, checkCleanup, checkCompose, checkSourceHashes, checkWriteLedger, commandOutput,
-  copyCommand, createLedger, createObservation, assertOwnedProject, gitIn, manifestInput, projectedResponse,
-  requestTarget, requireCheck, scanText, sha, verifyWorkspace,
+  copyCommand, createLedger, createObservation, assertOwnedProject, gitIn, manifestInput, noContentLogout, projectedResponse,
+  requestTarget, requireCheck, scanOwnedLogs, scanText, sha, verifyWorkspace,
 } from './support/r11-browser-isolation.mjs';
 
 const PG_DIGEST = 'sha256:f1ea2a1a4fb7b68d4836be1fdcb8a6466a89b072158bf9d97663600538c294c5';
@@ -152,6 +152,23 @@ export function projectAuthText(text, path, status, actor, secrets) {
   return { text: text.replace(occurrences[0][0], '"projectedField":null'), valid: true };
 }
 
+export async function signOutControl(page) {
+  const summary = page.locator('summary[aria-label="Account"]');
+  const menu = page.locator('details').filter({ has: summary });
+  if (await menu.getAttribute('open') === null) await summary.click();
+  return menu.getByRole('button', { name: 'Sign out', exact: true });
+}
+
+async function observedBody(response, path) {
+  if (noContentLogout(path, response.request().method(), response.status(), response.headers())) {
+    return { text: '', bodyless: true };
+  }
+  let bytes;
+  try { bytes = await response.body(); } catch { throw new DiagnosticFailure('OBSERVER_BODY_UNAVAILABLE'); }
+  requireCheck(bytes.length <= 1_000_000, 'OBSERVER_RESPONSE_SIZE');
+  return { text: bytes.toString('utf8'), bodyless: false };
+}
+
 async function exercise({ context, origin, actors, passwords, secrets, ledger, observation, receipt, step, outage, ready }) {
   const page = await context.newPage();
   page.setDefaultTimeout(12000);
@@ -191,17 +208,18 @@ async function exercise({ context, origin, actors, passwords, secrets, ledger, o
     const atDispatch = requestActor.get(request);
     void (async () => {
       let scanned = false;
+      let bodyless = false;
       try {
         const response = await request.response();
         requireCheck(response, 'OBSERVER_RESPONSE_MISSING');
-        const bytes = await response.body();
-        requireCheck(bytes.length <= 1_000_000, 'OBSERVER_RESPONSE_SIZE');
-        const projection = projectAuthText(bytes.toString('utf8'), path, response.status(), atDispatch, secrets);
+        const body = await observedBody(response, path);
+        const projection = projectAuthText(body.text, path, response.status(), atDispatch, secrets);
         requireCheck(scanText(projection.text, restricted(atDispatch)), 'RESPONSE_PRIVACY');
         requireCheck(projection.valid, 'AUTH_PROJECTION_UNSAFE');
-        scanned = true;
+        bodyless = body.bodyless;
+        scanned = !bodyless;
       } catch (error) { observation.fault(error.predicate ?? 'OBSERVER_BODY_UNAVAILABLE'); }
-      finally { terminal(request, { scanned }); }
+      finally { terminal(request, { scanned, bodyless }); }
     })();
   });
   page.on('pageerror', () => { receipt.browserErrors++; });
@@ -210,13 +228,12 @@ async function exercise({ context, origin, actors, passwords, secrets, ledger, o
     return url.origin === origin && url.pathname === path && response.request().method() === method;
   });
   const check = async (response, label, expected, type, active, noStore = true) => {
-    let raw;
-    try { raw = (await response.body()).toString('utf8'); } catch { throw new DiagnosticFailure('CASE_BODY_UNAVAILABLE'); }
     const path = new URL(response.url()).pathname;
+    const { text: raw, bodyless } = await observedBody(response, path);
     const auth = projectAuthText(raw, path, response.status(), active, secrets);
     const projection = projectedResponse({ text: auth.text, cache: response.headers()['cache-control'], status: response.status() },
       { expected, type, noStore, markers: restricted(active) });
-    receipt.statuses.push({ label, ...projection });
+    receipt.statuses.push({ label, ...projection, bodyless });
     requireCheck(auth.valid, 'AUTH_PROJECTION_UNSAFE');
     requireCheck(projection.pass, 'CASE_HTTP_CONTRACT');
     return type === 'data' || type === 'error' ? parse(raw) : null;
@@ -230,12 +247,13 @@ async function exercise({ context, origin, actors, passwords, secrets, ledger, o
   };
   const surface = async active => {
     await observation.settle();
-    const { html, storage } = await page.evaluate(() => ({
+    const { html, storage, navigation } = await page.evaluate(() => ({
       html: globalThis.document.documentElement.outerHTML,
       storage: JSON.stringify([Object.entries(globalThis.localStorage), Object.entries(globalThis.sessionStorage), globalThis.document.cookie]),
+      navigation: JSON.stringify([globalThis.location.href, globalThis.history.state]),
     }));
     requireCheck(scanText(html, restricted(active)), 'DOM_PRIVACY');
-    requireCheck(scanText(storage, restricted(null)), 'STORAGE_PRIVACY');
+    requireCheck(scanText(storage, restricted(null)) && scanText(navigation, restricted(null)), 'STORAGE_HISTORY_PRIVACY');
     receipt.domScans++;
     receipt.storageScans++;
     requireCheck(receipt.browserErrors === 0, 'BROWSER_PAGE_ERROR');
@@ -286,10 +304,11 @@ async function exercise({ context, origin, actors, passwords, secrets, ledger, o
     await visible(active);
   };
   const signOut = async (active, label) => {
+    const control = await signOutControl(page);
     authWindow = 'logout';
     try {
       const [response] = await Promise.all([match(LOGOUT, 'POST'),
-        page.getByRole('button', { name: 'Sign out', exact: true }).click()]);
+        control.click()]);
       await check(response, label + '_LOGOUT', 204, 'empty', active);
     } finally { authWindow = null; }
     await page.getByRole('button', { name: SIGN_IN, exact: true }).waitFor();
@@ -612,8 +631,11 @@ export async function run(argv) {
     if (services) {
       for (const name of ['api', 'web']) {
         try {
-          const logs = docker('OWNED_LOG_SCAN', ['logs', services[name].Id], { timeout: 15000 });
-          requireCheck(scanText(logs, [...secrets, ...actorMarkers]), 'SERVICE_LOG_PRIVACY');
+          const logs = spawnSync('docker', [DOCKER_HOST_ARG, 'logs', services[name].Id], {
+            cwd: harness, env, encoding: 'utf8', timeout: 15000, maxBuffer: 8_000_000,
+          });
+          requireCheck(scanOwnedLogs(logs, [...secrets, ...actorMarkers], failure => { commandFailure = failure; }),
+            'SERVICE_LOG_PRIVACY');
           receipt.logScans++;
         } catch (error) {
           receipt.result = 'FAIL';
