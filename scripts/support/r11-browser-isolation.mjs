@@ -252,6 +252,7 @@ const stageCounters = {
 };
 const countsFor = keys => Object.fromEntries(keys.map(key => [key, 0]));
 const methodGroup = method => requestMethods.includes(method) ? method : 'OTHER';
+const directoryPath = path => ['/api/v1/directory/providers', '/api/v1/directory/clinics'].includes(path);
 
 export function initialArguments(argv) {
   requireCheck(argv.length === 3 && argv[0] === INITIAL_MODE && argv[1] === '--evidence-dir'
@@ -270,6 +271,7 @@ export function createInitialLedger() {
       methods[methodGroup(method)]++;
       requireCheck(++total <= INITIAL_REQUEST_LIMIT, 'GET_BUDGET');
       requireCheck(method === 'GET' || method === 'HEAD', 'UNAUTHORIZED_BROWSER_METHOD');
+      return total < INITIAL_REQUEST_LIMIT;
     },
     report: () => ({ total, byPhase: { ...phases }, byMethod: { ...methods }, login: 0, logout: 0, outages: 0 }),
   };
@@ -278,7 +280,7 @@ export function createInitialLedger() {
 export function classifyInitialRequest(value, resource) {
   let path;
   try { path = new URL(value).pathname; } catch { return 'UNKNOWN'; }
-  if (path === '/api/v1/auth/me') return 'ALLOWED_API';
+  if (path === '/api/v1/auth/me' || directoryPath(path)) return 'ALLOWED_API';
   if (path.startsWith('/api/')) return 'UNKNOWN';
   if (path === '/patient' && resource === 'document') return 'DOCUMENT';
   if (path.startsWith('/_next/static/') || /^\/(?:favicon\.ico|icon[^/]*\.png)$/.test(path)) {
@@ -297,11 +299,30 @@ export function initialRequestTarget(value, origin, method, resource) {
   try { url = new URL(value); } catch { throw new DiagnosticFailure('FOREIGN_BROWSER_TARGET'); }
   requireCheck(url.origin === origin && url.protocol === 'http:' && !url.username && !url.password, 'FOREIGN_BROWSER_TARGET');
   requireCheck(method === 'GET' || method === 'HEAD', 'UNAUTHORIZED_BROWSER_METHOD');
-  requireCheck(!url.search && !url.hash, 'UNAUTHORIZED_INITIAL_QUERY');
+  requireCheck(!url.hash && (directoryPath(url.pathname) ? url.search === '?page=1&pageSize=100' : !url.search),
+    'UNAUTHORIZED_INITIAL_QUERY');
   const requestClass = classifyInitialRequest(value, resource);
   requireCheck(requestClass !== 'UNKNOWN', 'UNAUTHORIZED_INITIAL_TARGET');
   if (requestClass === 'ALLOWED_API') requireCheck(method === 'GET', 'UNAUTHORIZED_API_METHOD');
   return requestClass;
+}
+
+export function checkInitialApi(path, status, cache, body, cookie) {
+  if (path === '/api/v1/auth/me') {
+    const expiration = 'eh_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    requireCheck(cookie === null || (status === 401 && cookie === expiration), 'ANONYMOUS_COOKIE_WRITE');
+    requireCheck(projectedResponse({ status, cache, text: body }, { expected: 401, type: 'error' }).pass,
+      'ANONYMOUS_API_CONTRACT');
+    return;
+  }
+  requireCheck(directoryPath(path), 'ANONYMOUS_API_CONTRACT');
+  requireCheck(cookie === null, 'ANONYMOUS_COOKIE_WRITE');
+  let json;
+  try { json = JSON.parse(body); } catch { /* fixed contract checked below */ }
+  requireCheck(status === 200 && cache === 'no-store' && json && Object.keys(json).sort().join(',') === 'data,meta'
+    && Array.isArray(json.data) && json.data.length === 0
+    && json.meta && Object.keys(json.meta).sort().join(',') === 'page,pageSize,total'
+    && json.meta.page === 1 && json.meta.pageSize === 100 && json.meta.total === 0, 'ANONYMOUS_DIRECTORY_CONTRACT');
 }
 
 export function createObservation({ now = () => globalThis.performance.now() } = {}) {
@@ -426,6 +447,7 @@ export function checkZeroAuthLedger(before, after, ledger) {
   requireCheck(before && after && ledger, 'WRITE_LEDGER_UNAVAILABLE');
   requireCheck(JSON.stringify(before.domains) === JSON.stringify(after.domains), 'UNAUTHORIZED_DOMAIN_WRITE');
   for (const state of [before, after]) {
+    requireCheck(state.domains && Object.hasOwn(state.domains, 'users'), 'WRITE_LEDGER_UNAVAILABLE');
     requireCheck(state.accounts === 0 && state.sessions === 0 && state.active === 0 && state.revoked === 0
       && state.audits && Object.keys(state.audits).length === 0 && state.unsafelyAudited === 0, 'ZERO_AUTH_WRITE_LEDGER');
   }

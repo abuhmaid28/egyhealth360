@@ -12,7 +12,7 @@ import {
   checkCleanup, checkCompose, checkSourceHashes, checkWriteLedger, commandOutput, copyCommand, createLedger,
   createObservation, assertOwnedProject, gitEnvironment, gitIn, manifestInput, noContentLogout, projectedResponse, requestTarget,
   scanOwnedLogs, scanText, sha, sourceProgram, verifyWorkspace,
-  checkZeroAuthLedger, classifyInitialRequest, createInitialLedger, initialArguments, initialRequestTarget,
+  checkInitialApi, checkZeroAuthLedger, classifyInitialRequest, createInitialLedger, initialArguments, initialRequestTarget,
 } from '../scripts/support/r11-browser-isolation.mjs';
 
 const project = 'eh216-q2-0123456789ab';
@@ -313,7 +313,8 @@ test('initial ledger counts rejected dispatches, enforces sixty, and refuses the
   assert.equal(initialArguments(['--initial-page-only', '--evidence-dir', '/owned']), '/owned');
   const ledger = createInitialLedger();
   ledger.dispatch('TOPOLOGY', 'GET');
-  for (let i = 0; i < 59; i++) ledger.dispatch('INITIAL_PAGE', 'HEAD');
+  for (let i = 0; i < 58; i++) assert.equal(ledger.dispatch('INITIAL_PAGE', 'HEAD'), true);
+  assert.equal(ledger.dispatch('INITIAL_PAGE', 'HEAD'), false);
   assert.throws(() => ledger.dispatch('INITIAL_PAGE', 'GET'), /GET_BUDGET/);
   assert.equal(ledger.report().total, 61);
   const unauthorized = createInitialLedger();
@@ -407,6 +408,8 @@ test('zero-auth write comparison runs after close, fails closed and never substi
     assert.throws(() => checkZeroAuthLedger(before, { ...before, [field]: 1 }, ledger.report()), /ZERO_AUTH_WRITE_LEDGER/);
   }
   assert.throws(() => checkZeroAuthLedger(before, { ...before, audits: { AUTH_LOGIN: 1 } }, ledger.report()), /ZERO_AUTH_WRITE_LEDGER/);
+  assert.throws(() => checkZeroAuthLedger({ ...before, domains: undefined }, { ...before, domains: undefined }, ledger.report()),
+    /WRITE_LEDGER_UNAVAILABLE/);
   const operations = [];
   const observer = createObservation();
   observer.start('pending', { requestClass: 'STYLESHEET' });
@@ -430,6 +433,23 @@ test('zero-auth write comparison runs after close, fails closed and never substi
     const completed = await finishInitialEvidence({ before, ledger: ledger.report,
       close: async () => {}, snapshot: async () => state });
     assert.equal(completed.writes.result, result);
-    assert.doesNotMatch(JSON.stringify(completed), /inert|changed|private-marker/);
+    assert.doesNotMatch(JSON.stringify(completed), /"inert"|"changed"|private-marker/);
+  }
+});
+
+test('anonymous API accepts only source-supported session expiration and empty public directory responses', () => {
+  const expired = 'eh_session=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  const error = JSON.stringify({ error: { code: 'UNAUTHENTICATED', message: 'Synthetic denial' } });
+  checkInitialApi('/api/v1/auth/me', 401, 'no-store', error, expired);
+  assert.throws(() => checkInitialApi('/api/v1/auth/me', 401, 'no-store', error, expired + '; Domain=example.invalid'), /ANONYMOUS_COOKIE_WRITE/);
+  assert.throws(() => checkInitialApi('/api/v1/auth/me', 200, 'no-store', error, null), /ANONYMOUS_API_CONTRACT/);
+  const directory = JSON.stringify({ data: [], meta: { page: 1, pageSize: 100, total: 0 } });
+  for (const route of ['providers', 'clinics']) {
+    const path = '/api/v1/directory/' + route;
+    assert.equal(initialRequestTarget(origin + path + '?page=1&pageSize=100', origin, 'GET', 'fetch'), 'ALLOWED_API');
+    assert.throws(() => initialRequestTarget(origin + path + '?page=2&pageSize=100', origin, 'GET', 'fetch'), /UNAUTHORIZED_INITIAL_QUERY/);
+    checkInitialApi(path, 200, 'no-store', directory, null);
+    assert.throws(() => checkInitialApi(path, 200, 'no-store', directory, expired), /ANONYMOUS_COOKIE_WRITE/);
+    assert.throws(() => checkInitialApi(path, 200, 'no-store', JSON.stringify({ data: [1] }), null), /ANONYMOUS_DIRECTORY_CONTRACT/);
   }
 });

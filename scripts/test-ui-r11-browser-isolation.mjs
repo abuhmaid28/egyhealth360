@@ -9,7 +9,7 @@ import { setTimeout as wait } from 'node:timers/promises';
 import { chromium } from 'playwright';
 import {
   APP, APP_FILES, APP_TREE, BASE, BASE_TREE, BRANCH, DOCKER_HOST_ARG, DOCKER_ID, NODE_IMAGE, PATHS, PG_IMAGE,
-  DiagnosticFailure, checkCleanup, checkCompose, checkSourceHashes, checkZeroAuthLedger, commandOutput,
+  DiagnosticFailure, checkCleanup, checkCompose, checkInitialApi, checkSourceHashes, checkZeroAuthLedger, commandOutput,
   classifyInitialRequest, copyCommand, createInitialLedger, createObservation, assertOwnedProject, gitIn, initialArguments,
   initialRequestTarget, manifestInput, projectedResponse, requireCheck, scanOwnedLogs, scanText, sha, verifyWorkspace,
 } from './support/r11-browser-isolation.mjs';
@@ -23,6 +23,7 @@ const SIGN_IN = 'Sign in with live account';
 
 async function fixtureWorker(name) {
   let pool;
+  let reader;
   let output;
   try {
     const { createRequire } = await import('node:module');
@@ -40,30 +41,34 @@ async function fixtureWorker(name) {
     }
     const data = JSON.parse(body);
     pool = new Pool({ connectionString: url.href, max: 2, connectionTimeoutMillis: 3000, statement_timeout: 15000 });
+    reader = await pool.connect();
+    await reader.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
     if (data.action === 'snapshot') {
-      const tables = (await pool.query("SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename")).rows;
+      const tables = (await reader.query("SELECT tablename FROM pg_tables WHERE schemaname='public' ORDER BY tablename")).rows;
       const domains = {};
       for (const { tablename } of tables) {
         if (['sessions', 'audit_logs'].includes(tablename)) continue;
         if (!/^[a-z_][a-z0-9_]*$/.test(tablename)) throw new Error();
         const sql = "SELECT coalesce(jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text),'[]'::jsonb) AS items FROM public."
           + '"' + tablename + '" t';
-        domains[tablename] = createHash('sha256').update(JSON.stringify((await pool.query(sql)).rows[0].items)).digest('hex');
+        domains[tablename] = createHash('sha256').update(JSON.stringify((await reader.query(sql)).rows[0].items)).digest('hex');
       }
-      const sessions = (await pool.query('SELECT count(*)::int AS sessions,'
+      const sessions = (await reader.query('SELECT count(*)::int AS sessions,'
         + ' count(*) FILTER (WHERE revoked_at IS NOT NULL)::int AS revoked,'
         + ' count(*) FILTER (WHERE revoked_at IS NULL)::int AS active FROM sessions')).rows[0];
-      const audits = Object.fromEntries((await pool.query('SELECT action_type, count(*)::int AS n FROM audit_logs GROUP BY action_type'))
+      const audits = Object.fromEntries((await reader.query('SELECT action_type, count(*)::int AS n FROM audit_logs GROUP BY action_type'))
         .rows.map(row => [row.action_type, row.n]));
-      const unsafelyAudited = (await pool.query("SELECT count(*)::int AS n FROM audit_logs WHERE safe_metadata <> '{}'::jsonb")).rows[0].n;
-      const accounts = (await pool.query('SELECT count(*)::int AS n FROM public.users')).rows[0].n;
+      const unsafelyAudited = (await reader.query("SELECT count(*)::int AS n FROM audit_logs WHERE safe_metadata <> '{}'::jsonb")).rows[0].n;
+      const accounts = (await reader.query('SELECT count(*)::int AS n FROM public.users')).rows[0].n;
       output = { domains, accounts, ...sessions, audits, unsafelyAudited };
     } else if (data.action === 'migrations') {
-      output = (await pool.query('SELECT migration_name,checksum FROM _prisma_migrations ORDER BY migration_name')).rows;
+      output = (await reader.query('SELECT migration_name,checksum FROM _prisma_migrations ORDER BY migration_name')).rows;
     } else throw new Error();
+    await reader.query('COMMIT');
   } catch {
     process.exitCode = 1;
   } finally {
+    reader?.release(true);
     try { await pool?.end(); } catch { process.exitCode = 1; }
   }
   if (!process.exitCode) process.stdout.write(JSON.stringify(output));
@@ -218,8 +223,12 @@ async function observeInitialPage({ context, origin, secrets, ledger, observatio
   let navigations = 0;
 
   const fail = error => observation.fault(error instanceof DiagnosticFailure ? error.predicate : 'OBSERVER_UNEXPECTED');
+  const halt = error => {
+    fail(error);
+    void context.close().catch(() => {});
+  };
   const observe = callback => (...args) => {
-    try { callback(...args); } catch (error) { fail(error); }
+    try { callback(...args); } catch (error) { halt(error); }
   };
 
   context.on('page', observe(() => { requireCheck(context.pages().length === 1, 'INITIAL_PAGE_COUNT'); }));
@@ -227,24 +236,12 @@ async function observeInitialPage({ context, origin, secrets, ledger, observatio
     const method = request.method();
     const resource = request.resourceType();
     const requestClass = classifyInitialRequest(request.url(), resource);
-    try {
-      ledger.dispatch('INITIAL_PAGE', method);
-    } catch (error) {
-      observation.start(request, { requestClass, method });
-      fail(error);
-      void context.close().catch(() => {});
-      return;
-    }
     observation.start(request, { requestClass, method });
-    try {
-      active.set(request, initialRequestTarget(request.url(), origin, method, resource));
-      if (request.isNavigationRequest()) {
-        receipt.navigations = ++navigations;
-        requireCheck(navigations === 1 && requestClass === 'DOCUMENT', 'INITIAL_NAVIGATION_LIMIT');
-      }
-    } catch (error) {
-      fail(error);
-      void context.close().catch(() => {});
+    requireCheck(ledger.dispatch('INITIAL_PAGE', method), 'GET_BUDGET_REACHED');
+    active.set(request, initialRequestTarget(request.url(), origin, method, resource));
+    if (request.isNavigationRequest()) {
+      receipt.navigations = ++navigations;
+      requireCheck(navigations === 1 && requestClass === 'DOCUMENT', 'INITIAL_NAVIGATION_LIMIT');
     }
   }));
   context.on('response', observe(response => observation.event(response.request(), 'BROWSER_RESPONSE')));
@@ -262,9 +259,10 @@ async function observeInitialPage({ context, origin, secrets, ledger, observatio
         requireCheck(response, 'OBSERVER_RESPONSE_MISSING');
         observation.event(request, 'RESPONSE_ACQUIRED');
         const headers = response.headers();
-        requireCheck(await response.headerValue('set-cookie') === null, 'ANONYMOUS_COOKIE_WRITE');
+        const cookie = await response.headerValue('set-cookie');
         const type = active.get(request);
         requireCheck(type, 'OBSERVER_CLASSIFICATION');
+        requireCheck(type === 'ALLOWED_API' || cookie === null, 'ANONYMOUS_COOKIE_WRITE');
         if (type !== 'DOCUMENT' && type !== 'ALLOWED_API') return observation.terminal(request);
         if (request.method() === 'HEAD' && type === 'DOCUMENT') {
           return observation.terminal(request, { bodyless: true });
@@ -282,9 +280,7 @@ async function observeInitialPage({ context, origin, secrets, ledger, observatio
         observation.event(request, 'SCAN_COMPLETED');
         requireCheck(clean, 'RESPONSE_PRIVACY');
         if (type === 'ALLOWED_API') {
-          const projection = projectedResponse({ text: body, status: response.status(), cache: headers['cache-control'] },
-            { expected: 401, type: 'error' });
-          requireCheck(projection.pass, 'ANONYMOUS_API_CONTRACT');
+          checkInitialApi(new URL(request.url()).pathname, response.status(), headers['cache-control'], body, cookie);
         } else requireCheck(response.status() === 200, 'INITIAL_DOCUMENT_STATUS');
         observation.terminal(request);
       } catch (error) {
