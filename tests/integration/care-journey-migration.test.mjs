@@ -240,6 +240,84 @@ test('CJP B1 populated 22 to 23 upgrade preserves all 63 legacy tables, D36 disp
     }));
   }, { realRunner: true, migrationCount: 22 }));
 
+test('A1-D populated 23 to 24 upgrades identity and preserves all legacy and populated sidecar data', () =>
+  isolatedPharmacy(async f => {
+    const route = await f.readyPharmacy();
+    const dispensed = await f.dispense(route);
+    assert.equal(dispensed.data.items[0].fulfillmentState, 'FULLY_DISPENSED');
+    const booking = await f.create(await f.publish(60));
+    await enrollAndOpenJourney(f.pool, f, await bootstrapAdmission(f.pool, f), booking);
+
+    const names = (await f.pool.query(`
+      SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename <> '_prisma_migrations'
+      ORDER BY tablename`)).rows.map(row => row.tablename);
+    assert.equal(names.length, 68);
+    async function dataSnapshot(after = false) {
+      return Object.fromEntries(await Promise.all(names.map(async name => {
+        assert.match(name, /^[a-z0-9_]+$/);
+        const value = after && name === 'users' ? "to_jsonb(x) - 'account_epoch'" : 'to_jsonb(x)';
+        const { rows } = await f.pool.query(`SELECT ${value} AS value FROM public.${name} x ORDER BY (${value})::text`);
+        return [name, { count: rows.length, digest: createHash('sha256').update(JSON.stringify(rows)).digest('hex') }];
+      })));
+    }
+    async function existingAcls() {
+      return (await f.pool.query(`
+        SELECT 'relation' AS kind, c.relname AS name, c.relowner AS owner, c.relacl::text AS acl
+        FROM pg_class c WHERE c.relnamespace = 'public'::regnamespace AND c.relkind IN ('r','S')
+        UNION ALL
+        SELECT 'routine', p.oid::regprocedure::text, p.proowner, p.proacl::text
+        FROM pg_proc p WHERE p.pronamespace = 'public'::regnamespace
+          AND p.proname <> 'cjp_users_account_epoch_guard'
+        ORDER BY 1, 2`)).rows;
+    }
+    const migrationLedger = async () => (await f.pool.query(
+      'SELECT * FROM public._prisma_migrations ORDER BY migration_name',
+    )).rows;
+    const previous = await migrationLedger();
+    assert.equal(previous.length, 23);
+    assert.equal(previous[22].checksum, 'c260218681b369733383754ac6b10856a8eebd736974697f41236a95e88448c2');
+    const snapshots = await dataSnapshot();
+    const previousAcl = await existingAcls();
+    for (const sidecar of DARK_TABLES) assert.ok(snapshots[sidecar].count > 0, sidecar);
+    assert.ok(snapshots.sessions.count > 0);
+    assert.equal(snapshots.pharmacy_dispenses.count, 1);
+
+    migrationRunner(f.url, 'deploy', 24);
+    migrationRunner(f.url, 'status', 24);
+    const current = await migrationLedger();
+    assert.equal(current.length, 24);
+    assert.deepEqual(current.slice(0, 23), previous);
+    for (const row of current) {
+      assert.ok(row.finished_at && row.rolled_back_at === null);
+      const sql = await readFile(`packages/db/prisma/migrations/${row.migration_name}/migration.sql`);
+      assert.equal(row.checksum, createHash('sha256').update(sql).digest('hex'));
+    }
+    assert.deepEqual(await dataSnapshot(true), snapshots);
+    assert.deepEqual(await existingAcls(), previousAcl);
+    const epochs = () => f.pool.query('SELECT id, account_epoch FROM public.users ORDER BY id');
+    const initialized = (await epochs()).rows;
+    assert.equal(initialized.length, snapshots.users.count);
+    assert.ok(initialized.every(row => row.account_epoch === 1));
+
+    const added = await f.identities.createUser({
+      email: `${randomUUID()}@example.invalid`, passwordHash: f.hash, role: 'ADMIN',
+    });
+    assert.equal((await epochs()).rows.find(row => row.id === added.id)?.account_epoch, 1);
+    const expectedRepeatData = await dataSnapshot(true);
+    const expectedRepeatEpochs = (await epochs()).rows;
+    migrationRunner(f.url, 'deploy', 24);
+    migrationRunner(f.url, 'status', 24);
+    assert.deepEqual(await migrationLedger(), current);
+    assert.deepEqual(await dataSnapshot(true), expectedRepeatData);
+    assert.deepEqual((await epochs()).rows, expectedRepeatEpochs);
+    const own = await f.prescriptions.signedRead(f.actors.patient, null, f.signed.data.id);
+    assert.equal(own.data.items[0].fulfillmentState, 'FULLY_DISPENSED');
+    console.log('CJP_A1D_POPULATED_UPGRADE', JSON.stringify({
+      from: 23, to: 24, domainTables: names.length, populatedSidecars: DARK_TABLES.length,
+      allExistingEpochsInitialized: true, repeatDeploy: 'ZERO_WRITE',
+    }));
+  }, { realRunner: true, migrationCount: 23 }));
+
 test('CJP B1 migration enforces participant-exact provenance, booking-event bindings, post-termination denial, immutability, and concurrency', () =>
   isolatedBookings(async f => {
     const slot1 = await f.publish(30);

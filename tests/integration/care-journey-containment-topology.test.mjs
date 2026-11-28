@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Buffer } from 'node:buffer';
 import { randomBytes, randomUUID } from 'node:crypto';
-import { readdir } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { setTimeout } from 'node:timers/promises';
 const require = createRequire(new URL('../../packages/db/package.json', import.meta.url));
@@ -26,6 +26,75 @@ import { createCareJourneyGuardPersistence } from '../../packages/db/dist/care-j
 const NOTICE_DIGEST = 'a'.repeat(64);
 const FINGERPRINT = 'b'.repeat(64);
 const MEDICATION_ID = 'a3d10000-0000-4000-8000-000000000001';
+const IDENTITY_RELATIONS = ['users', 'patient_profiles', 'clinician_profiles', 'clinician_patient_assignments'];
+const EPOCH_FUNCTION = 'public.cjp_users_account_epoch_guard()';
+const EPOCH_MIGRATION = 'packages/db/prisma/migrations/20261125000000_cjp_account_epoch_dark/migration.sql';
+
+async function assertUnsafeDefaultAclRollsBack(pool, restrictedRole) {
+  const c = await pool.connect();
+  try {
+    await c.query(`ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO ${restrictedRole}`);
+    try {
+      const migration = await readFile(EPOCH_MIGRATION, 'utf8');
+      await assert.rejects(c.query(migration), { code: '42501', message: 'Unexpected account epoch function privileges' });
+    } finally {
+      await c.query('ROLLBACK');
+      await c.query(`ALTER DEFAULT PRIVILEGES IN SCHEMA public REVOKE EXECUTE ON FUNCTIONS FROM ${restrictedRole}`);
+    }
+    const catalog = (await c.query(`
+      SELECT to_regprocedure($1) AS routine,
+        EXISTS (SELECT FROM pg_attribute WHERE attrelid = 'public.users'::regclass
+          AND attname = 'account_epoch' AND NOT attisdropped) AS epoch,
+        EXISTS (SELECT FROM pg_trigger WHERE tgrelid = 'public.users'::regclass
+          AND tgname = 'cjp_users_account_epoch_write_guard') AS guard`, [EPOCH_FUNCTION])).rows[0];
+    assert.deepEqual(catalog, { routine: null, epoch: false, guard: false });
+  } finally {
+    c.release();
+  }
+}
+
+async function restrictedBoundary(client, role, otherRoles) {
+  const acl = (await client.query(`
+    SELECT current_user AS executor, session_user AS login,
+      has_column_privilege(current_user, 'public.users', 'password_hash', 'SELECT') AS hash,
+      EXISTS (SELECT FROM pg_auth_members WHERE member = current_user::regrole) AS member,
+      EXISTS (SELECT FROM unnest($1::text[]) AS t(name)
+        WHERE has_table_privilege(current_user, 'public.' || t.name, 'INSERT,UPDATE,DELETE,TRUNCATE,MAINTAIN')
+      ) AS broad`, [IDENTITY_RELATIONS])).rows[0];
+  assert.deepEqual(acl, { executor: role, login: role, hash: false, member: false, broad: false });
+  for (const other of otherRoles) {
+    await assert.rejects(client.query(`SET ROLE ${other}`), { code: '42501' });
+  }
+  await assert.rejects(client.query('SELECT password_hash FROM public.users WHERE false'), { code: '42501' });
+  return acl;
+}
+
+async function assertRestrictedLocks(client, userId) {
+  await client.query('BEGIN');
+  try {
+    const locked = await client.query('SELECT id FROM public.users WHERE id = $1 FOR NO KEY UPDATE', [userId]);
+    assert.deepEqual(locked.rows, [{ id: userId }]);
+    await assert.rejects(client.query(
+      'LOCK TABLE public.users,public.patient_profiles,public.clinician_profiles,public.clinician_patient_assignments IN ROW EXCLUSIVE MODE',
+    ), { code: '42501', message: 'permission denied for table users' });
+  } finally {
+    await client.query('ROLLBACK');
+  }
+}
+
+async function assertLegacyDrained(pool, dbName, legacyRole) {
+  const { rows: [retained] } = await pool.query(`
+    SELECT count(DISTINCT a.pid)::int AS sessions, count(l.pid)::int AS locks
+    FROM pg_stat_activity AS a LEFT JOIN pg_locks AS l ON l.pid = a.pid
+    WHERE a.datname = $1 AND a.usename = $2`, [dbName, legacyRole]);
+  assert.deepEqual(retained, { sessions: 0, locks: 0 }, 'Legacy sessions and locks must be drained');
+}
+
+function prismaSqlState(error, code) {
+  return error?.code === 'P2010' && (
+    error.meta?.code === code || error.meta?.driverAdapterError?.cause?.originalCode === code
+  );
+}
 
 const CJP_TABLES = [
   'care_journey_pairs',
@@ -229,10 +298,12 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
   const ownerRole = `cjp_a0_owner_${hex}`;
   const legacyRole = `cjp_a0_legacy_${hex}`;
   const successorRole = `cjp_a0_successor_${hex}`;
+  const restrictedRole = `cjp_a0_restricted_${hex}`;
   const groupRole = `cjp_a0_group_${hex}`;
   const ownerPass = randomBytes(18).toString('hex');
   const legacyPass = randomBytes(18).toString('hex');
   const successorPass = randomBytes(18).toString('hex');
+  const restrictedPass = randomBytes(18).toString('hex');
 
   const baseUrl = process.env.DATABASE_URL;
   assert.ok(baseUrl, 'DATABASE_URL must be configured');
@@ -244,6 +315,7 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
   const ownerUrl = roleUrl(baseUrl, ownerRole, ownerPass, dbName);
   const legacyUrl = roleUrl(baseUrl, legacyRole, legacyPass, dbName);
   const successorUrl = roleUrl(baseUrl, successorRole, successorPass, dbName);
+  const restrictedUrl = roleUrl(baseUrl, restrictedRole, restrictedPass, dbName);
 
   const cleanupHandles = [];
   let adminOnEphemeralPool;
@@ -254,11 +326,13 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
     await adminPool.query(`CREATE ROLE ${ownerRole} LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE PASSWORD '${ownerPass}'`);
     await adminPool.query(`CREATE ROLE ${legacyRole} LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT PASSWORD '${legacyPass}'`);
     await adminPool.query(`CREATE ROLE ${successorRole} LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE INHERIT PASSWORD '${successorPass}'`);
+    await adminPool.query(`CREATE ROLE ${restrictedRole} LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT PASSWORD '${restrictedPass}'`);
     await adminPool.query(`CREATE DATABASE ${dbName} OWNER ${ownerRole}`);
     await adminPool.query(`REVOKE ALL ON DATABASE ${dbName} FROM PUBLIC`);
     await adminPool.query(`GRANT CONNECT ON DATABASE ${dbName} TO ${ownerRole}`);
     await adminPool.query(`GRANT CONNECT ON DATABASE ${dbName} TO ${legacyRole}`);
     await adminPool.query(`GRANT CONNECT ON DATABASE ${dbName} TO ${successorRole}`);
+    await adminPool.query(`GRANT CONNECT ON DATABASE ${dbName} TO ${restrictedRole}`);
 
     adminOnEphemeralPool = new pg.Pool({ connectionString: roleUrl(baseUrl, adminUrlObj.username, adminUrlObj.password, dbName), max: 4 });
     adminOnEphemeralPool.on('error', () => {});
@@ -279,10 +353,10 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
     assert.equal(ownerMeta.rolcreatedb, false);
     assert.equal(ownerMeta.rolcreaterole, false);
 
-    // Run all 23 Prisma migrations as non-superuser ownerRole.
+    // Establish the exact historical grant targets before the new function exists.
     const migrationCount = (await readdir('packages/db/prisma/migrations')).filter(n => n !== 'migration_lock.toml').length;
-    assert.equal(migrationCount, 23);
-    migrationRunner(ownerUrl, 'deploy', migrationCount);
+    assert.equal(migrationCount, 24);
+    migrationRunner(ownerUrl, 'deploy', 23);
 
     // Grant legacyRole and successorRole realistic runtime privileges on public objects, keeping PUBLIC zero-access on sidecars.
     await ownerPool.query(`GRANT USAGE ON SCHEMA public TO ${groupRole}`);
@@ -296,6 +370,31 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
     await ownerPool.query(`GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO ${successorRole}`);
     await ownerPool.query(`REVOKE ALL ON TABLE ${CJP_TABLES.map(t => `public.${t}`).join(', ')} FROM PUBLIC`);
     await ownerPool.query(`REVOKE SELECT (password_hash) ON TABLE public.users FROM PUBLIC`);
+
+    // This restricted fixture is separate from the historical compatibility principals.
+    await ownerPool.query(`GRANT USAGE ON SCHEMA public TO ${restrictedRole}`);
+    await ownerPool.query(`GRANT SELECT (id, role, status), UPDATE (status) ON public.users TO ${restrictedRole}`);
+    await ownerPool.query(`GRANT SELECT (id) ON public.patient_profiles, public.clinician_profiles,
+      public.clinician_patient_assignments TO ${restrictedRole}`);
+    const restricted = new pg.Client({ connectionString: restrictedUrl });
+    restricted.on('error', () => {});
+    cleanupHandles.push(() => restricted.end());
+    await restricted.connect();
+    const alternativeRoles = [groupRole, legacyRole, successorRole, ownerRole];
+    const beforeRestricted = await restrictedBoundary(restricted, restrictedRole, alternativeRoles);
+    await assertUnsafeDefaultAclRollsBack(ownerPool, restrictedRole);
+    migrationRunner(ownerUrl, 'deploy', migrationCount);
+    assert.deepEqual(await restrictedBoundary(restricted, restrictedRole, alternativeRoles), beforeRestricted);
+    const epochPermissions = (await ownerPool.query(`
+      SELECT p.prosecdef, p.proconfig, has_function_privilege('public', p.oid, 'EXECUTE') AS public_execute,
+        has_function_privilege($2, p.oid, 'EXECUTE') AS legacy_execute,
+        has_function_privilege($3, p.oid, 'EXECUTE') AS successor_execute,
+        has_function_privilege($4, p.oid, 'EXECUTE') AS restricted_execute
+      FROM pg_proc AS p WHERE p.oid = $1::regprocedure`, [EPOCH_FUNCTION, legacyRole, successorRole, restrictedRole])).rows[0];
+    assert.deepEqual(epochPermissions, {
+      prosecdef: false, proconfig: ['search_path=pg_catalog, public, pg_temp'],
+      public_execute: false, legacy_execute: false, successor_execute: false, restricted_execute: false,
+    });
 
     // 2. Full PG 18.6 effective ACL inventory across database, schema, tables, columns, functions, and role memberships.
     const dbAcl = (
@@ -480,6 +579,44 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
       admin, clinician, patient, patientActor, clinicOrg, provider, membership, publication, booking: bookingA,
     };
     const seededA = await seedJourneyOnPool(ownerPool, ctx);
+    const restrictedPid = (await restricted.query('SELECT pg_backend_pid() AS pid')).rows[0].pid;
+    await assertRestrictedLocks(restricted, patient.id);
+    assert.equal((await adminOnEphemeralPool.query(
+      'SELECT 1 FROM pg_locks WHERE pid = $1', [restrictedPid],
+    )).rowCount, 0);
+    await restricted.end();
+
+    // The frozen marker leaves old-binary authorization intact until the legacy role is fenced.
+    const marker = (await ownerPool.query(`
+      SELECT 1 FROM public.care_journey_pairs WHERE patient_id = $1 AND clinician_id = $2`,
+    [patient.profileId, clinician.profileId])).rowCount;
+    assert.equal(marker, 1);
+    const legacyAuthorization = createAuthorizationPersistence(legacyUrl);
+    cleanupHandles.push(() => legacyAuthorization.close());
+    const legacyTarget = { patientId: patient.profileId };
+    let legacyReadPid;
+    async function legacyProfileRead() {
+      const restore = observeApplicabilityQueries((query, next) => {
+        if (query.text.includes('WITH actor AS') && query.text.includes('principalConsistent')) {
+          legacyReadPid = query.pid;
+        }
+        return next();
+      });
+      try {
+        return await legacyAuthorization.readPatientProfileAccess(clinicianActor, legacyTarget);
+      } finally {
+        restore();
+      }
+    }
+    const legacyBefore = await legacyProfileRead();
+    assert.equal(legacyBefore.sessionValid, true);
+    assert.equal(legacyBefore.principalConsistent, true);
+    assert.equal(legacyBefore.profile?.id, patient.profileId);
+    assert.ok(Number.isInteger(legacyReadPid));
+    assert.deepEqual((await adminOnEphemeralPool.query(
+      'SELECT datname, usename FROM pg_stat_activity WHERE pid = $1', [legacyReadPid],
+    )).rows, [{ datname: dbName, usename: legacyRole }]);
+    const obsoleteReaderPid = legacyReadPid;
 
     // 3. Prove REVOKE CONNECT (42501) and NOLOGIN (28000) fail ONLY for new connections while existing/prepared/in-flight sessions survive.
     const legacyEstablished = new pg.Client({ connectionString: legacyUrl });
@@ -590,6 +727,11 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
     await ownerPool.query(`REVOKE ALL ON ALL FUNCTIONS IN SCHEMA public FROM ${legacyRole}`);
     await ownerPool.query(`REVOKE ALL ON SCHEMA public FROM ${legacyRole}`);
 
+    // The real warmed authorization connection now returns no result under the retired grants.
+    legacyReadPid = undefined;
+    await assert.rejects(legacyProfileRead(), error => prismaSqlState(error, '42501'));
+    assert.equal(legacyReadPid, obsoleteReaderPid);
+
     // Verify SET ROLE and direct table query fail with 42501 on pooledEstablished BEFORE pg_terminate_backend!
     const pooledCheckClient = await legacyPool.connect();
     pooledCheckClient.on('error', () => {});
@@ -602,6 +744,19 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
       err => err.code === '42501',
     );
     pooledCheckClient.release();
+
+    // Login and grant fencing alone leave a real legacy session and lock in place.
+    const retainedBlocker = await adminOnEphemeralPool.query(`
+      SELECT 1
+      FROM pg_stat_activity AS a
+      JOIN pg_locks AS held ON held.pid = a.pid
+      JOIN pg_stat_activity AS waiter ON waiter.datname = a.datname AND waiter.usename = $4
+      WHERE a.datname = $1 AND a.usename = $2 AND a.pid = $3
+        AND held.relation = 'public.care_journeys'::regclass AND held.granted
+        AND a.pid = ANY(pg_blocking_pids(waiter.pid)) LIMIT 1`,
+    [dbName, legacyRole, legacyLockPid, successorRole]);
+    assert.equal(retainedBlocker.rowCount, 1, 'Expected the owned legacy session, held lock and actual waiter');
+    await assert.rejects(assertLegacyDrained(adminOnEphemeralPool, dbName, legacyRole), /Legacy sessions and locks must be drained/);
 
     // Expect 57P01 on legacyEstablished when targeted pg_terminate_backend fires, and verify successor writer commits immediately!
     const termCount = (
@@ -646,6 +801,7 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
       )
     ).rows[0].n;
     assert.equal(retainedLocks, 0);
+    await assertLegacyDrained(adminOnEphemeralPool, dbName, legacyRole);
 
     // 5. Remaining 4 real concurrent lock-wait pairs (Pairs 1..4) on successorRole!
     await identities.endAssignment(seededA.assignmentId);
@@ -1018,11 +1174,11 @@ test('Stage A0 non-superuser containment topology, effective ACL inventory, sess
       [dbName],
     ).catch(() => {});
     await adminPool.query(`DROP DATABASE IF EXISTS ${dbName} WITH (FORCE)`).catch(() => {});
-    for (const r of [legacyRole, successorRole, groupRole, ownerRole]) {
+    for (const r of [legacyRole, successorRole, restrictedRole, groupRole, ownerRole]) {
       await adminPool.query(`DROP ROLE IF EXISTS ${r}`).catch(() => {});
     }
     const leftoverDb = (await adminPool.query('SELECT count(*)::int n FROM pg_database WHERE datname = $1', [dbName])).rows[0].n;
-    const leftoverRoles = (await adminPool.query('SELECT count(*)::int n FROM pg_roles WHERE rolname = ANY($1::text[])', [[ownerRole, legacyRole, successorRole, groupRole]])).rows[0].n;
+    const leftoverRoles = (await adminPool.query('SELECT count(*)::int n FROM pg_roles WHERE rolname = ANY($1::text[])', [[ownerRole, legacyRole, successorRole, restrictedRole, groupRole]])).rows[0].n;
     await adminPool.end();
     assert.equal(leftoverDb, 0, 'Ephemeral A0 database must be completely dropped in finally');
     assert.equal(leftoverRoles, 0, 'Ephemeral A0 roles must be completely dropped in finally');

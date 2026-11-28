@@ -14,7 +14,7 @@ const { PrismaPg } = require('@prisma/adapter-pg');
 const darkTables = ['care_journey_bookings', 'care_journey_clinic_admissions', 'care_journey_events',
   'care_journey_pairs', 'care_journeys'];
 const darkChecks = ['cjp_admission_shape', 'cjp_binding_shape', 'cjp_event_shape', 'cjp_journey_shape',
-  'cjp_pair_evidence_shape'];
+  'cjp_pair_evidence_shape', 'users_account_epoch_positive'];
 const darkImmediateFks = [
   'care_journey_clinic_admissions_affiliation_id_fkey', 'care_journey_events_actor_user_id_fkey',
   'care_journey_events_booking_id_fkey', 'care_journey_events_clinician_id_fkey',
@@ -43,11 +43,12 @@ const darkTriggers = [
   ['cjp_journey_history_guard', 42, 'cjp_reject_history_change'],
   ['cjp_journey_write_guard', 23, 'cjp_journey_guard'],
   ['cjp_pair_history_guard', 58, 'cjp_reject_history_change'],
+  ['cjp_users_account_epoch_write_guard', 23, 'cjp_users_account_epoch_guard'],
 ].map(([tgname, tgtype, proname]) => ({tgname, tgtype, tgenabled: 'O', proname}));
 const darkFunctions = [
   'cjp_admission_evidence', 'cjp_admission_guard', 'cjp_binding_guard', 'cjp_booking_event_binding',
   'cjp_consent_anchor', 'cjp_ended_event_commit', 'cjp_event_insert', 'cjp_journey_end_evidence',
-  'cjp_journey_guard', 'cjp_reject_history_change',
+  'cjp_journey_guard', 'cjp_reject_history_change', 'cjp_users_account_epoch_guard',
 ];
 
 test('dark Care Journey objects preserve deferred scopes and grant no non-owner authority', () => withTransaction(async connection => {
@@ -67,6 +68,19 @@ test('dark Care Journey objects preserve deferred scopes and grant no non-owner 
     FROM pg_class c WHERE c.relnamespace = 'public'::regnamespace AND c.relname = ANY($1)
     ORDER BY c.relname`, [darkTables])).rows;
   assert.deepEqual(tables, darkTables.map(relname => ({ relname, non_owner: false })));
+  const epoch = (await connection.query(`
+    SELECT format_type(a.atttypid, a.atttypmod) AS type, a.attnotnull AS not_null,
+      pg_get_expr(d.adbin, d.adrelid) AS initializer, c.convalidated AS validated,
+      pg_get_constraintdef(c.oid) AS positive, t.tgqual IS NULL AS unconditional
+    FROM pg_attribute a
+    JOIN pg_attrdef d ON d.adrelid = a.attrelid AND d.adnum = a.attnum
+    JOIN pg_constraint c ON c.conrelid = a.attrelid AND c.conname = 'users_account_epoch_positive'
+    JOIN pg_trigger t ON t.tgrelid = a.attrelid AND t.tgname = 'cjp_users_account_epoch_write_guard'
+    WHERE a.attrelid = 'public.users'::regclass AND a.attname = 'account_epoch' AND NOT a.attisdropped`)).rows;
+  assert.deepEqual(epoch, [{
+    type: 'integer', not_null: true, initializer: '1', validated: true,
+    positive: 'CHECK ((account_epoch >= 1))', unconditional: true,
+  }]);
   const indexes = (await connection.query(`
     SELECT c.relname, i.indisvalid, i.indisunique, pg_get_expr(i.indpred, i.indrelid) AS predicate
     FROM pg_index i JOIN pg_class c ON c.oid = i.indexrelid

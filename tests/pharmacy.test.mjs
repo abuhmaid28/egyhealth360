@@ -120,7 +120,7 @@ test('I3S2 exact additive API and historical schema inventory remain pinned',asy
  const pharmacyMigration = await readFile('packages/db/prisma/migrations/20261101170000_v3_i3_pharmacy_fulfillment/migration.sql');
  assert.equal(createHash('sha256').update(pharmacyMigration).digest('hex'), 'd1482ce8ac43bb9eb6d86397ce22ca2f015c874d04eeb96eacd9aa5a731eca37');
  const names = (await readdir('packages/db/prisma/migrations')).filter(name => name !== 'migration_lock.toml').sort();
- assert.deepEqual(names, [...historicalMigrations, '20261123000000_cjp_expand_dark']);
+ assert.deepEqual(names, [...historicalMigrations, '20261123000000_cjp_expand_dark', '20261125000000_cjp_account_epoch_dark']);
  const schema = await readFile('packages/db/prisma/schema.prisma', 'utf8');
  const models = [...schema.matchAll(/^model (\w+)/gm)].map(([,name]) => name).sort();
  const darkModels = ['CareJourney', 'CareJourneyBooking', 'CareJourneyClinicAdmission', 'CareJourneyEvent', 'CareJourneyPair'];
